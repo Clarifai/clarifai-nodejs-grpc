@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+import "proto/clarifai/api/utils/extensions.proto";
+
+package clarifai.api.utils;
+
+option go_package = "utils";
+option java_multiple_files = true;
+option java_package = "com.clarifai.grpc.api.utils";
+option objc_class_prefix = "CAIP";
+
+message TestProto {
+  string id = 1;
+  string message = 2 [(utils.cl_show_if_empty) = true, (utils.cl_moretags) = "protos are cool"];
+  double value = 3 [(utils.cl_default_float) = 1.0];
+  bytes image_bytes = 4;
+
+
+  oneof one_of_field {
+    string string_oneof = 5;
+    bool bool_oneof = 6;
+    TestProto2 message_oneof = 7;
+  }
+}
+
+message TestProto2 {
+  string id = 1;
+  bool flip = 2;
+}

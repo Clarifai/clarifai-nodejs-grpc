@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+import "proto/clarifai/auth/util/extension.proto";
+import "proto/clarifai/api/status/status_code.proto";
+
+package clarifai.api.status;
+
+option go_package = "status";
+option java_multiple_files = true;
+option java_package = "com.clarifai.grpc.api.status";
+option objc_class_prefix = "CAIP";
+
+message Status {
+  // Status code from internal codes.
+  StatusCode code = 1;
+  // A longer description of the error.
+  string description = 2;
+  // More details of the given error.
+  string details = 3;
+  // For some environment we may return a stack trace to help debug
+  // any issues.
+  repeated string stack_trace = 4 [(clarifai.auth.util.cl_private_field) = true];
+  // specifically for long running jobs
+  uint32 percent_completed = 5;
+  // if status is pending, how much time is remaining (in seconds)
+  uint32 time_remaining = 6;
+  // If we want to return a request id in the base status field
+  string req_id = 7;
+  // Internal Annotation (do not set in production, for internal Clarifai use only).
+  string internal_details = 8 [(clarifai.auth.util.cl_private_field) = true];
+}
+
+// Base message to return when there is a internal server error that
+// is not caught elsewhere.
+message BaseResponse {
+  Status status = 1;
+}

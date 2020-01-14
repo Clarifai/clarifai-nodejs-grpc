@@ -1,0 +1,243 @@
+syntax = "proto3";
+
+import "google/protobuf/descriptor.proto";
+
+package clarifai.auth.scope;
+
+option go_package = "scope";
+option java_multiple_files = true;
+option java_package = "com.clarifai.grpc.auth.scope";
+option objc_class_prefix = "CAIP";
+
+
+message ScopeList {
+  // These are the list of low-level scopes to check from the enum below.
+  repeated S scopes = 1;
+  // This is a list of fully qualified grpc names to check.
+  repeated string endpoints = 2;
+}
+
+// Next index: 41
+// NOTE: When updating the list of "clarifai_exposed" scopes, please also
+// update the TestScopes function in main_key_test.go and TestGetExposedScopes function in
+// scope_test.go
+//
+// The dependencies listed for each scope are simply recommendations so that a user
+// cannot make a key that would be useless. Beyond the key creation they are not enforcee
+// but rather the scopes are enforce when data is accessed.
+//
+// There is the following conventions in place, make sure you add them to the socpes for all new
+// resource types:
+//
+// 1. *_Add required the corresponding _Get.
+// 2. *_Delete requires the corresponding _Add and _Get.
+// 3. *_Patch is deprecated and not check anywhere.
+//
+enum S {
+  // introduce undef so that the zero (default/unset) value of the enum is not a real
+  // permission.  undef is only present for this purpose and should not be used
+  // to indicate any "real" value.
+  undef = 0;
+
+  All = 1 [(clarfai_exposed) = true];
+
+  // Make an rpc to our prediction services.
+  Predict = 2 [(clarfai_exposed) = true];
+  Predict_Feedback = 29 [(clarfai_exposed) = true];
+  // Make an rpc to our search services.
+  Search = 3 [(clarfai_exposed) = true];
+  Search_Feedback = 28 [(clarfai_exposed) = true];
+
+  // Write to the inputs table in the DB.
+  Inputs_Add = 4 [(clarfai_exposed) = true,
+                  (clarifai_depending_scopes) = Inputs_Get];
+  // Read from the inputs table in the DB.
+  Inputs_Get = 5 [(clarfai_exposed) = true];
+  // To patch we need read/write.
+  // Deprecated.
+	// Optionally needs Concepts_Add.
+  Inputs_Patch = 7 [(clarfai_exposed) = true,
+                    (clarifai_depending_scopes) = Inputs_Add,
+                    (clarifai_depending_scopes) = Inputs_Get,
+                    deprecated = true];
+
+  // To delete we need read/write
+  Inputs_Delete = 8 [(clarfai_exposed) = true,
+                     (clarifai_depending_scopes) = Inputs_Add,
+                     (clarifai_depending_scopes) = Inputs_Get];
+  // Deprecated.
+  Outputs_Patch = 9 [(clarifai_depending_scopes) = Inputs_Get,
+                     (clarifai_depending_scopes) = Predict,
+                     deprecated = true];
+
+  // Write to the concepts DB tables.
+  Concepts_Add = 10 [(clarfai_exposed) = true,
+                    (clarifai_depending_scopes) = Concepts_Get];
+
+  // Read from the concepts DB tables.
+  Concepts_Get = 11 [(clarfai_exposed) = true];
+
+  // TODO: No concept searches scope.
+
+  // To patch we need read/write.
+  // Deprecated
+  Concepts_Patch = 12 [(clarfai_exposed) = true,
+                       (clarifai_depending_scopes) = Concepts_Add,
+                       (clarifai_depending_scopes) = Concepts_Get,
+                       deprecated = true];
+
+  // To delete we need read/write.
+  // Note: not implemented.
+  Concepts_Delete = 13 [(clarifai_depending_scopes) = Concepts_Add,
+                        (clarifai_depending_scopes) = Concepts_Get];
+
+	// Write to the models DB tables.
+  Models_Add = 14 [(clarfai_exposed) = true,
+                   (clarifai_depending_scopes) = Models_Get];
+
+  // Read from the models and models versions DB tables.
+  Models_Get = 15 [(clarfai_exposed) = true];
+
+  // To patch we need read/write.
+  // Deprecated.
+  Models_Patch = 16 [(clarfai_exposed) = true,
+                     (clarifai_depending_scopes) = Models_Add,
+                     (clarifai_depending_scopes) = Models_Get,
+                     (clarifai_depending_scopes) = Models_Train, // because patch adds a model version.
+                     deprecated = true];
+
+  // To delete we need read/write.
+  Models_Delete = 17 [(clarfai_exposed) = true,
+                      (clarifai_depending_scopes) = Models_Add,
+                      (clarifai_depending_scopes) = Models_Get];
+
+  // Note: Models_Train is effectively doing POST /models/{models_id}/versions so it's treated that
+  // way in terms of data access under the hood.
+  // Write to the model versions DB table.
+  Models_Train = 26 [(clarfai_exposed) = true,
+                     (clarifai_depending_scopes) = Models_Get];
+
+  // Internal only model syncing.
+  Models_Sync = 27 [(clarifai_depending_scopes) = Models_Get];
+
+  // Note: Models_Deploy is effectively doing POST /models/{models_id}/deployments so it's treated that
+  // way in terms of data access under the hood.
+  // Write to the model versions DB table.
+  Models_Deploy = 34 [(clarfai_exposed) = true,
+                      (clarifai_depending_scopes) = Models_Get];
+
+  // TODO: No model get metrics scope.
+
+  // Write to the workflows DB table.
+  Workflows_Add = 18 [(clarfai_exposed) = true,
+                      (clarifai_depending_scopes) = Workflows_Get];
+
+  // Read from the workflows DB table.
+  Workflows_Get = 19 [(clarfai_exposed) = true];
+
+  // To patch we need read/write.
+  // Deprecated.
+  Workflows_Patch = 20 [(clarfai_exposed) = true,
+                        (clarifai_depending_scopes) = Workflows_Add,
+                        (clarifai_depending_scopes) = Workflows_Get,
+                        deprecated = true];
+
+  // To delete we need read/write.
+  Workflows_Delete = 21 [(clarfai_exposed) = true,
+                         (clarifai_depending_scopes) = Workflows_Add,
+                         (clarifai_depending_scopes) = Workflows_Get];
+
+  // Write to the visualizations DB table.
+  // Deprecated
+  TSNEVisualizations_Add = 24 [(clarifai_depending_scopes) = TSNEVisualizations_Get,
+                               deprecated = true];
+
+  // Read from the visualizations DB table.
+  // Deprecated
+  TSNEVisualizations_Get = 25 [deprecated = true];
+
+  // Write to the workers DB table.
+  Workers_Add = 30 [(clarfai_exposed) = true,
+                    (clarifai_depending_scopes) = Workers_Get];
+
+  // Read from the workers DB table.
+  Workers_Get = 31 [(clarfai_exposed) = true];
+
+  // To delete we need read/write.
+  Workers_Delete = 32 [(clarfai_exposed) = true,
+                       (clarifai_depending_scopes) = Workers_Add,
+                       (clarifai_depending_scopes) = Workers_Get];
+
+  // Read from the templates DB table.
+  Templates_Get = 33 [(clarfai_exposed) = true];
+  // left numbers for Add, Patch, Delete Templates
+
+  // Write to the annotations DB table.
+  Annotations_Add = 37 [(clarfai_exposed) = true,
+                        (clarifai_depending_scopes) = Annotations_Get];
+
+  // Read from the annotations DB table.
+  Annotations_Get = 38 [(clarfai_exposed) = true];
+
+  // To patch we need read/write.
+  // Deprecated.
+  Annotations_Patch = 39 [(clarfai_exposed) = true,
+                          (clarifai_depending_scopes) = Annotations_Add,
+                          (clarifai_depending_scopes) = Annotations_Get,
+                          deprecated = true];
+
+  // To delete we need read/write.
+  Annotations_Delete = 40 [(clarfai_exposed) = true,
+                           (clarifai_depending_scopes) = Annotations_Add,
+                           (clarifai_depending_scopes) = Annotations_Get];
+
+
+
+  // Write to the collectors DB table.
+  Collectors_Add = 41 [(clarfai_exposed) = false,
+                       (clarifai_depending_scopes) = Collectors_Get];
+
+  // Read from the collectors DB table.
+  Collectors_Get = 42 [(clarfai_exposed) = false];
+
+  // To delete we need read/write.
+  Collectors_Delete = 43 [(clarfai_exposed) = false,
+                          (clarifai_depending_scopes) = Collectors_Add,
+                          (clarifai_depending_scopes) = Collectors_Get];
+
+
+  // Write to the apps DB table.
+  Apps_Add = 44 [(clarfai_exposed) = true,
+                 (clarifai_depending_scopes) = Apps_Get];
+
+  // Read from the apps DB table.
+  Apps_Get = 45 [(clarfai_exposed) = true];
+
+  // To delete we need read/write.
+  Apps_Delete = 46 [(clarfai_exposed) = true,
+                    (clarifai_depending_scopes) = Apps_Add,
+                    (clarifai_depending_scopes) = Apps_Get];
+
+  // Write to the keys DB table.
+  Keys_Add = 47 [(clarfai_exposed) = true,
+                 (clarifai_depending_scopes) = Keys_Get];
+
+  // Read from the keys DB table.
+  Keys_Get = 48 [(clarfai_exposed) = true];
+
+  // To delete we need read/write.
+  Keys_Delete = 49 [(clarfai_exposed) = true,
+                    (clarifai_depending_scopes) = Keys_Add,
+                    (clarifai_depending_scopes) = Keys_Get];
+
+
+}
+
+extend google.protobuf.EnumValueOptions {
+  // indicates whether the given scope should be returned by the Get /scopes/ call
+  // or any other call that returns list of available perms.
+  bool clarfai_exposed = 80318;
+  // TODO: We have no way of picking extension field numbers within clarifai to guarantee
+  // uniqueness.  Note: 50000-99999 are for organizational use (like this)
+  repeated S clarifai_depending_scopes = 80319;
+}

@@ -1,0 +1,4275 @@
+/////////////////////////////////////////////// WARNING ///////////////////////////////////////////////
+// Be aware that if you decide to add comments to this or any other non-private file, they could     //
+// end up in our *public* auto-generated swagger documentation. In order to ensure that your         //
+// comments are not included in our swagger docs, put one line of whitespace between your comment    //
+// and any proto definitions.                                                                        //
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+syntax = "proto3";
+
+import "proto/clarifai/api/resources.proto";
+import "proto/clarifai/api/status/status.proto";
+import "proto/clarifai/api/utils/extensions.proto";
+import "proto/clarifai/auth/scope/scope.proto";
+import "proto/clarifai/auth/util/extension.proto";
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+
+package clarifai.api;
+
+option go_package = "api";
+option java_multiple_files = true;
+option java_package = "com.clarifai.grpc.api";
+option objc_class_prefix = "CAIP";
+
+/*
+  Note: this is based on the google api format defined here. Please
+  read this before contributing to this file and other *.proto files
+  for the API.
+  https://cloud.google.com/service-management/reference/rpc/google.api#google.api.HttpRule
+ */
+
+message TestMessage {
+  clarifai.api.status.Status status = 1;
+  string value = 2;
+  bytes byts = 3;
+  uint32 int_32 = 4;
+  uint64 int_64 = 5;
+  float f_32 = 6;
+  double f_64 = 7;
+
+  // To handle arbitrary json you can use a struct field:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  google.protobuf.Struct s = 8;
+}
+
+
+service V2 {
+
+  // Common echo example.
+  rpc Echo (TestMessage) returns (TestMessage) {
+    option (google.api.http) = {
+      post: "/v2/example/echo"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+  }
+
+  ////////////////////////////////////////
+  // Concepts
+  ////////////////////////////////////////
+
+  // List all the concepts with their positive and negative counts
+  rpc GetConceptCounts (GetConceptCountsRequest) returns (MultiConceptCountResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/status"
+      additional_bindings {
+        get: "/v2/concepts/status"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+  }
+
+  // Get a specific concept from an app.
+  rpc GetConcept (GetConceptRequest) returns (SingleConceptResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}"
+      additional_bindings {
+        get: "/v2/concepts/{concept_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // List all the concepts.
+  rpc ListConcepts (ListConceptsRequest) returns (MultiConceptResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts"
+      additional_bindings {
+        get: "/v2/concepts"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // Search over the concepts to find one or more you're looking for.
+  // This leverage the "body" parameter because we also have page and
+  // per_page as url query param variables in this request.
+  rpc PostConceptsSearches (PostConceptsSearchesRequest) returns (MultiConceptResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/searches"
+      body: "*"
+      additional_bindings {
+        post: "/v2/concepts/searches"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // as it needs to know the concepts in your workflow's models.
+  }
+
+  // Add a concept to an app.
+  rpc PostConcepts (PostConceptsRequest) returns (MultiConceptResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts"
+      body: "*"
+      additional_bindings {
+        post: "/v2/concepts"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // Patch one or more concepts.
+  rpc PatchConcepts (PatchConceptsRequest) returns (MultiConceptResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts"
+      body: "*"
+      additional_bindings {
+        patch: "/v2/concepts"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+  ////////////////////////////////////////
+
+  ////////////////////////////////////////
+  // Vocabs
+  ////////////////////////////////////////
+
+  // Get a specific vocab from an app.
+  rpc GetVocab (GetVocabRequest) returns (SingleVocabResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/vocabs/{vocab_id}"
+      additional_bindings {
+        get: "/v2/vocabs/{vocab_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // List all the vocabs.
+  rpc ListVocabs (ListVocabsRequest) returns (MultiVocabResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/vocabs"
+      additional_bindings {
+        get: "/v2/vocabs"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // Add a vocab to an app.
+  rpc PostVocabs (PostVocabsRequest) returns (MultiVocabResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/vocabs"
+      body: "*"
+      additional_bindings {
+        post: "/v2/vocabs"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // Patch one or more vocabs.
+  rpc PatchVocabs (PatchVocabsRequest) returns (MultiVocabResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/vocabs"
+      body: "*"
+      additional_bindings {
+        patch: "/v2/vocabs"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // Delete a single vocab.
+  rpc DeleteVocab (DeleteVocabRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/vocabs/{vocab_id}"
+      additional_bindings {
+        delete: "/v2/vocabs/{vocab_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // Delete multiple vocabs in one request.
+  rpc DeleteVocabs (DeleteVocabsRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/vocabs"
+      body: "*"
+      additional_bindings {
+        delete: "/v2/vocabs"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // List all the vocabs.
+  rpc ListVocabConcepts (ListVocabConceptsRequest) returns (MultiConceptResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/vocabs/{vocab_id}/concepts"
+      additional_bindings {
+        get: "/v2/vocabs/{vocab_id}/concepts"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // Add a vocab to an app.
+  rpc PostVocabConcepts (PostVocabConceptsRequest) returns (MultiConceptResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/vocabs/{vocab_id}/concepts"
+      body: "*"
+      additional_bindings {
+        post: "/v2/vocabs/{vocab_id}/concepts"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // Delete a single concept from a vocab.
+  rpc DeleteVocabConcept (DeleteVocabConceptRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/vocabs/{vocab_id}/concepts/{concept_id}"
+      additional_bindings {
+        delete: "/v2/vocabs/{vocab_id}/concepts/{concept_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // Delete multiple concepts from a vocab in one request.
+  rpc DeleteVocabConcepts (DeleteVocabConceptsRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/vocabs/{vocab_id}/concepts"
+      body: "*"
+      additional_bindings {
+        delete: "/v2/vocabs/{vocab_id}/concepts"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  ////////////////////////////////////////
+
+  ////////////////////////////////////////
+  // Concept Languages
+  ////////////////////////////////////////
+
+  // Get a specific concept from an app.
+  rpc GetConceptLanguage (GetConceptLanguageRequest) returns (SingleConceptLanguageResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/languages/{language}"
+      additional_bindings {
+        get: "/v2/concepts/{concept_id}/languages/{language}"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // List the concept in all the translated languages.
+  rpc ListConceptLanguages (ListConceptLanguagesRequest) returns (MultiConceptLanguageResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/languages"
+      additional_bindings {
+        get: "/v2/concepts/{concept_id}/languages"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // Add a new tranlsation for this concept.
+  rpc PostConceptLanguages (PostConceptLanguagesRequest) returns (MultiConceptLanguageResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/languages"
+      body: "*"
+      additional_bindings {
+        post: "/v2/concepts/{concept_id}/languages"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // Patch the name for a given language names by passing in a list of concepts with the new names
+  // for the languages.
+  rpc PatchConceptLanguages (PatchConceptLanguagesRequest) returns (MultiConceptLanguageResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/languages"
+      body: "*"
+      additional_bindings {
+        patch: "/v2/concepts/{concept_id}/languages"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // TODO(zeiler): we don't have a way to delete the languages currently. This should be rare
+  // anyways as users should just patch translations to the right naming.
+  // // Delete a single concept translation.
+  // rpc DeleteConceptLanguage(DeleteConceptLanguageRequest) returns (clarifai.api.status.BaseResponse) {
+  //   option (google.api.http) = {
+  //     delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/languages/{language}"
+  //     additional_bindings {
+  //       delete: "/v2/concepts/{concept_id}/languages/{language}"
+  //     }
+  //   };
+  // }
+
+  // // Delete multiple concept translations in one request.
+  // rpc DeleteConceptLanguages(DeleteConceptLanguagesRequest) returns (clarifai.api.status.BaseResponse) {
+  //   option (google.api.http) = {
+  //     delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/languages"
+  //     body: "*"
+  //     additional_bindings {
+  //       delete: "/v2/concepts/{concept_id}/languages"
+  //       body: "*"
+  //     }
+  //   };
+  // }
+
+  ////////////////////////////////////////
+  // Concept Relationships
+  ////////////////////////////////////////
+
+  // List the concept in all the outside sources.
+  rpc ListConceptReferences (ListConceptReferencesRequest) returns (MultiConceptReferenceResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/references"
+      additional_bindings {
+        get: "/v2/concepts/{concept_id}/references"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // This is a general path for all these relations
+  // concepts/{concept_id}/hypernyms
+  // concepts/{concept_id}/hyponyms
+
+  // List concept relations.
+  rpc ListConceptRelations (ListConceptRelationsRequest) returns (MultiConceptResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/{predicate}"
+      additional_bindings {
+        get: "/v2/concepts/{concept_id}/{predicate}"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // Post concept relations.
+  rpc PostConceptRelations (PostConceptRelationsRequest) returns (MultiConceptRelationResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/relations"
+      additional_bindings {
+        post: "/v2/concepts/relations"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  ////////////////////////////////////////
+  // Knowledge Graph
+  ////////////////////////////////////////
+
+  // List all domain graphs.
+  rpc ListKnowledgeGraphs (ListKnowledgeGraphsRequest) returns (MultiKnowledgeGraphResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/knowledge_graphs"
+      additional_bindings {
+        get: "/v2/concepts/knowledge_graphs"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // Post domain graphs.
+  rpc PostKnowledgeGraphs (PostKnowledgeGraphsRequest) returns (MultiKnowledgeGraphResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/knowledge_graphs"
+      additional_bindings {
+        post: "/v2/concepts/knowledge_graphs"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // Start concept mapping jobs.
+  rpc PostConceptMappingJobs (PostConceptMappingJobsRequest) returns (MultiConceptMappingJobResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/mappings/jobs"
+      additional_bindings {
+        post: "/v2/concepts/mappings/jobs"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // List all concept mappings for a given concept id.
+  rpc ListConceptMappings (ListConceptMappingsRequest) returns (MultiConceptMappingResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/mappings"
+      additional_bindings {
+        get: "/v2/concepts/mappings"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // Post concept mappings.
+  rpc PostConceptMappings (PostConceptMappingsRequest) returns (MultiConceptMappingResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/mappings"
+      additional_bindings {
+        post: "/v2/concepts/mappings"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  ////////////////////////////////////////
+  // annotations
+  ////////////////////////////////////////
+
+  // Get a specific annotation from an app.
+  rpc GetAnnotation (GetAnnotationRequest) returns (SingleAnnotationResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}/annotations/{annotation_id}"
+      additional_bindings {
+        get: "/v2/inputs/{input_id}/annotations/{annotation_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // to get the model for the worker.
+  }
+
+  // List all the annotation.
+  rpc ListAnnotations (ListAnnotationsRequest) returns (MultiAnnotationResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations"
+      additional_bindings {
+        get: "/v2/annotations"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // to get the model for the worker.
+  }
+
+  // Post annotations.
+  rpc PostAnnotations (PostAnnotationsRequest) returns (MultiAnnotationResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations"
+      body: "*"
+      additional_bindings {
+        post: "/v2/annotations"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // to know the models in your default workflow.
+  }
+
+  // Post annotations status - can be used to change an annotation status from an old status to a new one.
+  rpc PostAnnotationsStatus (PostAnnotationsStatusRequest) returns (MultiAnnotationResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations_status"
+      body: "*"
+      additional_bindings {
+        post: "/v2/annotations_status"
+        body: "*"
+      }
+      additional_bindings {
+        post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workers/{worker_id}/annotations_status"
+        body: "*"
+      }
+      additional_bindings {
+        post: "/v2/workers/{worker_id}/annotations_status"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // to get the model for the worker.
+  }
+
+  // Patch one or more annotations.
+  rpc PatchAnnotations (PatchAnnotationsRequest) returns (MultiAnnotationResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations"
+      body: "*"
+      additional_bindings {
+        patch: "/v2/annotations"
+          body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // to get the model for the worker.
+  }
+
+  // Delete a single annotation.
+  rpc DeleteAnnotation (DeleteAnnotationRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}/annotations/{annotation_id}"
+      additional_bindings {
+        delete: "/v2/inputs/{input_id}/annotations/{annotation_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // for cleaning up some optimizations we have in DB layer for annotations.
+  }
+
+  // Delete multiple annotations in one request.
+  rpc DeleteAnnotations (DeleteAnnotationsRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/annotations"
+      body: "*"
+      additional_bindings {
+        delete: "/v2/inputs/annotations"
+          body: "*"
+      }
+      additional_bindings {
+        delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations"
+          body: "*"
+      }
+      additional_bindings {
+        delete: "/v2/annotations"
+          body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // for cleaning up some optimizations we have in DB layer for annotations.
+  }
+
+  ////////////////////////////////////////
+  // Inputs
+  ////////////////////////////////////////
+
+  // Patch one or more inputs.
+  rpc GetInputCount (GetInputCountRequest) returns (SingleInputCountResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/status"
+      additional_bindings {
+        get: "/v2/inputs/status"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+  }
+
+  // Streams all the inputs starting from oldest assets.
+  rpc StreamInputs (StreamInputsRequest) returns (MultiInputResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/stream"
+      additional_bindings {
+        get: "/v2/inputs/stream"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+  }
+
+  // Get a specific input from an app.
+  rpc GetInput (GetInputRequest) returns (SingleInputResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}"
+      additional_bindings {
+        get: "/v2/inputs/{input_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+  }
+
+  // List all the inputs.
+  rpc ListInputs (ListInputsRequest) returns (MultiInputResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs"
+      additional_bindings {
+        get: "/v2/inputs"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+  }
+
+  // Add an input (or set of inputs) to an app.
+  // This call is synchronous if the PostInputsRequest contains exactly one image input. Otherwise,
+  // it is asynchronous.
+  rpc PostInputs (PostInputsRequest) returns (MultiInputResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs"
+      body: "*"
+      additional_bindings {
+        post: "/v2/inputs"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Predict;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+  }
+
+  // Add an input (or set of inputs) to an app via a file.
+  // This is asynchronous.
+  rpc PostInputsFile (PostInputsFileRequest) returns (MultiInputResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/file"
+      body: "*"
+      additional_bindings {
+        post: "/v2/inputs/file"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Add;
+  }
+
+  // Add an input or set of inputs to an app designed for NiFi integration.
+  rpc PostInputsNiFi (PostInputsNiFiRequest) returns (MultiInputResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/vendors/nifi/inputs"
+      body: "*"
+      additional_bindings {
+        post: "/v2/vendors/nifi/inputs"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Add;
+  }
+
+  // Patch one or more inputs.
+  rpc PatchInputs (PatchInputsRequest) returns (MultiInputResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs"
+      body: "*"
+      additional_bindings {
+        patch: "/v2/inputs"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  }
+
+  // Delete a single input.  This call is synchronous.
+  rpc DeleteInput (DeleteInputRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}"
+      additional_bindings {
+        delete: "/v2/inputs/{input_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+  }
+
+  // Delete multiple inputs in one request.
+  // This call is asynchronous. Use DeleteInput if you want a synchronous version.
+  rpc DeleteInputs (DeleteInputsRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs"
+      body: "*"
+      additional_bindings {
+        delete: "/v2/inputs"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+  }
+
+  // Get predicted outputs from the model.
+  rpc PostModelOutputs (PostModelOutputsRequest) returns (MultiOutputResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/outputs"
+      body: "*"
+      additional_bindings {
+        post: "/v2/models/{model_id}/versions/{version_id}/outputs"
+        body: "*"
+      }
+      additional_bindings {
+        post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/outputs"
+        body: "*"
+      }
+      additional_bindings {
+        post: "/v2/models/{model_id}/outputs"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Predict;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+
+  // Provide feedback for model predictions.
+  rpc PostModelFeedback (PostModelFeedbackRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/feedback"
+      body: "*"
+      additional_bindings {
+        post: "/v2/models/{model_id}/versions/{version_id}/feedback"
+        body: "*"
+      }
+      additional_bindings {
+        post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/feedback"
+        body: "*"
+      }
+      additional_bindings {
+        post: "/v2/models/{model_id}/feedback"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Predict_Feedback;
+  }
+
+  ////////////////////////////////////////
+
+  ////////////////////////////////////////
+  // Models
+  ////////////////////////////////////////
+
+  // Get a specific model from an app.
+  rpc GetModel (GetModelRequest) returns (SingleModelResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}"
+      additional_bindings {
+        get: "/v2/models/{model_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+
+  // Get a the output info for a given model_id or model_id/version_id
+  // combo.
+  rpc GetModelOutputInfo (GetModelRequest) returns (SingleModelResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/output_info"
+      additional_bindings {
+        get: "/v2/models/{model_id}/output_info"
+      }
+      additional_bindings {
+        get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/output_info"
+      }
+      additional_bindings {
+        get: "/v2/models/{model_id}/versions/{version_id}/output_info"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+
+  // List all the models.
+  rpc ListModels (ListModelsRequest) returns (MultiModelResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models"
+      additional_bindings {
+        get: "/v2/models"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+
+  // Search over the models to find one or more you're looking for.
+  // This leverage the "body" parameter because we also have page and
+  // per_page as url query param variables in this request.
+  rpc PostModelsSearches (PostModelsSearchesRequest) returns (MultiModelResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/searches"
+      body: "*"
+      additional_bindings {
+        post: "/v2/models/searches"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+
+  // Add a models to an app.
+  // FIXME(zeiler): this should have been a plural response.
+  rpc PostModels (PostModelsRequest) returns (SingleModelResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models"
+      body: "*"
+      additional_bindings {
+        post: "/v2/models"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Train;  // Train is needed because it creates a new version.
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // Needs to check the base workflow to build off of.
+  }
+
+  // Patch one or more models.
+  rpc PatchModels (PatchModelsRequest) returns (MultiModelResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models"
+      body: "*"
+      additional_bindings {
+        patch: "/v2/models"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Train;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+
+  // Delete a single model.
+  rpc DeleteModel (DeleteModelRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}"
+      additional_bindings {
+        delete: "/v2/models/{model_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+
+  // Delete multiple models in one request.
+  rpc DeleteModels (DeleteModelsRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models"
+      body: "*"
+      additional_bindings {
+        delete: "/v2/models"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+
+  // List all the inputs.
+  rpc ListModelInputs (ListModelInputsRequest) returns (MultiInputResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/inputs"
+      additional_bindings {
+        get: "/v2/models/{model_id}/inputs"
+      }
+      additional_bindings {
+        get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/inputs"
+      }
+      additional_bindings {
+        get: "/v2/models/{model_id}/versions/{version_id}/inputs"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  }
+  ////////////////////////////////////////
+
+  ////////////////////////////////////////
+  // Model versions
+  ////////////////////////////////////////
+
+  // Get a specific model from an app.
+  rpc GetModelVersion (GetModelVersionRequest) returns (SingleModelVersionResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}"
+      additional_bindings {
+        get: "/v2/models/{model_id}/versions/{version_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+
+  // List all the models.
+  rpc ListModelVersions (ListModelVersionsRequest) returns (MultiModelVersionResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions"
+      additional_bindings {
+        get: "/v2/models/{model_id}/versions"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+
+  // NOTE: inconsistency: do we want this to return a SingleModelResponse?
+
+  // Create a new model version to trigger training of the model.
+  // FIXME(zeiler): this should have been a plural response.
+  rpc PostModelVersions (PostModelVersionsRequest) returns (SingleModelResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions"
+      body: "*"
+      additional_bindings {
+        post: "/v2/models/{model_id}/versions"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Train;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get;   // models need their worker id.
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // Needs to check the base workflow to build off of.
+  }
+
+  // Delete a single model.
+  rpc DeleteModelVersion (DeleteModelVersionRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}"
+      additional_bindings {
+        delete: "/v2/models/{model_id}/versions/{version_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+
+  // Get the evaluation metrics for a model version.
+  rpc GetModelVersionMetrics (GetModelVersionMetricsRequest) returns (SingleModelVersionResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/metrics"
+      additional_bindings {
+        get: "/v2/models/{model_id}/versions/{version_id}/metrics"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+
+  // Get the evaluation metrics for a model version.
+  rpc PostModelVersionMetrics (PostModelVersionMetricsRequest) returns (SingleModelVersionResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/metrics"
+      body: "*"
+      additional_bindings {
+        post: "/v2/models/{model_id}/versions/{version_id}/metrics"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Train;
+    option (clarifai.auth.util.cl_depending_scopes) = Predict;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get;   // models need their worker id.
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // Needs to check the base workflow to build off of.
+  }
+
+  // Use a list of existing model versions to trigger deployment of these already trained model versions of the same model.
+  rpc PostModelVersionsDeployment (PostModelVersionsDeploymentRequest) returns (MultiModelVersionResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/deployments"
+      body: "*"
+      additional_bindings {
+        post: "/v2/models/{model_id}/deployments"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Add; // Needs to updated status
+		option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Deploy;
+  }
+  ////////////////////////////////////////
+
+
+  ////////////////////////////////////////
+  // Workflows
+  ////////////////////////////////////////
+
+  // Get a specific workflow from an app.
+  rpc GetWorkflow (GetWorkflowRequest) returns (SingleWorkflowResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}"
+      additional_bindings {
+        get: "/v2/workflows/{workflow_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+
+  // List all the workflows.
+  rpc ListWorkflows (ListWorkflowsRequest) returns (MultiWorkflowResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows"
+      additional_bindings {
+        get: "/v2/workflows"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+
+  // List all the workflows.
+  rpc ListPublicWorkflows (ListPublicWorkflowsRequest) returns (MultiWorkflowResponse) {
+    option (google.api.http) = {
+      get: "/v2/public_workflows"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = NoAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+
+  // Add a workflow to an app.
+  rpc PostWorkflows (PostWorkflowsRequest) returns (MultiWorkflowResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows"
+      body: "*"
+      additional_bindings {
+        post: "/v2/workflows"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+
+  // Patch one or more workflows.
+  rpc PatchWorkflows (PatchWorkflowsRequest) returns (MultiWorkflowResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows"
+      body: "*"
+      additional_bindings {
+        patch: "/v2/workflows"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+
+  // Delete a single workflow.
+  rpc DeleteWorkflow (DeleteWorkflowRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}"
+      additional_bindings {
+        delete: "/v2/workflows/{workflow_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+  }
+
+  // Delete multiple workflows in one request.
+  rpc DeleteWorkflows (DeleteWorkflowsRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows"
+      body: "*"
+      additional_bindings {
+        delete: "/v2/workflows"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+  }
+
+  // Predict using a workflow.
+  rpc PostWorkflowResults (PostWorkflowResultsRequest) returns (PostWorkflowResultsResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/results"
+      body: "*"
+      additional_bindings {
+        post: "/v2/workflows/{workflow_id}/results"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Predict;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+  ////////////////////////////////////////
+
+  ////////////////////////////////////////
+  // API Keys
+  ////////////////////////////////////////
+
+  // Get a specific key from an app.
+  rpc GetKey (GetKeyRequest) returns (SingleKeyResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/keys/{key_id}"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
+  }
+
+  // List all the keys.
+  rpc ListKeys (ListKeysRequest) returns (MultiKeyResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/keys"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
+  }
+
+  // List keys by app_id
+  rpc ListAppKeys (ListAppKeysRequest) returns (MultiKeyResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/keys"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
+  }
+
+  // Search over the keys to find one or more you're looking for.
+  // This leverage the "body" parameter because we also have page and
+  // per_page as url query param variables in this request.
+  rpc DeleteKey (DeleteKeyRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/keys/{key_id}"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Keys_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Keys_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
+  }
+
+  // Add a key to an app.
+  rpc PostKeys (PostKeysRequest) returns (MultiKeyResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/keys"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Keys_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
+  }
+
+  // Patch one or more keys.
+  rpc PatchKeys (PatchKeysRequest) returns (MultiKeyResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/keys"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Keys_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
+  }
+
+  // API Keys in the public API -- request is itself Key authorized, and will tell
+  // the user the scopes/access of the key/credential they're providing, as computed by
+  // our authorizer:
+  rpc MyScopes (MyScopesRequest) returns (MultiScopeResponse) {
+    option (google.api.http) = {
+      get: "/v2/myscopes"
+      additional_bindings {
+        get: "/v2/my_scopes"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+  }
+
+  // List all auth scopes available.
+  rpc ListScopes (ListScopesRequest) returns (MultiScopeDepsResponse) {
+    option (google.api.http) = {
+      get: "/v2/scopes"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  ////////////////////////////////////////
+  // Apps
+  ////////////////////////////////////////
+
+  // Get a specific app from an app.
+  rpc GetApp (GetAppRequest) returns (SingleAppResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}"
+      additional_bindings {
+        get: "/v2/apps/{user_app_id.app_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+  }
+
+  // List all the apps.
+  rpc ListApps (ListAppsRequest) returns (MultiAppResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps"
+      additional_bindings {
+        get: "/v2/apps"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+  }
+
+  // Search over the apps to find one or more you're looking for.
+  // This leverage the "body" parameter because we also have page and
+  // per_page as url query param variables in this request.
+  rpc DeleteApp (DeleteAppRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+  }
+
+  // Add a app to an app.
+  // This needs to load the default workflow to make a copy, validating all the models in it, and
+  // then writing the new workflow back to this new app.
+  rpc PostApps (PostAppsRequest) returns (MultiAppResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Add;
+  }
+
+  // Patch one or more apps.
+  rpc PatchApps (PatchAppsRequest) returns (MultiAppResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    // option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    // option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+  }
+
+  ////////////////////////////////////////
+
+  ////////////////////////////////////////
+  // Users
+  ////////////////////////////////////////
+
+  // Get a specific user from an user.
+  rpc GetUser (GetUserRequest) returns (SingleUserResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // Update gdpr fields to a specific user.
+  rpc PostUserConsent (PostUserConsentRequest) returns (SingleUserResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/consent"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // Patch one user
+  rpc PatchUser (PatchUserRequest) returns (SingleUserResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  ////////////////////////////////////////
+
+  ////////////////////////////////////////
+  // Email
+  ////////////////////////////////////////
+  // Add Email
+  rpc PostEmails (PostEmailsRequest) returns (MultipleEmailResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/emails"
+      body: "*"
+      additional_bindings {
+        post: "/v2/emails"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // List emails
+  rpc ListEmails (ListEmailsRequest) returns (MultipleEmailResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/emails"
+      additional_bindings: {
+        get: "/v2/emails"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // For sending another verification email.
+  rpc PostResendVerifyEmail (PostResendVerifyRequest) returns (SingleResendVerifyResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/resend_verification"
+      body: "*"
+      additional_bindings {
+        post: "/v2/resend_verification"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // Deleting an email.
+  rpc DeleteEmail (DeleteEmailRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/emails/{email}"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // Create primate email.
+  rpc PostPrimaryEmail (PostPrimaryEmailRequest) returns (SingleEmailResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/emails/primary"
+      body: "*"
+      additional_bindings {
+        post: "/v2/emails/primary"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  ////////////////////////////////////////
+  // Searches
+  ////////////////////////////////////////
+
+  // Get a saved search.
+  rpc GetSearch (GetSearchRequest) returns (SingleSearchResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches/{id}"
+      additional_bindings {
+        get: "/v2/searches/{id}"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Search;
+  }
+
+  // List all saved searches.
+  rpc ListSearches (ListSearchesRequest) returns (MultiSearchResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches"
+      additional_bindings {
+        get: "/v2/searches"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Search;
+  }
+
+  // Execute a new search and optionally save it.
+  rpc PostSearches (PostSearchesRequest) returns (MultiSearchResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches"
+      body: "*"
+      additional_bindings {
+        post: "/v2/searches"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    // option (clarifai.auth.util.cl_depending_scopes) = Predict; // optional
+    option (clarifai.auth.util.cl_depending_scopes) = Search;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // to know the concepts and models in your default workflow.
+  }
+
+  // Note this API must be listed here before PostSearchesByIDRequest so the correct API is bound
+  // Give search feedback.
+  rpc PostSearchFeedback (PostSearchFeedbackRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches/feedback"
+      body: "*"
+      additional_bindings {
+        post: "/v2/searches/feedback"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Search;
+    option (clarifai.auth.util.cl_depending_scopes) = Search_Feedback;
+  }
+
+  // Execute a previously saved search.
+  rpc PostSearchesByID (PostSearchesByIDRequest) returns (MultiSearchResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches/{id}"
+      body: "*"
+      additional_bindings {
+        post: "/v2/searches/{id}"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Search;
+  }
+
+  // Delete a saved search.
+  rpc DeleteSearch (DeleteSearchRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches/{id}"
+      additional_bindings {
+        delete: "/v2/searches/{id}"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Search;
+  }
+
+  // Execute an attribute search.
+  rpc PostAttributeSearch (PostAttributeSearchRequest) returns (MultiSearchResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/attribute_searches"
+      body: "*"
+      additional_bindings {
+        post: "/v2/attribute_searches"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    // option (clarifai.auth.util.cl_depending_scopes) = Predict; // optional
+    option (clarifai.auth.util.cl_depending_scopes) = Search;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // to know the concepts and models in your default workflow.
+  }
+
+  // Get a list of clusters in an app
+  rpc ListClusters (ListClustersRequest) returns (MultiClusterResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/clusters"
+      additional_bindings {
+        get: "/v2/clusters"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Search;
+  }
+
+  // List all the annootations for a given cluser.
+  rpc ListAnnotationsForCluster (ListAnnotationsForClusterRequest) returns (MultiAnnotationResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/clusters/{cluster_id}/annotations"
+      additional_bindings {
+        get: "/v2/clusters/{cluster_id}/annotations"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Search;
+  }
+
+  // List all the annootations for a given cluser.
+  rpc PostClustersSearches (PostClustersSearchesRequest) returns (MultiClusterResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/clusters/searches"
+          body: "*"
+      additional_bindings {
+        post: "/v2/clusters/searches"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Search;
+  }
+  ////////////////////////////////////////
+
+  // Get the model weights from backend.
+  rpc GetModelWeight (GetModelWeightRequest) returns (SingleModelWeightResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/d03cb6c65/{model_id}"
+      additional_bindings {
+        get: "/v2/d03cb6c65/{model_id}"
+      }
+      additional_bindings {
+        get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/d03cb6c65/{model_id}/versions/{version_id}"
+      }
+      additional_bindings {
+        get: "/v2/d03cb6c65/{model_id}/versions/{version_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Sync;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get; // models need their worker id.
+  }
+
+  ////////////////////////////////////////
+  // Login
+  ////////////////////////////////////////
+
+  // Verify email
+  rpc PostVerifyEmail (PostVerifyEmailRequest) returns (SingleVerifyEmailResponse) {
+    option (google.api.http) = {
+      post: "/v2/verify_email"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = NoAuth;
+  }
+
+  // Reset password
+  rpc PostRequestResetPassword (RequestResetPasswordRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+        post: "/v2/request_password_reset"
+        body:"*"
+        };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = NoAuth;
+  }
+
+  // Complete reset password
+  rpc PostCompleteResetPassword (CompleteResetPasswordRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      post: "/v2/complete_password_reset"
+        body:"*"
+        };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = NoAuth;
+  }
+
+  // Login with user/pass
+  rpc PostLogin (PostLoginRequest) returns (SingleLoginResponse) {
+    option (google.api.http) = {
+      post: "/v2/login"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = NoAuth;
+  }
+
+  // Signup with account.
+  rpc PostSignup (PostSignupRequest) returns (SingleLoginResponse) {
+    option (google.api.http) = {
+      post: "/v2/signup"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = NoAuth;
+  }
+  ////////////////////////////////////////
+
+  ////////////////////////////////////////
+  // Subscriptions
+  ////////////////////////////////////////
+
+  // List the subscriptions.
+  rpc GetSubscription (GetSubscriptionRequest) returns (SingleSubscriptionResponse) {
+    option (google.api.http) = {
+      get: "/v2/subscriptions"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // Add a new subscription.
+  rpc PostSubscription (PostSubscriptionRequest) returns (SingleSubscriptionResponse) {
+    option (google.api.http) = {
+      post: "/v2/subscriptions"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // List all credit cards.
+  rpc ListCreditCards (ListCreditCardsRequest) returns (MultipleCreditCardResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/credit_cards"
+      additional_bindings: {
+          get: "/v2/credit_cards"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // Add a new credit card.
+  rpc PostCreditCard (PostCreditCardRequest) returns (SingleCreditCardResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/credit_cards"
+      body: "*"
+      additional_bindings: {
+        post: "/v2/credit_cards"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // Delete a credit card.
+  rpc DeleteCreditCard (DeleteCreditCardRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/credit_cards"
+      body: "*"
+      additional_bindings: {
+        delete: "/v2/credit_cards"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // Update a credit card.
+  rpc PatchCreditCards (PatchCreditCardsRequest) returns (MultipleCreditCardResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/credit_cards"
+      body: "*"
+      additional_bindings: {
+        patch: "/v2/credit_cards"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  ////////////////////////////////////////
+
+  ////////////////////////////////////////
+  // Status Codes
+  ////////////////////////////////////////
+
+  // List all status codes.
+  rpc ListStatusCodes (ListStatusCodesRequest) returns (MultiStatusCodeResponse) {
+    option (google.api.http) = {
+      get: "/v2/status_codes"
+    };
+    option (clarifai.auth.util.cl_auth_type) = NoAuth;
+  }
+
+  // Get more details for a status code.
+  rpc GetStatusCode (GetStatusCodeRequest) returns (SingleStatusCodeResponse) {
+    option (google.api.http) = {
+      get: "/v2/status_codes/{status_code_id}"
+    };
+    option (clarifai.auth.util.cl_auth_type) = NoAuth;
+  }
+
+  ////////////////////////////////////////
+  // Health Check for API
+  ////////////////////////////////////////
+
+  // Health check endpoint
+  rpc GetHealthz (GetHealthzRequest) returns (GetHealthzResponse) {
+    option (google.api.http) = {
+      get: "/v2/healthz"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = NoAuth;
+  }
+
+  ////////////////////////////////////////
+  // Usage Dashboard
+  ////////////////////////////////////////
+
+  // List all billing  cycles.
+  rpc ListUserBillingCycles (ListUserBillingCyclesRequest) returns (ListUserBillingCyclesResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/billing_cycles"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // FIXME(zeiler): this path seems wrong, it should be by user I believe.
+
+  // Gets the billing cycle start and end date as well as invoice items.
+  rpc GetBillingUsage (GetBillingUsageRequest) returns (GetBillingUsageResponse) {
+    option (google.api.http) = {
+      get: "/v2/billing_usage"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // Add historical usage.
+  rpc PostHistoricalUsage (PostHistoricalUsageRequest) returns (PostHistoricalUsageResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/historical_usage"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // Get a list of valid usage intervals
+  rpc ListUsageIntervals (ListUsageIntervalsRequest) returns (ListUsageIntervalsResponse) {
+    option (google.api.http) = {
+      get: "/v2/usage_intervals"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = NoAuth;
+  }
+
+  // Get realtime usage.
+  rpc GetRealtimeUsage (GetRealtimeUsageRequest) returns (GetRealtimeUsageResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/realtime_usage"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // Post usage to platform. Only called by on prem now.
+  rpc PostUsage (PostUsageRequest) returns (PostUsageResponse) {
+    // HTTP endpoint should be DELETED after testing.
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/usage"
+      body: "*"
+      additional_bindings {
+        post: "/v2/usage"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = All;
+  }
+
+  ////////////////////////////////////////
+  // App Sharing
+  ////////////////////////////////////////
+
+  // owner list users who the app is shared with
+  rpc ListCollaborators (ListCollaboratorsRequest) returns (MultiCollaboratorsResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collaborators"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // add collaborators to an app.
+  rpc PostCollaborators (PostCollaboratorsRequest) returns (MultiCollaboratorsResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collaborators"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // Patch existing collaborators.
+  rpc PatchCollaborators (PatchCollaboratorsRequest) returns (MultiCollaboratorsResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collaborators"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // Delete existing collaborators.
+  rpc DeleteCollaborators (DeleteCollaboratorsRequest) returns (clarifai.api.status.BaseResponse){
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collaborators"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // Collaboration includes the app user are invitied to work on
+  rpc ListCollaborations (ListCollaborationsRequest) returns (MultiCollaborationsResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/collaborations"
+      additional_bindings {
+        get: "/v2/collaborations"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  ////////////////////////////////////////
+  // Workers
+  ////////////////////////////////////////
+
+  // List all workers.
+  rpc ListWorkers (ListWorkersRequest) returns (MultiWorkerResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workers"
+      additional_bindings {
+        get: "/v2/workers"
+      }
+      additional_bindings {
+        get: "/v2/models/{model_id}/versions/{version_id}/workers"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // because some of the workers are model workers.
+  }
+
+  ////////////////////////////////////////
+  // Licenses
+  ////////////////////////////////////////
+
+  // Get the license with crypto security.
+  rpc FetchLicense (FetchLicenseRequest) returns (FetchLicenseResponse) {
+    option (google.api.http) = {
+    post: "/v2/licenses/{license_id}"
+    body: "*"
+  };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = All;
+  }
+
+  // List all licenses.
+  rpc ListLicenses (ListLicensesRequest) returns (MultipleLicensesResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/licenses"
+      additional_bindings {
+        get: "/v2/licenses"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = All;
+  }
+
+  // Get a license
+  rpc GetLicense (GetLicenseRequest) returns (SingleLicenseResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/licenses/{license_id}"
+      additional_bindings {
+        get: "/v2/licenses/{license_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = All;
+  }
+
+  // Check that a liceense is still valid.
+  rpc ValidateLicense (ValidateLicenseRequest) returns (ValidateLicenseResponse) {
+    option (google.api.http) = {
+      post: "/v2/licenses/{license_id}/validate"
+        body: "*"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = All;
+  }
+
+  ////////////////////////////////////////
+  // Deep training
+  ////////////////////////////////////////
+
+  // List all the training templates.
+  rpc ListTrainingTemplates (ListTrainingTemplatesRequest) returns (MultiTrainingTemplatesResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/templates"
+      additional_bindings {
+        get: "/v2/templates"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Templates_Get;
+  }
+
+  ////////////////////////////////////////
+  // App duplication
+  ////////////////////////////////////////
+
+  // start to duplicate an app which copies all the inputs, annotations, models, concepts etc. to a new app.
+  // this is an async process, you should use ListAppDuplications or GetAppDuplication to check the status.
+  rpc PostAppDuplications (PostAppDuplicationsRequest) returns (MultiAppDuplicationsResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/duplications"
+        body: "*"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Train;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get;
+
+  }
+
+  // list all the app duplications user triggers
+  rpc ListAppDuplications (ListAppDuplicationsRequest) returns (MultiAppDuplicationsResponse){
+    option (google.api.http) = {
+      get : "/v2/users/{user_app_id.user_id}/duplications"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+  // get the app duplication status
+  rpc GetAppDuplication (GetAppDuplicationRequest) returns (SingleAppDuplicationResponse) {
+    option (google.api.http) = {
+      get : "/v2/users/{user_app_id.user_id}/duplications/{app_duplication_id}"
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+  }
+
+
+  ////////////////////////////////////////
+  // Collectors
+  ////////////////////////////////////////
+
+  // Add an Collector to an app.
+  // In the handler of this endpoint we also check for all the scopes of the  POST /inputs
+  // endpiont.
+  // Those current scopes are listed here as a hard requirement.
+  // They are needed when adding the collectors just so we now that you have permission with
+  // that key atleast to do the writing to this app with POST /inputs.
+  rpc PostCollectors (PostCollectorsRequest) returns (MultiCollectorResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
+      body: "*"
+      additional_bindings {
+        post: "/v2/collectors"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Predict;
+    option (clarifai.auth.util.cl_depending_scopes) = Workers_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+
+  }
+
+  // Get a specific input from an app.
+  rpc GetCollector (GetCollectorRequest) returns (SingleCollectorResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors/{collector_id}"
+      additional_bindings {
+        get: "/v2/collectors/{collector_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Get;
+  }
+
+  // List all the collectors.
+  rpc ListCollectors (ListCollectorsRequest) returns (MultiCollectorResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
+      additional_bindings {
+        get: "/v2/collectors"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Get;
+  }
+
+  // Patch one or more collectors.
+  rpc PatchCollectors (PatchCollectorsRequest) returns (MultiCollectorResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
+      body: "*"
+      additional_bindings {
+        patch: "/v2/collectors"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Get;
+  }
+
+
+  // Delete multiple collectors in one request.
+  // This call is asynchronous. Use DeleteCollector if you want a synchronous version.
+  rpc DeleteCollectors (DeleteCollectorsRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
+      body: "*"
+      additional_bindings {
+        delete: "/v2/collectors"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = true;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Get;
+  }
+
+
+}
+
+
+
+
+// Split the results into pages.
+message Pagination {
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks. Defaults to 1.
+  uint32 page = 1;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults to 10.
+  uint32 per_page = 2;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/annotation.proto
+////////////////////////////////////////////////////////////////////////////////
+message GetAnnotationRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string annotation_id = 2;
+  string input_id = 3;
+}
+
+message ListAnnotationsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // List annotations for these IDs
+  repeated string ids = 2;
+
+  // List annotations for these Input IDs
+  // Note that 'ids' are optional but if the are provided the number and order in
+  // 'ids' and 'input_ids' should match
+  // If you do not specifiy 'ids' all the annotations for 'input_ids' are returned
+  // If a you do not specify both 'input_ids' and 'ids' all the annotations in the app are returned
+  repeated string input_ids = 3;
+
+  // Only return the annotations that has one of these worker IDs, effectively operating as an
+  // OR amounts them to filter down the results.
+  repeated string worker_ids = 4;
+
+  // Set status to filter by status
+  clarifai.api.status.Status status = 5;
+
+  // Set this flag to list both trusted and not trusted annotations
+  // by default it's listing only trusted annotations
+  bool list_all_annotations = 6;
+
+  uint32 page = 7;
+  uint32 per_page = 8;
+}
+
+message PostAnnotationsRequest {
+
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  repeated Annotation annotations = 2;
+
+  // Use this flag to create annotation with no embeddings
+  bool allow_dangling_annotations = 3;
+}
+
+// Request to evovle status of a series of annotations tied to a worker in batches.
+// The idea is to post a list of annotations to a worker with status 'Annotation pending' and have
+// the worker works through them. To do so we obtain batches annotations iteratively for labeling
+// via this API updating the status to 'Annotation in progress', and finally 'Annotation success'
+// or 'Annotation failed'.
+//
+// Note PostAnnotations supports posting annotations with status set to other workers.
+//
+// Note that there are only certain changes of status that make sense are allowed:
+// 'Annotation pending' -> 'Annotation in progress'
+// 'Annotation in progress' -> 'Annotation success'
+// 'Annotation in progress' -> 'Annotation failed'
+// 'Annotation in progress' -> 'Annotation pending'
+// 'Annotation success' -> 'Annotation pending'
+// 'Annotation failed' -> 'Annotation pending'
+message PostAnnotationsStatusRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // The ID of the wroker we want to evolve the annotations for
+  string worker_id = 2;
+
+  clarifai.api.status.Status old_status = 3;
+
+  clarifai.api.status.Status status = 4;
+
+  // How many annotations to fetch and change the status for; this is needed to keep labeling batches size managable
+  uint32 request_count = 5;
+}
+
+message PatchAnnotationsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  repeated Annotation annotations = 2;
+
+  // The action to perform on the patched objects
+  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  string action = 3;
+}
+
+message DeleteAnnotationRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  string input_id = 2;
+
+  string annotation_id = 3;
+}
+
+// Request to delete several things by the list of ids.
+message DeleteAnnotationsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // Delete annotations with IDs
+  repeated string ids = 2;
+
+  // Delete annotations for these Input IDs
+  // Note that 'ids' are optional but if the are provided the number and order in
+  // 'ids' and 'input_ids' should match
+  // If you do not specifiy 'ids' all the annotations for 'input_ids' are deleted
+  // However you need to specify at least one value for 'input_ids'
+  // i.e. this API does not support deleting all annotations
+  repeated string input_ids = 3;
+}
+
+message SingleAnnotationResponse {
+  clarifai.api.status.Status status = 1;
+  Annotation annotation = 2;
+}
+
+message MultiAnnotationResponse {
+  clarifai.api.status.Status status = 1;
+
+  repeated Annotation annotations = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/app.proto
+////////////////////////////////////////////////////////////////////////////////
+message GetAppRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+}
+
+message ListAppsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 3;
+}
+
+message PostAppsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated App apps = 2;
+}
+
+message DeleteAppRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+}
+
+message PatchAppsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated App apps = 2;
+
+  // The action to perform on the patched App objects except App.Metadata
+  // For now only action 'overwrite' is supported
+  string action = 3;
+
+  // The action to perform on the patched App.Metadata
+  clarifai.api.PatchAction metadata_action = 4;
+
+  // If set, the app will be automatically reindexed upon change of its base workflow.
+  bool reindex = 5;
+}
+
+message SingleAppResponse {
+  clarifai.api.status.Status status = 1;
+  App app = 2;
+}
+
+message MultiAppResponse {
+  clarifai.api.status.Status status = 1;
+  repeated App apps = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/app_sharing.proto
+////////////////////////////////////////////////////////////////////////////////
+message ListCollaboratorsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+}
+
+message PostCollaboratorsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated Collaborator collaborators = 2;
+}
+
+message PatchCollaboratorsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated Collaborator collaborators = 2;
+
+  // The action to perform on the patched objects
+  // For now only action 'overwrite' is supported
+  string action = 3;
+}
+
+message DeleteCollaboratorsRequest{
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated string collaborator_ids = 2;
+  repeated string user_emails = 3;
+}
+
+message MultiCollaboratorsResponse {
+  clarifai.api.status.Status status = 1;
+  repeated Collaborator collaborators = 2;
+}
+
+message ListCollaborationsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  uint32 page = 2;
+  uint32 per_page = 3;
+}
+
+message MultiCollaborationsResponse {
+  clarifai.api.status.Status status = 1;
+  repeated Collaboration collaborations = 2;
+}
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/audio.proto
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/auth.proto
+////////////////////////////////////////////////////////////////////////////////
+
+message PostVerifyEmailRequest {
+  string key = 1;
+}
+
+message SingleVerifyEmailResponse {
+  clarifai.api.status.Status status = 1;
+}
+
+////////////////
+//Reset Password
+message RequestResetPasswordRequest {
+  //To find associated account.
+  string email = 1;
+}
+
+message CompleteResetPasswordRequest {
+  //key to retrieve user
+  string key = 1;
+  //new password to set.
+  string new_password = 2;
+}
+
+/////////////
+// Login and Signup
+message PostLoginRequest {
+  string email = 1;
+  string password = 2;
+  bool long_lived = 3;
+}
+
+message PostSignupRequest {
+  string email = 1;
+  string password = 2;
+  string first_name = 3;
+  string last_name = 4;
+  string company_name = 5;
+  string captcha_response_token = 6;
+  // This field is only for registrations that come from the AWS marketplace
+  string aws_registration_token = 7;
+  bool gdpr_consent = 8;
+  bool tos_consent = 9;
+  bool marketing_consent = 10;
+}
+
+message SingleLoginResponse {
+  clarifai.api.status.Status status = 1;
+  string email = 2;
+  string first_name = 3;
+  string last_name = 4;
+  string company_name = 5;
+  string date_joined = 6;
+  int32 id = 7;
+  repeated EmailAddress email_addresses = 8;
+  string session_token = 9;
+  string token_expires = 10;
+  string v2_user_id = 11;
+  string date_gdpr_consent = 12;
+  string date_tos_consent = 13;
+  string date_marketing_consent = 14;
+}
+
+//////////////
+// Billing Usage
+message GetBillingUsageRequest {
+}
+
+message GetBillingUsageResponse {
+  clarifai.api.status.Status status = 1;
+  repeated InvoiceItem invoice_items = 2;
+  BillingCycle billing_cycle = 3;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/cluster.proto
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/code.proto
+////////////////////////////////////////////////////////////////////////////////
+message GetStatusCodeRequest {
+  string status_code_id = 1;
+}
+
+message ListStatusCodesRequest {
+}
+
+message SingleStatusCodeResponse {
+  // Status of this request.
+  clarifai.api.status.Status status = 1;
+}
+
+message MultiStatusCodeResponse {
+  clarifai.api.status.Status status = 1;
+  repeated clarifai.api.status.Status statuses = 2;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/color.proto
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/common.proto
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/concept.proto
+////////////////////////////////////////////////////////////////////////////////
+message GetConceptRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The concept's id.
+  string concept_id = 2;
+}
+
+message ListConceptsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 3;
+}
+
+message PostConceptsSearchesRequest {
+  // Ids present in the url of the request.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The body of the request.
+  ConceptQuery concept_query = 2;
+  // Pagination parameters here since there are no url args in this
+  // POST request.
+  Pagination pagination = 3;
+}
+
+message PostConceptsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The concepts to add.
+  repeated Concept concepts = 2;
+}
+
+message PatchConceptsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The concepts to patch.
+  repeated Concept concepts = 2;
+
+  // The action to perform on the patched objects
+  // For now ony action 'overwrite' is supported
+  string action = 3;
+}
+
+message GetConceptCountsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 3;
+}
+
+message SingleConceptResponse {
+  // The response status.
+  clarifai.api.status.Status status = 1;
+  // The returned concept.
+  Concept concept = 2;
+}
+
+message MultiConceptResponse {
+  // The response status.
+  clarifai.api.status.Status status = 1;
+  // The returned concepts.
+  repeated Concept concepts = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+message MultiConceptCountResponse {
+  // The response status.
+  clarifai.api.status.Status status = 1;
+  // The returned concept counts.
+  repeated ConceptCount concept_counts = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/concept_graph.proto
+////////////////////////////////////////////////////////////////////////////////
+//////////////////////
+// Responses
+//////////////////////
+// Requests
+//////////////////////
+// GET all relations such that the concept_id refers to the subject of the relation
+message ListConceptRelationsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string concept_id = 2;
+  // This is part of the url so we can extend to multiple link types in the future.
+  string predicate = 3;
+  // This identifies the subgraph you want to search over, if any.
+  string knowledge_graph_id = 4;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 5;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 6;
+}
+
+// POST new concept relations
+message PostConceptRelationsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated ConceptRelation concept_relations = 2;
+}
+
+// GET all knowledge graphs
+message ListKnowledgeGraphsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+}
+
+// POST new knowledge graphs
+message PostKnowledgeGraphsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated KnowledgeGraph knowledge_graphs = 2;
+}
+
+// GET all concept mappings for the app
+message ListConceptMappingsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 3;
+}
+
+// POST concept mappings
+message PostConceptMappingsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The concept mappings that are being added
+  repeated ConceptMapping concept_mappings = 2;
+  // The knowledge graph that is being used for these concept mappings
+  KnowledgeGraph knowledge_graph = 3;
+}
+
+// Start concept mapping jobs
+message PostConceptMappingJobsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The concept mapping jobs that are being started
+  repeated ConceptMappingJob concept_mapping_jobs = 2;
+}
+
+//////////////////////
+// Responses
+//////////////////////
+message SingleConceptRelationResponse {
+  // The response status.
+  clarifai.api.status.Status status = 1;
+  // The returned concept relation.
+  ConceptRelation concept_relation = 2;
+}
+
+message MultiConceptRelationResponse {
+  // The response status.
+  clarifai.api.status.Status status = 1;
+  // The returned concept relations.
+  repeated ConceptRelation concept_relations = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+message SingleKnowledgeGraphResponse {
+  // The response status.
+  clarifai.api.status.Status status = 1;
+  // The returned knowledge graph.
+  KnowledgeGraph knowledge_graph = 2;
+}
+
+message MultiKnowledgeGraphResponse {
+  // The response status.
+  clarifai.api.status.Status status = 1;
+  // The returned knowledge graphs.
+  repeated KnowledgeGraph knowledge_graphs = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+message SingleConceptMappingResponse {
+  // The response status.
+  clarifai.api.status.Status status = 1;
+  // The returned mapped concept.
+  ConceptMapping concept_mapping = 2;
+}
+
+message MultiConceptMappingResponse {
+  // The response status.
+  clarifai.api.status.Status status = 1;
+  // The returned mapped concepts.
+  repeated ConceptMapping concept_mappings = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+message SingleConceptMappingJobResponse {
+  // The response status.
+  clarifai.api.status.Status status = 1;
+  // The id of the concept mapping job underway.
+  string id = 2;
+}
+
+message MultiConceptMappingJobResponse {
+  // The response status.
+  clarifai.api.status.Status status = 1;
+  // The ids of the concept mapping jobs underway.
+  repeated string ids = 2;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/concept_language.proto
+////////////////////////////////////////////////////////////////////////////////
+// GET single concept language for the given concept.
+message GetConceptLanguageRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string concept_id = 2;
+  // This is the language identifier.
+  string language = 3;
+}
+
+// List multiple concept languages for the given concept.
+message ListConceptLanguagesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string concept_id = 2;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 3;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 4;
+}
+
+// PATCH multiple concept languages for the given concept.
+message PatchConceptLanguagesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string concept_id = 2;
+  repeated ConceptLanguage concept_languages = 3;
+  // The action to perform with the objects in the PATCH.
+  string action = 4;
+}
+
+// // DELETE multiple concept languages for the given concept.
+// message DeleteConceptLanguageRequest {
+//   clarifai.api.UserAppIDSet user_app_id = 1;
+//   string concept_id = 2;
+//   // The language code to delete.
+//   string language = 3;
+// }
+
+// // DELETE multiple concept languages for the given concept.
+// message DeleteConceptLanguagesRequest {
+//   clarifai.api.UserAppIDSet user_app_id = 1;
+//   string concept_id = 2;
+//   // The language code(s) to delete.
+//   string ids = 3;
+//   bool delete_all = 4;
+// }
+
+// POST multiple concept languages for the given concept.
+message PostConceptLanguagesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string concept_id = 2;
+  repeated ConceptLanguage concept_languages = 3;
+}
+
+message SingleConceptLanguageResponse {
+  clarifai.api.status.Status status = 1;
+  ConceptLanguage concept_language = 2;
+}
+
+message MultiConceptLanguageResponse {
+  clarifai.api.status.Status status = 1;
+  repeated ConceptLanguage concept_languages = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/concept_reference.proto
+////////////////////////////////////////////////////////////////////////////////
+message ListConceptReferencesRequest {
+  // The user id and app id set in the url.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The concept id you want to list translations for.
+  string concept_id = 2;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 3;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 4;
+}
+
+message SingleConceptReferenceResponse {
+  clarifai.api.status.Status status = 1;
+  ConceptReference concept_reference = 2;
+}
+
+message MultiConceptReferenceResponse {
+  clarifai.api.status.Status status = 1;
+  repeated ConceptReference concept_references = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/data.proto
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/embedding.proto
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/face.proto
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/feedback.proto
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/focus.proto
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/geo.proto
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/healthz.proto
+////////////////////////////////////////////////////////////////////////////////
+message GetHealthzRequest {
+}
+
+message GetHealthzResponse {
+  clarifai.api.status.Status status = 1;
+  string time = 2;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/image.proto
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/input.proto
+////////////////////////////////////////////////////////////////////////////////
+message GetInputRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string input_id = 2;
+}
+
+message ListInputsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 3;
+
+  // Set status to filter by status
+  clarifai.api.status.Status status = 5;
+
+  repeated string ids = 4;
+}
+
+message StreamInputsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  uint32 per_page = 2;
+  string last_id = 3;
+
+
+  bool descending = 4;
+}
+
+message PostInputsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  repeated Input inputs = 2;
+}
+
+message PostInputsFileRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  string url = 2;
+
+  string filetype = 3;
+}
+
+message PostInputsNiFiRequest {
+  option (clarifai.auth.util.cl_private_message) = true;
+
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  google.protobuf.ListValue urls = 2;
+  // For arbitrary JSON input, use a struct field:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  // The metadata contains info about the provenance of the files. The provenance info allows user
+  // locate the original source files after ingestion. Metadata should be searchable and displayed
+  // in output.
+  google.protobuf.Struct metadata = 3;
+  // The params contains key/value pairs sent by NiFi in case we need certain parameters to be set
+  // to successfully ingest inputs.
+  google.protobuf.Struct params = 4;
+}
+
+message PatchInputsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  repeated Input inputs = 2;
+
+  // The action to perform on the patched objects
+  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  string action = 3;
+}
+
+message DeleteInputRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string input_id = 2;
+}
+
+// Request to delete several things by the list of ids.
+message DeleteInputsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated string ids = 2;
+  bool delete_all = 3;
+}
+
+message PostModelFeedbackRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+  string version_id = 3;
+  Input input = 4;
+}
+
+message SingleInputResponse {
+  clarifai.api.status.Status status = 1;
+  Input input = 2;
+}
+
+message MultiInputResponse {
+
+  clarifai.api.status.Status status = 1;
+  repeated Input inputs = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+message SingleInputCountResponse {
+  clarifai.api.status.Status status = 1;
+
+  // NOTE: inconsistency: not named after the object name.
+  InputCount counts = 2;
+}
+
+message GetInputCountRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+}
+
+////////////////////////////////////////////////////
+// Model prediction related stuff needs inputs and produces outputs.
+////////////////////////////////////////////////////
+// Model prediction.
+message PostModelOutputsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+  string version_id = 3;
+  repeated Input inputs = 4;
+  // This allows you to specify config options for the model such as
+  // the language which appear's in the model's output_info.
+  Model model = 5;
+}
+
+// Listing the inputs that went into training this model.
+message ListModelInputsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+  string version_id = 3;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 4;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 5;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/key.proto
+////////////////////////////////////////////////////////////////////////////////
+message GetKeyRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string key_id = 2;
+}
+
+message ListKeysRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 3;
+}
+
+message ListAppKeysRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 3;
+}
+
+message PostKeysRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated Key keys = 2;
+}
+
+message DeleteKeyRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string key_id = 2;
+}
+
+message PatchKeysRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated Key keys = 2;
+
+  // The action to perform on the patched objects
+  // For now only action 'overwrite' is supported
+  string action = 3;
+}
+
+message SingleKeyResponse {
+  clarifai.api.status.Status status = 1;
+  Key key = 2;
+}
+
+message MultiKeyResponse {
+  clarifai.api.status.Status status = 1;
+  repeated Key keys = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/license.proto
+////////////////////////////////////////////////////////////////////////////////
+message FetchLicenseRequest {
+  string license_id = 1;
+  string public_key = 2; // public key generated in client side, per-activation scope (only created when client first fetches license file, but it is decided by client)
+  bytes signature = 3;
+}
+
+message FetchLicenseResponse {
+  clarifai.api.status.Status status = 1;
+  bytes encrypted_bytes = 2;
+  google.protobuf.Timestamp activated_at = 3; // Date and time the deployment was activated
+  string public_key = 4;
+  bytes signature = 5;
+}
+
+message ValidateLicenseRequest {
+  string license_id = 1;
+  string request_id = 2; // used to prevent users providing faked but valid response
+  //for example, returned by previous successful validation
+  google.protobuf.Timestamp activated_at = 3;
+  string public_key = 4; // public key generated in client side
+  bytes signature = 5;
+}
+
+message ValidateLicenseResponse {
+  clarifai.api.status.Status status = 1;
+  string request_id = 2; // mapping to the request_id in request
+  repeated LicenseLimit limits = 3;
+  bytes signature = 4;
+}
+
+message ListLicensesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+}
+
+message GetLicenseRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string license_id = 2;
+}
+
+message SingleLicenseResponse {
+  clarifai.api.status.Status status = 1;
+  clarifai.api.License license = 2;
+}
+
+message MultipleLicensesResponse {
+  clarifai.api.status.Status status = 1;
+  repeated clarifai.api.License licenses = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/model.proto
+////////////////////////////////////////////////////////////////////////////////
+message GetModelRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+  // This is included so that we can re-use this request for multiple
+  // rpcs with and without the version_id.
+  string version_id = 3;
+  string language = 4;
+  bool trained_before = 5;
+}
+
+// Get model weights.
+message GetModelWeightRequest {
+  option (clarifai.auth.util.cl_private_message) = true;
+
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+  // This is included so that we can re-use this request for multiple
+  // rpcs with and without the version_id.
+  string version_id = 3;
+}
+
+// Get more details of the output_info from the model.
+message GetModelOutputInfoRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+  string version_id = 3;
+}
+
+message ListModelsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 3;
+  repeated string ids = 4;
+}
+
+message PostModelsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // NOTE: inconsistent since "model" is not plural, please use "models" below.
+  // Previously you could only create one model at a time.
+  // We still support this but you should pass it as models=[model] so
+  // that this endpoint is consistent with the rest of our API.
+  Model model = 2 [deprecated = true];
+  // This allows you to create one or more model by posting it to the API.
+  repeated Model models = 3;
+}
+
+message PatchModelsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated Model models = 2;
+
+  // The action to perform on the patched objects
+  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  string action = 3;
+}
+
+message DeleteModelRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+}
+
+// Request to delete several things by the list of ids.
+message DeleteModelsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated string ids = 2;
+  bool delete_all = 3;
+}
+
+// Search over the available models.
+message PostModelsSearchesRequest {
+  // Ids present in the url of the request.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The body of the request.
+  ModelQuery model_query = 2;
+  // Pagination parameters here since there are no url args in this
+  // POST request.
+  Pagination pagination = 3;
+}
+
+message SingleModelResponse {
+  clarifai.api.status.Status status = 1;
+  Model model = 2;
+}
+
+message MultiModelResponse {
+  clarifai.api.status.Status status = 1;
+  repeated Model models = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+message SingleModelWeightResponse {
+  clarifai.api.status.Status status = 1;
+  Model model = 2;
+  // the base64 weights. When returned over json they will be returns as base64. When returned in a
+  // binary response they will remain bytes.
+  bytes ct64 = 3;
+  // a url to download the weights as protos
+  string proto_download_url = 4;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/model_version.proto
+////////////////////////////////////////////////////////////////////////////////
+// NOTE: this is same as GetModelRequest but backend doesn't support sharing same
+// request for different endpoints currently.
+message GetModelVersionRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+  string version_id = 3;
+}
+
+message ListModelVersionsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 3;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 4;
+  // To list only the model versions that have these concept ids present in them.
+  repeated string concept_ids = 5;
+}
+
+message DeleteModelVersionRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 3;
+  string version_id = 4;
+}
+
+message SingleModelVersionResponse {
+  clarifai.api.status.Status status = 1;
+  ModelVersion model_version = 2;
+}
+
+message MultiModelVersionResponse {
+  clarifai.api.status.Status status = 1;
+  repeated ModelVersion model_versions = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+// Create (train) a new model version.
+message PostModelVersionsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+
+  // This lets you post an existing model version rather than training a new one.
+  // For internal Clarifai use only to start.
+  repeated ModelVersion model_versions = 3;
+
+  // Use this to filter inputs that are used in training
+  clarifai.api.Search search = 4;
+}
+
+
+// Evaluate this model version.
+message PostModelVersionMetricsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+  string version_id = 3;
+  uint32 max_examples = 4;
+
+  // Use this to filter inputs that are used in evaluation
+  clarifai.api.Search search = 5;
+}
+
+// Deploy a model version already trained.
+message PostModelVersionsDeploymentRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+  repeated string version_ids = 3;
+}
+
+// Get the already computed evaluation metrics for this model
+// version.
+message GetModelVersionMetricsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+  string version_id = 3;
+
+  // Any of the fields you wish to return from multiclass_metrics
+  FieldsValue fields = 4;
+}
+
+
+// TODO: should we just move to this and get rid of above.
+// // Request to delete several things by the list of ids.
+// message DeleteModelVersionsRequest {
+//   clarifai.api.UserAppIDSet user_app_id = 1;
+//   repeated string ids = 2;
+//   bool delete_all = 3;
+// }
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/output.proto
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+// Outputs related requests
+////////////////////////////////////////////////////
+message MultiOutputResponse {
+  clarifai.api.status.Status status = 1;
+  repeated Output outputs = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/scope.proto
+////////////////////////////////////////////////////////////////////////////////
+message ListScopesRequest {
+  // If "personal_access_token" include scopes and endpoints available to personal access tokens.
+  // If "api_key" include scopes and endpoints available to app-specific keys. (default)
+  string key_type = 1;
+}
+
+message MyScopesRequest {
+}
+
+message MultiScopeDepsResponse {
+  // The status of the request.
+  clarifai.api.status.Status status = 1;
+  // scopes is a list of low-level scopes and their dependencies.
+  repeated ScopeDeps scope_deps = 2;
+  // endpoint_scopes is a listof all the publicly available endponts which can be
+  // used as scopes as well. A call to each of those endpoint depends on a subset
+  // of the above "scopes"
+  repeated EndpointDeps endpoint_deps = 3;
+}
+
+message MultiScopeResponse {
+  // The status of the request.
+  clarifai.api.status.Status status = 1;
+  // This is a list of the scopes that your key has.
+  repeated string scopes = 2;
+  // The app that the key has access to.
+  App app = 3;
+  // This is a list of endpoint permissions that your key has.
+  repeated string endpoints = 4;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/search.proto
+////////////////////////////////////////////////////////////////////////////////
+message GetSearchRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string id = 2;
+}
+
+message ListSearchesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  uint32 page = 2;
+  uint32 per_page = 3;
+}
+
+message PostSearchesRequest {
+  // The user_id and app_id to query from.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // The query; this specifies how the data to be searched
+  Query query = 2;
+
+  // The searched to be executed or saved
+  // Eventually the request level fields will be deprecated in favor of this object
+  repeated Search searches = 3;
+
+  // Pagination information to paginate through search result Hits.
+  Pagination pagination = 4;
+}
+
+// PostSearchesByIDRequest performs returns results of a saved search given its ID
+message PostSearchesByIDRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // ID for saves search to be executed
+  string id = 2;
+
+  // Pagination information to paginate through search result Hits.
+  Pagination pagination = 3;
+}
+
+message DeleteSearchRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string id = 2;
+}
+
+message PostAttributeSearchRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  Pagination pagination = 3;
+  // Perform a brute force search visual search
+  bool brute_force = 4;
+  AttributeQuery attribute_query = 5;
+}
+
+message PostSearchFeedbackRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  Input input = 2;
+}
+
+// SingleSearchResponse returns saved search in response to GetSearchRequest
+message SingleSearchResponse {
+  // Status of whether the search was successful.
+  clarifai.api.status.Status status = 1;
+  Search search = 5;
+}
+
+message MultiSearchResponse {
+  // Status of whether the search was successful.
+  clarifai.api.status.Status status = 1;
+
+  // A unique id which uniquely identifies a search
+  string id = 2;
+
+  // The list of serach result Hits.
+  repeated Hit hits = 3 [(clarifai.api.utils.cl_show_if_empty) = true];
+
+  // The original query provided in the request.
+  Query query = 4;
+
+  // The original Searches provided in the request.
+  repeated Search searches = 5;
+}
+
+// ListClustersRequest returns a page of clusters sorted but their count in the app along with some
+// statistics on usage of each cluster.
+// Note each annotation is assigned to a cluster by a cluster model.
+// It also retruns the most recent annotation for each cluster a representative for that cluster.
+message ListClustersRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // restrict listing to these cluster ids
+  repeated string ids = 2;
+
+  uint32 page = 3;
+  uint32 per_page = 4;
+  // number of annotations per cluster returned
+  uint32 annotations_per_cluster = 5;
+}
+
+// ListAnnotationsForClusterRequest returns a page of annotations sorted by created_at timestamp for a cluster
+message ListAnnotationsForClusterRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // Cluster ID to get annotations for
+  string cluster_id = 2;
+
+  uint32 page = 3;
+  uint32 per_page = 4;
+}
+
+message PostClustersSearchesRequest {
+  // The user_id and app_id to query from.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  repeated Search searches = 2;
+
+  // Pagination information to paginate through search result Hits.
+  Pagination pagination = 3;
+}
+
+message MultiClusterResponse {
+  clarifai.api.status.Status status = 1;
+
+  // Cluster statistics and represetatives
+  repeated Cluster clusters = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+
+  // The original Search provided in the request (if any).
+  repeated Search searches = 3;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/subscription.proto
+////////////////////////////////////////////////////////////////////////////////
+// Gets a the current subscription based on your session token.
+message GetSubscriptionRequest {
+}
+
+// FIXME: why is this used to change subscriptions as a POST and not PATCH?
+message PostSubscriptionRequest {
+  string signup_code = 1;
+  Plan plan = 2;
+}
+
+message SingleSubscriptionResponse {
+  clarifai.api.status.Status status = 1;
+  Plan plan = 2;
+  string signup_code = 3;
+}
+
+message ListCreditCardsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+}
+
+message MultipleCreditCardResponse {
+  clarifai.api.status.Status status = 1;
+  repeated CreditCard cards = 2;
+}
+
+message PostCreditCardRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string source = 2;
+  CreditCard card = 3;
+}
+
+message SingleCreditCardResponse {
+  clarifai.api.status.Status status = 1;
+  CreditCard card = 2;
+}
+
+message DeleteCreditCardRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  CreditCard card = 2;
+}
+
+message PatchCreditCardsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated CreditCard cards = 2;
+  clarifai.api.PatchAction action = 3;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/text.proto
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/usage.proto
+////////////////////////////////////////////////////////////////////////////////
+message PostHistoricalUsageRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // NOTE: add plotting parameters here as we expand the usage-dashboard functionality
+}
+
+message PostHistoricalUsageResponse {
+  clarifai.api.status.Status status = 1;
+
+  // in the future, we will also have an optional field for billing cycle:
+  google.protobuf.Duration interval = 2;
+  repeated DimensionList usage = 3 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+message GetRealtimeUsageRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+}
+
+message GetRealtimeUsageResponse {
+  clarifai.api.status.Status status = 1;
+  repeated RealtimeCount realtime_usage = 4;
+}
+
+message ListUsageIntervalsRequest {
+}
+
+message ListUsageIntervalsResponse {
+  clarifai.api.status.Status status = 1;
+  repeated UsageInterval usage_intervals = 2;
+}
+
+message ListUserBillingCyclesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 3;
+}
+
+message ListUserBillingCyclesResponse {
+  clarifai.api.status.Status status = 1;
+  repeated BillingCycle billing_cycles = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+message PostUsageRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated EventsCollection events_collections = 2;
+  string public_key = 3; // public key generated in client side
+  bytes signature = 4;
+}
+
+message PostUsageResponse {
+  clarifai.api.status.Status status = 1;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/usage_interval_type.proto
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/user.proto
+////////////////////////////////////////////////////////////////////////////////
+message GetUserRequest {
+  // Only user id should be populated. This can be the special
+  // user_id "me" as well.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+}
+
+message PostUserConsentRequest {
+  // This can be the special user_id "me" as well.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  bool consent = 2;
+  repeated string fields = 3;
+}
+
+message SingleUserResponse {
+  clarifai.api.status.Status status = 1;
+  User user = 2;
+}
+
+message MultiUserResponse {
+  clarifai.api.status.Status status = 1;
+  repeated User users = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+message PatchUserRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // Request to update first name, last name, and company
+  UserInfo info = 2;
+
+  // Request to update password
+  UserPassword pass = 3;
+
+  // To handle arbitrary json metadata you can use a struct field:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  google.protobuf.Struct metadata = 4;
+
+  clarifai.api.PatchAction action = 5;
+}
+
+message PostEmailsRequest {
+  // User ID
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // Emails to add
+  repeated string emails = 2;
+}
+
+message SingleEmailResponse {
+  // Standard clarifai status code
+  clarifai.api.status.Status status = 1;
+  // Returns the targeted email.
+  EmailAddress email = 2;
+}
+
+message MultipleEmailResponse {
+  // Standard clarifai status code
+  clarifai.api.status.Status status = 1;
+  // Returns the targeted emails.
+  repeated EmailAddress emails = 2;
+}
+
+message ListEmailsRequest {
+  // User ID
+  clarifai.api.UserAppIDSet user_app_id = 1;
+}
+
+message PostResendVerifyRequest {
+  //User ID
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  //Email to verify
+  string email = 2;
+}
+
+message SingleResendVerifyResponse {
+  //Standard clarifai status code
+  clarifai.api.status.Status status = 1;
+}
+
+message DeleteEmailRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  //email address to delete
+  string email = 2;
+}
+
+message PostPrimaryEmailRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  //email address to set as primary
+  string email = 2;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/video.proto
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/vocab.proto
+////////////////////////////////////////////////////////////////////////////////
+//////////////////////
+// Responses
+//////////////////////
+// Requests
+//////////////////////
+// GET single vocab by id.
+message GetVocabRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string vocab_id = 2;
+}
+
+// List multiple vocabs.
+message ListVocabsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 3;
+}
+
+// POST new vocabs with this.
+message PostVocabsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated Vocab vocabs = 2;
+}
+
+// PATCH one or more vocabs with this endpoint.
+message PatchVocabsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The list of updates fields for the vocabs. Must have the "id" field set so that it can match on
+  // of the existing vocabs.
+  repeated Vocab vocabs = 2;
+
+  // The action to perform on the patched objects
+  // For now only action 'overwrite' is supported
+  string action = 3;
+}
+
+message DeleteVocabRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string vocab_id = 2;
+}
+
+// Request to delete several things by the list of ids.
+message DeleteVocabsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated string ids = 2;
+  bool delete_all = 3;
+}
+
+// List concepts in a vocab. There is
+message ListVocabConceptsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string vocab_id = 2;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 3;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 4;
+}
+
+// Add a concept(s) to the END of the vocab list.
+message PostVocabConceptsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string vocab_id = 2;
+  repeated Concept concepts = 3;
+}
+
+// This lets you delete a specific concept from the vocab (not from your app).
+message DeleteVocabConceptRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string vocab_id = 2;
+  string concept_id = 3;
+}
+
+// Request to delete several concepts from vocab by the list of ids.
+// The delete_all in this case will empty the vocab to start over.
+// In either case the concepts will remain in your app.
+message DeleteVocabConceptsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string vocab_id = 2;
+  repeated string ids = 3;
+  bool delete_all = 4;
+}
+
+//////////////////////
+// Responses
+//////////////////////
+// A single vocab to return.
+message SingleVocabResponse {
+  clarifai.api.status.Status status = 1;
+  Vocab vocab = 2;
+}
+
+// Multiple vocabs to return.
+message MultiVocabResponse {
+  clarifai.api.status.Status status = 1;
+  repeated Vocab vocabs = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/worker.proto
+////////////////////////////////////////////////////////////////////////////////
+message ListWorkersRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  string model_id = 2;
+  string version_id = 3;
+
+  uint32 page = 4;
+  uint32 per_page = 5;
+}
+
+message SingleWorkerResponse {
+  clarifai.api.status.Status status = 1;
+
+  Worker worker = 2;
+}
+
+message MultiWorkerResponse {
+  clarifai.api.status.Status status = 1;
+
+  repeated Worker workers = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses from /proto/clarifai/api/workflow.proto
+////////////////////////////////////////////////////////////////////////////////
+message GetWorkflowRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // Workflow ID to retrieve
+  // If no ID is specified we return default workflow of the application
+  // If an ID is specified by default we first looks into Clarifai workflows for a Workflow ID
+  string workflow_id = 2;
+
+  // Use this flag to look into user created workflows first for a Workflow ID
+  bool favor_user_workflows = 3;
+}
+
+message ListWorkflowsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 3;
+}
+
+message ListPublicWorkflowsRequest {
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 1;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 2;
+}
+
+message PostWorkflowsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated Workflow workflows = 2;
+}
+
+message PatchWorkflowsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated Workflow workflows = 2;
+
+  // The action to perform on the patched objects
+  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  string action = 3;
+}
+
+message DeleteWorkflowRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string workflow_id = 2;
+}
+
+// Request to delete several things by the list of ids.
+message DeleteWorkflowsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated string ids = 2;
+  bool delete_all = 3;
+}
+
+message SingleWorkflowResponse {
+  clarifai.api.status.Status status = 1;
+  Workflow workflow = 2;
+}
+
+
+message MultiWorkflowResponse {
+  clarifai.api.status.Status status = 1;
+  repeated Workflow workflows = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+message PostWorkflowResultsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // Workflow ID to retrieve
+  // If no ID is specified we return default workflow of the application
+  // If an ID is specified by default we first looks into Clarifai workflows for a Workflow ID
+  string workflow_id = 2;
+
+  repeated Input inputs = 3;
+  // FIXME(zeiler): the request for post workflows is using an outputconfig object that is supposed
+  // to be within models. This is not consistent with setting this on the request for post model
+  // outputs where it is inside a model object. To make this consistent we would send in the
+  // workflow object so that each model can have it's own output config. If nobody is setting
+  // this OutputConfig it would probably be easier to just remove it for now to keep things simpler
+  // and then it's more consistent we just don't support the OutputConfig on workflows.
+  OutputConfig output_config = 4;
+
+  // Use this flag to look into user created workflows first for a Workflow ID
+  bool favor_user_workflows = 5;
+}
+
+message PostWorkflowResultsResponse {
+  clarifai.api.status.Status status = 1;
+  Workflow workflow = 2;
+  repeated WorkflowResult results = 3;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Deep training
+////////////////////////////////////////////////////////////////////////////////
+
+message TrainingTemplate {
+  string name = 1;
+  google.protobuf.Struct default_args = 2;
+  string doc_string = 3;
+  string model_type = 4;
+}
+
+message ListTrainingTemplatesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+}
+
+message MultiTrainingTemplatesResponse {
+  clarifai.api.status.Status status = 1;
+  repeated TrainingTemplate training_template = 2;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// App Duplication
+////////////////////////////////////////////////////////////////////////////////
+
+//Request to start a app duplication process
+message PostAppDuplicationsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated AppDuplication app_duplications = 2;
+}
+
+//Request to check app duplication status
+message GetAppDuplicationRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  //The app duplication id
+  string app_duplication_id = 2;
+}
+
+//Request to list all the app duplication that user triggered.
+message ListAppDuplicationsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+}
+
+message MultiAppDuplicationsResponse {
+  clarifai.api.status.Status status = 1;
+  repeated AppDuplication app_duplications = 2;
+}
+
+
+message SingleAppDuplicationResponse {
+  clarifai.api.status.Status status = 1;
+  AppDuplication app_duplication = 2;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Collectors
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+// Request to create a Collector.
+message PostCollectorsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated Collector collectors = 2;
+}
+
+message PatchCollectorsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  repeated Collector collectors = 2;
+
+  // The action to perform on the patched objects
+  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  string action = 3;
+}
+
+// Request to delete several things by the list of ids.
+message DeleteCollectorsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated string ids = 2;
+  bool delete_all = 3;
+}
+
+
+// Request to GET a single Collector.
+message GetCollectorRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  //The collecgtor id
+  string collector_id = 2;
+}
+
+// Request to GET all the Collectors.
+message ListCollectorsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 3;
+}
+
+// Response with multiple Collectors.
+message MultiCollectorResponse {
+  clarifai.api.status.Status status = 1;
+  repeated Collector collectors = 2;
+}
+
+// Response with a single Collector.
+message SingleCollectorResponse {
+  clarifai.api.status.Status status = 1;
+  Collector collector = 2;
+}

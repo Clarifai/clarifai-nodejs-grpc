@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package clarifai.auth.types;
+
+option go_package = "types";
+option java_multiple_files = true;
+option java_package = "com.clarifai.grpc.auth.types";
+option objc_class_prefix = "CAIP";
+
+// Authorization type for endpoints.
+enum AuthType {
+  // introduce undef so that the zero (default/unset) value of the enum is not a real
+  // permission.  undef is only present for this purpose and should not be used
+  // to indicate any "real" value.
+  undef = 0;
+
+  // No authorization need for this endpoint.
+  NoAuth = 1;
+
+  // This authorization requires API keys (both app-spceific keys and personal access tokens).
+  // The endpoints that use this AuthType may also include a list of
+  // clarifai.auth.utils.cl_depending_scopes.
+  KeyAuth = 2;
+
+  // This uses a session token from your web browser. This is reserved for users/account level APIs
+  // that are only needed in a browser.
+  SessionTokenAuth = 3;
+
+  // This uses a special token for admin access to the APIs.
+  AdminAuth = 4;
+
+  // This authorization requires personal access tokens. This is used for endpoints such as
+  // /users/{user_id}/apps which are not specific. An app-specific API key will not work
+  // when PATAuth is used.
+  PATAuth = 5;
+}
