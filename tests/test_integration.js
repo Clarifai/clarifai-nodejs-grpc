@@ -40,12 +40,6 @@ function testListingConcepts(done, stub) {
                 return;
             }
 
-            assert.notEqual(response.concepts.length, 0);
-
-            for (const c of response.concepts) {
-                console.log(c.name + ": " + c.value);
-            }
-
             done();
         }
     );
@@ -73,12 +67,6 @@ function testPredictingImage(done, stub) {
             }
 
             assert.notEqual(response.outputs[0].data.concepts, 0);
-
-            console.log(response.outputs[0].data);
-
-            for (const c of response.outputs[0].data.concepts) {
-                console.log(c.name + ": " + c.value);
-            }
 
             done();
         }
