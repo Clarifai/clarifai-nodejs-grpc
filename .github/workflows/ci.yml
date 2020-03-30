@@ -1,0 +1,49 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+    - name: Create the app & API key
+      env:
+        CLARIFAI_USER_EMAIL: ${{ secrets.CLARIFAI_USER_EMAIL }}
+        CLARIFAI_USER_PASSWORD: ${{ secrets.CLARIFAI_USER_PASSWORD }}
+      # It's not possible to make key & ID values secret in the logs, but it shouldn't be a problem since they are
+      # deleted in the clean up step.
+      run: |
+        export CLARIFAI_APP_ID="$(python scripts/app_and_key_for_tests.py --create-app javascript-github)"
+        export CLARIFAI_API_KEY="$(python scripts/app_and_key_for_tests.py --create-key ${CLARIFAI_APP_ID})"
+        python scripts/app_and_key_for_tests.py --create-workflow ${CLARIFAI_API_KEY}
+        echo "::set-env name=CLARIFAI_APP_ID::$CLARIFAI_APP_ID"
+        echo "::set-env name=CLARIFAI_API_KEY::$CLARIFAI_API_KEY"
+    - name: Run tests
+      env:
+        CI: true  # According to docs, setting this env. var. is required.
+        CLARIFAI_API_KEY: ${{ env.CLARIFAI_API_KEY }}
+      run: |
+        npm test
+    - name: Clean up the app & API key
+      if: always()
+      env:
+        CLARIFAI_USER_EMAIL: ${{ secrets.CLARIFAI_USER_EMAIL }}
+        CLARIFAI_USER_PASSWORD: ${{ secrets.CLARIFAI_USER_PASSWORD }}
+        CLARIFAI_API_KEY: ${{ env.CLARIFAI_API_KEY }}
+      run: python scripts/app_and_key_for_tests.py --delete-app ${{ env.CLARIFAI_APP_ID }}
