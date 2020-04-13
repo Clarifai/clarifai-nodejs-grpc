@@ -6,7 +6,7 @@ name: Publish npm package & GitHub release
 on:
   push:
     tags:
-        - '[0-9]+.[0-9]+.[0-9a-zA-Z]+'  # Matches 1.2.3, 1.2.3alpha1 etc.
+      - '[0-9]+.[0-9]+.[0-9a-zA-Z]+'  # Matches 1.2.3, 1.2.3alpha1 etc.
 
 jobs:
   publish-npm:
