@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
         node-version: [10.x, 12.x]
 
@@ -34,10 +35,11 @@ jobs:
         python scripts/app_and_key_for_tests.py --create-workflow ${CLARIFAI_API_KEY}
         echo "::set-env name=CLARIFAI_APP_ID::$CLARIFAI_APP_ID"
         echo "::set-env name=CLARIFAI_API_KEY::$CLARIFAI_API_KEY"
+        echo "::add-mask::$CLARIFAI_APP_ID"
+        echo "::add-mask::$CLARIFAI_API_KEY"
     - name: Run tests
       env:
         CI: true  # According to docs, setting this env. var. is required.
-        CLARIFAI_API_KEY: ${{ env.CLARIFAI_API_KEY }}
       run: |
         npm test
     - name: Clean up the app & API key
@@ -45,5 +47,5 @@ jobs:
       env:
         CLARIFAI_USER_EMAIL: ${{ secrets.CLARIFAI_USER_EMAIL }}
         CLARIFAI_USER_PASSWORD: ${{ secrets.CLARIFAI_USER_PASSWORD }}
-        CLARIFAI_API_KEY: ${{ env.CLARIFAI_API_KEY }}
-      run: python scripts/app_and_key_for_tests.py --delete-app ${{ env.CLARIFAI_APP_ID }}
+      run: |
+        python scripts/app_and_key_for_tests.py --delete-app ${{ env.CLARIFAI_APP_ID }}
