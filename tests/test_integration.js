@@ -6,6 +6,7 @@ const {ClarifaiStub} = require('../src/index');
 
 const DOG_IMAGE_URL = "https://samples.clarifai.com/dog2.jpeg";
 const NON_EXISTING_IMAGE_URL = "https://example.com/non-existing.jpg";
+const METRO_NORTH_IMAGE_FILE_PATH = "tests/assets/metro-north.jpg";
 
 describe("Integration Tests", () => {
     it ("Lists concepts on JSON channel", done => {
@@ -16,12 +17,20 @@ describe("Integration Tests", () => {
         testListingConcepts(done, ClarifaiStub.insecureGrpc());
     });
 
-    it("Predicts image on JSON channel", done => {
-        testPredictingImage(done, ClarifaiStub.json());
+    it("Predicts image URL on JSON channel", done => {
+        testPredictingImageUrl(done, ClarifaiStub.json());
     });
 
-    it("Predicts image on gRPC channel", done => {
-        testPredictingImage(done, ClarifaiStub.insecureGrpc());
+    it("Predicts image URL on gRPC channel", done => {
+        testPredictingImageUrl(done, ClarifaiStub.insecureGrpc());
+    });
+
+    it("Predicts image file on JSON channel", done => {
+        testPredictingImageFile(done, ClarifaiStub.json());
+    });
+
+    it("Predicts image file on gRPC channel", done => {
+        testPredictingImageFile(done, ClarifaiStub.insecureGrpc());
     });
 
     it("Failed predict on JSON channel", done => {
@@ -56,7 +65,7 @@ function testListingConcepts(done, stub) {
     );
 }
 
-function testPredictingImage(done, stub) {
+function testPredictingImageUrl(done, stub) {
     const metadata = new grpc.Metadata();
     metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY);
 
@@ -84,6 +93,36 @@ function testPredictingImage(done, stub) {
     );
 }
 
+function testPredictingImageFile(done, stub) {
+    const metadata = new grpc.Metadata();
+    metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY);
+
+    const fs = require("fs");
+    const imageBytes = fs.readFileSync(METRO_NORTH_IMAGE_FILE_PATH);
+
+    stub.PostModelOutputs(
+        {
+            model_id: "aaa03c23b3724a16a56b629203edc62c",
+            inputs: [{data: {image: {base64: imageBytes}}}]
+        },
+        metadata,
+        (err, response) => {
+            if (err) {
+                done(err);
+                return;
+            }
+
+            if (response.status.code !== 10000) {
+                done(new Error("Received status: " + response.status.description + "\n" + response.status.details));
+                return;
+            }
+
+            assert.notEqual(response.outputs[0].data.concepts, 0);
+
+            done();
+        }
+    );
+}
 
 function testFailedPredict(done, stub) {
     const metadata = new grpc.Metadata();
