@@ -1,6 +1,37 @@
 const axios = require("axios");
 const {findAppropriateUrl} = require("./methods_info");
 
+/**
+ * This recursively goes through the object/array and serialized any "base64" field that has Buffer value to a BASE64
+ * string.
+ */
+function stringifyBase64(obj) {
+    if (obj.constructor === Array) {
+        return obj.map(stringifyBase64);
+    } else if (obj.constructor === Object) {
+        const processedObject = {}
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                if (key === "base64") {
+                    if (Buffer.isBuffer(obj[key])) {
+                        processedObject[key] = obj[key].toString("base64");
+                    } else if (typeof obj[key] === 'string' || obj[key] instanceof String) {
+                        // Here we assume the value is already in BASE64.
+                        processedObject[key] = obj[key];
+                    } else {
+                        throw new Error("base64 has incorrect type, only Buffer and string (base64) are supported.");
+                    }
+                } else {
+                    processedObject[key] = stringifyBase64(obj[key]);
+                }
+            }
+        }
+        return processedObject;
+    } else {
+        return obj;
+    }
+}
+
 class CustomCall {
     constructor(method) {
         this.baseUrl = "https://api.clarifai.com";
@@ -18,7 +49,7 @@ class CustomCall {
     }
 
     write(writeObj) {
-        this.request = writeObj.message;
+        this.request = stringifyBase64(writeObj.message);
 
         const possibleParams = Object.keys(this.request);
 
