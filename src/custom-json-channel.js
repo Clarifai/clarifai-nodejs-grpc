@@ -57,8 +57,13 @@ class CustomCall {
                 this.dataCallback(response.data);
                 callback(status);
             }).catch((error) => {
-                this.dataCallback(JSON.stringify(error));
-                callback(errorStatus);
+                if (error.response && error.response.data) {
+                    this.dataCallback(error.response.data);
+                    callback(status);
+                } else {
+                    this.dataCallback(JSON.stringify(error));
+                    callback(errorStatus);
+                }
             });
         }
     }
