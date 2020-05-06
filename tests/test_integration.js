@@ -40,6 +40,22 @@ describe("Integration Tests", () => {
     it("Failed predict on gRPC channel", done => {
         testFailedPredict(done, ClarifaiStub.insecureGrpc());
     });
+
+    it("List models with pagination 1 on JSON channel", done => {
+        testListModelsWithPagination1(done, ClarifaiStub.json());
+    });
+
+    it("List models with pagination 1 on gRPC channel", done => {
+        testListModelsWithPagination1(done, ClarifaiStub.insecureGrpc());
+    });
+
+    it("List models with pagination 2 on JSON channel", done => {
+        testListModelsWithPagination2(done, ClarifaiStub.json());
+    });
+
+    it("List models with pagination 2 on gRPC channel", done => {
+        testListModelsWithPagination2(done, ClarifaiStub.insecureGrpc());
+    });
 });
 
 function testListingConcepts(done, stub) {
@@ -153,6 +169,62 @@ function testFailedPredict(done, stub) {
             assert.strictEqual(response.status.description, "Failure");
 
             assert.strictEqual(response.outputs[0].status.code, 30002);  // Download failed.
+
+            done();
+        }
+    );
+}
+
+function testListModelsWithPagination1(done, stub) {
+    const metadata = new grpc.Metadata();
+    metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY);
+
+    stub.ListModels(
+        {
+            per_page: 2
+        },
+        metadata,
+        (err, response) => {
+            if (err) {
+                done(err);
+                return;
+            }
+
+            if (response.status.code !== 10000) {
+                done(new Error("Received status: " + response.status.description + "\n" + response.status.details));
+                return;
+            }
+
+            assert.strictEqual(response.models.length, 2);
+
+            done();
+        }
+    );
+}
+
+function testListModelsWithPagination2(done, stub) {
+    const metadata = new grpc.Metadata();
+    metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY);
+
+    stub.ListModels(
+        {
+            // We shouldn 't have 1000*500 number of models, so the result should be empty.
+            page: 1000,
+            per_page: 500
+        },
+        metadata,
+        (err, response) => {
+            if (err) {
+                done(err);
+                return;
+            }
+
+            if (response.status.code !== 10000) {
+                done(new Error("Received status: " + response.status.description + "\n" + response.status.details));
+                return;
+            }
+
+            assert.strictEqual(response.models.length, 0);
 
             done();
         }

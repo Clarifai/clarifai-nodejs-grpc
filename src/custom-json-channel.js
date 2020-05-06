@@ -32,6 +32,42 @@ function stringifyBase64(obj) {
     }
 }
 
+function prepareGetParameters(request) {
+    let encodedParameters = {};
+    for (const key in request) {
+        if (request.hasOwnProperty(key)) {
+            let value = request[key];
+
+            if (value.constructor == Object) {
+                let subObj = prepareGetParameters(value);
+                for (const subKey in subObj) {
+                    if (subObj.hasOwnProperty(subKey)) {
+                        const subValue = subObj[subKey];
+                        encodedParameters[key + "." + subKey] = subValue;
+                    }
+                }
+            } else {
+                encodedParameters[key] = String(value);
+            }
+        }
+    }
+    return encodedParameters;
+}
+
+function encodeGetParameters(request) {
+    let url = "";
+
+    const additionalParametersObject = prepareGetParameters(request);
+    if (Object.keys(additionalParametersObject).length > 0) {
+        let p = [];
+        for (const k in additionalParametersObject) {
+            p.push(k + "=" + additionalParametersObject[k]);
+        }
+        url = "?" + p.join("&");
+    }
+    return url;
+}
+
 class CustomCall {
     constructor(method) {
         this.baseUrl = "https://api.clarifai.com";
@@ -79,10 +115,19 @@ class CustomCall {
             if (this.statusAlreadyGotten) { return; }
             this.statusAlreadyGotten = true;
 
+            let url = this.baseUrl + this.subUrl;
+            let data;
+            if (this.httpMethod === "get") {
+                data = null;
+                url += encodeGetParameters(this.request);
+            } else {
+                data = this.request;
+            }
+
             axios({
                 method: this.httpMethod,
-                url: this.baseUrl + this.subUrl,
-                data: this.request,
+                url: url,
+                data: data,
                 headers: this.headers,
             }).then((response) => {
                 this.dataCallback(response.data);
@@ -99,6 +144,8 @@ class CustomCall {
         }
     }
 }
+
+
 
 class CustomChannel {
     createCall(method, deadline, host, parentCall, propagateFlags) {
