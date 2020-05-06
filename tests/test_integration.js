@@ -8,6 +8,10 @@ const DOG_IMAGE_URL = "https://samples.clarifai.com/dog2.jpeg";
 const NON_EXISTING_IMAGE_URL = "https://example.com/non-existing.jpg";
 const METRO_NORTH_IMAGE_FILE_PATH = "tests/assets/metro-north.jpg";
 
+const metadata = new grpc.Metadata();
+metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY);
+
+
 describe("Integration Tests", () => {
     it ("Lists concepts on JSON channel", done => {
         testListingConcepts(done, ClarifaiStub.json());
@@ -59,9 +63,6 @@ describe("Integration Tests", () => {
 });
 
 function testListingConcepts(done, stub) {
-    const metadata = new grpc.Metadata();
-    metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY);
-
     stub.ListConcepts(
         {},
         metadata,
@@ -82,9 +83,6 @@ function testListingConcepts(done, stub) {
 }
 
 function testPredictingImageUrl(done, stub) {
-    const metadata = new grpc.Metadata();
-    metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY);
-
     stub.PostModelOutputs(
         {
             model_id: "aaa03c23b3724a16a56b629203edc62c",
@@ -110,9 +108,6 @@ function testPredictingImageUrl(done, stub) {
 }
 
 function testPredictingImageFile(done, stub) {
-    const metadata = new grpc.Metadata();
-    metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY);
-
     const fs = require("fs");
     const imageBytes = fs.readFileSync(METRO_NORTH_IMAGE_FILE_PATH);
 
@@ -141,9 +136,6 @@ function testPredictingImageFile(done, stub) {
 }
 
 function testFailedPredict(done, stub) {
-    const metadata = new grpc.Metadata();
-    metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY);
-
     stub.PostModelOutputs(
         {
             model_id: "aaa03c23b3724a16a56b629203edc62c",
@@ -176,9 +168,6 @@ function testFailedPredict(done, stub) {
 }
 
 function testListModelsWithPagination1(done, stub) {
-    const metadata = new grpc.Metadata();
-    metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY);
-
     stub.ListModels(
         {
             per_page: 2
@@ -203,9 +192,6 @@ function testListModelsWithPagination1(done, stub) {
 }
 
 function testListModelsWithPagination2(done, stub) {
-    const metadata = new grpc.Metadata();
-    metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY);
-
     stub.ListModels(
         {
             // We shouldn 't have 1000*500 number of models, so the result should be empty.
