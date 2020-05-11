@@ -5,6 +5,7 @@ const {describe, it} = require("mocha");
 const {ClarifaiStub} = require('../src/index');
 
 const DOG_IMAGE_URL = "https://samples.clarifai.com/dog2.jpeg";
+const RED_TRUCK_IMAGE_URL = "https://samples.clarifai.com/red-truck.png";
 const NON_EXISTING_IMAGE_URL = "https://example.com/non-existing.jpg";
 const METRO_NORTH_IMAGE_FILE_PATH = "tests/assets/metro-north.jpg";
 
@@ -59,6 +60,14 @@ describe("Integration Tests", () => {
 
     it("List models with pagination 2 on gRPC channel", done => {
         testListModelsWithPagination2(done, ClarifaiStub.insecureGrpc());
+    });
+
+    it("Default value serialization on JSON channel", done => {
+        testDefaultValueDeserialization(done, ClarifaiStub.json());
+    });
+
+    it("Default value serialization on gRPC channel", done => {
+        testDefaultValueDeserialization(done, ClarifaiStub.insecureGrpc());
     });
 });
 
@@ -216,3 +225,89 @@ function testListModelsWithPagination2(done, stub) {
         }
     );
 }
+
+function testDefaultValueDeserialization(done, stub) {
+    function postInputsAsync(...params) {
+        return new Promise((resolve, reject) => {
+            stub.PostInputs(...params, (err, response) => {
+                if (err !== null) reject(err);
+                else if (response.status.code !== 10000) reject(response)
+                else resolve(response);
+            });
+        })
+    }
+
+    function getInputAsync(...params) {
+        return new Promise((resolve, reject) => {
+            stub.GetInput(...params, (err, response) => {
+                if (err !== null) reject(err);
+                else if (response.status.code !== 10000) reject(response)
+                else resolve(response);
+            });
+        })
+    }
+
+    function deleteInputAsync(...params) {
+        return new Promise((resolve, reject) => {
+            stub.DeleteInput(...params, (err, response) => {
+                if (err !== null) reject(err);
+                else if (response.status.code !== 10000) reject(response)
+                else resolve(response);
+            });
+        })
+    }
+
+    postInputsAsync(
+        {
+            inputs: [
+                {
+                    data: {
+                        image: {
+                            url: DOG_IMAGE_URL,
+                            allow_duplicate_url: true
+                        },
+                        concepts: [
+                            {
+                                id: "dog"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        metadata
+    )
+        .then(response => {
+            return getInputAsync(
+                {
+                    input_id: response.inputs[0].id
+                },
+                metadata
+            )
+        })
+        .then(response => {
+            // We didn't set any concept value, so it should be set to 0 by default.
+            assert.strictEqual(response.input.data.concepts[0].value, 0);
+
+            return deleteInputAsync(
+                {
+                    input_id: response.input.id
+                },
+                metadata
+            );
+        })
+        .then(response => {
+            done();
+        })
+        .catch(err => {
+            if (err.status) {
+                done(new Error(
+                    "Received status: " + err.status.code + " " + err.status.description + " " + err.status.details +
+                    ". Full response:\n" + JSON.stringify(err, null, 2)
+                ));
+            } else {
+                done(new Error(err));
+            }
+        });
+}
+
