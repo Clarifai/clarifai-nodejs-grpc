@@ -2,7 +2,7 @@
 
 IFS=''
 n=1
-while read line
+while read line || [ -n "$line" ]
 do
   if [[ $line == *"additional_bindings "* ]]; then
     echo "$line" | sed -e 's/additional_bindings/additional_bindings'$n'/'
