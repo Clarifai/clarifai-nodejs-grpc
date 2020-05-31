@@ -17,6 +17,42 @@ let options = {
 };
 
 
+/*
+ * This function extracts the app_id and user_id values from the request object, or returns an empty array.
+ */
+function readAppIdAndUserId(request) {
+    if (request.constructor === Array) {
+        for (const e of request) {
+            const ids = readAppIdAndUserId(e);
+            if (ids.length === 2) {
+                return ids;
+            }
+        }
+    } else if (request.constructor === Object) {
+        for (const key in request) {
+            if (!request.hasOwnProperty(key)) continue;
+
+            const value = request[key];
+            if (key === "apps") {
+                if (value.length === 1) {
+                    return [value[0]["id"], value[0]["user_id"]]
+                } else if (value.length === 0) {
+                    return [];
+                } else {
+                    throw new Error("The request supports specifying only one app.")
+                }
+            } else if (key === "metadata") {
+                continue;
+            }
+            const ids = readAppIdAndUserId(value);
+            if (ids.length === 2) {
+                return ids;
+            }
+        }
+    }
+    return [];
+}
+
 function findAppropriateUrl(name, request) {
     let bestMatchUrl = undefined;
     let bestMatchCount = -1;
@@ -31,6 +67,17 @@ function findAppropriateUrl(name, request) {
         return undefined;
     }
 
+    const ids = readAppIdAndUserId(request);
+    let appId;
+    let userId;
+    if (ids.length === 2) {
+        appId = ids[0];
+        userId = ids[1];
+    } else {
+        appId = null;
+        userId = null;
+    }
+
     for (const availableUrl of info.availableUrls) {
         let allArgumentsTranslated = true;
 
@@ -38,13 +85,27 @@ function findAppropriateUrl(name, request) {
         let count = 0;
         let urlFields = extractRequiredUrlParameters(url);
         for (const field of urlFields) {
-            count++;
+            const parts = field.split(".");
+            const fieldName = parts[parts.length - 1];
 
-            const fieldValue = request[field];
+            let fieldValue;
+            if (fieldName === "app_id") {
+                fieldValue = appId
+            } else if (fieldName === "user_id") {
+                if (userId != null) {
+                    fieldValue = userId;
+                } else {
+                    fieldValue = "me";
+                }
+            } else {
+                fieldValue = request[fieldName];
+            }
             if (!fieldValue) {
                 allArgumentsTranslated = false;
                 break;
             }
+
+            count++;
 
             url = url.replace("{" + field + "}", fieldValue);
         }
