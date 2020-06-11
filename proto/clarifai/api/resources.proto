@@ -23,7 +23,7 @@ option objc_class_prefix = "CAIP";
 // Messages from /proto/clarifai/api/annotation.proto
 ////////////////////////////////////////////////////////////////////////////////
 message Annotation {
-  reserved 4, 5, 6, 11;
+  reserved 4, 5, 6, 11, 12;
 
   // The ID for the annotation
   string id = 1;
@@ -60,10 +60,11 @@ message Annotation {
   google.protobuf.Timestamp modified_at = 9;
 
   // Whether or not this annotation is trusted
-  bool trusted = 10;
+  // Will be deprecated
+  bool trusted = 10[deprecated=true];
 
-  // Is this the default annotation tied to the input
-  bool default = 12;
+  // Is this the input level annotation.
+  bool input_level = 17;
 }
 
 
@@ -98,6 +99,9 @@ message App {
 
   // short description about the app.
   string description = 14;
+
+  // Default value for model predictions on video: Sample delay for video predicting (1 frame per N milliseconds)
+  uint32 sample_ms = 15;
 }
 
 
@@ -847,7 +851,22 @@ enum LicenseScope {
 ////////////////////////////////////////////////////////////////////////////////
 // Messages from /proto/clarifai/api/model.proto
 ////////////////////////////////////////////////////////////////////////////////
+// This is the Model object which represents a created model in the platform.
+// Each model has a particular type denoted by the model_type_id.
+// When creating a Model with PostModels the following happens:
+//  - if the ModelType is trainable, then a new ModelVersion is created that is
+//    - UNTRAINED status by default
+//    - TRAINED status if a ModelVersion was included with PretrainedModelConfig in PostModels
+//  - if the ModelType is not trainable, then a new ModelVersion is created with TRAINED status.
+// To modify config settings like OutputInfo for the Model you an use PatchModels. This will
+// also create a new ModelVersion, potentially UNTRAINED following the same rules as above.
+// The fields that are patchable include Model.name, Model.display_name and Model.output_info
+// (except the Model.output_info.type and Model.output_info.type_ext).
+//
+//
 message Model {
+  reserved 8, 10,11;
+
   // The model's ID. Must be unique within a particular app and URL-friendly.
   string id = 1;
   // A nicer-to-read name for the model. Can have spaces and special characters.
@@ -863,31 +882,77 @@ message Model {
   // An even nicer-to-read name for public Clarifai models where we're not happy with the name but
   // need a temporary workaround while we check what depends on these names.
   string display_name = 7;
-  // Override the default template_name used for the model type
-  string template_name = 8;
   // The user id that the model belongs to.
   string user_id = 9;
-  // Map from the api.Data field names to the Triton config.pbtxt input.
-  google.protobuf.Struct input_fields_map = 10;
-  // Map from the api.Data field names to the Triton config.pbtxt output.
-  google.protobuf.Struct output_fields_map = 11;
+  // Info about the models' input and configuration of them.
+  InputInfo input_info = 12;
+  // Configuration for the training process of this model.
+  TrainInfo train_info = 13;
+  // The ModelType.Id that is used for this model. This is used for all versions and you cannot
+  // change model_type_id between versions of the same model.
+  string model_type_id = 14;
 }
 
+// OutputInfo defines some of the settings for each model version that PatchModels can effect. These
+// parameters control some of the training or inference operations that this model can do.
+// As the number of parameters continued to grow when we launched more ModelTypes we decided to move
+// to using the OutputInfo.params field which is a Struct (or JSON object if you're using
+// our JSON REST APIs). This allows each ModelType to define the set of fields, their default values
+// and description of each field so that we can display those in Portal and make the creation of
+// Model's very extensible. The OutputConfig object will eventually go away in favor of
+// infer_params struct.
 message OutputInfo {
   // List of concepts or other output related data for the model.
   Data data = 1;
-  // Model configuration.
+  // Model configuration...going away in favor of infer_params and train_params over time.
+  // TO BE DEPRECATED
   OutputConfig output_config = 2;
   // For returning where to look for the Output info if not returning it.
   string message = 3;
   // To help clients know what type of Data to expect out of the model.
+  // TO BE DEPRECATED
   string type = 4;
   // Extra metadata about the Type data.
+  // TO BE DEPRECATED
   string type_ext = 5;
+
+  // Map from the api.Data field names to the underlying model graph's outputs. When using a
+  // PretrainedModelConfig the values in this map need to match the Triton config.pbtxt output names.
+  google.protobuf.Struct fields_map = 6;
+
+  // For predicting with the various ModelType's we accept a Struct (JSON object) worth of args
+  // that the ModelTypeField defines. During inference, the settings contained within are sent
+  // to the model predictor to alter predictions from this Model.
+  google.protobuf.Struct params = 7;
 }
 
+
+
+message InputInfo {
+  // Map from the api.Data field names to the underlying model graph's inputs. When using a
+  // PretrainedModelConfig the values in this map need to match the Triton config.pbtxt input names.
+  google.protobuf.Struct fields_map = 1;
+
+  // To control the inputs to the given model we allow a list of parameters
+  // defined for each ModelType as a Struct (JSON object) here. During training or inference, the
+  // settings contained within are sent to the training processor to alter the training process.
+  google.protobuf.Struct params = 2;
+}
+
+message TrainInfo {
+  // To control the training process when PostModelVersions is used we allow a list of parameters
+  // defined for each ModelType as a Struct (JSON object) here. During training, the settings
+  // contained within are sent to the training processor to alter the training process.
+  google.protobuf.Struct params = 1;
+}
+
+
+
+// OutputConfig is a collection of parameters controlling either inference or training settings for
+// the given Model. This message will be deprecated over time in favor or infer_params and
+// train_params in OutputInfo which are cleaner and more extensible for many ModelTypes.
 message OutputConfig {
-  reserved 12, 16;
+  reserved 11, 12, 16, 18;
 
   // For custom concept model training: whether the concept predictions must sum to 1.
   bool concepts_mutually_exclusive = 1 [(clarifai.api.utils.cl_show_if_empty) = true];
@@ -916,9 +981,6 @@ message OutputConfig {
   uint32 training_timeout = 9;
   // For model predictions on video: Sample delay for video predicting (1 frame per N milliseconds)
   uint32 sample_ms = 10;
-  // For custom deep training: Override for template name and test split percentage
-  // test_split_percent defaults to 10 in training_coordinator/client.go
-  uint32 test_split_percent = 11;
   // For custom model training: Hyperparameters for custom training
   google.protobuf.Struct hyper_params = 13;
   // For custom model training: this is the base model version to use for image embeddings.
@@ -932,14 +994,109 @@ message OutputConfig {
   // introducing fields for new model types so we don't have to add a new proto field and DB field
   // each time. Please refer to the documentation or model implementation internally for more
   // details on what fields are supported for which models.
-  google.protobuf.Struct model_metadata = 17;
-  // For custom deep training: Percentage value (0 to 100) of user's tolerance level to invalid
-  // inputs among all training inputs. Training will be stopped with error thrown if actual
-  // percent of invalid inputs is higher than this.
-  float invalid_data_tolerance_percent = 18;
-  // For custom deep training: Use this flag to set this model to use few shot K-NN classification
-  // instead of custom concept classification. Default is false.
-  bool use_knn_classifier = 19;
+  // TODO(zeiler): remove this field after Portal is updated.
+  google.protobuf.Struct model_metadata = 17 [deprecated=true];
+}
+
+
+
+// ModelSpec is a definition of a Model type. This is used in model mode of portal
+// to list out the possible models that can be created and can be used to understand more about
+// the possible models in our platform.
+message ModelType {
+  reserved 7;
+  // A unique identifies for this model type. This is differnt than the 'type' field below because
+  // the 'type' can be re-used for differnet input and output combinations whereas 'id' is always
+  // unique.
+  string id = 1;
+  // title for this model in model gallery
+  string title = 2;
+  // Description of this model type.
+  string description = 3;
+  // The type of the model to create. This is currently stored in output_info.type.
+  string type = 4;
+  // The list of input fields that this model accepts. These are the keys of the Model's
+  // InputInfo.fields_map
+  repeated string input_fields = 5;
+  // The list of output fields that this model accepts. These are the keys of the Model's
+  // OutputInfo.fields_map
+  repeated string output_fields = 6;
+  // Is this model trainable in our platform.
+  bool trainable = 8;
+  // Is this model creatable. We have some pre-trained model types that users cannot create yet in
+  // model mode.
+  bool creatable = 9;
+  // Is this model type only for internal users at this time.
+  bool internal_only = 10;
+
+  // The remaining fields are definitions of the configurable fields that exist.
+  // Each field has path into the Model object such as "name" as a top level or "output_info.data"
+  // if it's the Data obejct within the OutputInfo object. We deciddd to not break these up
+  // into input_info, train_info and output_info related parameters and instead use the path
+  // so that they are most flexible.
+  repeated ModelTypeField model_type_fields = 11;
+}
+
+// For each field in ModelType.model_type_fields we defined them with ModelTypeField
+message ModelTypeField {
+  // The path to the field within the Model proto.
+  // Example:
+  // "output_info.data" would be the Data message in the OutputInfo message.
+  // "output_info.output_config.language" is in the OutputConfig message within OutputInfo
+  // "input_info.params" is in the params struct within InputInfo.
+  // "output_info.params" is in the params struct within OutputInfo.
+  // "train_info.params" is in the params struct within TrainInfo.
+  // and so on.
+  string path = 1;
+  // These are various types of fields that we have UIs for.
+  enum ModelTypeFieldType {
+    reserved 6;
+
+    INVALID_MODEL_TYPE_FIELD_TYPE = 0;
+
+    BOOLEAN = 1;
+    STRING = 2;
+    NUMBER = 3;
+    ARRAY_OF_CONCEPTS = 4;
+    ARRAY_OF_CONCEPTS_WITH_THRESHOLD = 5;
+    RANGE = 7;
+    // If ENUM is used then the "enum_options" field should also be filled in which allows for
+    // additional ModelTypeFields too depending on the enum choice.
+    ENUM = 8;
+    COLLABORATORS = 9;
+    JSON = 10;
+    // Such as [1.0, 2.0, 3.5]
+    ARRAY_OF_NUMBERS = 11;
+  }
+  // The field for this field.
+  ModelTypeFieldType field_type = 2;
+  // A default value. We use the Value field because we want to have structured data (just like
+  // google.protobuf.Struct but this is just a single value).
+  google.protobuf.Value default_value = 3;
+  // Description for this field.
+  string description = 4;
+  // Placeholder text for the UI element.
+  string placeholder = 5;
+  // List of options of the ENUM type and potentially additional fields they bring with them.
+  repeated ModelTypeEnumOption model_type_enum_options = 6;
+  // If this field should appear for internal users only.
+  bool internal_only = 7;
+}
+
+
+
+message ModelTypeEnumOption {
+  // The unique value of the enum option.
+  string id = 1;
+
+  // Optional description for this enum option.
+  string description = 2;
+  // These are additional fields that are specific to this enum choice. This allows
+  // us to use enums to control configuration settings as well.
+  repeated ModelTypeField model_type_fields = 3;
+
+  // If this enum option should be internal only.
+  bool internal_only = 4;
 }
 
 message ModelQuery {
@@ -975,6 +1132,8 @@ enum EvaluationType {
 // Messages from /proto/clarifai/api/model_version.proto
 ////////////////////////////////////////////////////////////////////////////////
 message ModelVersion {
+  reserved 9;
+
   string id = 1;
   // When the version was created.
   google.protobuf.Timestamp created_at = 2;
@@ -992,10 +1151,6 @@ message ModelVersion {
   // an API user you should not need to interact with this field.
 
   // Detailed training stats.
-
-  // The worker id for this model; a worker is an object that is assigned to a model or
-  // a human to track changes to different entities in our platfrom
-  string worker_id = 9;
 
   // When training of this version was completed.
   google.protobuf.Timestamp completed_at = 10;
@@ -1483,6 +1638,8 @@ enum UsageIntervalType {
 // Messages from /proto/clarifai/api/user.proto
 ////////////////////////////////////////////////////////////////////////////////
 message User {
+  reserved 13;
+
   string id = 1;
 
   string primary_email = 2;
@@ -1505,10 +1662,6 @@ message User {
   // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
   google.protobuf.Struct metadata = 11;
   repeated EmailAddress email_addresses = 12;
-
-  // The worker id for this model; a worker is an object that is assigned to a model or
-  // a human to track changes to different entities in our platfrom
-  string worker_id = 13;
 }
 
 message EmailAddress {
@@ -2034,6 +2187,17 @@ enum StatTimeAggType {
   HOUR = 5;
   MINUTE = 6;
 }
+
+
+
+
+/*
+    SDK Billing Cycle defines which year and month is associated with the billing data
+*/
+
+
+
+
 
 
 

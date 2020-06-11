@@ -631,6 +631,20 @@ service V2 {
   // Models
   ////////////////////////////////////////
 
+  // List all the models available in the platform.
+  rpc ListModelTypes (ListModelTypesRequest) returns (MultiModelTypeResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/types"
+      additional_bindings {
+        get: "/v2/models/types"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  }
+
+
+
   // Get a specific model from an app.
   rpc GetModel (GetModelRequest) returns (SingleModelResponse) {
     option (google.api.http) = {
@@ -676,6 +690,8 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
+
+
 
   // Search over the models to find one or more you're looking for.
   // This leverage the "body" parameter because we also have page and
@@ -875,7 +891,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Metrics_Get;
   }
 
-  // Get the evaluation metrics for a model version.
+  // Run the evaluation metrics for a model version.
   rpc PostModelVersionMetrics (PostModelVersionMetricsRequest) returns (SingleModelVersionResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/metrics"
@@ -1356,6 +1372,19 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Metrics_Get;
   }
 
+  rpc DeleteAnnotationSearchMetrics (DeleteAnnotationSearchMetricsRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations/searches/metrics/{id}"
+      additional_bindings {
+        delete: "/v2/annotations/searches/metrics/{id}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Metrics_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Metrics_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Metrics_Delete;
+  }
+
   // Delete a saved search.
   rpc DeleteSearch (DeleteSearchRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
@@ -1367,6 +1396,7 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Search;
   }
+
 
 
 
@@ -1498,8 +1528,6 @@ service V2 {
 
 
 
-
-
   ////////////////////////////////////////
   // App duplication
   ////////////////////////////////////////
@@ -1559,10 +1587,14 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Search;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // needed for converting workers internal ids to external ids
+    // option (clarifai.auth.util.cl_depending_scopes) = Predict; // optional, needed for add_annotations_for_task when saved search uses visual search
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add; // needed for add_annotations_for_task
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get; // needed for add_annotations_for_task
   }
 
   // Get a specific task from an app.
@@ -1610,10 +1642,14 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Search;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // needed for converting workers internal ids to external ids
+    // option (clarifai.auth.util.cl_depending_scopes) = Predict; // optional, needed for add_annotations_for_task when saved search uses visual search
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add; // needed for add_annotations_for_task
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get; // needed for add_annotations_for_task
   }
 
   // Delete multiple tasks in one request.
@@ -1752,8 +1788,6 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
   }
-
-
 
 
 }
@@ -1963,7 +1997,7 @@ message DeleteCollaboratorsRequest{
 
 message MultiCollaboratorsResponse {
   clarifai.api.status.Status status = 1;
-  repeated Collaborator collaborators = 2;
+  repeated Collaborator collaborators = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
 message ListCollaborationsRequest {
@@ -1974,8 +2008,9 @@ message ListCollaborationsRequest {
 
 message MultiCollaborationsResponse {
   clarifai.api.status.Status status = 1;
-  repeated Collaboration collaborations = 2;
+  repeated Collaboration collaborations = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
+
 
 
 
@@ -2739,7 +2774,6 @@ message GetModelVersionMetricsRequest {
 
 
 
-
 // TODO: should we just move to this and get rid of above.
 // // Request to delete several things by the list of ids.
 // message DeleteModelVersionsRequest {
@@ -2749,6 +2783,25 @@ message GetModelVersionMetricsRequest {
 // }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+
+message ListModelTypesRequest {
+  // use and app combo. Not really used for this endpoint at this time so may go away in future.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 10.
+  uint32 per_page = 3;
+}
+
+message MultiModelTypeResponse {
+  // Status of the response.
+  clarifai.api.status.Status status = 1;
+  // List of ModelType objcts.
+  repeated ModelType model_types = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
 
 
 
@@ -2870,6 +2923,11 @@ message PostAnnotationsSearchesRequest {
 
   // Pagination information to paginate through search result Hits.
   Pagination pagination = 3;
+}
+
+message DeleteAnnotationSearchMetricsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string id = 2;
 }
 
 // Execute a new input search and optionally save it
@@ -3151,10 +3209,6 @@ message PostWorkflowResultsSimilarityResponse {
 }
 
 
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////
 // App Duplication
 ////////////////////////////////////////////////////////////////////////////////
@@ -3354,3 +3408,7 @@ message MultiStatValueAggregateResponse {
   // The aggregate results for each query passedin.
   repeated StatValueAggregateResult stat_value_aggregate_results = 2;
 }
+
+
+
+

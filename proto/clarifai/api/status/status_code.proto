@@ -327,7 +327,7 @@ enum StatusCode {
   // The task is closed.
   TASK_DONE = 54002;
   // The task was requested to be closed (with status DONE), but validation failed.
-  TASK_NOT_VALID_TO_CLOSE = 541000;
+  TASK_NOT_VALID_TO_CLOSE = 54100;
 
   // License Related Status Code 600xx
   LICENSE_ACTIVE = 60000;
