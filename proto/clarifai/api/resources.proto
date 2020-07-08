@@ -104,6 +104,11 @@ message App {
   uint32 sample_ms = 15;
 }
 
+message AppQuery {
+  // The name of the field. This supports wildcard queries like "gen*" to match "general" as an example.
+  string name = 1;
+}
+
 
 
 
@@ -1057,16 +1062,24 @@ message ModelTypeField {
     BOOLEAN = 1;
     STRING = 2;
     NUMBER = 3;
+    // For auto-completting to concepts in the app. This goes into an data.concepts field.
     ARRAY_OF_CONCEPTS = 4;
+    // For auto-completting to concepts in the app. This goes into an data.concepts field.
     ARRAY_OF_CONCEPTS_WITH_THRESHOLD = 5;
+    // A range for a float value.
     RANGE = 7;
     // If ENUM is used then the "enum_options" field should also be filled in which allows for
     // additional ModelTypeFields too depending on the enum choice.
     ENUM = 8;
+    // For listing collaborators of the app. The field is a string of the collaborator's user_id.
     COLLABORATORS = 9;
+    // For arbitrary json object: "{...}"
     JSON = 10;
     // Such as [1.0, 2.0, 3.5]
     ARRAY_OF_NUMBERS = 11;
+    // For selecting the embed_model_version_id for context based models.
+    // This is a string type in the API request.
+    WORKFLOW_EMBED_MODELS = 12;
   }
   // The field for this field.
   ModelTypeFieldType field_type = 2;
@@ -1081,9 +1094,23 @@ message ModelTypeField {
   repeated ModelTypeEnumOption model_type_enum_options = 6;
   // If this field should appear for internal users only.
   bool internal_only = 7;
+  // If this field is a required field. If True then during validation you won't be able to create
+  // a model of this type with providing a value for this field. When False, the ModelType's
+  // default_value will be used for this field.
+  bool required = 8;
+  // If the field_type is RANGE, this must be filled in.
+  ModelTypeRangeInfo model_type_range_info = 9;
 }
 
-
+message ModelTypeRangeInfo {
+  // The start of the range as a float.
+  float min = 1;
+  // The end of the range as a float.
+  float max = 2;
+  // An optional step size for the range. If provided then only values at that step size will be
+  // rounded to. For example if step is 0.02 then 0.0245 will round to 0.02.
+  float step = 3;
+}
 
 message ModelTypeEnumOption {
   // The unique value of the enum option.
@@ -1100,8 +1127,13 @@ message ModelTypeEnumOption {
 }
 
 message ModelQuery {
+  // The name ofthe field. This supports wilcard queries like "gen*" to match "general" as an example.
   string name = 1;
-  string type = 2;
+  // This is the legacy model type. Do not use, only kept for support in old API clients.
+  string type = 2 [deprecated = true];
+  // Filter models by the specific model_type_id. See ListModelTypes for the list of ModelType.Id's
+  // supported.
+  string model_type_id = 3;
 }
 enum ValueComparator {
   CONCEPT_THRESHOLD_NOT_SET = 0;
@@ -1169,6 +1201,8 @@ message PretrainedModelConfig {
   string data_provider_params = 5;
   // Url to a zipped up model in triton format with only version 1
   string model_zip_url = 6;
+  // Whether to overwrite the model for the existing internal id
+  bool overwrite = 7;
 }
 
 message TrainStats {
@@ -1749,9 +1783,6 @@ message Video {
 
 
 
-
-
-
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -1848,6 +1879,10 @@ message AppDuplicationFilters {
 }
 
 
+
+
+
+
 ////////////////////////////////////////////////////////////////////////////////
 // Tasks
 ////////////////////////////////////////////////////////////////////////////////
@@ -1876,7 +1911,7 @@ message Task {
   // Worker details.
   TaskWorker worker = 6;
 
-  // List of concept ids used in the work of this task.
+  // List of concept ids used in the work of this task if label type is classification.
   repeated string concept_ids = 7;
 
   // List of inputs used in this task will be taken from this source.
@@ -1910,17 +1945,71 @@ message Task {
 }
 
 message TaskWorker {
-  // Work strategy.
+  // Worker strategy.
   TaskWorkerStrategy strategy = 1;
 
   // Who will work on this task.
   repeated string user_ids = 2;
 
+  // Info based on the worker strategy,
+  oneof strategy_info {
+    TaskWorkerPartitionedStrategyInfo partitioned_strategy_info = 3;
+  }
+
   enum TaskWorkerStrategy {
+    reserved 1;
+
     WORKER_STRATEGY_NOT_SET = 0;
 
-    // Manual work strategy.
-    MANUAL= 1;
+    // The inputs will be partitioned in several partitions.
+    // Each worker will label one or more input partitions.
+    PARTITIONED = 2;
+
+    // Each worker will label all inputs from input source.
+    FULL = 3;
+  }
+}
+
+message TaskWorkerPartitionedStrategyInfo {
+  // Define how the partitioning should work.
+  TaskWorkerPartitionedStrategy type = 1;
+
+  // How many workers will label each input.
+  int32 workers_per_input = 2;
+
+  // In case of weighted partitioning, map user ids to weights.
+  // Each labeler will be assigned work proportional to its own weight as compared to the sum of total weight.
+  //
+  // EXAMPLE:
+  // If we have 3 workers, and weights = {1: 30, 2: 30, 3: 40},
+  // then first worker will have assigned 30% of the work,
+  // second worker will have assigned 30% of the work,
+  // and third worker will have assigned 40% of the work.
+  // You may use weights which add up to 100, but it's not necessary.
+  // For example, weights {1: 30, 2: 30, 3: 40} are equivalent with {1: 3, 2: 3, 3: 4}
+  // because they represent the same percentages: {1: 30%, 2: 30%, 3: 40%}.
+  //
+  // NOTE:
+  // Note that no worker should be assigned a weight percentage greater than 1/workers_per_input.
+  // It is mathematically impossible to partition the work in such a case.
+  // Why? Say, we have 3 workers. And workers_per_input = 2, i.e. each input must be labeled by 2 workers.
+  // Let's assign weights {1: 51%, 2: 25%, 3: 24%}.
+  // Note that first worker has a weight percentage higher than 1/workers_per_input = 1/2 = 50%.
+  // If we have 100 inputs, then a total of 100 * workers_per_input = 200 cumulative inputs will be labeled by these 3 workers.
+  // Worker 1 should label 102 cumulative inputs, while worker 2 and worker 3 will label 98 cumulative inputs together.
+  // No matter how we assign the 98 cumulative inputs, the 2 workers will be able to label up to 98 actual inputs.
+  // This means the remaining 2 inputs will be labeled only by worker 1. This contradicts the worker_per_input = 2 requirement.
+  google.protobuf.Struct weights = 3;
+
+  enum TaskWorkerPartitionedStrategy {
+    PARTITIONED_WORKER_STRATEGY_NOT_SET = 0;
+
+    // Each worker will label (approximately) the same number of inputs.
+    EVENLY = 1;
+
+    // Each worker will have an assigned weight.
+    // See weights field for more details.
+    WEIGHTED = 2;
   }
 }
 

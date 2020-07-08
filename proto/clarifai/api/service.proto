@@ -631,7 +631,19 @@ service V2 {
   // Models
   ////////////////////////////////////////
 
-  // List all the models available in the platform.
+  // Get a specific model type.
+  rpc GetModelType (GetModelTypeRequest) returns (SingleModelTypeResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/types/{model_type_id}"
+      additional_bindings {
+        get: "/v2/models/types/{model_type_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  }
+
+  // List all the model types available in the platform.
   rpc ListModelTypes (ListModelTypesRequest) returns (MultiModelTypeResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/types"
@@ -642,8 +654,6 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
-
-
 
   // Get a specific model from an app.
   rpc GetModel (GetModelRequest) returns (SingleModelResponse) {
@@ -1216,6 +1226,21 @@ service V2 {
     // option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
 
+  // Search over the applications to find one or more you're looking for.
+  // This leverage the "body" parameter because we also have page and
+  // per_page as url query param variables in this request.
+  rpc PostAppsSearches (PostAppsSearchesRequest) returns (MultiAppResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/searches"
+      additional_bindings {
+        get: "/v2/apps/searches"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+  }
+
 
 
 
@@ -1248,6 +1273,7 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = PasswordPolicies_Get;
   }
+
 
 
 
@@ -1338,6 +1364,8 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Metrics_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Metrics_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // as it needs to know the concepts in your workflow's models.
   }
 
   // Get the evaluation results between two search requests
@@ -1592,9 +1620,9 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // needed for converting workers internal ids to external ids
-    // option (clarifai.auth.util.cl_depending_scopes) = Predict; // optional, needed for add_annotations_for_task when saved search uses visual search
-    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add; // needed for add_annotations_for_task
-    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get; // needed for add_annotations_for_task
+    // option (clarifai.auth.util.cl_depending_scopes) = Predict; // optional, needed for add_task_annotations.go when saved search uses visual search
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add; // needed for add_task_annotations.go
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get; // needed for add_task_annotations.go
   }
 
   // Get a specific task from an app.
@@ -1647,9 +1675,9 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // needed for converting workers internal ids to external ids
-    // option (clarifai.auth.util.cl_depending_scopes) = Predict; // optional, needed for add_annotations_for_task when saved search uses visual search
-    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add; // needed for add_annotations_for_task
-    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get; // needed for add_annotations_for_task
+    // option (clarifai.auth.util.cl_depending_scopes) = Predict; // optional, needed for add_task_annotations.go when saved search uses visual search
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add; // needed for add_task_annotations.go
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get; // needed for add_task_annotations.go
   }
 
   // Delete multiple tasks in one request.
@@ -1665,7 +1693,15 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Tasks_Delete;
   }
+
+
+
+
+
+
+
 
 
   ////////////////////////////////////////
@@ -1946,6 +1982,16 @@ message PatchAppsRequest {
 
   // If set, the app will be automatically reindexed upon change of its base workflow.
   bool reindex = 5;
+}
+
+// Search over the available applications.
+message PostAppsSearchesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The body of the request.
+  AppQuery app_query = 2;
+  // Pagination parameters here since there are no url args in this
+  // POST request.
+  Pagination pagination = 3;
 }
 
 message SingleAppResponse {
@@ -2756,8 +2802,6 @@ message PostModelVersionMetricsRequest {
   clarifai.api.Search test_search = 5;
 }
 
-
-
 // Get the already computed evaluation metrics for this model
 // version.
 message GetModelVersionMetricsRequest {
@@ -2773,7 +2817,6 @@ message GetModelVersionMetricsRequest {
 
 
 
-
 // TODO: should we just move to this and get rid of above.
 // // Request to delete several things by the list of ids.
 // message DeleteModelVersionsRequest {
@@ -2784,6 +2827,12 @@ message GetModelVersionMetricsRequest {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+message GetModelTypeRequest {
+  // use and app combo. Not really used for this endpoint at this time so may go away in future.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The specific ModelType.Id you want to retrieve.
+  string model_type_id = 2;
+}
 
 message ListModelTypesRequest {
   // use and app combo. Not really used for this endpoint at this time so may go away in future.
@@ -2796,10 +2845,17 @@ message ListModelTypesRequest {
   uint32 per_page = 3;
 }
 
+message SingleModelTypeResponse {
+  // Status of the response.
+  clarifai.api.status.Status status = 1;
+  // The retrieved ModelType object. .
+  ModelType model_type = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
 message MultiModelTypeResponse {
   // Status of the response.
   clarifai.api.status.Status status = 1;
-  // List of ModelType objcts.
+  // List of ModelType objects.
   repeated ModelType model_types = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
@@ -3095,6 +3151,11 @@ message SinglePasswordValidationResponse {
 
 
 
+
+
+
+
+
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -3308,12 +3369,14 @@ message SingleTaskResponse {
 
 
 
+
+
+
+
+
 ////////////////////////////////////////////////////////////////////////////////
 // Collectors
 ////////////////////////////////////////////////////////////////////////////////
-
-
-
 
 // Request to create Collectors.
 message PostCollectorsRequest {
@@ -3337,8 +3400,6 @@ message DeleteCollectorsRequest {
   repeated string ids = 2;
   bool delete_all = 3;
 }
-
-
 
 // Request to GET a single Collector.
 message GetCollectorRequest {

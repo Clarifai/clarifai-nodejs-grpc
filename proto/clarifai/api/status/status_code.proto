@@ -48,6 +48,7 @@ enum StatusCode {
   // Custom model is currently in queue for training, waiting on assets to process first.
   MODEL_QUEUED_FOR_TRAINING = 21103;
   MODEL_UPLOADING = 21104;
+  MODEL_UPLOADING_FAILED = 21105;
 
   MODEL_TRAINING_NO_DATA = 21110; // Custom model training had no data.
   MODEL_TRAINING_NO_POSITIVES = 21111; // Custom model training had no positive examples.
@@ -321,13 +322,20 @@ enum StatusCode {
   SSO_IDENTITY_PROVIDER_DOES_NOT_EXIST = 53001;
 
   // Tasks 54xxx
-
   // The task was created.
   TASK_IN_PROGRESS = 54001;
   // The task is closed.
   TASK_DONE = 54002;
-  // The task was requested to be closed (with status DONE), but validation failed.
-  TASK_NOT_VALID_TO_CLOSE = 54100;
+  // The task operation is in conflict with the current state of the server.
+  TASK_CONFLICT = 54100;
+  // Certain task-related scenarios are not implemented.
+  TASK_NOT_IMPLEMENTED = 54101;
+
+  // Label Order Related Status Code 55xxx
+  LABEL_ORDER_PENDING = 55001;
+  LABEL_ORDER_IN_PROGRESS = 55002;
+  LABEL_ORDER_SUCCESS = 55003;
+  LABEL_ORDER_CANCELED = 55004;
 
   // License Related Status Code 600xx
   LICENSE_ACTIVE = 60000;
