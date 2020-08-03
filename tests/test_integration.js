@@ -19,7 +19,7 @@ describe("Integration Tests", () => {
     });
 
     it ("Lists concepts on gRPC channel", done => {
-        testListingConcepts(done, ClarifaiStub.insecureGrpc());
+        testListingConcepts(done, ClarifaiStub.grpc());
     });
 
     it("Predicts image URL on JSON channel", done => {
@@ -27,7 +27,7 @@ describe("Integration Tests", () => {
     });
 
     it("Predicts image URL on gRPC channel", done => {
-        testPredictingImageUrl(done, ClarifaiStub.insecureGrpc());
+        testPredictingImageUrl(done, ClarifaiStub.grpc());
     });
 
     it("Predicts image file on JSON channel", done => {
@@ -35,7 +35,7 @@ describe("Integration Tests", () => {
     });
 
     it("Predicts image file on gRPC channel", done => {
-        testPredictingImageFile(done, ClarifaiStub.insecureGrpc());
+        testPredictingImageFile(done, ClarifaiStub.grpc());
     });
 
     it("Failed predict on JSON channel", done => {
@@ -43,7 +43,7 @@ describe("Integration Tests", () => {
     });
 
     it("Failed predict on gRPC channel", done => {
-        testFailedPredict(done, ClarifaiStub.insecureGrpc());
+        testFailedPredict(done, ClarifaiStub.grpc());
     });
 
     it("List models with pagination 1 on JSON channel", done => {
@@ -51,7 +51,7 @@ describe("Integration Tests", () => {
     });
 
     it("List models with pagination 1 on gRPC channel", done => {
-        testListModelsWithPagination1(done, ClarifaiStub.insecureGrpc());
+        testListModelsWithPagination1(done, ClarifaiStub.grpc());
     });
 
     it("List models with pagination 2 on JSON channel", done => {
@@ -59,7 +59,7 @@ describe("Integration Tests", () => {
     });
 
     it("List models with pagination 2 on gRPC channel", done => {
-        testListModelsWithPagination2(done, ClarifaiStub.insecureGrpc());
+        testListModelsWithPagination2(done, ClarifaiStub.grpc());
     });
 
     it("Default value serialization on JSON channel", done => {
@@ -67,7 +67,7 @@ describe("Integration Tests", () => {
     });
 
     it("Default value serialization on gRPC channel", done => {
-        testDefaultValueDeserialization(done, ClarifaiStub.insecureGrpc());
+        testDefaultValueDeserialization(done, ClarifaiStub.grpc());
     });
 });
 
