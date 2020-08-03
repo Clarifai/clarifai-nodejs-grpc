@@ -60,7 +60,11 @@ function _recursivelyAddConceptValue(obj) {
 }
 
 class ClarifaiStub {
-    static grpc(base = 'api.clarifai.com') {
+    static grpc(base = undefined) {
+        if (base === undefined)
+            base = process.env.CLARIFAI_GRPC_BASE;
+        if (base === undefined)
+            base = "api.clarifai.com"
         const grpcProtoDescriptor = grpc.loadPackageDefinition(packageDefinition);
         return new grpcProtoDescriptor.clarifai.api.V2(base, grpc.ChannelCredentials.createSsl());
     }
