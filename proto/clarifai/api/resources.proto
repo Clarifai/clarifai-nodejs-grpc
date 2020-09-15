@@ -1603,7 +1603,14 @@ message AnnotationSearchMetrics {
 
   // The metric result
   EvalMetrics metrics = 3;
+
+  // data is filled out with the concepts used for this evaluation
+  Data data = 4;
+
+  // active_concept_count is the number of concepts for this evaluation
+  uint32 active_concept_count = 5;
 }
+
 
 
 
@@ -1816,6 +1823,8 @@ message WorkflowNode {
   // Each WorkflowNode can connect to multiple input nodes so that we can handle multi-model data
   // and more complex workflow operations.
   repeated NodeInput node_inputs = 3;
+  // suppress the output for workflow prediction
+  bool suppress_output = 4;
 }
 
 // NodeInput represents inputs to a node of the graph.
@@ -1836,6 +1845,8 @@ message WorkflowResult {
   Model model = 4;
   Input input = 5;
   repeated Output outputs = 6;
+  // Indicate if the output of this model is suppressed.
+  bool suppress_output = 7;
 }
 
 

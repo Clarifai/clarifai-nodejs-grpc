@@ -520,6 +520,7 @@ service V2 {
 
 
 
+
   // Patch one or more inputs.
   rpc PatchInputs (PatchInputsRequest) returns (MultiInputResponse) {
     option (google.api.http) = {
@@ -2491,6 +2492,8 @@ message PostInputsRequest {
 
 
 
+
+
 message PatchInputsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 
@@ -3109,6 +3112,9 @@ message MultiAnnotationSearchMetricsResponse {
 
 
 
+
+
+
 message PostValidatePasswordRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // password to be validated
@@ -3334,6 +3340,9 @@ message ListTasksRequest {
 
   // Get tasks that have ANY user from this list assigned as reviewer.
   repeated string review_user_ids = 5;
+
+  // Get label order tasks as well
+  bool including_label_order_tasks = 6;
 }
 
 // Request to patch a list of tasks.

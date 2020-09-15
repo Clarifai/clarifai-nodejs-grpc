@@ -20,7 +20,7 @@ extend google.protobuf.FieldOptions {
 
 extend google.protobuf.MethodOptions {
   // indicates if this rpc should be private. If true, then internal use only. If False,
-  // then publicly avaliable to world.
+  // then publicly available to world.
   bool cl_private_rpc = 80321;
 
   // For each grpc method we define a list of required low-level auth scopes that are needed

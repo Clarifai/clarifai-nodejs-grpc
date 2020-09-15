@@ -326,6 +326,8 @@ enum StatusCode {
   TASK_IN_PROGRESS = 54001;
   // The task is closed.
   TASK_DONE = 54002;
+  // An error occurred during add-task-annotations pipeline.
+  TASK_ADD_ANNOTATIONS_FAILURE = 54005;
   // The task operation is in conflict with the current state of the server.
   TASK_CONFLICT = 54100;
   // Certain task-related scenarios are not implemented.
@@ -350,6 +352,10 @@ enum StatusCode {
   PASSWORD_VALIDATION_SUCCESS = 61000;
   PASSWORD_VALIDATION_FAILED = 61001;
   PASSWORDPOLICY_INVALID_ARGUMENT = 61002;
+
+  // Feature flags status code
+  FEATUREFLAG_CONFIG_NOT_FOUND = 62000;
+  FEATUREFLAG_INVALID_ARGUMENT = 62001;
 
   // TODO: Knowledge graph related 80xxx
 
