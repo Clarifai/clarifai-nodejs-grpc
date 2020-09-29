@@ -7,8 +7,8 @@ This is the official Clarifai Node.js gRPC client.
 In addition to the actual gRPC channel, it is also possible to use a JSON channel, which uses
 JSON & HTTP/REST, while using the same request / response handling code.
 
-![Build](https://github.com/Clarifai/clarifai-javascript-grpc/workflows/Run%20tests/badge.svg)
-![npm](https://img.shields.io/npm/v/clarifai-nodejs-grpc)
+[![Build](https://github.com/Clarifai/clarifai-javascript-grpc/workflows/Run%20tests/badge.svg)](https://github.com/Clarifai/clarifai-nodejs-grpc/actions)
+[![npm](https://img.shields.io/npm/v/clarifai-nodejs-grpc)](https://www.npmjs.com/package/clarifai-nodejs-grpc)
 
 
 ## Installation
