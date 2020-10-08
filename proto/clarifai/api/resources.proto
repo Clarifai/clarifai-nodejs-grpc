@@ -2074,8 +2074,10 @@ message TaskReviewManualStrategyInfo {
 }
 
 message TaskReviewConsensusStrategyInfo {
+  reserved 1;
+
   // The number of labelers that need to agree in order to automatically approve an annotation.
-  uint32 quorum_necessary_for_approval = 1;
+  uint32 approval_threshold = 2;
 }
 
 message TaskAIAssistant {

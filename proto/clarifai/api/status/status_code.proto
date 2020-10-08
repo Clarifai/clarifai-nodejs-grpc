@@ -324,8 +324,10 @@ enum StatusCode {
   // Tasks 54xxx
   // The task was created.
   TASK_IN_PROGRESS = 54001;
-  // The task is closed.
+  // The task is completed.
   TASK_DONE = 54002;
+  // The task is marked as abandoned.
+  TASK_WONT_DO = 54003;
   // An error occurred during add-task-annotations pipeline.
   TASK_ADD_ANNOTATIONS_FAILURE = 54005;
   // The task operation is in conflict with the current state of the server.
@@ -356,6 +358,7 @@ enum StatusCode {
   // Feature flags status code
   FEATUREFLAG_CONFIG_NOT_FOUND = 62000;
   FEATUREFLAG_INVALID_ARGUMENT = 62001;
+  FEATUREFLAG_BLOCKED = 62002;
 
   // TODO: Knowledge graph related 80xxx
 
