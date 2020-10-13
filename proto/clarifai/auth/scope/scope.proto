@@ -44,12 +44,8 @@ enum S {
 
   // Make an rpc to our prediction services.
   Predict = 2 [(clarfai_exposed) = true];
-  Predict_Feedback = 29 [(clarfai_exposed) = false,
-                         deprecated = true];
   // Make an rpc to our search services.
   Search = 3 [(clarfai_exposed) = true];
-  Search_Feedback = 28 [(clarfai_exposed) = false,
-                        deprecated = true];
 
   // Write to the inputs table in the DB.
   Inputs_Add = 4 [(clarfai_exposed) = true,
@@ -259,29 +255,11 @@ enum S {
        (clarifai_depending_scopes) = PasswordPolicies_Add,
        (clarifai_depending_scopes) = PasswordPolicies_Get];
 
-  // Write to password_history table
-  PasswordHistory_Add = 60 [(clarfai_exposed) = false,
-      (clarifai_depending_scopes) = PasswordHistory_Get];
 
-  // Read from password_history table
-  PasswordHistory_Get = 61 [(clarfai_exposed) = false];
 
-  // To delete password history we need read/write
-  PasswordHistory_Delete = 62 [(clarfai_exposed) = false,
-       (clarifai_depending_scopes) = PasswordHistory_Add,
-       (clarifai_depending_scopes) = PasswordHistory_Get];
 
-  // Read from notifications table
-  Notifications_Get = 64 [(clarfai_exposed) = false];
 
-  // Write to notifications table
-  Notifications_Add = 65 [(clarfai_exposed) = false,
-      (clarifai_depending_scopes) = Notifications_Get];
 
-  // To delete notifications we need read/write
-  Notifications_Delete = 66 [(clarfai_exposed) = false,
-       (clarifai_depending_scopes) = Notifications_Add,
-       (clarifai_depending_scopes) = Notifications_Get];
 
   // Read from label orders table
   LabelOrders_Get = 67 [(clarfai_exposed) = true];
@@ -298,14 +276,19 @@ enum S {
   // Read from user_feature_configs table
   UserFeatureConfigs_Get = 71 [(clarfai_exposed) = true];
 
-  // Write to configs table
-  UserFeatureConfigs_Add = 72 [(clarfai_exposed) = false,
-      (clarifai_depending_scopes) = UserFeatureConfigs_Get];
 
-  // To delete configs we need read/write
-  UserFeatureConfigs_Delete = 73 [(clarfai_exposed) = false,
-       (clarifai_depending_scopes) = UserFeatureConfigs_Add,
-       (clarifai_depending_scopes) = UserFeatureConfigs_Get];
+
+
+
+
+
+
+
+
+                  
+  
+
+
 }
 
 extend google.protobuf.EnumValueOptions {

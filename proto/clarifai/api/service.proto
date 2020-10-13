@@ -1228,19 +1228,16 @@ service V2 {
   }
 
   // Search over the applications to find one or more you're looking for.
-  // This leverage the "body" parameter because we also have page and
-  // per_page as url query param variables in this request.
   rpc PostAppsSearches (PostAppsSearchesRequest) returns (MultiAppResponse) {
     option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/searches"
-      additional_bindings {
-        get: "/v2/apps/searches"
-      }
+      post: "/v2/apps/searches"
+      body: "*"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
+
 
 
 
@@ -1285,7 +1282,28 @@ service V2 {
 
 
 
-  ////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   ////////////////////////////////////////
   // Searches
@@ -1425,6 +1443,7 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Search;
   }
+
 
 
 
@@ -1625,6 +1644,18 @@ service V2 {
     // option (clarifai.auth.util.cl_depending_scopes) = Predict; // optional, needed for add_task_annotations.go when saved search uses visual search
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add; // needed for add_task_annotations.go
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get; // needed for add_task_annotations.go
+  }
+
+  // Task annotation counts
+  rpc GetTaskAnnotationsCount (GetTaskAnnotationsCountRequest) returns (SingleTaskAnnotationsCountResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/annotations/count"
+      additional_bindings {
+        get: "/v2/tasks/{task_id}/annotations/count"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
   }
 
   // Get a specific task from an app.
@@ -2670,7 +2701,6 @@ message GetModelRequest {
   bool trained_before = 5;
 }
 
-
 message ListModelsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
@@ -3129,6 +3159,7 @@ message MultiAnnotationSearchMetricsResponse {
 
 
 
+
 message PostValidatePasswordRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // password to be validated
@@ -3140,6 +3171,33 @@ message SinglePasswordValidationResponse {
   clarifai.api.status.Status status = 1;
   PasswordViolations password_violations = 2;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3386,6 +3444,24 @@ message MultiTaskResponse {
 message SingleTaskResponse {
   clarifai.api.status.Status status = 1;
   Task task = 2;
+}
+
+// Request to get tasks annotations count per user per status
+message GetTaskAnnotationsCountRequest{
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // task_id for which count per user per status is needed
+  string task_id = 2;
+
+  // for given task_id, user_ids to filter on
+  repeated string user_ids= 3;
+}
+
+message SingleTaskAnnotationsCountResponse {
+  clarifai.api.status.Status status = 1;
+  string app_id = 2;
+  string task_id = 3;
+  repeated TaskAnnotationStatusCountPerUser counts = 4;
 }
 
 

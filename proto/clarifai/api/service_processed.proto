@@ -1228,19 +1228,16 @@ service V2 {
   }
 
   // Search over the applications to find one or more you're looking for.
-  // This leverage the "body" parameter because we also have page and
-  // per_page as url query param variables in this request.
   rpc PostAppsSearches (PostAppsSearchesRequest) returns (MultiAppResponse) {
     option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/searches"
-      additional_bindings71 {
-        get: "/v2/apps/searches"
-      }
+      post: "/v2/apps/searches"
+      body: "*"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
+
 
 
 
@@ -1266,7 +1263,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/validate_password"
       body: "*"
-      additional_bindings72 {
+      additional_bindings71 {
         post: "/v2/validate_password"
         body: "*"
       }
@@ -1285,7 +1282,28 @@ service V2 {
 
 
 
-  ////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   ////////////////////////////////////////
   // Searches
@@ -1295,7 +1313,7 @@ service V2 {
   rpc GetSearch (GetSearchRequest) returns (SingleSearchResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches/{id}"
-      additional_bindings73 {
+      additional_bindings72 {
         get: "/v2/searches/{id}"
       }
     };
@@ -1307,7 +1325,7 @@ service V2 {
   rpc ListSearches (ListSearchesRequest) returns (MultiSearchResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches"
-      additional_bindings74 {
+      additional_bindings73 {
         get: "/v2/searches"
       }
     };
@@ -1320,7 +1338,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches"
       body: "*"
-      additional_bindings75 {
+      additional_bindings74 {
         post: "/v2/searches"
         body: "*"
       }
@@ -1340,7 +1358,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches/{id}"
       body: "*"
-      additional_bindings76 {
+      additional_bindings75 {
         post: "/v2/searches/{id}"
         body: "*"
       }
@@ -1354,7 +1372,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations/searches/metrics"
       body: "*"
-      additional_bindings77 {
+      additional_bindings76 {
         post: "/v2/annotations/searches/metrics"
         body: "*"
       }
@@ -1373,7 +1391,7 @@ service V2 {
   rpc GetAnnotationSearchMetrics(GetAnnotationSearchMetricsRequest) returns (MultiAnnotationSearchMetricsResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations/searches/metrics/{id}"
-      additional_bindings78 {
+      additional_bindings77 {
         get: "/v2/annotations/searches/metrics/{id}"
       }
     };
@@ -1390,7 +1408,7 @@ service V2 {
   rpc ListAnnotationSearchMetrics(ListAnnotationSearchMetricsRequest) returns (MultiAnnotationSearchMetricsResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations/searches/metrics"
-      additional_bindings79 {
+      additional_bindings78 {
         get: "/v2/annotations/searches/metrics"
       }
     };
@@ -1404,7 +1422,7 @@ service V2 {
   rpc DeleteAnnotationSearchMetrics (DeleteAnnotationSearchMetricsRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations/searches/metrics/{id}"
-      additional_bindings80 {
+      additional_bindings79 {
         delete: "/v2/annotations/searches/metrics/{id}"
       }
     };
@@ -1418,13 +1436,14 @@ service V2 {
   rpc DeleteSearch (DeleteSearchRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches/{id}"
-      additional_bindings81 {
+      additional_bindings80 {
         delete: "/v2/searches/{id}"
       }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Search;
   }
+
 
 
 
@@ -1545,7 +1564,7 @@ service V2 {
   rpc ListCollaborations (ListCollaborationsRequest) returns (MultiCollaborationsResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/collaborations"
-      additional_bindings82 {
+      additional_bindings81 {
         get: "/v2/collaborations"
       }
     };
@@ -1609,7 +1628,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks"
       body: "*"
-      additional_bindings83 {
+      additional_bindings82 {
         post: "/v2/tasks"
         body: "*"
       }
@@ -1625,6 +1644,18 @@ service V2 {
     // option (clarifai.auth.util.cl_depending_scopes) = Predict; // optional, needed for add_task_annotations.go when saved search uses visual search
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add; // needed for add_task_annotations.go
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get; // needed for add_task_annotations.go
+  }
+
+  // Task annotation counts
+  rpc GetTaskAnnotationsCount (GetTaskAnnotationsCountRequest) returns (SingleTaskAnnotationsCountResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/annotations/count"
+      additional_bindings83 {
+        get: "/v2/tasks/{task_id}/annotations/count"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
   }
 
   // Get a specific task from an app.
@@ -2670,7 +2701,6 @@ message GetModelRequest {
   bool trained_before = 5;
 }
 
-
 message ListModelsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
@@ -3129,6 +3159,7 @@ message MultiAnnotationSearchMetricsResponse {
 
 
 
+
 message PostValidatePasswordRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // password to be validated
@@ -3140,6 +3171,33 @@ message SinglePasswordValidationResponse {
   clarifai.api.status.Status status = 1;
   PasswordViolations password_violations = 2;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3386,6 +3444,24 @@ message MultiTaskResponse {
 message SingleTaskResponse {
   clarifai.api.status.Status status = 1;
   Task task = 2;
+}
+
+// Request to get tasks annotations count per user per status
+message GetTaskAnnotationsCountRequest{
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // task_id for which count per user per status is needed
+  string task_id = 2;
+
+  // for given task_id, user_ids to filter on
+  repeated string user_ids= 3;
+}
+
+message SingleTaskAnnotationsCountResponse {
+  clarifai.api.status.Status status = 1;
+  string app_id = 2;
+  string task_id = 3;
+  repeated TaskAnnotationStatusCountPerUser counts = 4;
 }
 
 

@@ -105,7 +105,7 @@ message App {
 }
 
 message AppQuery {
-  // The name of the field. This supports wildcard queries like "gen*" to match "general" as an example.
+  // Query by application name. This supports wildcard queries like "gen*" to match "general" as an example.
   string name = 1;
 }
 
@@ -740,6 +740,9 @@ message HostedURL {
   // The sizes field lists which images of the different sizes are hosted in our storage. The URL
   // of each hosted image can be obtained by joining the prefix, one of the sizes and suffix.
   repeated string sizes = 3;
+  // The crossorigin property of html media tag
+  // For Secure Data Hosting this needs to be set to 'use-credentials'
+  string crossorigin = 4;
 }
 
 
@@ -1040,6 +1043,10 @@ message ModelType {
   // into input_info, train_info and output_info related parameters and instead use the path
   // so that they are most flexible.
   repeated ModelTypeField model_type_fields = 11;
+
+  // For sequence models we need to know when processing that they require temporal time frames
+  // in sequential order. This will be true for model types like trackers as an example.
+  bool requires_sequential_frames = 12;
 }
 
 // For each field in ModelType.model_type_fields we defined them with ModelTypeField
@@ -1583,6 +1590,10 @@ message Filter {
 
   // FILTER by annotation information.
   Annotation annotation = 4;
+
+  // FILTER by input information.
+  // For example you can filter inputs by status,
+  Input input = 5;
 }
 
 message Rank {
@@ -1703,6 +1714,9 @@ message User {
   // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
   google.protobuf.Struct metadata = 11;
   repeated EmailAddress email_addresses = 12;
+  bool is_org_admin  = 14;
+  bool two_factor_auth_enabled = 15;
+  uint32 teams_count = 16;
 }
 
 message EmailAddress {
@@ -2086,6 +2100,18 @@ message TaskAIAssistant {
   // If empty, then AI assistant is disabled.
   string workflow_id = 1;
 }
+
+message TaskAnnotationStatusCountPerUser {
+  string user_id = 1;
+  uint32 pending = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+  uint32 awaiting_review = 3 [(clarifai.api.utils.cl_show_if_empty) = true];
+  uint32 success = 4 [(clarifai.api.utils.cl_show_if_empty) = true];
+  uint32 review_denied = 5 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
