@@ -28,8 +28,6 @@ jobs:
       env:
         CLARIFAI_USER_EMAIL: ${{ secrets.CLARIFAI_USER_EMAIL }}
         CLARIFAI_USER_PASSWORD: ${{ secrets.CLARIFAI_USER_PASSWORD }}
-      # It's not possible to make key & ID values secret in the logs, but it shouldn't be a problem since they are
-      # deleted in the clean up step.
       run: |
         export CLARIFAI_APP_ID="$(python scripts/app_and_key_for_tests.py --create-app javascript-github)"
         export CLARIFAI_API_KEY="$(python scripts/app_and_key_for_tests.py --create-key ${CLARIFAI_APP_ID})"
