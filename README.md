@@ -20,13 +20,17 @@ npm install clarifai-nodejs-grpc
 
 ## Getting started
 
-Construct the stub variant you want to use:
+Construct the Clarifai stub, which contains all the methods available in the Clarifai API:
 
 ```javascript
-// Construct one of the stubs you want to use
-const stub = ClarifaiStub.json();
-const stub = ClarifaiStub.insecureGrpc();
+const stub = ClarifaiStub.grpc();
 ```
+
+> Alternatives to the encrypted gRPC channel (`ClarifaiStub.grpc()`) are:
+> - the HTTPS+JSON channel (`ClarifaiStub.json()`), and
+> - the unencrypted gRPC channel (`ClarifaiCStub.insecureGrpc()`).
+>
+> We only recommend them in special cases.
 
 Predict concepts in a image:
 
