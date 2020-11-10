@@ -1305,6 +1305,20 @@ service V2 {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   ////////////////////////////////////////
   // Searches
   ////////////////////////////////////////
@@ -3171,6 +3185,24 @@ message SinglePasswordValidationResponse {
   clarifai.api.status.Status status = 1;
   PasswordViolations password_violations = 2;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

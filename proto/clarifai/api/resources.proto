@@ -65,6 +65,11 @@ message Annotation {
 
   // Is this the input level annotation.
   bool input_level = 17;
+
+  // Consensus review related information, e.g.
+  // * annotation group
+  // * id of annotation parent, in case the annotation was split from another annotation
+  google.protobuf.Struct consensus_info = 18;
 }
 
 
@@ -1047,6 +1052,16 @@ message ModelType {
   // For sequence models we need to know when processing that they require temporal time frames
   // in sequential order. This will be true for model types like trackers as an example.
   bool requires_sequential_frames = 12;
+
+  // Can this model be evaluated?
+  bool evaluable = 13;
+
+
+  // Maps input_fields to the more granular data fields needed to parse a triton models inputs 
+  google.protobuf.Struct expected_pretrained_input_fields = 14;
+
+  // Maps output_fields to the more granular data fields needed to parse a triton models outputs 
+  google.protobuf.Struct expected_pretrained_output_fields = 15;
 }
 
 // For each field in ModelType.model_type_fields we defined them with ModelTypeField
@@ -2107,7 +2122,12 @@ message TaskAnnotationStatusCountPerUser {
   uint32 awaiting_review = 3 [(clarifai.api.utils.cl_show_if_empty) = true];
   uint32 success = 4 [(clarifai.api.utils.cl_show_if_empty) = true];
   uint32 review_denied = 5 [(clarifai.api.utils.cl_show_if_empty) = true];
+  uint32 awaiting_consensus_review = 6 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
+
+
+
+
 
 
 
