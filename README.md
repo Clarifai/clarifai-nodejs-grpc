@@ -34,13 +34,10 @@ Construct the Clarifai stub, which contains all the methods available in the Cla
 const stub = ClarifaiStub.grpc();
 ```
 
-> Alternatives to the encrypted gRPC channel (`ClarifaiStub.grpc()`) are:
-> - the HTTPS+JSON channel (`ClarifaiStub.json()`), and
-> - the unencrypted gRPC channel (`ClarifaiCStub.insecureGrpc()`).
->
-> We only recommend them in special cases.
+> An alternative to the encrypted gRPC channel is the unencrypted gRPC channel (`ClarifaiCStub.insecureGrpc()`).
+> We only recommend the latter in special cases.
 
-Predict concepts in a image:
+Predict concepts in an image:
 
 ```javascript
 const metadata = new grpc.Metadata();

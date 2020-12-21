@@ -14,59 +14,31 @@ metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY);
 
 
 describe("Integration Tests", () => {
-    it ("Lists concepts on JSON channel", done => {
-        testListingConcepts(done, ClarifaiStub.json());
-    });
-
-    it ("Lists concepts on gRPC channel", done => {
+    it ("Lists concepts", done => {
         testListingConcepts(done, ClarifaiStub.grpc());
     });
 
-    it("Predicts image URL on JSON channel", done => {
-        testPredictingImageUrl(done, ClarifaiStub.json());
-    });
-
-    it("Predicts image URL on gRPC channel", done => {
+    it("Predicts image URL", done => {
         testPredictingImageUrl(done, ClarifaiStub.grpc());
     });
 
-    it("Predicts image file on JSON channel", done => {
-        testPredictingImageFile(done, ClarifaiStub.json());
-    });
-
-    it("Predicts image file on gRPC channel", done => {
+    it("Predicts image file", done => {
         testPredictingImageFile(done, ClarifaiStub.grpc());
     });
 
-    it("Failed predict on JSON channel", done => {
-        testFailedPredict(done, ClarifaiStub.json());
-    });
-
-    it("Failed predict on gRPC channel", done => {
+    it("Failed predict", done => {
         testFailedPredict(done, ClarifaiStub.grpc());
     });
 
-    it("List models with pagination 1 on JSON channel", done => {
-        testListModelsWithPagination1(done, ClarifaiStub.json());
-    });
-
-    it("List models with pagination 1 on gRPC channel", done => {
+    it("List models with pagination 1", done => {
         testListModelsWithPagination1(done, ClarifaiStub.grpc());
     });
 
-    it("List models with pagination 2 on JSON channel", done => {
-        testListModelsWithPagination2(done, ClarifaiStub.json());
-    });
-
-    it("List models with pagination 2 on gRPC channel", done => {
+    it("List models with pagination 2", done => {
         testListModelsWithPagination2(done, ClarifaiStub.grpc());
     });
 
-    it("Default value serialization on JSON channel", done => {
-        testDefaultValueDeserialization(done, ClarifaiStub.json());
-    });
-
-    it("Default value serialization on gRPC channel", done => {
+    it("Default value serialization", done => {
         testDefaultValueDeserialization(done, ClarifaiStub.grpc());
     });
 });
