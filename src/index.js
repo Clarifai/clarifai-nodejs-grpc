@@ -33,6 +33,15 @@ class ClarifaiStub {
         const grpcProtoDescriptor = grpc.loadPackageDefinition(packageDefinition);
         return new grpcProtoDescriptor.clarifai.api.V2('api-grpc.clarifai.com:18080', grpc.credentials.createInsecure());
     }
+
+    /**
+     * @deprecated ClarifaiStub.grpc() is not supported anymore, ClarifaiStub.grpc() will be used instead. Please switch
+     * to the latter.
+     */
+    static json() {
+        console.warn("ClarifaiStub.grpc() is not supported anymore, ClarifaiStub.grpc() will be used instead. Please switch to the latter.");
+        return ClarifaiStub.grpc();
+    }
 }
 
 module.exports = {ClarifaiStub};
