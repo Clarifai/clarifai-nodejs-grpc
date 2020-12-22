@@ -35,11 +35,11 @@ class ClarifaiStub {
     }
 
     /**
-     * @deprecated ClarifaiStub.grpc() is not supported anymore, ClarifaiStub.grpc() will be used instead. Please switch
+     * @deprecated ClarifaiStub.json() is not supported anymore, ClarifaiStub.grpc() will be used instead. Please switch
      * to the latter.
      */
     static json() {
-        console.warn("ClarifaiStub.grpc() is not supported anymore, ClarifaiStub.grpc() will be used instead. Please switch to the latter.");
+        console.warn("ClarifaiStub.json() is not supported anymore, ClarifaiStub.grpc() will be used instead. Please switch to the latter.");
         return ClarifaiStub.grpc();
     }
 }
