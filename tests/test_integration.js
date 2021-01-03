@@ -1,8 +1,7 @@
 const assert = require("assert");
-const grpc = require("@grpc/grpc-js");
 const {describe, it} = require("mocha");
 
-const {ClarifaiStub} = require('../src/index');
+const {ClarifaiStub, grpc} = require('../src/index');
 
 const DOG_IMAGE_URL = "https://samples.clarifai.com/dog2.jpeg";
 const RED_TRUCK_IMAGE_URL = "https://samples.clarifai.com/red-truck.png";

@@ -31,6 +31,8 @@ npm install clarifai-nodejs-grpc
 Construct the Clarifai stub, which contains all the methods available in the Clarifai API:
 
 ```javascript
+const {ClarifaiStub, grpc} = require("clarifai-nodejs-grpc");
+
 const stub = ClarifaiStub.grpc();
 ```
 

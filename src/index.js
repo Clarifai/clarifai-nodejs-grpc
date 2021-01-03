@@ -1,5 +1,16 @@
-const grpc = require("@grpc/grpc-js");
-const protoLoader = require('@grpc/proto-loader');
+let grpc;
+try {
+    grpc = require("clarifai-nodejs-grpc/node_modules/@grpc/grpc-js");
+} catch {
+    grpc = require("@grpc/grpc-js");
+}
+
+let protoLoader;
+try {
+    protoLoader = require("clarifai-nodejs-grpc/node_modules/@grpc/proto-loader");
+} catch {
+    protoLoader = require('@grpc/proto-loader');
+}
 
 const PROTO_PATH = __dirname + "/../proto";
 
@@ -44,4 +55,4 @@ class ClarifaiStub {
     }
 }
 
-module.exports = {ClarifaiStub};
+module.exports = {ClarifaiStub, grpc};
