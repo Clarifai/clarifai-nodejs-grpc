@@ -37,8 +37,8 @@ describe("Integration Tests", () => {
         testListModelsWithPagination2(done, ClarifaiStub.grpc());
     });
 
-    it("Default value serialization", done => {
-        testDefaultValueDeserialization(done, ClarifaiStub.grpc());
+    it("Promise wrappers", done => {
+        testPromiseWrappers(done, ClarifaiStub.grpc());
     });
 });
 
@@ -197,7 +197,7 @@ function testListModelsWithPagination2(done, stub) {
     );
 }
 
-function testDefaultValueDeserialization(done, stub) {
+function testPromiseWrappers(done, stub) {
     function postInputsAsync(...params) {
         return new Promise((resolve, reject) => {
             stub.PostInputs(...params, (err, response) => {
