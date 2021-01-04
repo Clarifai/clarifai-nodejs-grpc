@@ -47,6 +47,7 @@ metadata.set("authorization", "Key YOUR_CLARIFAI_API_KEY");
 
 stub.PostModelOutputs(
     {
+        // This is the model ID of a publicly available General model. You may use any other public or custom model ID.
         model_id: "aaa03c23b3724a16a56b629203edc62c",
         inputs: [{data: {image: {url: "YOUR_IMAGE_URL"}}}]
     },
@@ -69,3 +70,6 @@ stub.PostModelOutputs(
 );
 ```
 
+> Note: Do not require the `grpc` library directly via `const grpc = require("@grpc/grpc-js");`. This produces
+> authentication issues (via `grpc.Metadata`) whenever any other co-installed libraries have the `@grpc/grpc-js`
+> dependency (of a different version). Instead, require `grpc` as shown above.
