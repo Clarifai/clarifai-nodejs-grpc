@@ -36,9 +36,6 @@ const {ClarifaiStub, grpc} = require("clarifai-nodejs-grpc");
 const stub = ClarifaiStub.grpc();
 ```
 
-> An alternative to the encrypted gRPC channel is the unencrypted gRPC channel (`ClarifaiCStub.insecureGrpc()`).
-> We only recommend the latter in special cases.
-
 Predict concepts in an image:
 
 ```javascript
