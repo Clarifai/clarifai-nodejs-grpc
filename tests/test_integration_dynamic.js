@@ -3,12 +3,7 @@ const {describe, it} = require("mocha");
 
 const {ClarifaiStub, grpc} = require('../src/index');
 
-const GENERIC_MODEL_ID = "aaa03c23b3724a16a56b629203edc62c";
-
-const DOG_IMAGE_URL = "https://samples.clarifai.com/dog2.jpeg";
-const RED_TRUCK_IMAGE_URL = "https://samples.clarifai.com/red-truck.png";
-const NON_EXISTING_IMAGE_URL = "https://example.com/non-existing.jpg";
-const METRO_NORTH_IMAGE_FILE_PATH = "tests/assets/metro-north.jpg";
+const common = require("./common");
 
 const metadata = new grpc.Metadata();
 metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY);
@@ -66,8 +61,8 @@ function testListConceptsDynamic(done, stub) {
 function testPredictImageUrlDynamic(done, stub) {
     stub.PostModelOutputs(
         {
-            model_id: GENERIC_MODEL_ID,
-            inputs: [{data: {image: {url: DOG_IMAGE_URL}}}]
+            model_id: common.GENERIC_MODEL_ID,
+            inputs: [{data: {image: {url: common.DOG_IMAGE_URL}}}]
         },
         metadata,
         (err, response) => {
@@ -90,11 +85,11 @@ function testPredictImageUrlDynamic(done, stub) {
 
 function testPredictImageFileDynamic(done, stub) {
     const fs = require("fs");
-    const imageBytes = fs.readFileSync(METRO_NORTH_IMAGE_FILE_PATH);
+    const imageBytes = fs.readFileSync(common.METRO_NORTH_IMAGE_FILE_PATH);
 
     stub.PostModelOutputs(
         {
-            model_id: GENERIC_MODEL_ID,
+            model_id: common.GENERIC_MODEL_ID,
             inputs: [{data: {image: {base64: imageBytes}}}]
         },
         metadata,
@@ -119,8 +114,8 @@ function testPredictImageFileDynamic(done, stub) {
 function testFailedPredictDynamic(done, stub) {
     stub.PostModelOutputs(
         {
-            model_id: GENERIC_MODEL_ID,
-            inputs: [{data: {image: {url: NON_EXISTING_IMAGE_URL}}}]
+            model_id: common.GENERIC_MODEL_ID,
+            inputs: [{data: {image: {url: common.NON_EXISTING_IMAGE_URL}}}]
         },
         metadata,
         (err, response) => {
@@ -235,7 +230,7 @@ function testPromiseWrappersDynamic(done, stub) {
                 {
                     data: {
                         image: {
-                            url: DOG_IMAGE_URL,
+                            url: common.DOG_IMAGE_URL,
                             allow_duplicate_url: true
                         },
                         concepts: [

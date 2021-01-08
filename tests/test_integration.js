@@ -6,20 +6,10 @@ const {V2Client} = require("../proto/clarifai/api/service_grpc_pb");
 const service = require("../proto/clarifai/api/service_pb");
 const resources = require("../proto/clarifai/api/resources_pb");
 
-const GENERIC_MODEL_ID = "aaa03c23b3724a16a56b629203edc62c";
-
-const DOG_IMAGE_URL = "https://samples.clarifai.com/dog2.jpeg";
-const RED_TRUCK_IMAGE_URL = "https://samples.clarifai.com/red-truck.png";
-const NON_EXISTING_IMAGE_URL = "https://example.com/non-existing.jpg";
-const METRO_NORTH_IMAGE_FILE_PATH = "tests/assets/metro-north.jpg";
+const common = require("./common");
 
 const metadata = new grpc.Metadata();
 metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY);
-
-// nadaljuj:
-// - podpiraj hkrati dynamic in static code, najbrz deprecate dynamic
-//     - najbrz naredi proto_dynamic mapo?
-// - fiksiraj verzije v Dockerfile
 
 describe("Integration Tests - static", () => {
     it("List concepts", done => {
@@ -81,14 +71,14 @@ function testPredictImageUrl(done) {
     const clarifai = makeClarifaiClient();
 
     const request = new service.PostModelOutputsRequest()
-        .setModelId(GENERIC_MODEL_ID);
+        .setModelId(common.GENERIC_MODEL_ID);
     request.addInputs(
         new resources.Input()
             .setData(
                 new resources.Data()
                     .setImage(
                         new resources.Image()
-                            .setUrl(DOG_IMAGE_URL)
+                            .setUrl(common.DOG_IMAGE_URL)
                     )
             )
     );
@@ -118,10 +108,10 @@ function testPredictImageFile(done) {
     const clarifai = makeClarifaiClient();
 
     const fs = require("fs");
-    const imageBytes = fs.readFileSync(METRO_NORTH_IMAGE_FILE_PATH);
+    const imageBytes = fs.readFileSync(common.METRO_NORTH_IMAGE_FILE_PATH);
 
     const request = new service.PostModelOutputsRequest();
-    request.setModelId(GENERIC_MODEL_ID);
+    request.setModelId(common.GENERIC_MODEL_ID);
     request.addInputs(
         new resources.Input()
             .setData(
@@ -158,14 +148,14 @@ function testFailedPredict(done) {
     const clarifai = makeClarifaiClient();
 
     const request = new service.PostModelOutputsRequest()
-        .setModelId(GENERIC_MODEL_ID);
+        .setModelId(common.GENERIC_MODEL_ID);
     request.addInputs(
         new resources.Input()
             .setData(
                 new resources.Data()
                     .setImage(
                         new resources.Image()
-                            .setUrl(NON_EXISTING_IMAGE_URL)
+                            .setUrl(common.NON_EXISTING_IMAGE_URL)
                     )
             )
     );
@@ -286,7 +276,7 @@ function testPromiseWrappers(done) {
     const data = new resources.Data();
     data.setImage(
         new resources.Image()
-            .setUrl(DOG_IMAGE_URL)
+            .setUrl(common.DOG_IMAGE_URL)
             .setAllowDuplicateUrl(true)
     );
     data.addConcepts(
