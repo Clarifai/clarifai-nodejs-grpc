@@ -1,7 +1,12 @@
 const assert = require("assert");
 const {describe, it} = require("mocha");
 
-const {ClarifaiStub, grpc} = require('../src/index');
+const {grpc} = require('../src/index');
+const {V2Client} = require("../proto/clarifai/api/service_grpc_pb");
+const service = require("../proto/clarifai/api/service_pb");
+const resources = require("../proto/clarifai/api/resources_pb");
+
+const GENERIC_MODEL_ID = "aaa03c23b3724a16a56b629203edc62c";
 
 const DOG_IMAGE_URL = "https://samples.clarifai.com/dog2.jpeg";
 const RED_TRUCK_IMAGE_URL = "https://samples.clarifai.com/red-truck.png";
@@ -11,40 +16,50 @@ const METRO_NORTH_IMAGE_FILE_PATH = "tests/assets/metro-north.jpg";
 const metadata = new grpc.Metadata();
 metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY);
 
+// nadaljuj:
+// - podpiraj hkrati dynamic in static code, najbrz deprecate dynamic
+//     - najbrz naredi proto_dynamic mapo?
+// - fiksiraj verzije v Dockerfile
 
-describe("Integration Tests", () => {
-    it ("Lists concepts", done => {
-        testListingConcepts(done, ClarifaiStub.grpc());
+describe("Integration Tests - static", () => {
+    it("List concepts", done => {
+        testListConcepts(done);
     });
 
-    it("Predicts image URL", done => {
-        testPredictingImageUrl(done, ClarifaiStub.grpc());
+    it("Predict image URL", done => {
+        testPredictImageUrl(done);
     });
 
-    it("Predicts image file", done => {
-        testPredictingImageFile(done, ClarifaiStub.grpc());
+    it("Predict image file", done => {
+        testPredictImageFile(done);
     });
 
     it("Failed predict", done => {
-        testFailedPredict(done, ClarifaiStub.grpc());
+        testFailedPredict(done);
     });
 
     it("List models with pagination 1", done => {
-        testListModelsWithPagination1(done, ClarifaiStub.grpc());
+        testListModelsWithPagination1(done);
     });
 
     it("List models with pagination 2", done => {
-        testListModelsWithPagination2(done, ClarifaiStub.grpc());
+        testListModelsWithPagination2(done);
     });
 
     it("Promise wrappers", done => {
-        testPromiseWrappers(done, ClarifaiStub.grpc());
+        testPromiseWrappers(done);
     });
 });
 
-function testListingConcepts(done, stub) {
-    stub.ListConcepts(
-        {},
+function makeClarifaiClient() {
+    return new V2Client("api.clarifai.com", grpc.ChannelCredentials.createSsl());
+}
+
+function testListConcepts(done) {
+    const client = makeClarifaiClient();
+
+    client.listConcepts(
+        new service.ListConceptsRequest(),
         metadata,
         (err, response) => {
             if (err) {
@@ -52,8 +67,8 @@ function testListingConcepts(done, stub) {
                 return;
             }
 
-            if (response.status.code !== 10000) {
-                done(new Error("Received status: " + response.status.description + "\n" + response.status.details));
+            if (response.getStatus().getCode() !== 10000) {
+                done(new Error("Received status: " + response.getStatus().getDescription() + "\n" + response.getStatus().getDetails()));
                 return;
             }
 
@@ -62,12 +77,24 @@ function testListingConcepts(done, stub) {
     );
 }
 
-function testPredictingImageUrl(done, stub) {
-    stub.PostModelOutputs(
-        {
-            model_id: "aaa03c23b3724a16a56b629203edc62c",
-            inputs: [{data: {image: {url: DOG_IMAGE_URL}}}]
-        },
+function testPredictImageUrl(done) {
+    const clarifai = makeClarifaiClient();
+
+    const request = new service.PostModelOutputsRequest()
+        .setModelId(GENERIC_MODEL_ID);
+    request.addInputs(
+        new resources.Input()
+            .setData(
+                new resources.Data()
+                    .setImage(
+                        new resources.Image()
+                            .setUrl(DOG_IMAGE_URL)
+                    )
+            )
+    );
+
+    clarifai.postModelOutputs(
+        request,
         metadata,
         (err, response) => {
             if (err) {
@@ -75,27 +102,39 @@ function testPredictingImageUrl(done, stub) {
                 return;
             }
 
-            if (response.status.code !== 10000) {
-                done(new Error("Received status: " + response.status.description + "\n" + response.status.details));
+            if (response.getStatus().getCode() !== 10000) {
+                done(new Error("Received status: " + response.getStatus().getDescription() + "\n" + response.getStatus().getDetails()));
                 return;
             }
 
-            assert.notEqual(response.outputs[0].data.concepts, 0);
+            assert.notStrictEqual(response.getOutputsList()[0].getData().getConceptsList().length, 0);
 
             done();
         }
     );
 }
 
-function testPredictingImageFile(done, stub) {
+function testPredictImageFile(done) {
+    const clarifai = makeClarifaiClient();
+
     const fs = require("fs");
     const imageBytes = fs.readFileSync(METRO_NORTH_IMAGE_FILE_PATH);
 
-    stub.PostModelOutputs(
-        {
-            model_id: "aaa03c23b3724a16a56b629203edc62c",
-            inputs: [{data: {image: {base64: imageBytes}}}]
-        },
+    const request = new service.PostModelOutputsRequest();
+    request.setModelId(GENERIC_MODEL_ID);
+    request.addInputs(
+        new resources.Input()
+            .setData(
+                new resources.Data()
+                    .setImage(
+                        new resources.Image()
+                            .setBase64(imageBytes)
+                    )
+            )
+    );
+
+    clarifai.postModelOutputs(
+        request,
         metadata,
         (err, response) => {
             if (err) {
@@ -103,24 +142,36 @@ function testPredictingImageFile(done, stub) {
                 return;
             }
 
-            if (response.status.code !== 10000) {
-                done(new Error("Received status: " + response.status.description + "\n" + response.status.details));
+            if (response.getStatus().getCode() !== 10000) {
+                done(new Error("Received status: " + response.getStatus().getDescription() + "\n" + response.getStatus().getDetails()));
                 return;
             }
 
-            assert.notEqual(response.outputs[0].data.concepts, 0);
+            assert.notStrictEqual(response.getOutputsList()[0].getData().getConceptsList(), 0);
 
             done();
         }
     );
 }
 
-function testFailedPredict(done, stub) {
-    stub.PostModelOutputs(
-        {
-            model_id: "aaa03c23b3724a16a56b629203edc62c",
-            inputs: [{data: {image: {url: NON_EXISTING_IMAGE_URL}}}]
-        },
+function testFailedPredict(done) {
+    const clarifai = makeClarifaiClient();
+
+    const request = new service.PostModelOutputsRequest()
+        .setModelId(GENERIC_MODEL_ID);
+    request.addInputs(
+        new resources.Input()
+            .setData(
+                new resources.Data()
+                    .setImage(
+                        new resources.Image()
+                            .setUrl(NON_EXISTING_IMAGE_URL)
+                    )
+            )
+    );
+
+    clarifai.postModelOutputs(
+        request,
         metadata,
         (err, response) => {
             if (err) {
@@ -128,30 +179,31 @@ function testFailedPredict(done, stub) {
                 return;
             }
 
-            if (response.status.code === 10000) {
+            if (response.getStatus().getCode() === 10000) {
                 done(new Error(
                     "Expected failed status, received 10000: " +
-                    response.status.description +
+                    response.getStatus().getDescription() +
                     "\n" +
-                    response.status.details
+                    response.getStatus().getDetails()
                 ));
                 return;
             }
 
-            assert.strictEqual(response.status.description, "Failure");
+            assert.strictEqual(response.getStatus().getDescription(), "Failure");
 
-            assert.strictEqual(response.outputs[0].status.code, 30002);  // Download failed.
+            assert.strictEqual(response.getOutputsList()[0].getStatus().getCode(), 30002);  // Download failed.
 
             done();
         }
     );
 }
 
-function testListModelsWithPagination1(done, stub) {
-    stub.ListModels(
-        {
-            per_page: 2
-        },
+function testListModelsWithPagination1(done) {
+    const clarifai = makeClarifaiClient();
+
+    clarifai.listModels(
+        new service.ListModelsRequest()
+            .setPerPage(2),
         metadata,
         (err, response) => {
             if (err) {
@@ -159,25 +211,26 @@ function testListModelsWithPagination1(done, stub) {
                 return;
             }
 
-            if (response.status.code !== 10000) {
-                done(new Error("Received status: " + response.status.description + "\n" + response.status.details));
+            if (response.getStatus().getCode() !== 10000) {
+                done(new Error("Received status: " + response.getStatus().getDescription() + "\n" + response.getStatus().getDetails()));
                 return;
             }
 
-            assert.strictEqual(response.models.length, 2);
+            assert.strictEqual(response.getModelsList().length, 2);
 
             done();
         }
     );
 }
 
-function testListModelsWithPagination2(done, stub) {
-    stub.ListModels(
-        {
-            // We shouldn 't have 1000*500 number of models, so the result should be empty.
-            page: 1000,
-            per_page: 500
-        },
+function testListModelsWithPagination2(done) {
+    const clarifai = makeClarifaiClient();
+
+    clarifai.listModels(
+        // We shouldn 't have 1000*500 number of models, so the result should be empty.
+        new service.ListModelsRequest()
+            .setPage(1000)
+            .setPerPage(500),
         metadata,
         (err, response) => {
             if (err) {
@@ -185,85 +238,84 @@ function testListModelsWithPagination2(done, stub) {
                 return;
             }
 
-            if (response.status.code !== 10000) {
-                done(new Error("Received status: " + response.status.description + "\n" + response.status.details));
+            if (response.getStatus().getCode() !== 10000) {
+                done(new Error("Received status: " + response.getStatus().getDescription() + "\n" + response.getStatus().getDetails()));
                 return;
             }
 
-            assert.strictEqual(response.models.length, 0);
+            assert.strictEqual(response.getModelsList().length, 0);
 
             done();
         }
     );
 }
 
-function testPromiseWrappers(done, stub) {
-    function postInputsAsync(...params) {
+function testPromiseWrappers(done) {
+    const clarifai = makeClarifaiClient();
+
+    function postInputsAsync(request, metadata) {
         return new Promise((resolve, reject) => {
-            stub.PostInputs(...params, (err, response) => {
+            clarifai.postInputs(request, metadata, (err, response) => {
                 if (err !== null) reject(err);
-                else if (response.status.code !== 10000) reject(response)
+                else if (response.getStatus().getCode() !== 10000) reject(response)
                 else resolve(response);
             });
         })
     }
 
-    function getInputAsync(...params) {
+    function getInputAsync(request, metadata) {
         return new Promise((resolve, reject) => {
-            stub.GetInput(...params, (err, response) => {
+            clarifai.getInput(request, metadata, (err, response) => {
                 if (err !== null) reject(err);
-                else if (response.status.code !== 10000) reject(response)
+                else if (response.getStatus().getCode() !== 10000) reject(response)
                 else resolve(response);
             });
         })
     }
 
-    function deleteInputAsync(...params) {
+    function deleteInputAsync(request, metadata) {
         return new Promise((resolve, reject) => {
-            stub.DeleteInput(...params, (err, response) => {
+            clarifai.deleteInput(request, metadata, (err, response) => {
                 if (err !== null) reject(err);
-                else if (response.status.code !== 10000) reject(response)
+                else if (response.getStatus().getCode() !== 10000) reject(response)
                 else resolve(response);
             });
         })
     }
+
+    const data = new resources.Data();
+    data.setImage(
+        new resources.Image()
+            .setUrl(DOG_IMAGE_URL)
+            .setAllowDuplicateUrl(true)
+    );
+    data.addConcepts(
+        new resources.Concept()
+            .setId("dog")
+    );
+    const postInputsRequest = new service.PostInputsRequest();
+    postInputsRequest.addInputs(
+        new resources.Input()
+            .setData(data)
+        );
 
     postInputsAsync(
-        {
-            inputs: [
-                {
-                    data: {
-                        image: {
-                            url: DOG_IMAGE_URL,
-                            allow_duplicate_url: true
-                        },
-                        concepts: [
-                            {
-                                id: "dog"
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
+        postInputsRequest,
         metadata
     )
         .then(response => {
             return getInputAsync(
-                {
-                    input_id: response.inputs[0].id
-                },
+                new service.GetInputRequest()
+                    .setInputId(response.getInputsList()[0].getId()),
                 metadata
             )
         })
         .then(response => {
             // We didn't set any concept value, so it should be set to 0 by default.
-            assert.strictEqual(response.input.data.concepts[0].value, 0);
+            assert.strictEqual(response.getInput().getData().getConceptsList()[0].getValue(), 0);
 
             return deleteInputAsync(
-                {
-                    input_id: response.input.id
-                },
+                new service.DeleteInputRequest().setInputId(response.getInput().getId()),
                 metadata
             );
         })
@@ -273,10 +325,11 @@ function testPromiseWrappers(done, stub) {
         .catch(err => {
             if (err.status) {
                 done(new Error(
-                    "Received status: " + err.status.code + " " + err.status.description + " " + err.status.details +
+                    "Received status: " + err.getStatus().getCode() + " " + err.getStatus().getDescription() + " " + err.getStatus().getDetails() +
                     ". Full response:\n" + JSON.stringify(err, null, 2)
                 ));
             } else {
+            	console.log("Got error: " + err);
                 done(new Error(err));
             }
         });
