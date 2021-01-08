@@ -30,7 +30,7 @@ npm install clarifai-nodejs-grpc
 
 There are two approaches to using this library: the dynamic and the static. The former has been around for a longer
 time, but latter provides type annotations via TypeScript declaration files which improves the IDE auto-completion
-experience. Otherwise approaches provide the exact same capabilities.
+experience to be more developer-friendly. Both approaches provide the exact same API capabilities.
 
 ### The dynamic approach
 
@@ -76,7 +76,7 @@ stub.PostModelOutputs(
 ```
 
 See more [in the Clarifai API Guide docs](https://docs.clarifai.com/api-guide/api-overview). Also see 
-[the integration tests](tree/master/tests/test_integration_dynamic.js);
+[the integration tests](tests/test_integration_dynamic.js).
 
 > Note: Do not require the `grpc` library directly via `const grpc = require("@grpc/grpc-js");`. This produces
 > authentication issues (via `grpc.Metadata`) whenever any other co-installed libraries have the `@grpc/grpc-js`
@@ -139,7 +139,7 @@ clarifai.postModelOutputs(
 ```
 
 See more [in the Clarifai API Guide docs](https://docs.clarifai.com/api-guide/api-overview). Also see
-[the integration tests](tree/master/tests/test_integration.js);
+[the integration tests](tests/test_integration.js).
 
 > Note: Currently, the NodeJS gRPC code examples [in the Clarifai documentation](https://docs.clarifai.com/api-guide/api-overview) 
 show only the dynamic approach. These code examples can easily be translated to the static approach, since the structure 
