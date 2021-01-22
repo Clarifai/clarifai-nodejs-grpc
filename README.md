@@ -2,9 +2,7 @@
 
 # Clarifai Node.js gRPC Client
 
-This is the official Clarifai Node.js gRPC client.
-
-This is the official Clarifai gRPC Go client for interacting with our powerful recognition
+This is the official Clarifai gRPC Node.js client for interacting with our powerful recognition
 [API](https://docs.clarifai.com).
 Clarifai provides a platform for data scientists, developers, researchers and enterprises to master the entire
 artificial intelligence lifecycle. Gather valuable business insights from images, video and text using computer vision
