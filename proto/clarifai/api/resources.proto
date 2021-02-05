@@ -88,6 +88,8 @@ message App {
   string name = 2;
   string default_language = 3;
   string default_workflow_id = 4;
+  //why is user_id present here when this message type is used in PostApps but completely ignored there? PostApp already specifies the userid in path but doesn't even actually use neither of userids, it instead used the id from auth context.
+  //This creates a lot of ambiguity, should always have different message types for Post/Get endpoints so that the minimum interface for each op can be described
   string user_id = 5;
   // When the app was created. We follow the XXXX timestamp
   // format. We use https://www.ietf.org/rfc/rfc3339.txt format:
@@ -186,6 +188,34 @@ message Audio {
   bytes base64 = 2;
   // If True then you will be allowed to have multiple urls.
   bool allow_duplicate_url = 4;
+  // The hosted field lists original audio hosted in Clarifai storage. This field is currently used
+  // only in response.
+  HostedURL hosted = 5;
+}
+
+// Track proto encodes information of a track over a number of frames
+message Track {
+  // track id
+  string id = 1;
+
+  // This is a recursive definition which can contain all the concepts,
+  // embeddings, etc. that are computed within this track.
+  Data data = 2;
+
+  // Here is where we store the track metadata.
+  message TrackInfo {
+    // Number of frames
+    uint32 num_frames = 1;
+    // Timestamp where track begins.
+    google.protobuf.Timestamp begin_time = 2;
+    // Timestamp where track ends.
+    google.protobuf.Timestamp end_time = 3;
+    // Quality of the track.
+    float quality = 4;
+  }
+
+  // The track information.
+  TrackInfo track_info = 3;
 }
 
 
@@ -414,6 +444,8 @@ message ConceptQuery {
   string name = 1;
   // (optional) The language of the concept name in a search. Defaults to English.
   string language = 2;
+  // (optional) The id of workflow. If no id is provided, then application base workflow is used.
+  string workflow_id = 3;
 }
 
 
@@ -469,7 +501,8 @@ message ConceptRelation {
   // will appear in queries as well.
   string predicate = 4;
 
-  // The knowledge graph id that this edge belongs to
+  // The knowledge graph id that this edge belongs to. If using the app's global knowledge graph
+  // and not a specific one then this should be the empty string "".
   string knowledge_graph_id = 5;
 }
 
@@ -561,6 +594,8 @@ message Data {
   Text text = 13;
   // Input and output audio.
   Audio audio = 14;
+  // Track information.
+  repeated Track tracks = 15;
 }
 
 // A region within the data.
@@ -1057,10 +1092,10 @@ message ModelType {
   bool evaluable = 13;
 
 
-  // Maps input_fields to the more granular data fields needed to parse a triton models inputs 
+  // Maps input_fields to the more granular data fields needed to parse a triton models inputs
   google.protobuf.Struct expected_pretrained_input_fields = 14;
 
-  // Maps output_fields to the more granular data fields needed to parse a triton models outputs 
+  // Maps output_fields to the more granular data fields needed to parse a triton models outputs
   google.protobuf.Struct expected_pretrained_output_fields = 15;
 }
 
@@ -1208,6 +1243,9 @@ message ModelVersion {
 
   // When training of this version was completed.
   google.protobuf.Timestamp completed_at = 10;
+
+  // Description about this version
+  string description = 11;
 }
 
 message PretrainedModelConfig {
@@ -1660,7 +1698,7 @@ message Text {
   string url = 2;
   bool allow_duplicate_url = 3;
   // The hosted field lists original text hosted in Clarifai storage. This field is currently used
-  // only in response..
+  // only in response.
   HostedURL hosted = 4;
 }
 
@@ -1840,6 +1878,8 @@ message Workflow {
   google.protobuf.Timestamp created_at = 3;
 
   repeated WorkflowNode nodes = 4;
+
+  google.protobuf.Struct metadata = 5;
 }
 
 message WorkflowNode {
@@ -1877,6 +1917,7 @@ message WorkflowResult {
   // Indicate if the output of this model is suppressed.
   bool suppress_output = 7;
 }
+
 
 
 
@@ -1972,6 +2013,8 @@ message Task {
   // Add a title for this task to quickly recognise it in a list of tasks.
   string name = 13;
 
+  AiAssistParameters ai_assist_params = 14;
+
   enum TaskType {
     TYPE_NOT_SET = 0;
 
@@ -1982,6 +2025,14 @@ message Task {
     // Polygon detection tasks annotate free-form regions around concepts in an image, frame of video or section of text.
     POLYGON_DETECTION = 3;
   }
+}
+
+message AiAssistParameters {
+  // Min and max threshold values for approving annotations by default based on prediction score
+  float min_threshold = 1;
+  float max_threshold = 2;
+  // ids of concept relations. Used in AI assist workflow
+  repeated string concept_relation_ids = 3;
 }
 
 message TaskWorker {
@@ -2116,7 +2167,14 @@ message TaskAIAssistant {
   string workflow_id = 1;
 }
 
-message TaskAnnotationStatusCountPerUser {
+
+
+
+// TaskStatusCountPerUser can represent -
+//    1. count of human created annotations for a user for each valid status
+//    2. count of inputs (anchor annotation) for a user for each valid status
+
+message TaskStatusCountPerUser {
   string user_id = 1;
   uint32 pending = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
   uint32 awaiting_review = 3 [(clarifai.api.utils.cl_show_if_empty) = true];

@@ -7,6 +7,7 @@ import "proto/clarifai/api/status/status.proto";
 import "proto/clarifai/api/utils/extensions.proto";
 import "proto/clarifai/auth/scope/scope.proto";
 import "proto/clarifai/auth/util/extension.proto";
+import "proto/clarifai/api/status/status_code.proto";
 
 import "google/api/annotations.proto";
 import "google/protobuf/duration.proto";
@@ -31,6 +32,68 @@ option objc_class_prefix = "CAIP";
 
 
 service V2 {
+
+
+
+
+
+  ////////////////////////////////////////
+  // Concept Relationships
+  ////////////////////////////////////////
+
+
+  // List concept relations between concepts in the platform.
+  // MUST be above ListConcepts so that if concept_id is empty this will still match
+  // /concepts/relations to list all the concept relations in the app.
+  rpc ListConceptRelations (ListConceptRelationsRequest) returns (MultiConceptRelationResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/relations"
+      additional_bindings {
+        get: "/v2/concepts/{concept_id}/relations"
+      }
+      additional_bindings {
+        get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/relations"
+      }
+      additional_bindings {
+        get: "/v2/concepts/relations"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+
+
+  // Post concept relations to create relations between concepts in the platform.
+  rpc PostConceptRelations (PostConceptRelationsRequest) returns (MultiConceptRelationResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/relations"
+      body: "*"
+      additional_bindings {
+        post: "/v2/concepts/{concept_id}/relations"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
+
+  // Post concept relations to create relations between concepts in the platform.
+  rpc DeleteConceptRelations (DeleteConceptRelationsRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/relations"
+      body: "*"
+      additional_bindings {
+        delete: "/v2/concepts/{concept_id}/relations"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  }
 
 
 
@@ -204,54 +267,6 @@ service V2 {
 
 
 
-  ////////////////////////////////////////
-  // Concept Relationships
-  ////////////////////////////////////////
-
-  // List concept relations between concepts in the platform.
-  rpc ListConceptRelations (ListConceptRelationsRequest) returns (MultiConceptRelationResponse) {
-    option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/relations"
-      additional_bindings {
-        get: "/v2/concepts/{concept_id}/relations"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
-  }
-
-
-
-  // Post concept relations to create relations between concepts in the platform.
-  rpc PostConceptRelations (PostConceptRelationsRequest) returns (MultiConceptRelationResponse) {
-    option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/relations"
-      body: "*"
-      additional_bindings {
-        post: "/v2/concepts/{concept_id}/relations"
-        body: "*"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
-  }
-
-  // Post concept relations to create relations between concepts in the platform.
-  rpc DeleteConceptRelations (DeleteConceptRelationsRequest) returns (clarifai.api.status.BaseResponse) {
-    option (google.api.http) = {
-      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/relations"
-      body: "*"
-      additional_bindings {
-        delete: "/v2/concepts/{concept_id}/relations"
-        body: "*"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Delete;
-    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
-  }
 
 
 
@@ -374,6 +389,20 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // to get the model for the worker.
   }
 
+  // Patch annotations status by worker id and task id.
+  rpc PatchAnnotationsStatus (PatchAnnotationsStatusRequest) returns (PatchAnnotationsStatusResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/task/{task_id}/annotations/status"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  }
+
   // Delete a single annotation.
   rpc DeleteAnnotation (DeleteAnnotationRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
@@ -439,7 +468,7 @@ service V2 {
   // Inputs
   ////////////////////////////////////////
 
-  // Patch one or more inputs.
+  // Get input count per status.
   rpc GetInputCount (GetInputCountRequest) returns (SingleInputCountResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/status"
@@ -459,6 +488,20 @@ service V2 {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/stream"
       additional_bindings {
         get: "/v2/inputs/stream"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+  }
+
+  // Get a specific input from an app.
+  rpc GetInputSamples (GetInputSamplesRequest) returns (MultiInputAnnotationResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/inputs/samples"
+      additional_bindings {
+        get: "/v2/tasks/{task_id}/inputs/samples"
       }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
@@ -645,6 +688,7 @@ service V2 {
   }
 
   // List all the model types available in the platform.
+  // This MUST be above ListModels so that the /models/types endpoint takes precedence.
   rpc ListModelTypes (ListModelTypesRequest) returns (MultiModelTypeResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/types"
@@ -1060,7 +1104,11 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
 
-  ////////////////////////////////////////
+
+
+
+
+
 
   ////////////////////////////////////////
   // API Keys
@@ -1271,6 +1319,7 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = PasswordPolicies_Get;
   }
+
 
 
 
@@ -1660,12 +1709,24 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get; // needed for add_task_annotations.go
   }
 
-  // Task annotation counts
-  rpc GetTaskAnnotationsCount (GetTaskAnnotationsCountRequest) returns (SingleTaskAnnotationsCountResponse) {
+  // Task annotation count
+  rpc GetTaskAnnotationCount (GetTaskCountRequest) returns (SingleTaskCountResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/annotations/count"
       additional_bindings {
         get: "/v2/tasks/{task_id}/annotations/count"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
+  }
+
+  // Task Input count
+  rpc GetTaskInputCount (GetTaskCountRequest) returns (SingleTaskCountResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/inputs/count"
+      additional_bindings {
+        get: "/v2/tasks/{task_id}/inputs/count"
       }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
@@ -1942,6 +2003,8 @@ message ListAnnotationsRequest {
 
   uint32 page = 7;
   uint32 per_page = 8;
+  // Flag to filter annotations by task_id
+  string task_id = 11;
 }
 
 message PostAnnotationsRequest {
@@ -1959,6 +2022,23 @@ message PatchAnnotationsRequest {
   // The action to perform on the patched objects
   // For now actions 'merge', 'overwrite', and 'remove' are supported
   string action = 3;
+}
+
+message PatchAnnotationsStatusRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // Annotation Status code
+  clarifai.api.status.StatusCode status_code = 2;
+  repeated string user_ids = 3;
+  string task_id = 4;
+  // 'overwrite' is supported
+  string action = 5;
+
+}
+
+message PatchAnnotationsStatusResponse {
+  clarifai.api.status.Status status = 1;
+  repeated string user_ids = 2;
+  uint32 updated_count = 3;
 }
 
 message DeleteAnnotationRequest {
@@ -2304,13 +2384,29 @@ message ListConceptRelationsRequest {
   // The user_id and app_id information.
   clarifai.api.UserAppIDSet user_app_id = 1;
   // The subject concept id in your app to get all the relationships for.
+  // Leave as an empty string (GET /concepts/relations) to list ALL the relations in the app.
+  //
+  // When listing all the relations it will only return one direction of the relationship
+  // with the predicate acting on the subject and not the inverse like is done when providing a
+  // concept_id so that we can return a reliable page size always.
+  //
+  // When providing a concept_id, if a hyponym is present in the DB such as:
+  // 'honey' (subject), 'hyponym' (predict for "is a kind of"), 'food' (object)
+  // then you can list the concept relations for 'honey' and get hyponym predicate with 'food'
+  // object.
+  // But you can also list the concept relations for 'food' and it will return the same hyponym
+  // relationship with 'honey' as subject and 'food' as predicate.
+  // Synonyms by nature are symmetrical relationships so either side can be the concept_id (subject)
+  // when listing the relations.
   string concept_id = 2;
   // This is part of the url so we can extend to multiple link types in the future.
   // Valid predicates are:
   // 'hypernyms'
   // 'hyponyms'
   string predicate = 3;
-  // This identifies the subgraph you want to search over, if any.
+  // If knowledge_graph_id is provided then just list relations from that knowledge graph.
+  // If not provided then list relations from all knowledge graphs including the global one for this
+  // app one (ie. knowledge_graph "") and any specific ones in the app.
   string knowledge_graph_id = 4;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
   // Defaults to 1.
@@ -2515,6 +2611,13 @@ message GetInputRequest {
   string input_id = 2;
 }
 
+message GetInputSamplesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string task_id = 2;
+  // URL param. If zero ids provided, returns for all task labelers
+  repeated string user_ids = 3;
+}
+
 message ListInputsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
@@ -2580,6 +2683,12 @@ message MultiInputResponse {
 
   clarifai.api.status.Status status = 1;
   repeated Input inputs = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+message MultiInputAnnotationResponse {
+
+  clarifai.api.status.Status status = 1;
+  repeated Hit hits = 3 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
 message SingleInputCountResponse {
@@ -2844,6 +2953,8 @@ message PostModelVersionsRequest {
   clarifai.api.Search test_search = 6;
   // whether to evaluate the transfer trained model after training
   bool evaluate_after_training = 7;
+  // Description about this training run
+  string description = 8;
 }
 
 
@@ -3092,6 +3203,7 @@ message PostAnnotationSearchMetricsRequest {
   clarifai.api.Search search_to_eval = 4;
 
   // List of concepts to evaluate are expected to be in data.concepts
+  // If nil, then all app concepts are used
   Data data = 5;
 
   // The type of evaluation to use
@@ -3185,6 +3297,10 @@ message SinglePasswordValidationResponse {
   clarifai.api.status.Status status = 1;
   PasswordViolations password_violations = 2;
 }
+
+
+
+
 
 
 
@@ -3380,6 +3496,13 @@ message PostWorkflowResultsSimilarityResponse {
 }
 
 
+
+
+
+
+
+
+
 ////////////////////////////////////////////////////////////////////////////////
 // App Duplication
 ////////////////////////////////////////////////////////////////////////////////
@@ -3478,22 +3601,27 @@ message SingleTaskResponse {
   Task task = 2;
 }
 
-// Request to get tasks annotations count per user per status
-message GetTaskAnnotationsCountRequest{
+// GetTaskCountRequest can be used for fetching -
+// 1. Task annotation count per user, per status
+// 1. Task input (anchor annotations) count per user, per status
+message GetTaskCountRequest{
   clarifai.api.UserAppIDSet user_app_id = 1;
 
   // task_id for which count per user per status is needed
   string task_id = 2;
 
-  // for given task_id, user_ids to filter on
+  // for given task_id, user_ids to filter on (optional)
   repeated string user_ids= 3;
 }
 
-message SingleTaskAnnotationsCountResponse {
+
+
+// SingleTaskCountResponse represent counts of annotations or inputs(anchor annotations) for labelers in given task
+message SingleTaskCountResponse {
   clarifai.api.status.Status status = 1;
   string app_id = 2;
   string task_id = 3;
-  repeated TaskAnnotationStatusCountPerUser counts = 4;
+  repeated TaskStatusCountPerUser counts = 4;
 }
 
 

@@ -140,6 +140,15 @@ enum S {
                          (clarifai_depending_scopes) = Workflows_Add,
                          (clarifai_depending_scopes) = Workflows_Get];
 
+  WorkflowMetrics_Get = 96 [(clarfai_exposed) = true];
+
+  WorkflowMetrics_Add = 97 [(clarfai_exposed) = true,
+                           (clarifai_depending_scopes) = WorkflowMetrics_Get];
+
+  WorkflowMetrics_Delete = 98 [(clarfai_exposed) = true,
+                              (clarifai_depending_scopes) = WorkflowMetrics_Add,
+                              (clarifai_depending_scopes) = WorkflowMetrics_Get];
+
   // Write to the visualizations DB table.
   // Deprecated
   TSNEVisualizations_Add = 24 [(clarifai_depending_scopes) = TSNEVisualizations_Get,
@@ -275,6 +284,8 @@ enum S {
 
   // Read from user_feature_configs table
   UserFeatureConfigs_Get = 71 [(clarfai_exposed) = true];
+
+
 
 
 

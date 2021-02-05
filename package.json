@@ -1,6 +1,6 @@
 {
   "name": "clarifai-nodejs-grpc",
-  "version": "7.0.3",
+  "version": "7.1.0",
   "description": "The official Clarifai Node.js gRPC client",
   "main": "src/index.js",
   "repository": "https://github.com/Clarifai/clarifai-javascript-grpc",
