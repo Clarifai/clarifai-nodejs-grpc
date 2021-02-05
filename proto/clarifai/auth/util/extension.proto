@@ -7,7 +7,7 @@ import "google/protobuf/descriptor.proto";
 
 package clarifai.auth.util;
 
-option go_package = "util";
+option go_package = "github.com/Clarifai/clarifai-go-grpc/proto/clarifai/auth/util";
 option java_multiple_files = true;
 option java_package = "com.clarifai.grpc.auth.util";
 option objc_class_prefix = "CAIP";

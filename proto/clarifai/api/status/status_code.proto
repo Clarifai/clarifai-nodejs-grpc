@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package clarifai.api.status;
 
-option go_package = "status";
+option go_package = "github.com/Clarifai/clarifai-go-grpc/proto/clarifai/api/status";
 option java_multiple_files = true;
 option java_package = "com.clarifai.grpc.api.status";
 option objc_class_prefix = "CAIP";
@@ -150,6 +150,7 @@ enum StatusCode {
   DATA_DUMP_PENDING = 25151;
   DATA_DUMP_FAILED = 25152;
   DATA_DUMP_IN_PROGRESS = 25153;
+  DATA_DUMP_NO_DATA = 25154;
 
   // Duplicate related 252xx
   APP_DUPLICATION_SUCCESS = 25200;
@@ -369,6 +370,12 @@ enum StatusCode {
   // Maintenance status code
   MAINTENANCE_SUCCESS = 63000;
   MAINTENANCE_FAILED = 63001;
+
+  // Generic Job status codes
+  JOB_QUEUED = 6400;
+  JOB_RUNNING = 6401;
+  JOB_COMPLETED = 6402;
+  JOB_FAILED = 6403;
 
   // TODO: Knowledge graph related 80xxx
 

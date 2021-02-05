@@ -5,7 +5,7 @@ import "proto/clarifai/api/status/status_code.proto";
 
 package clarifai.api.status;
 
-option go_package = "status";
+option go_package = "github.com/Clarifai/clarifai-go-grpc/proto/clarifai/api/status";
 option java_multiple_files = true;
 option java_package = "com.clarifai.grpc.api.status";
 option objc_class_prefix = "CAIP";

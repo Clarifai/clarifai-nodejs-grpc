@@ -9,7 +9,7 @@ import "google/protobuf/timestamp.proto";
 
 package clarifai.api;
 
-option go_package = "api";
+option go_package = "github.com/Clarifai/clarifai-go-grpc/proto/clarifai/api/api";
 option java_multiple_files = true;
 option java_package = "com.clarifai.grpc.api";
 option objc_class_prefix = "CAIP";
@@ -34,6 +34,7 @@ message Annotation {
   // The data passed along in this annotation.
   Data data = 3;
 
+  // task_id is deprecated in annotation_info. Use task_id
   google.protobuf.Struct annotation_info = 13;
 
   // ID of the user this annotation is created by
@@ -41,10 +42,8 @@ message Annotation {
   // ID of the model version this annotation is created by
   string model_version_id = 16;
 
-  // The embedding model version used make this annotation available for search and training
-  // Note that an annotation always have an 'embed_model_version_id' even if it is For human
-  // produced annotations i.e. if its worker is of type 'human' or 'app_owner'.
-  string embed_model_version_id = 14;
+  // DEPRECATED.
+  string embed_model_version_id = 14 [deprecated=true];
 
   // Annotation Status
   clarifai.api.status.Status status = 7;
@@ -70,6 +69,8 @@ message Annotation {
   // * annotation group
   // * id of annotation parent, in case the annotation was split from another annotation
   google.protobuf.Struct consensus_info = 18;
+  // The id of the task annotation belongs to
+  string task_id = 19;
 }
 
 
@@ -245,6 +246,8 @@ message Cluster {
 
   // Representative hits for cluster (for now we only return 1)
   repeated Hit hits = 4;
+
+  repeated float projection = 5;
 }
 
 
@@ -1348,6 +1351,21 @@ message BinaryMetrics {
 
 }
 
+message TrackerMetrics {
+  // Multiple object tracking accuracy
+  float mot_mota = 1;
+  // Number of switches between tracks
+  int32 mot_num_switches = 2;
+  // MORSE fragmentation rate (a.k.a unique switch rate, only calculated in public sector)
+  float morse_frag = 3;
+  // Average precision calculated from all processed frames
+  float avg_precision = 4;
+  // The concept that we are evaluating the tracker
+  string aiid = 5;
+  // Same as morse_frag but calculated using MOT mapping/metrics
+  float unique_switch_rate = 6;
+}
+
 message EvalTestSetEntry {
   // Input CFID
   string id = 1;
@@ -1427,6 +1445,7 @@ message EvalMetrics {
   repeated EvalTestSetEntry test_set = 7;
   repeated BinaryMetrics metrics_by_area = 8;
   repeated BinaryMetrics metrics_by_class = 9;
+  repeated TrackerMetrics tracker_metrics = 11;
 }
 
 
@@ -2183,6 +2202,11 @@ message TaskStatusCountPerUser {
   uint32 awaiting_consensus_review = 6 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+enum RoleType {
+  TEAM = 0;
+  ORG = 1;
+}
+
 
 
 
@@ -2400,6 +2424,10 @@ enum StatTimeAggType {
 /*
     SDK Billing Cycle defines which year and month is associated with the billing data
 */
+
+
+
+
 
 
 

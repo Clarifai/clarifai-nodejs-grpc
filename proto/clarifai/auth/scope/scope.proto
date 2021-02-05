@@ -4,7 +4,7 @@ import "google/protobuf/descriptor.proto";
 
 package clarifai.auth.scope;
 
-option go_package = "scope";
+option go_package = "github.com/Clarifai/clarifai-go-grpc/proto/clarifai/auth/scope";
 option java_multiple_files = true;
 option java_package = "com.clarifai.grpc.auth.scope";
 option objc_class_prefix = "CAIP";
@@ -306,6 +306,16 @@ enum S {
 
 
 
+
+  
+
+  // CRUD on FindDuplicateAnnotationsJobs table
+  FindDuplicateAnnotationsJobs_Add = 102 [(clarfai_exposed) = true,
+  (clarifai_depending_scopes) = FindDuplicateAnnotationsJobs_Get];
+  FindDuplicateAnnotationsJobs_Get = 103 [(clarfai_exposed) = true];
+  FindDuplicateAnnotationsJobs_Delete = 104 [(clarfai_exposed) = true,
+        (clarifai_depending_scopes) = FindDuplicateAnnotationsJobs_Add,
+        (clarifai_depending_scopes) = FindDuplicateAnnotationsJobs_Get];
 
 }
 

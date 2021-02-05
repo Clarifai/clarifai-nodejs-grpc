@@ -17,7 +17,7 @@ import "google/protobuf/timestamp.proto";
 
 package clarifai.api;
 
-option go_package = "api";
+option go_package = "github.com/Clarifai/clarifai-go-grpc/proto/clarifai/api/api";
 option java_multiple_files = true;
 option java_package = "com.clarifai.grpc.api";
 option objc_class_prefix = "CAIP";
@@ -382,6 +382,7 @@ service V2 {
       }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
@@ -1278,8 +1279,12 @@ service V2 {
   // Search over the applications to find one or more you're looking for.
   rpc PostAppsSearches (PostAppsSearchesRequest) returns (MultiAppResponse) {
     option (google.api.http) = {
-      post: "/v2/apps/searches"
+      post: "/v2/users/{user_app_id.user_id}/apps/searches"
       body: "*"
+      additional_bindings: {
+        post: "/v2/apps/searches"
+        body: "*"
+      }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
@@ -1319,6 +1324,14 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = PasswordPolicies_Get;
   }
+
+
+
+
+
+
+
+
 
 
 
@@ -1932,6 +1945,11 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
   }
+
+
+
+
+
 
 
 }
@@ -3328,6 +3346,28 @@ message SinglePasswordValidationResponse {
 
 
 
+enum OrganizationInvitationStatus {
+  NOT_SET = 0;
+  PENDING = 1;
+  ACCEPTED = 2;
+  CANCELLED = 3;
+  DECLINED = 4;
+  EXPIRED = 5;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3728,6 +3768,11 @@ message MultiStatValueAggregateResponse {
   // The aggregate results for each query passedin.
   repeated StatValueAggregateResult stat_value_aggregate_results = 2;
 }
+
+
+
+
+
 
 
 
