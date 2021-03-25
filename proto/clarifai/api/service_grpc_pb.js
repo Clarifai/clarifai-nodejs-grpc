@@ -1114,6 +1114,17 @@ function deserialize_clarifai_api_PatchKeysRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PatchKeysRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PatchModelVersionsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PatchModelVersionsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PatchModelVersionsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PatchModelVersionsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PatchModelVersionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PatchModelsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PatchModelsRequest)) {
     throw new Error('Expected argument of type clarifai.api.PatchModelsRequest');
@@ -2143,7 +2154,7 @@ patchInputs: {
     responseSerialize: serialize_clarifai_api_MultiInputResponse,
     responseDeserialize: deserialize_clarifai_api_MultiInputResponse,
   },
-  // Delete a single input.  This call is synchronous.
+  // Delete a single input asynchronously.
 deleteInput: {
     path: '/clarifai.api.V2/DeleteInput',
     requestStream: false,
@@ -2156,7 +2167,7 @@ deleteInput: {
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },
   // Delete multiple inputs in one request.
-// This call is asynchronous. Use DeleteInput if you want a synchronous version.
+// This call is asynchronous.
 deleteInputs: {
     path: '/clarifai.api.V2/DeleteInputs',
     requestStream: false,
@@ -2379,6 +2390,17 @@ postModelVersions: {
     requestDeserialize: deserialize_clarifai_api_PostModelVersionsRequest,
     responseSerialize: serialize_clarifai_api_SingleModelResponse,
     responseDeserialize: deserialize_clarifai_api_SingleModelResponse,
+  },
+  patchModelVersions: {
+    path: '/clarifai.api.V2/PatchModelVersions',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PatchModelVersionsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiModelVersionResponse,
+    requestSerialize: serialize_clarifai_api_PatchModelVersionsRequest,
+    requestDeserialize: deserialize_clarifai_api_PatchModelVersionsRequest,
+    responseSerialize: serialize_clarifai_api_MultiModelVersionResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiModelVersionResponse,
   },
   // Delete a single model.
 deleteModelVersion: {
@@ -2611,7 +2633,7 @@ myScopes: {
     responseSerialize: serialize_clarifai_api_MultiScopeResponse,
     responseDeserialize: deserialize_clarifai_api_MultiScopeResponse,
   },
-  // List all auth scopes available.
+  // List all auth scopes available to me as a user.
 listScopes: {
     path: '/clarifai.api.V2/ListScopes',
     requestStream: false,

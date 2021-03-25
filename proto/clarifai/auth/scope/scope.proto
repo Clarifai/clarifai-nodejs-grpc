@@ -305,8 +305,6 @@ enum S {
 
 
 
-
-
   
 
   // CRUD on FindDuplicateAnnotationsJobs table
@@ -315,8 +313,7 @@ enum S {
   FindDuplicateAnnotationsJobs_Get = 103 [(clarfai_exposed) = true];
   FindDuplicateAnnotationsJobs_Delete = 104 [(clarfai_exposed) = true,
         (clarifai_depending_scopes) = FindDuplicateAnnotationsJobs_Add,
-        (clarifai_depending_scopes) = FindDuplicateAnnotationsJobs_Get];
-
+        (clarifai_depending_scopes) = FindDuplicateAnnotationsJobs_Get]; 
 }
 
 extend google.protobuf.EnumValueOptions {

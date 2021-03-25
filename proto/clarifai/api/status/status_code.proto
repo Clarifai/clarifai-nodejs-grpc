@@ -23,7 +23,8 @@ enum StatusCode {
 
   // Clarifai Connection Codes: 11xxx
   CONN_ACCOUNT_ISSUES = 11000; // expired cc, still in trial, feature not supported in your tier
-  CONN_TOKEN_INVALID = 11001; // invalid auth token used
+  // invalid auth token used. Deprecated: we should return CONN_KEY_INVALID instead now in all cases.
+  CONN_TOKEN_INVALID = 11001 [deprecated = true];
   CONN_CREDENTIALS_INVALID = 11002; // invalid auth credentials
   CONN_EXCEED_HOURLY_LIMIT = 11003; // throttle hourly limit exceeded
   CONN_EXCEED_MONTHLY_LIMIT = 11004; // throttle monthly limit exceeded
@@ -281,6 +282,7 @@ enum StatusCode {
   EVALUATION_PENDING = 43106;
   EVALUATION_TIMED_OUT = 43107;
   EVALUATION_UNEXPECTED_ERROR = 43108;
+  EVALUATION_MIXED = 43109;
 
   // Stripe 44xxx
   STRIPE_EVENT_ERROR = 44001;
@@ -290,6 +292,7 @@ enum StatusCode {
   REDIS_SCRIPT_EXITED_WITH_FAILURE = 45002;
   REDIS_STREAM_ERR = 45003;
   REDIS_NO_CONSUMERS = 45004;
+  REDIS_STREAM_BACKOFF = 45005;
 
   // Sift Science 46xxx
   SIGNUP_EVENT_ERROR = 46001;
@@ -401,7 +404,8 @@ enum StatusCode {
   BILLING_UNCATEGORIZED = 99005;
   INTERNAL_UNCATEGORIZED = 99009;
 
-  // Depreciated codes: migrate off these to one of the internal issues
+  // Deprecated: migrate off to one of the internal issues
   BAD_REQUEST = 90400;
+  // Deprecated: migrate off to one of the internal issues
   SERVER_ERROR = 90500;
 }

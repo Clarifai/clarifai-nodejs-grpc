@@ -110,6 +110,11 @@ message App {
 
   // Default value for model predictions on video: Sample delay for video predicting (1 frame per N milliseconds)
   uint32 sample_ms = 15;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 16;
 }
 
 message AppQuery {
@@ -131,6 +136,7 @@ message Collaborator {
   //id of this collaborator
   string id = 1;
   //the app this collaborator has access to
+  // FIXME(zeiler): this should be in the user_app_id.app_id already from the endpoint.
   clarifai.api.App app = 2;
   //who is this collaborator
   clarifai.api.User user = 3;
@@ -409,6 +415,14 @@ message Concept {
   // of concepts that you can separate out based on this field. For example "age_appearance" vs
   // "gender_appearance" in a list of concept returned from the demographics model.
   string vocab_id = 8;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 9;
+
+  // The user the concept belongs to.
+  string user_id = 10;
 }
 
 message ConceptCount {
@@ -507,6 +521,11 @@ message ConceptRelation {
   // The knowledge graph id that this edge belongs to. If using the app's global knowledge graph
   // and not a specific one then this should be the empty string "".
   string knowledge_graph_id = 5;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 6;
 }
 
 // A Knowledge Graph is a logical subsets of edges in the overall Concept Graph
@@ -942,7 +961,16 @@ message Model {
   // The ModelType.Id that is used for this model. This is used for all versions and you cannot
   // change model_type_id between versions of the same model.
   string model_type_id = 14;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 15;
+
+  // Description about this model
+  string description = 16;
 }
+
 
 // OutputInfo defines some of the settings for each model version that PatchModels can effect. These
 // parameters control some of the training or inference operations that this model can do.
@@ -1082,7 +1110,7 @@ message ModelType {
 
   // The remaining fields are definitions of the configurable fields that exist.
   // Each field has path into the Model object such as "name" as a top level or "output_info.data"
-  // if it's the Data obejct within the OutputInfo object. We deciddd to not break these up
+  // if it's the Data object within the OutputInfo object. We decided to not break these up
   // into input_info, train_info and output_info related parameters and instead use the path
   // so that they are most flexible.
   repeated ModelTypeField model_type_fields = 11;
@@ -1100,11 +1128,14 @@ message ModelType {
 
   // Maps output_fields to the more granular data fields needed to parse a triton models outputs
   google.protobuf.Struct expected_pretrained_output_fields = 15;
+
+  // Can this model type be used as an operator type in workflows?
+  bool is_operator = 16;
 }
 
-// For each field in ModelType.model_type_fields we defined them with ModelTypeField
+// ModelTypeField stores a field value of a configurable type.
 message ModelTypeField {
-  // The path to the field within the Model proto.
+  // The path where the value of the field will be stored.
   // Example:
   // "output_info.data" would be the Data message in the OutputInfo message.
   // "output_info.output_config.language" is in the OutputConfig message within OutputInfo
@@ -1122,9 +1153,9 @@ message ModelTypeField {
     BOOLEAN = 1;
     STRING = 2;
     NUMBER = 3;
-    // For auto-completting to concepts in the app. This goes into an data.concepts field.
+    // For auto-completing to concepts in the app. This goes into an data.concepts field.
     ARRAY_OF_CONCEPTS = 4;
-    // For auto-completting to concepts in the app. This goes into an data.concepts field.
+    // For auto-completing to concepts in the app. This goes into an data.concepts field.
     ARRAY_OF_CONCEPTS_WITH_THRESHOLD = 5;
     // A range for a float value.
     RANGE = 7;
@@ -1140,6 +1171,8 @@ message ModelTypeField {
     // For selecting the embed_model_version_id for context based models.
     // This is a string type in the API request.
     WORKFLOW_EMBED_MODELS = 12;
+    // Such as ['a', 'b', 'cantaloupe']
+    ARRAY_OF_STRINGS = 13;
   }
   // The field for this field.
   ModelTypeFieldType field_type = 2;
@@ -1249,6 +1282,16 @@ message ModelVersion {
 
   // Description about this version
   string description = 11;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 12;
+
+  // The app the model version belongs to.
+  string app_id = 13;
+  // The user the model version belongs to.
+  string user_id = 14;
 }
 
 message PretrainedModelConfig {
@@ -1482,6 +1525,8 @@ message Output {
 
   // The model that created this Output.
   Model model = 4;
+  // The operator that created this Output.
+  Operator operator = 7;
   // The input that was passed to the model to create this Output. For example if we have an image
   // model then it will take as input here an Input object with Image filled in.
   Input input = 5;
@@ -1653,6 +1698,11 @@ message Search {
   // Defaults to 0.0 which means we won't do any thresholding as all probabilities will
   // likely be > 0.0.
   float min_value = 11;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 12;
 }
 
 message Filter {
@@ -1692,6 +1742,12 @@ message AnnotationSearchMetrics {
 
   // active_concept_count is the number of concepts for this evaluation
   uint32 active_concept_count = 5;
+
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 6;
 }
 
 
@@ -1766,11 +1822,11 @@ message User {
 
   string id = 1;
 
-  string primary_email = 2;
+  string primary_email = 2 [deprecated = true];
   string first_name = 3;
   string last_name = 4;
   string company_name = 5;
-  string bill_type = 7;
+  string bill_type = 7 [deprecated = true];
 
   // When the user was created. We follow the XXXX timestamp
   // format. We use https://www.ietf.org/rfc/rfc3339.txt format:
@@ -1778,17 +1834,45 @@ message User {
   // the following from the API:
   // "2017-04-11T21:50:50.223962Z"
   google.protobuf.Timestamp created_at = 6;
-  google.protobuf.Timestamp date_gdpr_consent = 8;
-  google.protobuf.Timestamp date_tos_consent = 9;
-  google.protobuf.Timestamp date_marketing_consent = 10;
+  google.protobuf.Timestamp date_gdpr_consent = 8 [deprecated = true];
+  google.protobuf.Timestamp date_tos_consent = 9 [deprecated = true];
+  google.protobuf.Timestamp date_marketing_consent = 10 [deprecated = true];
 
   // To handle arbitrary json metadata you can use a struct field:
   // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
-  google.protobuf.Struct metadata = 11;
-  repeated EmailAddress email_addresses = 12;
-  bool is_org_admin  = 14;
-  bool two_factor_auth_enabled = 15;
-  uint32 teams_count = 16;
+  google.protobuf.Struct metadata = 11 [deprecated = true];
+  repeated EmailAddress email_addresses = 12 [deprecated = true];
+  bool is_org_admin  = 14 [deprecated = true];
+  bool two_factor_auth_enabled = 15 [deprecated = true];
+  uint32 teams_count = 16 [deprecated = true];
+
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 17;
+
+  // This is all the personal information of a user. GetUser/ListUsers will not return this
+  // information unless the caller has the UserAccounts_Get scope on their key or is the user
+  // themselves.
+  UserDetail user_detail = 18;
+}
+
+// This message holds the confidential information from the User object that we don't want to expose
+// to other users. It will be accessible only from /users/{user_id}/account and with the User scopes.
+message UserDetail {
+  string primary_email  = 1;
+  string bill_type = 2;
+  google.protobuf.Timestamp date_gdpr_consent = 3;
+  google.protobuf.Timestamp date_tos_consent = 4;
+  google.protobuf.Timestamp date_marketing_consent = 5;
+  // To handle arbitrary json metadata you can use a struct field:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  google.protobuf.Struct metadata = 6;
+  repeated EmailAddress email_addresses = 7;
+  bool is_org_admin  = 8;
+  bool two_factor_auth_enabled = 9;
+  uint32 teams_count = 10;
 }
 
 message EmailAddress {
@@ -1884,9 +1968,9 @@ message Video {
 // Messages from /proto/clarifai/api/workflow.proto
 ////////////////////////////////////////////////////////////////////////////////
 message Workflow {
-  // The concept's unique id.
+  // The workflows's unique id.
   string id = 1;
-  // The name of the concept in the given language.
+  // The app the workflow belongs to
   string app_id = 2;
 
   // When the workflow was created. We follow the XXXX timestamp
@@ -1896,24 +1980,49 @@ message Workflow {
   // "2017-04-11T21:50:50.223962Z"
   google.protobuf.Timestamp created_at = 3;
 
+  // The list of nodes that make up the workflow. Each node can specify an input node
+  // that it connects to in order to define the graph.
   repeated WorkflowNode nodes = 4;
 
+  // To handle arbitrary json metadata you can use a struct field:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
   google.protobuf.Struct metadata = 5;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 6;
+
+  // The user the workflow belongs to
+  string user_id = 7;
 }
 
 message WorkflowNode {
   // An identifier for this node in the graph. This is used when connecting NodeInputs
   // together.
   string id = 1;
+
   // The model that will do the processing at this node. We only vlidate the model.id and
   // model.model_version.id fields.
   Model model = 2;
+  // An operator will process this node.
+  Operator operator = 5;
+
   // Each WorkflowNode can connect to multiple input nodes so that we can handle multi-model data
   // and more complex workflow operations.
   repeated NodeInput node_inputs = 3;
   // suppress the output for workflow prediction
   bool suppress_output = 4;
 }
+
+message Operator {
+  // Specify the operator type ID.
+  string type_id = 1;
+
+  // Info about the operator's output and configuration.
+  OutputInfo output_info = 2;
+}
+
 
 // NodeInput represents inputs to a node of the graph.
 message NodeInput {
@@ -2044,6 +2153,16 @@ message Task {
     // Polygon detection tasks annotate free-form regions around concepts in an image, frame of video or section of text.
     POLYGON_DETECTION = 3;
   }
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 15;
+
+  // The app the task belongs to.
+  string app_id = 16;
+  // The user the task belongs to.
+  string user_id = 17;
 }
 
 message AiAssistParameters {
@@ -2435,3 +2554,33 @@ enum StatTimeAggType {
 
 
 
+
+
+
+
+/////////////////////////////
+// Visibilty of the resource.
+/////////////////////////////
+// Visibility represents how visible the given resource is to other users.
+// When authenticating a request we can tell if a user is a collaborator or a teammate for the
+// the app that contains the resource and set their allowed visibility. We use that to restrict
+// what they are allowed to see:
+// If AllowedVisibility is PRIVATE then we allow PRIVATE (10), ORG (30), PUBLIC (50)
+// If AllowedVisibility is ORG then we allow ORG (30), PUBLIC (50)
+// If AllowedVisibility is PUBLIC then we allow PUBLIC (50) only.
+message Visibility {
+  // Gettable defined the level of access for GET operations for this resource.
+  enum Gettable {
+    // Default value not allowed.
+    UNKNOWN_VISIBILITY = 0;
+    // PRIVATE requires collaborator or team permissions in order to GET this resource.
+    PRIVATE = 10;
+    // ORG requires you to be in the same org in order to GET this resource, but don't have to be a
+    // teammate or collaborator.
+    ORG = 30;
+    // PUBLIC opens up GET access to the resource to any user on the platform even if they are not
+    // a teammate or collaborator.
+    PUBLIC = 50;
+  }
+  Gettable gettable = 1;
+}

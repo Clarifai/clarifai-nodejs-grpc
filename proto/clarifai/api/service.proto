@@ -49,13 +49,7 @@ service V2 {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/relations"
       additional_bindings {
-        get: "/v2/concepts/{concept_id}/relations"
-      }
-      additional_bindings {
         get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/relations"
-      }
-      additional_bindings {
-        get: "/v2/concepts/relations"
       }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
@@ -69,10 +63,6 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/relations"
       body: "*"
-      additional_bindings {
-        post: "/v2/concepts/{concept_id}/relations"
-        body: "*"
-      }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
@@ -84,10 +74,6 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/relations"
       body: "*"
-      additional_bindings {
-        delete: "/v2/concepts/{concept_id}/relations"
-        body: "*"
-      }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Delete;
@@ -584,7 +570,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
 
-  // Delete a single input.  This call is synchronous.
+  // Delete a single input asynchronously.
   rpc DeleteInput (DeleteInputRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}"
@@ -604,7 +590,7 @@ service V2 {
   }
 
   // Delete multiple inputs in one request.
-  // This call is asynchronous. Use DeleteInput if you want a synchronous version.
+  // This call is asynchronous.
   rpc DeleteInputs (DeleteInputsRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs"
@@ -915,6 +901,18 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Metrics_Add;
   }
 
+  rpc PatchModelVersions (PatchModelVersionsRequest) returns (MultiModelVersionResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Train;
+  }
+
   // Delete a single model.
   rpc DeleteModelVersion (DeleteModelVersionRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
@@ -1111,6 +1109,11 @@ service V2 {
 
 
 
+
+
+
+
+
   ////////////////////////////////////////
   // API Keys
   ////////////////////////////////////////
@@ -1194,10 +1197,10 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
   }
 
-  // List all auth scopes available.
+  // List all auth scopes available to me as a user.
   rpc ListScopes (ListScopesRequest) returns (MultiScopeDepsResponse) {
     option (google.api.http) = {
-      get: "/v2/scopes"
+      get: "/v2/users/{user_app_id.user_id}/scopes"
     };
     option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
   }
@@ -1211,9 +1214,6 @@ service V2 {
   rpc GetApp (GetAppRequest) returns (SingleAppResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}"
-      additional_bindings {
-        get: "/v2/apps/{user_app_id.app_id}"
-      }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
@@ -1281,10 +1281,6 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/searches"
       body: "*"
-      additional_bindings: {
-        post: "/v2/apps/searches"
-        body: "*"
-      }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
@@ -1324,7 +1320,6 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = PasswordPolicies_Get;
   }
-
 
 
 
@@ -1585,7 +1580,6 @@ service V2 {
 
 
 
-
   ////////////////////////////////////////
   // App Sharing
   ////////////////////////////////////////
@@ -1640,9 +1634,6 @@ service V2 {
   rpc ListCollaborations (ListCollaborationsRequest) returns (MultiCollaborationsResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/collaborations"
-      additional_bindings {
-        get: "/v2/collaborations"
-      }
     };
     option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
   }
@@ -1965,7 +1956,7 @@ service V2 {
 message Pagination {
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks. Defaults to 1.
   uint32 page = 1;
-  // (optional URL parameter) The number of results that will be contained in each page. Defaults to 10.
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults to 128.
   uint32 per_page = 2;
 }
 
@@ -2018,8 +2009,11 @@ message ListAnnotationsRequest {
   // Set this flag to list both trusted and not trusted annotations
   // by default it's listing only trusted annotations
   bool list_all_annotations = 6;
-
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
   uint32 page = 7;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
   uint32 per_page = 8;
   // Flag to filter annotations by task_id
   string task_id = 11;
@@ -2110,7 +2104,7 @@ message ListAppsRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
 }
 
@@ -2202,7 +2196,11 @@ message MultiCollaboratorsResponse {
 
 message ListCollaborationsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
   uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
   uint32 per_page = 3;
 }
 
@@ -2321,7 +2319,7 @@ message ListConceptsRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
 }
 
@@ -2357,7 +2355,7 @@ message GetConceptCountsRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
 }
 
@@ -2430,7 +2428,7 @@ message ListConceptRelationsRequest {
   // Defaults to 1.
   uint32 page = 5;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 6;
 }
 
@@ -2529,7 +2527,7 @@ message ListConceptLanguagesRequest {
   // Defaults to 1.
   uint32 page = 3;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 4;
 }
 
@@ -2642,7 +2640,7 @@ message ListInputsRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
 
   // Set status to filter by status
@@ -2653,6 +2651,8 @@ message ListInputsRequest {
 
 message StreamInputsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 20.
   uint32 per_page = 2;
   string last_id = 3;
 
@@ -2687,9 +2687,10 @@ message DeleteInputRequest {
 
 // Request to delete several things by the list of ids.
 message DeleteInputsRequest {
+  reserved 3;
+
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated string ids = 2;
-  bool delete_all = 3;
 }
 
 message SingleInputResponse {
@@ -2743,7 +2744,7 @@ message ListModelInputsRequest {
   // Defaults to 1.
   uint32 page = 4;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 5;
 }
 
@@ -2768,7 +2769,7 @@ message ListKeysRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
 }
 
@@ -2778,7 +2779,7 @@ message ListAppKeysRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
 }
 
@@ -2848,7 +2849,7 @@ message ListModelsRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
   repeated string ids = 4;
 }
@@ -2917,6 +2918,15 @@ message MultiModelResponse {
 ////////////////////////////////////////////////////////////////////////////////
 // Requests / Responses from /proto/clarifai/api/model_version.proto
 ////////////////////////////////////////////////////////////////////////////////
+message PatchModelVersionsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+  repeated ModelVersion model_versions = 3;
+  // The action to perform on the patched objects
+  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  string action = 4;
+}
+
 // NOTE: this is same as GetModelRequest but backend doesn't support sharing same
 // request for different endpoints currently.
 message GetModelVersionRequest {
@@ -2932,7 +2942,7 @@ message ListModelVersionsRequest {
   // Defaults to 1.
   uint32 page = 3;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 4;
   // To list only the model versions that have these concept ids present in them.
   repeated string concept_ids = 5;
@@ -3027,7 +3037,7 @@ message ListModelTypesRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
 }
 
@@ -3072,6 +3082,9 @@ message ListScopesRequest {
   // If "personal_access_token" include scopes and endpoints available to personal access tokens.
   // If "api_key" include scopes and endpoints available to app-specific keys. (default)
   string key_type = 1;
+
+  // For all user specific information we include user_app_id to get the user_id in a consistent way
+  clarifai.api.UserAppIDSet user_app_id = 2;
 }
 
 message MyScopesRequest {
@@ -3117,7 +3130,11 @@ message GetSearchRequest {
 
 message ListSearchesRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
   uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
   uint32 per_page = 3;
 }
 
@@ -3420,8 +3437,6 @@ enum OrganizationInvitationStatus {
 
 
 
-
-
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -3447,7 +3462,7 @@ message ListWorkflowsRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
 }
 
@@ -3543,6 +3558,13 @@ message PostWorkflowResultsSimilarityResponse {
 
 
 
+
+
+
+
+
+
+
 ////////////////////////////////////////////////////////////////////////////////
 // App Duplication
 ////////////////////////////////////////////////////////////////////////////////
@@ -3563,6 +3585,12 @@ message GetAppDuplicationRequest {
 //Request to list all the app duplication that user triggered.
 message ListAppDuplicationsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 3;
 }
 
 message MultiAppDuplicationsResponse {
@@ -3597,17 +3625,16 @@ message GetTaskRequest {
 // Request to list multiple tasks.
 message ListTasksRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
-
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
   uint32 page = 2;
-
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
   uint32 per_page = 3;
-
   // Get tasks that have ANY user from this list assigned as worker.
   repeated string worker_user_ids = 4;
-
   // Get tasks that have ANY user from this list assigned as reviewer.
   repeated string review_user_ids = 5;
-
   // Get label order tasks as well
   bool including_label_order_tasks = 6;
 }
@@ -3615,9 +3642,7 @@ message ListTasksRequest {
 // Request to patch a list of tasks.
 message PatchTasksRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
-
   repeated Task tasks = 2;
-
   // The action to perform on the patched objects
   // For now actions 'merge', 'overwrite', and 'remove' are supported
   string action = 3;
@@ -3714,7 +3739,7 @@ message ListCollectorsRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
 }
 
