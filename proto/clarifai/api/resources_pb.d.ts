@@ -140,6 +140,12 @@ export class App extends jspb.Message {
     setSampleMs(value: number): App;
 
 
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): Visibility | undefined;
+    setVisibility(value?: Visibility): App;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): App.AsObject;
     static toObject(includeInstance: boolean, msg: App): App.AsObject;
@@ -162,6 +168,7 @@ export namespace App {
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
         description: string,
         sampleMs: number,
+        visibility?: Visibility.AsObject,
     }
 }
 
@@ -599,6 +606,12 @@ export class Concept extends jspb.Message {
     setVocabId(value: string): Concept;
 
 
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): Visibility | undefined;
+    setVisibility(value?: Visibility): Concept;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Concept.AsObject;
     static toObject(includeInstance: boolean, msg: Concept): Concept.AsObject;
@@ -619,6 +632,7 @@ export namespace Concept {
         appId: string,
         definition: string,
         vocabId: string,
+        visibility?: Visibility.AsObject,
     }
 }
 
@@ -783,6 +797,12 @@ export class ConceptRelation extends jspb.Message {
     setKnowledgeGraphId(value: string): ConceptRelation;
 
 
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): Visibility | undefined;
+    setVisibility(value?: Visibility): ConceptRelation;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ConceptRelation.AsObject;
     static toObject(includeInstance: boolean, msg: ConceptRelation): ConceptRelation.AsObject;
@@ -800,6 +820,7 @@ export namespace ConceptRelation {
         objectConcept?: Concept.AsObject,
         predicate: string,
         knowledgeGraphId: string,
+        visibility?: Visibility.AsObject,
     }
 }
 
@@ -1711,6 +1732,12 @@ export class Model extends jspb.Message {
     setModelTypeId(value: string): Model;
 
 
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): Visibility | undefined;
+    setVisibility(value?: Visibility): Model;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Model.AsObject;
     static toObject(includeInstance: boolean, msg: Model): Model.AsObject;
@@ -1734,6 +1761,7 @@ export namespace Model {
         inputInfo?: InputInfo.AsObject,
         trainInfo?: TrainInfo.AsObject,
         modelTypeId: string,
+        visibility?: Visibility.AsObject,
     }
 }
 
@@ -1985,6 +2013,9 @@ export class ModelType extends jspb.Message {
     getExpectedPretrainedOutputFields(): google_protobuf_struct_pb.Struct | undefined;
     setExpectedPretrainedOutputFields(value?: google_protobuf_struct_pb.Struct): ModelType;
 
+    getIsOperator(): boolean;
+    setIsOperator(value: boolean): ModelType;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ModelType.AsObject;
@@ -2012,6 +2043,7 @@ export namespace ModelType {
         evaluable: boolean,
         expectedPretrainedInputFields?: google_protobuf_struct_pb.Struct.AsObject,
         expectedPretrainedOutputFields?: google_protobuf_struct_pb.Struct.AsObject,
+        isOperator: boolean,
     }
 }
 
@@ -2088,6 +2120,7 @@ export namespace ModelTypeField {
     JSON = 10,
     ARRAY_OF_NUMBERS = 11,
     WORKFLOW_EMBED_MODELS = 12,
+    ARRAY_OF_STRINGS = 13,
     }
 
 }
@@ -2223,6 +2256,12 @@ export class ModelVersion extends jspb.Message {
     setDescription(value: string): ModelVersion;
 
 
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): Visibility | undefined;
+    setVisibility(value?: Visibility): ModelVersion;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ModelVersion.AsObject;
     static toObject(includeInstance: boolean, msg: ModelVersion): ModelVersion.AsObject;
@@ -2243,6 +2282,7 @@ export namespace ModelVersion {
         totalInputCount: number,
         completedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         description: string,
+        visibility?: Visibility.AsObject,
     }
 }
 
@@ -3016,6 +3056,12 @@ export class Output extends jspb.Message {
     setModel(value?: Model): Output;
 
 
+    hasOperator(): boolean;
+    clearOperator(): void;
+    getOperator(): Operator | undefined;
+    setOperator(value?: Operator): Output;
+
+
     hasInput(): boolean;
     clearInput(): void;
     getInput(): Input | undefined;
@@ -3044,6 +3090,7 @@ export namespace Output {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         model?: Model.AsObject,
+        operator?: Operator.AsObject,
         input?: Input.AsObject,
         data?: Data.AsObject,
     }
@@ -3266,6 +3313,12 @@ export class Search extends jspb.Message {
     setMinValue(value: number): Search;
 
 
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): Visibility | undefined;
+    setVisibility(value?: Visibility): Search;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Search.AsObject;
     static toObject(includeInstance: boolean, msg: Search): Search.AsObject;
@@ -3289,6 +3342,7 @@ export namespace Search {
         algorithm: string,
         save: boolean,
         minValue: number,
+        visibility?: Visibility.AsObject,
     }
 }
 
@@ -3384,6 +3438,12 @@ export class AnnotationSearchMetrics extends jspb.Message {
     setActiveConceptCount(value: number): AnnotationSearchMetrics;
 
 
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): Visibility | undefined;
+    setVisibility(value?: Visibility): AnnotationSearchMetrics;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): AnnotationSearchMetrics.AsObject;
     static toObject(includeInstance: boolean, msg: AnnotationSearchMetrics): AnnotationSearchMetrics.AsObject;
@@ -3401,6 +3461,7 @@ export namespace AnnotationSearchMetrics {
         metrics?: EvalMetrics.AsObject,
         data?: Data.AsObject,
         activeConceptCount: number,
+        visibility?: Visibility.AsObject,
     }
 }
 
@@ -3504,6 +3565,18 @@ export class User extends jspb.Message {
     setTeamsCount(value: number): User;
 
 
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): Visibility | undefined;
+    setVisibility(value?: Visibility): User;
+
+
+    hasUserDetail(): boolean;
+    clearUserDetail(): void;
+    getUserDetail(): UserDetail | undefined;
+    setUserDetail(value?: UserDetail): User;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): User.AsObject;
     static toObject(includeInstance: boolean, msg: User): User.AsObject;
@@ -3523,6 +3596,79 @@ export namespace User {
         companyName: string,
         billType: string,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        dateGdprConsent?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        dateTosConsent?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        dateMarketingConsent?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        metadata?: google_protobuf_struct_pb.Struct.AsObject,
+        emailAddressesList: Array<EmailAddress.AsObject>,
+        isOrgAdmin: boolean,
+        twoFactorAuthEnabled: boolean,
+        teamsCount: number,
+        visibility?: Visibility.AsObject,
+        userDetail?: UserDetail.AsObject,
+    }
+}
+
+export class UserDetail extends jspb.Message { 
+    getPrimaryEmail(): string;
+    setPrimaryEmail(value: string): UserDetail;
+
+    getBillType(): string;
+    setBillType(value: string): UserDetail;
+
+
+    hasDateGdprConsent(): boolean;
+    clearDateGdprConsent(): void;
+    getDateGdprConsent(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setDateGdprConsent(value?: google_protobuf_timestamp_pb.Timestamp): UserDetail;
+
+
+    hasDateTosConsent(): boolean;
+    clearDateTosConsent(): void;
+    getDateTosConsent(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setDateTosConsent(value?: google_protobuf_timestamp_pb.Timestamp): UserDetail;
+
+
+    hasDateMarketingConsent(): boolean;
+    clearDateMarketingConsent(): void;
+    getDateMarketingConsent(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setDateMarketingConsent(value?: google_protobuf_timestamp_pb.Timestamp): UserDetail;
+
+
+    hasMetadata(): boolean;
+    clearMetadata(): void;
+    getMetadata(): google_protobuf_struct_pb.Struct | undefined;
+    setMetadata(value?: google_protobuf_struct_pb.Struct): UserDetail;
+
+    clearEmailAddressesList(): void;
+    getEmailAddressesList(): Array<EmailAddress>;
+    setEmailAddressesList(value: Array<EmailAddress>): UserDetail;
+    addEmailAddresses(value?: EmailAddress, index?: number): EmailAddress;
+
+    getIsOrgAdmin(): boolean;
+    setIsOrgAdmin(value: boolean): UserDetail;
+
+    getTwoFactorAuthEnabled(): boolean;
+    setTwoFactorAuthEnabled(value: boolean): UserDetail;
+
+    getTeamsCount(): number;
+    setTeamsCount(value: number): UserDetail;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): UserDetail.AsObject;
+    static toObject(includeInstance: boolean, msg: UserDetail): UserDetail.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: UserDetail, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): UserDetail;
+    static deserializeBinaryFromReader(message: UserDetail, reader: jspb.BinaryReader): UserDetail;
+}
+
+export namespace UserDetail {
+    export type AsObject = {
+        primaryEmail: string,
+        billType: string,
         dateGdprConsent?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         dateTosConsent?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         dateMarketingConsent?: google_protobuf_timestamp_pb.Timestamp.AsObject,
@@ -3724,6 +3870,12 @@ export class Workflow extends jspb.Message {
     setMetadata(value?: google_protobuf_struct_pb.Struct): Workflow;
 
 
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): Visibility | undefined;
+    setVisibility(value?: Visibility): Workflow;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Workflow.AsObject;
     static toObject(includeInstance: boolean, msg: Workflow): Workflow.AsObject;
@@ -3741,6 +3893,7 @@ export namespace Workflow {
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         nodesList: Array<WorkflowNode.AsObject>,
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
+        visibility?: Visibility.AsObject,
     }
 }
 
@@ -3753,6 +3906,12 @@ export class WorkflowNode extends jspb.Message {
     clearModel(): void;
     getModel(): Model | undefined;
     setModel(value?: Model): WorkflowNode;
+
+
+    hasOperator(): boolean;
+    clearOperator(): void;
+    getOperator(): Operator | undefined;
+    setOperator(value?: Operator): WorkflowNode;
 
     clearNodeInputsList(): void;
     getNodeInputsList(): Array<NodeInput>;
@@ -3777,8 +3936,37 @@ export namespace WorkflowNode {
     export type AsObject = {
         id: string,
         model?: Model.AsObject,
+        operator?: Operator.AsObject,
         nodeInputsList: Array<NodeInput.AsObject>,
         suppressOutput: boolean,
+    }
+}
+
+export class Operator extends jspb.Message { 
+    getTypeId(): string;
+    setTypeId(value: string): Operator;
+
+
+    hasOutputInfo(): boolean;
+    clearOutputInfo(): void;
+    getOutputInfo(): OutputInfo | undefined;
+    setOutputInfo(value?: OutputInfo): Operator;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): Operator.AsObject;
+    static toObject(includeInstance: boolean, msg: Operator): Operator.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: Operator, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): Operator;
+    static deserializeBinaryFromReader(message: Operator, reader: jspb.BinaryReader): Operator;
+}
+
+export namespace Operator {
+    export type AsObject = {
+        typeId: string,
+        outputInfo?: OutputInfo.AsObject,
     }
 }
 
@@ -4026,6 +4214,12 @@ export class Task extends jspb.Message {
     setAiAssistParams(value?: AiAssistParameters): Task;
 
 
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): Visibility | undefined;
+    setVisibility(value?: Visibility): Task;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Task.AsObject;
     static toObject(includeInstance: boolean, msg: Task): Task.AsObject;
@@ -4052,6 +4246,7 @@ export namespace Task {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         name: string,
         aiAssistParams?: AiAssistParameters.AsObject,
+        visibility?: Visibility.AsObject,
     }
 
     export enum TaskType {
@@ -4647,6 +4842,35 @@ export namespace StatValueAggregateQuery {
         startTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         endTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
     }
+}
+
+export class Visibility extends jspb.Message { 
+    getGettable(): Visibility.Gettable;
+    setGettable(value: Visibility.Gettable): Visibility;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): Visibility.AsObject;
+    static toObject(includeInstance: boolean, msg: Visibility): Visibility.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: Visibility, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): Visibility;
+    static deserializeBinaryFromReader(message: Visibility, reader: jspb.BinaryReader): Visibility;
+}
+
+export namespace Visibility {
+    export type AsObject = {
+        gettable: Visibility.Gettable,
+    }
+
+    export enum Gettable {
+    UNKNOWN_VISIBILITY = 0,
+    PRIVATE = 10,
+    ORG = 30,
+    PUBLIC = 50,
+    }
+
 }
 
 export enum ExpirationAction {

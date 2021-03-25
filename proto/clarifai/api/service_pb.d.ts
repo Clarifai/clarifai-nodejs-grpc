@@ -1996,9 +1996,6 @@ export class DeleteInputsRequest extends jspb.Message {
     setIdsList(value: Array<string>): DeleteInputsRequest;
     addIds(value: string, index?: number): string;
 
-    getDeleteAll(): boolean;
-    setDeleteAll(value: boolean): DeleteInputsRequest;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): DeleteInputsRequest.AsObject;
@@ -2014,7 +2011,6 @@ export namespace DeleteInputsRequest {
     export type AsObject = {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         idsList: Array<string>,
-        deleteAll: boolean,
     }
 }
 
@@ -2804,6 +2800,44 @@ export namespace MultiModelResponse {
     }
 }
 
+export class PatchModelVersionsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PatchModelVersionsRequest;
+
+    getModelId(): string;
+    setModelId(value: string): PatchModelVersionsRequest;
+
+    clearModelVersionsList(): void;
+    getModelVersionsList(): Array<proto_clarifai_api_resources_pb.ModelVersion>;
+    setModelVersionsList(value: Array<proto_clarifai_api_resources_pb.ModelVersion>): PatchModelVersionsRequest;
+    addModelVersions(value?: proto_clarifai_api_resources_pb.ModelVersion, index?: number): proto_clarifai_api_resources_pb.ModelVersion;
+
+    getAction(): string;
+    setAction(value: string): PatchModelVersionsRequest;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PatchModelVersionsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PatchModelVersionsRequest): PatchModelVersionsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PatchModelVersionsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PatchModelVersionsRequest;
+    static deserializeBinaryFromReader(message: PatchModelVersionsRequest, reader: jspb.BinaryReader): PatchModelVersionsRequest;
+}
+
+export namespace PatchModelVersionsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        modelId: string,
+        modelVersionsList: Array<proto_clarifai_api_resources_pb.ModelVersion.AsObject>,
+        action: string,
+    }
+}
+
 export class GetModelVersionRequest extends jspb.Message { 
 
     hasUserAppId(): boolean;
@@ -3272,6 +3306,12 @@ export class ListScopesRequest extends jspb.Message {
     setKeyType(value: string): ListScopesRequest;
 
 
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): ListScopesRequest;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListScopesRequest.AsObject;
     static toObject(includeInstance: boolean, msg: ListScopesRequest): ListScopesRequest.AsObject;
@@ -3285,6 +3325,7 @@ export class ListScopesRequest extends jspb.Message {
 export namespace ListScopesRequest {
     export type AsObject = {
         keyType: string,
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
     }
 }
 
@@ -4411,6 +4452,12 @@ export class ListAppDuplicationsRequest extends jspb.Message {
     getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
     setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): ListAppDuplicationsRequest;
 
+    getPage(): number;
+    setPage(value: number): ListAppDuplicationsRequest;
+
+    getPerPage(): number;
+    setPerPage(value: number): ListAppDuplicationsRequest;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListAppDuplicationsRequest.AsObject;
@@ -4425,6 +4472,8 @@ export class ListAppDuplicationsRequest extends jspb.Message {
 export namespace ListAppDuplicationsRequest {
     export type AsObject = {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        page: number,
+        perPage: number,
     }
 }
 
