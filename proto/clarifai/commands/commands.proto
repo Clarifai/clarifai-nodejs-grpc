@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package clarifai.commands;
+
+option go_package = "commands";
+option java_multiple_files = true;
+option java_package = "com.clarifai.grpc.commands";
+option objc_class_prefix = "CAIP";
+
+/*
+  Commands the server may send to the client as part of an http response to a request
+*/
+message Commands {
+  google.protobuf.Timestamp discard_data_older_than = 1;  // Discard data older than the Unix Epoch in this parameter
+  uint32 timeout_delay = 2;                               // Timeout, in seconds, the client should wait before trying to sync
+  uint32 upload_interval = 3;                             // Interval, in seconds, the client should try to sync
+  bool opt_out = 4;                                       // Opt out of analytics. Default is false (meaning opting-in)
+}

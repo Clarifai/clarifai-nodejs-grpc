@@ -93,6 +93,10 @@ enum StatusCode {
   MODEL_QUEUED_FOR_DEPLOYMENT = 21352; // Used when training is completed
   MODEL_NOT_DEPLOYED = 21353; // Used when model spire deployment is manually taken down or due to inactivity
 
+  MODEL_REFERENCE_INVALID_ARGUMENT = 21400; // Used when a model reference field is not set properly
+
+  MODEL_EXAMPLE_INPUT_INVALID_ARGUMENT = 21420; // Used when a model example input field is not set properly
+
   // Workflow related 22xxx
 
   WORKFLOW_NO_MATCHING_INPUT = 22001; // specified model input not in workflow
@@ -380,6 +384,8 @@ enum StatusCode {
   JOB_COMPLETED = 6402;
   JOB_FAILED = 6403;
 
+  //auth issues
+  AUTH_MISSING_IDP_ASSOC = 65000;
   // TODO: Knowledge graph related 80xxx
 
   // Internal issues: 98xxx
