@@ -355,6 +355,17 @@ function deserialize_clarifai_api_GetModelTypeRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.GetModelTypeRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_GetModelVersionInputExampleRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.GetModelVersionInputExampleRequest)) {
+    throw new Error('Expected argument of type clarifai.api.GetModelVersionInputExampleRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_GetModelVersionInputExampleRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.GetModelVersionInputExampleRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_GetModelVersionMetricsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.GetModelVersionMetricsRequest)) {
     throw new Error('Expected argument of type clarifai.api.GetModelVersionMetricsRequest');
@@ -597,6 +608,17 @@ function deserialize_clarifai_api_ListModelInputsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListModelInputsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_ListModelReferencesRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListModelReferencesRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListModelReferencesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListModelReferencesRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListModelReferencesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_ListModelTypesRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.ListModelTypesRequest)) {
     throw new Error('Expected argument of type clarifai.api.ListModelTypesRequest');
@@ -606,6 +628,17 @@ function serialize_clarifai_api_ListModelTypesRequest(arg) {
 
 function deserialize_clarifai_api_ListModelTypesRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListModelTypesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_ListModelVersionInputExamplesRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListModelVersionInputExamplesRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListModelVersionInputExamplesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListModelVersionInputExamplesRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListModelVersionInputExamplesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_ListModelVersionsRequest(arg) {
@@ -861,6 +894,17 @@ function deserialize_clarifai_api_MultiKnowledgeGraphResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiKnowledgeGraphResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_MultiModelReferenceResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiModelReferenceResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiModelReferenceResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiModelReferenceResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiModelReferenceResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_MultiModelResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.MultiModelResponse)) {
     throw new Error('Expected argument of type clarifai.api.MultiModelResponse');
@@ -881,6 +925,17 @@ function serialize_clarifai_api_MultiModelTypeResponse(arg) {
 
 function deserialize_clarifai_api_MultiModelTypeResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiModelTypeResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MultiModelVersionInputExampleResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiModelVersionInputExampleResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiModelVersionInputExampleResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiModelVersionInputExampleResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiModelVersionInputExampleResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiModelVersionResponse(arg) {
@@ -1640,6 +1695,17 @@ function serialize_clarifai_api_SingleModelTypeResponse(arg) {
 
 function deserialize_clarifai_api_SingleModelTypeResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.SingleModelTypeResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_SingleModelVersionInputExampleResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.SingleModelVersionInputExampleResponse)) {
+    throw new Error('Expected argument of type clarifai.api.SingleModelVersionInputExampleResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_SingleModelVersionInputExampleResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.SingleModelVersionInputExampleResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_SingleModelVersionResponse(arg) {
@@ -2437,6 +2503,52 @@ postModelVersionMetrics: {
     requestDeserialize: deserialize_clarifai_api_PostModelVersionMetricsRequest,
     responseSerialize: serialize_clarifai_api_SingleModelVersionResponse,
     responseDeserialize: deserialize_clarifai_api_SingleModelVersionResponse,
+  },
+  // //////////////////////////////////////
+//
+// //////////////////////////////////////
+// Model References
+// //////////////////////////////////////
+//
+// Lists model references tied to a particular model id.
+listModelReferences: {
+    path: '/clarifai.api.V2/ListModelReferences',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListModelReferencesRequest,
+    responseType: proto_clarifai_api_service_pb.MultiModelReferenceResponse,
+    requestSerialize: serialize_clarifai_api_ListModelReferencesRequest,
+    requestDeserialize: deserialize_clarifai_api_ListModelReferencesRequest,
+    responseSerialize: serialize_clarifai_api_MultiModelReferenceResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiModelReferenceResponse,
+  },
+  // //////////////////////////////////////
+//
+// //////////////////////////////////////
+// Model Version Input Examples
+// //////////////////////////////////////
+//
+getModelVersionInputExample: {
+    path: '/clarifai.api.V2/GetModelVersionInputExample',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.GetModelVersionInputExampleRequest,
+    responseType: proto_clarifai_api_service_pb.SingleModelVersionInputExampleResponse,
+    requestSerialize: serialize_clarifai_api_GetModelVersionInputExampleRequest,
+    requestDeserialize: deserialize_clarifai_api_GetModelVersionInputExampleRequest,
+    responseSerialize: serialize_clarifai_api_SingleModelVersionInputExampleResponse,
+    responseDeserialize: deserialize_clarifai_api_SingleModelVersionInputExampleResponse,
+  },
+  listModelVersionInputExamples: {
+    path: '/clarifai.api.V2/ListModelVersionInputExamples',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListModelVersionInputExamplesRequest,
+    responseType: proto_clarifai_api_service_pb.MultiModelVersionInputExampleResponse,
+    requestSerialize: serialize_clarifai_api_ListModelVersionInputExamplesRequest,
+    requestDeserialize: deserialize_clarifai_api_ListModelVersionInputExamplesRequest,
+    responseSerialize: serialize_clarifai_api_MultiModelVersionInputExampleResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiModelVersionInputExampleResponse,
   },
   // //////////////////////////////////////
 //

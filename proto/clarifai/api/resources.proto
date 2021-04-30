@@ -971,6 +971,40 @@ message Model {
   string description = 16;
 }
 
+// A link to a html/markdown/text file that stores reference material
+// tied to a model.
+message ModelReference {
+  // Id of the reference
+  string id = 1;
+
+  // The id of the model this Model reference is tied to.
+  string model_id = 2;
+
+  // address of resource
+  string url = 3;
+
+  // name of link
+  string name = 4;
+
+  // To handle arbitrary json metadata:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  google.protobuf.Struct metadata = 5;
+}
+
+message ModelVersionInputExample {
+  // user unique id
+  string id = 1;
+  // external id of model
+  string model_id = 2;
+  // external id of model version
+  string model_version_id = 3;
+  // data to store as example input for model
+  Data data = 4;
+  // name of link for display
+  string name = 5;
+  // description of link contents
+  string description = 6;
+}
 
 // OutputInfo defines some of the settings for each model version that PatchModels can effect. These
 // parameters control some of the training or inference operations that this model can do.
@@ -1128,9 +1162,6 @@ message ModelType {
 
   // Maps output_fields to the more granular data fields needed to parse a triton models outputs
   google.protobuf.Struct expected_pretrained_output_fields = 15;
-
-  // Can this model type be used as an operator type in workflows?
-  bool is_operator = 16;
 }
 
 // ModelTypeField stores a field value of a configurable type.
@@ -1525,8 +1556,6 @@ message Output {
 
   // The model that created this Output.
   Model model = 4;
-  // The operator that created this Output.
-  Operator operator = 7;
   // The input that was passed to the model to create this Output. For example if we have an image
   // model then it will take as input here an Input object with Image filled in.
   Input input = 5;
@@ -1826,6 +1855,9 @@ message User {
   string first_name = 3;
   string last_name = 4;
   string company_name = 5;
+  string job_title = 19;
+  string job_role = 20;
+
   string bill_type = 7 [deprecated = true];
 
   // When the user was created. We follow the XXXX timestamp
@@ -2005,8 +2037,6 @@ message WorkflowNode {
   // The model that will do the processing at this node. We only vlidate the model.id and
   // model.model_version.id fields.
   Model model = 2;
-  // An operator will process this node.
-  Operator operator = 5;
 
   // Each WorkflowNode can connect to multiple input nodes so that we can handle multi-model data
   // and more complex workflow operations.
@@ -2014,15 +2044,6 @@ message WorkflowNode {
   // suppress the output for workflow prediction
   bool suppress_output = 4;
 }
-
-message Operator {
-  // Specify the operator type ID.
-  string type_id = 1;
-
-  // Info about the operator's output and configuration.
-  OutputInfo output_info = 2;
-}
-
 
 // NodeInput represents inputs to a node of the graph.
 message NodeInput {
@@ -2046,6 +2067,14 @@ message WorkflowResult {
   bool suppress_output = 7;
 }
 
+
+message WorkflowState {
+  // A unique ID for the workflow state.
+  // To start saving a state in a PostWorkflowResults request set this ID to "init"
+  // and it will return a newly generated unique state id that you can then pass in subsequent
+  // PostWorkflowResults calls. These state expire after 5 minutes between calls.
+  string id = 1;
+}
 
 
 

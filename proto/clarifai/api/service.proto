@@ -403,6 +403,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Delete;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // for cleaning up some optimizations we have in DB layer for annotations.
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
 
   // Delete multiple annotations in one request.
@@ -428,6 +429,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Delete;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // for cleaning up some optimizations we have in DB layer for annotations.
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
 
   // Execute a search over annotation
@@ -447,7 +449,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Search;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // to know the concepts and models in your default workflow.
-
   }
 
 
@@ -970,9 +971,61 @@ service V2 {
 
 
 
+  ////////////////////////////////////////
+
+  ////////////////////////////////////////
+  // Model References
+  ////////////////////////////////////////
+
+  // Lists model references tied to a particular model id.
+  rpc ListModelReferences (ListModelReferencesRequest) returns (MultiModelReferenceResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/references"
+      additional_bindings {
+        get: "/v2/models/{model_id}/references"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  }
+
+
+
+
 
   ////////////////////////////////////////
 
+  ////////////////////////////////////////
+  // Model Version Input Examples
+  ////////////////////////////////////////
+
+  rpc GetModelVersionInputExample (GetModelVersionInputExampleRequest) returns (SingleModelVersionInputExampleResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/input_examples/{example_id}"
+      additional_bindings {
+        get: "/v2/models/{model_id}/versions/{model_version_id}/input_examples/{example_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  }
+
+  rpc ListModelVersionInputExamples (ListModelVersionInputExamplesRequest) returns (MultiModelVersionInputExampleResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/input_examples"
+      additional_bindings {
+        get: "/v2/models/{model_id}/versions/{model_version_id}/input_examples"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  }
+
+
+
+
+
+  ////////////////////////////////////////
 
   ////////////////////////////////////////
   // Workflows
@@ -1102,10 +1155,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Predict;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
-
-
-
-
 
 
 
@@ -1514,6 +1563,8 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Search;
   }
+
+
 
 
 
@@ -2106,6 +2157,8 @@ message ListAppsRequest {
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
   // to 128.
   uint32 per_page = 3;
+  // Filter by the name of the app. This supports wilcard queries like "gen*" to match "general" as an example.
+  string name = 4;
 }
 
 message PostAppsRequest {
@@ -2208,6 +2261,13 @@ message MultiCollaborationsResponse {
   clarifai.api.status.Status status = 1;
   repeated Collaboration collaborations = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
+
+
+
+
+
+
+
 
 
 
@@ -2852,6 +2912,19 @@ message ListModelsRequest {
   // to 128.
   uint32 per_page = 3;
   repeated string ids = 4;
+  // Filter by the name of the model. This supports wilcard queries like "gen*" to match "general" as an example.
+  string name = 5;
+  // Filter models by the specific model_type_id. See ListModelTypes for the list of ModelType.Id's
+  // supported.
+  string model_type_id = 6;
+  // If true, we only return models that have the status MODEL_TRAINED, which includes non-trainable model types.
+  bool trained_only = 7;
+  // The list of input fields to the model.
+  // For example, you can specify 'image', which will return models that make inferences on images like visual-classifier models.
+  repeated string input_fields = 8;
+  // The list of output fields to the model.
+  // For example, you can specify 'regions[...].data.concepts', which will return visual-detector models.
+  repeated string output_fields = 9;
 }
 
 message PostModelsRequest {
@@ -3056,6 +3129,79 @@ message MultiModelTypeResponse {
 }
 
 
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses for Model Version Input Examples
+////////////////////////////////////////////////////////////////////////////////
+message GetModelVersionInputExampleRequest {
+  // authorization field  (contains app/user id info)
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // id of model the example belongs to
+  string model_id = 2;
+  // specific version the example belongs to
+  string model_version_id = 3;
+  // Id of example to fetch
+  string example_id = 4;
+}
+
+message ListModelVersionInputExamplesRequest {
+  // authorization field  (contains app/user id info)
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // id of model the example belongs to
+  string model_id = 2;
+  // specific version the example belongs to
+  string model_version_id = 3;
+  // Optional, defaults to 1.
+  uint32 page = 4;
+  // Optional, defaults to 128 references per page.
+  uint32 per_page = 5;
+}
+
+
+
+message SingleModelVersionInputExampleResponse {
+  // status of response
+  clarifai.api.status.Status status = 1;
+  // model input example message
+  ModelVersionInputExample model_version_input_example = 2;
+}
+
+message MultiModelVersionInputExampleResponse {
+  // status of response
+  clarifai.api.status.Status status = 1;
+  // model input example messages
+  repeated ModelVersionInputExample model_version_input_examples = 2;
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses for Model References
+////////////////////////////////////////////////////////////////////////////////
+
+message ListModelReferencesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  string model_id = 2;
+  // Optional, defaults to 1.
+  uint32 page = 3;
+  // Optional, defaults to 128 references per page.
+  uint32 per_page = 4;
+}
+
+
+
+message MultiModelReferenceResponse {
+  clarifai.api.status.Status status = 1;
+  repeated ModelReference model_references = 2;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Requests / Responses from /proto/clarifai/api/output.proto
@@ -3464,6 +3610,8 @@ message ListWorkflowsRequest {
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
   // to 128.
   uint32 per_page = 3;
+  // Filter by the id of the workflow. This supports wilcard queries like "gen*" to match "general" as an example.
+  string id = 4;
 }
 
 
@@ -3524,12 +3672,26 @@ message PostWorkflowResultsRequest {
 
   // Use this flag to look into clarifai published workflows first for a Workflow ID
   bool favor_clarifai_workflows = 5;
+
+  // A workflow state to be maintained across PostWorkflowResults requests/responses.
+  // If it is not sent in the initial request with workflow_state.id = "init" then no
+  // state will be saved or returned in PostWorkflowResultsResponse.
+  WorkflowState workflow_state = 6;
 }
 
 message PostWorkflowResultsResponse {
+  // The status of the request.
   clarifai.api.status.Status status = 1;
+  // The workflow that was used in predictions with PostWorkflowResults
   Workflow workflow = 2;
+  // The resulting predictions of all models in the workflow.
   repeated WorkflowResult results = 3;
+  // A workflow state to be maintained across PostWorkflowResults requests/responses.
+  // This WorkflowState should be passed in to subsequent PostWorkflowResults calls
+  // if you want to keep track of state across requests.
+  // If no WorkflowState was initialized in a request then no WorkflowState will be returned in this
+  // response.
+  WorkflowState workflow_state = 4;
 }
 
 message PostWorkflowResultsSimilarityRequest {
@@ -3549,11 +3711,6 @@ message PostWorkflowResultsSimilarityResponse {
   clarifai.api.status.Status status = 1;
   repeated WorkflowResultsSimilarity results = 2;
 }
-
-
-
-
-
 
 
 

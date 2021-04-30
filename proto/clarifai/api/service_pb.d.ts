@@ -448,6 +448,9 @@ export class ListAppsRequest extends jspb.Message {
     getPerPage(): number;
     setPerPage(value: number): ListAppsRequest;
 
+    getName(): string;
+    setName(value: string): ListAppsRequest;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListAppsRequest.AsObject;
@@ -464,6 +467,7 @@ export namespace ListAppsRequest {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         page: number,
         perPage: number,
+        name: string,
     }
 }
 
@@ -2548,6 +2552,25 @@ export class ListModelsRequest extends jspb.Message {
     setIdsList(value: Array<string>): ListModelsRequest;
     addIds(value: string, index?: number): string;
 
+    getName(): string;
+    setName(value: string): ListModelsRequest;
+
+    getModelTypeId(): string;
+    setModelTypeId(value: string): ListModelsRequest;
+
+    getTrainedOnly(): boolean;
+    setTrainedOnly(value: boolean): ListModelsRequest;
+
+    clearInputFieldsList(): void;
+    getInputFieldsList(): Array<string>;
+    setInputFieldsList(value: Array<string>): ListModelsRequest;
+    addInputFields(value: string, index?: number): string;
+
+    clearOutputFieldsList(): void;
+    getOutputFieldsList(): Array<string>;
+    setOutputFieldsList(value: Array<string>): ListModelsRequest;
+    addOutputFields(value: string, index?: number): string;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListModelsRequest.AsObject;
@@ -2565,6 +2588,11 @@ export namespace ListModelsRequest {
         page: number,
         perPage: number,
         idsList: Array<string>,
+        name: string,
+        modelTypeId: string,
+        trainedOnly: boolean,
+        inputFieldsList: Array<string>,
+        outputFieldsList: Array<string>,
     }
 }
 
@@ -3268,6 +3296,209 @@ export namespace MultiModelTypeResponse {
     export type AsObject = {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         modelTypesList: Array<proto_clarifai_api_resources_pb.ModelType.AsObject>,
+    }
+}
+
+export class GetModelVersionInputExampleRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): GetModelVersionInputExampleRequest;
+
+    getModelId(): string;
+    setModelId(value: string): GetModelVersionInputExampleRequest;
+
+    getModelVersionId(): string;
+    setModelVersionId(value: string): GetModelVersionInputExampleRequest;
+
+    getExampleId(): string;
+    setExampleId(value: string): GetModelVersionInputExampleRequest;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetModelVersionInputExampleRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: GetModelVersionInputExampleRequest): GetModelVersionInputExampleRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetModelVersionInputExampleRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetModelVersionInputExampleRequest;
+    static deserializeBinaryFromReader(message: GetModelVersionInputExampleRequest, reader: jspb.BinaryReader): GetModelVersionInputExampleRequest;
+}
+
+export namespace GetModelVersionInputExampleRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        modelId: string,
+        modelVersionId: string,
+        exampleId: string,
+    }
+}
+
+export class ListModelVersionInputExamplesRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): ListModelVersionInputExamplesRequest;
+
+    getModelId(): string;
+    setModelId(value: string): ListModelVersionInputExamplesRequest;
+
+    getModelVersionId(): string;
+    setModelVersionId(value: string): ListModelVersionInputExamplesRequest;
+
+    getPage(): number;
+    setPage(value: number): ListModelVersionInputExamplesRequest;
+
+    getPerPage(): number;
+    setPerPage(value: number): ListModelVersionInputExamplesRequest;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListModelVersionInputExamplesRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListModelVersionInputExamplesRequest): ListModelVersionInputExamplesRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListModelVersionInputExamplesRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListModelVersionInputExamplesRequest;
+    static deserializeBinaryFromReader(message: ListModelVersionInputExamplesRequest, reader: jspb.BinaryReader): ListModelVersionInputExamplesRequest;
+}
+
+export namespace ListModelVersionInputExamplesRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        modelId: string,
+        modelVersionId: string,
+        page: number,
+        perPage: number,
+    }
+}
+
+export class SingleModelVersionInputExampleResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): SingleModelVersionInputExampleResponse;
+
+
+    hasModelVersionInputExample(): boolean;
+    clearModelVersionInputExample(): void;
+    getModelVersionInputExample(): proto_clarifai_api_resources_pb.ModelVersionInputExample | undefined;
+    setModelVersionInputExample(value?: proto_clarifai_api_resources_pb.ModelVersionInputExample): SingleModelVersionInputExampleResponse;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): SingleModelVersionInputExampleResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: SingleModelVersionInputExampleResponse): SingleModelVersionInputExampleResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: SingleModelVersionInputExampleResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): SingleModelVersionInputExampleResponse;
+    static deserializeBinaryFromReader(message: SingleModelVersionInputExampleResponse, reader: jspb.BinaryReader): SingleModelVersionInputExampleResponse;
+}
+
+export namespace SingleModelVersionInputExampleResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        modelVersionInputExample?: proto_clarifai_api_resources_pb.ModelVersionInputExample.AsObject,
+    }
+}
+
+export class MultiModelVersionInputExampleResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiModelVersionInputExampleResponse;
+
+    clearModelVersionInputExamplesList(): void;
+    getModelVersionInputExamplesList(): Array<proto_clarifai_api_resources_pb.ModelVersionInputExample>;
+    setModelVersionInputExamplesList(value: Array<proto_clarifai_api_resources_pb.ModelVersionInputExample>): MultiModelVersionInputExampleResponse;
+    addModelVersionInputExamples(value?: proto_clarifai_api_resources_pb.ModelVersionInputExample, index?: number): proto_clarifai_api_resources_pb.ModelVersionInputExample;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiModelVersionInputExampleResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiModelVersionInputExampleResponse): MultiModelVersionInputExampleResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiModelVersionInputExampleResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiModelVersionInputExampleResponse;
+    static deserializeBinaryFromReader(message: MultiModelVersionInputExampleResponse, reader: jspb.BinaryReader): MultiModelVersionInputExampleResponse;
+}
+
+export namespace MultiModelVersionInputExampleResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        modelVersionInputExamplesList: Array<proto_clarifai_api_resources_pb.ModelVersionInputExample.AsObject>,
+    }
+}
+
+export class ListModelReferencesRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): ListModelReferencesRequest;
+
+    getModelId(): string;
+    setModelId(value: string): ListModelReferencesRequest;
+
+    getPage(): number;
+    setPage(value: number): ListModelReferencesRequest;
+
+    getPerPage(): number;
+    setPerPage(value: number): ListModelReferencesRequest;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListModelReferencesRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListModelReferencesRequest): ListModelReferencesRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListModelReferencesRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListModelReferencesRequest;
+    static deserializeBinaryFromReader(message: ListModelReferencesRequest, reader: jspb.BinaryReader): ListModelReferencesRequest;
+}
+
+export namespace ListModelReferencesRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        modelId: string,
+        page: number,
+        perPage: number,
+    }
+}
+
+export class MultiModelReferenceResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiModelReferenceResponse;
+
+    clearModelReferencesList(): void;
+    getModelReferencesList(): Array<proto_clarifai_api_resources_pb.ModelReference>;
+    setModelReferencesList(value: Array<proto_clarifai_api_resources_pb.ModelReference>): MultiModelReferenceResponse;
+    addModelReferences(value?: proto_clarifai_api_resources_pb.ModelReference, index?: number): proto_clarifai_api_resources_pb.ModelReference;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiModelReferenceResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiModelReferenceResponse): MultiModelReferenceResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiModelReferenceResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiModelReferenceResponse;
+    static deserializeBinaryFromReader(message: MultiModelReferenceResponse, reader: jspb.BinaryReader): MultiModelReferenceResponse;
+}
+
+export namespace MultiModelReferenceResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        modelReferencesList: Array<proto_clarifai_api_resources_pb.ModelReference.AsObject>,
     }
 }
 
@@ -4021,6 +4252,9 @@ export class ListWorkflowsRequest extends jspb.Message {
     getPerPage(): number;
     setPerPage(value: number): ListWorkflowsRequest;
 
+    getId(): string;
+    setId(value: string): ListWorkflowsRequest;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListWorkflowsRequest.AsObject;
@@ -4037,6 +4271,7 @@ export namespace ListWorkflowsRequest {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         page: number,
         perPage: number,
+        id: string,
     }
 }
 
@@ -4252,6 +4487,12 @@ export class PostWorkflowResultsRequest extends jspb.Message {
     setFavorClarifaiWorkflows(value: boolean): PostWorkflowResultsRequest;
 
 
+    hasWorkflowState(): boolean;
+    clearWorkflowState(): void;
+    getWorkflowState(): proto_clarifai_api_resources_pb.WorkflowState | undefined;
+    setWorkflowState(value?: proto_clarifai_api_resources_pb.WorkflowState): PostWorkflowResultsRequest;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PostWorkflowResultsRequest.AsObject;
     static toObject(includeInstance: boolean, msg: PostWorkflowResultsRequest): PostWorkflowResultsRequest.AsObject;
@@ -4269,6 +4510,7 @@ export namespace PostWorkflowResultsRequest {
         inputsList: Array<proto_clarifai_api_resources_pb.Input.AsObject>,
         outputConfig?: proto_clarifai_api_resources_pb.OutputConfig.AsObject,
         favorClarifaiWorkflows: boolean,
+        workflowState?: proto_clarifai_api_resources_pb.WorkflowState.AsObject,
     }
 }
 
@@ -4291,6 +4533,12 @@ export class PostWorkflowResultsResponse extends jspb.Message {
     addResults(value?: proto_clarifai_api_resources_pb.WorkflowResult, index?: number): proto_clarifai_api_resources_pb.WorkflowResult;
 
 
+    hasWorkflowState(): boolean;
+    clearWorkflowState(): void;
+    getWorkflowState(): proto_clarifai_api_resources_pb.WorkflowState | undefined;
+    setWorkflowState(value?: proto_clarifai_api_resources_pb.WorkflowState): PostWorkflowResultsResponse;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PostWorkflowResultsResponse.AsObject;
     static toObject(includeInstance: boolean, msg: PostWorkflowResultsResponse): PostWorkflowResultsResponse.AsObject;
@@ -4306,6 +4554,7 @@ export namespace PostWorkflowResultsResponse {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         workflow?: proto_clarifai_api_resources_pb.Workflow.AsObject,
         resultsList: Array<proto_clarifai_api_resources_pb.WorkflowResult.AsObject>,
+        workflowState?: proto_clarifai_api_resources_pb.WorkflowState.AsObject,
     }
 }
 

@@ -49,13 +49,7 @@ service V2 {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/relations"
       additional_bindings1 {
-        get: "/v2/concepts/{concept_id}/relations"
-      }
-      additional_bindings2 {
         get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/relations"
-      }
-      additional_bindings3 {
-        get: "/v2/concepts/relations"
       }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
@@ -69,10 +63,6 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/relations"
       body: "*"
-      additional_bindings4 {
-        post: "/v2/concepts/{concept_id}/relations"
-        body: "*"
-      }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
@@ -84,10 +74,6 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/relations"
       body: "*"
-      additional_bindings5 {
-        delete: "/v2/concepts/{concept_id}/relations"
-        body: "*"
-      }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Delete;
@@ -106,7 +92,7 @@ service V2 {
   rpc GetConceptCounts (GetConceptCountsRequest) returns (MultiConceptCountResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/status"
-      additional_bindings6 {
+      additional_bindings2 {
         get: "/v2/concepts/status"
       }
     };
@@ -120,7 +106,7 @@ service V2 {
   rpc GetConcept (GetConceptRequest) returns (SingleConceptResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}"
-      additional_bindings7 {
+      additional_bindings3 {
         get: "/v2/concepts/{concept_id}"
       }
     };
@@ -132,7 +118,7 @@ service V2 {
   rpc ListConcepts (ListConceptsRequest) returns (MultiConceptResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts"
-      additional_bindings8 {
+      additional_bindings4 {
         get: "/v2/concepts"
       }
     };
@@ -147,7 +133,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/searches"
       body: "*"
-      additional_bindings9 {
+      additional_bindings5 {
         post: "/v2/concepts/searches"
         body: "*"
       }
@@ -163,7 +149,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts"
       body: "*"
-      additional_bindings10 {
+      additional_bindings6 {
         post: "/v2/concepts"
         body: "*"
       }
@@ -178,7 +164,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts"
       body: "*"
-      additional_bindings11 {
+      additional_bindings7 {
         patch: "/v2/concepts"
         body: "*"
       }
@@ -211,7 +197,7 @@ service V2 {
   rpc GetConceptLanguage (GetConceptLanguageRequest) returns (SingleConceptLanguageResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/languages/{language}"
-      additional_bindings12 {
+      additional_bindings8 {
         get: "/v2/concepts/{concept_id}/languages/{language}"
       }
     };
@@ -223,7 +209,7 @@ service V2 {
   rpc ListConceptLanguages (ListConceptLanguagesRequest) returns (MultiConceptLanguageResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/languages"
-      additional_bindings13 {
+      additional_bindings9 {
         get: "/v2/concepts/{concept_id}/languages"
       }
     };
@@ -236,7 +222,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/languages"
       body: "*"
-      additional_bindings14 {
+      additional_bindings10 {
         post: "/v2/concepts/{concept_id}/languages"
         body: "*"
       }
@@ -252,7 +238,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/languages"
       body: "*"
-      additional_bindings15 {
+      additional_bindings11 {
         patch: "/v2/concepts/{concept_id}/languages"
         body: "*"
       }
@@ -279,7 +265,7 @@ service V2 {
   rpc ListKnowledgeGraphs (ListKnowledgeGraphsRequest) returns (MultiKnowledgeGraphResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/knowledge_graphs"
-      additional_bindings16 {
+      additional_bindings12 {
         get: "/v2/concepts/knowledge_graphs"
       }
     };
@@ -292,7 +278,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/knowledge_graphs"
       body: "*"
-      additional_bindings17 {
+      additional_bindings13 {
         post: "/v2/concepts/knowledge_graphs"
         body: "*"
       }
@@ -307,7 +293,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/mappings/jobs"
       body: "*"
-      additional_bindings18 {
+      additional_bindings14 {
         post: "/v2/concepts/mappings/jobs"
         body: "*"
       }
@@ -328,7 +314,7 @@ service V2 {
   rpc GetAnnotation (GetAnnotationRequest) returns (SingleAnnotationResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}/annotations/{annotation_id}"
-      additional_bindings19 {
+      additional_bindings15 {
         get: "/v2/inputs/{input_id}/annotations/{annotation_id}"
       }
     };
@@ -342,7 +328,7 @@ service V2 {
   rpc ListAnnotations (ListAnnotationsRequest) returns (MultiAnnotationResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations"
-      additional_bindings20 {
+      additional_bindings16 {
         get: "/v2/annotations"
       }
     };
@@ -357,7 +343,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations"
       body: "*"
-      additional_bindings21 {
+      additional_bindings17 {
         post: "/v2/annotations"
         body: "*"
       }
@@ -376,7 +362,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations"
       body: "*"
-      additional_bindings22 {
+      additional_bindings18 {
         patch: "/v2/annotations"
           body: "*"
       }
@@ -408,7 +394,7 @@ service V2 {
   rpc DeleteAnnotation (DeleteAnnotationRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}/annotations/{annotation_id}"
-      additional_bindings23 {
+      additional_bindings19 {
         delete: "/v2/inputs/{input_id}/annotations/{annotation_id}"
       }
     };
@@ -417,6 +403,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Delete;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // for cleaning up some optimizations we have in DB layer for annotations.
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
 
   // Delete multiple annotations in one request.
@@ -424,15 +411,15 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/annotations"
       body: "*"
-      additional_bindings24 {
+      additional_bindings20 {
         delete: "/v2/inputs/annotations"
           body: "*"
       }
-      additional_bindings25 {
+      additional_bindings21 {
         delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations"
           body: "*"
       }
-      additional_bindings26 {
+      additional_bindings22 {
         delete: "/v2/annotations"
           body: "*"
       }
@@ -442,6 +429,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Delete;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // for cleaning up some optimizations we have in DB layer for annotations.
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
 
   // Execute a search over annotation
@@ -449,7 +437,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations/searches"
       body: "*"
-      additional_bindings27 {
+      additional_bindings23 {
         post: "/v2/annotations/searches"
         body: "*"
       }
@@ -461,7 +449,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Search;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // to know the concepts and models in your default workflow.
-
   }
 
 
@@ -473,7 +460,7 @@ service V2 {
   rpc GetInputCount (GetInputCountRequest) returns (SingleInputCountResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/status"
-      additional_bindings28 {
+      additional_bindings24 {
         get: "/v2/inputs/status"
       }
     };
@@ -487,7 +474,7 @@ service V2 {
   rpc StreamInputs (StreamInputsRequest) returns (MultiInputResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/stream"
-      additional_bindings29 {
+      additional_bindings25 {
         get: "/v2/inputs/stream"
       }
     };
@@ -501,7 +488,7 @@ service V2 {
   rpc GetInputSamples (GetInputSamplesRequest) returns (MultiInputAnnotationResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/inputs/samples"
-      additional_bindings30 {
+      additional_bindings26 {
         get: "/v2/tasks/{task_id}/inputs/samples"
       }
     };
@@ -515,7 +502,7 @@ service V2 {
   rpc GetInput (GetInputRequest) returns (SingleInputResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}"
-      additional_bindings31 {
+      additional_bindings27 {
         get: "/v2/inputs/{input_id}"
       }
     };
@@ -529,7 +516,7 @@ service V2 {
   rpc ListInputs (ListInputsRequest) returns (MultiInputResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs"
-      additional_bindings32 {
+      additional_bindings28 {
         get: "/v2/inputs"
       }
     };
@@ -546,7 +533,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs"
       body: "*"
-      additional_bindings33 {
+      additional_bindings29 {
         post: "/v2/inputs"
         body: "*"
       }
@@ -570,7 +557,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs"
       body: "*"
-      additional_bindings34 {
+      additional_bindings30 {
         patch: "/v2/inputs"
         body: "*"
       }
@@ -584,11 +571,11 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
 
-  // Delete a single input.  This call is synchronous.
+  // Delete a single input asynchronously.
   rpc DeleteInput (DeleteInputRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}"
-      additional_bindings35 {
+      additional_bindings31 {
         delete: "/v2/inputs/{input_id}"
       }
     };
@@ -604,12 +591,12 @@ service V2 {
   }
 
   // Delete multiple inputs in one request.
-  // This call is asynchronous. Use DeleteInput if you want a synchronous version.
+  // This call is asynchronous.
   rpc DeleteInputs (DeleteInputsRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs"
       body: "*"
-      additional_bindings36 {
+      additional_bindings32 {
         delete: "/v2/inputs"
         body: "*"
       }
@@ -630,7 +617,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/searches"
       body: "*"
-      additional_bindings37 {
+      additional_bindings33 {
         post: "/v2/inputs/searches"
         body: "*"
       }
@@ -649,15 +636,15 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/outputs"
       body: "*"
-      additional_bindings38 {
+      additional_bindings34 {
         post: "/v2/models/{model_id}/versions/{version_id}/outputs"
         body: "*"
       }
-      additional_bindings39 {
+      additional_bindings35 {
         post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/outputs"
         body: "*"
       }
-      additional_bindings40 {
+      additional_bindings36 {
         post: "/v2/models/{model_id}/outputs"
         body: "*"
       }
@@ -680,7 +667,7 @@ service V2 {
   rpc GetModelType (GetModelTypeRequest) returns (SingleModelTypeResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/types/{model_type_id}"
-      additional_bindings41 {
+      additional_bindings37 {
         get: "/v2/models/types/{model_type_id}"
       }
     };
@@ -693,7 +680,7 @@ service V2 {
   rpc ListModelTypes (ListModelTypesRequest) returns (MultiModelTypeResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/types"
-      additional_bindings42 {
+      additional_bindings38 {
         get: "/v2/models/types"
       }
     };
@@ -705,7 +692,7 @@ service V2 {
   rpc GetModel (GetModelRequest) returns (SingleModelResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}"
-      additional_bindings43 {
+      additional_bindings39 {
         get: "/v2/models/{model_id}"
       }
     };
@@ -719,13 +706,13 @@ service V2 {
   rpc GetModelOutputInfo (GetModelRequest) returns (SingleModelResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/output_info"
-      additional_bindings44 {
+      additional_bindings40 {
         get: "/v2/models/{model_id}/output_info"
       }
-      additional_bindings45 {
+      additional_bindings41 {
         get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/output_info"
       }
-      additional_bindings46 {
+      additional_bindings42 {
         get: "/v2/models/{model_id}/versions/{version_id}/output_info"
       }
     };
@@ -738,7 +725,7 @@ service V2 {
   rpc ListModels (ListModelsRequest) returns (MultiModelResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models"
-      additional_bindings47 {
+      additional_bindings43 {
         get: "/v2/models"
       }
     };
@@ -756,7 +743,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/searches"
       body: "*"
-      additional_bindings48 {
+      additional_bindings44 {
         post: "/v2/models/searches"
         body: "*"
       }
@@ -772,7 +759,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models"
       body: "*"
-      additional_bindings49 {
+      additional_bindings45 {
         post: "/v2/models"
         body: "*"
       }
@@ -790,7 +777,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models"
       body: "*"
-      additional_bindings50 {
+      additional_bindings46 {
         patch: "/v2/models"
         body: "*"
       }
@@ -806,7 +793,7 @@ service V2 {
   rpc DeleteModel (DeleteModelRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}"
-      additional_bindings51 {
+      additional_bindings47 {
         delete: "/v2/models/{model_id}"
       }
     };
@@ -823,7 +810,7 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models"
       body: "*"
-      additional_bindings52 {
+      additional_bindings48 {
         delete: "/v2/models"
         body: "*"
       }
@@ -840,13 +827,13 @@ service V2 {
   rpc ListModelInputs (ListModelInputsRequest) returns (MultiInputResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/inputs"
-      additional_bindings53 {
+      additional_bindings49 {
         get: "/v2/models/{model_id}/inputs"
       }
-      additional_bindings54 {
+      additional_bindings50 {
         get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/inputs"
       }
-      additional_bindings55 {
+      additional_bindings51 {
         get: "/v2/models/{model_id}/versions/{version_id}/inputs"
       }
     };
@@ -867,7 +854,7 @@ service V2 {
   rpc GetModelVersion (GetModelVersionRequest) returns (SingleModelVersionResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}"
-      additional_bindings56 {
+      additional_bindings52 {
         get: "/v2/models/{model_id}/versions/{version_id}"
       }
     };
@@ -880,7 +867,7 @@ service V2 {
   rpc ListModelVersions (ListModelVersionsRequest) returns (MultiModelVersionResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions"
-      additional_bindings57 {
+      additional_bindings53 {
         get: "/v2/models/{model_id}/versions"
       }
     };
@@ -898,7 +885,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions"
       body: "*"
-      additional_bindings58 {
+      additional_bindings54 {
         post: "/v2/models/{model_id}/versions"
         body: "*"
       }
@@ -915,11 +902,23 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Metrics_Add;
   }
 
+  rpc PatchModelVersions (PatchModelVersionsRequest) returns (MultiModelVersionResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Train;
+  }
+
   // Delete a single model.
   rpc DeleteModelVersion (DeleteModelVersionRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}"
-      additional_bindings59 {
+      additional_bindings55 {
         delete: "/v2/models/{model_id}/versions/{version_id}"
       }
     };
@@ -935,7 +934,7 @@ service V2 {
   rpc GetModelVersionMetrics (GetModelVersionMetricsRequest) returns (SingleModelVersionResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/metrics"
-      additional_bindings60 {
+      additional_bindings56 {
         get: "/v2/models/{model_id}/versions/{version_id}/metrics"
       }
     };
@@ -952,7 +951,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/metrics"
       body: "*"
-      additional_bindings61 {
+      additional_bindings57 {
         post: "/v2/models/{model_id}/versions/{version_id}/metrics"
         body: "*"
       }
@@ -972,9 +971,61 @@ service V2 {
 
 
 
+  ////////////////////////////////////////
+
+  ////////////////////////////////////////
+  // Model References
+  ////////////////////////////////////////
+
+  // Lists model references tied to a particular model id.
+  rpc ListModelReferences (ListModelReferencesRequest) returns (MultiModelReferenceResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/references"
+      additional_bindings58 {
+        get: "/v2/models/{model_id}/references"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  }
+
+
+
+
 
   ////////////////////////////////////////
 
+  ////////////////////////////////////////
+  // Model Version Input Examples
+  ////////////////////////////////////////
+
+  rpc GetModelVersionInputExample (GetModelVersionInputExampleRequest) returns (SingleModelVersionInputExampleResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/input_examples/{example_id}"
+      additional_bindings59 {
+        get: "/v2/models/{model_id}/versions/{model_version_id}/input_examples/{example_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  }
+
+  rpc ListModelVersionInputExamples (ListModelVersionInputExamplesRequest) returns (MultiModelVersionInputExampleResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/input_examples"
+      additional_bindings60 {
+        get: "/v2/models/{model_id}/versions/{model_version_id}/input_examples"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  }
+
+
+
+
+
+  ////////////////////////////////////////
 
   ////////////////////////////////////////
   // Workflows
@@ -984,7 +1035,7 @@ service V2 {
   rpc GetWorkflow (GetWorkflowRequest) returns (SingleWorkflowResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}"
-      additional_bindings62 {
+      additional_bindings61 {
         get: "/v2/workflows/{workflow_id}"
       }
     };
@@ -997,7 +1048,7 @@ service V2 {
   rpc ListWorkflows (ListWorkflowsRequest) returns (MultiWorkflowResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows"
-      additional_bindings63 {
+      additional_bindings62 {
         get: "/v2/workflows"
       }
     };
@@ -1012,7 +1063,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows"
       body: "*"
-      additional_bindings64 {
+      additional_bindings63 {
         post: "/v2/workflows"
         body: "*"
       }
@@ -1028,7 +1079,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows"
       body: "*"
-      additional_bindings65 {
+      additional_bindings64 {
         patch: "/v2/workflows"
         body: "*"
       }
@@ -1043,7 +1094,7 @@ service V2 {
   rpc DeleteWorkflow (DeleteWorkflowRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}"
-      additional_bindings66 {
+      additional_bindings65 {
         delete: "/v2/workflows/{workflow_id}"
       }
     };
@@ -1058,7 +1109,7 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows"
       body: "*"
-      additional_bindings67 {
+      additional_bindings66 {
         delete: "/v2/workflows"
         body: "*"
       }
@@ -1074,7 +1125,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/results"
       body: "*"
-      additional_bindings68 {
+      additional_bindings67 {
         post: "/v2/workflows/{workflow_id}/results"
         body: "*"
       }
@@ -1093,7 +1144,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/results/similarity"
       body: "*"
-      additional_bindings69 {
+      additional_bindings68 {
         post: "/v2/workflows/{workflow_id}/results/similarity"
         body: "*"
       }
@@ -1104,6 +1155,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Predict;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
+
 
 
 
@@ -1184,20 +1236,20 @@ service V2 {
   rpc MyScopes (MyScopesRequest) returns (MultiScopeResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/myscopes"
-      additional_bindings70 {
+      additional_bindings69 {
         get: "/v2/myscopes"
       }
-      additional_bindings71 {
+      additional_bindings70 {
         get: "/v2/my_scopes"
       }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
   }
 
-  // List all auth scopes available.
+  // List all auth scopes available to me as a user.
   rpc ListScopes (ListScopesRequest) returns (MultiScopeDepsResponse) {
     option (google.api.http) = {
-      get: "/v2/scopes"
+      get: "/v2/users/{user_app_id.user_id}/scopes"
     };
     option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
   }
@@ -1211,9 +1263,6 @@ service V2 {
   rpc GetApp (GetAppRequest) returns (SingleAppResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}"
-      additional_bindings72 {
-        get: "/v2/apps/{user_app_id.app_id}"
-      }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
@@ -1224,7 +1273,7 @@ service V2 {
   rpc ListApps (ListAppsRequest) returns (MultiAppResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps"
-      additional_bindings73 {
+      additional_bindings71 {
         get: "/v2/apps"
       }
     };
@@ -1281,10 +1330,6 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/searches"
       body: "*"
-      additional_bindings: {
-        post: "/v2/apps/searches"
-        body: "*"
-      }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
@@ -1316,7 +1361,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/validate_password"
       body: "*"
-      additional_bindings74 {
+      additional_bindings72 {
         post: "/v2/validate_password"
         body: "*"
       }
@@ -1324,7 +1369,6 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = PasswordPolicies_Get;
   }
-
 
 
 
@@ -1389,7 +1433,7 @@ service V2 {
   rpc GetSearch (GetSearchRequest) returns (SingleSearchResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches/{id}"
-      additional_bindings75 {
+      additional_bindings73 {
         get: "/v2/searches/{id}"
       }
     };
@@ -1401,7 +1445,7 @@ service V2 {
   rpc ListSearches (ListSearchesRequest) returns (MultiSearchResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches"
-      additional_bindings76 {
+      additional_bindings74 {
         get: "/v2/searches"
       }
     };
@@ -1414,7 +1458,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches"
       body: "*"
-      additional_bindings77 {
+      additional_bindings75 {
         post: "/v2/searches"
         body: "*"
       }
@@ -1434,7 +1478,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches/{id}"
       body: "*"
-      additional_bindings78 {
+      additional_bindings76 {
         post: "/v2/searches/{id}"
         body: "*"
       }
@@ -1448,7 +1492,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations/searches/metrics"
       body: "*"
-      additional_bindings79 {
+      additional_bindings77 {
         post: "/v2/annotations/searches/metrics"
         body: "*"
       }
@@ -1467,7 +1511,7 @@ service V2 {
   rpc GetAnnotationSearchMetrics(GetAnnotationSearchMetricsRequest) returns (MultiAnnotationSearchMetricsResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations/searches/metrics/{id}"
-      additional_bindings80 {
+      additional_bindings78 {
         get: "/v2/annotations/searches/metrics/{id}"
       }
     };
@@ -1484,7 +1528,7 @@ service V2 {
   rpc ListAnnotationSearchMetrics(ListAnnotationSearchMetricsRequest) returns (MultiAnnotationSearchMetricsResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations/searches/metrics"
-      additional_bindings81 {
+      additional_bindings79 {
         get: "/v2/annotations/searches/metrics"
       }
     };
@@ -1498,7 +1542,7 @@ service V2 {
   rpc DeleteAnnotationSearchMetrics (DeleteAnnotationSearchMetricsRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations/searches/metrics/{id}"
-      additional_bindings82 {
+      additional_bindings80 {
         delete: "/v2/annotations/searches/metrics/{id}"
       }
     };
@@ -1512,13 +1556,15 @@ service V2 {
   rpc DeleteSearch (DeleteSearchRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches/{id}"
-      additional_bindings83 {
+      additional_bindings81 {
         delete: "/v2/searches/{id}"
       }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Search;
   }
+
+
 
 
 
@@ -1585,7 +1631,6 @@ service V2 {
 
 
 
-
   ////////////////////////////////////////
   // App Sharing
   ////////////////////////////////////////
@@ -1640,9 +1685,6 @@ service V2 {
   rpc ListCollaborations (ListCollaborationsRequest) returns (MultiCollaborationsResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/collaborations"
-      additional_bindings84 {
-        get: "/v2/collaborations"
-      }
     };
     option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
   }
@@ -1704,7 +1746,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks"
       body: "*"
-      additional_bindings85 {
+      additional_bindings82 {
         post: "/v2/tasks"
         body: "*"
       }
@@ -1726,7 +1768,7 @@ service V2 {
   rpc GetTaskAnnotationCount (GetTaskCountRequest) returns (SingleTaskCountResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/annotations/count"
-      additional_bindings86 {
+      additional_bindings83 {
         get: "/v2/tasks/{task_id}/annotations/count"
       }
     };
@@ -1738,7 +1780,7 @@ service V2 {
   rpc GetTaskInputCount (GetTaskCountRequest) returns (SingleTaskCountResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/inputs/count"
-      additional_bindings87 {
+      additional_bindings84 {
         get: "/v2/tasks/{task_id}/inputs/count"
       }
     };
@@ -1750,7 +1792,7 @@ service V2 {
   rpc GetTask (GetTaskRequest) returns (SingleTaskResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}"
-      additional_bindings88 {
+      additional_bindings85 {
         get: "/v2/tasks/{task_id}"
       }
     };
@@ -1766,7 +1808,7 @@ service V2 {
   rpc ListTasks (ListTasksRequest) returns (MultiTaskResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks"
-      additional_bindings89 {
+      additional_bindings86 {
         get: "/v2/tasks"
       }
     };
@@ -1783,7 +1825,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks"
       body: "*"
-      additional_bindings90 {
+      additional_bindings87 {
         patch: "/v2/tasks"
         body: "*"
       }
@@ -1806,7 +1848,7 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks"
       body: "*"
-      additional_bindings91 {
+      additional_bindings88 {
         delete: "/v2/tasks"
         body: "*"
       }
@@ -1839,7 +1881,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
       body: "*"
-      additional_bindings92 {
+      additional_bindings89 {
         post: "/v2/collectors"
         body: "*"
       }
@@ -1861,7 +1903,7 @@ service V2 {
   rpc GetCollector (GetCollectorRequest) returns (SingleCollectorResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors/{collector_id}"
-      additional_bindings93 {
+      additional_bindings90 {
         get: "/v2/collectors/{collector_id}"
       }
     };
@@ -1873,7 +1915,7 @@ service V2 {
   rpc ListCollectors (ListCollectorsRequest) returns (MultiCollectorResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
-      additional_bindings94 {
+      additional_bindings91 {
         get: "/v2/collectors"
       }
     };
@@ -1886,7 +1928,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
       body: "*"
-      additional_bindings95 {
+      additional_bindings92 {
         patch: "/v2/collectors"
         body: "*"
       }
@@ -1904,7 +1946,7 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
       body: "*"
-      additional_bindings96 {
+      additional_bindings93 {
         delete: "/v2/collectors"
         body: "*"
       }
@@ -1924,7 +1966,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/stats/values"
       body: "*"
-      additional_bindings97 {
+      additional_bindings94 {
         post: "/v2/stats/values"
         body: "*"
       }
@@ -1938,7 +1980,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/stats/values/aggregate"
       body: "*"
-      additional_bindings98 {
+      additional_bindings95 {
         post: "/v2/stats/values/aggregate"
         body: "*"
       }
@@ -1965,7 +2007,7 @@ service V2 {
 message Pagination {
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks. Defaults to 1.
   uint32 page = 1;
-  // (optional URL parameter) The number of results that will be contained in each page. Defaults to 10.
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults to 128.
   uint32 per_page = 2;
 }
 
@@ -2018,8 +2060,11 @@ message ListAnnotationsRequest {
   // Set this flag to list both trusted and not trusted annotations
   // by default it's listing only trusted annotations
   bool list_all_annotations = 6;
-
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
   uint32 page = 7;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
   uint32 per_page = 8;
   // Flag to filter annotations by task_id
   string task_id = 11;
@@ -2110,8 +2155,10 @@ message ListAppsRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
+  // Filter by the name of the app. This supports wilcard queries like "gen*" to match "general" as an example.
+  string name = 4;
 }
 
 message PostAppsRequest {
@@ -2202,7 +2249,11 @@ message MultiCollaboratorsResponse {
 
 message ListCollaborationsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
   uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
   uint32 per_page = 3;
 }
 
@@ -2210,6 +2261,13 @@ message MultiCollaborationsResponse {
   clarifai.api.status.Status status = 1;
   repeated Collaboration collaborations = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
+
+
+
+
+
+
+
 
 
 
@@ -2321,7 +2379,7 @@ message ListConceptsRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
 }
 
@@ -2357,7 +2415,7 @@ message GetConceptCountsRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
 }
 
@@ -2430,7 +2488,7 @@ message ListConceptRelationsRequest {
   // Defaults to 1.
   uint32 page = 5;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 6;
 }
 
@@ -2529,7 +2587,7 @@ message ListConceptLanguagesRequest {
   // Defaults to 1.
   uint32 page = 3;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 4;
 }
 
@@ -2642,7 +2700,7 @@ message ListInputsRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
 
   // Set status to filter by status
@@ -2653,6 +2711,8 @@ message ListInputsRequest {
 
 message StreamInputsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 20.
   uint32 per_page = 2;
   string last_id = 3;
 
@@ -2687,9 +2747,10 @@ message DeleteInputRequest {
 
 // Request to delete several things by the list of ids.
 message DeleteInputsRequest {
+  reserved 3;
+
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated string ids = 2;
-  bool delete_all = 3;
 }
 
 message SingleInputResponse {
@@ -2743,7 +2804,7 @@ message ListModelInputsRequest {
   // Defaults to 1.
   uint32 page = 4;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 5;
 }
 
@@ -2768,7 +2829,7 @@ message ListKeysRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
 }
 
@@ -2778,7 +2839,7 @@ message ListAppKeysRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
 }
 
@@ -2848,9 +2909,22 @@ message ListModelsRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
   repeated string ids = 4;
+  // Filter by the name of the model. This supports wilcard queries like "gen*" to match "general" as an example.
+  string name = 5;
+  // Filter models by the specific model_type_id. See ListModelTypes for the list of ModelType.Id's
+  // supported.
+  string model_type_id = 6;
+  // If true, we only return models that have the status MODEL_TRAINED, which includes non-trainable model types.
+  bool trained_only = 7;
+  // The list of input fields to the model.
+  // For example, you can specify 'image', which will return models that make inferences on images like visual-classifier models.
+  repeated string input_fields = 8;
+  // The list of output fields to the model.
+  // For example, you can specify 'regions[...].data.concepts', which will return visual-detector models.
+  repeated string output_fields = 9;
 }
 
 message PostModelsRequest {
@@ -2917,6 +2991,15 @@ message MultiModelResponse {
 ////////////////////////////////////////////////////////////////////////////////
 // Requests / Responses from /proto/clarifai/api/model_version.proto
 ////////////////////////////////////////////////////////////////////////////////
+message PatchModelVersionsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+  repeated ModelVersion model_versions = 3;
+  // The action to perform on the patched objects
+  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  string action = 4;
+}
+
 // NOTE: this is same as GetModelRequest but backend doesn't support sharing same
 // request for different endpoints currently.
 message GetModelVersionRequest {
@@ -2932,7 +3015,7 @@ message ListModelVersionsRequest {
   // Defaults to 1.
   uint32 page = 3;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 4;
   // To list only the model versions that have these concept ids present in them.
   repeated string concept_ids = 5;
@@ -3027,7 +3110,7 @@ message ListModelTypesRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
 }
 
@@ -3046,6 +3129,79 @@ message MultiModelTypeResponse {
 }
 
 
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses for Model Version Input Examples
+////////////////////////////////////////////////////////////////////////////////
+message GetModelVersionInputExampleRequest {
+  // authorization field  (contains app/user id info)
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // id of model the example belongs to
+  string model_id = 2;
+  // specific version the example belongs to
+  string model_version_id = 3;
+  // Id of example to fetch
+  string example_id = 4;
+}
+
+message ListModelVersionInputExamplesRequest {
+  // authorization field  (contains app/user id info)
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // id of model the example belongs to
+  string model_id = 2;
+  // specific version the example belongs to
+  string model_version_id = 3;
+  // Optional, defaults to 1.
+  uint32 page = 4;
+  // Optional, defaults to 128 references per page.
+  uint32 per_page = 5;
+}
+
+
+
+message SingleModelVersionInputExampleResponse {
+  // status of response
+  clarifai.api.status.Status status = 1;
+  // model input example message
+  ModelVersionInputExample model_version_input_example = 2;
+}
+
+message MultiModelVersionInputExampleResponse {
+  // status of response
+  clarifai.api.status.Status status = 1;
+  // model input example messages
+  repeated ModelVersionInputExample model_version_input_examples = 2;
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// Requests / Responses for Model References
+////////////////////////////////////////////////////////////////////////////////
+
+message ListModelReferencesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  string model_id = 2;
+  // Optional, defaults to 1.
+  uint32 page = 3;
+  // Optional, defaults to 128 references per page.
+  uint32 per_page = 4;
+}
+
+
+
+message MultiModelReferenceResponse {
+  clarifai.api.status.Status status = 1;
+  repeated ModelReference model_references = 2;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Requests / Responses from /proto/clarifai/api/output.proto
@@ -3072,6 +3228,9 @@ message ListScopesRequest {
   // If "personal_access_token" include scopes and endpoints available to personal access tokens.
   // If "api_key" include scopes and endpoints available to app-specific keys. (default)
   string key_type = 1;
+
+  // For all user specific information we include user_app_id to get the user_id in a consistent way
+  clarifai.api.UserAppIDSet user_app_id = 2;
 }
 
 message MyScopesRequest {
@@ -3117,7 +3276,11 @@ message GetSearchRequest {
 
 message ListSearchesRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
   uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
   uint32 per_page = 3;
 }
 
@@ -3420,8 +3583,6 @@ enum OrganizationInvitationStatus {
 
 
 
-
-
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -3447,8 +3608,10 @@ message ListWorkflowsRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
+  // Filter by the id of the workflow. This supports wilcard queries like "gen*" to match "general" as an example.
+  string id = 4;
 }
 
 
@@ -3509,12 +3672,26 @@ message PostWorkflowResultsRequest {
 
   // Use this flag to look into clarifai published workflows first for a Workflow ID
   bool favor_clarifai_workflows = 5;
+
+  // A workflow state to be maintained across PostWorkflowResults requests/responses.
+  // If it is not sent in the initial request with workflow_state.id = "init" then no
+  // state will be saved or returned in PostWorkflowResultsResponse.
+  WorkflowState workflow_state = 6;
 }
 
 message PostWorkflowResultsResponse {
+  // The status of the request.
   clarifai.api.status.Status status = 1;
+  // The workflow that was used in predictions with PostWorkflowResults
   Workflow workflow = 2;
+  // The resulting predictions of all models in the workflow.
   repeated WorkflowResult results = 3;
+  // A workflow state to be maintained across PostWorkflowResults requests/responses.
+  // This WorkflowState should be passed in to subsequent PostWorkflowResults calls
+  // if you want to keep track of state across requests.
+  // If no WorkflowState was initialized in a request then no WorkflowState will be returned in this
+  // response.
+  WorkflowState workflow_state = 4;
 }
 
 message PostWorkflowResultsSimilarityRequest {
@@ -3534,6 +3711,8 @@ message PostWorkflowResultsSimilarityResponse {
   clarifai.api.status.Status status = 1;
   repeated WorkflowResultsSimilarity results = 2;
 }
+
+
 
 
 
@@ -3563,6 +3742,12 @@ message GetAppDuplicationRequest {
 //Request to list all the app duplication that user triggered.
 message ListAppDuplicationsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 3;
 }
 
 message MultiAppDuplicationsResponse {
@@ -3597,17 +3782,16 @@ message GetTaskRequest {
 // Request to list multiple tasks.
 message ListTasksRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
-
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
   uint32 page = 2;
-
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
   uint32 per_page = 3;
-
   // Get tasks that have ANY user from this list assigned as worker.
   repeated string worker_user_ids = 4;
-
   // Get tasks that have ANY user from this list assigned as reviewer.
   repeated string review_user_ids = 5;
-
   // Get label order tasks as well
   bool including_label_order_tasks = 6;
 }
@@ -3615,9 +3799,7 @@ message ListTasksRequest {
 // Request to patch a list of tasks.
 message PatchTasksRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
-
   repeated Task tasks = 2;
-
   // The action to perform on the patched objects
   // For now actions 'merge', 'overwrite', and 'remove' are supported
   string action = 3;
@@ -3714,7 +3896,7 @@ message ListCollectorsRequest {
   // Defaults to 1.
   uint32 page = 2;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 10.
+  // to 128.
   uint32 per_page = 3;
 }
 

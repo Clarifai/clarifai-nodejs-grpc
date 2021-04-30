@@ -611,6 +611,9 @@ export class Concept extends jspb.Message {
     getVisibility(): Visibility | undefined;
     setVisibility(value?: Visibility): Concept;
 
+    getUserId(): string;
+    setUserId(value: string): Concept;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Concept.AsObject;
@@ -633,6 +636,7 @@ export namespace Concept {
         definition: string,
         vocabId: string,
         visibility?: Visibility.AsObject,
+        userId: string,
     }
 }
 
@@ -1737,6 +1741,9 @@ export class Model extends jspb.Message {
     getVisibility(): Visibility | undefined;
     setVisibility(value?: Visibility): Model;
 
+    getDescription(): string;
+    setDescription(value: string): Model;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Model.AsObject;
@@ -1762,6 +1769,91 @@ export namespace Model {
         trainInfo?: TrainInfo.AsObject,
         modelTypeId: string,
         visibility?: Visibility.AsObject,
+        description: string,
+    }
+}
+
+export class ModelReference extends jspb.Message { 
+    getId(): string;
+    setId(value: string): ModelReference;
+
+    getModelId(): string;
+    setModelId(value: string): ModelReference;
+
+    getUrl(): string;
+    setUrl(value: string): ModelReference;
+
+    getName(): string;
+    setName(value: string): ModelReference;
+
+
+    hasMetadata(): boolean;
+    clearMetadata(): void;
+    getMetadata(): google_protobuf_struct_pb.Struct | undefined;
+    setMetadata(value?: google_protobuf_struct_pb.Struct): ModelReference;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ModelReference.AsObject;
+    static toObject(includeInstance: boolean, msg: ModelReference): ModelReference.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ModelReference, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ModelReference;
+    static deserializeBinaryFromReader(message: ModelReference, reader: jspb.BinaryReader): ModelReference;
+}
+
+export namespace ModelReference {
+    export type AsObject = {
+        id: string,
+        modelId: string,
+        url: string,
+        name: string,
+        metadata?: google_protobuf_struct_pb.Struct.AsObject,
+    }
+}
+
+export class ModelVersionInputExample extends jspb.Message { 
+    getId(): string;
+    setId(value: string): ModelVersionInputExample;
+
+    getModelId(): string;
+    setModelId(value: string): ModelVersionInputExample;
+
+    getModelVersionId(): string;
+    setModelVersionId(value: string): ModelVersionInputExample;
+
+
+    hasData(): boolean;
+    clearData(): void;
+    getData(): Data | undefined;
+    setData(value?: Data): ModelVersionInputExample;
+
+    getName(): string;
+    setName(value: string): ModelVersionInputExample;
+
+    getDescription(): string;
+    setDescription(value: string): ModelVersionInputExample;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ModelVersionInputExample.AsObject;
+    static toObject(includeInstance: boolean, msg: ModelVersionInputExample): ModelVersionInputExample.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ModelVersionInputExample, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ModelVersionInputExample;
+    static deserializeBinaryFromReader(message: ModelVersionInputExample, reader: jspb.BinaryReader): ModelVersionInputExample;
+}
+
+export namespace ModelVersionInputExample {
+    export type AsObject = {
+        id: string,
+        modelId: string,
+        modelVersionId: string,
+        data?: Data.AsObject,
+        name: string,
+        description: string,
     }
 }
 
@@ -2013,9 +2105,6 @@ export class ModelType extends jspb.Message {
     getExpectedPretrainedOutputFields(): google_protobuf_struct_pb.Struct | undefined;
     setExpectedPretrainedOutputFields(value?: google_protobuf_struct_pb.Struct): ModelType;
 
-    getIsOperator(): boolean;
-    setIsOperator(value: boolean): ModelType;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ModelType.AsObject;
@@ -2043,7 +2132,6 @@ export namespace ModelType {
         evaluable: boolean,
         expectedPretrainedInputFields?: google_protobuf_struct_pb.Struct.AsObject,
         expectedPretrainedOutputFields?: google_protobuf_struct_pb.Struct.AsObject,
-        isOperator: boolean,
     }
 }
 
@@ -2261,6 +2349,12 @@ export class ModelVersion extends jspb.Message {
     getVisibility(): Visibility | undefined;
     setVisibility(value?: Visibility): ModelVersion;
 
+    getAppId(): string;
+    setAppId(value: string): ModelVersion;
+
+    getUserId(): string;
+    setUserId(value: string): ModelVersion;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ModelVersion.AsObject;
@@ -2283,6 +2377,8 @@ export namespace ModelVersion {
         completedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         description: string,
         visibility?: Visibility.AsObject,
+        appId: string,
+        userId: string,
     }
 }
 
@@ -3056,12 +3152,6 @@ export class Output extends jspb.Message {
     setModel(value?: Model): Output;
 
 
-    hasOperator(): boolean;
-    clearOperator(): void;
-    getOperator(): Operator | undefined;
-    setOperator(value?: Operator): Output;
-
-
     hasInput(): boolean;
     clearInput(): void;
     getInput(): Input | undefined;
@@ -3090,7 +3180,6 @@ export namespace Output {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         model?: Model.AsObject,
-        operator?: Operator.AsObject,
         input?: Input.AsObject,
         data?: Data.AsObject,
     }
@@ -3517,6 +3606,12 @@ export class User extends jspb.Message {
     getCompanyName(): string;
     setCompanyName(value: string): User;
 
+    getJobTitle(): string;
+    setJobTitle(value: string): User;
+
+    getJobRole(): string;
+    setJobRole(value: string): User;
+
     getBillType(): string;
     setBillType(value: string): User;
 
@@ -3594,6 +3689,8 @@ export namespace User {
         firstName: string,
         lastName: string,
         companyName: string,
+        jobTitle: string,
+        jobRole: string,
         billType: string,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         dateGdprConsent?: google_protobuf_timestamp_pb.Timestamp.AsObject,
@@ -3875,6 +3972,9 @@ export class Workflow extends jspb.Message {
     getVisibility(): Visibility | undefined;
     setVisibility(value?: Visibility): Workflow;
 
+    getUserId(): string;
+    setUserId(value: string): Workflow;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Workflow.AsObject;
@@ -3894,6 +3994,7 @@ export namespace Workflow {
         nodesList: Array<WorkflowNode.AsObject>,
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
         visibility?: Visibility.AsObject,
+        userId: string,
     }
 }
 
@@ -3906,12 +4007,6 @@ export class WorkflowNode extends jspb.Message {
     clearModel(): void;
     getModel(): Model | undefined;
     setModel(value?: Model): WorkflowNode;
-
-
-    hasOperator(): boolean;
-    clearOperator(): void;
-    getOperator(): Operator | undefined;
-    setOperator(value?: Operator): WorkflowNode;
 
     clearNodeInputsList(): void;
     getNodeInputsList(): Array<NodeInput>;
@@ -3936,37 +4031,8 @@ export namespace WorkflowNode {
     export type AsObject = {
         id: string,
         model?: Model.AsObject,
-        operator?: Operator.AsObject,
         nodeInputsList: Array<NodeInput.AsObject>,
         suppressOutput: boolean,
-    }
-}
-
-export class Operator extends jspb.Message { 
-    getTypeId(): string;
-    setTypeId(value: string): Operator;
-
-
-    hasOutputInfo(): boolean;
-    clearOutputInfo(): void;
-    getOutputInfo(): OutputInfo | undefined;
-    setOutputInfo(value?: OutputInfo): Operator;
-
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): Operator.AsObject;
-    static toObject(includeInstance: boolean, msg: Operator): Operator.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: Operator, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): Operator;
-    static deserializeBinaryFromReader(message: Operator, reader: jspb.BinaryReader): Operator;
-}
-
-export namespace Operator {
-    export type AsObject = {
-        typeId: string,
-        outputInfo?: OutputInfo.AsObject,
     }
 }
 
@@ -4047,6 +4113,27 @@ export namespace WorkflowResult {
         input?: Input.AsObject,
         outputsList: Array<Output.AsObject>,
         suppressOutput: boolean,
+    }
+}
+
+export class WorkflowState extends jspb.Message { 
+    getId(): string;
+    setId(value: string): WorkflowState;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): WorkflowState.AsObject;
+    static toObject(includeInstance: boolean, msg: WorkflowState): WorkflowState.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: WorkflowState, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): WorkflowState;
+    static deserializeBinaryFromReader(message: WorkflowState, reader: jspb.BinaryReader): WorkflowState;
+}
+
+export namespace WorkflowState {
+    export type AsObject = {
+        id: string,
     }
 }
 
@@ -4219,6 +4306,12 @@ export class Task extends jspb.Message {
     getVisibility(): Visibility | undefined;
     setVisibility(value?: Visibility): Task;
 
+    getAppId(): string;
+    setAppId(value: string): Task;
+
+    getUserId(): string;
+    setUserId(value: string): Task;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Task.AsObject;
@@ -4247,6 +4340,8 @@ export namespace Task {
         name: string,
         aiAssistParams?: AiAssistParameters.AsObject,
         visibility?: Visibility.AsObject,
+        appId: string,
+        userId: string,
     }
 
     export enum TaskType {
