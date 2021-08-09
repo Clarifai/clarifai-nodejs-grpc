@@ -98,6 +98,8 @@ message App {
   // the following from the API:
   // "2017-04-11T21:50:50.223962Z"
   google.protobuf.Timestamp created_at = 6;
+  // When the app was last modified
+  google.protobuf.Timestamp modified_at= 17;
   // if user accept legal consent for face recognition
   uint32 legal_consent_status = 7;
 
@@ -889,6 +891,9 @@ message Key {
 
   // When does the key expires, the key won't expire if this is empty
   google.protobuf.Timestamp expires_at = 6;
+
+  // list of idp ids at which key is currently authorized
+  repeated string authorized_idp_ids = 9;
 }
 
 
@@ -967,8 +972,17 @@ message Model {
   // also be publicly visible.
   Visibility visibility = 15;
 
-  // Description about this model
+  // Short description about this model
   string description = 16;
+
+  // To handle arbitrary json metadata you can use a struct field:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  google.protobuf.Struct metadata = 17;
+
+  // Notes about a model (should support markdown)
+  // This field should be used for in-depth notes about
+  // about a model and supports up to 64Kbs.
+  string notes = 18;
 }
 
 // A link to a html/markdown/text file that stores reference material
@@ -1323,6 +1337,15 @@ message ModelVersion {
   string app_id = 13;
   // The user the model version belongs to.
   string user_id = 14;
+
+  // When this model version was last modified
+  google.protobuf.Timestamp modified_at = 15;
+
+  // To handle arbitrary json metadata you can use a struct field:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  google.protobuf.Struct metadata = 16;
+
+  string license = 17;
 }
 
 message PretrainedModelConfig {
@@ -1442,8 +1465,10 @@ message TrackerMetrics {
 
 message EvalTestSetEntry {
   // Input CFID
-  string id = 1;
-  string url = 2;
+  string id = 1 [deprecated = true];
+  string url = 2 [deprecated = true];
+  Input input = 6; // the input information
+
   repeated Concept predicted_concepts = 3;
   // All the ground truth concepts will be show on the top level
   repeated Concept ground_truth_concepts = 4;
@@ -1745,6 +1770,14 @@ message Filter {
   // FILTER by input information.
   // For example you can filter inputs by status,
   Input input = 5;
+
+  // Filter by annotation last updated time range.
+  TimeRange last_updated_time_range = 6;
+}
+
+message TimeRange {
+  google.protobuf.Timestamp start_time = 1; // Begin of the time range, optional, inclusive.
+  google.protobuf.Timestamp end_time = 2; // End of the time range, optional, inclusive.
 }
 
 message Rank {
@@ -2012,8 +2045,8 @@ message Workflow {
   // "2017-04-11T21:50:50.223962Z"
   google.protobuf.Timestamp created_at = 3;
 
-  // The list of nodes that make up the workflow. Each node can specify an input node
-  // that it connects to in order to define the graph.
+  // The list of nodes retrieved from latest workflow version.
+  // Each node can specify an input node that it connects to in order to define the graph.
   repeated WorkflowNode nodes = 4;
 
   // To handle arbitrary json metadata you can use a struct field:
@@ -2027,6 +2060,48 @@ message Workflow {
 
   // The user the workflow belongs to
   string user_id = 7;
+
+  // When the workflow was last modified
+  google.protobuf.Timestamp modified_at = 8;
+
+  // Info about the workflow version
+  WorkflowVersion version = 9;
+}
+
+message WorkflowVersion {
+  // Id of this version.
+  string id = 1;
+
+  // Workflow id for this version.
+  string workflow_id = 2;
+
+  // When the version was created.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp created_at = 3;
+
+  // Most recent time when the version was updated.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp modified_at = 4;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 5;
+
+  // The list of nodes that make up the workflow version. Each node can specify an input node
+  // that it connects to in order to define the graph.
+  repeated WorkflowNode nodes = 6;
+
+  // To handle arbitrary json metadata you can use a struct field:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  google.protobuf.Struct metadata = 7;
+
+  // The app the workflow version belongs to.
+  string app_id = 8;
+  // The user the workflow version belongs to.
+  string user_id = 9;
 }
 
 message WorkflowNode {
@@ -2612,4 +2687,11 @@ message Visibility {
     PUBLIC = 50;
   }
   Gettable gettable = 1;
+}
+
+message TrendingMetric {
+  string user_id = 1;
+  string app_id = 2;
+  string object_id = 3;
+  uint64 view_count = 4;
 }
