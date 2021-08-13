@@ -8,7 +8,7 @@ option java_package = "com.clarifai.grpc.api.status";
 option objc_class_prefix = "CAIP";
 
 enum StatusCode {
-  reserved 33000, 33001, 33002, 33100, 33101, 33102, 33103, 33104, 33105, 33106, 33200, 33201, 33203, 33210, 39995, 40018, 40019; // deprecated status codes that should not be reused
+  reserved 33000, 33001, 33002, 33100, 33101, 33102, 33103, 33104, 33105, 33106, 33200, 33201, 33203, 33210, 39995, 40018, 40019, 41200, 41201, 41202, 41203, 41204; // deprecated status codes that should not be reused
   // to be revised and greatly expanded
   ZERO = 0;
 
@@ -57,7 +57,7 @@ enum StatusCode {
   MODEL_TRAINING_TIMED_OUT = 21113; // Training took longer than hard coded timeouts.
   MODEL_TRAINING_WAITING_ERROR = 21114; // Training got error waiting on asset pipeline to finish.
   MODEL_TRAINING_UNKNOWN_ERROR = 21115; // Training threw an unknown exception.
-  MODEL_TRAINING_MSG_REDELIVER = 21116; // Training message was redelivered.
+  MODEL_TRAINING_MSG_REDELIVER = 21116 [deprecated = true]; // Training message was redelivered.
   MODEL_TRAINING_INSUFFICIENT_DATA = 21117; // Training got error due to insufficient labelled data
   MODEL_TRAINING_INVALID_PARAMS = 21118;
   MODEL_TRAINING_INVALID_DATA_TOLERANCE_EXCEEDED = 21119; // Training is stopped because too much data was dropped
@@ -83,7 +83,7 @@ enum StatusCode {
   MODEL_EVALUATION_UNKNOWN_ERROR = 21312; // EVALUATION THREW AN UNKNOWN EXCEPTION.
 
   MODEL_PREDICTION_FAILED = 21313;
-  MODEL_EVALUATION_MSG_REDELIVER = 21314; // Eval message was redelivered.
+  MODEL_EVALUATION_MSG_REDELIVER = 21314 [deprecated = true]; // Eval message was redelivered.
   MODEL_EVALUATION_NEED_LABELS = 21315; // Don't have enough concepts labelled to perform evaluation
   MODEL_EVALUATION_NEED_INPUTS = 21316; // Don't have enough inputs per concept to perform evaluation
   // Status codes through 21319 (inclusive) reserved for model eval *errors* (per logic in clients)
@@ -263,13 +263,6 @@ enum StatusCode {
   SQS_INVALID_RECEIPT_HANDLE = 41101;
   SQS_UNKNOWN = 41102;
 
-  // KAFKA related errros 412xx
-  KAFKA_UNKNOW = 41200;
-  KAFKA_MISSING_TOPIC = 41201;
-  KAFKA_ADMIN_ERR = 41202;
-  KAFKA_CONSUMER_ERR = 41203;
-  KAFKA_PUBLISHER_ERR = 41204;
-
   //Search related errors 43xxxx
   SEARCH_INTERNAL_FAILURE = 43001;
   SEARCH_PROJECTION_FAILURE = 43002;
@@ -317,6 +310,9 @@ enum StatusCode {
   MP_INVALID_ARGUMENT = 47105;
   MP_IMAGE_PROCESSING_ERROR = 47106;
 
+  // DataTier related error 472xx
+  DATATIER_CONN_ERROR = 47201;
+
   // User legal consent stauts related 50xxx
   USER_CONSENT_FACE = 50001;
 
@@ -329,7 +325,8 @@ enum StatusCode {
   COLLECTOR_MISSING = 52000;
   COLLECTOR_ACTIVE = 52001;
   COLLECTOR_INACTIVE = 52002;
-
+  COLLECTOR_POST_INPUT_FAILED = 52003;
+  
   // SSO 53xxx
   SSO_IDENTITY_PROVIDER_DOES_NOT_EXIST = 53001;
 

@@ -124,6 +124,12 @@ export class App extends jspb.Message {
     getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
     setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): App;
 
+
+    hasModifiedAt(): boolean;
+    clearModifiedAt(): void;
+    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): App;
+
     getLegalConsentStatus(): number;
     setLegalConsentStatus(value: number): App;
 
@@ -164,6 +170,7 @@ export namespace App {
         defaultWorkflowId: string,
         userId: string,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         legalConsentStatus: number,
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
         description: string,
@@ -1662,6 +1669,11 @@ export class Key extends jspb.Message {
     getExpiresAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
     setExpiresAt(value?: google_protobuf_timestamp_pb.Timestamp): Key;
 
+    clearAuthorizedIdpIdsList(): void;
+    getAuthorizedIdpIdsList(): Array<string>;
+    setAuthorizedIdpIdsList(value: Array<string>): Key;
+    addAuthorizedIdpIds(value: string, index?: number): string;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Key.AsObject;
@@ -1683,6 +1695,7 @@ export namespace Key {
         appsList: Array<App.AsObject>,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         expiresAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        authorizedIdpIdsList: Array<string>,
     }
 }
 
@@ -1745,6 +1758,15 @@ export class Model extends jspb.Message {
     setDescription(value: string): Model;
 
 
+    hasMetadata(): boolean;
+    clearMetadata(): void;
+    getMetadata(): google_protobuf_struct_pb.Struct | undefined;
+    setMetadata(value?: google_protobuf_struct_pb.Struct): Model;
+
+    getNotes(): string;
+    setNotes(value: string): Model;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Model.AsObject;
     static toObject(includeInstance: boolean, msg: Model): Model.AsObject;
@@ -1770,6 +1792,8 @@ export namespace Model {
         modelTypeId: string,
         visibility?: Visibility.AsObject,
         description: string,
+        metadata?: google_protobuf_struct_pb.Struct.AsObject,
+        notes: string,
     }
 }
 
@@ -2356,6 +2380,21 @@ export class ModelVersion extends jspb.Message {
     setUserId(value: string): ModelVersion;
 
 
+    hasModifiedAt(): boolean;
+    clearModifiedAt(): void;
+    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): ModelVersion;
+
+
+    hasMetadata(): boolean;
+    clearMetadata(): void;
+    getMetadata(): google_protobuf_struct_pb.Struct | undefined;
+    setMetadata(value?: google_protobuf_struct_pb.Struct): ModelVersion;
+
+    getLicense(): string;
+    setLicense(value: string): ModelVersion;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ModelVersion.AsObject;
     static toObject(includeInstance: boolean, msg: ModelVersion): ModelVersion.AsObject;
@@ -2379,6 +2418,9 @@ export namespace ModelVersion {
         visibility?: Visibility.AsObject,
         appId: string,
         userId: string,
+        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        metadata?: google_protobuf_struct_pb.Struct.AsObject,
+        license: string,
     }
 }
 
@@ -2857,6 +2899,12 @@ export class EvalTestSetEntry extends jspb.Message {
     getUrl(): string;
     setUrl(value: string): EvalTestSetEntry;
 
+
+    hasInput(): boolean;
+    clearInput(): void;
+    getInput(): Input | undefined;
+    setInput(value?: Input): EvalTestSetEntry;
+
     clearPredictedConceptsList(): void;
     getPredictedConceptsList(): Array<Concept>;
     setPredictedConceptsList(value: Array<Concept>): EvalTestSetEntry;
@@ -2888,6 +2936,7 @@ export namespace EvalTestSetEntry {
     export type AsObject = {
         id: string,
         url: string,
+        input?: Input.AsObject,
         predictedConceptsList: Array<Concept.AsObject>,
         groundTruthConceptsList: Array<Concept.AsObject>,
         annotation?: Annotation.AsObject,
@@ -3452,6 +3501,12 @@ export class Filter extends jspb.Message {
     setInput(value?: Input): Filter;
 
 
+    hasLastUpdatedTimeRange(): boolean;
+    clearLastUpdatedTimeRange(): void;
+    getLastUpdatedTimeRange(): TimeRange | undefined;
+    setLastUpdatedTimeRange(value?: TimeRange): Filter;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Filter.AsObject;
     static toObject(includeInstance: boolean, msg: Filter): Filter.AsObject;
@@ -3467,6 +3522,38 @@ export namespace Filter {
         negate: boolean,
         annotation?: Annotation.AsObject,
         input?: Input.AsObject,
+        lastUpdatedTimeRange?: TimeRange.AsObject,
+    }
+}
+
+export class TimeRange extends jspb.Message { 
+
+    hasStartTime(): boolean;
+    clearStartTime(): void;
+    getStartTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setStartTime(value?: google_protobuf_timestamp_pb.Timestamp): TimeRange;
+
+
+    hasEndTime(): boolean;
+    clearEndTime(): void;
+    getEndTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setEndTime(value?: google_protobuf_timestamp_pb.Timestamp): TimeRange;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): TimeRange.AsObject;
+    static toObject(includeInstance: boolean, msg: TimeRange): TimeRange.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: TimeRange, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): TimeRange;
+    static deserializeBinaryFromReader(message: TimeRange, reader: jspb.BinaryReader): TimeRange;
+}
+
+export namespace TimeRange {
+    export type AsObject = {
+        startTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        endTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
     }
 }
 
@@ -3976,6 +4063,18 @@ export class Workflow extends jspb.Message {
     setUserId(value: string): Workflow;
 
 
+    hasModifiedAt(): boolean;
+    clearModifiedAt(): void;
+    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): Workflow;
+
+
+    hasVersion(): boolean;
+    clearVersion(): void;
+    getVersion(): WorkflowVersion | undefined;
+    setVersion(value?: WorkflowVersion): Workflow;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Workflow.AsObject;
     static toObject(includeInstance: boolean, msg: Workflow): Workflow.AsObject;
@@ -3994,6 +4093,75 @@ export namespace Workflow {
         nodesList: Array<WorkflowNode.AsObject>,
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
         visibility?: Visibility.AsObject,
+        userId: string,
+        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        version?: WorkflowVersion.AsObject,
+    }
+}
+
+export class WorkflowVersion extends jspb.Message { 
+    getId(): string;
+    setId(value: string): WorkflowVersion;
+
+    getWorkflowId(): string;
+    setWorkflowId(value: string): WorkflowVersion;
+
+
+    hasCreatedAt(): boolean;
+    clearCreatedAt(): void;
+    getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): WorkflowVersion;
+
+
+    hasModifiedAt(): boolean;
+    clearModifiedAt(): void;
+    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): WorkflowVersion;
+
+
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): Visibility | undefined;
+    setVisibility(value?: Visibility): WorkflowVersion;
+
+    clearNodesList(): void;
+    getNodesList(): Array<WorkflowNode>;
+    setNodesList(value: Array<WorkflowNode>): WorkflowVersion;
+    addNodes(value?: WorkflowNode, index?: number): WorkflowNode;
+
+
+    hasMetadata(): boolean;
+    clearMetadata(): void;
+    getMetadata(): google_protobuf_struct_pb.Struct | undefined;
+    setMetadata(value?: google_protobuf_struct_pb.Struct): WorkflowVersion;
+
+    getAppId(): string;
+    setAppId(value: string): WorkflowVersion;
+
+    getUserId(): string;
+    setUserId(value: string): WorkflowVersion;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): WorkflowVersion.AsObject;
+    static toObject(includeInstance: boolean, msg: WorkflowVersion): WorkflowVersion.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: WorkflowVersion, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): WorkflowVersion;
+    static deserializeBinaryFromReader(message: WorkflowVersion, reader: jspb.BinaryReader): WorkflowVersion;
+}
+
+export namespace WorkflowVersion {
+    export type AsObject = {
+        id: string,
+        workflowId: string,
+        createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        visibility?: Visibility.AsObject,
+        nodesList: Array<WorkflowNode.AsObject>,
+        metadata?: google_protobuf_struct_pb.Struct.AsObject,
+        appId: string,
         userId: string,
     }
 }
@@ -4966,6 +5134,39 @@ export namespace Visibility {
     PUBLIC = 50,
     }
 
+}
+
+export class TrendingMetric extends jspb.Message { 
+    getUserId(): string;
+    setUserId(value: string): TrendingMetric;
+
+    getAppId(): string;
+    setAppId(value: string): TrendingMetric;
+
+    getObjectId(): string;
+    setObjectId(value: string): TrendingMetric;
+
+    getViewCount(): number;
+    setViewCount(value: number): TrendingMetric;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): TrendingMetric.AsObject;
+    static toObject(includeInstance: boolean, msg: TrendingMetric): TrendingMetric.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: TrendingMetric, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): TrendingMetric;
+    static deserializeBinaryFromReader(message: TrendingMetric, reader: jspb.BinaryReader): TrendingMetric;
+}
+
+export namespace TrendingMetric {
+    export type AsObject = {
+        userId: string,
+        appId: string,
+        objectId: string,
+        viewCount: number,
+    }
 }
 
 export enum ExpirationAction {

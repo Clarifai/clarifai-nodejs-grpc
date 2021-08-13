@@ -9,6 +9,7 @@ import "proto/clarifai/auth/scope/scope.proto";
 import "proto/clarifai/auth/util/extension.proto";
 import "proto/clarifai/api/status/status_code.proto";
 
+
 import "google/api/annotations.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/struct.proto";
@@ -675,7 +676,16 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
 
-  // List all the model types available in the platform.
+  // List all the supported open source licenses in the platform.
+  rpc ListOpenSourceLicenses (ListOpenSourceLicensesRequest) returns (ListOpenSourceLicensesResponse) {
+    option (google.api.http) = {
+      get: "/v2/open_source_licenses"
+    };
+    option (clarifai.auth.util.cl_auth_type) = NoAuth;
+  }
+    // List all the model types available in the platform.
+
+    // List all the model types available in the platform.
   // This MUST be above ListModels so that the /models/types endpoint takes precedence.
   rpc ListModelTypes (ListModelTypesRequest) returns (MultiModelTypeResponse) {
     option (google.api.http) = {
@@ -1123,8 +1133,12 @@ service V2 {
   // Predict using a workflow.
   rpc PostWorkflowResults (PostWorkflowResultsRequest) returns (PostWorkflowResultsResponse) {
     option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/results"
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{version_id}/results"
       body: "*"
+      additional_bindings {
+        post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/results"
+        body: "*"
+      }
       additional_bindings {
         post: "/v2/workflows/{workflow_id}/results"
         body: "*"
@@ -1142,8 +1156,12 @@ service V2 {
 
   rpc PostWorkflowResultsSimilarity(PostWorkflowResultsSimilarityRequest) returns (PostWorkflowResultsSimilarityResponse) {
     option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/results/similarity"
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{version_id}/results/similarity"
       body: "*"
+      additional_bindings {
+        post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/results/similarity"
+        body: "*"
+      }
       additional_bindings {
         post: "/v2/workflows/{workflow_id}/results/similarity"
         body: "*"
@@ -1154,6 +1172,70 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Predict;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+  }
+
+  ////////////////////////////////////////
+
+  ////////////////////////////////////////
+  // Workflow Versions
+  ////////////////////////////////////////
+
+  // List workflow versions.
+  rpc ListWorkflowVersions (ListWorkflowVersionsRequest) returns (MultiWorkflowVersionResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions"
+      additional_bindings {
+        get: "/v2/workflows/{workflow_id}/versions"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+  }
+
+  // Get single workflow version.
+  rpc GetWorkflowVersion (GetWorkflowVersionRequest) returns (SingleWorkflowVersionResponse) {
+      option (google.api.http) = {
+        get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}"
+        additional_bindings {
+          get: "/v2/workflows/{workflow_id}/versions/{workflow_version_id}"
+        }
+      };
+      option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+      option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+      option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+  }
+
+  // Delete workflow versions.
+  rpc DeleteWorkflowVersions (DeleteWorkflowVersionsRequest) returns (clarifai.api.status.BaseResponse) {
+      option (google.api.http) = {
+        delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions"
+        body: "*"
+        additional_bindings {
+          delete: "/v2/workflows/{workflow_id}/versions"
+          body: "*"
+        }
+      };
+      option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+      option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+      option (clarifai.auth.util.cl_depending_scopes) = Workflows_Add;
+      option (clarifai.auth.util.cl_depending_scopes) = Workflows_Delete;
+  }
+
+  // Patch workflow versions.
+  rpc PatchWorkflowVersions (PatchWorkflowVersionsRequest) returns (MultiWorkflowVersionResponse) {
+      option (google.api.http) = {
+        patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions"
+        body: "*"
+        additional_bindings {
+          patch: "/v2/workflows/{workflow_id}/versions"
+          body: "*"
+        }
+      };
+      option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+      option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+      option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+      option (clarifai.auth.util.cl_depending_scopes) = Workflows_Add;
   }
 
 
@@ -1425,6 +1507,7 @@ service V2 {
 
 
 
+
   ////////////////////////////////////////
   // Searches
   ////////////////////////////////////////
@@ -1563,6 +1646,8 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Search;
   }
+
+
 
 
 
@@ -1994,13 +2079,35 @@ service V2 {
 
 
 
-}
 
 
 
 
+  ////////////////////////////////////////
 
+  ////////////////////////////////////////
+  // Trending Metrics
+  ////////////////////////////////////////
 
+  // Increase the view metric for a detail view
+  rpc PostTrendingMetricsView (PostTrendingMetricsViewRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/trending_metrics/views/{view_type}/{object_id}"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+  }
+
+  // List the view metrics for a detail view
+  rpc ListTrendingMetricsViews (ListTrendingMetricsViewsRequest) returns (MultiTrendingMetricsViewResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/trending_metrics/views/{view_type}"
+      additional_bindings {
+        get: "/v2/trending_metrics/views/{view_type}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+  }}
 
 
 // Split the results into pages.
@@ -2157,8 +2264,25 @@ message ListAppsRequest {
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
   // to 128.
   uint32 per_page = 3;
+
+  // Sorting opitons:
+   // Whether to sort in ascending order. If false, will order in descending order.
+   bool sort_ascending = 5;
+   oneof sort_by {
+    // Whether to order by the name
+    bool sort_by_name = 6;
+    // Whether to order by the modified_at time.
+    // If neither sort option is set to true, will sort by modified_at.
+    bool sort_by_modified_at = 7;
+   }
+
+  // Filtering options:
+  // Query various text fields that can contain the words in the query string
+  string query = 8;
   // Filter by the name of the app. This supports wilcard queries like "gen*" to match "general" as an example.
-  string name = 4;
+  // Deprecated in favor of query
+  string name = 4 [deprecated = true];
+
 }
 
 message PostAppsRequest {
@@ -2904,6 +3028,7 @@ message GetModelRequest {
 }
 
 message ListModelsRequest {
+  reserved 4;
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
   // Defaults to 1.
@@ -2911,9 +3036,26 @@ message ListModelsRequest {
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
   // to 128.
   uint32 per_page = 3;
-  repeated string ids = 4;
+
+  // Sorting options:
+  // Whether to sort in ascending order. If false, will order in descending order.
+  bool sort_ascending = 10;
+  oneof sort_by {
+    // Whether to order by the name
+    bool sort_by_name = 11;
+    // Whether to order by the number of training inputs
+    bool sort_by_num_inputs = 12;
+    // Whether to order by the modified_at time of the latest model version.
+    // If neither sort option is set to true, will sort by modified_at.
+    bool sort_by_modified_at = 13;
+  }
+
+  // Filtering options:
+  // // Query various text fields that can contain the words in the query string
+  string query = 14;
   // Filter by the name of the model. This supports wilcard queries like "gen*" to match "general" as an example.
-  string name = 5;
+  // Deprecated in favor of query
+  string name = 5 [deprecated = true];
   // Filter models by the specific model_type_id. See ListModelTypes for the list of ModelType.Id's
   // supported.
   string model_type_id = 6;
@@ -2925,6 +3067,8 @@ message ListModelsRequest {
   // The list of output fields to the model.
   // For example, you can specify 'regions[...].data.concepts', which will return visual-detector models.
   repeated string output_fields = 9;
+  // Filter by the license of the model version
+  string license = 15;
 }
 
 message PostModelsRequest {
@@ -3112,6 +3256,13 @@ message ListModelTypesRequest {
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
   // to 128.
   uint32 per_page = 3;
+}
+
+message ListOpenSourceLicensesRequest {}
+
+message ListOpenSourceLicensesResponse {
+  clarifai.api.status.Status status = 1;
+  repeated string licenses = 2;
 }
 
 message SingleModelTypeResponse {
@@ -3509,6 +3660,7 @@ message SinglePasswordValidationResponse {
 
 
 
+
 enum OrganizationInvitationStatus {
   NOT_SET = 0;
   PENDING = 1;
@@ -3610,8 +3762,23 @@ message ListWorkflowsRequest {
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
   // to 128.
   uint32 per_page = 3;
+
+    // Sorting options:
+  // Whether to sort in ascending order. If false, will order in descending order.
+  bool sort_ascending = 5;
+  oneof sort_by {
+    // Whether to order by the name
+    bool sort_by_id = 6;
+    // Whether to order by the modified_at time.
+    // If neither sort option is set to true, will sort by modified_at.
+    bool sort_by_modified_at = 7;
+  }
+
+  // Query various text fields that can contain the words in the query string.
+  string query = 8;
   // Filter by the id of the workflow. This supports wilcard queries like "gen*" to match "general" as an example.
-  string id = 4;
+  // Deprecated in favor of query
+  string id = 4 [deprecated = true];
 }
 
 
@@ -3661,6 +3828,10 @@ message PostWorkflowResultsRequest {
   // If an ID is specified by default we first looks into Clarifai workflows for a Workflow ID
   string workflow_id = 2;
 
+  // Workflow version ID to retrieve
+  // If no ID is specified, latest workflow version is used
+  string version_id = 7;
+
   repeated Input inputs = 3;
   // FIXME(zeiler): the request for post workflows is using an outputconfig object that is supposed
   // to be within models. This is not consistent with setting this on the request for post model
@@ -3697,6 +3868,9 @@ message PostWorkflowResultsResponse {
 message PostWorkflowResultsSimilarityRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string workflow_id = 2;
+  // Workflow version ID to retrieve
+  // If no ID is specified, latest workflow version is used
+  string version_id = 7;
   // The specific model version whose outputs we are comparing
   string model_version_id = 3;
   // Each probe is compared against every pool input
@@ -3710,6 +3884,60 @@ message PostWorkflowResultsSimilarityRequest {
 message PostWorkflowResultsSimilarityResponse {
   clarifai.api.status.Status status = 1;
   repeated WorkflowResultsSimilarity results = 2;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Workflow Versions
+////////////////////////////////////////////////////////////////////////////////
+
+message ListWorkflowVersionsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // List versions for the workflow identified by this id
+  string workflow_id = 2;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 3;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 4;
+}
+
+message GetWorkflowVersionRequest {
+    clarifai.api.UserAppIDSet user_app_id = 1;
+    // The id of the workflow that has the requested version.
+    string workflow_id = 2;
+    // Get the identified by this id
+    string workflow_version_id = 3;
+}
+
+message DeleteWorkflowVersionsRequest {
+    clarifai.api.UserAppIDSet user_app_id = 1;
+    // The id of the workflow that has the requested versions to delete.
+    string workflow_id = 2;
+    // Delete the versions identified by these ids
+    repeated string workflow_version_ids = 3;
+}
+
+message PatchWorkflowVersionsRequest {
+    clarifai.api.UserAppIDSet user_app_id = 1;
+    // The id of the workflow that has the requested versions to patch.
+    string workflow_id = 2;
+    // Patch these versions.
+    repeated WorkflowVersion workflow_versions = 3;
+    // The action to perform on the patched objects
+    // For now actions 'merge', 'overwrite', and 'remove' are supported
+    string action = 4;
+}
+
+message MultiWorkflowVersionResponse {
+    clarifai.api.status.Status status = 1;
+    repeated WorkflowVersion workflow_versions = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+message SingleWorkflowVersionResponse {
+    clarifai.api.status.Status status = 1;
+    WorkflowVersion workflow_version = 2;
 }
 
 
@@ -3959,3 +4187,31 @@ message MultiStatValueAggregateResponse {
 
 
 
+
+
+message PostTrendingMetricsViewRequest {
+  // The user_id and app_id information.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // For now view types 'apps', 'workflows', and 'models' are supported.
+  string view_type = 2;
+  // ID of the views object.
+  string object_id = 3;
+}
+
+message ListTrendingMetricsViewsRequest {
+  // The user_id and app_id information.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // For now view types 'apps', 'workflows', and 'models' are supported.
+  string view_type = 2;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 3;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 4;
+}
+
+message MultiTrendingMetricsViewResponse {
+  clarifai.api.status.Status status = 1;
+  repeated TrendingMetric metrics = 2;
+}
