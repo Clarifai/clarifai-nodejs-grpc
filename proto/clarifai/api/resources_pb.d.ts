@@ -1763,9 +1763,6 @@ export class Model extends jspb.Message {
     getMetadata(): google_protobuf_struct_pb.Struct | undefined;
     setMetadata(value?: google_protobuf_struct_pb.Struct): Model;
 
-    getNotes(): string;
-    setNotes(value: string): Model;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Model.AsObject;
@@ -1793,7 +1790,6 @@ export namespace Model {
         visibility?: Visibility.AsObject,
         description: string,
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
-        notes: string,
     }
 }
 
@@ -5134,39 +5130,6 @@ export namespace Visibility {
     PUBLIC = 50,
     }
 
-}
-
-export class TrendingMetric extends jspb.Message { 
-    getUserId(): string;
-    setUserId(value: string): TrendingMetric;
-
-    getAppId(): string;
-    setAppId(value: string): TrendingMetric;
-
-    getObjectId(): string;
-    setObjectId(value: string): TrendingMetric;
-
-    getViewCount(): number;
-    setViewCount(value: number): TrendingMetric;
-
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): TrendingMetric.AsObject;
-    static toObject(includeInstance: boolean, msg: TrendingMetric): TrendingMetric.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: TrendingMetric, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): TrendingMetric;
-    static deserializeBinaryFromReader(message: TrendingMetric, reader: jspb.BinaryReader): TrendingMetric;
-}
-
-export namespace TrendingMetric {
-    export type AsObject = {
-        userId: string,
-        appId: string,
-        objectId: string,
-        viewCount: number,
-    }
 }
 
 export enum ExpirationAction {
