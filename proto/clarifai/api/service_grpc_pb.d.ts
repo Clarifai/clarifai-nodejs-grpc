@@ -135,6 +135,7 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     postStatValues: IV2Service_IPostStatValues;
     postStatValuesAggregate: IV2Service_IPostStatValuesAggregate;
     postTrendingMetricsView: IV2Service_IPostTrendingMetricsView;
+    listTrendingMetricsViews: IV2Service_IListTrendingMetricsViews;
 }
 
 interface IV2Service_IListConceptRelations extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListConceptRelationsRequest, proto_clarifai_api_service_pb.MultiConceptRelationResponse> {
@@ -1199,6 +1200,15 @@ interface IV2Service_IPostTrendingMetricsView extends grpc.MethodDefinition<prot
     responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
 }
+interface IV2Service_IListTrendingMetricsViews extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest, proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse> {
+    path: "/clarifai.api.V2/ListTrendingMetricsViews";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse>;
+}
 
 export const V2Service: IV2Service;
 
@@ -1321,6 +1331,7 @@ export interface IV2Server {
     postStatValues: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostStatValuesRequest, proto_clarifai_api_service_pb.MultiStatValueResponse>;
     postStatValuesAggregate: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, proto_clarifai_api_service_pb.MultiStatValueAggregateResponse>;
     postTrendingMetricsView: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
+    listTrendingMetricsViews: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest, proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse>;
 }
 
 export interface IV2Client {
@@ -1678,6 +1689,9 @@ export interface IV2Client {
     postTrendingMetricsView(request: proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     postTrendingMetricsView(request: proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     postTrendingMetricsView(request: proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    listTrendingMetricsViews(request: proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse) => void): grpc.ClientUnaryCall;
+    listTrendingMetricsViews(request: proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse) => void): grpc.ClientUnaryCall;
+    listTrendingMetricsViews(request: proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse) => void): grpc.ClientUnaryCall;
 }
 
 export class V2Client extends grpc.Client implements IV2Client {
@@ -2036,4 +2050,7 @@ export class V2Client extends grpc.Client implements IV2Client {
     public postTrendingMetricsView(request: proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public postTrendingMetricsView(request: proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public postTrendingMetricsView(request: proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public listTrendingMetricsViews(request: proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse) => void): grpc.ClientUnaryCall;
+    public listTrendingMetricsViews(request: proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse) => void): grpc.ClientUnaryCall;
+    public listTrendingMetricsViews(request: proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse) => void): grpc.ClientUnaryCall;
 }

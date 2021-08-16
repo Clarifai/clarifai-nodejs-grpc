@@ -1712,6 +1712,12 @@ export class Model extends jspb.Message {
     getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
     setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): Model;
 
+
+    hasModifiedAt(): boolean;
+    clearModifiedAt(): void;
+    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): Model;
+
     getAppId(): string;
     setAppId(value: string): Model;
 
@@ -1763,6 +1769,9 @@ export class Model extends jspb.Message {
     getMetadata(): google_protobuf_struct_pb.Struct | undefined;
     setMetadata(value?: google_protobuf_struct_pb.Struct): Model;
 
+    getNotes(): string;
+    setNotes(value: string): Model;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Model.AsObject;
@@ -1779,6 +1788,7 @@ export namespace Model {
         id: string,
         name: string,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         appId: string,
         outputInfo?: OutputInfo.AsObject,
         modelVersion?: ModelVersion.AsObject,
@@ -1790,6 +1800,7 @@ export namespace Model {
         visibility?: Visibility.AsObject,
         description: string,
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
+        notes: string,
     }
 }
 
@@ -5132,6 +5143,39 @@ export namespace Visibility {
 
 }
 
+export class TrendingMetric extends jspb.Message { 
+    getUserId(): string;
+    setUserId(value: string): TrendingMetric;
+
+    getAppId(): string;
+    setAppId(value: string): TrendingMetric;
+
+    getObjectId(): string;
+    setObjectId(value: string): TrendingMetric;
+
+    getViewCount(): number;
+    setViewCount(value: number): TrendingMetric;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): TrendingMetric.AsObject;
+    static toObject(includeInstance: boolean, msg: TrendingMetric): TrendingMetric.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: TrendingMetric, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): TrendingMetric;
+    static deserializeBinaryFromReader(message: TrendingMetric, reader: jspb.BinaryReader): TrendingMetric;
+}
+
+export namespace TrendingMetric {
+    export type AsObject = {
+        userId: string,
+        appId: string,
+        objectId: string,
+        viewCount: number,
+    }
+}
+
 export enum ExpirationAction {
     EXPIRATION_ACTION_NOT_SET = 0,
     DELAY = 1,
@@ -5191,4 +5235,11 @@ export enum StatTimeAggType {
     DAY = 4,
     HOUR = 5,
     MINUTE = 6,
+}
+
+export enum ValidationErrorType {
+    VALIDATION_ERROR_TYPE_NOT_SET = 0,
+    RESTRICTED = 1,
+    DATABASE = 2,
+    FORMAT = 3,
 }
