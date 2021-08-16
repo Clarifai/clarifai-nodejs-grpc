@@ -751,17 +751,6 @@ function deserialize_clarifai_api_ListTasksRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListTasksRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_ListTrendingMetricsViewsRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest)) {
-    throw new Error('Expected argument of type clarifai.api.ListTrendingMetricsViewsRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_ListTrendingMetricsViewsRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_clarifai_api_ListWorkflowVersionsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.ListWorkflowVersionsRequest)) {
     throw new Error('Expected argument of type clarifai.api.ListWorkflowVersionsRequest');
@@ -1101,17 +1090,6 @@ function serialize_clarifai_api_MultiTaskResponse(arg) {
 
 function deserialize_clarifai_api_MultiTaskResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiTaskResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_MultiTrendingMetricsViewResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse)) {
-    throw new Error('Expected argument of type clarifai.api.MultiTrendingMetricsViewResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_MultiTrendingMetricsViewResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiWorkflowResponse(arg) {
@@ -3489,18 +3467,6 @@ postTrendingMetricsView: {
     requestDeserialize: deserialize_clarifai_api_PostTrendingMetricsViewRequest,
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
-  },
-  // List the view metrics for a detail view
-listTrendingMetricsViews: {
-    path: '/clarifai.api.V2/ListTrendingMetricsViews',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest,
-    responseType: proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse,
-    requestSerialize: serialize_clarifai_api_ListTrendingMetricsViewsRequest,
-    requestDeserialize: deserialize_clarifai_api_ListTrendingMetricsViewsRequest,
-    responseSerialize: serialize_clarifai_api_MultiTrendingMetricsViewResponse,
-    responseDeserialize: deserialize_clarifai_api_MultiTrendingMetricsViewResponse,
   },
 };
 

@@ -972,17 +972,12 @@ message Model {
   // also be publicly visible.
   Visibility visibility = 15;
 
-  // Short description about this model
+  // Description about this model
   string description = 16;
 
   // To handle arbitrary json metadata you can use a struct field:
   // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
   google.protobuf.Struct metadata = 17;
-
-  // Notes about a model (should support markdown)
-  // This field should be used for in-depth notes about
-  // about a model and supports up to 64Kbs.
-  string notes = 18;
 }
 
 // A link to a html/markdown/text file that stores reference material
@@ -2687,11 +2682,4 @@ message Visibility {
     PUBLIC = 50;
   }
   Gettable gettable = 1;
-}
-
-message TrendingMetric {
-  string user_id = 1;
-  string app_id = 2;
-  string object_id = 3;
-  uint64 view_count = 4;
 }
