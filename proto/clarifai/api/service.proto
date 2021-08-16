@@ -1133,8 +1133,12 @@ service V2 {
   // Predict using a workflow.
   rpc PostWorkflowResults (PostWorkflowResultsRequest) returns (PostWorkflowResultsResponse) {
     option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/results"
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{version_id}/results"
       body: "*"
+      additional_bindings {
+        post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/results"
+        body: "*"
+      }
       additional_bindings {
         post: "/v2/workflows/{workflow_id}/results"
         body: "*"
@@ -1152,8 +1156,12 @@ service V2 {
 
   rpc PostWorkflowResultsSimilarity(PostWorkflowResultsSimilarityRequest) returns (PostWorkflowResultsSimilarityResponse) {
     option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/results/similarity"
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{version_id}/results/similarity"
       body: "*"
+      additional_bindings {
+        post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/results/similarity"
+        body: "*"
+      }
       additional_bindings {
         post: "/v2/workflows/{workflow_id}/results/similarity"
         body: "*"
@@ -2074,9 +2082,6 @@ service V2 {
 
 
 
-
-  ////////////////////////////////////////
-
   ////////////////////////////////////////
   // Trending Metrics
   ////////////////////////////////////////
@@ -2088,7 +2093,20 @@ service V2 {
       body: "*"
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-  }}
+  }
+
+  // List the view metrics for a detail view
+  rpc ListTrendingMetricsViews (ListTrendingMetricsViewsRequest) returns (MultiTrendingMetricsViewResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/trending_metrics/views/{view_type}"
+      additional_bindings {
+        get: "/v2/trending_metrics/views/{view_type}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+  }
+
+}
 
 
 // Split the results into pages.
@@ -2263,7 +2281,8 @@ message ListAppsRequest {
   // Filter by the name of the app. This supports wilcard queries like "gen*" to match "general" as an example.
   // Deprecated in favor of query
   string name = 4 [deprecated = true];
-
+  // If true, we only return workflows that are handpicked by clarifai staff
+  bool featured_only = 9;
 }
 
 message PostAppsRequest {
@@ -3050,6 +3069,8 @@ message ListModelsRequest {
   repeated string output_fields = 9;
   // Filter by the license of the model version
   string license = 15;
+  // If true, we only return models that are handpicked by clarifai staff
+  bool featured_only = 16;
 }
 
 message PostModelsRequest {
@@ -3760,6 +3781,8 @@ message ListWorkflowsRequest {
   // Filter by the id of the workflow. This supports wilcard queries like "gen*" to match "general" as an example.
   // Deprecated in favor of query
   string id = 4 [deprecated = true];
+  // If true, we only return workflows that are handpicked by clarifai staff
+  bool featured_only = 9;
 }
 
 
@@ -3809,6 +3832,10 @@ message PostWorkflowResultsRequest {
   // If an ID is specified by default we first looks into Clarifai workflows for a Workflow ID
   string workflow_id = 2;
 
+  // Workflow version ID to retrieve
+  // If no ID is specified, latest workflow version is used
+  string version_id = 7;
+
   repeated Input inputs = 3;
   // FIXME(zeiler): the request for post workflows is using an outputconfig object that is supposed
   // to be within models. This is not consistent with setting this on the request for post model
@@ -3845,6 +3872,9 @@ message PostWorkflowResultsResponse {
 message PostWorkflowResultsSimilarityRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string workflow_id = 2;
+  // Workflow version ID to retrieve
+  // If no ID is specified, latest workflow version is used
+  string version_id = 7;
   // The specific model version whose outputs we are comparing
   string model_version_id = 3;
   // Each probe is compared against every pool input
@@ -4163,11 +4193,37 @@ message MultiStatValueAggregateResponse {
 
 
 
+
+////////////////////////////////////////
+// Trending Metrics
+////////////////////////////////////////
+
 message PostTrendingMetricsViewRequest {
   // The user_id and app_id information.
   clarifai.api.UserAppIDSet user_app_id = 1;
-  // For now view types 'apps', 'workflows', and 'models' are supported
+  // For now view types 'apps', 'workflows', and 'models' are supported.
   string view_type = 2;
-  // ID of the views object
+  // ID of the views object.
   string object_id = 3;
 }
+
+message ListTrendingMetricsViewsRequest {
+  // The user_id and app_id information.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // For now view types 'apps', 'workflows', and 'models' are supported.
+  string view_type = 2;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 3;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 4;
+}
+
+message MultiTrendingMetricsViewResponse {
+  clarifai.api.status.Status status = 1;
+  repeated TrendingMetric metrics = 2;
+}
+
+
+

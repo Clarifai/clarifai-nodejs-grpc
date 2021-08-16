@@ -946,8 +946,14 @@ message Model {
   string id = 1;
   // A nicer-to-read name for the model. Can have spaces and special characters.
   string name = 2;
-  // When the model was created.
+  // When the model was created. We follow the XXXX timestamp
+  // format. We use https://www.ietf.org/rfc/rfc3339.txt format:
+  // "2006-01-02T15:04:05.999999Z" so you can expect results like
+  //  the following from the API:
+  //  "2017-04-11T21:50:50.223962Z"
   google.protobuf.Timestamp created_at = 3;
+  // When was the most recent model version created at
+  google.protobuf.Timestamp modified_at = 19;
   // The app the model belongs to.
   string app_id = 4 [(clarifai.api.utils.cl_show_if_empty) = true];
   // Info about the model's output and configuration.
@@ -972,12 +978,17 @@ message Model {
   // also be publicly visible.
   Visibility visibility = 15;
 
-  // Description about this model
+  // Short description about this model
   string description = 16;
 
   // To handle arbitrary json metadata you can use a struct field:
   // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
   google.protobuf.Struct metadata = 17;
+
+  // Notes about a model (should support markdown)
+  // This field should be used for in-depth notes about
+  // about a model and supports up to 64Kbs.
+  string notes = 18;
 }
 
 // A link to a html/markdown/text file that stores reference material
@@ -2683,3 +2694,22 @@ message Visibility {
   }
   Gettable gettable = 1;
 }
+
+message TrendingMetric {
+  string user_id = 1;
+  string app_id = 2;
+  string object_id = 3;
+  uint64 view_count = 4;
+}
+
+
+
+enum ValidationErrorType {
+  VALIDATION_ERROR_TYPE_NOT_SET = 0;
+
+  RESTRICTED = 1;
+  DATABASE = 2;
+  FORMAT = 3;
+}
+
+
