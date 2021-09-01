@@ -151,6 +151,9 @@ export class App extends jspb.Message {
     getVisibility(): Visibility | undefined;
     setVisibility(value?: Visibility): App;
 
+    getDataTierId(): string;
+    setDataTierId(value: string): App;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): App.AsObject;
@@ -176,6 +179,7 @@ export namespace App {
         description: string,
         sampleMs: number,
         visibility?: Visibility.AsObject,
+        dataTierId: string,
     }
 }
 
@@ -373,6 +377,12 @@ export class Track extends jspb.Message {
     setTrackInfo(value?: Track.TrackInfo): Track;
 
 
+    hasTimeInfo(): boolean;
+    clearTimeInfo(): void;
+    getTimeInfo(): TimeInfo | undefined;
+    setTimeInfo(value?: TimeInfo): Track;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Track.AsObject;
     static toObject(includeInstance: boolean, msg: Track): Track.AsObject;
@@ -388,6 +398,7 @@ export namespace Track {
         id: string,
         data?: Data.AsObject,
         trackInfo?: Track.TrackInfo.AsObject,
+        timeInfo?: TimeInfo.AsObject,
     }
 
 
@@ -1000,6 +1011,11 @@ export class Data extends jspb.Message {
     setTracksList(value: Array<Track>): Data;
     addTracks(value?: Track, index?: number): Track;
 
+    clearTimeSegmentsList(): void;
+    getTimeSegmentsList(): Array<TimeSegment>;
+    setTimeSegmentsList(value: Array<TimeSegment>): Data;
+    addTimeSegments(value?: TimeSegment, index?: number): TimeSegment;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Data.AsObject;
@@ -1026,6 +1042,7 @@ export namespace Data {
         text?: Text.AsObject,
         audio?: Audio.AsObject,
         tracksList: Array<Track.AsObject>,
+        timeSegmentsList: Array<TimeSegment.AsObject>,
     }
 }
 
@@ -1212,12 +1229,6 @@ export namespace Frame {
 
 export class Mask extends jspb.Message { 
 
-    hasColor(): boolean;
-    clearColor(): void;
-    getColor(): Color | undefined;
-    setColor(value?: Color): Mask;
-
-
     hasImage(): boolean;
     clearImage(): void;
     getImage(): Image | undefined;
@@ -1236,7 +1247,6 @@ export class Mask extends jspb.Message {
 
 export namespace Mask {
     export type AsObject = {
-        color?: Color.AsObject,
         image?: Image.AsObject,
     }
 }
@@ -5176,6 +5186,72 @@ export namespace TrendingMetric {
     }
 }
 
+export class TimeSegment extends jspb.Message { 
+
+    hasData(): boolean;
+    clearData(): void;
+    getData(): Data | undefined;
+    setData(value?: Data): TimeSegment;
+
+
+    hasTimeInfo(): boolean;
+    clearTimeInfo(): void;
+    getTimeInfo(): TimeInfo | undefined;
+    setTimeInfo(value?: TimeInfo): TimeSegment;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): TimeSegment.AsObject;
+    static toObject(includeInstance: boolean, msg: TimeSegment): TimeSegment.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: TimeSegment, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): TimeSegment;
+    static deserializeBinaryFromReader(message: TimeSegment, reader: jspb.BinaryReader): TimeSegment;
+}
+
+export namespace TimeSegment {
+    export type AsObject = {
+        data?: Data.AsObject,
+        timeInfo?: TimeInfo.AsObject,
+    }
+}
+
+export class TimeInfo extends jspb.Message { 
+    getNumFrames(): number;
+    setNumFrames(value: number): TimeInfo;
+
+
+    hasBeginTime(): boolean;
+    clearBeginTime(): void;
+    getBeginTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setBeginTime(value?: google_protobuf_timestamp_pb.Timestamp): TimeInfo;
+
+
+    hasEndTime(): boolean;
+    clearEndTime(): void;
+    getEndTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setEndTime(value?: google_protobuf_timestamp_pb.Timestamp): TimeInfo;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): TimeInfo.AsObject;
+    static toObject(includeInstance: boolean, msg: TimeInfo): TimeInfo.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: TimeInfo, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): TimeInfo;
+    static deserializeBinaryFromReader(message: TimeInfo, reader: jspb.BinaryReader): TimeInfo;
+}
+
+export namespace TimeInfo {
+    export type AsObject = {
+        numFrames: number,
+        beginTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        endTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    }
+}
+
 export enum ExpirationAction {
     EXPIRATION_ACTION_NOT_SET = 0,
     DELAY = 1,
@@ -5242,4 +5318,12 @@ export enum ValidationErrorType {
     RESTRICTED = 1,
     DATABASE = 2,
     FORMAT = 3,
+}
+
+export enum TagCategoryName {
+    UNCATEGORIZED = 0,
+    USE_CASE = 1,
+    LANGUAGE = 2,
+    LICENCE = 3,
+    TOOLKIT = 4,
 }

@@ -117,6 +117,9 @@ message App {
   // To be visible to the public the App that contains it AND the User that contains the App must
   // also be publicly visible.
   Visibility visibility = 16;
+
+  // data tier id this app is using.
+  string data_tier_id = 18;
 }
 
 message AppQuery {
@@ -225,6 +228,8 @@ message Track {
 
   // The track information.
   TrackInfo track_info = 3;
+
+  TimeInfo time_info = 4;
 }
 
 
@@ -620,6 +625,8 @@ message Data {
   Audio audio = 14;
   // Track information.
   repeated Track tracks = 15;
+  // Time segments information.
+  repeated TimeSegment time_segments = 16;
 }
 
 // A region within the data.
@@ -688,9 +695,8 @@ message Frame {
 
 // Segmentation mask.
 message Mask {
-  // The color of the segmentation mask that was created. This is used in visualizing masks next to
-  // each other.
-  Color color = 1;
+  reserved 1;
+
   // The image of the mask in a non-raster format.
   Image image = 2;
 }
@@ -856,7 +862,8 @@ message InputCount {
 }
 
 
-////////////////////////////////////////////////////////////////////////////////
+
+
 
 message WorkflowResultsSimilarity {
   // The input with the specific data compare against all pool results
@@ -2713,3 +2720,31 @@ enum ValidationErrorType {
 }
 
 
+
+
+
+enum TagCategoryName {
+  uncategorized = 0;
+
+  use_case = 1; // ex. tags: "faces", "food", "misc"
+  language = 2; // ex. tags: "en", "ar", "fi"
+  licence = 3; // ex. tags: "MIT", "Apache-2.0", "OSL"
+  toolkit = 4; // ex. tags: “HuggingFace”, "Detectron2", "OpenMMLab"
+}
+
+
+
+
+message TimeSegment {
+  Data data = 1;
+  TimeInfo time_info = 2;
+}
+
+message TimeInfo {
+  // Number of frames
+  uint32 num_frames = 1;
+  // Timestamp where track begins.
+  google.protobuf.Timestamp begin_time = 2;
+  // Timestamp where track ends.
+  google.protobuf.Timestamp end_time = 3;
+}

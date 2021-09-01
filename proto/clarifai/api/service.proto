@@ -658,7 +658,11 @@ service V2 {
 
 
 
-  ////////////////////////////////////////
+
+
+
+
+
 
   ////////////////////////////////////////
   // Models
@@ -2106,6 +2110,7 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
   }
 
+
 }
 
 
@@ -2904,6 +2909,15 @@ message SingleInputCountResponse {
 message GetInputCountRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 }
+
+
+
+
+
+
+
+
+
 
 ////////////////////////////////////////////////////
 // Model prediction related stuff needs inputs and produces outputs.
@@ -4224,6 +4238,8 @@ message MultiTrendingMetricsViewResponse {
   clarifai.api.status.Status status = 1;
   repeated TrendingMetric metrics = 2;
 }
+
+
 
 
 
