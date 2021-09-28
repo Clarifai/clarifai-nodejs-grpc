@@ -120,6 +120,13 @@ message App {
 
   // data tier id this app is using.
   string data_tier_id = 18;
+
+  // Is starred by the requesting user (only showed on get/list requests)
+  // Please use PostAppStars/DeleteAppStars endpoints to star/unstar an app
+  bool is_starred = 19;
+  // How many users have starred the app (only showed on get/list requests)
+  // Computed value, not editable
+  int32 star_count = 20;
 }
 
 message AppQuery {
@@ -847,6 +854,10 @@ message Input {
   // This is the status at a per Input level which allows for
   // partial failures.
   clarifai.api.status.Status status = 6;
+
+  // List of dataset IDs that this input is part of
+  // Currently, this field is ONLY used in search.
+  repeated string dataset_ids = 7;
 }
 
 // NOTE: inconsistency: this is weird mix of plural and singular words.
@@ -860,6 +871,10 @@ message InputCount {
   uint32 reindex_errors = 7 [(clarifai.api.utils.cl_show_if_empty) = true];
   uint32 reindexing = 8 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
+
+
+
+
 
 
 
@@ -996,6 +1011,16 @@ message Model {
   // This field should be used for in-depth notes about
   // about a model and supports up to 64Kbs.
   string notes = 18;
+  // Tags from toolkits category
+  repeated string toolkits = 20 [(clarifai.api.utils.cl_show_if_empty) = true];
+  // Tags from use_cases category
+  repeated string use_cases = 21 [(clarifai.api.utils.cl_show_if_empty) = true];
+  // Is starred by the requesting user (only showed on get/list requests)
+  // Please use PostModelStars/DeleteModelStars endpoints to star/unstar a model
+  bool is_starred = 22;
+  // How many users have starred the model (only showed on get/list requests)
+  // Computed value, not editable
+  int32 star_count = 23;
 }
 
 // A link to a html/markdown/text file that stores reference material
@@ -1217,8 +1242,8 @@ message ModelTypeField {
     ARRAY_OF_CONCEPTS_WITH_THRESHOLD = 5;
     // A range for a float value.
     RANGE = 7;
-    // If ENUM is used then the "enum_options" field should also be filled in which allows for
-    // additional ModelTypeFields too depending on the enum choice.
+    // If ENUM is used then the "enum_options" field should also be filled in with the respective ID and description
+    // for the different ENUM options.
     ENUM = 8;
     // For listing collaborators of the app. The field is a string of the collaborator's user_id.
     COLLABORATORS = 9;
@@ -1231,6 +1256,9 @@ message ModelTypeField {
     WORKFLOW_EMBED_MODELS = 12;
     // Such as ['a', 'b', 'cantaloupe']
     ARRAY_OF_STRINGS = 13;
+    // If RECURSIVE_ENUM is used then the "enum_options" field should also be filled in with the respective ID and description
+    // for the different RECURSIVE_ENUM options, as well as model_type_fields for each enum choice.
+    RECURSIVE_ENUM = 14;
   }
   // The field for this field.
   ModelTypeFieldType field_type = 2;
@@ -1924,6 +1952,13 @@ message User {
   bool two_factor_auth_enabled = 15 [deprecated = true];
   uint32 teams_count = 16 [deprecated = true];
 
+  // Is starred by the requesting user (only showed on get/list requests)
+  // Please use PostUserStars/DeleteUserStars endpoints to star/unstar an user
+  bool is_starred = 21;
+  // How many users have starred the user (only showed on get/list requests)
+  // Computed value, not editable
+  int32 star_count = 22;
+
 
   // The visibility field represents whether this message is privately/publicly visible.
   // To be visible to the public the App that contains it AND the User that contains the App must
@@ -1951,6 +1986,8 @@ message UserDetail {
   bool is_org_admin  = 8;
   bool two_factor_auth_enabled = 9;
   uint32 teams_count = 10;
+  string country = 11;
+  string state = 12;
 }
 
 message EmailAddress {
@@ -2079,6 +2116,13 @@ message Workflow {
 
   // Info about the workflow version
   WorkflowVersion version = 9;
+
+  // Is starred by the requesting user (only showed on get/list requests)
+  // Please use PostWorkflowStars/DeleteWorkflowStars endpoints to star/unstar a workflow
+  bool is_starred = 10;
+  // How many users have starred the workflow (only showed on get/list requests)
+  // Computed value, not editable
+  int32 star_count = 11;
 }
 
 message WorkflowVersion {
@@ -2723,28 +2767,24 @@ enum ValidationErrorType {
 
 
 
-enum TagCategoryName {
-  uncategorized = 0;
-
-  use_case = 1; // ex. tags: "faces", "food", "misc"
-  language = 2; // ex. tags: "en", "ar", "fi"
-  licence = 3; // ex. tags: "MIT", "Apache-2.0", "OSL"
-  toolkit = 4; // ex. tags: “HuggingFace”, "Detectron2", "OpenMMLab"
-}
-
-
-
 
 message TimeSegment {
-  Data data = 1;
-  TimeInfo time_info = 2;
+  // A unique id for the time segment.
+  string id = 1;
+
+  Data data = 2;
+
+  TimeInfo time_info = 3;
 }
 
 message TimeInfo {
   // Number of frames
   uint32 num_frames = 1;
   // Timestamp where track begins.
-  google.protobuf.Timestamp begin_time = 2;
+  uint32 begin_time = 2;
   // Timestamp where track ends.
-  google.protobuf.Timestamp end_time = 3;
+  uint32 end_time = 3;
 }
+
+
+

@@ -146,6 +146,17 @@ function deserialize_clarifai_api_DeleteModelVersionRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.DeleteModelVersionRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_DeleteModelVersionsUnpublishRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.DeleteModelVersionsUnpublishRequest)) {
+    throw new Error('Expected argument of type clarifai.api.DeleteModelVersionsUnpublishRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_DeleteModelVersionsUnpublishRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.DeleteModelVersionsUnpublishRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_DeleteModelsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.DeleteModelsRequest)) {
     throw new Error('Expected argument of type clarifai.api.DeleteModelsRequest');
@@ -1048,6 +1059,28 @@ function deserialize_clarifai_api_MultiScopeResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiScopeResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_MultiScopeRootResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiScopeRootResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiScopeRootResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiScopeRootResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiScopeRootResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MultiScopeUserResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiScopeUserResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiScopeUserResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiScopeUserResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiScopeUserResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_MultiSearchResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.MultiSearchResponse)) {
     throw new Error('Expected argument of type clarifai.api.MultiSearchResponse');
@@ -1145,6 +1178,28 @@ function serialize_clarifai_api_MyScopesRequest(arg) {
 
 function deserialize_clarifai_api_MyScopesRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.MyScopesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MyScopesRootRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MyScopesRootRequest)) {
+    throw new Error('Expected argument of type clarifai.api.MyScopesRootRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MyScopesRootRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.MyScopesRootRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MyScopesUserRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MyScopesUserRequest)) {
+    throw new Error('Expected argument of type clarifai.api.MyScopesUserRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MyScopesUserRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.MyScopesUserRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PatchAnnotationsRequest(arg) {
@@ -1519,6 +1574,17 @@ function serialize_clarifai_api_PostModelVersionMetricsRequest(arg) {
 
 function deserialize_clarifai_api_PostModelVersionMetricsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostModelVersionMetricsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PostModelVersionsPublishRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostModelVersionsPublishRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostModelVersionsPublishRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostModelVersionsPublishRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostModelVersionsPublishRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PostModelVersionsRequest(arg) {
@@ -2573,6 +2639,28 @@ listModelVersions: {
     responseSerialize: serialize_clarifai_api_MultiModelVersionResponse,
     responseDeserialize: deserialize_clarifai_api_MultiModelVersionResponse,
   },
+  postModelVersionsPublish: {
+    path: '/clarifai.api.V2/PostModelVersionsPublish',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostModelVersionsPublishRequest,
+    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
+    requestSerialize: serialize_clarifai_api_PostModelVersionsPublishRequest,
+    requestDeserialize: deserialize_clarifai_api_PostModelVersionsPublishRequest,
+    responseSerialize: serialize_clarifai_api_status_BaseResponse,
+    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
+  deleteModelVersionsUnPublish: {
+    path: '/clarifai.api.V2/DeleteModelVersionsUnPublish',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.DeleteModelVersionsUnpublishRequest,
+    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
+    requestSerialize: serialize_clarifai_api_DeleteModelVersionsUnpublishRequest,
+    requestDeserialize: deserialize_clarifai_api_DeleteModelVersionsUnpublishRequest,
+    responseSerialize: serialize_clarifai_api_status_BaseResponse,
+    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
   // NOTE: inconsistency: do we want this to return a SingleModelResponse?
 //
 // Create a new model version to trigger training of the model.
@@ -2929,6 +3017,28 @@ myScopes: {
     requestDeserialize: deserialize_clarifai_api_MyScopesRequest,
     responseSerialize: serialize_clarifai_api_MultiScopeResponse,
     responseDeserialize: deserialize_clarifai_api_MultiScopeResponse,
+  },
+  myScopesUser: {
+    path: '/clarifai.api.V2/MyScopesUser',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.MyScopesUserRequest,
+    responseType: proto_clarifai_api_service_pb.MultiScopeUserResponse,
+    requestSerialize: serialize_clarifai_api_MyScopesUserRequest,
+    requestDeserialize: deserialize_clarifai_api_MyScopesUserRequest,
+    responseSerialize: serialize_clarifai_api_MultiScopeUserResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiScopeUserResponse,
+  },
+  myScopesRoot: {
+    path: '/clarifai.api.V2/MyScopesRoot',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.MyScopesRootRequest,
+    responseType: proto_clarifai_api_service_pb.MultiScopeRootResponse,
+    requestSerialize: serialize_clarifai_api_MyScopesRootRequest,
+    requestDeserialize: deserialize_clarifai_api_MyScopesRootRequest,
+    responseSerialize: serialize_clarifai_api_MultiScopeRootResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiScopeRootResponse,
   },
   // List all auth scopes available to me as a user.
 listScopes: {

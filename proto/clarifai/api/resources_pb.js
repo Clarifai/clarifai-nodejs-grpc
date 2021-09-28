@@ -121,7 +121,6 @@ goog.exportSymbol('proto.clarifai.api.StatValueAggType', null, global);
 goog.exportSymbol('proto.clarifai.api.StatValueAggregate', null, global);
 goog.exportSymbol('proto.clarifai.api.StatValueAggregateQuery', null, global);
 goog.exportSymbol('proto.clarifai.api.StatValueAggregateResult', null, global);
-goog.exportSymbol('proto.clarifai.api.TagCategoryName', null, global);
 goog.exportSymbol('proto.clarifai.api.Task', null, global);
 goog.exportSymbol('proto.clarifai.api.Task.TaskType', null, global);
 goog.exportSymbol('proto.clarifai.api.TaskAIAssistant', null, global);
@@ -973,7 +972,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.clarifai.api.Input = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.clarifai.api.Input.repeatedFields_, null);
 };
 goog.inherits(proto.clarifai.api.Input, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -1057,7 +1056,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.clarifai.api.Model = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.clarifai.api.Model.repeatedFields_, null);
 };
 goog.inherits(proto.clarifai.api.Model, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -3374,7 +3373,9 @@ proto.clarifai.api.App.toObject = function(includeInstance, msg) {
     description: jspb.Message.getFieldWithDefault(msg, 14, ""),
     sampleMs: jspb.Message.getFieldWithDefault(msg, 15, 0),
     visibility: (f = msg.getVisibility()) && proto.clarifai.api.Visibility.toObject(includeInstance, f),
-    dataTierId: jspb.Message.getFieldWithDefault(msg, 18, "")
+    dataTierId: jspb.Message.getFieldWithDefault(msg, 18, ""),
+    isStarred: jspb.Message.getBooleanFieldWithDefault(msg, 19, false),
+    starCount: jspb.Message.getFieldWithDefault(msg, 20, 0)
   };
 
   if (includeInstance) {
@@ -3466,6 +3467,14 @@ proto.clarifai.api.App.deserializeBinaryFromReader = function(msg, reader) {
     case 18:
       var value = /** @type {string} */ (reader.readString());
       msg.setDataTierId(value);
+      break;
+    case 19:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsStarred(value);
+      break;
+    case 20:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setStarCount(value);
       break;
     default:
       reader.skipField();
@@ -3588,6 +3597,20 @@ proto.clarifai.api.App.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeString(
       18,
+      f
+    );
+  }
+  f = message.getIsStarred();
+  if (f) {
+    writer.writeBool(
+      19,
+      f
+    );
+  }
+  f = message.getStarCount();
+  if (f !== 0) {
+    writer.writeInt32(
+      20,
       f
     );
   }
@@ -3901,6 +3924,42 @@ proto.clarifai.api.App.prototype.getDataTierId = function() {
  */
 proto.clarifai.api.App.prototype.setDataTierId = function(value) {
   return jspb.Message.setProto3StringField(this, 18, value);
+};
+
+
+/**
+ * optional bool is_starred = 19;
+ * @return {boolean}
+ */
+proto.clarifai.api.App.prototype.getIsStarred = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 19, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.App} returns this
+ */
+proto.clarifai.api.App.prototype.setIsStarred = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 19, value);
+};
+
+
+/**
+ * optional int32 star_count = 20;
+ * @return {number}
+ */
+proto.clarifai.api.App.prototype.getStarCount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 20, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.App} returns this
+ */
+proto.clarifai.api.App.prototype.setStarCount = function(value) {
+  return jspb.Message.setProto3IntField(this, 20, value);
 };
 
 
@@ -13020,6 +13079,13 @@ proto.clarifai.api.HostedURL.prototype.setCrossorigin = function(value) {
 
 
 
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.clarifai.api.Input.repeatedFields_ = [7];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -13055,7 +13121,8 @@ proto.clarifai.api.Input.toObject = function(includeInstance, msg) {
     data: (f = msg.getData()) && proto.clarifai.api.Data.toObject(includeInstance, f),
     createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f)
+    status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f),
+    datasetIdsList: (f = jspb.Message.getRepeatedField(msg, 7)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -13115,6 +13182,10 @@ proto.clarifai.api.Input.deserializeBinaryFromReader = function(msg, reader) {
       var value = new proto_clarifai_api_status_status_pb.Status;
       reader.readMessage(value,proto_clarifai_api_status_status_pb.Status.deserializeBinaryFromReader);
       msg.setStatus(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addDatasetIds(value);
       break;
     default:
       reader.skipField();
@@ -13182,6 +13253,13 @@ proto.clarifai.api.Input.serializeBinaryToWriter = function(message, writer) {
       6,
       f,
       proto_clarifai_api_status_status_pb.Status.serializeBinaryToWriter
+    );
+  }
+  f = message.getDatasetIdsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      7,
+      f
     );
   }
 };
@@ -13350,6 +13428,43 @@ proto.clarifai.api.Input.prototype.clearStatus = function() {
  */
 proto.clarifai.api.Input.prototype.hasStatus = function() {
   return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
+ * repeated string dataset_ids = 7;
+ * @return {!Array<string>}
+ */
+proto.clarifai.api.Input.prototype.getDatasetIdsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 7));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.clarifai.api.Input} returns this
+ */
+proto.clarifai.api.Input.prototype.setDatasetIdsList = function(value) {
+  return jspb.Message.setField(this, 7, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.Input} returns this
+ */
+proto.clarifai.api.Input.prototype.addDatasetIds = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 7, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.Input} returns this
+ */
+proto.clarifai.api.Input.prototype.clearDatasetIdsList = function() {
+  return this.setDatasetIdsList([]);
 };
 
 
@@ -14404,6 +14519,13 @@ proto.clarifai.api.Key.prototype.clearAuthorizedIdpIdsList = function() {
 
 
 
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.clarifai.api.Model.repeatedFields_ = [20,21];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -14450,7 +14572,11 @@ proto.clarifai.api.Model.toObject = function(includeInstance, msg) {
     visibility: (f = msg.getVisibility()) && proto.clarifai.api.Visibility.toObject(includeInstance, f),
     description: jspb.Message.getFieldWithDefault(msg, 16, ""),
     metadata: (f = msg.getMetadata()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
-    notes: jspb.Message.getFieldWithDefault(msg, 18, "")
+    notes: jspb.Message.getFieldWithDefault(msg, 18, ""),
+    toolkitsList: (f = jspb.Message.getRepeatedField(msg, 20)) == null ? undefined : f,
+    useCasesList: (f = jspb.Message.getRepeatedField(msg, 21)) == null ? undefined : f,
+    isStarred: jspb.Message.getBooleanFieldWithDefault(msg, 22, false),
+    starCount: jspb.Message.getFieldWithDefault(msg, 23, 0)
   };
 
   if (includeInstance) {
@@ -14558,6 +14684,22 @@ proto.clarifai.api.Model.deserializeBinaryFromReader = function(msg, reader) {
     case 18:
       var value = /** @type {string} */ (reader.readString());
       msg.setNotes(value);
+      break;
+    case 20:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addToolkits(value);
+      break;
+    case 21:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addUseCases(value);
+      break;
+    case 22:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsStarred(value);
+      break;
+    case 23:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setStarCount(value);
       break;
     default:
       reader.skipField();
@@ -14705,6 +14847,34 @@ proto.clarifai.api.Model.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeString(
       18,
+      f
+    );
+  }
+  f = message.getToolkitsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      20,
+      f
+    );
+  }
+  f = message.getUseCasesList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      21,
+      f
+    );
+  }
+  f = message.getIsStarred();
+  if (f) {
+    writer.writeBool(
+      22,
+      f
+    );
+  }
+  f = message.getStarCount();
+  if (f !== 0) {
+    writer.writeInt32(
+      23,
       f
     );
   }
@@ -15148,6 +15318,116 @@ proto.clarifai.api.Model.prototype.getNotes = function() {
  */
 proto.clarifai.api.Model.prototype.setNotes = function(value) {
   return jspb.Message.setProto3StringField(this, 18, value);
+};
+
+
+/**
+ * repeated string toolkits = 20;
+ * @return {!Array<string>}
+ */
+proto.clarifai.api.Model.prototype.getToolkitsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 20));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.clarifai.api.Model} returns this
+ */
+proto.clarifai.api.Model.prototype.setToolkitsList = function(value) {
+  return jspb.Message.setField(this, 20, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.Model} returns this
+ */
+proto.clarifai.api.Model.prototype.addToolkits = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 20, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.Model} returns this
+ */
+proto.clarifai.api.Model.prototype.clearToolkitsList = function() {
+  return this.setToolkitsList([]);
+};
+
+
+/**
+ * repeated string use_cases = 21;
+ * @return {!Array<string>}
+ */
+proto.clarifai.api.Model.prototype.getUseCasesList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 21));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.clarifai.api.Model} returns this
+ */
+proto.clarifai.api.Model.prototype.setUseCasesList = function(value) {
+  return jspb.Message.setField(this, 21, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.Model} returns this
+ */
+proto.clarifai.api.Model.prototype.addUseCases = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 21, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.Model} returns this
+ */
+proto.clarifai.api.Model.prototype.clearUseCasesList = function() {
+  return this.setUseCasesList([]);
+};
+
+
+/**
+ * optional bool is_starred = 22;
+ * @return {boolean}
+ */
+proto.clarifai.api.Model.prototype.getIsStarred = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 22, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.Model} returns this
+ */
+proto.clarifai.api.Model.prototype.setIsStarred = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 22, value);
+};
+
+
+/**
+ * optional int32 star_count = 23;
+ * @return {number}
+ */
+proto.clarifai.api.Model.prototype.getStarCount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 23, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.Model} returns this
+ */
+proto.clarifai.api.Model.prototype.setStarCount = function(value) {
+  return jspb.Message.setProto3IntField(this, 23, value);
 };
 
 
@@ -17930,7 +18210,8 @@ proto.clarifai.api.ModelTypeField.ModelTypeFieldType = {
   JSON: 10,
   ARRAY_OF_NUMBERS: 11,
   WORKFLOW_EMBED_MODELS: 12,
-  ARRAY_OF_STRINGS: 13
+  ARRAY_OF_STRINGS: 13,
+  RECURSIVE_ENUM: 14
 };
 
 /**
@@ -28289,6 +28570,8 @@ proto.clarifai.api.User.toObject = function(includeInstance, msg) {
     isOrgAdmin: jspb.Message.getBooleanFieldWithDefault(msg, 14, false),
     twoFactorAuthEnabled: jspb.Message.getBooleanFieldWithDefault(msg, 15, false),
     teamsCount: jspb.Message.getFieldWithDefault(msg, 16, 0),
+    isStarred: jspb.Message.getBooleanFieldWithDefault(msg, 21, false),
+    starCount: jspb.Message.getFieldWithDefault(msg, 22, 0),
     visibility: (f = msg.getVisibility()) && proto.clarifai.api.Visibility.toObject(includeInstance, f),
     userDetail: (f = msg.getUserDetail()) && proto.clarifai.api.UserDetail.toObject(includeInstance, f)
   };
@@ -28400,6 +28683,14 @@ proto.clarifai.api.User.deserializeBinaryFromReader = function(msg, reader) {
     case 16:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setTeamsCount(value);
+      break;
+    case 21:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsStarred(value);
+      break;
+    case 22:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setStarCount(value);
       break;
     case 17:
       var value = new proto.clarifai.api.Visibility;
@@ -28562,6 +28853,20 @@ proto.clarifai.api.User.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0) {
     writer.writeUint32(
       16,
+      f
+    );
+  }
+  f = message.getIsStarred();
+  if (f) {
+    writer.writeBool(
+      21,
+      f
+    );
+  }
+  f = message.getStarCount();
+  if (f !== 0) {
+    writer.writeInt32(
+      22,
       f
     );
   }
@@ -29006,6 +29311,42 @@ proto.clarifai.api.User.prototype.setTeamsCount = function(value) {
 
 
 /**
+ * optional bool is_starred = 21;
+ * @return {boolean}
+ */
+proto.clarifai.api.User.prototype.getIsStarred = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 21, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.User} returns this
+ */
+proto.clarifai.api.User.prototype.setIsStarred = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 21, value);
+};
+
+
+/**
+ * optional int32 star_count = 22;
+ * @return {number}
+ */
+proto.clarifai.api.User.prototype.getStarCount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 22, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.User} returns this
+ */
+proto.clarifai.api.User.prototype.setStarCount = function(value) {
+  return jspb.Message.setProto3IntField(this, 22, value);
+};
+
+
+/**
  * optional Visibility visibility = 17;
  * @return {?proto.clarifai.api.Visibility}
  */
@@ -29128,7 +29469,9 @@ proto.clarifai.api.UserDetail.toObject = function(includeInstance, msg) {
     proto.clarifai.api.EmailAddress.toObject, includeInstance),
     isOrgAdmin: jspb.Message.getBooleanFieldWithDefault(msg, 8, false),
     twoFactorAuthEnabled: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
-    teamsCount: jspb.Message.getFieldWithDefault(msg, 10, 0)
+    teamsCount: jspb.Message.getFieldWithDefault(msg, 10, 0),
+    country: jspb.Message.getFieldWithDefault(msg, 11, ""),
+    state: jspb.Message.getFieldWithDefault(msg, 12, "")
   };
 
   if (includeInstance) {
@@ -29209,6 +29552,14 @@ proto.clarifai.api.UserDetail.deserializeBinaryFromReader = function(msg, reader
     case 10:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setTeamsCount(value);
+      break;
+    case 11:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCountry(value);
+      break;
+    case 12:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setState(value);
       break;
     default:
       reader.skipField();
@@ -29311,6 +29662,20 @@ proto.clarifai.api.UserDetail.serializeBinaryToWriter = function(message, writer
   if (f !== 0) {
     writer.writeUint32(
       10,
+      f
+    );
+  }
+  f = message.getCountry();
+  if (f.length > 0) {
+    writer.writeString(
+      11,
+      f
+    );
+  }
+  f = message.getState();
+  if (f.length > 0) {
+    writer.writeString(
+      12,
       f
     );
   }
@@ -29590,6 +29955,42 @@ proto.clarifai.api.UserDetail.prototype.getTeamsCount = function() {
  */
 proto.clarifai.api.UserDetail.prototype.setTeamsCount = function(value) {
   return jspb.Message.setProto3IntField(this, 10, value);
+};
+
+
+/**
+ * optional string country = 11;
+ * @return {string}
+ */
+proto.clarifai.api.UserDetail.prototype.getCountry = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.UserDetail} returns this
+ */
+proto.clarifai.api.UserDetail.prototype.setCountry = function(value) {
+  return jspb.Message.setProto3StringField(this, 11, value);
+};
+
+
+/**
+ * optional string state = 12;
+ * @return {string}
+ */
+proto.clarifai.api.UserDetail.prototype.getState = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 12, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.UserDetail} returns this
+ */
+proto.clarifai.api.UserDetail.prototype.setState = function(value) {
+  return jspb.Message.setProto3StringField(this, 12, value);
 };
 
 
@@ -30776,7 +31177,9 @@ proto.clarifai.api.Workflow.toObject = function(includeInstance, msg) {
     visibility: (f = msg.getVisibility()) && proto.clarifai.api.Visibility.toObject(includeInstance, f),
     userId: jspb.Message.getFieldWithDefault(msg, 7, ""),
     modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    version: (f = msg.getVersion()) && proto.clarifai.api.WorkflowVersion.toObject(includeInstance, f)
+    version: (f = msg.getVersion()) && proto.clarifai.api.WorkflowVersion.toObject(includeInstance, f),
+    isStarred: jspb.Message.getBooleanFieldWithDefault(msg, 10, false),
+    starCount: jspb.Message.getFieldWithDefault(msg, 11, 0)
   };
 
   if (includeInstance) {
@@ -30854,6 +31257,14 @@ proto.clarifai.api.Workflow.deserializeBinaryFromReader = function(msg, reader) 
       var value = new proto.clarifai.api.WorkflowVersion;
       reader.readMessage(value,proto.clarifai.api.WorkflowVersion.deserializeBinaryFromReader);
       msg.setVersion(value);
+      break;
+    case 10:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsStarred(value);
+      break;
+    case 11:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setStarCount(value);
       break;
     default:
       reader.skipField();
@@ -30951,6 +31362,20 @@ proto.clarifai.api.Workflow.serializeBinaryToWriter = function(message, writer) 
       9,
       f,
       proto.clarifai.api.WorkflowVersion.serializeBinaryToWriter
+    );
+  }
+  f = message.getIsStarred();
+  if (f) {
+    writer.writeBool(
+      10,
+      f
+    );
+  }
+  f = message.getStarCount();
+  if (f !== 0) {
+    writer.writeInt32(
+      11,
+      f
     );
   }
 };
@@ -31230,6 +31655,42 @@ proto.clarifai.api.Workflow.prototype.clearVersion = function() {
  */
 proto.clarifai.api.Workflow.prototype.hasVersion = function() {
   return jspb.Message.getField(this, 9) != null;
+};
+
+
+/**
+ * optional bool is_starred = 10;
+ * @return {boolean}
+ */
+proto.clarifai.api.Workflow.prototype.getIsStarred = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 10, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.Workflow} returns this
+ */
+proto.clarifai.api.Workflow.prototype.setIsStarred = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 10, value);
+};
+
+
+/**
+ * optional int32 star_count = 11;
+ * @return {number}
+ */
+proto.clarifai.api.Workflow.prototype.getStarCount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.Workflow} returns this
+ */
+proto.clarifai.api.Workflow.prototype.setStarCount = function(value) {
+  return jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -38269,6 +38730,7 @@ proto.clarifai.api.TimeSegment.prototype.toObject = function(opt_includeInstance
  */
 proto.clarifai.api.TimeSegment.toObject = function(includeInstance, msg) {
   var f, obj = {
+    id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     data: (f = msg.getData()) && proto.clarifai.api.Data.toObject(includeInstance, f),
     timeInfo: (f = msg.getTimeInfo()) && proto.clarifai.api.TimeInfo.toObject(includeInstance, f)
   };
@@ -38308,11 +38770,15 @@ proto.clarifai.api.TimeSegment.deserializeBinaryFromReader = function(msg, reade
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setId(value);
+      break;
+    case 2:
       var value = new proto.clarifai.api.Data;
       reader.readMessage(value,proto.clarifai.api.Data.deserializeBinaryFromReader);
       msg.setData(value);
       break;
-    case 2:
+    case 3:
       var value = new proto.clarifai.api.TimeInfo;
       reader.readMessage(value,proto.clarifai.api.TimeInfo.deserializeBinaryFromReader);
       msg.setTimeInfo(value);
@@ -38346,10 +38812,17 @@ proto.clarifai.api.TimeSegment.prototype.serializeBinary = function() {
  */
 proto.clarifai.api.TimeSegment.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+  f = message.getId();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
   f = message.getData();
   if (f != null) {
     writer.writeMessage(
-      1,
+      2,
       f,
       proto.clarifai.api.Data.serializeBinaryToWriter
     );
@@ -38357,7 +38830,7 @@ proto.clarifai.api.TimeSegment.serializeBinaryToWriter = function(message, write
   f = message.getTimeInfo();
   if (f != null) {
     writer.writeMessage(
-      2,
+      3,
       f,
       proto.clarifai.api.TimeInfo.serializeBinaryToWriter
     );
@@ -38366,12 +38839,30 @@ proto.clarifai.api.TimeSegment.serializeBinaryToWriter = function(message, write
 
 
 /**
- * optional Data data = 1;
+ * optional string id = 1;
+ * @return {string}
+ */
+proto.clarifai.api.TimeSegment.prototype.getId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.TimeSegment} returns this
+ */
+proto.clarifai.api.TimeSegment.prototype.setId = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional Data data = 2;
  * @return {?proto.clarifai.api.Data}
  */
 proto.clarifai.api.TimeSegment.prototype.getData = function() {
   return /** @type{?proto.clarifai.api.Data} */ (
-    jspb.Message.getWrapperField(this, proto.clarifai.api.Data, 1));
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Data, 2));
 };
 
 
@@ -38380,7 +38871,7 @@ proto.clarifai.api.TimeSegment.prototype.getData = function() {
  * @return {!proto.clarifai.api.TimeSegment} returns this
 */
 proto.clarifai.api.TimeSegment.prototype.setData = function(value) {
-  return jspb.Message.setWrapperField(this, 1, value);
+  return jspb.Message.setWrapperField(this, 2, value);
 };
 
 
@@ -38398,17 +38889,17 @@ proto.clarifai.api.TimeSegment.prototype.clearData = function() {
  * @return {boolean}
  */
 proto.clarifai.api.TimeSegment.prototype.hasData = function() {
-  return jspb.Message.getField(this, 1) != null;
+  return jspb.Message.getField(this, 2) != null;
 };
 
 
 /**
- * optional TimeInfo time_info = 2;
+ * optional TimeInfo time_info = 3;
  * @return {?proto.clarifai.api.TimeInfo}
  */
 proto.clarifai.api.TimeSegment.prototype.getTimeInfo = function() {
   return /** @type{?proto.clarifai.api.TimeInfo} */ (
-    jspb.Message.getWrapperField(this, proto.clarifai.api.TimeInfo, 2));
+    jspb.Message.getWrapperField(this, proto.clarifai.api.TimeInfo, 3));
 };
 
 
@@ -38417,7 +38908,7 @@ proto.clarifai.api.TimeSegment.prototype.getTimeInfo = function() {
  * @return {!proto.clarifai.api.TimeSegment} returns this
 */
 proto.clarifai.api.TimeSegment.prototype.setTimeInfo = function(value) {
-  return jspb.Message.setWrapperField(this, 2, value);
+  return jspb.Message.setWrapperField(this, 3, value);
 };
 
 
@@ -38435,7 +38926,7 @@ proto.clarifai.api.TimeSegment.prototype.clearTimeInfo = function() {
  * @return {boolean}
  */
 proto.clarifai.api.TimeSegment.prototype.hasTimeInfo = function() {
-  return jspb.Message.getField(this, 2) != null;
+  return jspb.Message.getField(this, 3) != null;
 };
 
 
@@ -38472,8 +38963,8 @@ proto.clarifai.api.TimeInfo.prototype.toObject = function(opt_includeInstance) {
 proto.clarifai.api.TimeInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
     numFrames: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    beginTime: (f = msg.getBeginTime()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    endTime: (f = msg.getEndTime()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f)
+    beginTime: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    endTime: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -38515,13 +39006,11 @@ proto.clarifai.api.TimeInfo.deserializeBinaryFromReader = function(msg, reader) 
       msg.setNumFrames(value);
       break;
     case 2:
-      var value = new google_protobuf_timestamp_pb.Timestamp;
-      reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
+      var value = /** @type {number} */ (reader.readUint32());
       msg.setBeginTime(value);
       break;
     case 3:
-      var value = new google_protobuf_timestamp_pb.Timestamp;
-      reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
+      var value = /** @type {number} */ (reader.readUint32());
       msg.setEndTime(value);
       break;
     default:
@@ -38561,19 +39050,17 @@ proto.clarifai.api.TimeInfo.serializeBinaryToWriter = function(message, writer) 
     );
   }
   f = message.getBeginTime();
-  if (f != null) {
-    writer.writeMessage(
+  if (f !== 0) {
+    writer.writeUint32(
       2,
-      f,
-      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
+      f
     );
   }
   f = message.getEndTime();
-  if (f != null) {
-    writer.writeMessage(
+  if (f !== 0) {
+    writer.writeUint32(
       3,
-      f,
-      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
+      f
     );
   }
 };
@@ -38598,76 +39085,38 @@ proto.clarifai.api.TimeInfo.prototype.setNumFrames = function(value) {
 
 
 /**
- * optional google.protobuf.Timestamp begin_time = 2;
- * @return {?proto.google.protobuf.Timestamp}
+ * optional uint32 begin_time = 2;
+ * @return {number}
  */
 proto.clarifai.api.TimeInfo.prototype.getBeginTime = function() {
-  return /** @type{?proto.google.protobuf.Timestamp} */ (
-    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 2));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
 
 /**
- * @param {?proto.google.protobuf.Timestamp|undefined} value
+ * @param {number} value
  * @return {!proto.clarifai.api.TimeInfo} returns this
-*/
+ */
 proto.clarifai.api.TimeInfo.prototype.setBeginTime = function(value) {
-  return jspb.Message.setWrapperField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
 /**
- * Clears the message field making it undefined.
- * @return {!proto.clarifai.api.TimeInfo} returns this
- */
-proto.clarifai.api.TimeInfo.prototype.clearBeginTime = function() {
-  return this.setBeginTime(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.clarifai.api.TimeInfo.prototype.hasBeginTime = function() {
-  return jspb.Message.getField(this, 2) != null;
-};
-
-
-/**
- * optional google.protobuf.Timestamp end_time = 3;
- * @return {?proto.google.protobuf.Timestamp}
+ * optional uint32 end_time = 3;
+ * @return {number}
  */
 proto.clarifai.api.TimeInfo.prototype.getEndTime = function() {
-  return /** @type{?proto.google.protobuf.Timestamp} */ (
-    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 3));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
 
 /**
- * @param {?proto.google.protobuf.Timestamp|undefined} value
+ * @param {number} value
  * @return {!proto.clarifai.api.TimeInfo} returns this
-*/
+ */
 proto.clarifai.api.TimeInfo.prototype.setEndTime = function(value) {
-  return jspb.Message.setWrapperField(this, 3, value);
-};
-
-
-/**
- * Clears the message field making it undefined.
- * @return {!proto.clarifai.api.TimeInfo} returns this
- */
-proto.clarifai.api.TimeInfo.prototype.clearEndTime = function() {
-  return this.setEndTime(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.clarifai.api.TimeInfo.prototype.hasEndTime = function() {
-  return jspb.Message.getField(this, 3) != null;
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -38767,17 +39216,6 @@ proto.clarifai.api.ValidationErrorType = {
   RESTRICTED: 1,
   DATABASE: 2,
   FORMAT: 3
-};
-
-/**
- * @enum {number}
- */
-proto.clarifai.api.TagCategoryName = {
-  UNCATEGORIZED: 0,
-  USE_CASE: 1,
-  LANGUAGE: 2,
-  LICENCE: 3,
-  TOOLKIT: 4
 };
 
 goog.object.extend(exports, proto.clarifai.api);

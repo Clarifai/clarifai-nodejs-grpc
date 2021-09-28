@@ -241,6 +241,7 @@ enum StatusCode {
   RPC_MAX_MESSAGE_SIZE_EXCEEDED = 40033;
   RPC_CANCELED = 40035;
   RPC_UNKNOWN_METHOD = 40036;
+  REQUEST_CANCELED_BY_USER = 40037;
   CLUSTER_INTERNAL_FAILURE = 43040;
 
   EXTERNAL_CONNECTION_ERROR = 40034; // could not connect to external services
@@ -326,7 +327,7 @@ enum StatusCode {
   COLLECTOR_ACTIVE = 52001;
   COLLECTOR_INACTIVE = 52002;
   COLLECTOR_POST_INPUT_FAILED = 52003;
-  
+
   // SSO 53xxx
   SSO_IDENTITY_PROVIDER_DOES_NOT_EXIST = 53001;
 
@@ -375,11 +376,23 @@ enum StatusCode {
   MAINTENANCE_SUCCESS = 63000;
   MAINTENANCE_FAILED = 63001;
 
+  // Datasets 64xxx
+  // The dataset version is pending to be processed.
+  DATASET_VERSION_PENDING = 64005;
+  // The dataset version is currently being processed.
+  DATASET_VERSION_IN_PROGRESS = 64010;
+  // The dataset version is ready to be used.
+  DATASET_VERSION_READY = 64015;
+  // An error occurred during the dataset version processing.
+  DATASET_VERSION_FAILURE = 64020;
+  // An unexpected error occurred during the dataset version processing.
+  DATASET_VERSION_UNEXPECTED_ERROR = 64025;
+
   // Generic Job status codes
-  JOB_QUEUED = 6400;
-  JOB_RUNNING = 6401;
-  JOB_COMPLETED = 6402;
-  JOB_FAILED = 6403;
+  JOB_QUEUED = 64000;
+  JOB_RUNNING = 64001;
+  JOB_COMPLETED = 64002;
+  JOB_FAILED = 64003;
 
   //auth issues
   AUTH_MISSING_IDP_ASSOC = 65000;

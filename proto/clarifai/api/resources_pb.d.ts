@@ -154,6 +154,12 @@ export class App extends jspb.Message {
     getDataTierId(): string;
     setDataTierId(value: string): App;
 
+    getIsStarred(): boolean;
+    setIsStarred(value: boolean): App;
+
+    getStarCount(): number;
+    setStarCount(value: number): App;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): App.AsObject;
@@ -180,6 +186,8 @@ export namespace App {
         sampleMs: number,
         visibility?: Visibility.AsObject,
         dataTierId: string,
+        isStarred: boolean,
+        starCount: number,
     }
 }
 
@@ -1542,6 +1550,11 @@ export class Input extends jspb.Message {
     getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
     setStatus(value?: proto_clarifai_api_status_status_pb.Status): Input;
 
+    clearDatasetIdsList(): void;
+    getDatasetIdsList(): Array<string>;
+    setDatasetIdsList(value: Array<string>): Input;
+    addDatasetIds(value: string, index?: number): string;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Input.AsObject;
@@ -1560,6 +1573,7 @@ export namespace Input {
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        datasetIdsList: Array<string>,
     }
 }
 
@@ -1782,6 +1796,22 @@ export class Model extends jspb.Message {
     getNotes(): string;
     setNotes(value: string): Model;
 
+    clearToolkitsList(): void;
+    getToolkitsList(): Array<string>;
+    setToolkitsList(value: Array<string>): Model;
+    addToolkits(value: string, index?: number): string;
+
+    clearUseCasesList(): void;
+    getUseCasesList(): Array<string>;
+    setUseCasesList(value: Array<string>): Model;
+    addUseCases(value: string, index?: number): string;
+
+    getIsStarred(): boolean;
+    setIsStarred(value: boolean): Model;
+
+    getStarCount(): number;
+    setStarCount(value: number): Model;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Model.AsObject;
@@ -1811,6 +1841,10 @@ export namespace Model {
         description: string,
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
         notes: string,
+        toolkitsList: Array<string>,
+        useCasesList: Array<string>,
+        isStarred: boolean,
+        starCount: number,
     }
 }
 
@@ -2250,6 +2284,7 @@ export namespace ModelTypeField {
     ARRAY_OF_NUMBERS = 11,
     WORKFLOW_EMBED_MODELS = 12,
     ARRAY_OF_STRINGS = 13,
+    RECURSIVE_ENUM = 14,
     }
 
 }
@@ -3763,6 +3798,12 @@ export class User extends jspb.Message {
     getTeamsCount(): number;
     setTeamsCount(value: number): User;
 
+    getIsStarred(): boolean;
+    setIsStarred(value: boolean): User;
+
+    getStarCount(): number;
+    setStarCount(value: number): User;
+
 
     hasVisibility(): boolean;
     clearVisibility(): void;
@@ -3805,6 +3846,8 @@ export namespace User {
         isOrgAdmin: boolean,
         twoFactorAuthEnabled: boolean,
         teamsCount: number,
+        isStarred: boolean,
+        starCount: number,
         visibility?: Visibility.AsObject,
         userDetail?: UserDetail.AsObject,
     }
@@ -3855,6 +3898,12 @@ export class UserDetail extends jspb.Message {
     getTeamsCount(): number;
     setTeamsCount(value: number): UserDetail;
 
+    getCountry(): string;
+    setCountry(value: string): UserDetail;
+
+    getState(): string;
+    setState(value: string): UserDetail;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): UserDetail.AsObject;
@@ -3878,6 +3927,8 @@ export namespace UserDetail {
         isOrgAdmin: boolean,
         twoFactorAuthEnabled: boolean,
         teamsCount: number,
+        country: string,
+        state: string,
     }
 }
 
@@ -4091,6 +4142,12 @@ export class Workflow extends jspb.Message {
     getVersion(): WorkflowVersion | undefined;
     setVersion(value?: WorkflowVersion): Workflow;
 
+    getIsStarred(): boolean;
+    setIsStarred(value: boolean): Workflow;
+
+    getStarCount(): number;
+    setStarCount(value: number): Workflow;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Workflow.AsObject;
@@ -4113,6 +4170,8 @@ export namespace Workflow {
         userId: string,
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         version?: WorkflowVersion.AsObject,
+        isStarred: boolean,
+        starCount: number,
     }
 }
 
@@ -5187,6 +5246,9 @@ export namespace TrendingMetric {
 }
 
 export class TimeSegment extends jspb.Message { 
+    getId(): string;
+    setId(value: string): TimeSegment;
+
 
     hasData(): boolean;
     clearData(): void;
@@ -5212,6 +5274,7 @@ export class TimeSegment extends jspb.Message {
 
 export namespace TimeSegment {
     export type AsObject = {
+        id: string,
         data?: Data.AsObject,
         timeInfo?: TimeInfo.AsObject,
     }
@@ -5221,17 +5284,11 @@ export class TimeInfo extends jspb.Message {
     getNumFrames(): number;
     setNumFrames(value: number): TimeInfo;
 
+    getBeginTime(): number;
+    setBeginTime(value: number): TimeInfo;
 
-    hasBeginTime(): boolean;
-    clearBeginTime(): void;
-    getBeginTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setBeginTime(value?: google_protobuf_timestamp_pb.Timestamp): TimeInfo;
-
-
-    hasEndTime(): boolean;
-    clearEndTime(): void;
-    getEndTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setEndTime(value?: google_protobuf_timestamp_pb.Timestamp): TimeInfo;
+    getEndTime(): number;
+    setEndTime(value: number): TimeInfo;
 
 
     serializeBinary(): Uint8Array;
@@ -5247,8 +5304,8 @@ export class TimeInfo extends jspb.Message {
 export namespace TimeInfo {
     export type AsObject = {
         numFrames: number,
-        beginTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        endTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        beginTime: number,
+        endTime: number,
     }
 }
 
@@ -5318,12 +5375,4 @@ export enum ValidationErrorType {
     RESTRICTED = 1,
     DATABASE = 2,
     FORMAT = 3,
-}
-
-export enum TagCategoryName {
-    UNCATEGORIZED = 0,
-    USE_CASE = 1,
-    LANGUAGE = 2,
-    LICENCE = 3,
-    TOOLKIT = 4,
 }

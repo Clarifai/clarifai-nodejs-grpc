@@ -418,6 +418,11 @@ export class GetAppRequest extends jspb.Message {
     getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
     setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): GetAppRequest;
 
+    clearAdditionalFieldsList(): void;
+    getAdditionalFieldsList(): Array<string>;
+    setAdditionalFieldsList(value: Array<string>): GetAppRequest;
+    addAdditionalFields(value: string, index?: number): string;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetAppRequest.AsObject;
@@ -432,6 +437,7 @@ export class GetAppRequest extends jspb.Message {
 export namespace GetAppRequest {
     export type AsObject = {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        additionalFieldsList: Array<string>,
     }
 }
 
@@ -472,6 +478,11 @@ export class ListAppsRequest extends jspb.Message {
     getFeaturedOnly(): boolean;
     setFeaturedOnly(value: boolean): ListAppsRequest;
 
+    clearAdditionalFieldsList(): void;
+    getAdditionalFieldsList(): Array<string>;
+    setAdditionalFieldsList(value: Array<string>): ListAppsRequest;
+    addAdditionalFields(value: string, index?: number): string;
+
 
     getSortByCase(): ListAppsRequest.SortByCase;
 
@@ -496,6 +507,7 @@ export namespace ListAppsRequest {
         query: string,
         name: string,
         featuredOnly: boolean,
+        additionalFieldsList: Array<string>,
     }
 
     export enum SortByCase {
@@ -2551,6 +2563,11 @@ export class GetModelRequest extends jspb.Message {
     getTrainedBefore(): boolean;
     setTrainedBefore(value: boolean): GetModelRequest;
 
+    clearAdditionalFieldsList(): void;
+    getAdditionalFieldsList(): Array<string>;
+    setAdditionalFieldsList(value: Array<string>): GetModelRequest;
+    addAdditionalFields(value: string, index?: number): string;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetModelRequest.AsObject;
@@ -2569,6 +2586,7 @@ export namespace GetModelRequest {
         versionId: string,
         language: string,
         trainedBefore: boolean,
+        additionalFieldsList: Array<string>,
     }
 }
 
@@ -2634,6 +2652,21 @@ export class ListModelsRequest extends jspb.Message {
     getFeaturedOnly(): boolean;
     setFeaturedOnly(value: boolean): ListModelsRequest;
 
+    clearToolkitsList(): void;
+    getToolkitsList(): Array<string>;
+    setToolkitsList(value: Array<string>): ListModelsRequest;
+    addToolkits(value: string, index?: number): string;
+
+    clearUseCasesList(): void;
+    getUseCasesList(): Array<string>;
+    setUseCasesList(value: Array<string>): ListModelsRequest;
+    addUseCases(value: string, index?: number): string;
+
+    clearAdditionalFieldsList(): void;
+    getAdditionalFieldsList(): Array<string>;
+    setAdditionalFieldsList(value: Array<string>): ListModelsRequest;
+    addAdditionalFields(value: string, index?: number): string;
+
 
     getSortByCase(): ListModelsRequest.SortByCase;
 
@@ -2664,6 +2697,9 @@ export namespace ListModelsRequest {
         outputFieldsList: Array<string>,
         license: string,
         featuredOnly: boolean,
+        toolkitsList: Array<string>,
+        useCasesList: Array<string>,
+        additionalFieldsList: Array<string>,
     }
 
     export enum SortByCase {
@@ -3176,6 +3212,116 @@ export namespace PostModelVersionsRequest {
         testSearch?: proto_clarifai_api_resources_pb.Search.AsObject,
         evaluateAfterTraining: boolean,
         description: string,
+    }
+}
+
+export class ModelVersionPublishRequest extends jspb.Message { 
+    getVersionId(): string;
+    setVersionId(value: string): ModelVersionPublishRequest;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ModelVersionPublishRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ModelVersionPublishRequest): ModelVersionPublishRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ModelVersionPublishRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ModelVersionPublishRequest;
+    static deserializeBinaryFromReader(message: ModelVersionPublishRequest, reader: jspb.BinaryReader): ModelVersionPublishRequest;
+}
+
+export namespace ModelVersionPublishRequest {
+    export type AsObject = {
+        versionId: string,
+    }
+}
+
+export class PostModelVersionsPublishRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PostModelVersionsPublishRequest;
+
+    getModelId(): string;
+    setModelId(value: string): PostModelVersionsPublishRequest;
+
+    clearPublicationsList(): void;
+    getPublicationsList(): Array<ModelVersionPublishRequest>;
+    setPublicationsList(value: Array<ModelVersionPublishRequest>): PostModelVersionsPublishRequest;
+    addPublications(value?: ModelVersionPublishRequest, index?: number): ModelVersionPublishRequest;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PostModelVersionsPublishRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PostModelVersionsPublishRequest): PostModelVersionsPublishRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PostModelVersionsPublishRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PostModelVersionsPublishRequest;
+    static deserializeBinaryFromReader(message: PostModelVersionsPublishRequest, reader: jspb.BinaryReader): PostModelVersionsPublishRequest;
+}
+
+export namespace PostModelVersionsPublishRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        modelId: string,
+        publicationsList: Array<ModelVersionPublishRequest.AsObject>,
+    }
+}
+
+export class ModelVersionUnpublishRequest extends jspb.Message { 
+    getVersionId(): string;
+    setVersionId(value: string): ModelVersionUnpublishRequest;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ModelVersionUnpublishRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ModelVersionUnpublishRequest): ModelVersionUnpublishRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ModelVersionUnpublishRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ModelVersionUnpublishRequest;
+    static deserializeBinaryFromReader(message: ModelVersionUnpublishRequest, reader: jspb.BinaryReader): ModelVersionUnpublishRequest;
+}
+
+export namespace ModelVersionUnpublishRequest {
+    export type AsObject = {
+        versionId: string,
+    }
+}
+
+export class DeleteModelVersionsUnpublishRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): DeleteModelVersionsUnpublishRequest;
+
+    getModelId(): string;
+    setModelId(value: string): DeleteModelVersionsUnpublishRequest;
+
+    clearPublicationsList(): void;
+    getPublicationsList(): Array<ModelVersionUnpublishRequest>;
+    setPublicationsList(value: Array<ModelVersionUnpublishRequest>): DeleteModelVersionsUnpublishRequest;
+    addPublications(value?: ModelVersionUnpublishRequest, index?: number): ModelVersionUnpublishRequest;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DeleteModelVersionsUnpublishRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: DeleteModelVersionsUnpublishRequest): DeleteModelVersionsUnpublishRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DeleteModelVersionsUnpublishRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DeleteModelVersionsUnpublishRequest;
+    static deserializeBinaryFromReader(message: DeleteModelVersionsUnpublishRequest, reader: jspb.BinaryReader): DeleteModelVersionsUnpublishRequest;
+}
+
+export namespace DeleteModelVersionsUnpublishRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        modelId: string,
+        publicationsList: Array<ModelVersionUnpublishRequest.AsObject>,
     }
 }
 
@@ -3714,6 +3860,47 @@ export namespace MyScopesRequest {
     }
 }
 
+export class MyScopesUserRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): MyScopesUserRequest;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MyScopesUserRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: MyScopesUserRequest): MyScopesUserRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MyScopesUserRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MyScopesUserRequest;
+    static deserializeBinaryFromReader(message: MyScopesUserRequest, reader: jspb.BinaryReader): MyScopesUserRequest;
+}
+
+export namespace MyScopesUserRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+    }
+}
+
+export class MyScopesRootRequest extends jspb.Message { 
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MyScopesRootRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: MyScopesRootRequest): MyScopesRootRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MyScopesRootRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MyScopesRootRequest;
+    static deserializeBinaryFromReader(message: MyScopesRootRequest, reader: jspb.BinaryReader): MyScopesRootRequest;
+}
+
+export namespace MyScopesRootRequest {
+    export type AsObject = {
+    }
+}
+
 export class MultiScopeDepsResponse extends jspb.Message { 
 
     hasStatus(): boolean;
@@ -3789,6 +3976,78 @@ export namespace MultiScopeResponse {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         scopesList: Array<string>,
         app?: proto_clarifai_api_resources_pb.App.AsObject,
+        endpointsList: Array<string>,
+    }
+}
+
+export class MultiScopeUserResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiScopeUserResponse;
+
+    clearScopesList(): void;
+    getScopesList(): Array<string>;
+    setScopesList(value: Array<string>): MultiScopeUserResponse;
+    addScopes(value: string, index?: number): string;
+
+    clearEndpointsList(): void;
+    getEndpointsList(): Array<string>;
+    setEndpointsList(value: Array<string>): MultiScopeUserResponse;
+    addEndpoints(value: string, index?: number): string;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiScopeUserResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiScopeUserResponse): MultiScopeUserResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiScopeUserResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiScopeUserResponse;
+    static deserializeBinaryFromReader(message: MultiScopeUserResponse, reader: jspb.BinaryReader): MultiScopeUserResponse;
+}
+
+export namespace MultiScopeUserResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        scopesList: Array<string>,
+        endpointsList: Array<string>,
+    }
+}
+
+export class MultiScopeRootResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiScopeRootResponse;
+
+    clearScopesList(): void;
+    getScopesList(): Array<string>;
+    setScopesList(value: Array<string>): MultiScopeRootResponse;
+    addScopes(value: string, index?: number): string;
+
+    clearEndpointsList(): void;
+    getEndpointsList(): Array<string>;
+    setEndpointsList(value: Array<string>): MultiScopeRootResponse;
+    addEndpoints(value: string, index?: number): string;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiScopeRootResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiScopeRootResponse): MultiScopeRootResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiScopeRootResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiScopeRootResponse;
+    static deserializeBinaryFromReader(message: MultiScopeRootResponse, reader: jspb.BinaryReader): MultiScopeRootResponse;
+}
+
+export namespace MultiScopeRootResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        scopesList: Array<string>,
         endpointsList: Array<string>,
     }
 }
@@ -4350,6 +4609,11 @@ export class GetWorkflowRequest extends jspb.Message {
     getFavorClarifaiWorkflows(): boolean;
     setFavorClarifaiWorkflows(value: boolean): GetWorkflowRequest;
 
+    clearAdditionalFieldsList(): void;
+    getAdditionalFieldsList(): Array<string>;
+    setAdditionalFieldsList(value: Array<string>): GetWorkflowRequest;
+    addAdditionalFields(value: string, index?: number): string;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetWorkflowRequest.AsObject;
@@ -4366,6 +4630,7 @@ export namespace GetWorkflowRequest {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         workflowId: string,
         favorClarifaiWorkflows: boolean,
+        additionalFieldsList: Array<string>,
     }
 }
 
@@ -4406,6 +4671,11 @@ export class ListWorkflowsRequest extends jspb.Message {
     getFeaturedOnly(): boolean;
     setFeaturedOnly(value: boolean): ListWorkflowsRequest;
 
+    clearAdditionalFieldsList(): void;
+    getAdditionalFieldsList(): Array<string>;
+    setAdditionalFieldsList(value: Array<string>): ListWorkflowsRequest;
+    addAdditionalFields(value: string, index?: number): string;
+
 
     getSortByCase(): ListWorkflowsRequest.SortByCase;
 
@@ -4430,6 +4700,7 @@ export namespace ListWorkflowsRequest {
         query: string,
         id: string,
         featuredOnly: boolean,
+        additionalFieldsList: Array<string>,
     }
 
     export enum SortByCase {
