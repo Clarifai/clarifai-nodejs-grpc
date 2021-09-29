@@ -664,6 +664,23 @@ service V2 {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   ////////////////////////////////////////
   // Models
   ////////////////////////////////////////
@@ -739,6 +756,9 @@ service V2 {
   rpc ListModels (ListModelsRequest) returns (MultiModelResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models"
+      additional_bindings {
+        get: "/v2/users/{user_app_id.user_id}/models"
+      }
       additional_bindings {
         get: "/v2/models"
       }
@@ -891,6 +911,52 @@ service V2 {
   }
 
 
+
+  rpc PostModelVersionsPublish (PostModelVersionsPublishRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/publish"
+      body: "*"
+      additional_bindings {
+        post: "/v2/models/{model_id}/publish"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Train;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Metrics_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Metrics_Add;
+  }
+
+  rpc DeleteModelVersionsUnPublish (DeleteModelVersionsUnpublishRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/unpublish"
+      body: "*"
+      additional_bindings {
+        post: "/v2/models/{model_id}/unpublish"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Train;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Metrics_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Metrics_Add;
+  }
+
+
+
+
   // NOTE: inconsistency: do we want this to return a SingleModelResponse?
 
   // Create a new model version to trigger training of the model.
@@ -1039,6 +1105,12 @@ service V2 {
 
 
 
+
+
+
+
+
+
   ////////////////////////////////////////
 
   ////////////////////////////////////////
@@ -1062,6 +1134,9 @@ service V2 {
   rpc ListWorkflows (ListWorkflowsRequest) returns (MultiWorkflowResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows"
+      additional_bindings {
+        get: "/v2/users/{user_app_id.user_id}/workflows"
+      }
       additional_bindings {
         get: "/v2/workflows"
       }
@@ -1332,6 +1407,20 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
   }
 
+  rpc MyScopesUser (MyScopesUserRequest) returns (MultiScopeUserResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/myscopes"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+  }
+
+  rpc MyScopesRoot (MyScopesRootRequest) returns (MultiScopeRootResponse) {
+    option (google.api.http) = {
+      get: "/v2/myscopesroot"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+  }
+
   // List all auth scopes available to me as a user.
   rpc ListScopes (ListScopesRequest) returns (MultiScopeDepsResponse) {
     option (google.api.http) = {
@@ -1452,8 +1541,7 @@ service V2 {
         body: "*"
       }
     };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = PasswordPolicies_Get;
+    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
   }
 
 
@@ -2258,6 +2346,8 @@ message MultiAnnotationResponse {
 ////////////////////////////////////////////////////////////////////////////////
 message GetAppRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars
+  repeated string additional_fields = 2;
 }
 
 message ListAppsRequest {
@@ -2288,6 +2378,8 @@ message ListAppsRequest {
   string name = 4 [deprecated = true];
   // If true, we only return workflows that are handpicked by clarifai staff
   bool featured_only = 9;
+  // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars
+  repeated string additional_fields = 10;
 }
 
 message PostAppsRequest {
@@ -2919,6 +3011,29 @@ message GetInputCountRequest {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ////////////////////////////////////////////////////
 // Model prediction related stuff needs inputs and produces outputs.
 ////////////////////////////////////////////////////
@@ -3039,6 +3154,8 @@ message GetModelRequest {
   string version_id = 3;
   string language = 4;
   bool trained_before = 5;
+  // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars, outputs
+  repeated string additional_fields = 19;
 }
 
 message ListModelsRequest {
@@ -3085,6 +3202,12 @@ message ListModelsRequest {
   string license = 15;
   // If true, we only return models that are handpicked by clarifai staff
   bool featured_only = 16;
+  // List of toolkit tags to filter by
+  repeated string toolkits = 17;
+  // List of use_case tags to filter by
+  repeated string use_cases = 18;
+  // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars, outputs
+  repeated string additional_fields = 19;
 }
 
 message PostModelsRequest {
@@ -3216,6 +3339,26 @@ message PostModelVersionsRequest {
   bool evaluate_after_training = 7;
   // Description about this training run
   string description = 8;
+}
+
+message ModelVersionPublishRequest {
+  string version_id = 1;
+}
+
+message PostModelVersionsPublishRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+  repeated ModelVersionPublishRequest publications = 3;
+}
+
+message ModelVersionUnpublishRequest {
+  string version_id = 1;
+}
+
+message DeleteModelVersionsUnpublishRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+  repeated ModelVersionUnpublishRequest publications = 3;
 }
 
 
@@ -3404,6 +3547,15 @@ message MyScopesRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 }
 
+message MyScopesUserRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+}
+
+message MyScopesRootRequest {
+}
+
+
+
 message MultiScopeDepsResponse {
   // The status of the request.
   clarifai.api.status.Status status = 1;
@@ -3426,7 +3578,25 @@ message MultiScopeResponse {
   repeated string endpoints = 4;
 }
 
+message MultiScopeUserResponse {
+  // The status of the request.
+  clarifai.api.status.Status status = 1;
+  // This is a list of the scopes that your key has.
+  repeated string scopes = 2;
+  // This is a list of endpoint permissions that your key has.
+  repeated string endpoints = 4;
+}
 
+
+
+message MultiScopeRootResponse {
+  // The status of the request.
+  clarifai.api.status.Status status = 1;
+  // This is a list of the scopes that your key has.
+  repeated string scopes = 2;
+  // This is a list of endpoint permissions that your key has.
+  repeated string endpoints = 4;
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -3768,6 +3938,8 @@ message GetWorkflowRequest {
 
   // Use this flag to look into clarifai published workflows first for a Workflow ID
   bool favor_clarifai_workflows = 3;
+  // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars
+  repeated string additional_fields = 4;
 }
 
 message ListWorkflowsRequest {
@@ -3797,6 +3969,8 @@ message ListWorkflowsRequest {
   string id = 4 [deprecated = true];
   // If true, we only return workflows that are handpicked by clarifai staff
   bool featured_only = 9;
+  // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars
+  repeated string additional_fields = 10;
 }
 
 
@@ -4047,7 +4221,7 @@ message PatchTasksRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated Task tasks = 2;
   // The action to perform on the patched objects
-  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  // For now only 'overwrite' action is supported
   string action = 3;
 }
 
@@ -4117,7 +4291,7 @@ message PatchCollectorsRequest {
   repeated Collector collectors = 2;
 
   // The action to perform on the patched objects
-  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  // Only 'overwrite' is supported
   string action = 3;
 }
 
@@ -4238,6 +4412,22 @@ message MultiTrendingMetricsViewResponse {
   clarifai.api.status.Status status = 1;
   repeated TrendingMetric metrics = 2;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
