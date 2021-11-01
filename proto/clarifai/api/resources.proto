@@ -210,10 +210,24 @@ message Audio {
   // The hosted field lists original audio hosted in Clarifai storage. This field is currently used
   // only in response.
   HostedURL hosted = 5;
+  // audio info
+  AudioInfo audio_info = 6;
+}
+
+message AudioInfo {
+  // audio format
+  string audio_format = 1;
+  // sample rate
+  int32 sample_rate = 2;
+  // audio track duration in seconds
+  float duration_seconds = 3;
+  // audio track bit rate
+  int32 bit_rate = 4;
 }
 
 // Track proto encodes information of a track over a number of frames
 message Track {
+  reserved 3;
   // track id
   string id = 1;
 
@@ -221,22 +235,9 @@ message Track {
   // embeddings, etc. that are computed within this track.
   Data data = 2;
 
-  // Here is where we store the track metadata.
-  message TrackInfo {
-    // Number of frames
-    uint32 num_frames = 1;
-    // Timestamp where track begins.
-    google.protobuf.Timestamp begin_time = 2;
-    // Timestamp where track ends.
-    google.protobuf.Timestamp end_time = 3;
-    // Quality of the track.
-    float quality = 4;
-  }
-
-  // The track information.
-  TrackInfo track_info = 3;
-
   TimeInfo time_info = 4;
+
+  float quality = 5;
 }
 
 
@@ -807,6 +808,19 @@ message Image {
   bool allow_duplicate_url = 4;
   // The hosted field lists images in different sizes hosted in Clarifai storage.
   HostedURL hosted = 5;
+  // image info
+  ImageInfo image_info = 6;
+}
+
+message ImageInfo {
+  // width
+  int32 width = 1;
+  // height
+  int32 height = 2;
+  // image format
+  string format = 3;
+  // image color mode
+  string color_mode = 4;
 }
 
 message HostedURL {
@@ -876,9 +890,98 @@ message InputCount {
 
 
 
+message DatasetFilter {
+  reserved 7;
+
+  // The ID for the dataset filter
+  string id = 1;
+
+  // When the dataset filter was created.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp created_at = 2;
+
+  // When the dataset filter was modified.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp modified_at = 3;
+
+  // The user the dataset filter belongs to.
+  string user_id = 4;
+
+  // The app the dataset filter belongs to.
+  string app_id = 5;
+
+  // The dataset the filter belongs to.
+  string dataset_id = 6;
+
+  // The saved search that this filter uses.
+  Search saved_search = 8;
+}
 
 
+message DatasetVersion {
+  reserved 9;
 
+  // The ID for the dataset version
+  string id = 1;
+
+  // When the dataset version was created.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp created_at = 2;
+
+  // When the dataset version was modified.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp modified_at = 3;
+
+  // The app the dataset version belongs to.
+  string app_id = 4;
+
+  // The user the dataset version belongs to.
+  string user_id = 5;
+
+  // The dataset the dataset version belongs to.
+  string dataset_id = 6;
+
+  // Data config reveals how the dataset version is generated.
+  oneof data_config {
+    // The dataset version will be generated based on a single dataset filter.
+    DatasetVersionDatasetFilterConfig dataset_filter_config = 7;
+  }
+
+  // Status for this dataset version.
+  clarifai.api.status.Status status = 8;
+
+  // Description of the dataset version
+  string description = 10;
+
+  // Dataset version summary
+  DatasetVersionSummary summary = 11;
+
+  // To handle arbitrary json metadata you can use a struct field:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  google.protobuf.Struct metadata = 12;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 13;
+
+  // The embedding models to return embeddings for. If empty, no embeddings are returned.
+  repeated string embed_model_version_ids = 14;
+}
+
+message DatasetVersionDatasetFilterConfig {
+  DatasetFilter dataset_filter = 1;
+}
+
+message DatasetVersionSummary {
+  // Counts by different filters. Each key is the filter key,
+  // e.g. total_image, train_image, test_image, total_video, train_video, test_video.
+  map<string, uint64> input_counts = 1;
+}
 
 message WorkflowResultsSimilarity {
   // The input with the specific data compare against all pool results
@@ -1007,20 +1110,26 @@ message Model {
   // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
   google.protobuf.Struct metadata = 17;
 
-  // Notes about a model (should support markdown)
-  // This field should be used for in-depth notes about
-  // about a model and supports up to 64Kbs.
+  // Notes for the model
+  // This field should be used for in-depth notes and supports up to 64Kbs.
   string notes = 18;
+
   // Tags from toolkits category
   repeated string toolkits = 20 [(clarifai.api.utils.cl_show_if_empty) = true];
   // Tags from use_cases category
   repeated string use_cases = 21 [(clarifai.api.utils.cl_show_if_empty) = true];
+  // Tags from languages category.
+  repeated string languages = 25 [(clarifai.api.utils.cl_show_if_empty) = true];
+
   // Is starred by the requesting user (only showed on get/list requests)
   // Please use PostModelStars/DeleteModelStars endpoints to star/unstar a model
   bool is_starred = 22;
   // How many users have starred the model (only showed on get/list requests)
   // Computed value, not editable
   int32 star_count = 23;
+
+  // Configuration used to import model from third-party toolkits
+  ImportInfo import_info = 24;
 }
 
 // A link to a html/markdown/text file that stores reference material
@@ -1111,7 +1220,10 @@ message TrainInfo {
   google.protobuf.Struct params = 1;
 }
 
-
+message ImportInfo {
+  // Used to configure model imports from third-party toolkits.
+  google.protobuf.Struct params = 1;
+}
 
 // OutputConfig is a collection of parameters controlling either inference or training settings for
 // the given Model. This message will be deprecated over time in favor or infer_params and
@@ -1878,6 +1990,15 @@ message Text {
   // The hosted field lists original text hosted in Clarifai storage. This field is currently used
   // only in response.
   HostedURL hosted = 4;
+  // text info
+  TextInfo text_info = 5;
+}
+
+message TextInfo {
+  // count of characters in text
+  int32 char_count = 1;
+  // text encoding
+  string encoding = 2;
 }
 
 
@@ -2066,6 +2187,26 @@ message Video {
   // The hosted field lists original video hosted in Clarifai storage. This field is currently used
   // only in response.
   HostedURL hosted = 6;
+  // video info
+  VideoInfo video_info = 7;
+
+}
+
+message VideoInfo {
+  // width
+  int32 width = 1;
+  // height
+  int32 height = 2;
+  // Frames per second of the video.
+  float fps = 3;
+  // video format
+  string video_format = 4;
+  // video track bit rate
+  int32 bit_rate = 5;
+  // video frame count
+  int32 frame_count = 6;
+  // video duration in seconds
+  float duration_seconds = 7;
 }
 
 
@@ -2123,6 +2264,16 @@ message Workflow {
   // How many users have starred the workflow (only showed on get/list requests)
   // Computed value, not editable
   int32 star_count = 11;
+
+  // Short description about this workflow
+  string description = 12;
+
+  // Notes for the workflow
+  // This field should be used for in-depth notes and supports up to 64Kbs.
+  string notes = 13;
+
+  // Tags from use_cases category
+  repeated string use_cases = 14 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
 message WorkflowVersion {
@@ -2159,6 +2310,12 @@ message WorkflowVersion {
   string app_id = 8;
   // The user the workflow version belongs to.
   string user_id = 9;
+
+  // Short description about this workflow version
+  string description = 10;
+
+  // License associated to this workflow version
+  string license = 11;
 }
 
 message WorkflowNode {

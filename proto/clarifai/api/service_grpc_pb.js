@@ -146,17 +146,6 @@ function deserialize_clarifai_api_DeleteModelVersionRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.DeleteModelVersionRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_DeleteModelVersionsUnpublishRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.DeleteModelVersionsUnpublishRequest)) {
-    throw new Error('Expected argument of type clarifai.api.DeleteModelVersionsUnpublishRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_DeleteModelVersionsUnpublishRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.DeleteModelVersionsUnpublishRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_clarifai_api_DeleteModelsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.DeleteModelsRequest)) {
     throw new Error('Expected argument of type clarifai.api.DeleteModelsRequest');
@@ -971,6 +960,17 @@ function deserialize_clarifai_api_MultiKnowledgeGraphResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiKnowledgeGraphResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_MultiModelLanguageResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiModelLanguageResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiModelLanguageResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiModelLanguageResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiModelLanguageResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_MultiModelReferenceResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.MultiModelReferenceResponse)) {
     throw new Error('Expected argument of type clarifai.api.MultiModelReferenceResponse');
@@ -993,6 +993,17 @@ function deserialize_clarifai_api_MultiModelResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiModelResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_MultiModelToolkitResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiModelToolkitResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiModelToolkitResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiModelToolkitResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiModelToolkitResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_MultiModelTypeResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.MultiModelTypeResponse)) {
     throw new Error('Expected argument of type clarifai.api.MultiModelTypeResponse');
@@ -1002,6 +1013,17 @@ function serialize_clarifai_api_MultiModelTypeResponse(arg) {
 
 function deserialize_clarifai_api_MultiModelTypeResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiModelTypeResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MultiModelUseCaseResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiModelUseCaseResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiModelUseCaseResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiModelUseCaseResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiModelUseCaseResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiModelVersionInputExampleResponse(arg) {
@@ -1312,6 +1334,39 @@ function deserialize_clarifai_api_PatchKeysRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PatchKeysRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PatchModelLanguagesRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PatchModelLanguagesRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PatchModelLanguagesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PatchModelLanguagesRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PatchModelLanguagesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PatchModelToolkitsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PatchModelToolkitsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PatchModelToolkitsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PatchModelToolkitsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PatchModelToolkitsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PatchModelUseCasesRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PatchModelUseCasesRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PatchModelUseCasesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PatchModelUseCasesRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PatchModelUseCasesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PatchModelVersionsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PatchModelVersionsRequest)) {
     throw new Error('Expected argument of type clarifai.api.PatchModelVersionsRequest');
@@ -1596,6 +1651,17 @@ function serialize_clarifai_api_PostModelVersionsRequest(arg) {
 
 function deserialize_clarifai_api_PostModelVersionsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostModelVersionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PostModelVersionsUnPublishRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostModelVersionsUnPublishRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostModelVersionsUnPublishRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostModelVersionsUnPublishRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostModelVersionsUnPublishRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PostModelsRequest(arg) {
@@ -2597,6 +2663,42 @@ deleteModels: {
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },
+  // Update model toolkits tags
+patchModelToolkits: {
+    path: '/clarifai.api.V2/PatchModelToolkits',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PatchModelToolkitsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiModelToolkitResponse,
+    requestSerialize: serialize_clarifai_api_PatchModelToolkitsRequest,
+    requestDeserialize: deserialize_clarifai_api_PatchModelToolkitsRequest,
+    responseSerialize: serialize_clarifai_api_MultiModelToolkitResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiModelToolkitResponse,
+  },
+  // Update model use_cases tags
+patchModelUseCases: {
+    path: '/clarifai.api.V2/PatchModelUseCases',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PatchModelUseCasesRequest,
+    responseType: proto_clarifai_api_service_pb.MultiModelUseCaseResponse,
+    requestSerialize: serialize_clarifai_api_PatchModelUseCasesRequest,
+    requestDeserialize: deserialize_clarifai_api_PatchModelUseCasesRequest,
+    responseSerialize: serialize_clarifai_api_MultiModelUseCaseResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiModelUseCaseResponse,
+  },
+  // Update model languages tags
+patchModelLanguages: {
+    path: '/clarifai.api.V2/PatchModelLanguages',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PatchModelLanguagesRequest,
+    responseType: proto_clarifai_api_service_pb.MultiModelLanguageResponse,
+    requestSerialize: serialize_clarifai_api_PatchModelLanguagesRequest,
+    requestDeserialize: deserialize_clarifai_api_PatchModelLanguagesRequest,
+    responseSerialize: serialize_clarifai_api_MultiModelLanguageResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiModelLanguageResponse,
+  },
   // List all the inputs.
 listModelInputs: {
     path: '/clarifai.api.V2/ListModelInputs',
@@ -2650,14 +2752,14 @@ listModelVersions: {
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },
-  deleteModelVersionsUnPublish: {
-    path: '/clarifai.api.V2/DeleteModelVersionsUnPublish',
+  postModelVersionsUnPublish: {
+    path: '/clarifai.api.V2/PostModelVersionsUnPublish',
     requestStream: false,
     responseStream: false,
-    requestType: proto_clarifai_api_service_pb.DeleteModelVersionsUnpublishRequest,
+    requestType: proto_clarifai_api_service_pb.PostModelVersionsUnPublishRequest,
     responseType: proto_clarifai_api_status_status_pb.BaseResponse,
-    requestSerialize: serialize_clarifai_api_DeleteModelVersionsUnpublishRequest,
-    requestDeserialize: deserialize_clarifai_api_DeleteModelVersionsUnpublishRequest,
+    requestSerialize: serialize_clarifai_api_PostModelVersionsUnPublishRequest,
+    requestDeserialize: deserialize_clarifai_api_PostModelVersionsUnPublishRequest,
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },

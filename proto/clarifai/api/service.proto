@@ -857,6 +857,48 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
 
+  // Update model toolkits tags
+  rpc PatchModelToolkits (PatchModelToolkitsRequest) returns (MultiModelToolkitResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/toolkits"
+      body: "*"
+      additional_bindings {
+        patch: "/v2/models/{model_id}/toolkits"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  }
+
+  // Update model use_cases tags
+  rpc PatchModelUseCases (PatchModelUseCasesRequest) returns (MultiModelUseCaseResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/usecases"
+      body: "*"
+      additional_bindings {
+        patch: "/v2/models/{model_id}/usecases"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  }
+
+  // Update model languages tags
+  rpc PatchModelLanguages (PatchModelLanguagesRequest) returns (MultiModelLanguageResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/languages"
+      body: "*"
+      additional_bindings {
+        patch: "/v2/models/{model_id}/languages"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  }
+
   // List all the inputs.
   rpc ListModelInputs (ListModelInputsRequest) returns (MultiInputResponse) {
     option (google.api.http) = {
@@ -909,9 +951,9 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
+  
 
-
-
+  
   rpc PostModelVersionsPublish (PostModelVersionsPublishRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/publish"
@@ -933,7 +975,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Metrics_Add;
   }
 
-  rpc DeleteModelVersionsUnPublish (DeleteModelVersionsUnpublishRequest) returns (clarifai.api.status.BaseResponse) {
+  rpc PostModelVersionsUnPublish (PostModelVersionsUnPublishRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/unpublish"
       body: "*"
@@ -1510,6 +1552,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
+
 
 
 
@@ -2376,8 +2419,10 @@ message ListAppsRequest {
   // Filter by the name of the app. This supports wilcard queries like "gen*" to match "general" as an example.
   // Deprecated in favor of query
   string name = 4 [deprecated = true];
-  // If true, we only return workflows that are handpicked by clarifai staff
+  // If true, we only return apps that are handpicked by clarifai staff
   bool featured_only = 9;
+  // If true, we only return apps that are starred by the requesting user
+  bool starred_only = 11;
   // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars
   repeated string additional_fields = 10;
 }
@@ -3184,7 +3229,7 @@ message ListModelsRequest {
   // Filtering options:
   // // Query various text fields that can contain the words in the query string
   string query = 14;
-  // Filter by the name of the model. This supports wilcard queries like "gen*" to match "general" as an example.
+  // Filter by the name of the model. This supports wildcard queries like "gen*" to match "general" as an example.
   // Deprecated in favor of query
   string name = 5 [deprecated = true];
   // Filter models by the specific model_type_id. See ListModelTypes for the list of ModelType.Id's
@@ -3202,12 +3247,63 @@ message ListModelsRequest {
   string license = 15;
   // If true, we only return models that are handpicked by clarifai staff
   bool featured_only = 16;
+  // If true, we only return models that are starred by the requesting user
+  bool starred_only = 20;
   // List of toolkit tags to filter by
   repeated string toolkits = 17;
   // List of use_case tags to filter by
   repeated string use_cases = 18;
+  // List of language tags to filter by
+  repeated string languages = 21;
   // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars, outputs
   repeated string additional_fields = 19;
+}
+
+message PatchModelToolkitsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  string model_id = 2;
+
+  repeated string toolkits = 3;
+  //overwrite supported
+  string action = 4;
+}
+
+message PatchModelUseCasesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  string model_id = 2;
+
+  repeated string usecases = 3;
+  //overwrite supported
+  string action = 4;
+}
+
+message PatchModelLanguagesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  string model_id = 2;
+
+  repeated string languages = 3;
+  // Only overwrite supported
+  string action = 4;
+}
+
+
+
+message MultiModelToolkitResponse {
+  clarifai.api.status.Status status = 1;
+  repeated string toolkits = 2;
+}
+
+message MultiModelUseCaseResponse {
+  clarifai.api.status.Status status = 1;
+  repeated string usecases = 2;
+}
+
+message MultiModelLanguageResponse {
+  clarifai.api.status.Status status = 1;
+  repeated string languages = 2;
 }
 
 message PostModelsRequest {
@@ -3330,15 +3426,28 @@ message PostModelVersionsRequest {
   repeated ModelVersion model_versions = 3;
 
   // Use this to filter inputs that are used in training
+  // Alternatively, use train_search & test_search fields OR dataset_version field.
   clarifai.api.Search search = 4 [deprecated = true];
   //train_search is used to specify what data to train on.
+  // Alternatively, use dataset_version field.
   clarifai.api.Search train_search = 5;
   //test_search is used to specify what data to test on.
+  // Alternatively, use dataset_version field.
   clarifai.api.Search test_search = 6;
+
   // whether to evaluate the transfer trained model after training
   bool evaluate_after_training = 7;
+
   // Description about this training run
   string description = 8;
+
+  // Use the data from this dataset version for training.
+  // Set dataset_version.dataset_id to identify the dataset that you would like to use.
+  // When dataset_version.id field is set,
+  // the system will reuse the data from provided dataset version.
+  // When dataset_version.id is not set,
+  // a new dataset version will be created in the dataset using provided dataset_version fields.
+  DatasetVersion dataset_version = 9;
 }
 
 message ModelVersionPublishRequest {
@@ -3355,7 +3464,7 @@ message ModelVersionUnpublishRequest {
   string version_id = 1;
 }
 
-message DeleteModelVersionsUnpublishRequest {
+message PostModelVersionsUnPublishRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string model_id = 2;
   repeated ModelVersionUnpublishRequest publications = 3;
@@ -3804,6 +3913,8 @@ message MultiAnnotationSearchMetricsResponse {
 
 
 
+
+
 message PostValidatePasswordRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // password to be validated
@@ -3969,6 +4080,8 @@ message ListWorkflowsRequest {
   string id = 4 [deprecated = true];
   // If true, we only return workflows that are handpicked by clarifai staff
   bool featured_only = 9;
+  // If true, we only return workflows that are starred by the requesting user
+  bool starred_only = 11;
   // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars
   repeated string additional_fields = 10;
 }
