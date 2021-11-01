@@ -63,11 +63,14 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     patchModels: IV2Service_IPatchModels;
     deleteModel: IV2Service_IDeleteModel;
     deleteModels: IV2Service_IDeleteModels;
+    patchModelToolkits: IV2Service_IPatchModelToolkits;
+    patchModelUseCases: IV2Service_IPatchModelUseCases;
+    patchModelLanguages: IV2Service_IPatchModelLanguages;
     listModelInputs: IV2Service_IListModelInputs;
     getModelVersion: IV2Service_IGetModelVersion;
     listModelVersions: IV2Service_IListModelVersions;
     postModelVersionsPublish: IV2Service_IPostModelVersionsPublish;
-    deleteModelVersionsUnPublish: IV2Service_IDeleteModelVersionsUnPublish;
+    postModelVersionsUnPublish: IV2Service_IPostModelVersionsUnPublish;
     postModelVersions: IV2Service_IPostModelVersions;
     patchModelVersions: IV2Service_IPatchModelVersions;
     deleteModelVersion: IV2Service_IDeleteModelVersion;
@@ -556,6 +559,33 @@ interface IV2Service_IDeleteModels extends grpc.MethodDefinition<proto_clarifai_
     responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
 }
+interface IV2Service_IPatchModelToolkits extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PatchModelToolkitsRequest, proto_clarifai_api_service_pb.MultiModelToolkitResponse> {
+    path: "/clarifai.api.V2/PatchModelToolkits";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PatchModelToolkitsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PatchModelToolkitsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiModelToolkitResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiModelToolkitResponse>;
+}
+interface IV2Service_IPatchModelUseCases extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PatchModelUseCasesRequest, proto_clarifai_api_service_pb.MultiModelUseCaseResponse> {
+    path: "/clarifai.api.V2/PatchModelUseCases";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PatchModelUseCasesRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PatchModelUseCasesRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiModelUseCaseResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiModelUseCaseResponse>;
+}
+interface IV2Service_IPatchModelLanguages extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PatchModelLanguagesRequest, proto_clarifai_api_service_pb.MultiModelLanguageResponse> {
+    path: "/clarifai.api.V2/PatchModelLanguages";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PatchModelLanguagesRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PatchModelLanguagesRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiModelLanguageResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiModelLanguageResponse>;
+}
 interface IV2Service_IListModelInputs extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListModelInputsRequest, proto_clarifai_api_service_pb.MultiInputResponse> {
     path: "/clarifai.api.V2/ListModelInputs";
     requestStream: false;
@@ -592,12 +622,12 @@ interface IV2Service_IPostModelVersionsPublish extends grpc.MethodDefinition<pro
     responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
 }
-interface IV2Service_IDeleteModelVersionsUnPublish extends grpc.MethodDefinition<proto_clarifai_api_service_pb.DeleteModelVersionsUnpublishRequest, proto_clarifai_api_status_status_pb.BaseResponse> {
-    path: "/clarifai.api.V2/DeleteModelVersionsUnPublish";
+interface IV2Service_IPostModelVersionsUnPublish extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostModelVersionsUnPublishRequest, proto_clarifai_api_status_status_pb.BaseResponse> {
+    path: "/clarifai.api.V2/PostModelVersionsUnPublish";
     requestStream: false;
     responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.DeleteModelVersionsUnpublishRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.DeleteModelVersionsUnpublishRequest>;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostModelVersionsUnPublishRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostModelVersionsUnPublishRequest>;
     responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
 }
@@ -1299,11 +1329,14 @@ export interface IV2Server {
     patchModels: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchModelsRequest, proto_clarifai_api_service_pb.MultiModelResponse>;
     deleteModel: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteModelRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     deleteModels: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteModelsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
+    patchModelToolkits: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchModelToolkitsRequest, proto_clarifai_api_service_pb.MultiModelToolkitResponse>;
+    patchModelUseCases: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchModelUseCasesRequest, proto_clarifai_api_service_pb.MultiModelUseCaseResponse>;
+    patchModelLanguages: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchModelLanguagesRequest, proto_clarifai_api_service_pb.MultiModelLanguageResponse>;
     listModelInputs: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListModelInputsRequest, proto_clarifai_api_service_pb.MultiInputResponse>;
     getModelVersion: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetModelVersionRequest, proto_clarifai_api_service_pb.SingleModelVersionResponse>;
     listModelVersions: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListModelVersionsRequest, proto_clarifai_api_service_pb.MultiModelVersionResponse>;
     postModelVersionsPublish: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostModelVersionsPublishRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
-    deleteModelVersionsUnPublish: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteModelVersionsUnpublishRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
+    postModelVersionsUnPublish: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostModelVersionsUnPublishRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     postModelVersions: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostModelVersionsRequest, proto_clarifai_api_service_pb.SingleModelResponse>;
     patchModelVersions: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchModelVersionsRequest, proto_clarifai_api_service_pb.MultiModelVersionResponse>;
     deleteModelVersion: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteModelVersionRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
@@ -1517,6 +1550,15 @@ export interface IV2Client {
     deleteModels(request: proto_clarifai_api_service_pb.DeleteModelsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteModels(request: proto_clarifai_api_service_pb.DeleteModelsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteModels(request: proto_clarifai_api_service_pb.DeleteModelsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    patchModelToolkits(request: proto_clarifai_api_service_pb.PatchModelToolkitsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelToolkitResponse) => void): grpc.ClientUnaryCall;
+    patchModelToolkits(request: proto_clarifai_api_service_pb.PatchModelToolkitsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelToolkitResponse) => void): grpc.ClientUnaryCall;
+    patchModelToolkits(request: proto_clarifai_api_service_pb.PatchModelToolkitsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelToolkitResponse) => void): grpc.ClientUnaryCall;
+    patchModelUseCases(request: proto_clarifai_api_service_pb.PatchModelUseCasesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelUseCaseResponse) => void): grpc.ClientUnaryCall;
+    patchModelUseCases(request: proto_clarifai_api_service_pb.PatchModelUseCasesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelUseCaseResponse) => void): grpc.ClientUnaryCall;
+    patchModelUseCases(request: proto_clarifai_api_service_pb.PatchModelUseCasesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelUseCaseResponse) => void): grpc.ClientUnaryCall;
+    patchModelLanguages(request: proto_clarifai_api_service_pb.PatchModelLanguagesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelLanguageResponse) => void): grpc.ClientUnaryCall;
+    patchModelLanguages(request: proto_clarifai_api_service_pb.PatchModelLanguagesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelLanguageResponse) => void): grpc.ClientUnaryCall;
+    patchModelLanguages(request: proto_clarifai_api_service_pb.PatchModelLanguagesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelLanguageResponse) => void): grpc.ClientUnaryCall;
     listModelInputs(request: proto_clarifai_api_service_pb.ListModelInputsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputResponse) => void): grpc.ClientUnaryCall;
     listModelInputs(request: proto_clarifai_api_service_pb.ListModelInputsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputResponse) => void): grpc.ClientUnaryCall;
     listModelInputs(request: proto_clarifai_api_service_pb.ListModelInputsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputResponse) => void): grpc.ClientUnaryCall;
@@ -1529,9 +1571,9 @@ export interface IV2Client {
     postModelVersionsPublish(request: proto_clarifai_api_service_pb.PostModelVersionsPublishRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     postModelVersionsPublish(request: proto_clarifai_api_service_pb.PostModelVersionsPublishRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     postModelVersionsPublish(request: proto_clarifai_api_service_pb.PostModelVersionsPublishRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    deleteModelVersionsUnPublish(request: proto_clarifai_api_service_pb.DeleteModelVersionsUnpublishRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    deleteModelVersionsUnPublish(request: proto_clarifai_api_service_pb.DeleteModelVersionsUnpublishRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    deleteModelVersionsUnPublish(request: proto_clarifai_api_service_pb.DeleteModelVersionsUnpublishRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    postModelVersionsUnPublish(request: proto_clarifai_api_service_pb.PostModelVersionsUnPublishRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    postModelVersionsUnPublish(request: proto_clarifai_api_service_pb.PostModelVersionsUnPublishRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    postModelVersionsUnPublish(request: proto_clarifai_api_service_pb.PostModelVersionsUnPublishRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     postModelVersions(request: proto_clarifai_api_service_pb.PostModelVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelResponse) => void): grpc.ClientUnaryCall;
     postModelVersions(request: proto_clarifai_api_service_pb.PostModelVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelResponse) => void): grpc.ClientUnaryCall;
     postModelVersions(request: proto_clarifai_api_service_pb.PostModelVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelResponse) => void): grpc.ClientUnaryCall;
@@ -1890,6 +1932,15 @@ export class V2Client extends grpc.Client implements IV2Client {
     public deleteModels(request: proto_clarifai_api_service_pb.DeleteModelsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteModels(request: proto_clarifai_api_service_pb.DeleteModelsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteModels(request: proto_clarifai_api_service_pb.DeleteModelsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public patchModelToolkits(request: proto_clarifai_api_service_pb.PatchModelToolkitsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelToolkitResponse) => void): grpc.ClientUnaryCall;
+    public patchModelToolkits(request: proto_clarifai_api_service_pb.PatchModelToolkitsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelToolkitResponse) => void): grpc.ClientUnaryCall;
+    public patchModelToolkits(request: proto_clarifai_api_service_pb.PatchModelToolkitsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelToolkitResponse) => void): grpc.ClientUnaryCall;
+    public patchModelUseCases(request: proto_clarifai_api_service_pb.PatchModelUseCasesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelUseCaseResponse) => void): grpc.ClientUnaryCall;
+    public patchModelUseCases(request: proto_clarifai_api_service_pb.PatchModelUseCasesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelUseCaseResponse) => void): grpc.ClientUnaryCall;
+    public patchModelUseCases(request: proto_clarifai_api_service_pb.PatchModelUseCasesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelUseCaseResponse) => void): grpc.ClientUnaryCall;
+    public patchModelLanguages(request: proto_clarifai_api_service_pb.PatchModelLanguagesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelLanguageResponse) => void): grpc.ClientUnaryCall;
+    public patchModelLanguages(request: proto_clarifai_api_service_pb.PatchModelLanguagesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelLanguageResponse) => void): grpc.ClientUnaryCall;
+    public patchModelLanguages(request: proto_clarifai_api_service_pb.PatchModelLanguagesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelLanguageResponse) => void): grpc.ClientUnaryCall;
     public listModelInputs(request: proto_clarifai_api_service_pb.ListModelInputsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputResponse) => void): grpc.ClientUnaryCall;
     public listModelInputs(request: proto_clarifai_api_service_pb.ListModelInputsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputResponse) => void): grpc.ClientUnaryCall;
     public listModelInputs(request: proto_clarifai_api_service_pb.ListModelInputsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputResponse) => void): grpc.ClientUnaryCall;
@@ -1902,9 +1953,9 @@ export class V2Client extends grpc.Client implements IV2Client {
     public postModelVersionsPublish(request: proto_clarifai_api_service_pb.PostModelVersionsPublishRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public postModelVersionsPublish(request: proto_clarifai_api_service_pb.PostModelVersionsPublishRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public postModelVersionsPublish(request: proto_clarifai_api_service_pb.PostModelVersionsPublishRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public deleteModelVersionsUnPublish(request: proto_clarifai_api_service_pb.DeleteModelVersionsUnpublishRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public deleteModelVersionsUnPublish(request: proto_clarifai_api_service_pb.DeleteModelVersionsUnpublishRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public deleteModelVersionsUnPublish(request: proto_clarifai_api_service_pb.DeleteModelVersionsUnpublishRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public postModelVersionsUnPublish(request: proto_clarifai_api_service_pb.PostModelVersionsUnPublishRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public postModelVersionsUnPublish(request: proto_clarifai_api_service_pb.PostModelVersionsUnPublishRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public postModelVersionsUnPublish(request: proto_clarifai_api_service_pb.PostModelVersionsUnPublishRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public postModelVersions(request: proto_clarifai_api_service_pb.PostModelVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelResponse) => void): grpc.ClientUnaryCall;
     public postModelVersions(request: proto_clarifai_api_service_pb.PostModelVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelResponse) => void): grpc.ClientUnaryCall;
     public postModelVersions(request: proto_clarifai_api_service_pb.PostModelVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelResponse) => void): grpc.ClientUnaryCall;

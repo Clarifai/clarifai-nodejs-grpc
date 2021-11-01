@@ -349,6 +349,12 @@ export class Audio extends jspb.Message {
     setHosted(value?: HostedURL): Audio;
 
 
+    hasAudioInfo(): boolean;
+    clearAudioInfo(): void;
+    getAudioInfo(): AudioInfo | undefined;
+    setAudioInfo(value?: AudioInfo): Audio;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Audio.AsObject;
     static toObject(includeInstance: boolean, msg: Audio): Audio.AsObject;
@@ -365,6 +371,40 @@ export namespace Audio {
         base64: Uint8Array | string,
         allowDuplicateUrl: boolean,
         hosted?: HostedURL.AsObject,
+        audioInfo?: AudioInfo.AsObject,
+    }
+}
+
+export class AudioInfo extends jspb.Message { 
+    getAudioFormat(): string;
+    setAudioFormat(value: string): AudioInfo;
+
+    getSampleRate(): number;
+    setSampleRate(value: number): AudioInfo;
+
+    getDurationSeconds(): number;
+    setDurationSeconds(value: number): AudioInfo;
+
+    getBitRate(): number;
+    setBitRate(value: number): AudioInfo;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): AudioInfo.AsObject;
+    static toObject(includeInstance: boolean, msg: AudioInfo): AudioInfo.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: AudioInfo, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): AudioInfo;
+    static deserializeBinaryFromReader(message: AudioInfo, reader: jspb.BinaryReader): AudioInfo;
+}
+
+export namespace AudioInfo {
+    export type AsObject = {
+        audioFormat: string,
+        sampleRate: number,
+        durationSeconds: number,
+        bitRate: number,
     }
 }
 
@@ -379,16 +419,13 @@ export class Track extends jspb.Message {
     setData(value?: Data): Track;
 
 
-    hasTrackInfo(): boolean;
-    clearTrackInfo(): void;
-    getTrackInfo(): Track.TrackInfo | undefined;
-    setTrackInfo(value?: Track.TrackInfo): Track;
-
-
     hasTimeInfo(): boolean;
     clearTimeInfo(): void;
     getTimeInfo(): TimeInfo | undefined;
     setTimeInfo(value?: TimeInfo): Track;
+
+    getQuality(): number;
+    setQuality(value: number): Track;
 
 
     serializeBinary(): Uint8Array;
@@ -405,50 +442,9 @@ export namespace Track {
     export type AsObject = {
         id: string,
         data?: Data.AsObject,
-        trackInfo?: Track.TrackInfo.AsObject,
         timeInfo?: TimeInfo.AsObject,
+        quality: number,
     }
-
-
-    export class TrackInfo extends jspb.Message { 
-        getNumFrames(): number;
-        setNumFrames(value: number): TrackInfo;
-
-
-        hasBeginTime(): boolean;
-        clearBeginTime(): void;
-        getBeginTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
-        setBeginTime(value?: google_protobuf_timestamp_pb.Timestamp): TrackInfo;
-
-
-        hasEndTime(): boolean;
-        clearEndTime(): void;
-        getEndTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
-        setEndTime(value?: google_protobuf_timestamp_pb.Timestamp): TrackInfo;
-
-        getQuality(): number;
-        setQuality(value: number): TrackInfo;
-
-
-        serializeBinary(): Uint8Array;
-        toObject(includeInstance?: boolean): TrackInfo.AsObject;
-        static toObject(includeInstance: boolean, msg: TrackInfo): TrackInfo.AsObject;
-        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-        static serializeBinaryToWriter(message: TrackInfo, writer: jspb.BinaryWriter): void;
-        static deserializeBinary(bytes: Uint8Array): TrackInfo;
-        static deserializeBinaryFromReader(message: TrackInfo, reader: jspb.BinaryReader): TrackInfo;
-    }
-
-    export namespace TrackInfo {
-        export type AsObject = {
-            numFrames: number,
-            beginTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-            endTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-            quality: number,
-        }
-    }
-
 }
 
 export class Cluster extends jspb.Message { 
@@ -1468,6 +1464,12 @@ export class Image extends jspb.Message {
     setHosted(value?: HostedURL): Image;
 
 
+    hasImageInfo(): boolean;
+    clearImageInfo(): void;
+    getImageInfo(): ImageInfo | undefined;
+    setImageInfo(value?: ImageInfo): Image;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Image.AsObject;
     static toObject(includeInstance: boolean, msg: Image): Image.AsObject;
@@ -1484,6 +1486,40 @@ export namespace Image {
         base64: Uint8Array | string,
         allowDuplicateUrl: boolean,
         hosted?: HostedURL.AsObject,
+        imageInfo?: ImageInfo.AsObject,
+    }
+}
+
+export class ImageInfo extends jspb.Message { 
+    getWidth(): number;
+    setWidth(value: number): ImageInfo;
+
+    getHeight(): number;
+    setHeight(value: number): ImageInfo;
+
+    getFormat(): string;
+    setFormat(value: string): ImageInfo;
+
+    getColorMode(): string;
+    setColorMode(value: string): ImageInfo;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ImageInfo.AsObject;
+    static toObject(includeInstance: boolean, msg: ImageInfo): ImageInfo.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ImageInfo, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ImageInfo;
+    static deserializeBinaryFromReader(message: ImageInfo, reader: jspb.BinaryReader): ImageInfo;
+}
+
+export namespace ImageInfo {
+    export type AsObject = {
+        width: number,
+        height: number,
+        format: string,
+        colorMode: string,
     }
 }
 
@@ -1623,6 +1659,209 @@ export namespace InputCount {
         toReindex: number,
         reindexErrors: number,
         reindexing: number,
+    }
+}
+
+export class DatasetFilter extends jspb.Message { 
+    getId(): string;
+    setId(value: string): DatasetFilter;
+
+
+    hasCreatedAt(): boolean;
+    clearCreatedAt(): void;
+    getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): DatasetFilter;
+
+
+    hasModifiedAt(): boolean;
+    clearModifiedAt(): void;
+    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): DatasetFilter;
+
+    getUserId(): string;
+    setUserId(value: string): DatasetFilter;
+
+    getAppId(): string;
+    setAppId(value: string): DatasetFilter;
+
+    getDatasetId(): string;
+    setDatasetId(value: string): DatasetFilter;
+
+
+    hasSavedSearch(): boolean;
+    clearSavedSearch(): void;
+    getSavedSearch(): Search | undefined;
+    setSavedSearch(value?: Search): DatasetFilter;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DatasetFilter.AsObject;
+    static toObject(includeInstance: boolean, msg: DatasetFilter): DatasetFilter.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DatasetFilter, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DatasetFilter;
+    static deserializeBinaryFromReader(message: DatasetFilter, reader: jspb.BinaryReader): DatasetFilter;
+}
+
+export namespace DatasetFilter {
+    export type AsObject = {
+        id: string,
+        createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        userId: string,
+        appId: string,
+        datasetId: string,
+        savedSearch?: Search.AsObject,
+    }
+}
+
+export class DatasetVersion extends jspb.Message { 
+    getId(): string;
+    setId(value: string): DatasetVersion;
+
+
+    hasCreatedAt(): boolean;
+    clearCreatedAt(): void;
+    getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): DatasetVersion;
+
+
+    hasModifiedAt(): boolean;
+    clearModifiedAt(): void;
+    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): DatasetVersion;
+
+    getAppId(): string;
+    setAppId(value: string): DatasetVersion;
+
+    getUserId(): string;
+    setUserId(value: string): DatasetVersion;
+
+    getDatasetId(): string;
+    setDatasetId(value: string): DatasetVersion;
+
+
+    hasDatasetFilterConfig(): boolean;
+    clearDatasetFilterConfig(): void;
+    getDatasetFilterConfig(): DatasetVersionDatasetFilterConfig | undefined;
+    setDatasetFilterConfig(value?: DatasetVersionDatasetFilterConfig): DatasetVersion;
+
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): DatasetVersion;
+
+    getDescription(): string;
+    setDescription(value: string): DatasetVersion;
+
+
+    hasSummary(): boolean;
+    clearSummary(): void;
+    getSummary(): DatasetVersionSummary | undefined;
+    setSummary(value?: DatasetVersionSummary): DatasetVersion;
+
+
+    hasMetadata(): boolean;
+    clearMetadata(): void;
+    getMetadata(): google_protobuf_struct_pb.Struct | undefined;
+    setMetadata(value?: google_protobuf_struct_pb.Struct): DatasetVersion;
+
+
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): Visibility | undefined;
+    setVisibility(value?: Visibility): DatasetVersion;
+
+    clearEmbedModelVersionIdsList(): void;
+    getEmbedModelVersionIdsList(): Array<string>;
+    setEmbedModelVersionIdsList(value: Array<string>): DatasetVersion;
+    addEmbedModelVersionIds(value: string, index?: number): string;
+
+
+    getDataConfigCase(): DatasetVersion.DataConfigCase;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DatasetVersion.AsObject;
+    static toObject(includeInstance: boolean, msg: DatasetVersion): DatasetVersion.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DatasetVersion, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DatasetVersion;
+    static deserializeBinaryFromReader(message: DatasetVersion, reader: jspb.BinaryReader): DatasetVersion;
+}
+
+export namespace DatasetVersion {
+    export type AsObject = {
+        id: string,
+        createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        appId: string,
+        userId: string,
+        datasetId: string,
+        datasetFilterConfig?: DatasetVersionDatasetFilterConfig.AsObject,
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        description: string,
+        summary?: DatasetVersionSummary.AsObject,
+        metadata?: google_protobuf_struct_pb.Struct.AsObject,
+        visibility?: Visibility.AsObject,
+        embedModelVersionIdsList: Array<string>,
+    }
+
+    export enum DataConfigCase {
+        DATA_CONFIG_NOT_SET = 0,
+    
+    DATASET_FILTER_CONFIG = 7,
+
+    }
+
+}
+
+export class DatasetVersionDatasetFilterConfig extends jspb.Message { 
+
+    hasDatasetFilter(): boolean;
+    clearDatasetFilter(): void;
+    getDatasetFilter(): DatasetFilter | undefined;
+    setDatasetFilter(value?: DatasetFilter): DatasetVersionDatasetFilterConfig;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DatasetVersionDatasetFilterConfig.AsObject;
+    static toObject(includeInstance: boolean, msg: DatasetVersionDatasetFilterConfig): DatasetVersionDatasetFilterConfig.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DatasetVersionDatasetFilterConfig, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DatasetVersionDatasetFilterConfig;
+    static deserializeBinaryFromReader(message: DatasetVersionDatasetFilterConfig, reader: jspb.BinaryReader): DatasetVersionDatasetFilterConfig;
+}
+
+export namespace DatasetVersionDatasetFilterConfig {
+    export type AsObject = {
+        datasetFilter?: DatasetFilter.AsObject,
+    }
+}
+
+export class DatasetVersionSummary extends jspb.Message { 
+
+    getInputCountsMap(): jspb.Map<string, number>;
+    clearInputCountsMap(): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DatasetVersionSummary.AsObject;
+    static toObject(includeInstance: boolean, msg: DatasetVersionSummary): DatasetVersionSummary.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DatasetVersionSummary, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DatasetVersionSummary;
+    static deserializeBinaryFromReader(message: DatasetVersionSummary, reader: jspb.BinaryReader): DatasetVersionSummary;
+}
+
+export namespace DatasetVersionSummary {
+    export type AsObject = {
+
+        inputCountsMap: Array<[string, number]>,
     }
 }
 
@@ -1806,11 +2045,22 @@ export class Model extends jspb.Message {
     setUseCasesList(value: Array<string>): Model;
     addUseCases(value: string, index?: number): string;
 
+    clearLanguagesList(): void;
+    getLanguagesList(): Array<string>;
+    setLanguagesList(value: Array<string>): Model;
+    addLanguages(value: string, index?: number): string;
+
     getIsStarred(): boolean;
     setIsStarred(value: boolean): Model;
 
     getStarCount(): number;
     setStarCount(value: number): Model;
+
+
+    hasImportInfo(): boolean;
+    clearImportInfo(): void;
+    getImportInfo(): ImportInfo | undefined;
+    setImportInfo(value?: ImportInfo): Model;
 
 
     serializeBinary(): Uint8Array;
@@ -1843,8 +2093,10 @@ export namespace Model {
         notes: string,
         toolkitsList: Array<string>,
         useCasesList: Array<string>,
+        languagesList: Array<string>,
         isStarred: boolean,
         starCount: number,
+        importInfo?: ImportInfo.AsObject,
     }
 }
 
@@ -2039,6 +2291,30 @@ export class TrainInfo extends jspb.Message {
 }
 
 export namespace TrainInfo {
+    export type AsObject = {
+        params?: google_protobuf_struct_pb.Struct.AsObject,
+    }
+}
+
+export class ImportInfo extends jspb.Message { 
+
+    hasParams(): boolean;
+    clearParams(): void;
+    getParams(): google_protobuf_struct_pb.Struct | undefined;
+    setParams(value?: google_protobuf_struct_pb.Struct): ImportInfo;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ImportInfo.AsObject;
+    static toObject(includeInstance: boolean, msg: ImportInfo): ImportInfo.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ImportInfo, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ImportInfo;
+    static deserializeBinaryFromReader(message: ImportInfo, reader: jspb.BinaryReader): ImportInfo;
+}
+
+export namespace ImportInfo {
     export type AsObject = {
         params?: google_protobuf_struct_pb.Struct.AsObject,
     }
@@ -3710,6 +3986,12 @@ export class Text extends jspb.Message {
     setHosted(value?: HostedURL): Text;
 
 
+    hasTextInfo(): boolean;
+    clearTextInfo(): void;
+    getTextInfo(): TextInfo | undefined;
+    setTextInfo(value?: TextInfo): Text;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Text.AsObject;
     static toObject(includeInstance: boolean, msg: Text): Text.AsObject;
@@ -3726,6 +4008,32 @@ export namespace Text {
         url: string,
         allowDuplicateUrl: boolean,
         hosted?: HostedURL.AsObject,
+        textInfo?: TextInfo.AsObject,
+    }
+}
+
+export class TextInfo extends jspb.Message { 
+    getCharCount(): number;
+    setCharCount(value: number): TextInfo;
+
+    getEncoding(): string;
+    setEncoding(value: string): TextInfo;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): TextInfo.AsObject;
+    static toObject(includeInstance: boolean, msg: TextInfo): TextInfo.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: TextInfo, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): TextInfo;
+    static deserializeBinaryFromReader(message: TextInfo, reader: jspb.BinaryReader): TextInfo;
+}
+
+export namespace TextInfo {
+    export type AsObject = {
+        charCount: number,
+        encoding: string,
     }
 }
 
@@ -4077,6 +4385,12 @@ export class Video extends jspb.Message {
     setHosted(value?: HostedURL): Video;
 
 
+    hasVideoInfo(): boolean;
+    clearVideoInfo(): void;
+    getVideoInfo(): VideoInfo | undefined;
+    setVideoInfo(value?: VideoInfo): Video;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Video.AsObject;
     static toObject(includeInstance: boolean, msg: Video): Video.AsObject;
@@ -4094,6 +4408,52 @@ export namespace Video {
         allowDuplicateUrl: boolean,
         thumbnailUrl: string,
         hosted?: HostedURL.AsObject,
+        videoInfo?: VideoInfo.AsObject,
+    }
+}
+
+export class VideoInfo extends jspb.Message { 
+    getWidth(): number;
+    setWidth(value: number): VideoInfo;
+
+    getHeight(): number;
+    setHeight(value: number): VideoInfo;
+
+    getFps(): number;
+    setFps(value: number): VideoInfo;
+
+    getVideoFormat(): string;
+    setVideoFormat(value: string): VideoInfo;
+
+    getBitRate(): number;
+    setBitRate(value: number): VideoInfo;
+
+    getFrameCount(): number;
+    setFrameCount(value: number): VideoInfo;
+
+    getDurationSeconds(): number;
+    setDurationSeconds(value: number): VideoInfo;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): VideoInfo.AsObject;
+    static toObject(includeInstance: boolean, msg: VideoInfo): VideoInfo.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: VideoInfo, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): VideoInfo;
+    static deserializeBinaryFromReader(message: VideoInfo, reader: jspb.BinaryReader): VideoInfo;
+}
+
+export namespace VideoInfo {
+    export type AsObject = {
+        width: number,
+        height: number,
+        fps: number,
+        videoFormat: string,
+        bitRate: number,
+        frameCount: number,
+        durationSeconds: number,
     }
 }
 
@@ -4148,6 +4508,17 @@ export class Workflow extends jspb.Message {
     getStarCount(): number;
     setStarCount(value: number): Workflow;
 
+    getDescription(): string;
+    setDescription(value: string): Workflow;
+
+    getNotes(): string;
+    setNotes(value: string): Workflow;
+
+    clearUseCasesList(): void;
+    getUseCasesList(): Array<string>;
+    setUseCasesList(value: Array<string>): Workflow;
+    addUseCases(value: string, index?: number): string;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Workflow.AsObject;
@@ -4172,6 +4543,9 @@ export namespace Workflow {
         version?: WorkflowVersion.AsObject,
         isStarred: boolean,
         starCount: number,
+        description: string,
+        notes: string,
+        useCasesList: Array<string>,
     }
 }
 
@@ -4217,6 +4591,12 @@ export class WorkflowVersion extends jspb.Message {
     getUserId(): string;
     setUserId(value: string): WorkflowVersion;
 
+    getDescription(): string;
+    setDescription(value: string): WorkflowVersion;
+
+    getLicense(): string;
+    setLicense(value: string): WorkflowVersion;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): WorkflowVersion.AsObject;
@@ -4239,6 +4619,8 @@ export namespace WorkflowVersion {
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
         appId: string,
         userId: string,
+        description: string,
+        license: string,
     }
 }
 
