@@ -2068,11 +2068,7 @@ function deserialize_clarifai_api_status_BaseResponse(buffer_arg) {
 // https://cloud.google.com/service-management/reference/rpc/google.api#google.api.HttpRule
 //
 var V2Service = exports.V2Service = {
-  // //////////////////////////////////////
-// Concept Relationships
-// //////////////////////////////////////
-//
-// List concept relations between concepts in the platform.
+  // List concept relations between concepts in the platform.
 // MUST be above ListConcepts so that if concept_id is empty this will still match
 // /concepts/relations to list all the concept relations in the app.
 listConceptRelations: {
@@ -2110,11 +2106,7 @@ deleteConceptRelations: {
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },
-  // //////////////////////////////////////
-// Concepts
-// //////////////////////////////////////
-//
-// List all the concepts with their positive and negative counts
+  // List all the concepts with their positive and negative counts
 getConceptCounts: {
     path: '/clarifai.api.V2/GetConceptCounts',
     requestStream: false,
@@ -2188,13 +2180,7 @@ patchConcepts: {
     responseSerialize: serialize_clarifai_api_MultiConceptResponse,
     responseDeserialize: deserialize_clarifai_api_MultiConceptResponse,
   },
-  // //////////////////////////////////////
-//
-// //////////////////////////////////////
-// Concept Languages
-// //////////////////////////////////////
-//
-// Get a specific concept from an app.
+  // Get a specific concept from an app.
 getConceptLanguage: {
     path: '/clarifai.api.V2/GetConceptLanguage',
     requestStream: false,
@@ -2218,7 +2204,7 @@ listConceptLanguages: {
     responseSerialize: serialize_clarifai_api_MultiConceptLanguageResponse,
     responseDeserialize: deserialize_clarifai_api_MultiConceptLanguageResponse,
   },
-  // Add a new tranlsation for this concept.
+  // Add a new translation for this concept.
 postConceptLanguages: {
     path: '/clarifai.api.V2/PostConceptLanguages',
     requestStream: false,
@@ -2243,11 +2229,7 @@ patchConceptLanguages: {
     responseSerialize: serialize_clarifai_api_MultiConceptLanguageResponse,
     responseDeserialize: deserialize_clarifai_api_MultiConceptLanguageResponse,
   },
-  // //////////////////////////////////////
-// Knowledge Graph
-// //////////////////////////////////////
-//
-// List all domain graphs.
+  // List all domain graphs.
 listKnowledgeGraphs: {
     path: '/clarifai.api.V2/ListKnowledgeGraphs',
     requestStream: false,
@@ -2283,11 +2265,7 @@ postConceptMappingJobs: {
     responseSerialize: serialize_clarifai_api_MultiConceptMappingJobResponse,
     responseDeserialize: deserialize_clarifai_api_MultiConceptMappingJobResponse,
   },
-  // //////////////////////////////////////
-// annotations
-// //////////////////////////////////////
-//
-// Get a specific annotation from an app.
+  // Get a specific annotation from an app.
 getAnnotation: {
     path: '/clarifai.api.V2/GetAnnotation',
     requestStream: false,
@@ -2383,11 +2361,7 @@ postAnnotationsSearches: {
     responseSerialize: serialize_clarifai_api_MultiSearchResponse,
     responseDeserialize: deserialize_clarifai_api_MultiSearchResponse,
   },
-  // //////////////////////////////////////
-// Inputs
-// //////////////////////////////////////
-//
-// Get input count per status.
+  // Get input count per status.
 getInputCount: {
     path: '/clarifai.api.V2/GetInputCount',
     requestStream: false,
@@ -2615,7 +2589,6 @@ postModelsSearches: {
     responseDeserialize: deserialize_clarifai_api_MultiModelResponse,
   },
   // Add a models to an app.
-// FIXME(zeiler): this should have been a plural response.
 postModels: {
     path: '/clarifai.api.V2/PostModels',
     requestStream: false,
@@ -2711,13 +2684,7 @@ listModelInputs: {
     responseSerialize: serialize_clarifai_api_MultiInputResponse,
     responseDeserialize: deserialize_clarifai_api_MultiInputResponse,
   },
-  // //////////////////////////////////////
-//
-// //////////////////////////////////////
-// Model versions
-// //////////////////////////////////////
-//
-// Get a specific model from an app.
+  // Get a specific model from an app.
 getModelVersion: {
     path: '/clarifai.api.V2/GetModelVersion',
     requestStream: false,
@@ -2741,7 +2708,8 @@ listModelVersions: {
     responseSerialize: serialize_clarifai_api_MultiModelVersionResponse,
     responseDeserialize: deserialize_clarifai_api_MultiModelVersionResponse,
   },
-  postModelVersionsPublish: {
+  // PostModelVersionsPublish
+postModelVersionsPublish: {
     path: '/clarifai.api.V2/PostModelVersionsPublish',
     requestStream: false,
     responseStream: false,
@@ -2752,7 +2720,8 @@ listModelVersions: {
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },
-  postModelVersionsUnPublish: {
+  // PostModelVersionsUnPublish
+postModelVersionsUnPublish: {
     path: '/clarifai.api.V2/PostModelVersionsUnPublish',
     requestStream: false,
     responseStream: false,
@@ -2766,7 +2735,6 @@ listModelVersions: {
   // NOTE: inconsistency: do we want this to return a SingleModelResponse?
 //
 // Create a new model version to trigger training of the model.
-// FIXME(zeiler): this should have been a plural response.
 postModelVersions: {
     path: '/clarifai.api.V2/PostModelVersions',
     requestStream: false,
@@ -2778,7 +2746,8 @@ postModelVersions: {
     responseSerialize: serialize_clarifai_api_SingleModelResponse,
     responseDeserialize: deserialize_clarifai_api_SingleModelResponse,
   },
-  patchModelVersions: {
+  // PatchModelVersions
+patchModelVersions: {
     path: '/clarifai.api.V2/PatchModelVersions',
     requestStream: false,
     responseStream: false,
@@ -2825,13 +2794,7 @@ postModelVersionMetrics: {
     responseSerialize: serialize_clarifai_api_SingleModelVersionResponse,
     responseDeserialize: deserialize_clarifai_api_SingleModelVersionResponse,
   },
-  // //////////////////////////////////////
-//
-// //////////////////////////////////////
-// Model References
-// //////////////////////////////////////
-//
-// Lists model references tied to a particular model id.
+  // Lists model references tied to a particular model id.
 listModelReferences: {
     path: '/clarifai.api.V2/ListModelReferences',
     requestStream: false,
@@ -2843,12 +2806,7 @@ listModelReferences: {
     responseSerialize: serialize_clarifai_api_MultiModelReferenceResponse,
     responseDeserialize: deserialize_clarifai_api_MultiModelReferenceResponse,
   },
-  // //////////////////////////////////////
-//
-// //////////////////////////////////////
-// Model Version Input Examples
-// //////////////////////////////////////
-//
+  // GetModelVersionInputExample
 getModelVersionInputExample: {
     path: '/clarifai.api.V2/GetModelVersionInputExample',
     requestStream: false,
@@ -2860,7 +2818,8 @@ getModelVersionInputExample: {
     responseSerialize: serialize_clarifai_api_SingleModelVersionInputExampleResponse,
     responseDeserialize: deserialize_clarifai_api_SingleModelVersionInputExampleResponse,
   },
-  listModelVersionInputExamples: {
+  // ListModelVersionInputExamples
+listModelVersionInputExamples: {
     path: '/clarifai.api.V2/ListModelVersionInputExamples',
     requestStream: false,
     responseStream: false,
@@ -2962,7 +2921,6 @@ postWorkflowResults: {
     responseDeserialize: deserialize_clarifai_api_PostWorkflowResultsResponse,
   },
   // Compare embeddings distances using a workflow
-//
 postWorkflowResultsSimilarity: {
     path: '/clarifai.api.V2/PostWorkflowResultsSimilarity',
     requestStream: false,
@@ -2974,13 +2932,7 @@ postWorkflowResultsSimilarity: {
     responseSerialize: serialize_clarifai_api_PostWorkflowResultsSimilarityResponse,
     responseDeserialize: deserialize_clarifai_api_PostWorkflowResultsSimilarityResponse,
   },
-  // //////////////////////////////////////
-//
-// //////////////////////////////////////
-// Workflow Versions
-// //////////////////////////////////////
-//
-// List workflow versions.
+  // List workflow versions.
 listWorkflowVersions: {
     path: '/clarifai.api.V2/ListWorkflowVersions',
     requestStream: false,
@@ -3028,11 +2980,7 @@ patchWorkflowVersions: {
     responseSerialize: serialize_clarifai_api_MultiWorkflowVersionResponse,
     responseDeserialize: deserialize_clarifai_api_MultiWorkflowVersionResponse,
   },
-  // //////////////////////////////////////
-// API Keys
-// //////////////////////////////////////
-//
-// Get a specific key from an app.
+  // Get a specific key from an app.
 getKey: {
     path: '/clarifai.api.V2/GetKey',
     requestStream: false,
@@ -3154,11 +3102,7 @@ listScopes: {
     responseSerialize: serialize_clarifai_api_MultiScopeDepsResponse,
     responseDeserialize: deserialize_clarifai_api_MultiScopeDepsResponse,
   },
-  // //////////////////////////////////////
-// Apps
-// //////////////////////////////////////
-//
-// Get a specific app from an app.
+  // Get a specific app from an app.
 getApp: {
     path: '/clarifai.api.V2/GetApp',
     requestStream: false,
@@ -3234,13 +3178,7 @@ postAppsSearches: {
     responseSerialize: serialize_clarifai_api_MultiAppResponse,
     responseDeserialize: deserialize_clarifai_api_MultiAppResponse,
   },
-  // //////////////////////////////////////
-//
-// //////////////////////////////////////
-// Password
-// //////////////////////////////////////
-//
-// Validate new password in real-time for a user
+  // Validate new password in real-time for a user
 postValidatePassword: {
     path: '/clarifai.api.V2/PostValidatePassword',
     requestStream: false,
@@ -3252,11 +3190,7 @@ postValidatePassword: {
     responseSerialize: serialize_clarifai_api_SinglePasswordValidationResponse,
     responseDeserialize: deserialize_clarifai_api_SinglePasswordValidationResponse,
   },
-  // //////////////////////////////////////
-// Searches
-// //////////////////////////////////////
-//
-// Get a saved search.
+  // Get a saved search.
 getSearch: {
     path: '/clarifai.api.V2/GetSearch',
     requestStream: false,
@@ -3340,7 +3274,8 @@ listAnnotationSearchMetrics: {
     responseSerialize: serialize_clarifai_api_MultiAnnotationSearchMetricsResponse,
     responseDeserialize: deserialize_clarifai_api_MultiAnnotationSearchMetricsResponse,
   },
-  deleteAnnotationSearchMetrics: {
+  // DeleteAnnotationSearchMetrics
+deleteAnnotationSearchMetrics: {
     path: '/clarifai.api.V2/DeleteAnnotationSearchMetrics',
     requestStream: false,
     responseStream: false,
@@ -3363,13 +3298,7 @@ deleteSearch: {
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },
-  // //////////////////////////////////////
-//
-// //////////////////////////////////////
-// Status Codes
-// //////////////////////////////////////
-//
-// List all status codes.
+  // List all status codes.
 listStatusCodes: {
     path: '/clarifai.api.V2/ListStatusCodes',
     requestStream: false,
@@ -3393,11 +3322,7 @@ getStatusCode: {
     responseSerialize: serialize_clarifai_api_SingleStatusCodeResponse,
     responseDeserialize: deserialize_clarifai_api_SingleStatusCodeResponse,
   },
-  // //////////////////////////////////////
-// App Sharing
-// //////////////////////////////////////
-//
-// owner list users who the app is shared with
+  // owner list users who the app is shared with
 listCollaborators: {
     path: '/clarifai.api.V2/ListCollaborators',
     requestStream: false,
@@ -3457,11 +3382,7 @@ listCollaborations: {
     responseSerialize: serialize_clarifai_api_MultiCollaborationsResponse,
     responseDeserialize: deserialize_clarifai_api_MultiCollaborationsResponse,
   },
-  // //////////////////////////////////////
-// App duplication
-// //////////////////////////////////////
-//
-// start to duplicate an app which copies all the inputs, annotations, models, concepts etc. to a new app.
+  // start to duplicate an app which copies all the inputs, annotations, models, concepts etc. to a new app.
 // this is an async process, you should use ListAppDuplications or GetAppDuplication to check the status.
 postAppDuplications: {
     path: '/clarifai.api.V2/PostAppDuplications',
@@ -3498,11 +3419,7 @@ getAppDuplication: {
     responseSerialize: serialize_clarifai_api_SingleAppDuplicationResponse,
     responseDeserialize: deserialize_clarifai_api_SingleAppDuplicationResponse,
   },
-  // //////////////////////////////////////
-// Tasks
-// //////////////////////////////////////
-//
-// Add tasks to an app.
+  // Add tasks to an app.
 postTasks: {
     path: '/clarifai.api.V2/PostTasks',
     requestStream: false,
@@ -3586,11 +3503,7 @@ deleteTasks: {
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },
-  // //////////////////////////////////////
-// Collectors
-// //////////////////////////////////////
-//
-// Add a list of Collectors to an app.
+  // Add a list of Collectors to an app.
 // In the handler of this endpoint we also check for all the scopes of the  POST /inputs
 // endpoint.
 // Those current scopes are listed here as a hard requirement.
@@ -3656,10 +3569,7 @@ deleteCollectors: {
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },
-  // //////////////////////////////////////////////////////////////////////////////
-// Stats Collection Endpoints.
-// //////////////////////////////////////////////////////////////////////////////
-//
+  // PostStatValues
 postStatValues: {
     path: '/clarifai.api.V2/PostStatValues',
     requestStream: false,
@@ -3671,7 +3581,8 @@ postStatValues: {
     responseSerialize: serialize_clarifai_api_MultiStatValueResponse,
     responseDeserialize: deserialize_clarifai_api_MultiStatValueResponse,
   },
-  postStatValuesAggregate: {
+  // PostStatValuesAggregate
+postStatValuesAggregate: {
     path: '/clarifai.api.V2/PostStatValuesAggregate',
     requestStream: false,
     responseStream: false,
@@ -3682,11 +3593,7 @@ postStatValues: {
     responseSerialize: serialize_clarifai_api_MultiStatValueAggregateResponse,
     responseDeserialize: deserialize_clarifai_api_MultiStatValueAggregateResponse,
   },
-  // //////////////////////////////////////
-// Trending Metrics
-// //////////////////////////////////////
-//
-// Increase the view metric for a detail view
+  // Increase the view metric for a detail view
 postTrendingMetricsView: {
     path: '/clarifai.api.V2/PostTrendingMetricsView',
     requestStream: false,
