@@ -31,16 +31,8 @@ option objc_class_prefix = "CAIP";
  */
 
 
-
 service V2 {
 
-
-
-
-
-  ////////////////////////////////////////
-  // Concept Relationships
-  ////////////////////////////////////////
 
 
   // List concept relations between concepts in the platform.
@@ -81,13 +73,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
   }
-
-
-
-
-  ////////////////////////////////////////
-  // Concepts
-  ////////////////////////////////////////
 
   // List all the concepts with their positive and negative counts
   rpc GetConceptCounts (GetConceptCountsRequest) returns (MultiConceptCountResponse) {
@@ -185,15 +170,6 @@ service V2 {
 
 
 
-
-
-
-  ////////////////////////////////////////
-
-  ////////////////////////////////////////
-  // Concept Languages
-  ////////////////////////////////////////
-
   // Get a specific concept from an app.
   rpc GetConceptLanguage (GetConceptLanguageRequest) returns (SingleConceptLanguageResponse) {
     option (google.api.http) = {
@@ -218,7 +194,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
   }
 
-  // Add a new tranlsation for this concept.
+  // Add a new translation for this concept.
   rpc PostConceptLanguages (PostConceptLanguagesRequest) returns (MultiConceptLanguageResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/{concept_id}/languages"
@@ -251,16 +227,6 @@ service V2 {
 
 
 
-
-
-
-
-
-
-
-  ////////////////////////////////////////
-  // Knowledge Graph
-  ////////////////////////////////////////
 
   // List all domain graphs.
   rpc ListKnowledgeGraphs (ListKnowledgeGraphsRequest) returns (MultiKnowledgeGraphResponse) {
@@ -305,11 +271,6 @@ service V2 {
   }
 
 
-
-
-  ////////////////////////////////////////
-  // annotations
-  ////////////////////////////////////////
 
   // Get a specific annotation from an app.
   rpc GetAnnotation (GetAnnotationRequest) returns (SingleAnnotationResponse) {
@@ -451,11 +412,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Search;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // to know the concepts and models in your default workflow.
   }
-
-
-  ////////////////////////////////////////
-  // Inputs
-  ////////////////////////////////////////
 
   // Get input count per status.
   rpc GetInputCount (GetInputCountRequest) returns (SingleInputCountResponse) {
@@ -676,11 +632,6 @@ service V2 {
 
 
 
-
-
-
-
-
   ////////////////////////////////////////
   // Models
   ////////////////////////////////////////
@@ -704,9 +655,8 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = NoAuth;
   }
-    // List all the model types available in the platform.
 
-    // List all the model types available in the platform.
+  // List all the model types available in the platform.
   // This MUST be above ListModels so that the /models/types endpoint takes precedence.
   rpc ListModelTypes (ListModelTypesRequest) returns (MultiModelTypeResponse) {
     option (google.api.http) = {
@@ -788,7 +738,6 @@ service V2 {
   }
 
   // Add a models to an app.
-  // FIXME(zeiler): this should have been a plural response.
   rpc PostModels (PostModelsRequest) returns (SingleModelResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models"
@@ -920,12 +869,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
 
-  ////////////////////////////////////////
-
-  ////////////////////////////////////////
-  // Model versions
-  ////////////////////////////////////////
-
   // Get a specific model from an app.
   rpc GetModelVersion (GetModelVersionRequest) returns (SingleModelVersionResponse) {
     option (google.api.http) = {
@@ -951,9 +894,8 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
-  
 
-  
+  // PostModelVersionsPublish
   rpc PostModelVersionsPublish (PostModelVersionsPublishRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/publish"
@@ -975,6 +917,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Metrics_Add;
   }
 
+  // PostModelVersionsUnPublish
   rpc PostModelVersionsUnPublish (PostModelVersionsUnPublishRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/unpublish"
@@ -997,12 +940,9 @@ service V2 {
   }
 
 
-
-
   // NOTE: inconsistency: do we want this to return a SingleModelResponse?
 
   // Create a new model version to trigger training of the model.
-  // FIXME(zeiler): this should have been a plural response.
   rpc PostModelVersions (PostModelVersionsRequest) returns (SingleModelResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions"
@@ -1024,6 +964,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Metrics_Add;
   }
 
+  // PatchModelVersions
   rpc PatchModelVersions (PatchModelVersionsRequest) returns (MultiModelVersionResponse) {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions"
@@ -1091,14 +1032,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Metrics_Add;
   }
 
-
-
-  ////////////////////////////////////////
-
-  ////////////////////////////////////////
-  // Model References
-  ////////////////////////////////////////
-
   // Lists model references tied to a particular model id.
   rpc ListModelReferences (ListModelReferencesRequest) returns (MultiModelReferenceResponse) {
     option (google.api.http) = {
@@ -1113,14 +1046,7 @@ service V2 {
 
 
 
-
-
-  ////////////////////////////////////////
-
-  ////////////////////////////////////////
-  // Model Version Input Examples
-  ////////////////////////////////////////
-
+  // GetModelVersionInputExample
   rpc GetModelVersionInputExample (GetModelVersionInputExampleRequest) returns (SingleModelVersionInputExampleResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/input_examples/{example_id}"
@@ -1132,6 +1058,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
 
+  // ListModelVersionInputExamples
   rpc ListModelVersionInputExamples (ListModelVersionInputExamplesRequest) returns (MultiModelVersionInputExampleResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/input_examples"
@@ -1272,9 +1199,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
 
-
   // Compare embeddings distances using a workflow
-
   rpc PostWorkflowResultsSimilarity(PostWorkflowResultsSimilarityRequest) returns (PostWorkflowResultsSimilarityResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{version_id}/results/similarity"
@@ -1294,12 +1219,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Predict;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
-
-  ////////////////////////////////////////
-
-  ////////////////////////////////////////
-  // Workflow Versions
-  ////////////////////////////////////////
 
   // List workflow versions.
   rpc ListWorkflowVersions (ListWorkflowVersionsRequest) returns (MultiWorkflowVersionResponse) {
@@ -1363,12 +1282,6 @@ service V2 {
 
 
 
-
-
-
-  ////////////////////////////////////////
-  // API Keys
-  ////////////////////////////////////////
 
   // Get a specific key from an app.
   rpc GetKey (GetKeyRequest) returns (SingleKeyResponse) {
@@ -1471,11 +1384,6 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
   }
 
-
-  ////////////////////////////////////////
-  // Apps
-  ////////////////////////////////////////
-
   // Get a specific app from an app.
   rpc GetApp (GetAppRequest) returns (SingleAppResponse) {
     option (google.api.http) = {
@@ -1538,8 +1446,6 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    // option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
-    // option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
 
   // Search over the applications to find one or more you're looking for.
@@ -1563,16 +1469,6 @@ service V2 {
 
 
 
-
-
-
-
-
-  ////////////////////////////////////////
-
-  ////////////////////////////////////////
-  // Password
-  ////////////////////////////////////////
 
   // Validate new password in real-time for a user
   rpc PostValidatePassword (PostValidatePasswordRequest) returns (SinglePasswordValidationResponse) {
@@ -1629,23 +1525,6 @@ service V2 {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  ////////////////////////////////////////
-  // Searches
-  ////////////////////////////////////////
 
   // Get a saved search.
   rpc GetSearch (GetSearchRequest) returns (SingleSearchResponse) {
@@ -1757,6 +1636,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Metrics_Get;
   }
 
+  // DeleteAnnotationSearchMetrics
   rpc DeleteAnnotationSearchMetrics (DeleteAnnotationSearchMetricsRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations/searches/metrics/{id}"
@@ -1813,18 +1693,6 @@ service V2 {
 
 
 
-
-
-
-
-
-
-  ////////////////////////////////////////
-
-  ////////////////////////////////////////
-  // Status Codes
-  ////////////////////////////////////////
-
   // List all status codes.
   rpc ListStatusCodes (ListStatusCodesRequest) returns (MultiStatusCodeResponse) {
     option (google.api.http) = {
@@ -1847,13 +1715,6 @@ service V2 {
 
 
 
-
-
-
-
-  ////////////////////////////////////////
-  // App Sharing
-  ////////////////////////////////////////
 
   // owner list users who the app is shared with
   rpc ListCollaborators (ListCollaboratorsRequest) returns (MultiCollaboratorsResponse) {
@@ -1913,12 +1774,6 @@ service V2 {
 
 
 
-
-
-  ////////////////////////////////////////
-  // App duplication
-  ////////////////////////////////////////
-
   // start to duplicate an app which copies all the inputs, annotations, models, concepts etc. to a new app.
   // this is an async process, you should use ListAppDuplications or GetAppDuplication to check the status.
   rpc PostAppDuplications (PostAppDuplicationsRequest) returns (MultiAppDuplicationsResponse) {
@@ -1955,11 +1810,6 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
   }
-
-
-  ////////////////////////////////////////
-  // Tasks
-  ////////////////////////////////////////
 
   // Add tasks to an app.
   rpc PostTasks (PostTasksRequest) returns (MultiTaskResponse) {
@@ -2085,12 +1935,6 @@ service V2 {
 
 
 
-
-
-  ////////////////////////////////////////
-  // Collectors
-  ////////////////////////////////////////
-
   // Add a list of Collectors to an app.
   // In the handler of this endpoint we also check for all the scopes of the  POST /inputs
   // endpoint.
@@ -2177,11 +2021,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Collectors_Get;
   }
 
-
-  ////////////////////////////////////////////////////////////////////////////////
-  // Stats Collection Endpoints.
-  ////////////////////////////////////////////////////////////////////////////////
-
+  // PostStatValues
   rpc PostStatValues (PostStatValuesRequest) returns (MultiStatValueResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/stats/values"
@@ -2194,8 +2034,7 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
   }
 
-
-
+  // PostStatValuesAggregate
   rpc PostStatValuesAggregate (PostStatValuesAggregateRequest) returns (MultiStatValueAggregateResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/stats/values/aggregate"
@@ -2214,12 +2053,6 @@ service V2 {
 
 
 
-
-
-
-  ////////////////////////////////////////
-  // Trending Metrics
-  ////////////////////////////////////////
 
   // Increase the view metric for a detail view
   rpc PostTrendingMetricsView (PostTrendingMetricsViewRequest) returns (clarifai.api.status.BaseResponse) {
@@ -2242,6 +2075,9 @@ service V2 {
   }
 
 
+
+
+
 }
 
 
@@ -2253,17 +2089,14 @@ message Pagination {
   uint32 per_page = 2;
 }
 
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/annotation.proto
-////////////////////////////////////////////////////////////////////////////////
+// GetAnnotationRequest
 message GetAnnotationRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string annotation_id = 2;
   string input_id = 3;
 }
 
+// ListAnnotationsRequest
 message ListAnnotationsRequest {
   reserved 4;
 
@@ -2312,6 +2145,7 @@ message ListAnnotationsRequest {
   string task_id = 11;
 }
 
+// PostAnnotationsRequest
 message PostAnnotationsRequest {
 
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -2319,6 +2153,7 @@ message PostAnnotationsRequest {
   repeated Annotation annotations = 2;
 }
 
+// PatchAnnotationsRequest
 message PatchAnnotationsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 
@@ -2329,6 +2164,7 @@ message PatchAnnotationsRequest {
   string action = 3;
 }
 
+// PatchAnnotationsStatusRequest
 message PatchAnnotationsStatusRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // Annotation Status code
@@ -2340,12 +2176,14 @@ message PatchAnnotationsStatusRequest {
 
 }
 
+// PatchAnnotationsStatusResponse
 message PatchAnnotationsStatusResponse {
   clarifai.api.status.Status status = 1;
   repeated string user_ids = 2;
   uint32 updated_count = 3;
 }
 
+// DeleteAnnotationRequest
 message DeleteAnnotationRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 
@@ -2370,29 +2208,27 @@ message DeleteAnnotationsRequest {
   repeated string input_ids = 3;
 }
 
+// SingleAnnotationResponse
 message SingleAnnotationResponse {
   clarifai.api.status.Status status = 1;
   Annotation annotation = 2;
 }
 
+// MultiAnnotationResponse
 message MultiAnnotationResponse {
   clarifai.api.status.Status status = 1;
 
   repeated Annotation annotations = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
-
-////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/app.proto
-////////////////////////////////////////////////////////////////////////////////
+// GetAppRequest
 message GetAppRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars
   repeated string additional_fields = 2;
 }
 
+// ListAppsRequest
 message ListAppsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
@@ -2427,15 +2263,18 @@ message ListAppsRequest {
   repeated string additional_fields = 10;
 }
 
+// PostAppsRequest
 message PostAppsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated App apps = 2;
 }
 
+// DeleteAppRequest
 message DeleteAppRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 }
 
+// PatchAppsRequest
 message PatchAppsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated App apps = 2;
@@ -2461,26 +2300,19 @@ message PostAppsSearchesRequest {
   Pagination pagination = 3;
 }
 
+// SingleAppResponse
 message SingleAppResponse {
   clarifai.api.status.Status status = 1;
   App app = 2;
 }
 
+// MultiAppResponse
 message MultiAppResponse {
   clarifai.api.status.Status status = 1;
   repeated App apps = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/app_sharing.proto
-////////////////////////////////////////////////////////////////////////////////
+// ListCollaboratorsRequest
 message ListCollaboratorsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // Set this flag to list both deleted and not deleted collaborators
@@ -2488,11 +2320,13 @@ message ListCollaboratorsRequest {
   bool list_all_collaborators = 2;
 }
 
+// PostCollaboratorsRequest
 message PostCollaboratorsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated Collaborator collaborators = 2;
 }
 
+// PatchCollaboratorsRequest
 message PatchCollaboratorsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated Collaborator collaborators = 2;
@@ -2502,17 +2336,20 @@ message PatchCollaboratorsRequest {
   string action = 3;
 }
 
+// DeleteCollaboratorsRequest
 message DeleteCollaboratorsRequest{
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated string collaborator_ids = 2;
   repeated string user_emails = 3;
 }
 
+// MultiCollaboratorsResponse
 message MultiCollaboratorsResponse {
   clarifai.api.status.Status status = 1;
   repeated Collaborator collaborators = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+// ListCollaborationsRequest
 message ListCollaborationsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
@@ -2523,6 +2360,7 @@ message ListCollaborationsRequest {
   uint32 per_page = 3;
 }
 
+// MultiCollaborationsResponse
 message MultiCollaborationsResponse {
   clarifai.api.status.Status status = 1;
   repeated Collaboration collaborations = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
@@ -2561,84 +2399,35 @@ message MultiCollaborationsResponse {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/cluster.proto
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/code.proto
-////////////////////////////////////////////////////////////////////////////////
+// GetStatusCodeRequest
 message GetStatusCodeRequest {
   string status_code_id = 1;
 }
 
+// ListStatusCodesRequest
 message ListStatusCodesRequest {
 }
 
+// SingleStatusCodeResponse
 message SingleStatusCodeResponse {
   // Status of this request.
   clarifai.api.status.Status status = 1;
 }
 
+// MultiStatusCodeResponse
 message MultiStatusCodeResponse {
   clarifai.api.status.Status status = 1;
   repeated clarifai.api.status.Status statuses = 2;
 }
 
-
-
-
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/color.proto
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/common.proto
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/concept.proto
-////////////////////////////////////////////////////////////////////////////////
+// GetConceptRequest
 message GetConceptRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // The concept's id.
   string concept_id = 2;
 }
 
+// ListConceptsRequest
 message ListConceptsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
@@ -2649,6 +2438,7 @@ message ListConceptsRequest {
   uint32 per_page = 3;
 }
 
+// PostConceptsSearchesRequest
 message PostConceptsSearchesRequest {
   // Ids present in the url of the request.
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -2659,12 +2449,14 @@ message PostConceptsSearchesRequest {
   Pagination pagination = 3;
 }
 
+// PostConceptsRequest
 message PostConceptsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // The concepts to add.
   repeated Concept concepts = 2;
 }
 
+// PatchConceptsRequest
 message PatchConceptsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // The concepts to patch.
@@ -2675,6 +2467,7 @@ message PatchConceptsRequest {
   string action = 3;
 }
 
+// GetConceptCountsRequest
 message GetConceptCountsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
@@ -2685,6 +2478,7 @@ message GetConceptCountsRequest {
   uint32 per_page = 3;
 }
 
+// SingleConceptResponse
 message SingleConceptResponse {
   // The response status.
   clarifai.api.status.Status status = 1;
@@ -2692,6 +2486,7 @@ message SingleConceptResponse {
   Concept concept = 2;
 }
 
+// MultiConceptResponse
 message MultiConceptResponse {
   // The response status.
   clarifai.api.status.Status status = 1;
@@ -2699,6 +2494,7 @@ message MultiConceptResponse {
   repeated Concept concepts = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+// MultiConceptCountResponse
 message MultiConceptCountResponse {
   // The response status.
   clarifai.api.status.Status status = 1;
@@ -2706,21 +2502,6 @@ message MultiConceptCountResponse {
   repeated ConceptCount concept_counts = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/concept_graph.proto
-////////////////////////////////////////////////////////////////////////////////
-//////////////////////
-// Responses
-//////////////////////
-// Requests
-//////////////////////
 // GET all relations such that the concept_id refers to the subject of the relation
 message ListConceptRelationsRequest {
   // The user_id and app_id information.
@@ -2802,6 +2583,7 @@ message PostConceptMappingJobsRequest {
 }
 
 
+// MultiConceptRelationResponse
 message MultiConceptRelationResponse {
   // The response status.
   clarifai.api.status.Status status = 1;
@@ -2810,6 +2592,7 @@ message MultiConceptRelationResponse {
 }
 
 
+// MultiKnowledgeGraphResponse
 message MultiKnowledgeGraphResponse {
   // The response status.
   clarifai.api.status.Status status = 1;
@@ -2820,6 +2603,7 @@ message MultiKnowledgeGraphResponse {
 
 
 
+// MultiConceptMappingJobResponse
 message MultiConceptMappingJobResponse {
   // The response status.
   clarifai.api.status.Status status = 1;
@@ -2827,16 +2611,6 @@ message MultiConceptMappingJobResponse {
   repeated string ids = 2;
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/concept_language.proto
-////////////////////////////////////////////////////////////////////////////////
 // GET single concept language for the given concept.
 message GetConceptLanguageRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -2892,11 +2666,13 @@ message PostConceptLanguagesRequest {
   repeated ConceptLanguage concept_languages = 3;
 }
 
+// SingleConceptLanguageResponse
 message SingleConceptLanguageResponse {
   clarifai.api.status.Status status = 1;
   ConceptLanguage concept_language = 2;
 }
 
+// MultiConceptLanguageResponse
 message MultiConceptLanguageResponse {
   clarifai.api.status.Status status = 1;
   repeated ConceptLanguage concept_languages = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
@@ -2907,52 +2683,13 @@ message MultiConceptLanguageResponse {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/image.proto
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/input.proto
-////////////////////////////////////////////////////////////////////////////////
+// GetInputRequest
 message GetInputRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string input_id = 2;
 }
 
+// GetInputSamplesRequest
 message GetInputSamplesRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string task_id = 2;
@@ -2960,6 +2697,7 @@ message GetInputSamplesRequest {
   repeated string user_ids = 3;
 }
 
+// ListInputsRequest
 message ListInputsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
@@ -2975,6 +2713,7 @@ message ListInputsRequest {
   repeated string ids = 4;
 }
 
+// StreamInputsRequest
 message StreamInputsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
@@ -2986,9 +2725,15 @@ message StreamInputsRequest {
   bool descending = 4;
 }
 
+// PostInputsRequest
 message PostInputsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 
+  // List of inputs to post.
+  // For each input, the following fields are used:
+  // * id
+  // * data
+  // * dataset_ids
   repeated Input inputs = 2;
 }
 
@@ -2996,9 +2741,14 @@ message PostInputsRequest {
 
 
 
+// PatchInputsRequest
 message PatchInputsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 
+  // List of inputs to patch.
+  // Inputs are identified by id field.
+  // For each input, the following fields are patchable:
+  // * data
   repeated Input inputs = 2;
 
   // The action to perform on the patched objects
@@ -3006,6 +2756,7 @@ message PatchInputsRequest {
   string action = 3;
 }
 
+// DeleteInputRequest
 message DeleteInputRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string input_id = 2;
@@ -3019,38 +2770,37 @@ message DeleteInputsRequest {
   repeated string ids = 2;
 }
 
+// SingleInputResponse
 message SingleInputResponse {
   clarifai.api.status.Status status = 1;
   Input input = 2;
 }
 
+// MultiInputResponse
 message MultiInputResponse {
 
   clarifai.api.status.Status status = 1;
   repeated Input inputs = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+// MultiInputAnnotationResponse
 message MultiInputAnnotationResponse {
 
   clarifai.api.status.Status status = 1;
   repeated Hit hits = 3 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+// SingleInputCountResponse
 message SingleInputCountResponse {
   clarifai.api.status.Status status = 1;
 
-  // NOTE: inconsistency: not named after the object name.
   InputCount counts = 2;
 }
 
+// GetInputCountRequest
 message GetInputCountRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 }
-
-
-
-
-
 
 
 
@@ -3106,21 +2856,13 @@ message ListModelInputsRequest {
   uint32 per_page = 5;
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/key.proto
-////////////////////////////////////////////////////////////////////////////////
+// GetKeyRequest
 message GetKeyRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string key_id = 2;
 }
 
+// ListKeysRequest
 message ListKeysRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
@@ -3131,6 +2873,7 @@ message ListKeysRequest {
   uint32 per_page = 3;
 }
 
+// ListAppKeysRequest
 message ListAppKeysRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
@@ -3141,16 +2884,19 @@ message ListAppKeysRequest {
   uint32 per_page = 3;
 }
 
+// PostKeysRequest
 message PostKeysRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated Key keys = 2;
 }
 
+// DeleteKeyRequest
 message DeleteKeyRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string key_id = 2;
 }
 
+// PatchKeysRequest
 message PatchKeysRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated Key keys = 2;
@@ -3160,11 +2906,13 @@ message PatchKeysRequest {
   string action = 3;
 }
 
+// SingleKeyResponse
 message SingleKeyResponse {
   clarifai.api.status.Status status = 1;
   Key key = 2;
 }
 
+// MultiKeyResponse
 message MultiKeyResponse {
   clarifai.api.status.Status status = 1;
   repeated Key keys = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
@@ -3178,19 +2926,7 @@ message MultiKeyResponse {
 
 
 
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/model.proto
-////////////////////////////////////////////////////////////////////////////////
+// GetModelRequest
 message GetModelRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string model_id = 2;
@@ -3203,6 +2939,7 @@ message GetModelRequest {
   repeated string additional_fields = 19;
 }
 
+// ListModelsRequest
 message ListModelsRequest {
   reserved 4;
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -3227,9 +2964,9 @@ message ListModelsRequest {
   }
 
   // Filtering options:
-  // // Query various text fields that can contain the words in the query string
+  // Query name, description and id fields, that can contain the words in the query string. Does NOT support wildcards - full words only. Supports operators "OR" and "-" as NOT.
   string query = 14;
-  // Filter by the name of the model. This supports wildcard queries like "gen*" to match "general" as an example.
+  // Filter by the name, description and id of the model. This supports wildcard queries like "gen*" to match "general" as an example.
   // Deprecated in favor of query
   string name = 5 [deprecated = true];
   // Filter models by the specific model_type_id. See ListModelTypes for the list of ModelType.Id's
@@ -3306,6 +3043,7 @@ message MultiModelLanguageResponse {
   repeated string languages = 2;
 }
 
+// PostModelsRequest
 message PostModelsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 
@@ -3318,6 +3056,7 @@ message PostModelsRequest {
   repeated Model models = 3;
 }
 
+// PatchModelsRequest
 message PatchModelsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated Model models = 2;
@@ -3327,6 +3066,7 @@ message PatchModelsRequest {
   string action = 3;
 }
 
+// DeleteModelRequest
 message DeleteModelRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string model_id = 2;
@@ -3350,26 +3090,19 @@ message PostModelsSearchesRequest {
   Pagination pagination = 3;
 }
 
+// SingleModelResponse
 message SingleModelResponse {
   clarifai.api.status.Status status = 1;
   Model model = 2;
 }
 
+// MultiModelResponse
 message MultiModelResponse {
   clarifai.api.status.Status status = 1;
   repeated Model models = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/model_version.proto
-////////////////////////////////////////////////////////////////////////////////
+// PatchModelVersionsRequest
 message PatchModelVersionsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string model_id = 2;
@@ -3379,7 +3112,6 @@ message PatchModelVersionsRequest {
   string action = 4;
 }
 
-// NOTE: this is same as GetModelRequest but backend doesn't support sharing same
 // request for different endpoints currently.
 message GetModelVersionRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -3387,6 +3119,7 @@ message GetModelVersionRequest {
   string version_id = 3;
 }
 
+// ListModelVersionsRequest
 message ListModelVersionsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string model_id = 2;
@@ -3400,17 +3133,20 @@ message ListModelVersionsRequest {
   repeated string concept_ids = 5;
 }
 
+// DeleteModelVersionRequest
 message DeleteModelVersionRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string model_id = 3;
   string version_id = 4;
 }
 
+// SingleModelVersionResponse
 message SingleModelVersionResponse {
   clarifai.api.status.Status status = 1;
   ModelVersion model_version = 2;
 }
 
+// MultiModelVersionResponse
 message MultiModelVersionResponse {
   clarifai.api.status.Status status = 1;
   repeated ModelVersion model_versions = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
@@ -3450,20 +3186,24 @@ message PostModelVersionsRequest {
   DatasetVersion dataset_version = 9;
 }
 
+// ModelVersionPublishRequest
 message ModelVersionPublishRequest {
   string version_id = 1;
 }
 
+// PostModelVersionsPublishRequest
 message PostModelVersionsPublishRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string model_id = 2;
   repeated ModelVersionPublishRequest publications = 3;
 }
 
+// ModelVersionUnpublishRequest
 message ModelVersionUnpublishRequest {
   string version_id = 1;
 }
 
+// PostModelVersionsUnPublishRequest
 message PostModelVersionsUnPublishRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string model_id = 2;
@@ -3497,8 +3237,6 @@ message GetModelVersionMetricsRequest {
 
 
 
-
-// TODO: should we just move to this and get rid of above.
 // // Request to delete several things by the list of ids.
 // message DeleteModelVersionsRequest {
 //   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -3506,8 +3244,7 @@ message GetModelVersionMetricsRequest {
 //   bool delete_all = 3;
 // }
 
-////////////////////////////////////////////////////////////////////////////////
-
+// GetModelTypeRequest
 message GetModelTypeRequest {
   // use and app combo. Not really used for this endpoint at this time so may go away in future.
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -3515,6 +3252,7 @@ message GetModelTypeRequest {
   string model_type_id = 2;
 }
 
+// ListModelTypesRequest
 message ListModelTypesRequest {
   // use and app combo. Not really used for this endpoint at this time so may go away in future.
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -3526,13 +3264,16 @@ message ListModelTypesRequest {
   uint32 per_page = 3;
 }
 
+// ListOpenSourceLicensesRequest
 message ListOpenSourceLicensesRequest {}
 
+// ListOpenSourceLicensesResponse
 message ListOpenSourceLicensesResponse {
   clarifai.api.status.Status status = 1;
   repeated string licenses = 2;
 }
 
+// SingleModelTypeResponse
 message SingleModelTypeResponse {
   // Status of the response.
   clarifai.api.status.Status status = 1;
@@ -3540,6 +3281,7 @@ message SingleModelTypeResponse {
   ModelType model_type = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+// MultiModelTypeResponse
 message MultiModelTypeResponse {
   // Status of the response.
   clarifai.api.status.Status status = 1;
@@ -3547,16 +3289,7 @@ message MultiModelTypeResponse {
   repeated ModelType model_types = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses for Model Version Input Examples
-////////////////////////////////////////////////////////////////////////////////
+// GetModelVersionInputExampleRequest
 message GetModelVersionInputExampleRequest {
   // authorization field  (contains app/user id info)
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -3568,6 +3301,7 @@ message GetModelVersionInputExampleRequest {
   string example_id = 4;
 }
 
+// ListModelVersionInputExamplesRequest
 message ListModelVersionInputExamplesRequest {
   // authorization field  (contains app/user id info)
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -3583,6 +3317,7 @@ message ListModelVersionInputExamplesRequest {
 
 
 
+// SingleModelVersionInputExampleResponse
 message SingleModelVersionInputExampleResponse {
   // status of response
   clarifai.api.status.Status status = 1;
@@ -3590,6 +3325,7 @@ message SingleModelVersionInputExampleResponse {
   ModelVersionInputExample model_version_input_example = 2;
 }
 
+// MultiModelVersionInputExampleResponse
 message MultiModelVersionInputExampleResponse {
   // status of response
   clarifai.api.status.Status status = 1;
@@ -3597,14 +3333,7 @@ message MultiModelVersionInputExampleResponse {
   repeated ModelVersionInputExample model_version_input_examples = 2;
 }
 
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses for Model References
-////////////////////////////////////////////////////////////////////////////////
-
+// ListModelReferencesRequest
 message ListModelReferencesRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 
@@ -3617,32 +3346,19 @@ message ListModelReferencesRequest {
 
 
 
+// MultiModelReferenceResponse
 message MultiModelReferenceResponse {
   clarifai.api.status.Status status = 1;
   repeated ModelReference model_references = 2;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/output.proto
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-// Outputs related requests
-////////////////////////////////////////////////////
+// MultiOutputResponse
 message MultiOutputResponse {
   clarifai.api.status.Status status = 1;
   repeated Output outputs = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/scope.proto
-////////////////////////////////////////////////////////////////////////////////
+// ListScopesRequest
 message ListScopesRequest {
   // If "personal_access_token" include scopes and endpoints available to personal access tokens.
   // If "api_key" include scopes and endpoints available to app-specific keys. (default)
@@ -3652,19 +3368,21 @@ message ListScopesRequest {
   clarifai.api.UserAppIDSet user_app_id = 2;
 }
 
+// MyScopesRequest
 message MyScopesRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 }
 
+// MyScopesUserRequest
 message MyScopesUserRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 }
 
+// MyScopesRootRequest
 message MyScopesRootRequest {
 }
 
-
-
+// MultiScopeDepsResponse
 message MultiScopeDepsResponse {
   // The status of the request.
   clarifai.api.status.Status status = 1;
@@ -3676,6 +3394,7 @@ message MultiScopeDepsResponse {
   repeated EndpointDeps endpoint_deps = 3;
 }
 
+// MultiScopeResponse
 message MultiScopeResponse {
   // The status of the request.
   clarifai.api.status.Status status = 1;
@@ -3687,6 +3406,7 @@ message MultiScopeResponse {
   repeated string endpoints = 4;
 }
 
+// MultiScopeUserResponse
 message MultiScopeUserResponse {
   // The status of the request.
   clarifai.api.status.Status status = 1;
@@ -3696,8 +3416,7 @@ message MultiScopeUserResponse {
   repeated string endpoints = 4;
 }
 
-
-
+// MultiScopeRootResponse
 message MultiScopeRootResponse {
   // The status of the request.
   clarifai.api.status.Status status = 1;
@@ -3707,19 +3426,13 @@ message MultiScopeRootResponse {
   repeated string endpoints = 4;
 }
 
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/search.proto
-////////////////////////////////////////////////////////////////////////////////
+// GetSearchRequest
 message GetSearchRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string id = 2;
 }
 
+// ListSearchesRequest
 message ListSearchesRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
@@ -3730,6 +3443,7 @@ message ListSearchesRequest {
   uint32 per_page = 3;
 }
 
+// PostSearchesRequest
 message PostSearchesRequest {
   // The user_id and app_id to query from.
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -3757,6 +3471,7 @@ message PostSearchesByIDRequest {
   Pagination pagination = 3;
 }
 
+// DeleteSearchRequest
 message DeleteSearchRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string id = 2;
@@ -3776,6 +3491,7 @@ message PostAnnotationsSearchesRequest {
   Pagination pagination = 3;
 }
 
+// DeleteAnnotationSearchMetricsRequest
 message DeleteAnnotationSearchMetricsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string id = 2;
@@ -3800,6 +3516,7 @@ message SingleSearchResponse {
   Search search = 5;
 }
 
+// MultiSearchResponse
 message MultiSearchResponse {
   // Status of whether the search was successful.
   clarifai.api.status.Status status = 1;
@@ -3817,6 +3534,7 @@ message MultiSearchResponse {
   repeated Search searches = 5;
 }
 
+// PostAnnotationSearchMetricsRequest
 message PostAnnotationSearchMetricsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 
@@ -3837,6 +3555,7 @@ message PostAnnotationSearchMetricsRequest {
   EvaluationType evaluation_type = 6;
 }
 
+// GetAnnotationSearchMetricsRequest
 message GetAnnotationSearchMetricsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 
@@ -3844,10 +3563,12 @@ message GetAnnotationSearchMetricsRequest {
   string id = 2;
 }
 
+// ListAnnotationSearchMetricsRequest
 message ListAnnotationSearchMetricsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 }
 
+// MultiAnnotationSearchMetricsResponse
 message MultiAnnotationSearchMetricsResponse {
   // Status of the request
   clarifai.api.status.Status status = 1;
@@ -3898,43 +3619,19 @@ message MultiAnnotationSearchMetricsResponse {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// PostValidatePasswordRequest
 message PostValidatePasswordRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // password to be validated
   Password password = 2;
 }
 
+// SinglePasswordValidationResponse
 message SinglePasswordValidationResponse {
   // Standard clarifai status code
   clarifai.api.status.Status status = 1;
   PasswordViolations password_violations = 2;
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -4016,29 +3713,7 @@ enum OrganizationInvitationStatus {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Requests / Responses from /proto/clarifai/api/workflow.proto
-////////////////////////////////////////////////////////////////////////////////
+// GetWorkflowRequest
 message GetWorkflowRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 
@@ -4053,6 +3728,7 @@ message GetWorkflowRequest {
   repeated string additional_fields = 4;
 }
 
+// ListWorkflowsRequest
 message ListWorkflowsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
@@ -4087,11 +3763,13 @@ message ListWorkflowsRequest {
 }
 
 
+// PostWorkflowsRequest
 message PostWorkflowsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated Workflow workflows = 2;
 }
 
+// PatchWorkflowsRequest
 message PatchWorkflowsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated Workflow workflows = 2;
@@ -4101,6 +3779,7 @@ message PatchWorkflowsRequest {
   string action = 3;
 }
 
+// DeleteWorkflowRequest
 message DeleteWorkflowRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string workflow_id = 2;
@@ -4113,18 +3792,19 @@ message DeleteWorkflowsRequest {
   bool delete_all = 3;
 }
 
+// SingleWorkflowResponse
 message SingleWorkflowResponse {
   clarifai.api.status.Status status = 1;
   Workflow workflow = 2;
 }
 
-
-
+// MultiWorkflowResponse
 message MultiWorkflowResponse {
   clarifai.api.status.Status status = 1;
   repeated Workflow workflows = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+// PostWorkflowResultsRequest
 message PostWorkflowResultsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 
@@ -4155,6 +3835,7 @@ message PostWorkflowResultsRequest {
   WorkflowState workflow_state = 6;
 }
 
+// PostWorkflowResultsResponse
 message PostWorkflowResultsResponse {
   // The status of the request.
   clarifai.api.status.Status status = 1;
@@ -4170,6 +3851,7 @@ message PostWorkflowResultsResponse {
   WorkflowState workflow_state = 4;
 }
 
+// PostWorkflowResultsSimilarityRequest
 message PostWorkflowResultsSimilarityRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string workflow_id = 2;
@@ -4186,16 +3868,13 @@ message PostWorkflowResultsSimilarityRequest {
   bool favor_clarifai_workflows = 6;
 }
 
+// PostWorkflowResultsSimilarityResponse
 message PostWorkflowResultsSimilarityResponse {
   clarifai.api.status.Status status = 1;
   repeated WorkflowResultsSimilarity results = 2;
 }
 
-
-////////////////////////////////////////////////////////////////////////////////
-// Workflow Versions
-////////////////////////////////////////////////////////////////////////////////
-
+// ListWorkflowVersionsRequest
 message ListWorkflowVersionsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // List versions for the workflow identified by this id
@@ -4208,6 +3887,7 @@ message ListWorkflowVersionsRequest {
   uint32 per_page = 4;
 }
 
+// GetWorkflowVersionRequest
 message GetWorkflowVersionRequest {
     clarifai.api.UserAppIDSet user_app_id = 1;
     // The id of the workflow that has the requested version.
@@ -4216,6 +3896,7 @@ message GetWorkflowVersionRequest {
     string workflow_version_id = 3;
 }
 
+// DeleteWorkflowVersionsRequest
 message DeleteWorkflowVersionsRequest {
     clarifai.api.UserAppIDSet user_app_id = 1;
     // The id of the workflow that has the requested versions to delete.
@@ -4224,6 +3905,7 @@ message DeleteWorkflowVersionsRequest {
     repeated string workflow_version_ids = 3;
 }
 
+// PatchWorkflowVersionsRequest
 message PatchWorkflowVersionsRequest {
     clarifai.api.UserAppIDSet user_app_id = 1;
     // The id of the workflow that has the requested versions to patch.
@@ -4235,11 +3917,13 @@ message PatchWorkflowVersionsRequest {
     string action = 4;
 }
 
+// MultiWorkflowVersionResponse
 message MultiWorkflowVersionResponse {
     clarifai.api.status.Status status = 1;
     repeated WorkflowVersion workflow_versions = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+// SingleWorkflowVersionResponse
 message SingleWorkflowVersionResponse {
     clarifai.api.status.Status status = 1;
     WorkflowVersion workflow_version = 2;
@@ -4252,12 +3936,6 @@ message SingleWorkflowVersionResponse {
 
 
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// App Duplication
-////////////////////////////////////////////////////////////////////////////////
 
 //Request to start a app duplication process
 message PostAppDuplicationsRequest {
@@ -4283,22 +3961,17 @@ message ListAppDuplicationsRequest {
   uint32 per_page = 3;
 }
 
+// MultiAppDuplicationsResponse
 message MultiAppDuplicationsResponse {
   clarifai.api.status.Status status = 1;
   repeated AppDuplication app_duplications = 2;
 }
 
-
-
+// SingleAppDuplicationResponse
 message SingleAppDuplicationResponse {
   clarifai.api.status.Status status = 1;
   AppDuplication app_duplication = 2;
 }
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Tasks
-////////////////////////////////////////////////////////////////////////////////
 
 // Request to create Tasks.
 message PostTasksRequest {
@@ -4334,7 +4007,7 @@ message PatchTasksRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated Task tasks = 2;
   // The action to perform on the patched objects
-  // For now only 'overwrite' action is supported
+  // For now actions 'merge', 'overwrite', and 'remove' are supported
   string action = 3;
 }
 
@@ -4386,18 +4059,13 @@ message SingleTaskCountResponse {
 
 
 
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Collectors
-////////////////////////////////////////////////////////////////////////////////
-
 // Request to create Collectors.
 message PostCollectorsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated Collector collectors = 2;
 }
 
+// PatchCollectorsRequest
 message PatchCollectorsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 
@@ -4445,13 +4113,7 @@ message SingleCollectorResponse {
   Collector collector = 2;
 }
 
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Stats Collection Endpoints.
-////////////////////////////////////////////////////////////////////////////////
+// PostStatValuesRequest
 message PostStatValuesRequest {
   // The user and app information for the request.
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -4459,6 +4121,7 @@ message PostStatValuesRequest {
   repeated StatValue stat_values = 2;
 }
 
+// MultiStatValueResponse
 message MultiStatValueResponse {
   // The response status.
   clarifai.api.status.Status status = 1;
@@ -4466,8 +4129,7 @@ message MultiStatValueResponse {
   repeated StatValue stat_values = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
-
-
+// PostStatValuesAggregateRequest
 message PostStatValuesAggregateRequest {
   // Ids present in the url of the request.
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -4476,6 +4138,7 @@ message PostStatValuesAggregateRequest {
   repeated StatValueAggregateQuery stat_value_aggregate_queries = 2;
 }
 
+// MultiStatValueAggregateResponse
 message MultiStatValueAggregateResponse {
   // The response status.
   clarifai.api.status.Status status = 1;
@@ -4493,12 +4156,7 @@ message MultiStatValueAggregateResponse {
 
 
 
-
-
-////////////////////////////////////////
-// Trending Metrics
-////////////////////////////////////////
-
+// PostTrendingMetricsViewRequest
 message PostTrendingMetricsViewRequest {
   // The user_id and app_id information.
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -4508,6 +4166,7 @@ message PostTrendingMetricsViewRequest {
   string object_id = 3;
 }
 
+// ListTrendingMetricsViewsRequest
 message ListTrendingMetricsViewsRequest {
   // The user_id and app_id information.
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -4521,10 +4180,15 @@ message ListTrendingMetricsViewsRequest {
   uint32 per_page = 4;
 }
 
+// MultiTrendingMetricsViewResponse
 message MultiTrendingMetricsViewResponse {
   clarifai.api.status.Status status = 1;
   repeated TrendingMetric metrics = 2;
 }
+
+
+
+
 
 
 

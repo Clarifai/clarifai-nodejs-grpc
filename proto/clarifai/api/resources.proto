@@ -17,11 +17,7 @@ option objc_class_prefix = "CAIP";
 
 
 
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/annotation.proto
-////////////////////////////////////////////////////////////////////////////////
+// Annotation of an asset with metadata
 message Annotation {
   reserved 4, 5, 6, 11, 12;
 
@@ -73,16 +69,7 @@ message Annotation {
   string task_id = 19;
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/app.proto
-////////////////////////////////////////////////////////////////////////////////
+// Application with tasks and datasets
 message App {
   reserved 10, 11, 12;
   string id = 1;
@@ -129,21 +116,13 @@ message App {
   int32 star_count = 20;
 }
 
+// App query
 message AppQuery {
   // Query by application name. This supports wildcard queries like "gen*" to match "general" as an example.
   string name = 1;
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/app_sharing.proto
-////////////////////////////////////////////////////////////////////////////////
+// Collaborator - invited user, who shares an access to an application
 message Collaborator {
   //id of this collaborator
   string id = 1;
@@ -184,16 +163,7 @@ message Collaboration{
   google.protobuf.Timestamp created_at = 5;
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/audio.proto
-////////////////////////////////////////////////////////////////////////////////
+// Audio asset struct
 message Audio {
   // This is a URL to a publicly accessible image file. The platform will download this file server
   // side and then process.
@@ -242,20 +212,7 @@ message Track {
 
 
 
-
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/cluster.proto
-////////////////////////////////////////////////////////////////////////////////
+// Cluster data
 message Cluster {
   string id = 1;
 
@@ -271,26 +228,7 @@ message Cluster {
   repeated float projection = 5;
 }
 
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/code.proto
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/color.proto
-////////////////////////////////////////////////////////////////////////////////
+// Color data
 message Color {
   string raw_hex = 1;
   W3C w3c = 2;
@@ -302,16 +240,6 @@ message W3C {
   string name = 2;
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/common.proto
-////////////////////////////////////////////////////////////////////////////////
 // Common message to identify the app in a url endpoint.
 message UserAppIDSet {
   // Note user_id 'me' is reserved - it is the alias for the id of authorized user
@@ -319,6 +247,7 @@ message UserAppIDSet {
   string app_id = 2;
 }
 
+// PatchAction
 message PatchAction {
   // The operation to perform on the patched metadata given a path
   // For now only operations 'overwrite', 'delete, and 'merge' is supported
@@ -394,15 +323,9 @@ message PatchAction {
   // Default path is root level i.e. ''.
   string path = 3;
 }
-
-
 ////////////////////////////////////////////////////////////////////////////////
 
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/concept.proto
-////////////////////////////////////////////////////////////////////////////////
+// Concept or tag
 message Concept {
   // The concept's unique id.
   string id = 1;
@@ -440,6 +363,7 @@ message Concept {
   string user_id = 10;
 }
 
+// ConceptCount
 message ConceptCount {
   // The concept's unique id.
   string id = 1;
@@ -451,6 +375,7 @@ message ConceptCount {
   DetailConceptCount detail_concept_count = 4;
 }
 
+// ConceptTypeCount
 message ConceptTypeCount {
   // The number of inputs that have a concept with a value of 1.0 (indicating presence of the
   // concept in an input).
@@ -460,6 +385,7 @@ message ConceptTypeCount {
   uint32 negative = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+// DetailConceptCount
 message DetailConceptCount {
   // The concept count for processed assets
   ConceptTypeCount processed = 1;
@@ -471,6 +397,7 @@ message DetailConceptCount {
   ConceptTypeCount processing = 4;
 }
 
+// ConceptQuery
 message ConceptQuery {
   // The name of the concept to search.
   string name = 1;
@@ -480,16 +407,6 @@ message ConceptQuery {
   string workflow_id = 3;
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/concept_graph.proto
-////////////////////////////////////////////////////////////////////////////////
 // This represents a relation (i.e. edge) between the subject concept and the object concept
 message ConceptRelation {
   // ID of the concept relation
@@ -558,6 +475,7 @@ message KnowledgeGraph {
 }
 
 
+// ConceptMappingJob
 message ConceptMappingJob {
   // The id of the knowledge graph being used for this concept mapping job
   string knowledge_graph_id = 1;
@@ -565,16 +483,6 @@ message ConceptMappingJob {
   repeated string concept_ids = 2;
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/concept_language.proto
-////////////////////////////////////////////////////////////////////////////////
 // This represents a link to an outside source for the given concept.
 // The values from here are sticked into Concept message into the name and definition fields when
 // returning from the API in your default language. The "id" field here becomes the "language"
@@ -589,19 +497,7 @@ message ConceptLanguage {
 }
 
 
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/data.proto
-////////////////////////////////////////////////////////////////////////////////
+// Data
 message Data {
   reserved 4, 10;
   // Input and output images.
@@ -709,11 +605,13 @@ message Mask {
   Image image = 2;
 }
 
+// Polygon
 message Polygon {
   // A list of points connected together to form the polygon.
   repeated Point points = 1;
 }
 
+// Point
 message Point {
   // The row location of the point. This has a [0.0-1.0] range with 0.0 being top row and 1.0
   // being the bottom row.
@@ -725,45 +623,30 @@ message Point {
   float z = 3;
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/embedding.proto
-////////////////////////////////////////////////////////////////////////////////
+// Embedding
 message Embedding {
   repeated float vector = 1 [packed = true];
   uint32 num_dimensions = 2;
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/geo.proto
-////////////////////////////////////////////////////////////////////////////////
+// GeoPoint
 message GeoPoint {
   float longitude = 1 [(clarifai.api.utils.cl_show_if_empty) = true];
   float latitude = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+// GeoLimit
 message GeoLimit {
   string type = 1;
   float value = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+// GeoBoxedPoint
 message GeoBoxedPoint {
   GeoPoint geo_point = 1;
 }
 
+// Geo
 message Geo {
   GeoPoint geo_point = 1;
   GeoLimit geo_limit = 2;
@@ -771,26 +654,7 @@ message Geo {
   repeated GeoBoxedPoint geo_box = 3;
 }
 
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/healthz.proto
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/image.proto
-////////////////////////////////////////////////////////////////////////////////
+// Image
 message Image {
   reserved 3;
 
@@ -823,6 +687,7 @@ message ImageInfo {
   string color_mode = 4;
 }
 
+// HostedURL
 message HostedURL {
   // Prefix of the URL of every hosted image.
   string prefix = 1;
@@ -836,16 +701,7 @@ message HostedURL {
   string crossorigin = 4;
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/input.proto
-////////////////////////////////////////////////////////////////////////////////
+// Input
 message Input {
   reserved 3;
 
@@ -887,9 +743,7 @@ message InputCount {
 }
 
 
-
-
-
+// DatasetFilter
 message DatasetFilter {
   reserved 7;
 
@@ -920,6 +774,7 @@ message DatasetFilter {
 }
 
 
+// DatasetVersion
 message DatasetVersion {
   reserved 9;
 
@@ -983,15 +838,14 @@ message DatasetVersionSummary {
   map<string, uint64> input_counts = 1;
 }
 
+// WorkflowResultsSimilarity
 message WorkflowResultsSimilarity {
   // The input with the specific data compare against all pool results
   Input probe_input = 1;
   repeated Hit pool_results = 2;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/key.proto
-////////////////////////////////////////////////////////////////////////////////
+// Key
 message Key {
   // The id of this key, it is used for authorization.
   string id = 1;
@@ -1022,9 +876,6 @@ message Key {
 }
 
 
-
-
-
 enum ExpirationAction {
   EXPIRATION_ACTION_NOT_SET = 0;
 
@@ -1041,16 +892,6 @@ enum LicenseScope {
 }
 
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/model.proto
-////////////////////////////////////////////////////////////////////////////////
 // This is the Model object which represents a created model in the platform.
 // Each model has a particular type denoted by the model_type_id.
 // When creating a Model with PostModels the following happens:
@@ -1062,8 +903,6 @@ enum LicenseScope {
 // also create a new ModelVersion, potentially UNTRAINED following the same rules as above.
 // The fields that are patchable include Model.name, Model.display_name and Model.output_info
 // (except the Model.output_info.type and Model.output_info.type_ext).
-//
-//
 message Model {
   reserved 8, 10,11;
 
@@ -1132,8 +971,7 @@ message Model {
   ImportInfo import_info = 24;
 }
 
-// A link to a html/markdown/text file that stores reference material
-// tied to a model.
+// A link to a html/markdown/text file that stores reference material tied to a model.
 message ModelReference {
   // Id of the reference
   string id = 1;
@@ -1152,6 +990,7 @@ message ModelReference {
   google.protobuf.Struct metadata = 5;
 }
 
+// ModelVersionInputExample
 message ModelVersionInputExample {
   // user unique id
   string id = 1;
@@ -1176,6 +1015,7 @@ message ModelVersionInputExample {
 // Model's very extensible. The OutputConfig object will eventually go away in favor of
 // infer_params struct.
 message OutputInfo {
+  reserved 4, 5;
   // List of concepts or other output related data for the model.
   Data data = 1;
   // Model configuration...going away in favor of infer_params and train_params over time.
@@ -1183,13 +1023,6 @@ message OutputInfo {
   OutputConfig output_config = 2;
   // For returning where to look for the Output info if not returning it.
   string message = 3;
-  // To help clients know what type of Data to expect out of the model.
-  // TO BE DEPRECATED
-  string type = 4;
-  // Extra metadata about the Type data.
-  // TO BE DEPRECATED
-  string type_ext = 5;
-
   // Map from the api.Data field names to the underlying model graph's outputs. When using a
   // PretrainedModelConfig the values in this map need to match the Triton config.pbtxt output names.
   google.protobuf.Struct fields_map = 6;
@@ -1200,8 +1033,7 @@ message OutputInfo {
   google.protobuf.Struct params = 7;
 }
 
-
-
+// InputInfo
 message InputInfo {
   // Map from the api.Data field names to the underlying model graph's inputs. When using a
   // PretrainedModelConfig the values in this map need to match the Triton config.pbtxt input names.
@@ -1281,7 +1113,7 @@ message OutputConfig {
 // to list out the possible models that can be created and can be used to understand more about
 // the possible models in our platform.
 message ModelType {
-  reserved 7;
+  reserved 7, 4;
   // A unique identifies for this model type. This is differnt than the 'type' field below because
   // the 'type' can be re-used for differnet input and output combinations whereas 'id' is always
   // unique.
@@ -1290,8 +1122,6 @@ message ModelType {
   string title = 2;
   // Description of this model type.
   string description = 3;
-  // The type of the model to create. This is currently stored in output_info.type.
-  string type = 4;
   // The list of input fields that this model accepts. These are the keys of the Model's
   // InputInfo.fields_map
   repeated string input_fields = 5;
@@ -1393,6 +1223,7 @@ message ModelTypeField {
   ModelTypeRangeInfo model_type_range_info = 9;
 }
 
+// ModelTypeRangeInfo
 message ModelTypeRangeInfo {
   // The start of the range as a float.
   float min = 1;
@@ -1403,9 +1234,17 @@ message ModelTypeRangeInfo {
   float step = 3;
 }
 
+// ModelTypeEnumOption
 message ModelTypeEnumOption {
   // The unique value of the enum option.
   string id = 1;
+
+  // List of other ID values that are equivalent with this ID.
+  // This allows the user to choose this option by multiple IDs.
+  // Example: if enum is "Phone Number Prefix", you could add an option that is selectable by two values:
+  // 1. ID: "Estonia"
+  // 2. Alias: 37
+  repeated ModelTypeEnumOptionAlias aliases = 5;
 
   // Optional description for this enum option.
   string description = 2;
@@ -1417,11 +1256,16 @@ message ModelTypeEnumOption {
   bool internal_only = 4;
 }
 
+message ModelTypeEnumOptionAlias {
+  // Integer alias for id.
+  int64 id_int = 1;
+}
+
+// ModelQuery
 message ModelQuery {
+  reserved 2;
   // The name ofthe field. This supports wilcard queries like "gen*" to match "general" as an example.
   string name = 1;
-  // This is the legacy model type. Do not use, only kept for support in old API clients.
-  string type = 2 [deprecated = true];
   // Filter models by the specific model_type_id. See ListModelTypes for the list of ModelType.Id's
   // supported.
   string model_type_id = 3;
@@ -1441,19 +1285,13 @@ enum ValueComparator {
   EQUAL = 5;
 }
 
-
-
 enum EvaluationType {
   Classification = 0; // default
   Detection = 1;
 }
 
 
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/model_version.proto
-////////////////////////////////////////////////////////////////////////////////
+// ModelVersion
 message ModelVersion {
   reserved 9;
 
@@ -1501,6 +1339,7 @@ message ModelVersion {
   string license = 17;
 }
 
+// PretrainedModelConfig
 message PretrainedModelConfig {
   // This is the internal id of the pretrained model.
   string id = 1;
@@ -1518,10 +1357,12 @@ message PretrainedModelConfig {
   bool overwrite = 7;
 }
 
+// TrainStats
 message TrainStats {
   repeated LossCurveEntry loss_curve = 1;
 }
 
+// LossCurveEntry
 message LossCurveEntry {
   // current epoch
   uint32 epoch = 1;
@@ -1532,6 +1373,7 @@ message LossCurveEntry {
   float cost = 3;
 }
 
+// LabelCount
 message LabelCount {
   // FIXME: should move to Concept object and return the whole thing (including name and id)
   // otherwise if two concepts have same name then you won't tell them apart in confusion matrix.
@@ -1539,6 +1381,7 @@ message LabelCount {
   uint32 count = 2;
 }
 
+// LabelDistribution
 message LabelDistribution {
   repeated LabelCount positive_label_counts = 1;
 }
@@ -1552,24 +1395,28 @@ message CooccurrenceMatrixEntry {
   uint32 count = 3;
 }
 
+// CooccurrenceMatrix
 message CooccurrenceMatrix {
   repeated CooccurrenceMatrixEntry matrix = 1;
   // These concept_ids are ordered by the strength of the diagonal in the ConfusionMatrix.
   repeated string concept_ids = 2;
 }
 
+// ConfusionMatrixEntry
 message ConfusionMatrixEntry {
   string predicted = 1;
   string actual = 2;
   float value = 4 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+// ConfusionMatrix
 message ConfusionMatrix {
   repeated ConfusionMatrixEntry matrix = 1;
   // These concept_ids are ordered by the strength of the diagonal in the ConfusionMatrix.
   repeated string concept_ids = 2;
 }
 
+// ROC
 message ROC {
   repeated float fpr = 1 [(clarifai.api.utils.cl_show_if_empty) = true];
   repeated float tpr = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
@@ -1578,12 +1425,14 @@ message ROC {
   repeated float fpr_per_object = 5;
 }
 
+// PrecisionRecallCurve
 message PrecisionRecallCurve {
   repeated float recall = 1 [(clarifai.api.utils.cl_show_if_empty) = true];
   repeated float precision = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
   repeated float thresholds = 3 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+// BinaryMetrics
 message BinaryMetrics {
   uint32 num_pos = 1 [(clarifai.api.utils.cl_show_if_empty) = true];
   uint32 num_neg = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
@@ -1601,6 +1450,7 @@ message BinaryMetrics {
 
 }
 
+// TrackerMetrics
 message TrackerMetrics {
   // Multiple object tracking accuracy
   float mot_mota = 1;
@@ -1616,6 +1466,7 @@ message TrackerMetrics {
   float unique_switch_rate = 6;
 }
 
+// EvalTestSetEntry
 message EvalTestSetEntry {
   // Input CFID
   string id = 1 [deprecated = true];
@@ -1632,8 +1483,7 @@ message EvalTestSetEntry {
 
 }
 
-// NOTE(Janvier): We copy this from proto/utils/lopq_service.proto instead of importing it because
-// we should not import internal protos in public protos.
+// LOPQEvalResult
 message LOPQEvalResult {
   // Rank k for which all metrics are reported.
   int32 k = 1;
@@ -1670,7 +1520,7 @@ message LOPQEvalResult {
   float brute_force_ndcg = 6 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
-// FIXME: copy this into an internal proto since it is stored in DB and field names can't change.
+// MetricsSummary
 message MetricsSummary {
   float top1_accuracy = 1 [deprecated = true];
   float top5_accuracy = 2 [deprecated = true];
@@ -1686,6 +1536,7 @@ message MetricsSummary {
   repeated LOPQEvalResult lopq_metrics = 9;
 }
 
+// EvalMetrics
 message EvalMetrics {
   clarifai.api.status.Status status = 1;
   string id = 10;
@@ -1700,8 +1551,7 @@ message EvalMetrics {
   repeated TrackerMetrics tracker_metrics = 11;
 }
 
-
-
+// FieldsValue
 message FieldsValue {
   bool confusion_matrix = 1;
   bool cooccurrence_matrix = 2;
@@ -1712,14 +1562,7 @@ message FieldsValue {
   bool metrics_by_class = 7;
 }
 
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/output.proto
-////////////////////////////////////////////////////////////////////////////////
+// Output
 message Output {
   // One of these outputs per Input
   string id = 1;
@@ -1742,16 +1585,7 @@ message Output {
   Data data = 6;
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/scope.proto
-////////////////////////////////////////////////////////////////////////////////
+// ScopeDeps
 message ScopeDeps {
   // The scope
   string scope = 1;
@@ -1759,6 +1593,7 @@ message ScopeDeps {
   repeated string depending_scopes = 2;
 }
 
+// EndpointDeps
 message EndpointDeps {
   // The fully qualified endpoint to
   string endpoint = 1;
@@ -1766,16 +1601,7 @@ message EndpointDeps {
   repeated string depending_scopes = 2;
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/search.proto
-////////////////////////////////////////////////////////////////////////////////
+// Hit
 message Hit {
   // This is the score for the ranked Hit results of the search query. This score is a number
   // between 0.0 and 1.0 as it represents a confidence in the search Hit. For example, if you search
@@ -1838,7 +1664,6 @@ message And {
   // combinable with queries like visual search (a query with Output filled in).
   Annotation annotation = 4;
 }
-
 
 
 
@@ -1912,6 +1737,7 @@ message Search {
   Visibility visibility = 12;
 }
 
+// Filter
 message Filter {
   // If True then this will flip the meaning of this part of the
   // query. This allow for queries such as dog AND ! metadata=={"blah":"value"}
@@ -1928,11 +1754,13 @@ message Filter {
   TimeRange last_updated_time_range = 6;
 }
 
+// TimeRange
 message TimeRange {
   google.protobuf.Timestamp start_time = 1; // Begin of the time range, optional, inclusive.
   google.protobuf.Timestamp end_time = 2; // End of the time range, optional, inclusive.
 }
 
+// Rank
 message Rank {
   // If True then this will flip the meaning of this part of the
   // query. This allow for queries such as !dog
@@ -1942,6 +1770,7 @@ message Rank {
   Annotation annotation = 4;
 }
 
+// AnnotationSearchMetrics
 message AnnotationSearchMetrics {
   // The ground truth we are evaluating against
   clarifai.api.Search ground_truth = 1;
@@ -1968,19 +1797,7 @@ message AnnotationSearchMetrics {
 
 
 
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/text.proto
-////////////////////////////////////////////////////////////////////////////////
+// Text
 message Text {
   // This is a raw text string.
   string raw = 1;
@@ -2005,9 +1822,6 @@ message TextInfo {
 
 
 
-
-
-
 enum APIEventType {
   API_EVENT_TYPE_NOT_SET = 0;
 
@@ -2019,9 +1833,6 @@ enum APIEventType {
   // Platform event types
 }
 
-
-
-
 enum UsageIntervalType {
   // undef UsageIntervalType is so that the interval field can be forced to be included
   undef = 0;
@@ -2031,16 +1842,7 @@ enum UsageIntervalType {
 }
 
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/user.proto
-////////////////////////////////////////////////////////////////////////////////
+// User
 message User {
   reserved 13;
 
@@ -2111,6 +1913,7 @@ message UserDetail {
   string state = 12;
 }
 
+// EmailAddress
 message EmailAddress {
   string email = 1 [(clarifai.api.utils.cl_show_if_empty) = true];
   bool primary = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
@@ -2119,16 +1922,15 @@ message EmailAddress {
 
 
 
+// Password
 message Password {
-  // TODO(lawrence): merge this with message UserPassword above
   // unencrypted password string
   string plaintext = 1;
 }
 
 
 
-
-
+// PasswordViolations
 message PasswordViolations {
   // when new password length is shorter than minimum length set
   bool minimum_length = 1;
@@ -2160,14 +1962,7 @@ message PasswordViolations {
   bool password_lifespan = 14;
 }
 
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/video.proto
-////////////////////////////////////////////////////////////////////////////////
+// Video
 message Video {
   // This is a URL to a publicly accessible video file. The platform will download this file server
   // side and then process.
@@ -2210,19 +2005,7 @@ message VideoInfo {
 }
 
 
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Messages from /proto/clarifai/api/workflow.proto
-////////////////////////////////////////////////////////////////////////////////
+// Workflow
 message Workflow {
   // The workflows's unique id.
   string id = 1;
@@ -2276,6 +2059,7 @@ message Workflow {
   repeated string use_cases = 14 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+// WorkflowVersion
 message WorkflowVersion {
   // Id of this version.
   string id = 1;
@@ -2318,6 +2102,7 @@ message WorkflowVersion {
   string license = 11;
 }
 
+// WorkflowNode
 message WorkflowNode {
   // An identifier for this node in the graph. This is used when connecting NodeInputs
   // together.
@@ -2340,6 +2125,7 @@ message NodeInput {
   string node_id = 1;
 }
 
+// WorkflowResult
 message WorkflowResult {
   string id = 1;
   clarifai.api.status.Status status = 2;
@@ -2357,6 +2143,7 @@ message WorkflowResult {
 }
 
 
+// WorkflowState
 message WorkflowState {
   // A unique ID for the workflow state.
   // To start saving a state in a PostWorkflowResults request set this ID to "init"
@@ -2365,16 +2152,7 @@ message WorkflowState {
   string id = 1;
 }
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////
-// App Duplication
-////////////////////////////////////////////////////////////////////////////////
-
-
+// AppDuplication
 message AppDuplication {
   //the id of app duplication
   string id = 1;
@@ -2392,6 +2170,7 @@ message AppDuplication {
   AppDuplicationFilters filter = 7;
 }
 
+// AppDuplicationFilters
 message AppDuplicationFilters {
   // Copy only inputs and default annotations
   bool copy_inputs = 1;
@@ -2405,14 +2184,6 @@ message AppDuplicationFilters {
   bool copy_workflows = 5;
 }
 
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Tasks
-////////////////////////////////////////////////////////////////////////////////
 
 // Task is the work that needs to be done for labeling the inputs in an app.
 message Task {
@@ -2483,6 +2254,7 @@ message Task {
   string user_id = 17;
 }
 
+// AiAssistParameters
 message AiAssistParameters {
   // Min and max threshold values for approving annotations by default based on prediction score
   float min_threshold = 1;
@@ -2491,6 +2263,7 @@ message AiAssistParameters {
   repeated string concept_relation_ids = 3;
 }
 
+// TaskWorker
 message TaskWorker {
   // Worker strategy.
   TaskWorkerStrategy strategy = 1;
@@ -2517,6 +2290,7 @@ message TaskWorker {
   }
 }
 
+// TaskWorkerPartitionedStrategyInfo
 message TaskWorkerPartitionedStrategyInfo {
   // Define how the partitioning should work.
   TaskWorkerPartitionedStrategy type = 1;
@@ -2560,6 +2334,7 @@ message TaskWorkerPartitionedStrategyInfo {
   }
 }
 
+// TaskInputSource
 message TaskInputSource {
   // Type of input source.
   TaskInputSourceType type = 1;
@@ -2577,6 +2352,7 @@ message TaskInputSource {
   }
 }
 
+// TaskReview
 message TaskReview {
   // Task review strategy.
   TaskReviewStrategy strategy = 1;
@@ -2604,11 +2380,13 @@ message TaskReview {
   }
 }
 
+// TaskReviewManualStrategyInfo
 message TaskReviewManualStrategyInfo {
   // This field represents the percentage of inputs that will be reviewed by reviewers. It is a value between 0 and 1.
   float sample_percentage = 1;
 }
 
+// TaskReviewConsensusStrategyInfo
 message TaskReviewConsensusStrategyInfo {
   reserved 1;
 
@@ -2616,6 +2394,7 @@ message TaskReviewConsensusStrategyInfo {
   uint32 approval_threshold = 2;
 }
 
+// TaskAIAssistant
 message TaskAIAssistant {
   // The worker is helped by an AI assistant.
   // This field is the workflow id which is used to assist the worker with predictions.
@@ -2625,11 +2404,8 @@ message TaskAIAssistant {
 
 
 
-
-// TaskStatusCountPerUser can represent -
-//    1. count of human created annotations for a user for each valid status
-//    2. count of inputs (anchor annotation) for a user for each valid status
-
+// TaskStatusCountPerUser can represents count of human created annotations for a user for each valid status,
+// count of inputs (anchor annotation) for a user for each valid status
 message TaskStatusCountPerUser {
   string user_id = 1;
   uint32 pending = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
@@ -2650,12 +2426,6 @@ enum RoleType {
 
 
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Collectors
-////////////////////////////////////////////////////////////////////////////////
 
 // Collector is a data pathway from a CollectorSource to an app to collect data automatically.
 // For example, a CollectorSource
@@ -2756,13 +2526,7 @@ message APIPostModelOutputsCollectorSource {
   // If this is left blank then this collector will collect from ALL users calling the given model.
 }
 
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// Stats Collection Objects.
-////////////////////////////////////////////////////////////////////////////////
+// StatValue
 message StatValue {
   // The time of the event. Defaults to now().
   google.protobuf.Timestamp time = 1;
@@ -2777,8 +2541,7 @@ message StatValue {
   repeated string tags = 3;
 }
 
-
-
+// StatValueAggregateResult
 message StatValueAggregateResult {
   // The list of repeated aggregate values and their counts.
   repeated StatValueAggregate stat_value_aggregates = 1;
@@ -2787,8 +2550,7 @@ message StatValueAggregateResult {
   StatValueAggregateQuery stat_value_aggregate_query = 2;
 }
 
-
-
+// StatValueAggregate
 message StatValueAggregate {
   // The time of the aggregation. For example, if you aggregate over "HOUR" buckets then you can
   // expect each hour that has atleast one value (matching the rest of your query fields) will have
@@ -2803,8 +2565,7 @@ message StatValueAggregate {
   repeated string tags = 4;
 }
 
-
-
+// StatValueAggregateQuery
 message StatValueAggregateQuery {
   // These tags are used to filter down the values before they are aggregated. For example,
   // if you want to aggregate values for "task_id:a" you could specify that as a tag here.
@@ -2858,9 +2619,6 @@ enum StatTimeAggType {
 
 
 
-/*
-    SDK Billing Cycle defines which year and month is associated with the billing data
-*/
 
 
 
@@ -2873,12 +2631,6 @@ enum StatTimeAggType {
 
 
 
-
-
-
-/////////////////////////////
-// Visibilty of the resource.
-/////////////////////////////
 // Visibility represents how visible the given resource is to other users.
 // When authenticating a request we can tell if a user is a collaborator or a teammate for the
 // the app that contains the resource and set their allowed visibility. We use that to restrict
@@ -2903,14 +2655,13 @@ message Visibility {
   Gettable gettable = 1;
 }
 
+// TrendingMetric
 message TrendingMetric {
   string user_id = 1;
   string app_id = 2;
   string object_id = 3;
   uint64 view_count = 4;
 }
-
-
 
 enum ValidationErrorType {
   VALIDATION_ERROR_TYPE_NOT_SET = 0;
@@ -2924,7 +2675,7 @@ enum ValidationErrorType {
 
 
 
-
+// TimeSegment
 message TimeSegment {
   // A unique id for the time segment.
   string id = 1;
@@ -2934,6 +2685,7 @@ message TimeSegment {
   TimeInfo time_info = 3;
 }
 
+// TimeInfo
 message TimeInfo {
   // Number of frames
   uint32 num_frames = 1;
@@ -2942,6 +2694,8 @@ message TimeInfo {
   // Timestamp where track ends.
   uint32 end_time = 3;
 }
+
+
 
 
 
