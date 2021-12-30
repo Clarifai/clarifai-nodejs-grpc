@@ -3783,6 +3783,12 @@ export class MultiModelTypeResponse extends jspb.Message {
     addModelTypes(value?: proto_clarifai_api_resources_pb.ModelType, index?: number): proto_clarifai_api_resources_pb.ModelType;
 
 
+    hasModelImporters(): boolean;
+    clearModelImporters(): void;
+    getModelImporters(): proto_clarifai_api_resources_pb.ModelTypeField | undefined;
+    setModelImporters(value?: proto_clarifai_api_resources_pb.ModelTypeField): MultiModelTypeResponse;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): MultiModelTypeResponse.AsObject;
     static toObject(includeInstance: boolean, msg: MultiModelTypeResponse): MultiModelTypeResponse.AsObject;
@@ -3797,6 +3803,7 @@ export namespace MultiModelTypeResponse {
     export type AsObject = {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         modelTypesList: Array<proto_clarifai_api_resources_pb.ModelType.AsObject>,
+        modelImporters?: proto_clarifai_api_resources_pb.ModelTypeField.AsObject,
     }
 }
 

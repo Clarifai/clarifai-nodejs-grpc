@@ -29881,7 +29881,8 @@ proto.clarifai.api.MultiModelTypeResponse.toObject = function(includeInstance, m
   var f, obj = {
     status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f),
     modelTypesList: jspb.Message.toObjectList(msg.getModelTypesList(),
-    proto_clarifai_api_resources_pb.ModelType.toObject, includeInstance)
+    proto_clarifai_api_resources_pb.ModelType.toObject, includeInstance),
+    modelImporters: (f = msg.getModelImporters()) && proto_clarifai_api_resources_pb.ModelTypeField.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -29928,6 +29929,11 @@ proto.clarifai.api.MultiModelTypeResponse.deserializeBinaryFromReader = function
       reader.readMessage(value,proto_clarifai_api_resources_pb.ModelType.deserializeBinaryFromReader);
       msg.addModelTypes(value);
       break;
+    case 3:
+      var value = new proto_clarifai_api_resources_pb.ModelTypeField;
+      reader.readMessage(value,proto_clarifai_api_resources_pb.ModelTypeField.deserializeBinaryFromReader);
+      msg.setModelImporters(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -29971,6 +29977,14 @@ proto.clarifai.api.MultiModelTypeResponse.serializeBinaryToWriter = function(mes
       2,
       f,
       proto_clarifai_api_resources_pb.ModelType.serializeBinaryToWriter
+    );
+  }
+  f = message.getModelImporters();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      proto_clarifai_api_resources_pb.ModelTypeField.serializeBinaryToWriter
     );
   }
 };
@@ -30048,6 +30062,43 @@ proto.clarifai.api.MultiModelTypeResponse.prototype.addModelTypes = function(opt
  */
 proto.clarifai.api.MultiModelTypeResponse.prototype.clearModelTypesList = function() {
   return this.setModelTypesList([]);
+};
+
+
+/**
+ * optional ModelTypeField model_importers = 3;
+ * @return {?proto.clarifai.api.ModelTypeField}
+ */
+proto.clarifai.api.MultiModelTypeResponse.prototype.getModelImporters = function() {
+  return /** @type{?proto.clarifai.api.ModelTypeField} */ (
+    jspb.Message.getWrapperField(this, proto_clarifai_api_resources_pb.ModelTypeField, 3));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.ModelTypeField|undefined} value
+ * @return {!proto.clarifai.api.MultiModelTypeResponse} returns this
+*/
+proto.clarifai.api.MultiModelTypeResponse.prototype.setModelImporters = function(value) {
+  return jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.MultiModelTypeResponse} returns this
+ */
+proto.clarifai.api.MultiModelTypeResponse.prototype.clearModelImporters = function() {
+  return this.setModelImporters(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.MultiModelTypeResponse.prototype.hasModelImporters = function() {
+  return jspb.Message.getField(this, 3) != null;
 };
 
 

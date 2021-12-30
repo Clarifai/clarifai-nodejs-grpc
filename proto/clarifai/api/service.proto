@@ -632,6 +632,7 @@ service V2 {
 
 
 
+
   ////////////////////////////////////////
   // Models
   ////////////////////////////////////////
@@ -805,6 +806,8 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
+
+
 
   // Update model toolkits tags
   rpc PatchModelToolkits (PatchModelToolkitsRequest) returns (MultiModelToolkitResponse) {
@@ -1470,6 +1473,7 @@ service V2 {
 
 
 
+
   // Validate new password in real-time for a user
   rpc PostValidatePassword (PostValidatePasswordRequest) returns (SinglePasswordValidationResponse) {
     option (google.api.http) = {
@@ -2073,6 +2077,24 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2829,6 +2851,8 @@ message GetInputCountRequest {
 
 
 
+
+
 ////////////////////////////////////////////////////
 // Model prediction related stuff needs inputs and produces outputs.
 ////////////////////////////////////////////////////
@@ -3287,6 +3311,8 @@ message MultiModelTypeResponse {
   clarifai.api.status.Status status = 1;
   // List of ModelType objects.
   repeated ModelType model_types = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+  // List of model importers
+  ModelTypeField model_importers = 3;
 }
 
 // GetModelVersionInputExampleRequest
@@ -3574,6 +3600,8 @@ message MultiAnnotationSearchMetricsResponse {
   clarifai.api.status.Status status = 1;
   repeated AnnotationSearchMetrics annotation_search_metrics = 2;
 }
+
+
 
 
 
@@ -4185,6 +4213,34 @@ message MultiTrendingMetricsViewResponse {
   clarifai.api.status.Status status = 1;
   repeated TrendingMetric metrics = 2;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
