@@ -632,6 +632,7 @@ service V2 {
 
 
 
+
   ////////////////////////////////////////
   // Models
   ////////////////////////////////////////
@@ -805,6 +806,8 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
+
+
 
   // Update model toolkits tags
   rpc PatchModelToolkits (PatchModelToolkitsRequest) returns (MultiModelToolkitResponse) {
@@ -1470,6 +1473,7 @@ service V2 {
 
 
 
+
   // Validate new password in real-time for a user
   rpc PostValidatePassword (PostValidatePasswordRequest) returns (SinglePasswordValidationResponse) {
     option (google.api.http) = {
@@ -1929,11 +1933,100 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Delete;
   }
 
+  // Add Label orders.
+  rpc PostLabelOrders (PostLabelOrdersRequest) returns (MultiLabelOrderResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/label_orders"
+      body: "*"
+      additional_bindings102 {
+        post: "/v2/label_orders"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = false;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = LabelOrders_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = LabelOrders_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Tasks_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Search;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // needed for converting workers internal ids to external ids
+  }
 
 
 
+  // Get a label order.
+  rpc GetLabelOrder (GetLabelOrderRequest) returns (SingleLabelOrderResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/label_orders/{label_order_id}"
+      additional_bindings103 {
+        get: "/v2/label_orders/{label_order_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = false;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = LabelOrders_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get; // needed because task is embedded
+  }
 
+  // List label orders.
+  rpc ListLabelOrders (ListLabelOrdersRequest) returns (MultiLabelOrderResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/label_orders"
+      additional_bindings104 {
+        get: "/v2/label_orders"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = false;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = LabelOrders_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get; // needed because task is embedded
+  }
 
+  // Patch one or more label orders.
+  rpc PatchLabelOrders (PatchLabelOrdersRequest) returns (MultiLabelOrderResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/label_orders"
+      body: "*"
+      additional_bindings105 {
+        patch: "/v2/label_orders"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = false;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = LabelOrders_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = LabelOrders_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Tasks_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Tasks_Delete;
+  }
+
+  // Delete multiple label orders in one request.
+  // this do not change task status
+  rpc DeleteLabelOrders (DeleteLabelOrdersRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/label_orders"
+      body: "*"
+      additional_bindings106 {
+        delete: "/v2/label_orders"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_private_rpc) = false;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = LabelOrders_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = LabelOrders_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = LabelOrders_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Tasks_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
+  }
 
   // Add a list of Collectors to an app.
   // In the handler of this endpoint we also check for all the scopes of the  POST /inputs
@@ -1945,7 +2038,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
       body: "*"
-      additional_bindings102 {
+      additional_bindings107 {
         post: "/v2/collectors"
         body: "*"
       }
@@ -1967,7 +2060,7 @@ service V2 {
   rpc GetCollector (GetCollectorRequest) returns (SingleCollectorResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors/{collector_id}"
-      additional_bindings103 {
+      additional_bindings108 {
         get: "/v2/collectors/{collector_id}"
       }
     };
@@ -1979,7 +2072,7 @@ service V2 {
   rpc ListCollectors (ListCollectorsRequest) returns (MultiCollectorResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
-      additional_bindings104 {
+      additional_bindings109 {
         get: "/v2/collectors"
       }
     };
@@ -1992,7 +2085,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
       body: "*"
-      additional_bindings105 {
+      additional_bindings110 {
         patch: "/v2/collectors"
         body: "*"
       }
@@ -2010,7 +2103,7 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
       body: "*"
-      additional_bindings106 {
+      additional_bindings111 {
         delete: "/v2/collectors"
         body: "*"
       }
@@ -2026,7 +2119,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/stats/values"
       body: "*"
-      additional_bindings107 {
+      additional_bindings112 {
         post: "/v2/stats/values"
         body: "*"
       }
@@ -2039,7 +2132,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/stats/values/aggregate"
       body: "*"
-      additional_bindings108 {
+      additional_bindings113 {
         post: "/v2/stats/values/aggregate"
         body: "*"
       }
@@ -2067,12 +2160,30 @@ service V2 {
   rpc ListTrendingMetricsViews (ListTrendingMetricsViewsRequest) returns (MultiTrendingMetricsViewResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/trending_metrics/views/{view_type}"
-      additional_bindings109 {
+      additional_bindings114 {
         get: "/v2/trending_metrics/views/{view_type}"
       }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2829,6 +2940,8 @@ message GetInputCountRequest {
 
 
 
+
+
 ////////////////////////////////////////////////////
 // Model prediction related stuff needs inputs and produces outputs.
 ////////////////////////////////////////////////////
@@ -3287,6 +3400,8 @@ message MultiModelTypeResponse {
   clarifai.api.status.Status status = 1;
   // List of ModelType objects.
   repeated ModelType model_types = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+  // List of model importers
+  ModelTypeField model_importers = 3;
 }
 
 // GetModelVersionInputExampleRequest
@@ -3574,6 +3689,8 @@ message MultiAnnotationSearchMetricsResponse {
   clarifai.api.status.Status status = 1;
   repeated AnnotationSearchMetrics annotation_search_metrics = 2;
 }
+
+
 
 
 
@@ -4052,12 +4169,57 @@ message SingleTaskCountResponse {
   repeated TaskStatusCountPerUser counts = 4;
 }
 
+// Request to create label orders.
+message PostLabelOrdersRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated LabelOrder label_orders = 2;
+}
 
+// Request to get one label order.
+message GetLabelOrderRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string label_order_id = 2;
+}
 
+// Request to list multiple label orders.
+message ListLabelOrdersRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 3;
+}
 
+// Request to patch a list of label orders.
+message PatchLabelOrdersRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
 
+  repeated LabelOrder label_orders = 2;
 
+  // The action to perform on the patched objects
+  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  string action = 3;
+}
 
+// Request to delete a list of tasks.
+message DeleteLabelOrdersRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated string ids = 2;
+}
+
+// Response with multiple label order.
+message MultiLabelOrderResponse {
+  clarifai.api.status.Status status = 1;
+  repeated LabelOrder label_orders = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+// Response with a label order.
+message SingleLabelOrderResponse {
+  clarifai.api.status.Status status = 1;
+  LabelOrder label_order = 2;
+}
 
 // Request to create Collectors.
 message PostCollectorsRequest {
@@ -4185,6 +4347,34 @@ message MultiTrendingMetricsViewResponse {
   clarifai.api.status.Status status = 1;
   repeated TrendingMetric metrics = 2;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

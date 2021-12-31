@@ -86,7 +86,7 @@ message App {
   // "2017-04-11T21:50:50.223962Z"
   google.protobuf.Timestamp created_at = 6;
   // When the app was last modified
-  google.protobuf.Timestamp modified_at= 17;
+  google.protobuf.Timestamp modified_at = 17;
   // if user accept legal consent for face recognition
   uint32 legal_consent_status = 7;
 
@@ -531,6 +531,8 @@ message Data {
   repeated Track tracks = 15;
   // Time segments information.
   repeated TimeSegment time_segments = 16;
+  // Holds score, rank, and user, app, input IDs and search hit data
+  repeated Hit hits= 17;
 }
 
 // A region within the data.
@@ -812,8 +814,8 @@ message DatasetVersion {
   // Description of the dataset version
   string description = 10;
 
-  // Dataset version summary
-  DatasetVersionSummary summary = 11;
+  // Dataset version metrics
+  DatasetVersionMetrics metrics = 11;
 
   // To handle arbitrary json metadata you can use a struct field:
   // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
@@ -832,11 +834,18 @@ message DatasetVersionDatasetFilterConfig {
   DatasetFilter dataset_filter = 1;
 }
 
-message DatasetVersionSummary {
-  // Counts by different filters. Each key is the filter key,
-  // e.g. total_image, train_image, test_image, total_video, train_video, test_video.
-  map<string, uint64> input_counts = 1;
+message DatasetVersionMetrics {
+  uint64 inputs_count = 1;
+  uint64 positive_annotations_count = 2;
+  uint64 bounding_boxes_count = 3;
 }
+
+enum DatasetVersionMetricsGroupType {
+  DATASET_VERSION_METRICS_GROUP_TYPE_NOT_SET = 0;
+
+  INPUT_TYPE = 1;
+}
+
 
 // WorkflowResultsSimilarity
 message WorkflowResultsSimilarity {
@@ -904,12 +913,12 @@ enum LicenseScope {
 // The fields that are patchable include Model.name, Model.display_name and Model.output_info
 // (except the Model.output_info.type and Model.output_info.type_ext).
 message Model {
-  reserved 8, 10,11;
+  reserved 8, 10, 11;
 
   // The model's ID. Must be unique within a particular app and URL-friendly.
   string id = 1;
-  // A nicer-to-read name for the model. Can have spaces and special characters.
-  string name = 2;
+  // DEPRECATED: Please use the model id to name the model.
+  string name = 2 [deprecated = true];
   // When the model was created. We follow the XXXX timestamp
   // format. We use https://www.ietf.org/rfc/rfc3339.txt format:
   // "2006-01-02T15:04:05.999999Z" so you can expect results like
@@ -924,9 +933,8 @@ message Model {
   OutputInfo output_info = 5;
   // A particular version of the model, e.g., to specify the version when creating a workflow.
   ModelVersion model_version = 6;
-  // An even nicer-to-read name for public Clarifai models where we're not happy with the name but
-  // need a temporary workaround while we check what depends on these names.
-  string display_name = 7;
+  // DEPRECATED: Please use the model id to name the model.
+  string display_name = 7 [deprecated = true];
   // The user id that the model belongs to.
   string user_id = 9;
   // Info about the models' input and configuration of them.
@@ -1104,7 +1112,7 @@ message OutputConfig {
   // each time. Please refer to the documentation or model implementation internally for more
   // details on what fields are supported for which models.
   // TODO(zeiler): remove this field after Portal is updated.
-  google.protobuf.Struct model_metadata = 17 [deprecated=true];
+  google.protobuf.Struct model_metadata = 17 [deprecated = true];
 }
 
 
@@ -1337,6 +1345,9 @@ message ModelVersion {
   google.protobuf.Struct metadata = 16;
 
   string license = 17;
+
+  // Dataset version used to create this model version.
+  DatasetVersion dataset_version = 18;
 }
 
 // PretrainedModelConfig
@@ -1623,6 +1634,10 @@ message Hit {
   // field will be that matched annotation info and the input will be the image/video that the user
   // originally added which contains those regions / frames.
   Annotation annotation = 3;
+  // The customer-facing id of the user who owns the app the asset came from.
+  string user_id = 4;
+  // The cfid of the app the asset came from.
+  string app_id = 5;
 }
 
 // This is the common building block of a query which is a sequence of And messages ANDed together.
@@ -1871,7 +1886,7 @@ message User {
   // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
   google.protobuf.Struct metadata = 11 [deprecated = true];
   repeated EmailAddress email_addresses = 12 [deprecated = true];
-  bool is_org_admin  = 14 [deprecated = true];
+  bool is_org_admin = 14 [deprecated = true];
   bool two_factor_auth_enabled = 15 [deprecated = true];
   uint32 teams_count = 16 [deprecated = true];
 
@@ -1897,7 +1912,7 @@ message User {
 // This message holds the confidential information from the User object that we don't want to expose
 // to other users. It will be accessible only from /users/{user_id}/account and with the User scopes.
 message UserDetail {
-  string primary_email  = 1;
+  string primary_email = 1;
   string bill_type = 2;
   google.protobuf.Timestamp date_gdpr_consent = 3;
   google.protobuf.Timestamp date_tos_consent = 4;
@@ -1906,7 +1921,7 @@ message UserDetail {
   // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
   google.protobuf.Struct metadata = 6;
   repeated EmailAddress email_addresses = 7;
-  bool is_org_admin  = 8;
+  bool is_org_admin = 8;
   bool two_factor_auth_enabled = 9;
   uint32 teams_count = 10;
   string country = 11;
@@ -2184,6 +2199,45 @@ message AppDuplicationFilters {
   bool copy_workflows = 5;
 }
 
+// LabelOrder
+message LabelOrder {
+  // id of the order
+  string id = 1;
+
+  // name of the order
+  string name = 2;
+  // status of the order.
+  // pending (QA lead review the order),
+  // in progress (labeling in progress),
+  // ready for release (passed clarifai QA and client can review)
+  // success (released)
+  clarifai.api.status.Status status = 3;
+
+  // if set to true, automatically release the labels once passed clarifai review.
+  bool auto_release = 4;
+
+  // allow input without any tag.
+  bool allow_empty_tag = 5;
+
+  // User desired estimation when the task should be done
+  google.protobuf.Timestamp desired_fulfill_time = 6;
+
+  // Clarifai estimation when the task should be done .
+  google.protobuf.Timestamp estimate_fulfill_time = 7;
+
+  // task for this label order
+  Task task = 8;
+
+  // When the label order was created.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp created_at = 9;
+
+  // Most recent time when the label order was updated.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp modified_at = 10;
+}
 
 // Task is the work that needs to be done for labeling the inputs in an app.
 message Task {
@@ -2694,6 +2748,12 @@ message TimeInfo {
   // Timestamp where track ends.
   uint32 end_time = 3;
 }
+
+
+
+
+
+
 
 
 

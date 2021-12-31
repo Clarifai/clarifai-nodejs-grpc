@@ -134,6 +134,11 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     listTasks: IV2Service_IListTasks;
     patchTasks: IV2Service_IPatchTasks;
     deleteTasks: IV2Service_IDeleteTasks;
+    postLabelOrders: IV2Service_IPostLabelOrders;
+    getLabelOrder: IV2Service_IGetLabelOrder;
+    listLabelOrders: IV2Service_IListLabelOrders;
+    patchLabelOrders: IV2Service_IPatchLabelOrders;
+    deleteLabelOrders: IV2Service_IDeleteLabelOrders;
     postCollectors: IV2Service_IPostCollectors;
     getCollector: IV2Service_IGetCollector;
     listCollectors: IV2Service_IListCollectors;
@@ -1198,6 +1203,51 @@ interface IV2Service_IDeleteTasks extends grpc.MethodDefinition<proto_clarifai_a
     responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
 }
+interface IV2Service_IPostLabelOrders extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostLabelOrdersRequest, proto_clarifai_api_service_pb.MultiLabelOrderResponse> {
+    path: "/clarifai.api.V2/PostLabelOrders";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostLabelOrdersRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostLabelOrdersRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiLabelOrderResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiLabelOrderResponse>;
+}
+interface IV2Service_IGetLabelOrder extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetLabelOrderRequest, proto_clarifai_api_service_pb.SingleLabelOrderResponse> {
+    path: "/clarifai.api.V2/GetLabelOrder";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.GetLabelOrderRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.GetLabelOrderRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleLabelOrderResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleLabelOrderResponse>;
+}
+interface IV2Service_IListLabelOrders extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListLabelOrdersRequest, proto_clarifai_api_service_pb.MultiLabelOrderResponse> {
+    path: "/clarifai.api.V2/ListLabelOrders";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListLabelOrdersRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListLabelOrdersRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiLabelOrderResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiLabelOrderResponse>;
+}
+interface IV2Service_IPatchLabelOrders extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PatchLabelOrdersRequest, proto_clarifai_api_service_pb.MultiLabelOrderResponse> {
+    path: "/clarifai.api.V2/PatchLabelOrders";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PatchLabelOrdersRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PatchLabelOrdersRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiLabelOrderResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiLabelOrderResponse>;
+}
+interface IV2Service_IDeleteLabelOrders extends grpc.MethodDefinition<proto_clarifai_api_service_pb.DeleteLabelOrdersRequest, proto_clarifai_api_status_status_pb.BaseResponse> {
+    path: "/clarifai.api.V2/DeleteLabelOrders";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.DeleteLabelOrdersRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.DeleteLabelOrdersRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
+}
 interface IV2Service_IPostCollectors extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostCollectorsRequest, proto_clarifai_api_service_pb.MultiCollectorResponse> {
     path: "/clarifai.api.V2/PostCollectors";
     requestStream: false;
@@ -1400,6 +1450,11 @@ export interface IV2Server {
     listTasks: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListTasksRequest, proto_clarifai_api_service_pb.MultiTaskResponse>;
     patchTasks: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchTasksRequest, proto_clarifai_api_service_pb.MultiTaskResponse>;
     deleteTasks: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteTasksRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
+    postLabelOrders: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostLabelOrdersRequest, proto_clarifai_api_service_pb.MultiLabelOrderResponse>;
+    getLabelOrder: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetLabelOrderRequest, proto_clarifai_api_service_pb.SingleLabelOrderResponse>;
+    listLabelOrders: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListLabelOrdersRequest, proto_clarifai_api_service_pb.MultiLabelOrderResponse>;
+    patchLabelOrders: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchLabelOrdersRequest, proto_clarifai_api_service_pb.MultiLabelOrderResponse>;
+    deleteLabelOrders: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteLabelOrdersRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     postCollectors: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostCollectorsRequest, proto_clarifai_api_service_pb.MultiCollectorResponse>;
     getCollector: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetCollectorRequest, proto_clarifai_api_service_pb.SingleCollectorResponse>;
     listCollectors: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListCollectorsRequest, proto_clarifai_api_service_pb.MultiCollectorResponse>;
@@ -1763,6 +1818,21 @@ export interface IV2Client {
     deleteTasks(request: proto_clarifai_api_service_pb.DeleteTasksRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteTasks(request: proto_clarifai_api_service_pb.DeleteTasksRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteTasks(request: proto_clarifai_api_service_pb.DeleteTasksRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    postLabelOrders(request: proto_clarifai_api_service_pb.PostLabelOrdersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    postLabelOrders(request: proto_clarifai_api_service_pb.PostLabelOrdersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    postLabelOrders(request: proto_clarifai_api_service_pb.PostLabelOrdersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    getLabelOrder(request: proto_clarifai_api_service_pb.GetLabelOrderRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    getLabelOrder(request: proto_clarifai_api_service_pb.GetLabelOrderRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    getLabelOrder(request: proto_clarifai_api_service_pb.GetLabelOrderRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    listLabelOrders(request: proto_clarifai_api_service_pb.ListLabelOrdersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    listLabelOrders(request: proto_clarifai_api_service_pb.ListLabelOrdersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    listLabelOrders(request: proto_clarifai_api_service_pb.ListLabelOrdersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    patchLabelOrders(request: proto_clarifai_api_service_pb.PatchLabelOrdersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    patchLabelOrders(request: proto_clarifai_api_service_pb.PatchLabelOrdersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    patchLabelOrders(request: proto_clarifai_api_service_pb.PatchLabelOrdersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    deleteLabelOrders(request: proto_clarifai_api_service_pb.DeleteLabelOrdersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    deleteLabelOrders(request: proto_clarifai_api_service_pb.DeleteLabelOrdersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    deleteLabelOrders(request: proto_clarifai_api_service_pb.DeleteLabelOrdersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     postCollectors(request: proto_clarifai_api_service_pb.PostCollectorsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCollectorResponse) => void): grpc.ClientUnaryCall;
     postCollectors(request: proto_clarifai_api_service_pb.PostCollectorsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCollectorResponse) => void): grpc.ClientUnaryCall;
     postCollectors(request: proto_clarifai_api_service_pb.PostCollectorsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCollectorResponse) => void): grpc.ClientUnaryCall;
@@ -2145,6 +2215,21 @@ export class V2Client extends grpc.Client implements IV2Client {
     public deleteTasks(request: proto_clarifai_api_service_pb.DeleteTasksRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteTasks(request: proto_clarifai_api_service_pb.DeleteTasksRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteTasks(request: proto_clarifai_api_service_pb.DeleteTasksRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public postLabelOrders(request: proto_clarifai_api_service_pb.PostLabelOrdersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    public postLabelOrders(request: proto_clarifai_api_service_pb.PostLabelOrdersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    public postLabelOrders(request: proto_clarifai_api_service_pb.PostLabelOrdersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    public getLabelOrder(request: proto_clarifai_api_service_pb.GetLabelOrderRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    public getLabelOrder(request: proto_clarifai_api_service_pb.GetLabelOrderRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    public getLabelOrder(request: proto_clarifai_api_service_pb.GetLabelOrderRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    public listLabelOrders(request: proto_clarifai_api_service_pb.ListLabelOrdersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    public listLabelOrders(request: proto_clarifai_api_service_pb.ListLabelOrdersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    public listLabelOrders(request: proto_clarifai_api_service_pb.ListLabelOrdersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    public patchLabelOrders(request: proto_clarifai_api_service_pb.PatchLabelOrdersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    public patchLabelOrders(request: proto_clarifai_api_service_pb.PatchLabelOrdersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    public patchLabelOrders(request: proto_clarifai_api_service_pb.PatchLabelOrdersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLabelOrderResponse) => void): grpc.ClientUnaryCall;
+    public deleteLabelOrders(request: proto_clarifai_api_service_pb.DeleteLabelOrdersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public deleteLabelOrders(request: proto_clarifai_api_service_pb.DeleteLabelOrdersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public deleteLabelOrders(request: proto_clarifai_api_service_pb.DeleteLabelOrdersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public postCollectors(request: proto_clarifai_api_service_pb.PostCollectorsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCollectorResponse) => void): grpc.ClientUnaryCall;
     public postCollectors(request: proto_clarifai_api_service_pb.PostCollectorsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCollectorResponse) => void): grpc.ClientUnaryCall;
     public postCollectors(request: proto_clarifai_api_service_pb.PostCollectorsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCollectorResponse) => void): grpc.ClientUnaryCall;

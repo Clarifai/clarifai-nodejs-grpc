@@ -124,6 +124,17 @@ function deserialize_clarifai_api_DeleteKeyRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.DeleteKeyRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_DeleteLabelOrdersRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.DeleteLabelOrdersRequest)) {
+    throw new Error('Expected argument of type clarifai.api.DeleteLabelOrdersRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_DeleteLabelOrdersRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.DeleteLabelOrdersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_DeleteModelRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.DeleteModelRequest)) {
     throw new Error('Expected argument of type clarifai.api.DeleteModelRequest');
@@ -342,6 +353,17 @@ function serialize_clarifai_api_GetKeyRequest(arg) {
 
 function deserialize_clarifai_api_GetKeyRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.GetKeyRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_GetLabelOrderRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.GetLabelOrderRequest)) {
+    throw new Error('Expected argument of type clarifai.api.GetLabelOrderRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_GetLabelOrderRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.GetLabelOrderRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_GetModelRequest(arg) {
@@ -617,6 +639,17 @@ function serialize_clarifai_api_ListKnowledgeGraphsRequest(arg) {
 
 function deserialize_clarifai_api_ListKnowledgeGraphsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListKnowledgeGraphsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_ListLabelOrdersRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListLabelOrdersRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListLabelOrdersRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListLabelOrdersRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListLabelOrdersRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_ListModelInputsRequest(arg) {
@@ -958,6 +991,17 @@ function serialize_clarifai_api_MultiKnowledgeGraphResponse(arg) {
 
 function deserialize_clarifai_api_MultiKnowledgeGraphResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiKnowledgeGraphResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MultiLabelOrderResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiLabelOrderResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiLabelOrderResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiLabelOrderResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiLabelOrderResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiModelLanguageResponse(arg) {
@@ -1334,6 +1378,17 @@ function deserialize_clarifai_api_PatchKeysRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PatchKeysRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PatchLabelOrdersRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PatchLabelOrdersRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PatchLabelOrdersRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PatchLabelOrdersRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PatchLabelOrdersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PatchModelLanguagesRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PatchModelLanguagesRequest)) {
     throw new Error('Expected argument of type clarifai.api.PatchModelLanguagesRequest');
@@ -1607,6 +1662,17 @@ function serialize_clarifai_api_PostKnowledgeGraphsRequest(arg) {
 
 function deserialize_clarifai_api_PostKnowledgeGraphsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostKnowledgeGraphsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PostLabelOrdersRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostLabelOrdersRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostLabelOrdersRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostLabelOrdersRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostLabelOrdersRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PostModelOutputsRequest(arg) {
@@ -1915,6 +1981,17 @@ function serialize_clarifai_api_SingleKeyResponse(arg) {
 
 function deserialize_clarifai_api_SingleKeyResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.SingleKeyResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_SingleLabelOrderResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.SingleLabelOrderResponse)) {
+    throw new Error('Expected argument of type clarifai.api.SingleLabelOrderResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_SingleLabelOrderResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.SingleLabelOrderResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_SingleModelResponse(arg) {
@@ -3500,6 +3577,67 @@ deleteTasks: {
     responseType: proto_clarifai_api_status_status_pb.BaseResponse,
     requestSerialize: serialize_clarifai_api_DeleteTasksRequest,
     requestDeserialize: deserialize_clarifai_api_DeleteTasksRequest,
+    responseSerialize: serialize_clarifai_api_status_BaseResponse,
+    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
+  // Add Label orders.
+postLabelOrders: {
+    path: '/clarifai.api.V2/PostLabelOrders',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostLabelOrdersRequest,
+    responseType: proto_clarifai_api_service_pb.MultiLabelOrderResponse,
+    requestSerialize: serialize_clarifai_api_PostLabelOrdersRequest,
+    requestDeserialize: deserialize_clarifai_api_PostLabelOrdersRequest,
+    responseSerialize: serialize_clarifai_api_MultiLabelOrderResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiLabelOrderResponse,
+  },
+  // Get a label order.
+getLabelOrder: {
+    path: '/clarifai.api.V2/GetLabelOrder',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.GetLabelOrderRequest,
+    responseType: proto_clarifai_api_service_pb.SingleLabelOrderResponse,
+    requestSerialize: serialize_clarifai_api_GetLabelOrderRequest,
+    requestDeserialize: deserialize_clarifai_api_GetLabelOrderRequest,
+    responseSerialize: serialize_clarifai_api_SingleLabelOrderResponse,
+    responseDeserialize: deserialize_clarifai_api_SingleLabelOrderResponse,
+  },
+  // List label orders.
+listLabelOrders: {
+    path: '/clarifai.api.V2/ListLabelOrders',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListLabelOrdersRequest,
+    responseType: proto_clarifai_api_service_pb.MultiLabelOrderResponse,
+    requestSerialize: serialize_clarifai_api_ListLabelOrdersRequest,
+    requestDeserialize: deserialize_clarifai_api_ListLabelOrdersRequest,
+    responseSerialize: serialize_clarifai_api_MultiLabelOrderResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiLabelOrderResponse,
+  },
+  // Patch one or more label orders.
+patchLabelOrders: {
+    path: '/clarifai.api.V2/PatchLabelOrders',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PatchLabelOrdersRequest,
+    responseType: proto_clarifai_api_service_pb.MultiLabelOrderResponse,
+    requestSerialize: serialize_clarifai_api_PatchLabelOrdersRequest,
+    requestDeserialize: deserialize_clarifai_api_PatchLabelOrdersRequest,
+    responseSerialize: serialize_clarifai_api_MultiLabelOrderResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiLabelOrderResponse,
+  },
+  // Delete multiple label orders in one request.
+// this do not change task status
+deleteLabelOrders: {
+    path: '/clarifai.api.V2/DeleteLabelOrders',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.DeleteLabelOrdersRequest,
+    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
+    requestSerialize: serialize_clarifai_api_DeleteLabelOrdersRequest,
+    requestDeserialize: deserialize_clarifai_api_DeleteLabelOrdersRequest,
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },
