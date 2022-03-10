@@ -2,14 +2,16 @@ syntax = "proto3";
 
 import "proto/clarifai/api/status/status.proto";
 import "proto/clarifai/api/utils/extensions.proto";
+import "proto/utils/matrix.proto";
 import "proto/clarifai/auth/util/extension.proto";
 
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 
 package clarifai.api;
 
-option go_package = "github.com/Clarifai/clarifai-go-grpc/proto/clarifai/api/api";
+option go_package = "github.com/Clarifai/clarifai-go-grpc/proto/clarifai/api";
 option java_multiple_files = true;
 option java_package = "com.clarifai.grpc.api";
 option objc_class_prefix = "CAIP";
@@ -39,7 +41,7 @@ message Annotation {
   string model_version_id = 16;
 
   // DEPRECATED.
-  string embed_model_version_id = 14 [deprecated=true];
+  string embed_model_version_id = 14 [deprecated = true];
 
   // Annotation Status
   clarifai.api.status.Status status = 7;
@@ -56,7 +58,7 @@ message Annotation {
 
   // Whether or not this annotation is trusted
   // Will be deprecated
-  bool trusted = 10[deprecated=true];
+  bool trusted = 10[deprecated = true];
 
   // Is this the input level annotation.
   bool input_level = 17;
@@ -114,6 +116,10 @@ message App {
   // How many users have starred the app (only showed on get/list requests)
   // Computed value, not editable
   int32 star_count = 20;
+
+  // Notes for the application
+  // This field should be used for in-depth notes and supports up to 64Kbs.
+  string notes = 21;
 }
 
 // App query
@@ -219,7 +225,8 @@ message Cluster {
   // Number of annotations tied to the cluster in the app
   uint32 count = 2;
 
-  // The score assigned to this cluster
+  // The score assigned to this cluster.
+  // For List Clusters endpoint, this represents percentage of inputs in the app assigned to this cluster.
   float score = 3;
 
   // Representative hits for cluster (for now we only return 1)
@@ -532,7 +539,7 @@ message Data {
   // Time segments information.
   repeated TimeSegment time_segments = 16;
   // Holds score, rank, and user, app, input IDs and search hit data
-  repeated Hit hits= 17;
+  repeated Hit hits = 17;
 }
 
 // A region within the data.
@@ -562,6 +569,10 @@ message RegionInfo {
   Polygon polygon = 5;
   // A landmark point location.
   Point point = 6;
+  // Span char sequence for NLP.
+  Span span = 7;
+  // Token char sequence for NLP.
+  Token token = 8;
 }
 
 // Rectangular bounding box for a region.
@@ -623,6 +634,18 @@ message Point {
   float col = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
   // Depth if applicable for the point.
   float z = 3;
+}
+
+message Span {
+  uint32 char_start = 1 [(clarifai.api.utils.cl_show_if_empty) = true];
+  uint32 char_end = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+  string raw_text = 3;
+}
+
+message Token {
+  uint32 char_start = 1 [(clarifai.api.utils.cl_show_if_empty) = true];
+  uint32 char_end = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+  string raw_text = 3;
 }
 
 // Embedding
@@ -745,31 +768,30 @@ message InputCount {
 }
 
 
-// DatasetFilter
-message DatasetFilter {
-  reserved 7;
+// AnnotationFilter is used to create a new dataset version.
+// For now, the filter is simply a wrapper over a Search.
+// In the future, we may add extra fields to customize the filtering.
+message AnnotationFilter {
+  reserved 6, 7;
 
-  // The ID for the dataset filter
+  // The ID for the annotation filter
   string id = 1;
 
-  // When the dataset filter was created.
+  // When the annotation filter was created.
   // The format is https://www.ietf.org/rfc/rfc3339.txt.
   // Example: "2006-01-02T15:04:05.999999Z".
   google.protobuf.Timestamp created_at = 2;
 
-  // When the dataset filter was modified.
+  // When the annotation filter was modified.
   // The format is https://www.ietf.org/rfc/rfc3339.txt.
   // Example: "2006-01-02T15:04:05.999999Z".
   google.protobuf.Timestamp modified_at = 3;
 
-  // The user the dataset filter belongs to.
+  // The user the annotation filter belongs to.
   string user_id = 4;
 
-  // The app the dataset filter belongs to.
+  // The app the annotation filter belongs to.
   string app_id = 5;
-
-  // The dataset the filter belongs to.
-  string dataset_id = 6;
 
   // The saved search that this filter uses.
   Search saved_search = 8;
@@ -778,7 +800,7 @@ message DatasetFilter {
 
 // DatasetVersion
 message DatasetVersion {
-  reserved 9;
+  reserved 7, 9;
 
   // The ID for the dataset version
   string id = 1;
@@ -804,8 +826,8 @@ message DatasetVersion {
 
   // Data config reveals how the dataset version is generated.
   oneof data_config {
-    // The dataset version will be generated based on a single dataset filter.
-    DatasetVersionDatasetFilterConfig dataset_filter_config = 7;
+    // The dataset version will be generated based on a single annotation filter.
+    AnnotationFilterConfig annotation_filter_config = 15;
   }
 
   // Status for this dataset version.
@@ -830,20 +852,96 @@ message DatasetVersion {
   repeated string embed_model_version_ids = 14;
 }
 
-message DatasetVersionDatasetFilterConfig {
-  DatasetFilter dataset_filter = 1;
+message AnnotationFilterConfig {
+  AnnotationFilter annotation_filter = 1;
 }
 
 message DatasetVersionMetrics {
-  uint64 inputs_count = 1;
-  uint64 positive_annotations_count = 2;
-  uint64 bounding_boxes_count = 3;
+  reserved 2, 3, 4, 5, 7;
+
+  // Number of inputs
+  google.protobuf.UInt64Value inputs_count = 1;
+  // Number of unlabeled inputs
+  // An input is considered unlabeled if it there are no annotations with positive labels for that input.
+  google.protobuf.UInt64Value unlabeled_inputs_count = 6;
+  // Number of inputs that have metadata
+  google.protobuf.UInt64Value inputs_with_metadata_count = 8;
+  // Number of inputs that have geo information
+  google.protobuf.UInt64Value inputs_with_geo_count = 9;
+
+  // Number of regions
+  google.protobuf.UInt64Value regions_count = 20;
+  // The matrix shows where the regions are located.
+  // Example: If the matrix has 2x2 dimensions, then
+  // * region_location_matrix[0][0] = the number of regions that appear in the top left corner, i.e. [0,0]..(0.5,0.5)
+  // * region_location_matrix[0][1] = the number of regions that appear in the top right corner, i.e. [0,0.5]..[0.5,1]
+  // * region_location_matrix[1][0] = the number of regions that appear in the bottom left corner, i.e. [0.5,0]..[1,0.5)
+  // * region_location_matrix[1][1] = the number of regions that appear in the bottom right corner, i.e. [0.5,0.5]..[1,1]
+  MatrixUint64 region_location_matrix = 21;
+  // Number of bounding boxes
+  google.protobuf.UInt64Value bounding_boxes_count = 22;
+  // Number of polygons
+  google.protobuf.UInt64Value polygons_count = 23;
+  // Number of points
+  google.protobuf.UInt64Value points_count = 24;
+  // Number of masks
+  google.protobuf.UInt64Value masks_count = 25;
+
+  // Number of inputs that have regions attached
+  // Note that this is not a recursive count: if an input contains frames that contains regions, then the region_frames_count is increased, but region_inputs_count is not increased.
+  google.protobuf.UInt64Value region_inputs_count = 60;
+  // Number of frames that have regions attached
+  google.protobuf.UInt64Value region_frames_count = 61;
+
+  // Number of frames
+  google.protobuf.UInt64Value frames_count = 30;
+
+  // Number of inputs that have frames attached
+  google.protobuf.UInt64Value frame_inputs_count = 70;
+
+  // Number of embeddings
+  google.protobuf.UInt64Value embeddings_count = 40;
+
+  // Number of positive tags added at input-level
+  google.protobuf.UInt64Value positive_input_tags_count = 50;
+  // Number of positive tags added at region-level
+  google.protobuf.UInt64Value positive_region_tags_count = 51;
+  // Number of positive tags added at frame-level
+  google.protobuf.UInt64Value positive_frame_tags_count = 52;
 }
 
 enum DatasetVersionMetricsGroupType {
   DATASET_VERSION_METRICS_GROUP_TYPE_NOT_SET = 0;
 
-  INPUT_TYPE = 1;
+  // Group data examples by input type.
+  // Examples: images, videos, text, audio.
+  INPUT_TYPE = 2;
+  // Group data examples by concept ID.
+  // Examples: inputs with cat concept, inputs with dog concept.
+  CONCEPT_ID = 10;
+  // Group data examples by concepts count.
+  // Examples: inputs with 20 concepts, inputs with 21 concepts.
+  CONCEPTS_COUNT = 11;
+  // Group data examples by bounding boxes count.
+  // Examples: inputs with 20 bounding boxes, inputs with 21 bounding boxes.
+  BOUNDING_BOXES_COUNT = 20;
+  // Group data examples by polygons count.
+  // Examples: inputs with 20 polygons, inputs with 21 polygons.
+  POLYGONS_COUNT = 21;
+  // Group data examples by points count.
+  // Examples: inputs with 20 points, inputs with 21 points.
+  POINTS_COUNT = 22;
+  // Group data examples by masks count.
+  // Examples: inputs with 20 masks, inputs with 21 masks.
+  MASKS_COUNT = 23;
+  // Group data examples by pixels count.
+  // In order to reduce the number of groups, we use bins.
+  // Examples for bin size = 400: inputs with [200000, 200400) pixels, inputs with [200400, 200800) pixels.
+  PIXELS_COUNT = 30;
+  // Group data examples by aspect ratio.
+  // In order to reduce the number of groups, we use bins.
+  // Examples for bin size = 0.1: inputs with [0.5, 0.6) aspect ratio, inputs with [0.6, 0.7) aspect ratio.
+  ASPECT_RATIO = 31;
 }
 
 
@@ -944,6 +1042,8 @@ message Model {
   // The ModelType.Id that is used for this model. This is used for all versions and you cannot
   // change model_type_id between versions of the same model.
   string model_type_id = 14;
+  // The task the model was trained to do
+  string task = 26;
 
   // The visibility field represents whether this message is privately/publicly visible.
   // To be visible to the public the App that contains it AND the User that contains the App must
@@ -2171,9 +2271,12 @@ message WorkflowState {
 message AppDuplication {
   //the id of app duplication
   string id = 1;
-  //the id of new app
+  // the id of new app. If provided, we will create a new application with this id. If the app id exists, we will return err.
+  // if new_app_name is empty, the name will be the same as this id.
+  // You can not set this if existing_app_id is set.
   string new_app_id = 2;
-  //the name of new app
+  //the name of new app. If provided, we will create a new application with this name.
+  // You can not set this if existing_app_id is set.
   string new_app_name = 3;
   //the status of app duplication
   clarifai.api.status.Status status = 4;
@@ -2183,11 +2286,15 @@ message AppDuplication {
   google.protobuf.Timestamp last_modified_at = 6;
   // Only copy resources depending on the filters
   AppDuplicationFilters filter = 7;
+  // the id of existing app you want to copy data into.
+  // you can not set this if either new_app_id or new_app_name is set.
+  // if new_app_id, new_app_name and existing_app_id are all empty, we will create a new app with random app id/name
+  string existing_app_id = 8;
 }
 
 // AppDuplicationFilters
 message AppDuplicationFilters {
-  // Copy only inputs and default annotations
+  // Copy inputs what what it depends on: input level annotation and concepts
   bool copy_inputs = 1;
   // Copy only concepts
   bool copy_concepts = 2;
@@ -2403,6 +2510,8 @@ message TaskInputSource {
     ALL_INPUTS = 1;
     // Use the inputs from a saved search.
     SAVED_SEARCH = 2;
+    // Inputs from a dataset.
+    DATASET = 3;
   }
 }
 

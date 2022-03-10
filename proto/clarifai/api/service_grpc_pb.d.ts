@@ -40,6 +40,7 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     patchAnnotationsStatus: IV2Service_IPatchAnnotationsStatus;
     deleteAnnotation: IV2Service_IDeleteAnnotation;
     deleteAnnotations: IV2Service_IDeleteAnnotations;
+    patchAnnotationsSearches: IV2Service_IPatchAnnotationsSearches;
     postAnnotationsSearches: IV2Service_IPostAnnotationsSearches;
     getInputCount: IV2Service_IGetInputCount;
     streamInputs: IV2Service_IStreamInputs;
@@ -50,6 +51,7 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     patchInputs: IV2Service_IPatchInputs;
     deleteInput: IV2Service_IDeleteInput;
     deleteInputs: IV2Service_IDeleteInputs;
+    patchInputsSearches: IV2Service_IPatchInputsSearches;
     postInputsSearches: IV2Service_IPostInputsSearches;
     postModelOutputs: IV2Service_IPostModelOutputs;
     getModelType: IV2Service_IGetModelType;
@@ -61,6 +63,7 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     postModelsSearches: IV2Service_IPostModelsSearches;
     postModels: IV2Service_IPostModels;
     patchModels: IV2Service_IPatchModels;
+    patchModelIds: IV2Service_IPatchModelIds;
     deleteModel: IV2Service_IDeleteModel;
     deleteModels: IV2Service_IDeleteModels;
     patchModelToolkits: IV2Service_IPatchModelToolkits;
@@ -110,6 +113,7 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     postValidatePassword: IV2Service_IPostValidatePassword;
     getSearch: IV2Service_IGetSearch;
     listSearches: IV2Service_IListSearches;
+    patchSearches: IV2Service_IPatchSearches;
     postSearches: IV2Service_IPostSearches;
     postSearchesByID: IV2Service_IPostSearchesByID;
     postAnnotationSearchMetrics: IV2Service_IPostAnnotationSearchMetrics;
@@ -357,6 +361,15 @@ interface IV2Service_IDeleteAnnotations extends grpc.MethodDefinition<proto_clar
     responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
 }
+interface IV2Service_IPatchAnnotationsSearches extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse> {
+    path: "/clarifai.api.V2/PatchAnnotationsSearches";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiSearchResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiSearchResponse>;
+}
 interface IV2Service_IPostAnnotationsSearches extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostAnnotationsSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse> {
     path: "/clarifai.api.V2/PostAnnotationsSearches";
     requestStream: false;
@@ -446,6 +459,15 @@ interface IV2Service_IDeleteInputs extends grpc.MethodDefinition<proto_clarifai_
     requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.DeleteInputsRequest>;
     responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
+}
+interface IV2Service_IPatchInputsSearches extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PatchInputsSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse> {
+    path: "/clarifai.api.V2/PatchInputsSearches";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PatchInputsSearchesRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PatchInputsSearchesRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiSearchResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiSearchResponse>;
 }
 interface IV2Service_IPostInputsSearches extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostInputsSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse> {
     path: "/clarifai.api.V2/PostInputsSearches";
@@ -543,6 +565,15 @@ interface IV2Service_IPatchModels extends grpc.MethodDefinition<proto_clarifai_a
     responseStream: false;
     requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PatchModelsRequest>;
     requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PatchModelsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiModelResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiModelResponse>;
+}
+interface IV2Service_IPatchModelIds extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PatchModelIdsRequest, proto_clarifai_api_service_pb.MultiModelResponse> {
+    path: "/clarifai.api.V2/PatchModelIds";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PatchModelIdsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PatchModelIdsRequest>;
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiModelResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiModelResponse>;
 }
@@ -987,6 +1018,15 @@ interface IV2Service_IListSearches extends grpc.MethodDefinition<proto_clarifai_
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiSearchResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiSearchResponse>;
 }
+interface IV2Service_IPatchSearches extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PatchSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse> {
+    path: "/clarifai.api.V2/PatchSearches";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PatchSearchesRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PatchSearchesRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiSearchResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiSearchResponse>;
+}
 interface IV2Service_IPostSearches extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse> {
     path: "/clarifai.api.V2/PostSearches";
     requestStream: false;
@@ -1356,6 +1396,7 @@ export interface IV2Server {
     patchAnnotationsStatus: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchAnnotationsStatusRequest, proto_clarifai_api_service_pb.PatchAnnotationsStatusResponse>;
     deleteAnnotation: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteAnnotationRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     deleteAnnotations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteAnnotationsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
+    patchAnnotationsSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse>;
     postAnnotationsSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostAnnotationsSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse>;
     getInputCount: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetInputCountRequest, proto_clarifai_api_service_pb.SingleInputCountResponse>;
     streamInputs: grpc.handleUnaryCall<proto_clarifai_api_service_pb.StreamInputsRequest, proto_clarifai_api_service_pb.MultiInputResponse>;
@@ -1366,6 +1407,7 @@ export interface IV2Server {
     patchInputs: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchInputsRequest, proto_clarifai_api_service_pb.MultiInputResponse>;
     deleteInput: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteInputRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     deleteInputs: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteInputsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
+    patchInputsSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchInputsSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse>;
     postInputsSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostInputsSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse>;
     postModelOutputs: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostModelOutputsRequest, proto_clarifai_api_service_pb.MultiOutputResponse>;
     getModelType: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetModelTypeRequest, proto_clarifai_api_service_pb.SingleModelTypeResponse>;
@@ -1377,6 +1419,7 @@ export interface IV2Server {
     postModelsSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostModelsSearchesRequest, proto_clarifai_api_service_pb.MultiModelResponse>;
     postModels: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostModelsRequest, proto_clarifai_api_service_pb.SingleModelResponse>;
     patchModels: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchModelsRequest, proto_clarifai_api_service_pb.MultiModelResponse>;
+    patchModelIds: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchModelIdsRequest, proto_clarifai_api_service_pb.MultiModelResponse>;
     deleteModel: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteModelRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     deleteModels: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteModelsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     patchModelToolkits: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchModelToolkitsRequest, proto_clarifai_api_service_pb.MultiModelToolkitResponse>;
@@ -1426,6 +1469,7 @@ export interface IV2Server {
     postValidatePassword: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostValidatePasswordRequest, proto_clarifai_api_service_pb.SinglePasswordValidationResponse>;
     getSearch: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetSearchRequest, proto_clarifai_api_service_pb.SingleSearchResponse>;
     listSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse>;
+    patchSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse>;
     postSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse>;
     postSearchesByID: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostSearchesByIDRequest, proto_clarifai_api_service_pb.MultiSearchResponse>;
     postAnnotationSearchMetrics: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostAnnotationSearchMetricsRequest, proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse>;
@@ -1536,6 +1580,9 @@ export interface IV2Client {
     deleteAnnotations(request: proto_clarifai_api_service_pb.DeleteAnnotationsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteAnnotations(request: proto_clarifai_api_service_pb.DeleteAnnotationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteAnnotations(request: proto_clarifai_api_service_pb.DeleteAnnotationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    patchAnnotationsSearches(request: proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
+    patchAnnotationsSearches(request: proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
+    patchAnnotationsSearches(request: proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     postAnnotationsSearches(request: proto_clarifai_api_service_pb.PostAnnotationsSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     postAnnotationsSearches(request: proto_clarifai_api_service_pb.PostAnnotationsSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     postAnnotationsSearches(request: proto_clarifai_api_service_pb.PostAnnotationsSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
@@ -1566,6 +1613,9 @@ export interface IV2Client {
     deleteInputs(request: proto_clarifai_api_service_pb.DeleteInputsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteInputs(request: proto_clarifai_api_service_pb.DeleteInputsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteInputs(request: proto_clarifai_api_service_pb.DeleteInputsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    patchInputsSearches(request: proto_clarifai_api_service_pb.PatchInputsSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
+    patchInputsSearches(request: proto_clarifai_api_service_pb.PatchInputsSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
+    patchInputsSearches(request: proto_clarifai_api_service_pb.PatchInputsSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     postInputsSearches(request: proto_clarifai_api_service_pb.PostInputsSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     postInputsSearches(request: proto_clarifai_api_service_pb.PostInputsSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     postInputsSearches(request: proto_clarifai_api_service_pb.PostInputsSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
@@ -1599,6 +1649,9 @@ export interface IV2Client {
     patchModels(request: proto_clarifai_api_service_pb.PatchModelsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelResponse) => void): grpc.ClientUnaryCall;
     patchModels(request: proto_clarifai_api_service_pb.PatchModelsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelResponse) => void): grpc.ClientUnaryCall;
     patchModels(request: proto_clarifai_api_service_pb.PatchModelsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelResponse) => void): grpc.ClientUnaryCall;
+    patchModelIds(request: proto_clarifai_api_service_pb.PatchModelIdsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelResponse) => void): grpc.ClientUnaryCall;
+    patchModelIds(request: proto_clarifai_api_service_pb.PatchModelIdsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelResponse) => void): grpc.ClientUnaryCall;
+    patchModelIds(request: proto_clarifai_api_service_pb.PatchModelIdsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelResponse) => void): grpc.ClientUnaryCall;
     deleteModel(request: proto_clarifai_api_service_pb.DeleteModelRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteModel(request: proto_clarifai_api_service_pb.DeleteModelRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteModel(request: proto_clarifai_api_service_pb.DeleteModelRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
@@ -1746,6 +1799,9 @@ export interface IV2Client {
     listSearches(request: proto_clarifai_api_service_pb.ListSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     listSearches(request: proto_clarifai_api_service_pb.ListSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     listSearches(request: proto_clarifai_api_service_pb.ListSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
+    patchSearches(request: proto_clarifai_api_service_pb.PatchSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
+    patchSearches(request: proto_clarifai_api_service_pb.PatchSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
+    patchSearches(request: proto_clarifai_api_service_pb.PatchSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     postSearches(request: proto_clarifai_api_service_pb.PostSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     postSearches(request: proto_clarifai_api_service_pb.PostSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     postSearches(request: proto_clarifai_api_service_pb.PostSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
@@ -1933,6 +1989,9 @@ export class V2Client extends grpc.Client implements IV2Client {
     public deleteAnnotations(request: proto_clarifai_api_service_pb.DeleteAnnotationsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteAnnotations(request: proto_clarifai_api_service_pb.DeleteAnnotationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteAnnotations(request: proto_clarifai_api_service_pb.DeleteAnnotationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public patchAnnotationsSearches(request: proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
+    public patchAnnotationsSearches(request: proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
+    public patchAnnotationsSearches(request: proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     public postAnnotationsSearches(request: proto_clarifai_api_service_pb.PostAnnotationsSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     public postAnnotationsSearches(request: proto_clarifai_api_service_pb.PostAnnotationsSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     public postAnnotationsSearches(request: proto_clarifai_api_service_pb.PostAnnotationsSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
@@ -1963,6 +2022,9 @@ export class V2Client extends grpc.Client implements IV2Client {
     public deleteInputs(request: proto_clarifai_api_service_pb.DeleteInputsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteInputs(request: proto_clarifai_api_service_pb.DeleteInputsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteInputs(request: proto_clarifai_api_service_pb.DeleteInputsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public patchInputsSearches(request: proto_clarifai_api_service_pb.PatchInputsSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
+    public patchInputsSearches(request: proto_clarifai_api_service_pb.PatchInputsSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
+    public patchInputsSearches(request: proto_clarifai_api_service_pb.PatchInputsSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     public postInputsSearches(request: proto_clarifai_api_service_pb.PostInputsSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     public postInputsSearches(request: proto_clarifai_api_service_pb.PostInputsSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     public postInputsSearches(request: proto_clarifai_api_service_pb.PostInputsSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
@@ -1996,6 +2058,9 @@ export class V2Client extends grpc.Client implements IV2Client {
     public patchModels(request: proto_clarifai_api_service_pb.PatchModelsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelResponse) => void): grpc.ClientUnaryCall;
     public patchModels(request: proto_clarifai_api_service_pb.PatchModelsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelResponse) => void): grpc.ClientUnaryCall;
     public patchModels(request: proto_clarifai_api_service_pb.PatchModelsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelResponse) => void): grpc.ClientUnaryCall;
+    public patchModelIds(request: proto_clarifai_api_service_pb.PatchModelIdsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelResponse) => void): grpc.ClientUnaryCall;
+    public patchModelIds(request: proto_clarifai_api_service_pb.PatchModelIdsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelResponse) => void): grpc.ClientUnaryCall;
+    public patchModelIds(request: proto_clarifai_api_service_pb.PatchModelIdsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModelResponse) => void): grpc.ClientUnaryCall;
     public deleteModel(request: proto_clarifai_api_service_pb.DeleteModelRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteModel(request: proto_clarifai_api_service_pb.DeleteModelRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteModel(request: proto_clarifai_api_service_pb.DeleteModelRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
@@ -2143,6 +2208,9 @@ export class V2Client extends grpc.Client implements IV2Client {
     public listSearches(request: proto_clarifai_api_service_pb.ListSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     public listSearches(request: proto_clarifai_api_service_pb.ListSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     public listSearches(request: proto_clarifai_api_service_pb.ListSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
+    public patchSearches(request: proto_clarifai_api_service_pb.PatchSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
+    public patchSearches(request: proto_clarifai_api_service_pb.PatchSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
+    public patchSearches(request: proto_clarifai_api_service_pb.PatchSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     public postSearches(request: proto_clarifai_api_service_pb.PostSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     public postSearches(request: proto_clarifai_api_service_pb.PostSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     public postSearches(request: proto_clarifai_api_service_pb.PostSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;

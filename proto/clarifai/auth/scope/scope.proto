@@ -44,8 +44,6 @@ enum S {
 
   // Make an rpc to our prediction services.
   Predict = 2 [(clarfai_exposed) = true];
-  // Make an rpc to our search services.
-  Search = 3 [(clarfai_exposed) = true];
 
   // Write to the inputs table in the DB.
   Inputs_Add = 4 [(clarfai_exposed) = true,
@@ -324,6 +322,20 @@ enum S {
 
 
 
+  // Make an rpc to our search services.
+  Search = 3 [(clarfai_exposed) = true];
+
+  // To get a saved search.
+  SavedSearch_Get = 114 [(clarfai_exposed) = true];
+
+  // To add a saved search
+  SavedSearch_Add = 115 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = SavedSearch_Get];
+
+  // To delete a saved search
+  SavedSearch_Delete=116 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = SavedSearch_Get,
+    (clarifai_depending_scopes) = SavedSearch_Add];
 }
 
 extend google.protobuf.EnumValueOptions {

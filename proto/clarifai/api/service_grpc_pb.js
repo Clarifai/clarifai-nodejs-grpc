@@ -1279,6 +1279,17 @@ function deserialize_clarifai_api_PatchAnnotationsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PatchAnnotationsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PatchAnnotationsSearchesRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PatchAnnotationsSearchesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PatchAnnotationsSearchesRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PatchAnnotationsStatusRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PatchAnnotationsStatusRequest)) {
     throw new Error('Expected argument of type clarifai.api.PatchAnnotationsStatusRequest');
@@ -1367,6 +1378,17 @@ function deserialize_clarifai_api_PatchInputsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PatchInputsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PatchInputsSearchesRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PatchInputsSearchesRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PatchInputsSearchesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PatchInputsSearchesRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PatchInputsSearchesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PatchKeysRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PatchKeysRequest)) {
     throw new Error('Expected argument of type clarifai.api.PatchKeysRequest');
@@ -1387,6 +1409,17 @@ function serialize_clarifai_api_PatchLabelOrdersRequest(arg) {
 
 function deserialize_clarifai_api_PatchLabelOrdersRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PatchLabelOrdersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PatchModelIdsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PatchModelIdsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PatchModelIdsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PatchModelIdsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PatchModelIdsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PatchModelLanguagesRequest(arg) {
@@ -1442,6 +1475,17 @@ function serialize_clarifai_api_PatchModelsRequest(arg) {
 
 function deserialize_clarifai_api_PatchModelsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PatchModelsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PatchSearchesRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PatchSearchesRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PatchSearchesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PatchSearchesRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PatchSearchesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PatchTasksRequest(arg) {
@@ -2426,7 +2470,19 @@ deleteAnnotations: {
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },
-  // Execute a search over annotation
+  // Patch saved annotations searches by ids.
+patchAnnotationsSearches: {
+    path: '/clarifai.api.V2/PatchAnnotationsSearches',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest,
+    responseType: proto_clarifai_api_service_pb.MultiSearchResponse,
+    requestSerialize: serialize_clarifai_api_PatchAnnotationsSearchesRequest,
+    requestDeserialize: deserialize_clarifai_api_PatchAnnotationsSearchesRequest,
+    responseSerialize: serialize_clarifai_api_MultiSearchResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiSearchResponse,
+  },
+  // Execute a search over annotations
 postAnnotationsSearches: {
     path: '/clarifai.api.V2/PostAnnotationsSearches',
     requestStream: false,
@@ -2549,7 +2605,19 @@ deleteInputs: {
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },
-  // Execute a search over input
+  // Patch saved inputs searches by ids.
+patchInputsSearches: {
+    path: '/clarifai.api.V2/PatchInputsSearches',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PatchInputsSearchesRequest,
+    responseType: proto_clarifai_api_service_pb.MultiSearchResponse,
+    requestSerialize: serialize_clarifai_api_PatchInputsSearchesRequest,
+    requestDeserialize: deserialize_clarifai_api_PatchInputsSearchesRequest,
+    responseSerialize: serialize_clarifai_api_MultiSearchResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiSearchResponse,
+  },
+  // Execute a search over inputs
 postInputsSearches: {
     path: '/clarifai.api.V2/PostInputsSearches',
     requestStream: false,
@@ -2686,6 +2754,18 @@ patchModels: {
     responseType: proto_clarifai_api_service_pb.MultiModelResponse,
     requestSerialize: serialize_clarifai_api_PatchModelsRequest,
     requestDeserialize: deserialize_clarifai_api_PatchModelsRequest,
+    responseSerialize: serialize_clarifai_api_MultiModelResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiModelResponse,
+  },
+  // Patch one or more models.
+patchModelIds: {
+    path: '/clarifai.api.V2/PatchModelIds',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PatchModelIdsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiModelResponse,
+    requestSerialize: serialize_clarifai_api_PatchModelIdsRequest,
+    requestDeserialize: deserialize_clarifai_api_PatchModelIdsRequest,
     responseSerialize: serialize_clarifai_api_MultiModelResponse,
     responseDeserialize: deserialize_clarifai_api_MultiModelResponse,
   },
@@ -3267,7 +3347,7 @@ postValidatePassword: {
     responseSerialize: serialize_clarifai_api_SinglePasswordValidationResponse,
     responseDeserialize: deserialize_clarifai_api_SinglePasswordValidationResponse,
   },
-  // Get a saved search.
+  // Get a saved legacy search.
 getSearch: {
     path: '/clarifai.api.V2/GetSearch',
     requestStream: false,
@@ -3279,7 +3359,7 @@ getSearch: {
     responseSerialize: serialize_clarifai_api_SingleSearchResponse,
     responseDeserialize: deserialize_clarifai_api_SingleSearchResponse,
   },
-  // List all saved searches.
+  // List all saved legacy searches.
 listSearches: {
     path: '/clarifai.api.V2/ListSearches',
     requestStream: false,
@@ -3288,6 +3368,18 @@ listSearches: {
     responseType: proto_clarifai_api_service_pb.MultiSearchResponse,
     requestSerialize: serialize_clarifai_api_ListSearchesRequest,
     requestDeserialize: deserialize_clarifai_api_ListSearchesRequest,
+    responseSerialize: serialize_clarifai_api_MultiSearchResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiSearchResponse,
+  },
+  // Patch saved legacy searches by ids.
+patchSearches: {
+    path: '/clarifai.api.V2/PatchSearches',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PatchSearchesRequest,
+    responseType: proto_clarifai_api_service_pb.MultiSearchResponse,
+    requestSerialize: serialize_clarifai_api_PatchSearchesRequest,
+    requestDeserialize: deserialize_clarifai_api_PatchSearchesRequest,
     responseSerialize: serialize_clarifai_api_MultiSearchResponse,
     responseDeserialize: deserialize_clarifai_api_MultiSearchResponse,
   },
@@ -3303,7 +3395,7 @@ postSearches: {
     responseSerialize: serialize_clarifai_api_MultiSearchResponse,
     responseDeserialize: deserialize_clarifai_api_MultiSearchResponse,
   },
-  // Execute a previously saved search.
+  // Execute a previously saved legacy search.
 postSearchesByID: {
     path: '/clarifai.api.V2/PostSearchesByID',
     requestStream: false,
