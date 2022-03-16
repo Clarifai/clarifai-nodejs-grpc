@@ -1,0 +1,23 @@
+{
+  "name": "clarifai-nodejs-grpc",
+  "version": "8.0.0",
+  "description": "The official Clarifai Node.js gRPC client",
+  "main": "src/index.js",
+  "repository": "https://github.com/Clarifai/clarifai-javascript-grpc",
+  "author": "Clarifai Inc.",
+  "license": "Apache-2.0",
+  "scripts": {
+    "test": "mocha 'tests/**/*.js' --recursive --timeout 30000"
+  },
+  "keywords": [],
+  "dependencies": {
+    "@grpc/grpc-js": "^1.4.2",
+    "@grpc/proto-loader": "^0.5.5",
+    "axios": "^0.21.1",
+    "protobufjs": "^6.10.2",
+    "google-protobuf": "^3.14.0"
+  },
+  "devDependencies": {
+    "mocha": "^8.2.1"
+  }
+}

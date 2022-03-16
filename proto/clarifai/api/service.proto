@@ -18,7 +18,7 @@ import "google/protobuf/timestamp.proto";
 
 package clarifai.api;
 
-option go_package = "github.com/Clarifai/clarifai-go-grpc/proto/clarifai/api/api";
+option go_package = "github.com/Clarifai/clarifai-go-grpc/proto/clarifai/api";
 option java_multiple_files = true;
 option java_package = "com.clarifai.grpc.api";
 option objc_class_prefix = "CAIP";
@@ -394,7 +394,22 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
 
-  // Execute a search over annotation
+  // Patch saved annotations searches by ids.
+  rpc PatchAnnotationsSearches (PatchAnnotationsSearchesRequest) returns (MultiSearchResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations/searches"
+      body: "*"
+      additional_bindings {
+        patch: "/v2/annotations/searches"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Get;
+  }
+
+  // Execute a search over annotations
   rpc PostAnnotationsSearches(PostAnnotationsSearchesRequest) returns (MultiSearchResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations/searches"
@@ -569,7 +584,22 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
 
-  // Execute a search over input
+  // Patch saved inputs searches by ids.
+  rpc PatchInputsSearches (PatchInputsSearchesRequest) returns (MultiSearchResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/searches"
+      body: "*"
+      additional_bindings {
+        patch: "/v2/inputs/searches"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Get;
+  }
+
+  // Execute a search over inputs
   rpc PostInputsSearches(PostInputsSearchesRequest) returns (MultiSearchResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/searches"
@@ -611,11 +641,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Predict;
   }
-
-
-
-
-
 
 
 
@@ -771,6 +796,17 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Train;
+  }
+
+  // Patch one or more models.
+  rpc PatchModelIds (PatchModelIdsRequest) returns (MultiModelResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/ids"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
 
   // Delete a single model.
@@ -1530,7 +1566,7 @@ service V2 {
 
 
 
-  // Get a saved search.
+  // Get a saved legacy search.
   rpc GetSearch (GetSearchRequest) returns (SingleSearchResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches/{id}"
@@ -1539,10 +1575,10 @@ service V2 {
       }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Search;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Get;
   }
 
-  // List all saved searches.
+  // List all saved legacy searches.
   rpc ListSearches (ListSearchesRequest) returns (MultiSearchResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches"
@@ -1551,7 +1587,22 @@ service V2 {
       }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Search;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Get;
+  }
+
+  // Patch saved legacy searches by ids.
+  rpc PatchSearches (PatchSearchesRequest) returns (MultiSearchResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches"
+      body: "*"
+      additional_bindings {
+        patch: "/v2/searches"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Get;
   }
 
   // Execute a new search and optionally save it.
@@ -1574,7 +1625,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // to know the concepts and models in your default workflow.
   }
 
-  // Execute a previously saved search.
+  // Execute a previously saved legacy search.
   rpc PostSearchesByID (PostSearchesByIDRequest) returns (MultiSearchResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches/{id}"
@@ -1585,6 +1636,7 @@ service V2 {
       }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Search;
   }
 
@@ -1663,8 +1715,15 @@ service V2 {
       }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Search;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Delete;
   }
+
+
+
+
+
 
 
 
@@ -1830,6 +1889,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Search;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // needed for converting workers internal ids to external ids
@@ -1872,7 +1932,7 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Search;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // needed for converting workers internal ids to external ids
@@ -1888,7 +1948,7 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Search;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // needed for converting workers internal ids to external ids
@@ -1908,7 +1968,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Search;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // needed for converting workers internal ids to external ids
@@ -1950,7 +2010,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Search;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // needed for converting workers internal ids to external ids
@@ -2188,7 +2248,6 @@ service V2 {
 
 
 
-
 }
 
 
@@ -2246,6 +2305,10 @@ message ListAnnotationsRequest {
   // Set this flag to list both trusted and not trusted annotations
   // by default it's listing only trusted annotations
   bool list_all_annotations = 6;
+
+  // Set this flag to return the model output for model annotations in the response.
+  bool return_model_output = 12;
+
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
   // Defaults to 1.
   uint32 page = 7;
@@ -2935,13 +2998,6 @@ message GetInputCountRequest {
 
 
 
-
-
-
-
-
-
-
 ////////////////////////////////////////////////////
 // Model prediction related stuff needs inputs and produces outputs.
 ////////////////////////////////////////////////////
@@ -3177,6 +3233,25 @@ message PatchModelsRequest {
   // The action to perform on the patched objects
   // For now actions 'merge', 'overwrite', and 'remove' are supported
   string action = 3;
+}
+
+message IdUpdateSource {
+  //old id
+  string id = 1;
+  //new id
+  string new_id = 2;
+}
+
+// PatchModelIdRequest
+message PatchModelIdsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // Array containing 1 entry
+  repeated IdUpdateSource ids = 3;
+
+  // The action to perform on the patched objects
+  // Only 'overwrite' is supported
+  string action = 4;
 }
 
 // DeleteModelRequest
@@ -3575,6 +3650,43 @@ message PostSearchesRequest {
   Pagination pagination = 4;
 }
 
+message PatchInputsSearchesRequest{
+  // The user_id and app_id to query from.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // The searches to be patched
+  repeated Search searches = 2;
+
+  // The action to perform on the patched Search objects
+  // For now only action 'overwrite' is supported
+  string action = 3;
+}
+
+message PatchAnnotationsSearchesRequest {
+  // The user_id and app_id to query from.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // The searches to be patched
+  repeated Search searches = 2;
+
+  // The action to perform on the patched Search objects
+  // For now only action 'overwrite' is supported
+  string action = 3;
+}
+
+// PatchSearchesRequest
+message PatchSearchesRequest {
+  // The user_id and app_id to query from.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // The searches to be patched
+  repeated Search searches = 2;
+
+  // The action to perform on the patched Search objects
+  // For now only action 'overwrite' is supported
+  string action = 3;
+}
+
 // PostSearchesByIDRequest performs returns results of a saved search given its ID
 message PostSearchesByIDRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -3736,6 +3848,13 @@ message MultiAnnotationSearchMetricsResponse {
 
 
 
+
+
+
+
+
+
+
 // PostValidatePasswordRequest
 message PostValidatePasswordRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -3843,6 +3962,9 @@ message GetWorkflowRequest {
   bool favor_clarifai_workflows = 3;
   // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars
   repeated string additional_fields = 4;
+
+  // if true will not expand search to clarifai workflows
+  bool exclude_clarifai_workflows = 5;
 }
 
 // ListWorkflowsRequest
@@ -4347,6 +4469,7 @@ message MultiTrendingMetricsViewResponse {
   clarifai.api.status.Status status = 1;
   repeated TrendingMetric metrics = 2;
 }
+
 
 
 
