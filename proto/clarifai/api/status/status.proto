@@ -28,6 +28,19 @@ message Status {
   string req_id = 7;
   // Internal Annotation (do not set in production, for internal Clarifai use only).
   string internal_details = 8 [(clarifai.auth.util.cl_private_field) = true];
+  // Resource location info for redirect, when resource location has been changed.
+  RedirectInfo redirect_info = 9 [(clarifai.auth.util.cl_private_field) = true];
+}
+
+message RedirectInfo {
+  // New location for the resource. Used to set response Location header.
+  string url = 1;
+  // Resource type
+  string resource_type = 2;
+  // Old resource id
+  string old_resource_id = 3;
+  // New resource id
+  string new_resource_id = 4;
 }
 
 // Base message to return when there is a internal server error that

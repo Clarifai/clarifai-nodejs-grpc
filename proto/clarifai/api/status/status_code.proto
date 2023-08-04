@@ -8,7 +8,10 @@ option java_package = "com.clarifai.grpc.api.status";
 option objc_class_prefix = "CAIP";
 
 enum StatusCode {
-  reserved 33000, 33001, 33002, 33100, 33101, 33102, 33103, 33104, 33105, 33106, 33200, 33201, 33203, 33210, 39995, 40018, 40019, 41200, 41201, 41202, 41203, 41204; // deprecated status codes that should not be reused
+  reserved
+      25407, 33000, 33001, 33002, 33100, 33101, 33102, 33103, 33104, 33105,
+      33106, 33200, 33201, 33203, 33210, 39995, 40018, 40019, 41200, 41201,
+      41202, 41203, 41204, 25500, 25501, 25502, 25503, 25505, 25506;
   // to be revised and greatly expanded
   ZERO = 0;
 
@@ -18,6 +21,7 @@ enum StatusCode {
   FAILURE = 10020;
   TRY_AGAIN = 10030;
   NOT_IMPLEMENTED = 10040;
+  MOVED = 10050; // Resource moved. Respond with Http status 307 and add new Location header to response
   //SUCCESS_WARNING_API_DEPRECATED = 10001;
   //SUCCESS_WARNING_CLIENT_DEPRECATED = 10002;
 
@@ -50,17 +54,18 @@ enum StatusCode {
   MODEL_QUEUED_FOR_TRAINING = 21103;
   MODEL_UPLOADING = 21104;
   MODEL_UPLOADING_FAILED = 21105;
+  MODEL_TRAINING_FAILED = 21106; // generic err msg for any type of model training err.
 
-  MODEL_TRAINING_NO_DATA = 21110; // Custom model training had no data.
-  MODEL_TRAINING_NO_POSITIVES = 21111; // Custom model training had no positive examples.
-  MODEL_TRAINING_ONE_VS_N_SINGLE_CLASS = 21112; // Custom model training was ONE_VS_N but with a single class.
-  MODEL_TRAINING_TIMED_OUT = 21113; // Training took longer than hard coded timeouts.
-  MODEL_TRAINING_WAITING_ERROR = 21114; // Training got error waiting on asset pipeline to finish.
+  MODEL_TRAINING_NO_DATA = 21110; // Custom model training had no data.  FIXME(yang): deprecate this. Use the 21106 + errStatusMsg
+  MODEL_TRAINING_NO_POSITIVES = 21111; // Custom model training had no positive examples. FIXME(yang): deprecate this. Use the 21106 + errStatusMsg
+  MODEL_TRAINING_ONE_VS_N_SINGLE_CLASS = 21112; // Custom model training was ONE_VS_N but with a single class. FIXME(yang): deprecate this. Use the 21106 + errStatusMsg
+  MODEL_TRAINING_TIMED_OUT = 21113; // Training took longer than hard coded timeouts. FIXME(yang): deprecate this. Use the 21106 + errStatusMsg
+  MODEL_TRAINING_WAITING_ERROR = 21114; // Training got error waiting on asset pipeline to finish. FIXME(yang): deprecate this. Use the 21106 + errStatusMsg
   MODEL_TRAINING_UNKNOWN_ERROR = 21115; // Training threw an unknown exception.
-  MODEL_TRAINING_MSG_REDELIVER = 21116 [deprecated = true]; // Training message was redelivered.
-  MODEL_TRAINING_INSUFFICIENT_DATA = 21117; // Training got error due to insufficient labelled data
-  MODEL_TRAINING_INVALID_PARAMS = 21118;
-  MODEL_TRAINING_INVALID_DATA_TOLERANCE_EXCEEDED = 21119; // Training is stopped because too much data was dropped
+  MODEL_TRAINING_MSG_REDELIVER = 21116 [deprecated = true]; // Training message was redelivered. FIXME(yang): deprecate this. Use the 21106 + errStatusMsg
+  MODEL_TRAINING_INSUFFICIENT_DATA = 21117; // Training got error due to insufficient labelled data. FIXME(yang): deprecate this. Use the 21106 + errStatusMsg
+  MODEL_TRAINING_INVALID_PARAMS = 21118; // FIXME(yang): deprecate this. Use the 21106 + errStatusMsg
+  MODEL_TRAINING_INVALID_DATA_TOLERANCE_EXCEEDED = 21119; // Training is stopped because too much data was dropped. FIXME(yang): deprecate this. Use the 21106 + errStatusMsg
 
   MODEL_MODIFY_SUCCESS = 21150;
   MODEL_MODIFY_PENDING = 21151;
@@ -78,14 +83,15 @@ enum StatusCode {
   MODEL_NOT_EVALUATED = 21302;
   MODEL_QUEUED_FOR_EVALUATION = 21303;
 
-  MODEL_EVALUATION_TIMED_OUT = 21310; // Evaluation took longer than hard coded timeouts.
-  MODEL_EVALUATION_WAITING_ERROR = 21311; // Evaluation got error waiting on asset pipeline to finish.
+  MODEL_EVALUATION_TIMED_OUT = 21310; // Evaluation took longer than hard coded timeouts. FIXME(yang): deprecate this. Use the 21317 + errStatusMsg
+  MODEL_EVALUATION_WAITING_ERROR = 21311; // Evaluation got error waiting on asset pipeline to finish.FIXME(yang): deprecate this. Use the 21317 + errStatusMsg
   MODEL_EVALUATION_UNKNOWN_ERROR = 21312; // EVALUATION THREW AN UNKNOWN EXCEPTION.
 
   MODEL_PREDICTION_FAILED = 21313;
-  MODEL_EVALUATION_MSG_REDELIVER = 21314 [deprecated = true]; // Eval message was redelivered.
-  MODEL_EVALUATION_NEED_LABELS = 21315; // Don't have enough concepts labelled to perform evaluation
-  MODEL_EVALUATION_NEED_INPUTS = 21316; // Don't have enough inputs per concept to perform evaluation
+  MODEL_EVALUATION_MSG_REDELIVER = 21314 [deprecated = true]; // Eval message was redelivered. FIXME(yang): deprecate this. Use the 21317 + errStatusMsg
+  MODEL_EVALUATION_NEED_LABELS = 21315; // Don't have enough concepts labelled to perform evaluation. FIXME(yang): deprecate this. Use the 21317 + errStatusMsg
+  MODEL_EVALUATION_NEED_INPUTS = 21316; // Don't have enough inputs per concept to perform evaluation. FIXME(yang): deprecate this. Use the 21317 + errStatusMsg
+  MODEL_EVALUATION_FAILED = 21317; // Generic err code for eval failure.
   // Status codes through 21319 (inclusive) reserved for model eval *errors* (per logic in clients)
 
   MODEL_DEPLOYMENT_FAILED = 21350; // Used when inference coordinator failed to deploy spire and throws an error
@@ -155,7 +161,15 @@ enum StatusCode {
   DATA_DUMP_PENDING = 25151;
   DATA_DUMP_FAILED = 25152;
   DATA_DUMP_IN_PROGRESS = 25153;
-  DATA_DUMP_NO_DATA = 25154;
+  // DEPRECATED: Not used anymore. Now for an empty data dump, DATA_DUMP_SUCCESS is returned. To detect an empty data dump, check if the inptus count is 0.
+  DATA_DUMP_NO_DATA = 25154 [deprecated = true];
+  DATA_DUMP_UNEXPECTED_ERROR = 25155;
+
+  DATA_DUMP_EXPORT_SUCCESS = 25170;
+  DATA_DUMP_EXPORT_PENDING = 25171;
+  DATA_DUMP_EXPORT_FAILED = 25172;
+  DATA_DUMP_EXPORT_IN_PROGRESS = 25173;
+  DATA_DUMP_EXPORT_UNEXPECTED_ERROR = 25174;
 
   // Duplicate related 252xx
   APP_DUPLICATION_SUCCESS = 25200;
@@ -170,6 +184,21 @@ enum StatusCode {
   MODULE_INVALID_ARGUMENT = 25302;
   MODULE_INVALID_REQUEST = 25303;
 
+  // Bulk Operation related codes 254xx
+  BULK_OPERATION_SUCCESS = 25400;
+  BULK_OPERATION_FAILED = 25401;
+  BULK_OPERATION_PENDING = 25402;
+  BULK_OPERATION_IN_PROGRESS = 25403;
+  BULK_OPERATION_INVALID_REQUEST = 25404;
+  BULK_OPERATION_CANCELLED = 25405;
+  BULK_OPERATION_UNEXPECTED_ERROR = 25406;
+
+  // Runner related codes 256xx
+  RUNNER_DOES_NOT_EXIST = 25600;
+  RUNNER_PERMISSION_DENIED = 25601;
+  RUNNER_INVALID_ARGUMENT = 25602;
+  RUNNER_INVALID_REQUEST = 25603;
+  RUNNER_NEEDS_RETRY = 25604;
 
   // Input:Image related 30xxx
   INPUT_DOWNLOAD_SUCCESS = 30000;
@@ -185,6 +214,7 @@ enum StatusCode {
   INPUT_INVALID_ARGUMENT = 30104;
   INPUT_OVER_LIMIT = 30105;
   INPUT_INVALID_URL = 30106;
+  
   INPUT_MODIFY_SUCCESS = 30200;
   INPUT_MODIFY_PENDING = 30201;
   INPUT_MODIFY_FAILED = 30203;
@@ -220,9 +250,16 @@ enum StatusCode {
 
   ALL_INPUT_VIDEOS_INVALID_BYTES = 31300;
 
+  INPUT_VIDEO_PROCESSING_SUCCESS = 31400;
+  INPUT_VIDEO_PROCESSING_PENDING = 31410;
+  INPUT_VIDEO_PROCESSING_FAILED = 31420;
+  INPUT_VIDEO_STORAGE_INCONSISTENCY = 31430;
+  INPUT_VIDEO_STORAGE_FAILURE = 31440;
+  INPUT_VIDEO_URL_GENERATION_FAILURE = 31450;
+
   INPUT_CONNECTION_FAILED = 39996;
   REQUEST_DISABLED_FOR_MAINTENANCE = 39997;
-  INPUT_WRITES_DISABLED_FOR_MAINTENANCE = 39998;
+  INPUT_WRITES_DISABLED_FOR_MAINTENANCE = 39998 [deprecated = true]; // deprecate this one. Use REQUEST_DISABLED_FOR_MAINTENANCE
   INPUT_INVALID_REQUEST = 39999;
 
   // API formatting issues 4000x
@@ -240,6 +277,7 @@ enum StatusCode {
   DATABASE_FAIL_TO_GET_CONNECTIONS = 40015;
   DATABASE_TOO_MANY_CLIENTS = 40016;
   DATABASE_CONSTRAINT_VIOLATED = 40017;
+  DATABASE_CANCELED = 40021;
 
   ASYNC_WORKER_MULTI_ERRORS = 40020;
   RPC_REQUEST_QUEUE_FULL = 40030;
@@ -252,6 +290,8 @@ enum StatusCode {
   CLUSTER_INTERNAL_FAILURE = 43040;
 
   EXTERNAL_CONNECTION_ERROR = 40034; // could not connect to external services
+
+  QUERY_INVALID_SYNTAX = 40050;
 
   // Queue related errors 41xxx
   QUEUE_CONN_ERROR = 41000;
@@ -277,7 +317,9 @@ enum StatusCode {
   SEARCH_PREDICTION_FAILURE = 43003;
   SEARCH_BY_NOT_FULLY_INDEXED_INPUT = 43004;
   SAVED_SEARCH_MODIFY_FAILED = 43005;
+  SEARCH_COUNTS_UNAVAILABLE = 43006;
 
+  // Workflow evaluation err code
   EVALUATION_QUEUED = 43100;
   EVALUATION_IN_PROGRESS = 43101;
   EVALUATION_SUCCESS = 43102;
@@ -345,8 +387,10 @@ enum StatusCode {
   TASK_DONE = 54002;
   // The task is marked as abandoned.
   TASK_WONT_DO = 54003;
-  // An error occurred during add-task-annotations pipeline.
-  TASK_ADD_ANNOTATIONS_FAILURE = 54005;
+  // An error occurred during add-task-annotations or add-auto-annotations pipeline.
+  TASK_FAILED = 54005;
+  // When an Auto Annotation task job has finished processing its last batch and is waiting for more dataset assets.
+  TASK_IDLE = 54006;
   // The task operation is in conflict with the current state of the server.
   TASK_CONFLICT = 54100;
   // Certain task-related scenarios are not implemented.
@@ -394,16 +438,54 @@ enum StatusCode {
   DATASET_VERSION_FAILURE = 64020;
   // An unexpected error occurred during the dataset version processing.
   DATASET_VERSION_UNEXPECTED_ERROR = 64025;
+  // An alteration to dataset version would create a conflict
+  DATASET_VERSION_CONFLICT = 64030;
+
+  // The dataset input was successfully added.
+  DATASET_INPUT_SUCCESS = 64100;
+  // The dataset input is a duplicate.
+  // Deprecated: Unused.
+  DATASET_INPUT_DUPLICATE = 64101;
+
+  // The dataset version export is completed.
+  DATASET_VERSION_EXPORT_SUCCESS = 64200;
+  // The dataset version is pending to be exported.
+  DATASET_VERSION_EXPORT_PENDING = 64201;
+  // An error occurred during the dataset version export.
+  DATASET_VERSION_EXPORT_FAILED = 64202;
+  // The dataset version is currently being exported.
+  DATASET_VERSION_EXPORT_IN_PROGRESS = 64203;
+  // An unexpected error occurred during the dataset version export.
+  DATASET_VERSION_EXPORT_UNEXPECTED_ERROR = 64204;
 
   // Generic Job status codes
   JOB_QUEUED = 64000;
   JOB_RUNNING = 64001;
   JOB_COMPLETED = 64002;
   JOB_FAILED = 64003;
+  JOB_CANCELLED = 64004;
+  JOB_UNEXPECTED_ERROR = 64006;
+  JOB_CONFLICT = 64007;
 
   //auth issues
   AUTH_MISSING_IDP_ASSOC = 65000;
   // TODO: Knowledge graph related 80xxx
+
+  LIST_OBJECTS_FAILED = 66000;
+
+  ARCHIVE_EXTRACT_FAILED = 67000;
+
+  // Multipart uploading status codes
+  UPLOAD_IN_PROGRESS = 68000;
+  UPLOAD_DONE = 68001;
+  UPLOAD_FAILED = 68002;
+  UPLOAD_UNEXPECTED_ERROR = 68003;
+  UPLOAD_EXPIRED = 68004;
+  UPLOAD_CANCELED = 68005;
+  UPLOAD_CONFLICT = 68006;
+
+  // Billing related issues: 69xxx
+  BILLING_INVALID_INFO = 69000;
 
   // Internal issues: 98xxx
   INTERNAL_SERVER_ISSUE = 98004;
@@ -431,4 +513,5 @@ enum StatusCode {
   BAD_REQUEST = 90400;
   // Deprecated: migrate off to one of the internal issues
   SERVER_ERROR = 90500;
+
 }

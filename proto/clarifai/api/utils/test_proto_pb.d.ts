@@ -10,36 +10,29 @@ import * as proto_clarifai_api_utils_extensions_pb from "../../../../proto/clari
 export class TestProto extends jspb.Message { 
     getId(): string;
     setId(value: string): TestProto;
-
     getMessage(): string;
     setMessage(value: string): TestProto;
-
     getValue(): number;
     setValue(value: number): TestProto;
-
     getImageBytes(): Uint8Array | string;
     getImageBytes_asU8(): Uint8Array;
     getImageBytes_asB64(): string;
     setImageBytes(value: Uint8Array | string): TestProto;
-
 
     hasStringOneof(): boolean;
     clearStringOneof(): void;
     getStringOneof(): string;
     setStringOneof(value: string): TestProto;
 
-
     hasBoolOneof(): boolean;
     clearBoolOneof(): void;
     getBoolOneof(): boolean;
     setBoolOneof(value: boolean): TestProto;
 
-
     hasMessageOneof(): boolean;
     clearMessageOneof(): void;
     getMessageOneof(): TestProto2 | undefined;
     setMessageOneof(value?: TestProto2): TestProto;
-
 
     getOneOfFieldCase(): TestProto.OneOfFieldCase;
 
@@ -66,13 +59,9 @@ export namespace TestProto {
 
     export enum OneOfFieldCase {
         ONE_OF_FIELD_NOT_SET = 0,
-    
-    STRING_ONEOF = 5,
-
-    BOOL_ONEOF = 6,
-
-    MESSAGE_ONEOF = 7,
-
+        STRING_ONEOF = 5,
+        BOOL_ONEOF = 6,
+        MESSAGE_ONEOF = 7,
     }
 
 }
@@ -80,10 +69,8 @@ export namespace TestProto {
 export class TestProto2 extends jspb.Message { 
     getId(): string;
     setId(value: string): TestProto2;
-
     getFlip(): boolean;
     setFlip(value: boolean): TestProto2;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): TestProto2.AsObject;
