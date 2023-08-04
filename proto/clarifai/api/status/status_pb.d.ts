@@ -11,30 +11,27 @@ import * as proto_clarifai_api_status_status_code_pb from "../../../../proto/cla
 export class Status extends jspb.Message { 
     getCode(): proto_clarifai_api_status_status_code_pb.StatusCode;
     setCode(value: proto_clarifai_api_status_status_code_pb.StatusCode): Status;
-
     getDescription(): string;
     setDescription(value: string): Status;
-
     getDetails(): string;
     setDetails(value: string): Status;
-
     clearStackTraceList(): void;
     getStackTraceList(): Array<string>;
     setStackTraceList(value: Array<string>): Status;
     addStackTrace(value: string, index?: number): string;
-
     getPercentCompleted(): number;
     setPercentCompleted(value: number): Status;
-
     getTimeRemaining(): number;
     setTimeRemaining(value: number): Status;
-
     getReqId(): string;
     setReqId(value: string): Status;
-
     getInternalDetails(): string;
     setInternalDetails(value: string): Status;
 
+    hasRedirectInfo(): boolean;
+    clearRedirectInfo(): void;
+    getRedirectInfo(): RedirectInfo | undefined;
+    setRedirectInfo(value?: RedirectInfo): Status;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Status.AsObject;
@@ -56,6 +53,36 @@ export namespace Status {
         timeRemaining: number,
         reqId: string,
         internalDetails: string,
+        redirectInfo?: RedirectInfo.AsObject,
+    }
+}
+
+export class RedirectInfo extends jspb.Message { 
+    getUrl(): string;
+    setUrl(value: string): RedirectInfo;
+    getResourceType(): string;
+    setResourceType(value: string): RedirectInfo;
+    getOldResourceId(): string;
+    setOldResourceId(value: string): RedirectInfo;
+    getNewResourceId(): string;
+    setNewResourceId(value: string): RedirectInfo;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): RedirectInfo.AsObject;
+    static toObject(includeInstance: boolean, msg: RedirectInfo): RedirectInfo.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: RedirectInfo, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): RedirectInfo;
+    static deserializeBinaryFromReader(message: RedirectInfo, reader: jspb.BinaryReader): RedirectInfo;
+}
+
+export namespace RedirectInfo {
+    export type AsObject = {
+        url: string,
+        resourceType: string,
+        oldResourceId: string,
+        newResourceId: string,
     }
 }
 
@@ -65,7 +92,6 @@ export class BaseResponse extends jspb.Message {
     clearStatus(): void;
     getStatus(): Status | undefined;
     setStatus(value?: Status): BaseResponse;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): BaseResponse.AsObject;
