@@ -20,6 +20,7 @@ const packageDefinition = protoLoader.loadSync(
         PROTO_PATH + "/clarifai/api/status/status.proto",
         PROTO_PATH + "/clarifai/api/resources.proto",
         PROTO_PATH + "/clarifai/api/service_processed.proto",
+        PROTO_PATH + "/clarifai/api/utils/matrix.proto",
     ],
     {
         keepCase: true,
