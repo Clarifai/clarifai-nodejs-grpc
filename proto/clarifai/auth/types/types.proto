@@ -7,6 +7,7 @@ option java_multiple_files = true;
 option java_package = "com.clarifai.grpc.auth.types";
 option objc_class_prefix = "CAIP";
 
+
 // Authorization type for endpoints.
 enum AuthType {
   // introduce undef so that the zero (default/unset) value of the enum is not a real

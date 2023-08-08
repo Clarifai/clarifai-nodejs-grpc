@@ -1,20 +1,21 @@
 syntax = "proto3";
 
 import "proto/clarifai/api/status/status.proto";
+import "proto/clarifai/api/status/status_code.proto";
 import "proto/clarifai/api/utils/extensions.proto";
+import "proto/clarifai/api/utils/matrix.proto";
 import "proto/clarifai/auth/util/extension.proto";
 
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 
 package clarifai.api;
 
-option go_package = "github.com/Clarifai/clarifai-go-grpc/proto/clarifai/api/api";
+option go_package = "github.com/Clarifai/clarifai-go-grpc/proto/clarifai/api";
 option java_multiple_files = true;
 option java_package = "com.clarifai.grpc.api";
 option objc_class_prefix = "CAIP";
-
-
 
 
 // Annotation of an asset with metadata
@@ -39,7 +40,7 @@ message Annotation {
   string model_version_id = 16;
 
   // DEPRECATED.
-  string embed_model_version_id = 14 [deprecated=true];
+  string embed_model_version_id = 14 [deprecated = true];
 
   // Annotation Status
   clarifai.api.status.Status status = 7;
@@ -56,7 +57,7 @@ message Annotation {
 
   // Whether or not this annotation is trusted
   // Will be deprecated
-  bool trusted = 10[deprecated=true];
+  bool trusted = 10 [deprecated = true];
 
   // Is this the input level annotation.
   bool input_level = 17;
@@ -67,6 +68,8 @@ message Annotation {
   google.protobuf.Struct consensus_info = 18;
   // The id of the task annotation belongs to
   string task_id = 19;
+  // ID of the workflow version this annotation is created by
+  string workflow_version_id = 20;
 }
 
 // Application with tasks and datasets
@@ -75,9 +78,12 @@ message App {
   string id = 1;
   string name = 2;
   string default_language = 3;
+  // Default workflow id deprecated in favor of default_workflow
   string default_workflow_id = 4;
-  //why is user_id present here when this message type is used in PostApps but completely ignored there? PostApp already specifies the userid in path but doesn't even actually use neither of userids, it instead used the id from auth context.
-  //This creates a lot of ambiguity, should always have different message types for Post/Get endpoints so that the minimum interface for each op can be described
+  Workflow default_workflow = 23;
+  // why is user_id present here when this message type is used in PostApps but completely ignored there? PostApp already
+  // specifies the userid in path but doesn't even actually use neither of userids, it instead used the id from auth context.
+  // This creates a lot of ambiguity, should always have different message types for Post/Get endpoints so that the minimum interface for each op can be described
   string user_id = 5;
   // When the app was created. We follow the XXXX timestamp
   // format. We use https://www.ietf.org/rfc/rfc3339.txt format:
@@ -114,6 +120,13 @@ message App {
   // How many users have starred the app (only showed on get/list requests)
   // Computed value, not editable
   int32 star_count = 20;
+
+  // Notes for the application
+  // This field should be used for in-depth notes and supports up to 64Kbs.
+  string notes = 21;
+
+  // Representative image for this app
+  Image image = 22;
 }
 
 // App query
@@ -124,14 +137,14 @@ message AppQuery {
 
 // Collaborator - invited user, who shares an access to an application
 message Collaborator {
-  //id of this collaborator
+  // id of this collaborator
   string id = 1;
-  //the app this collaborator has access to
+  // the app this collaborator has access to
   // FIXME(zeiler): this should be in the user_app_id.app_id already from the endpoint.
   clarifai.api.App app = 2;
-  //who is this collaborator
+  // who is this collaborator
   clarifai.api.User user = 3;
-  //the permission this collaborator
+  // the permission this collaborator
   repeated string scopes = 4;
   repeated string endpoints = 5;
 
@@ -149,17 +162,17 @@ message Collaborator {
   google.protobuf.Timestamp deleted_at = 8;
 }
 
-//collaboration includes an app you're invited to work on.
-message Collaboration{
-  //the application
+// collaboration includes an app you're invited to work on.
+message Collaboration {
+  // the application
   App app = 1;
-  //the app owner's info(including user_unique_id, first_name, last_name, primary_email)
+  // the app owner's info(including user_unique_id, first_name, last_name, primary_email)
   User app_owner = 2;
-  //the low-level scope users are shared with for this collaboration
+  // the low-level scope users are shared with for this collaboration
   repeated string scopes = 3;
-  //the endpoint-level scopes users are shared with for this collaboration
+  // the endpoint-level scopes users are shared with for this collaboration
   repeated string endpoints = 4;
-  //when is the collaboration created
+  // when is the collaboration created
   google.protobuf.Timestamp created_at = 5;
 }
 
@@ -212,6 +225,7 @@ message Track {
 
 
 
+
 // Cluster data
 message Cluster {
   string id = 1;
@@ -219,7 +233,8 @@ message Cluster {
   // Number of annotations tied to the cluster in the app
   uint32 count = 2;
 
-  // The score assigned to this cluster
+  // The score assigned to this cluster.
+  // For List Clusters endpoint, this represents percentage of inputs in the app assigned to this cluster.
   float score = 3;
 
   // Representative hits for cluster (for now we only return 1)
@@ -361,6 +376,22 @@ message Concept {
 
   // The user the concept belongs to.
   string user_id = 10;
+
+  // Information about keypoints for this concept
+  KeypointInfo keypoint_info = 11;
+}
+
+message KeypointInfo {
+  // Names of the keypoints
+  repeated string keypoint_names = 1;
+
+  // Defines the connections between keypoint_names. Each value represents the index in keypoint_names.
+  repeated KeypointEdge skeleton = 2;
+}
+
+message KeypointEdge {
+  uint32 k1 = 1;
+  uint32 k2 = 2;
 }
 
 // ConceptCount
@@ -523,7 +554,7 @@ message Data {
   repeated Region regions = 11;
   // For temporal content like video.
   repeated Frame frames = 12;
-  // Input and output text.
+  // Input, output or annotation text.
   Text text = 13;
   // Input and output audio.
   Audio audio = 14;
@@ -532,7 +563,9 @@ message Data {
   // Time segments information.
   repeated TimeSegment time_segments = 16;
   // Holds score, rank, and user, app, input IDs and search hit data
-  repeated Hit hits= 17;
+  repeated Hit hits = 17;
+  // Heatmap as 2d image
+  repeated Image heatmaps = 18;
 }
 
 // A region within the data.
@@ -562,6 +595,13 @@ message RegionInfo {
   Polygon polygon = 5;
   // A landmark point location.
   Point point = 6;
+  // Span char sequence for NLP.
+  Span span = 7;
+  // Token char sequence for NLP.
+  Token token = 8;
+  // The locations of detected keypoints, which are to be used in conjunction with the detected concept's skeleton to connect the keypoint locations.
+  // These will be in the same order as the respective keypoint_names inside the concept.
+  repeated Point keypoint_locations = 9;
 }
 
 // Rectangular bounding box for a region.
@@ -623,6 +663,26 @@ message Point {
   float col = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
   // Depth if applicable for the point.
   float z = 3;
+  // Whether this point is visible or occluded
+  enum Visibility {
+    NOT_SET = 0;     // Visibility of the point is not set
+    VISIBLE = 1;     // Point is visible
+    NOT_VISIBLE = 2; // Point is occluded
+    NOT_PRESENT = 3; // Point is not in the image
+  }
+  Visibility visibility = 4;
+}
+
+message Span {
+  uint32 char_start = 1 [(clarifai.api.utils.cl_show_if_empty) = true];
+  uint32 char_end = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+  string raw_text = 3;
+}
+
+message Token {
+  uint32 char_start = 1 [(clarifai.api.utils.cl_show_if_empty) = true];
+  uint32 char_end = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+  string raw_text = 3;
 }
 
 // Embedding
@@ -644,9 +704,7 @@ message GeoLimit {
 }
 
 // GeoBoxedPoint
-message GeoBoxedPoint {
-  GeoPoint geo_point = 1;
-}
+message GeoBoxedPoint { GeoPoint geo_point = 1; }
 
 // Geo
 message Geo {
@@ -728,9 +786,16 @@ message Input {
   clarifai.api.status.Status status = 6;
 
   // List of dataset IDs that this input is part of
-  // Currently, this field is ONLY used in search.
+  // Currently, this field is ONLY used to
+  // * search inputs part of dataset(s), e.g. in `PostSearches`, `PostInputsSearches` and `PostAnnotationsSearches` endpoints, and
+  // * to add inputs to dataset(s) in `PostInputs` endpoint.
+  // Note that this field is ignored for other endpoints, e.g. `GetInput`, `ListInputs` and `PatchInputs`.
   repeated string dataset_ids = 7;
 }
+
+// InputBatch is a batch of Input resources. Large amounts of inputs are usually
+// divided into multiple InputBatches.
+message InputBatch { repeated Input inputs = 1; }
 
 // NOTE: inconsistency: this is weird mix of plural and singular words.
 message InputCount {
@@ -744,41 +809,108 @@ message InputCount {
   uint32 reindexing = 8 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+// Dataset
+message Dataset {
+  reserved 6, 10;
 
-// DatasetFilter
-message DatasetFilter {
-  reserved 7;
-
-  // The ID for the dataset filter
+  // The ID for the dataset
   string id = 1;
 
-  // When the dataset filter was created.
+  // When the dataset was created.
   // The format is https://www.ietf.org/rfc/rfc3339.txt.
   // Example: "2006-01-02T15:04:05.999999Z".
   google.protobuf.Timestamp created_at = 2;
 
-  // When the dataset filter was modified.
+  // When the dataset was modified.
   // The format is https://www.ietf.org/rfc/rfc3339.txt.
   // Example: "2006-01-02T15:04:05.999999Z".
   google.protobuf.Timestamp modified_at = 3;
 
-  // The user the dataset filter belongs to.
+  // The app the dataset belongs to.
+  string app_id = 4;
+
+  // The user the dataset belongs to.
+  string user_id = 5;
+
+  // Description of the dataset
+  string description = 7;
+
+  // To handle arbitrary json metadata you can use a struct field:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  google.protobuf.Struct metadata = 8;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 9;
+
+  // Default annotation filter used for this dataset.
+  AnnotationFilter default_annotation_filter = 12;
+
+  // Default processing info used for this dataset.
+  DatasetVersionProcessingInfo default_processing_info = 16;
+
+  // Notes for the dataset
+  // This field should be used for in-depth notes and supports up to 64Kbs.
+  string notes = 11;
+
+  // Dataset version associated with this dataset. This is used in listing Datasets
+  // and including the latest version.
+  DatasetVersion version = 13;
+
+  // Whether the dataset is starred by the requesting user.
+  bool is_starred = 14;
+  // Number of users that starred this dataset.
+  int32 star_count = 15;
+
+  // bookmark info. When set, this dataset is a bookmarked dataset of this app.
+  // Info in this field will allow you to find/access original dataset.
+  BookmarkOrigin bookmark_origin = 17;
+}
+
+// AnnotationFilter is used to create a new dataset version.
+// For now, the filter is simply a wrapper over a Search.
+// In the future, we may add extra fields to customize the filtering.
+message AnnotationFilter {
+  reserved 6, 7;
+
+  // The ID for the annotation filter
+  string id = 1;
+
+  // When the annotation filter was created.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp created_at = 2;
+
+  // When the annotation filter was modified.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp modified_at = 3;
+
+  // The user the annotation filter belongs to.
   string user_id = 4;
 
-  // The app the dataset filter belongs to.
+  // The app the annotation filter belongs to.
   string app_id = 5;
-
-  // The dataset the filter belongs to.
-  string dataset_id = 6;
 
   // The saved search that this filter uses.
   Search saved_search = 8;
 }
 
+// DatasetInput
+message DatasetInput {
+  // When the input was added to the dataset.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp created_at = 1;
+
+  // The input data.
+  Input input = 2;
+}
 
 // DatasetVersion
 message DatasetVersion {
-  reserved 9;
+  reserved 7, 9, 11;
 
   // The ID for the dataset version
   string id = 1;
@@ -804,8 +936,10 @@ message DatasetVersion {
 
   // Data config reveals how the dataset version is generated.
   oneof data_config {
-    // The dataset version will be generated based on a single dataset filter.
-    DatasetVersionDatasetFilterConfig dataset_filter_config = 7;
+    // The dataset version will be generated based on a single annotation filter.
+    AnnotationFilterConfig annotation_filter_config = 15;
+    // The dataset version will be generated based on model version inferences.
+    ModelPredictConfig model_predict_config = 18;
   }
 
   // Status for this dataset version.
@@ -814,8 +948,16 @@ message DatasetVersion {
   // Description of the dataset version
   string description = 10;
 
+  // Dataset version processing. If this is not set when the dataset version is
+  // created, then the dataset default_processing_info is copied instead. Later
+  // updates to default_processing_info will not apply to existing versions.
+  DatasetVersionProcessingInfo processing_info = 19;
+
   // Dataset version metrics
-  DatasetVersionMetrics metrics = 11;
+  map<string, DatasetVersionMetrics> metrics = 16;
+
+  // Dataset version exports
+  DatasetVersionExportInfo export_info = 17;
 
   // To handle arbitrary json metadata you can use a struct field:
   // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
@@ -830,22 +972,192 @@ message DatasetVersion {
   repeated string embed_model_version_ids = 14;
 }
 
-message DatasetVersionDatasetFilterConfig {
-  DatasetFilter dataset_filter = 1;
+message AnnotationFilterConfig {
+  // The annotation filter that is used.
+  AnnotationFilter annotation_filter = 1;
+
+  // If true, empty inputs are not included in the dataset version.
+  // If false, empty inputs are included in the dataset version.
+  // We define an empty input as an input without any annotations after annotation filter is applied.
+  bool ignore_empty_inputs = 2;
+}
+
+message ModelPredictConfig {
+  // Assumed to be owned by the calling users app unless user_id and app_id are filled out.
+  Model model = 1;
 }
 
 message DatasetVersionMetrics {
-  uint64 inputs_count = 1;
-  uint64 positive_annotations_count = 2;
-  uint64 bounding_boxes_count = 3;
+  reserved 2, 3, 4, 5, 7;
+
+  // Number of inputs
+  google.protobuf.UInt64Value inputs_count = 1;
+  // Number of unlabeled inputs
+  // An input is considered unlabeled if it there are no annotations with positive labels for that input.
+  google.protobuf.UInt64Value unlabeled_inputs_count = 6;
+  // Number of inputs that have metadata
+  google.protobuf.UInt64Value inputs_with_metadata_count = 8;
+  // Number of inputs that have geo information
+  google.protobuf.UInt64Value inputs_with_geo_count = 9;
+
+  // Number of regions
+  google.protobuf.UInt64Value regions_count = 20;
+  // The matrix shows where the regions are located.
+  // Example: If the matrix has 2x2 dimensions, then
+  // * region_location_matrix[0][0] = the number of regions that appear in the top left corner, i.e. [0,0]..(0.5,0.5)
+  // * region_location_matrix[0][1] = the number of regions that appear in the top right corner, i.e. [0,0.5]..[0.5,1]
+  // * region_location_matrix[1][0] = the number of regions that appear in the bottom left corner, i.e. [0.5,0]..[1,0.5)
+  // * region_location_matrix[1][1] = the number of regions that appear in the bottom right corner, i.e. [0.5,0.5]..[1,1]
+  MatrixUint64 region_location_matrix = 21;
+  // Number of bounding boxes
+  google.protobuf.UInt64Value bounding_boxes_count = 22;
+  // Number of polygons
+  google.protobuf.UInt64Value polygons_count = 23;
+  // Number of points
+  google.protobuf.UInt64Value points_count = 24;
+  // Number of masks
+  google.protobuf.UInt64Value masks_count = 25;
+
+  // Number of inputs that have regions attached
+  // Note that this is not a recursive count: if an input contains frames that contains regions, then the region_frames_count is increased, but region_inputs_count is not increased.
+  google.protobuf.UInt64Value region_inputs_count = 60;
+  // Number of frames that have regions attached
+  google.protobuf.UInt64Value region_frames_count = 61;
+
+  // Number of frames
+  google.protobuf.UInt64Value frames_count = 30;
+
+  // Number of inputs that have frames attached
+  google.protobuf.UInt64Value frame_inputs_count = 70;
+
+  // Number of embeddings
+  google.protobuf.UInt64Value embeddings_count = 40;
+
+  // Number of positive tags added at input-level
+  google.protobuf.UInt64Value positive_input_tags_count = 50;
+  // Number of positive tags added at region-level
+  google.protobuf.UInt64Value positive_region_tags_count = 51;
+  // Number of positive tags added at frame-level
+  google.protobuf.UInt64Value positive_frame_tags_count = 52;
 }
 
+message DatasetVersionMetricsGroup {
+  string parent_path = 1;
+  DatasetVersionMetricsGroupType type = 2;
+  google.protobuf.Value value = 3;
+  DatasetVersionMetrics metrics = 4;
+}
 enum DatasetVersionMetricsGroupType {
   DATASET_VERSION_METRICS_GROUP_TYPE_NOT_SET = 0;
 
-  INPUT_TYPE = 1;
+  // Group data examples by input type.
+  // Examples: images, videos, text, audio.
+  INPUT_TYPE = 2;
+  // Group data examples by concept ID.
+  // Examples: inputs with cat concept, inputs with dog concept.
+  CONCEPT_ID = 10;
+  // Group data examples by concepts count.
+  // Examples: inputs with 20 concepts, inputs with 21 concepts.
+  CONCEPTS_COUNT = 11;
+  // Group data examples by bounding boxes count.
+  // Examples: inputs with 20 bounding boxes, inputs with 21 bounding boxes.
+  BOUNDING_BOXES_COUNT = 20;
+  // Group data examples by polygons count.
+  // Examples: inputs with 20 polygons, inputs with 21 polygons.
+  POLYGONS_COUNT = 21;
+  // Group data examples by points count.
+  // Examples: inputs with 20 points, inputs with 21 points.
+  POINTS_COUNT = 22;
+  // Group data examples by masks count.
+  // Examples: inputs with 20 masks, inputs with 21 masks.
+  MASKS_COUNT = 23;
+  // Group data examples by pixels count.
+  // In order to reduce the number of groups, we use bins.
+  // Examples for bin size = 400: inputs with [200000, 200400) pixels, inputs with [200400, 200800) pixels.
+  PIXELS_COUNT = 30;
+  // Group data examples by aspect ratio.
+  // In order to reduce the number of groups, we use bins.
+  // Examples for bin size = 0.1: inputs with [0.5, 0.6) aspect ratio, inputs with [0.6, 0.7) aspect ratio.
+  ASPECT_RATIO = 31;
 }
 
+
+// DatasetVersionExportInfo contains information about all exports of a dataset version.
+//
+// If the dataset version has not been exported in a format, then the DatasetVersionExport
+// field for that format is empty instead of having a "not exported" status.
+message DatasetVersionExportInfo {
+  // clarifai_data_protobuf is a CLARIFAI_DATA_PROTOBUF export of the dataset version.
+  DatasetVersionExport clarifai_data_protobuf = 1;
+
+  // clarifai_data_json is a CLARIFAI_DATA_JSON export of the dataset version.
+  DatasetVersionExport clarifai_data_json = 3;
+
+  // coco is a COCO export of the dataset version.
+  DatasetVersionExport coco = 2;
+}
+
+// DatasetVersionExport contains metadata for a single dataset version export.
+message DatasetVersionExport {
+  // format is the format of the dataset version export.
+  DatasetVersionExportFormat format = 1;
+
+  // status is the current status of the dataset version export.
+  clarifai.api.status.Status status = 2;
+
+  // url is the URL from where the dataset version export can be downloaded.
+  string url = 3;
+
+  // size is the size of the dataset version export in number of bytes.
+  uint64 size = 4;
+
+  // whether to include embeddings in the export or not.
+  bool include_embeddings = 5;
+}
+enum DatasetVersionExportFormat {
+  DATASET_VERSION_EXPORT_FORMAT_NOT_SET = 0;
+
+  // CLARIFAI_DATA_PROTOBUF is the proprietary Clarifai API Data format. It
+  // is a ZIP-archive containing batches of serialized InputBatch protobuf messages.
+  //
+  // Note that only the "id" and "data" fields of exported inputs are set.
+  CLARIFAI_DATA_PROTOBUF = 1;
+
+  // CLARIFAI_DATA_JSON is the proprietary Clarifai API Data format in JSON. It
+  // is a ZIP-archive containing batches of serialized InputBatch JSON messages.
+  //
+  // Note that only the "id" and "data" fields of exported inputs are set.
+  CLARIFAI_DATA_JSON = 3;
+
+  // COCO is the data format used by Common Objects in Context. It is a
+  // ZIP-archive containing JSON files with the dataset version annotations.
+  // See https://cocodataset.org/#format-data.
+  COCO = 2;
+}
+
+
+// DatasetVersionProcessingInfo contains information about processing applied
+// to a dataset version.
+message DatasetVersionProcessingInfo {
+  // If frame_interpolation_info is set, then these settings are used to
+  // interpolate new frame annotation from other video annotations.
+  //
+  // If frame_interpolation_info is set in the dataset default_processing_info,
+  // then it can be disabled for a single dataset version by setting
+  // processing_info but not setting processing_info.frame_interpolation_info.
+  FrameInterpolationInfo frame_interpolation_info = 1;
+}
+
+// FrameInterpolationInfo contains information about frame annotations
+// interpolated from other video annotations, such as image object-detection
+// regions generated from video object-tracking regions.
+message FrameInterpolationInfo {
+  // sample_ms is the sampling rate at which frame annotations are interpolated.
+  // If sample_ms is zero, then the dataset default_processing_info value is used.
+  // If the dataset default is zero or not set, then the input frame prediction
+  // sampling rate is used.
+  uint32 sample_ms = 1;
+}
 
 // WorkflowResultsSimilarity
 message WorkflowResultsSimilarity {
@@ -888,7 +1200,7 @@ message Key {
 enum ExpirationAction {
   EXPIRATION_ACTION_NOT_SET = 0;
 
-  DELAY = 1; // Progressively delay the execution of operations
+  DELAY = 1;  // Progressively delay the execution of operations
   EXPIRY = 2; // Cease functioning
 }
 
@@ -913,7 +1225,7 @@ enum LicenseScope {
 // The fields that are patchable include Model.name, Model.display_name and Model.output_info
 // (except the Model.output_info.type and Model.output_info.type_ext).
 message Model {
-  reserved 8, 10, 11;
+  reserved 8, 10, 11, 12, 13, 24, 28;
 
   // The model's ID. Must be unique within a particular app and URL-friendly.
   string id = 1;
@@ -930,20 +1242,23 @@ message Model {
   // The app the model belongs to.
   string app_id = 4 [(clarifai.api.utils.cl_show_if_empty) = true];
   // Info about the model's output and configuration.
-  OutputInfo output_info = 5;
-  // A particular version of the model, e.g., to specify the version when creating a workflow.
+  // DEPRECATED: Will be moved to model version
+  OutputInfo output_info = 5 [deprecated = true];
+  // A particular version of the model, e.g., to specify the version when creating a workflow or
+  // when listing Models to include the latest ModelVersion of the model in the response.
   ModelVersion model_version = 6;
   // DEPRECATED: Please use the model id to name the model.
   string display_name = 7 [deprecated = true];
   // The user id that the model belongs to.
   string user_id = 9;
-  // Info about the models' input and configuration of them.
-  InputInfo input_info = 12;
-  // Configuration for the training process of this model.
-  TrainInfo train_info = 13;
+
+  // The default evaluation info. Can be overwritten by eval request.
+  EvalInfo default_eval_info = 30;
   // The ModelType.Id that is used for this model. This is used for all versions and you cannot
   // change model_type_id between versions of the same model.
   string model_type_id = 14;
+  // The task the model was trained to do
+  string task = 26;
 
   // The visibility field represents whether this message is privately/publicly visible.
   // To be visible to the public the App that contains it AND the User that contains the App must
@@ -956,6 +1271,7 @@ message Model {
   // To handle arbitrary json metadata you can use a struct field:
   // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
   google.protobuf.Struct metadata = 17;
+  google.protobuf.Struct presets = 27;
 
   // Notes for the model
   // This field should be used for in-depth notes and supports up to 64Kbs.
@@ -967,6 +1283,10 @@ message Model {
   repeated string use_cases = 21 [(clarifai.api.utils.cl_show_if_empty) = true];
   // Tags from languages category.
   repeated string languages = 25 [(clarifai.api.utils.cl_show_if_empty) = true];
+  // Tags from languages category with names, only used in responses.
+  repeated FullTag languages_full = 31 [(clarifai.api.utils.cl_show_if_empty) = true];
+
+  repeated string check_consents = 32 [(clarifai.api.utils.cl_show_if_empty) = true];
 
   // Is starred by the requesting user (only showed on get/list requests)
   // Please use PostModelStars/DeleteModelStars endpoints to star/unstar a model
@@ -975,8 +1295,12 @@ message Model {
   // Computed value, not editable
   int32 star_count = 23;
 
-  // Configuration used to import model from third-party toolkits
-  ImportInfo import_info = 24;
+  // Whether it's recommended that this model is used within a workflow
+  google.protobuf.BoolValue workflow_recommended = 29;
+
+  // bookmark info. When set, this model is a bookmarked model of this app.
+  // Info in this field will allow you to find/access original model.
+  BookmarkOrigin bookmark_origin = 33;
 }
 
 // A link to a html/markdown/text file that stores reference material tied to a model.
@@ -1051,12 +1375,20 @@ message InputInfo {
   // defined for each ModelType as a Struct (JSON object) here. During training or inference, the
   // settings contained within are sent to the training processor to alter the training process.
   google.protobuf.Struct params = 2;
+  // For base model to get embeddings from for transfer learned models.
+  Model base_embed_model = 3;
 }
 
 message TrainInfo {
   // To control the training process when PostModelVersions is used we allow a list of parameters
   // defined for each ModelType as a Struct (JSON object) here. During training, the settings
   // contained within are sent to the training processor to alter the training process.
+  google.protobuf.Struct params = 1;
+}
+
+message EvalInfo {
+  // To control the evaluation process.
+  // Allow a list of parameters.
   google.protobuf.Struct params = 1;
 }
 
@@ -1072,10 +1404,7 @@ message OutputConfig {
   reserved 11, 12, 16, 18;
 
   // For custom concept model training: whether the concept predictions must sum to 1.
-  bool concepts_mutually_exclusive = 1 [(clarifai.api.utils.cl_show_if_empty) = true];
-  // For custom concept model training: Whether negatives should only be sampled from within the app during
-  // training, for custom models.
-  bool closed_environment = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+  bool concepts_mutually_exclusive = 1 [deprecated = true];
   // DEPRECATED: For custom models, this is the base model to use for image embeddings.
   // Default is general model.
   string existing_model_id = 3 [deprecated = true];
@@ -1102,7 +1431,7 @@ message OutputConfig {
   google.protobuf.Struct hyper_params = 13;
   // For custom model training: this is the base model version to use for image embeddings.
   // This has to be one of the embed models in the app workflow.
-  string embed_model_version_id = 14;
+  string embed_model_version_id = 14 [deprecated = true]; // Use input_info.base_embed_model instead.
   // For custom model training: Use this flag to fail on missing positive examples
   // By default we fill in the missing with random examples
   bool fail_on_missing_positive_examples = 15;
@@ -1115,13 +1444,11 @@ message OutputConfig {
   google.protobuf.Struct model_metadata = 17 [deprecated = true];
 }
 
-
-
 // ModelSpec is a definition of a Model type. This is used in model mode of portal
 // to list out the possible models that can be created and can be used to understand more about
 // the possible models in our platform.
 message ModelType {
-  reserved 7, 4;
+  reserved 7, 4, 13, 14, 15;
   // A unique identifies for this model type. This is differnt than the 'type' field below because
   // the 'type' can be re-used for differnet input and output combinations whereas 'id' is always
   // unique.
@@ -1155,15 +1482,50 @@ message ModelType {
   // in sequential order. This will be true for model types like trackers as an example.
   bool requires_sequential_frames = 12;
 
-  // Can this model be evaluated?
-  bool evaluable = 13;
+  // Expected input layers of an uploaded model
+  repeated ModelLayerInfo expected_input_layers = 16;
+
+  // Expected output layers of an uploaded model
+  repeated ModelLayerInfo expected_output_layers = 17;
+
+  EvaluationType evaluation_type = 18;
+}
+
+message ModelLayerInfo {
+  // The api.Data field this layer will be parsed into
+  string data_field_name = 1;
+  // Description of the expected shape. Can support multiple support layer shapes.
+  repeated LayerShape shapes = 2;
+  // Brief description about the layer if needed
+  string description = 3;
+  // Whether this layer should have a label_filename specified and provided
+  bool requires_label_filename = 4;
+}
+
+message TritonCondaEnvInfo {
+  string conda_pack_url = 1;
+  string conda_yaml_url = 2;
+}
+enum DataType {
+  UNDEFINED = 0; // Default value, should not be used
+  STRING = 1;
+  UINT8 = 2;
+  INT32 = 3;
+  INT64 = 4;
+  FP32 = 5;
+}
 
 
-  // Maps input_fields to the more granular data fields needed to parse a triton models inputs
-  google.protobuf.Struct expected_pretrained_input_fields = 14;
-
-  // Maps output_fields to the more granular data fields needed to parse a triton models outputs
-  google.protobuf.Struct expected_pretrained_output_fields = 15;
+message LayerShape {
+  // Supported dimensions
+  // Example: [-1,4] is a 2-dimensional array with the first dimension of variablesize, but second dimension with a static size: [[1,2,3,4],[4,5,6,7],...]
+  repeated int32 dims = 1;
+  // Max dimension size, applicable to layers that can have flexible sizes.
+  repeated int32 max_dims = 2;
+  // The triton data type
+  DataType data_type = 3;
+  // Description about the dimensions
+  string description = 4;
 }
 
 // ModelTypeField stores a field value of a configurable type.
@@ -1206,9 +1568,17 @@ message ModelTypeField {
     WORKFLOW_EMBED_MODELS = 12;
     // Such as ['a', 'b', 'cantaloupe']
     ARRAY_OF_STRINGS = 13;
-    // If RECURSIVE_ENUM is used then the "enum_options" field should also be filled in with the respective ID and description
-    // for the different RECURSIVE_ENUM options, as well as model_type_fields for each enum choice.
+    // If RECURSIVE_ENUM is used then the "enum_options" field should also be filled in with the respective ID and
+    // description for the different RECURSIVE_ENUM options, as well as model_type_fields for each enum choice.
     RECURSIVE_ENUM = 14;
+    // For blocks of code that need to be specified by the user for setup or execution during workflow runs.
+    PYTHON_CODE = 15;
+    // For selecting a dataset id in model parameters. String in API request.
+    DATASET_ID = 16;
+    // For selecting a dataset version id. String.
+    DATASET_VERSION_ID = 17;
+    // For auto-completing to concepts in the model.
+    ARRAY_OF_MODEL_CONCEPTS = 18;
   }
   // The field for this field.
   ModelTypeFieldType field_type = 2;
@@ -1262,11 +1632,17 @@ message ModelTypeEnumOption {
 
   // If this enum option should be internal only.
   bool internal_only = 4;
+
+  // Whether this is the recommended enum option. Set to `true` when there
+  // are multiple options, and one is shown to be better than the others.
+  bool recommended = 6;
 }
 
 message ModelTypeEnumOptionAlias {
   // Integer alias for id.
   int64 id_int = 1;
+  // String that can contain wild cards and the regex needs to match.
+  string wildcard_string = 2;
 }
 
 // ModelQuery
@@ -1294,14 +1670,18 @@ enum ValueComparator {
 }
 
 enum EvaluationType {
-  Classification = 0; // default
-  Detection = 1;
+  Undefined = 0;
+  Classification = 1; // default
+  Detection = 2;
+  Segmentation = 3;
+  Clustering = 4;
+  Tracker = 5;
 }
 
 
 // ModelVersion
 message ModelVersion {
-  reserved 9;
+  reserved 9, 18;
 
   string id = 1;
   // When the version was created.
@@ -1316,8 +1696,7 @@ message ModelVersion {
   // number of inputs in the model version
   uint32 total_input_count = 6;
 
-  // This is the internal name for the ModelVersion when creating a new model at Clarifai. If you're
-  // an API user you should not need to interact with this field.
+  PretrainedModelConfig pretrained_model_config = 7;
 
   // Detailed training stats.
 
@@ -1346,32 +1725,34 @@ message ModelVersion {
 
   string license = 17;
 
-  // Dataset version used to create this model version.
-  DatasetVersion dataset_version = 18;
+  // Info about the model's output and configuration.
+  OutputInfo output_info = 19;
+  // Info about the models' input and configuration of them.
+  InputInfo input_info = 20;
+  // Configuration for the training process of this model.
+  TrainInfo train_info = 21;
+  // Configuration used to import model from third-party toolkits
+  ImportInfo import_info = 22;
+  string train_log = 23;
 }
 
 // PretrainedModelConfig
 message PretrainedModelConfig {
+  reserved 2, 5;
   // This is the internal id of the pretrained model.
-  string id = 1;
-  // This is the internal type of the pretrained model.
-  string type = 2;
   // Map from the api.Data field names to the Triton config.pbtxt input.
   google.protobuf.Struct input_fields_map = 3;
   // Map from the api.Data field names to the Triton config.pbtxt output.
   google.protobuf.Struct output_fields_map = 4;
-  // Preprocessing steps for the model as a json string
-  string data_provider_params = 5;
-  // Url to a zipped up model in triton format with only version 1
+  // Url to a zipped up model in triton format with the following files and folders at the root:
+  //  config.pbtxt
+  //  version 1 folder that contains model files (onnx graph, torch script, python BE model, and etc.)
   string model_zip_url = 6;
   // Whether to overwrite the model for the existing internal id
-  bool overwrite = 7;
 }
 
 // TrainStats
-message TrainStats {
-  repeated LossCurveEntry loss_curve = 1;
-}
+message TrainStats { repeated LossCurveEntry loss_curve = 1; }
 
 // LossCurveEntry
 message LossCurveEntry {
@@ -1386,16 +1767,13 @@ message LossCurveEntry {
 
 // LabelCount
 message LabelCount {
-  // FIXME: should move to Concept object and return the whole thing (including name and id)
-  // otherwise if two concepts have same name then you won't tell them apart in confusion matrix.
-  string concept_name = 1;
+  string concept_name = 1 [deprecated = true];
   uint32 count = 2;
+  Concept concept = 3;
 }
 
 // LabelDistribution
-message LabelDistribution {
-  repeated LabelCount positive_label_counts = 1;
-}
+message LabelDistribution { repeated LabelCount positive_label_counts = 1; }
 
 // NOTE: this is inefficient, should just have the order of the rows/cols
 message CooccurrenceMatrixEntry {
@@ -1458,7 +1836,6 @@ message BinaryMetrics {
   double area_min = 11;
   double area_max = 12;
   float iou = 13;
-
 }
 
 // TrackerMetrics
@@ -1479,9 +1856,7 @@ message TrackerMetrics {
 
 // EvalTestSetEntry
 message EvalTestSetEntry {
-  // Input CFID
-  string id = 1 [deprecated = true];
-  string url = 2 [deprecated = true];
+  reserved 1, 2;
   Input input = 6; // the input information
 
   repeated Concept predicted_concepts = 3;
@@ -1491,7 +1866,6 @@ message EvalTestSetEntry {
   // Each annotation only contains one region
   // And the concepts is in ground_truth_concepts instead of this annotation
   Annotation annotation = 5;
-
 }
 
 // LOPQEvalResult
@@ -1550,7 +1924,17 @@ message MetricsSummary {
 // EvalMetrics
 message EvalMetrics {
   clarifai.api.status.Status status = 1;
+  // user id that owns this evaluation
+  string user_id = 15;
+  // app id that owns this evaluation
+  string app_id = 16;
+  // Id of this evaluation
   string id = 10;
+  // Model to evaluate
+  Model model = 13;
+  // The ground truth dataset
+  Dataset ground_truth_dataset = 14;
+
   MetricsSummary summary = 2;
   ConfusionMatrix confusion_matrix = 3;
   CooccurrenceMatrix cooccurrence_matrix = 4;
@@ -1560,6 +1944,10 @@ message EvalMetrics {
   repeated BinaryMetrics metrics_by_area = 8;
   repeated BinaryMetrics metrics_by_class = 9;
   repeated TrackerMetrics tracker_metrics = 11;
+
+  // Evaluation parameters to pass. Expected to match what
+  // is defined in the model type for the respective model.
+  EvalInfo eval_info = 12;
 }
 
 // FieldsValue
@@ -1640,6 +2028,11 @@ message Hit {
   string app_id = 5;
 }
 
+message HitCount {
+  // The estimated total number of hits for the search query, not just the current page.
+  uint64 estimated_total = 1;
+}
+
 // This is the common building block of a query which is a sequence of And messages ANDed together.
 // Note that some fields are used too RANK results (affect the scores) and some are used to FILTER
 // results (unordered subset of your app's contents). In general, FILTER operations are more
@@ -1650,6 +2043,24 @@ message And {
   // This can include human provided concepts, geo location info, metadata, etc.
   // This is effectively searching over only the trusted annotation attached to an input in your
   // app. To search by more specific annotation fields use the Annotation object here.
+  // ########## Supported fields ##########
+  //  - data.concepts[].id
+  //  - data.concepts[].name
+  //  - data.concepts[].value
+  //  - data.geo.geo_box[].geo_point.latitude
+  //  - data.geo.geo_box[].geo_point.longitude
+  //  - data.geo.geo_limit.type
+  //  - data.geo.geo_limit.value
+  //  - data.geo.geo_point.latitude
+  //  - data.geo.geo_point.longitude
+  //  - data.image.url
+  //  - data.metadata - allow search with empty metadata
+  //    note that searching by empty metadata will actually not influence the search results.
+  //    however, in order to be user-friendly, we are still supporting searching by empty metadata.
+  //  - data.metadata.fields - filter by metadata. metadata key&value fields are OR-ed.
+  //  - dataset_ids[] - filter by dataset IDs
+  //  - id - filter by input ID
+  //  - status.code - filter by input status
   Input input = 1;
   // RANK based predicted outputs from models such as custom trained models, pre-trained models,
   // etc. This is also where you enter the image url for a visual search because what we're asking
@@ -1662,6 +2073,16 @@ message And {
   // to the score returned if you search for Output concept "dog" in your query. This provides
   // a natural ranking to search results based on confidence of predictions from the models and
   // is used when ANDing multiple of these types of RANK by Output queries together as well.
+  //
+  // ########## Supported fields ##########
+  //  - data.clusters[].id
+  //  - data.concepts[].id
+  //  - data.concepts[].name
+  //  - data.concepts[].value
+  //  - input.data.image - empty image is required when searching by input ID
+  //  - input.data.image.base64[]
+  //  - input.data.image.url
+  //  - input.id
   Output output = 2;
   // If True then this will flip the meaning of this part of the
   // query. This allow for queries such as dog AND ! metadata=={"blah":"value"}
@@ -1677,6 +2098,33 @@ message And {
   // Since all the annotations under the hood are joined to the embedding model's annotation
   // using worker_id's of other models like cluster models or concept models should be
   // combinable with queries like visual search (a query with Output filled in).
+  //
+  // ########## Supported fields ##########
+  //  - annotation_info - allows searching by empty annotation info
+  //    note that searching by empty annotation info will actually not influence the search results.
+  //    however, in order to be user-friendly, we are still supporting searching by empty annotation info.
+  //  - annotation_info.fields - filter by annotation info
+  //  - data.concepts[].id
+  //  - data.concepts[].name
+  //  - data.concepts[].value
+  //  - data.geo.geo_box[].geo_point.latitude
+  //  - data.geo.geo_box[].geo_point.longitude
+  //  - data.geo.geo_limit.type
+  //  - data.geo.geo_limit.value
+  //  - data.geo.geo_point.latitude
+  //  - data.geo.geo_point.longitude
+  //  - data.image.url
+  //  - data.metadata - allow search with empty metadata
+  //    note that searching by empty metadata will actually not influence the search results.
+  //    however, in order to be user-friendly, we are still supporting searching by empty metadata.
+  //  - data.metadata.fields - filter by metadata. metadata key&value fields are OR-ed.
+  //  - input_id
+  //  - input_level
+  //  - model_version_id
+  //  - status.code
+  //  - task_id
+  //  - trusted
+  //  - user_id
   Annotation annotation = 4;
 }
 
@@ -1686,7 +2134,10 @@ message And {
 message Query {
   // The query syntax is simply a list of And operatiosn that will be ANDed together to fetch
   // results which are returned to the user as Hit messages.
-  repeated And ands = 1;
+  //
+  // Deprecated: Only used by the deprecated PostSearches endpoint. Use filters
+  // and ranks instead with PostInputsSearches or PostAnnotationsSearches.
+  repeated And ands = 1 [deprecated = true];
 
   // This allows the query to override any default language the app was setup in when doing Concept
   // based searches. This currently only affects public Models Output searches when those public
@@ -1750,6 +2201,15 @@ message Search {
   // To be visible to the public the App that contains it AND the User that contains the App must
   // also be publicly visible.
   Visibility visibility = 12;
+
+  // Metric used for search. Can be EUCLIDEAN_DISTANCE (default) or COSINE_DISTANCE.
+  // Currently only brute force search supports non-eudlicean metrics.
+  enum Metric {
+    METRIC_NOT_SET = 0;
+    EUCLIDEAN_DISTANCE = 1;
+    COSINE_DISTANCE = 2;
+  }
+  Metric metric = 13;
 }
 
 // Filter
@@ -1759,10 +2219,51 @@ message Filter {
   bool negate = 3;
 
   // FILTER by annotation information.
+  // ########## Supported fields ##########
+  //  - annotation_info - allows searching by empty annotation info
+  //    note that searching by empty annotation info will actually not influence the search results.
+  //    however, in order to be user-friendly, we are still supporting searching by empty annotation info.
+  //  - annotation_info.fields - filter by annotation info
+  //  - data.clusters[].id
+  //  - data.concepts[].id
+  //  - data.concepts[].name
+  //  - data.concepts[].value
+  //  - data.frames[].frame_info - filter by frame annotations
+  //  - data.geo.geo_box[].geo_point.latitude
+  //  - data.geo.geo_box[].geo_point.longitude
+  //  - data.geo.geo_limit.type
+  //  - data.geo.geo_limit.value
+  //  - data.geo.geo_point.latitude
+  //  - data.geo.geo_point.longitude
+  //  - data.metadata - allow search with empty metadata
+  //    note that searching by empty metadata will actually not influence the search results.
+  //    however, in order to be user-friendly, we are still supporting searching by empty metadata.
+  //  - data.metadata.fields - filter by metadata. metadata key&value fields are OR-ed.
+  //  - data.regions[].region_info.bounding_box - filter by bounding box annotations
+  //  - data.regions[].region_info.mask - filter by mask annotations
+  //  - data.regions[].region_info.point - filter by point annotations
+  //  - data.regions[].region_info.polygon - filter by polygon annotations
+  //  - data.regions[].region_info.span - filter by span annotations
+  //  - data.text - filter by text annotations
+  //  - data.time_segments[].time_info - filter by time-segment annotations
+  //  - id
+  //  - input_id
+  //  - input_level
+  //  - model_version_id
+  //  - status.code
+  //  - task_id
+  //  - user_id
+  //  - workflow_version_id
   Annotation annotation = 4;
 
   // FILTER by input information.
-  // For example you can filter inputs by status,
+  // ########## Supported fields ##########
+  //  - data.audio - filter audio inputs
+  //  - data.image - filter image inputs
+  //  - data.text - filter text inputs
+  //  - data.video - filter video inputs
+  //  - dataset_ids[] - filter by dataset IDs
+  //  - status.code - filter by input status
   Input input = 5;
 
   // Filter by annotation last updated time range.
@@ -1772,7 +2273,7 @@ message Filter {
 // TimeRange
 message TimeRange {
   google.protobuf.Timestamp start_time = 1; // Begin of the time range, optional, inclusive.
-  google.protobuf.Timestamp end_time = 2; // End of the time range, optional, inclusive.
+  google.protobuf.Timestamp end_time = 2;   // End of the time range, optional, inclusive.
 }
 
 // Rank
@@ -1782,6 +2283,18 @@ message Rank {
   bool negate = 3;
 
   // RANK by annotation information.
+  // ########## Supported fields ##########
+  //  - data.concepts[].id
+  //  - data.concepts[].name
+  //  - data.concepts[].value
+  //  - data.embeddings[].num_dimensions
+  //  - data.embeddings[].vector[]
+  //  - data.image.base64[]
+  //  - data.image.url
+  //  - data.lopq_code[]
+  //  - data.text.raw
+  //  - input_id
+  //  - model_version_id
   Annotation annotation = 4;
 }
 
@@ -1801,7 +2314,6 @@ message AnnotationSearchMetrics {
 
   // active_concept_count is the number of concepts for this evaluation
   uint32 active_concept_count = 5;
-
 
   // The visibility field represents whether this message is privately/publicly visible.
   // To be visible to the public the App that contains it AND the User that contains the App must
@@ -1837,6 +2349,7 @@ message TextInfo {
 
 
 
+
 enum APIEventType {
   API_EVENT_TYPE_NOT_SET = 0;
 
@@ -1859,7 +2372,7 @@ enum UsageIntervalType {
 
 // User
 message User {
-  reserved 13;
+  reserved 13, 14;
 
   string id = 1;
 
@@ -1881,12 +2394,13 @@ message User {
   google.protobuf.Timestamp date_gdpr_consent = 8 [deprecated = true];
   google.protobuf.Timestamp date_tos_consent = 9 [deprecated = true];
   google.protobuf.Timestamp date_marketing_consent = 10 [deprecated = true];
+  google.protobuf.Timestamp date_pii_consent = 23 [deprecated = true];
 
   // To handle arbitrary json metadata you can use a struct field:
   // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
   google.protobuf.Struct metadata = 11 [deprecated = true];
   repeated EmailAddress email_addresses = 12 [deprecated = true];
-  bool is_org_admin = 14 [deprecated = true];
+
   bool two_factor_auth_enabled = 15 [deprecated = true];
   uint32 teams_count = 16 [deprecated = true];
 
@@ -1896,7 +2410,6 @@ message User {
   // How many users have starred the user (only showed on get/list requests)
   // Computed value, not editable
   int32 star_count = 22;
-
 
   // The visibility field represents whether this message is privately/publicly visible.
   // To be visible to the public the App that contains it AND the User that contains the App must
@@ -1912,16 +2425,19 @@ message User {
 // This message holds the confidential information from the User object that we don't want to expose
 // to other users. It will be accessible only from /users/{user_id}/account and with the User scopes.
 message UserDetail {
+  reserved 8;
+
   string primary_email = 1;
   string bill_type = 2;
   google.protobuf.Timestamp date_gdpr_consent = 3;
   google.protobuf.Timestamp date_tos_consent = 4;
   google.protobuf.Timestamp date_marketing_consent = 5;
+  google.protobuf.Timestamp date_pii_consent = 13;
+
   // To handle arbitrary json metadata you can use a struct field:
   // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
   google.protobuf.Struct metadata = 6;
   repeated EmailAddress email_addresses = 7;
-  bool is_org_admin = 8;
   bool two_factor_auth_enabled = 9;
   uint32 teams_count = 10;
   string country = 11;
@@ -1999,7 +2515,6 @@ message Video {
   HostedURL hosted = 6;
   // video info
   VideoInfo video_info = 7;
-
 }
 
 message VideoInfo {
@@ -2053,7 +2568,7 @@ message Workflow {
   // When the workflow was last modified
   google.protobuf.Timestamp modified_at = 8;
 
-  // Info about the workflow version
+  // Info about the workflow version used to return the latest version when listing Workflows.
   WorkflowVersion version = 9;
 
   // Is starred by the requesting user (only showed on get/list requests)
@@ -2072,6 +2587,13 @@ message Workflow {
 
   // Tags from use_cases category
   repeated string use_cases = 14 [(clarifai.api.utils.cl_show_if_empty) = true];
+
+  // Tags for check consents
+  repeated string check_consents = 15 [(clarifai.api.utils.cl_show_if_empty) = true];
+
+  // bookmark info. When set, this workflow is a bookmarked workflow of this app.
+  // Info in this field will allow you to find/access original workflow.
+  BookmarkOrigin bookmark_origin = 16;
 }
 
 // WorkflowVersion
@@ -2132,6 +2654,9 @@ message WorkflowNode {
   repeated NodeInput node_inputs = 3;
   // suppress the output for workflow prediction
   bool suppress_output = 4;
+  // Used to override the output_info.data and output_info.params of the model specified by the node.
+  // Values for fields_map, message, and output_config are ignored.
+  OutputInfo output_info_override = 5;
 }
 
 // NodeInput represents inputs to a node of the graph.
@@ -2169,25 +2694,40 @@ message WorkflowState {
 
 // AppDuplication
 message AppDuplication {
-  //the id of app duplication
+  // the id of app duplication
   string id = 1;
-  //the id of new app
+  // the id of new app. If provided, we will create a new application with this id. If the app id exists, we will return err.
+  // if new_app_name is empty, the name will be the same as this id.
+  // You can not set this if existing_app_id is set.
   string new_app_id = 2;
-  //the name of new app
+  // the name of new app. If provided, we will create a new application with this name.
+  // You can not set this if existing_app_id is set.
   string new_app_name = 3;
-  //the status of app duplication
+  // the status of app duplication
   clarifai.api.status.Status status = 4;
-  //when is the app duplication triggered
+  // when is the app duplication triggered
   google.protobuf.Timestamp created_at = 5;
-  //The last time when is the status got updated
+  // The last time when is the status got updated
   google.protobuf.Timestamp last_modified_at = 6;
   // Only copy resources depending on the filters
   AppDuplicationFilters filter = 7;
+  // the id of existing app you want to copy data into.
+  // you can not set this if either new_app_id or new_app_name is set.
+  // if new_app_id, new_app_name and existing_app_id are all empty, we will create a new app with random app id/name
+  string existing_app_id = 8;
+
+  // contains progress for each requested filter
+  repeated AppCopyProgress progress = 9;
+}
+
+message AppCopyProgress {
+  string field = 1;
+  int32 value = 2;
 }
 
 // AppDuplicationFilters
 message AppDuplicationFilters {
-  // Copy only inputs and default annotations
+  // Copy inputs what what it depends on: input level annotation and concepts
   bool copy_inputs = 1;
   // Copy only concepts
   bool copy_concepts = 2;
@@ -2263,8 +2803,9 @@ message Task {
   // Worker details.
   TaskWorker worker = 6;
 
-  // List of concept ids used in the work of this task if label type is classification.
-  repeated string concept_ids = 7;
+  // List of concept ids used in the work of this task.
+  // DEPRECATED: Use task.concepts instead.
+  repeated string concept_ids = 7 [deprecated = true];
 
   // List of inputs used in this task will be taken from this source.
   TaskInputSource input_source = 8;
@@ -2306,6 +2847,16 @@ message Task {
   string app_id = 16;
   // The user the task belongs to.
   string user_id = 17;
+
+  // The label order the task belongs to.
+  string label_order_id = 18;
+
+  // Ignore Task.concept_ids field if Task.TaskConcept are supplied.
+  repeated TaskConcept concepts = 19;
+
+  // Specify whether existing Annotations within the same app that are generated by other auto annotation tasks
+  // with the specified Concept from the selected Model or Workflow should deleted before executing the Task
+  bool delete_previous_annotations = 20;
 }
 
 // AiAssistParameters
@@ -2323,12 +2874,22 @@ message TaskWorker {
   TaskWorkerStrategy strategy = 1;
 
   // Who will work on this task.
-  repeated string user_ids = 2;
+  // DEPRECATED: Use users.id instead.
+  repeated string user_ids = 2 [deprecated = true];
+
+  // Users who will work on this task.
+  // When the 'worker.users' field is additionally requested, then all user
+  // info is filled for the workers. Otherwise, only the user 'id' is filled.
+  repeated User users = 4;
+
+  // Models that will work on this task. For Auto Annotation Tasks. Currently only supports 1 entry.
+  repeated Model models = 5;
+
+  // Workflows that will work on this task. For Auto Annotation Tasks. Currently only supports 1 entry.
+  repeated Workflow workflows = 6;
 
   // Info based on the worker strategy,
-  oneof strategy_info {
-    TaskWorkerPartitionedStrategyInfo partitioned_strategy_info = 3;
-  }
+  oneof strategy_info { TaskWorkerPartitionedStrategyInfo partitioned_strategy_info = 3; }
 
   enum TaskWorkerStrategy {
     reserved 1;
@@ -2403,6 +2964,8 @@ message TaskInputSource {
     ALL_INPUTS = 1;
     // Use the inputs from a saved search.
     SAVED_SEARCH = 2;
+    // Inputs from a dataset.
+    DATASET = 3;
   }
 }
 
@@ -2412,7 +2975,13 @@ message TaskReview {
   TaskReviewStrategy strategy = 1;
 
   // Who will review this task.
-  repeated string user_ids = 2;
+  // DEPRECATED: Use users.id instead.
+  repeated string user_ids = 2 [deprecated = true];
+
+  // Users who will review this task.
+  // When the 'review.users' field is additionally requested, then all user
+  // info is filled for the reviewers. Otherwise, only the user 'id' is filled.
+  repeated User users = 5;
 
   // Info based on the review strategy,
   oneof strategy_info {
@@ -2456,8 +3025,6 @@ message TaskAIAssistant {
   string workflow_id = 1;
 }
 
-
-
 // TaskStatusCountPerUser can represents count of human created annotations for a user for each valid status,
 // count of inputs (anchor annotation) for a user for each valid status
 message TaskStatusCountPerUser {
@@ -2469,10 +3036,49 @@ message TaskStatusCountPerUser {
   uint32 awaiting_consensus_review = 6 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+message ThresholdRange {
+  // The range used to filter over concept values.
+  // e.g. GREATER_THAN_OR_EQUAL_TO 0.7 -> is_lower_inclusive = true, lower = 0.7, is_upper_inclusive = true, upper = 1.0
+  // e.g. (0.3, 0.75] -> is_lower_inclusive = false, lower = 0.3, is_upper_inclusive = true, upper = 0.75
+  bool is_lower_inclusive = 1;
+  bool is_upper_inclusive = 2;
+  float lower = 3;
+  float upper = 4;
+}
+
+message TaskConceptAutoAnnotationConfig {
+  // Filter anontations by their annotation data type.
+  // This specifies types in an OR fashion, e.g. a `dog` concept that appears as a mask or a bbox.
+  uint32 annotation_data_types = 1;
+
+  // Filter annotations by concept value.
+  // Only concepts that fit in the threshold will be used to generate annotations.
+  ThresholdRange threshold_range = 2;
+  // The output annotations will be created using this status code.
+  clarifai.api.status.StatusCode status_code = 3;
+}
+
+message TaskConcept {
+  // For auto annotation, id/name and value, user + app id must be specified. For other tasks, only the id field is required.
+  Concept concept = 1;
+  TaskConceptAutoAnnotationConfig auto_annotation_config = 2;
+}
+enum AnnotationDataType {
+  ANNOTATION_DATA_TYPE_NOT_SET = 0;
+  TAG = 1;
+  BOUNDING_BOX = 2;
+  POLYGON = 4;
+  POINT = 8;
+  SPAN = 16;
+  MASK = 32;
+}
+
+
 enum RoleType {
   TEAM = 0;
   ORG = 1;
 }
+
 
 
 
@@ -2527,11 +3133,9 @@ message Collector {
   // Note(zeiler): not yet available, uses only the default workflow that POST /inputs uses.
   // string workflow_id = 7;
 
-
   // Status for the collector. This allows you to pause a collector without having to delete it as
   // an example.
   clarifai.api.status.Status status = 7;
-
 }
 
 // Configuration for the source to collect data from.
@@ -2544,8 +3148,6 @@ message CollectorSource {
   // This does not apply to models used within workflows, only PostModelOutputs calls.
   APIPostModelOutputsCollectorSource api_post_model_outputs_collector_source = 2;
 }
-
-
 
 // This is configuration for using the inputs send for model prediction in our API as
 // as the source for data.
@@ -2682,8 +3284,39 @@ enum StatTimeAggType {
 
 
 
+message DatasetInputsSearchAddJob {
+  // The id of this job
+  string id = 1;
 
+  // When the job was created.
+  google.protobuf.Timestamp created_at = 2;
 
+  // When the job was last modified.
+  google.protobuf.Timestamp modified_at = 3;
+
+  // Status of the job and rough estimated progress
+  clarifai.api.status.Status status = 4;
+
+  // Dataset which will receive inputs
+  string dataset_id = 5;
+
+  // The search that the job uses
+  Search search = 6;
+}
+
+// PCAProjectionComparator
+message PCAProjectionComparator {
+  // Within what distance do we consider two annotations duplicates
+  float distance_threshold = 1;
+  // What cluster model version generated these
+  string model_version_id = 2;
+}
+
+// DuplicateAnnotationsResults
+message DuplicateAnnotationsResults {
+  repeated string duplicate_cfid = 1;
+  int32 unique_count = 2;
+}
 
 // Visibility represents how visible the given resource is to other users.
 // When authenticating a request we can tell if a user is a collaborator or a teammate for the
@@ -2729,6 +3362,13 @@ enum ValidationErrorType {
 
 
 
+message FullTag {
+  // Display name of the tag. Ex. "English"
+  string name = 1;
+  // Id value for referencing. Ex. "en"
+  string id = 2;
+}
+
 // TimeSegment
 message TimeSegment {
   // A unique id for the time segment.
@@ -2753,9 +3393,581 @@ message TimeInfo {
 
 
 
+// DatasetStar
+message DatasetStar { string dataset_id = 1; }
+
+// ModuleStar
+message ModuleStar {
+  // Module id of the star
+  string module_id = 1;
+}
 
 
 
+// An app module that a user created in our app module marketplace.
+message Module {
+  reserved 2;
+  // A unique ID for this app module.
+  string id = 1;
+  // A short description for this app module to be used in grids of modules.
+  string description = 3;
+  // When the app module was created.
+  google.protobuf.Timestamp created_at = 4;
+  // When the app module was last modified.
+  google.protobuf.Timestamp modified_at = 5;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  // Defaults to PRIVATE if not provided.
+  Visibility visibility = 7;
+
+  // To handle arbitrary json metadata you can use a struct field:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  // This is an optional arg.
+  google.protobuf.Struct metadata = 8;
+
+  // The creator of the app module.
+  string user_id = 9;
+
+  // The app_id this module was created in.
+  string app_id = 10;
+
+  // A ModuleVersion which is used when listing modules to include the latest module version
+  // in the response.
+  ModuleVersion module_version = 11;
+
+  // Is starred by the requesting user (only showed on get/list requests)
+  // Please use PostModuleStars/DeleteModuleStars endpoints to star/unstar a module
+  bool is_starred = 12;
+  // How many users have starred the module (only showed on get/list requests)
+  // Computed value, not editable
+  int32 star_count = 13;
+
+  // bookmark info. When set, this module is a bookmarked module of this app.
+  // Info in this field will allow you to find/access original module.
+  BookmarkOrigin bookmark_origin = 14;
+}
+
+// A specific version of an app module that is available for assigning to apps.
+message ModuleVersion {
+  reserved 5;
+  // A name for this version like 1_0, 1_1_0, etc.
+  string id = 1;
+  // The module this version belongs to.
+  string module_id = 2;
+  // The app_id this module version belongs to.
+  string app_id = 3;
+  // The user_id this module version belongs to.
+  string user_id = 4;
+  // A short description for this version.
+  string description = 6;
+  // A markdown formatted string to detailed description of the app module.
+  // This is within each version so that it can be change version to version.
+  string notes = 7;
+  // When the app module version was created.
+  google.protobuf.Timestamp created_at = 8;
+  // When the app module version was last modified.
+  google.protobuf.Timestamp modified_at = 9;
+
+  // The code repo of the streamlit app.
+  // If you are still developing your Module you should create a ModuleVersion
+  // with an empty git_commit_url and then create an InstalledModuleVersion
+  // with a pre-deployed deploy_url (such as localhost or streamlit cloud).
+  // Once you are ready to create a production, create a new ModuleVersion with
+  // the ready git url to a specific commit that you would like to be reviewed by the
+  // Clarifai team for approval within our community. You cannot publish a ModuleVersion
+  // is reviewed and approved. Please only provide the git_commit_url when you're
+  // ready for a review. This url needs to include a specific commit, for example:
+  // https://github.com/user/repo/commit/767ff9c08ba3429c8e7b8825da148555
+  string git_commit_url = 10;
+
+  message ModuleSubNav {
+    // This is the display title for a navbar element to link to a specific page.
+    // The name for this subnav element to show in the sidebar.
+    string title = 1;
+    // The query param name
+    string query_key = 2;
+    // The query param value
+    string query_value = 3;
+  }
+
+  message ModuleNav {
+    // This is the left side title for this module and for browser tab title of the module.
+    // We have this in the version so that users can change those settings
+    // when releasing a new version of their module.
+    string title = 1;
+
+    // A list of subnav elements to put under the module title.
+    repeated ModuleSubNav module_sub_navs = 2;
+  }
+  ModuleNav module_nav = 11;
+
+  // A boolean to mark if Clarifai has approved this app version.
+  // This cannot be set in the request to True.
+  bool approved = 12;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  // Defaults to PRIVATE if not provided.
+  Visibility visibility = 13;
+
+  // To handle arbitrary json metadata you can use a struct field:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  // This is an optional arg.
+  google.protobuf.Struct metadata = 14;
+}
+
+message InstalledModuleVersion {
+  // A unique id for this install. This will be used in the browser url.
+  string id = 1;
+  // The installed module version provided here so that we users don't need to do an additional
+  // fetch. When creating a new InstalledModuleVersion you should provide the:
+  // module_version.user_id
+  // module_version.app_id
+  // module_version.module_id
+  // module_version.id
+  // in order to uniquely define which module version.
+  ModuleVersion module_version = 2;
+  // The app_id the ModuleVersion is installed into (not necessary where the ModuleVersion was
+  // created). This doesn't have to be provided in requests to install, but will be returned in
+  // responses.
+  string app_id = 3;
+  // The user that the app belongs to where the ModuleVersion is installed into (not necessary where
+  // the ModuleVersion was created). This doesn't have to be provided in requests to install, but
+  // will be returned in responses.
+  string user_id = 4;
+  // When the install was created.
+  google.protobuf.Timestamp created_at = 5;
+  // When the install was last modified.
+  google.protobuf.Timestamp modified_at = 6;
+
+  // The URL of where this app module version is deployed.
+  // If you provide this deploy_url when creating the install then it will
+  // be treated as a pre-deployed module. You can only use a pre-deployed module
+  // in when installing to an app_id that you own as the creator of the module.
+  // If you want to install someone elses module or to rely on Clarifai deploying
+  // your module for you, leave deploy_url empty when creating the install.
+  // If it is left empty, then deployment will occur when this module version is
+  // installed into an app using the git_commit_url of the ModuleVersion.
+  string deploy_url = 7;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible. For the InstalledModuleVersion this allows the app owner who
+  // installed the module version to decide if they want other users of their app to have
+  // the added functionality that the modules version provides to their app.
+  // Defaults to PRIVATE if not provided.
+  Visibility visibility = 8;
+
+  // The key ID to use for making requests to the API for this module.
+  // This key is associated to this installed module version by PostInstalledModuleVersionsKey
+  // request. The key is associated with the CALLER not the App Owner where this module is installed
+  // nor the author of the module. This allows the module to act on behalf of the caller at all
+  // times so we get proper permissions the caller has (such as if they are stranger, teammate or
+  // collaborator). This key should be a personal access token to enable modules to work across apps
+  // and have necessary abilities beyond what app-specific keys offer.
+  string key_id = 9;
+}
+
+message BulkOperation {
+  // id of the Bulk Operation task
+  string id = 1;
+
+  // Input Source could be list of input ids or a Search whose results will be a list of input ids.
+  // InputIDs:
+  //      List of input ids to which operation to be applied
+  // clarifai.api.Search:
+  //      A Search(either filter or rank with min value) to allow filtering down the entire app's
+  //      sub-assets(image, region in image, frame in video, region in frame in video)
+  //      and perform operation to only the results of this search query. See our search
+  //      documentation for more details about the search Query message.
+  //      For eg., filters the asset/sub-asset matching the search and performs specified operation.
+  // Dataset:
+  //      A dataset, whose inputs will have the operation applied to. This does not support dataset versions.
+  oneof input_source {
+    InputIDs input_ids = 2;
+    clarifai.api.Search search = 10;
+    Dataset dataset = 11;
+  }
+
+  // Operation to perform
+  Operation operation = 3;
+
+  // Application ID that this Operation was created from
+  string app_id = 4;
+
+  // Status (pending, in-progress, completed, failed) of the operation
+  clarifai.api.status.Status status = 5;
+
+  // Progress of an on-going Bulk Operation task
+  Progress progress = 6;
+
+  // User id that created this operation
+  string created_by = 7;
+
+  // When the operation was created. We follow the XXXX timestamp
+  // format. We use https://www.ietf.org/rfc/rfc3339.txt format:
+  // "2006-01-02T15:04:05.999999Z" so you can expect results like
+  // the following from the API:
+  // "2017-04-11T21:50:50.223962Z"
+  google.protobuf.Timestamp created_at = 8;
+  // Last time the status got updated
+  google.protobuf.Timestamp last_modified_at = 9;
+}
+
+message InputIDs { repeated string input_ids = 1; }
+
+message Progress {
+  uint32 processed = 1;
+  string last_processed_id = 2;
+}
+
+message Operation {
+  // Bulk Operations supported:
+  // Concepts:
+  //    Operations: add_concepts, delete_concepts
+  //    AddConcepts:
+  //        If new concepts are given, add concepts operation creates new concepts in the app and adds them to the given inputs' annotations.
+  //        If the given concept already exist, the label value of the concept is updated with the given value.
+  //    DeleteConcepts:
+  //        Remove the matching concept(s) for all the inputs in input source (mentioned above).
+  //        If user IDs are set, concepts will be deleted only from annotations created by given user ids.
+  //        If the user IDs are not set, the list will be automatically set with 1 element that is the caller user ID.
+  //    Input Source:
+  //        Input ids of assets(images) (or) search on sub-assets(region in image, frame in video, region in frame in video)
+  // Metadata:
+  //    Operations: add_metadata, delete_metadata
+  //    AddMetadata:
+  //        Add the provided metadata to the input level annotation for all the inputs in input source (mentioned above).
+  //        If the key(s) already exists, it will overwrite the key(s) with the corresponding new value(s).
+  //    DeleteMetadata:
+  //        Remove the key, value pairs that match the given metadata from the existing input level Annotations' metadata
+  //        for all the inputs in input source (mentioned above).
+  //    Input Source:
+  //        Input ids of assets(images, videos) (or) search on sub-assets(region in image, frame in video, region in frame in video)
+  // Geo:
+  //    Operations: overwrite_geo, delete_geo
+  //    OverwriteGeo:
+  //        Add the provided geo info for all the inputs in input source (mentioned above).
+  //    DeleteGeo:
+  //        Delete Geo info for all the inputs in input source (mentioned above).
+  //    Input Source:
+  //        Input ids of assets(images, videos) (or) search on sub-assets(region in image, frame in video, region in frame in video)
+  // Dataset Inputs:
+  //    Operations: add_to_dataset, delete_from_dataset, split_into_datasets
+  //    AddToDataset:
+  //        Add inputs to a dataset
+  //    DeleteFromDataset:
+  //        Delete inputs from a dataset
+  //    SplitIntoDatasets:
+  //        Randomly split inputs into provided dataset ID's with provided percentages.
+  oneof operation {
+    AddConcepts add_concepts = 1;
+    DeleteConcepts delete_concepts = 2;
+    AddMetadata add_metadata = 3;
+    DeleteMetadata delete_metadata = 4;
+    OverwriteGeo overwrite_geo = 5;
+    DeleteGeo delete_geo = 6;
+    DeleteFromDataset delete_from_dataset = 7;
+    AddToDataset add_to_dataset = 8;
+    SplitIntoDatasets split_into_datasets = 9;
+  }
+}
+
+message AddConcepts { repeated Concept concepts = 1; }
+
+message DeleteConcepts {
+  repeated Concept concepts = 1;
+  repeated string user_ids = 2;
+}
+
+message AddMetadata {
+  // To handle arbitrary json metadata you can use a struct field:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  google.protobuf.Struct metadata = 1;
+}
+
+message DeleteMetadata {
+  // To handle arbitrary json metadata you can use a struct field:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  google.protobuf.Struct metadata = 1;
+}
+
+message OverwriteGeo {
+  // Geo info
+  Geo geo = 1;
+}
+
+message DeleteGeo {}
+
+message AddToDataset { string dataset_id = 1; }
+
+message DeleteFromDataset { string dataset_id = 1; }
+
+message SplitIntoDatasets {
+  repeated DatasetSplit dataset_splits = 1;
+  DatasetSplitMethod method = 2;
+  enum DatasetSplitMethod {
+    NOT_SET = 0;
+    // We will randomly split inputs into the datasets
+    RANDOM_PERCENTAGE_SPLIT = 1;
+  }
+}
+
+message DatasetSplit {
+  // Expected to have ID
+  Dataset dataset = 1;
+  oneof method_info {
+    // For RANDOM_PERCENTAGE_SPLIT.
+    // Values from (0,100]
+    uint32 percentage = 2;
+  }
+}
 
 
+message InputsAddJob {
+  reserved 2, 5, 6;
 
+  // id of the job
+  string id = 1;
+
+  // If call back url is set, we will send a Post request to this endpoint with job status.
+  string call_back_url = 3;
+
+  // Personal Access Token to the application to which inputs are added
+  string app_pat = 4;
+
+  // Progress of an on-going Input Ingestion task
+  InputsAddJobProgress progress = 7;
+
+  // When the job was created.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp created_at = 8;
+
+  // Most recent time when the job was updated.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp modified_at = 9;
+
+  // Sub-jobs that extract inputs from the cloud and/or archives
+  repeated InputsExtractionJob extraction_jobs = 10;
+
+  // Archive uploads
+  repeated Upload uploads = 11;
+
+  // Status of the job
+  clarifai.api.status.Status status = 12;
+}
+
+message InputsAddJobProgress {
+  uint64 pending_count = 1;
+  uint64 in_progress_count = 2;
+  uint64 success_count = 3;
+  uint64 failed_count = 4;
+}
+
+message Upload {
+  // ID of upload
+  string id = 1;
+
+  // When the upload was started.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp created_at = 2;
+
+  // Most recent time when the upload was updated.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp modified_at = 3;
+
+  // When the upload will expire and be deleted
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp expires_at = 4;
+
+  // Status of the upload
+  clarifai.api.status.Status status = 5;
+
+  // name of uploaded content (e.g. filename)
+  string content_name = 8;
+
+  // Total size of the upload content
+  uint64 content_length = 6;
+
+  // Url of uploaded content
+  string content_url = 7;
+}
+
+message UploadContentPart {
+  uint64 range_start = 1;
+  int64 part_number = 2;
+  bytes data = 3;
+}
+
+// We use this message to communicate with Custom Code Operator Backend. You can use this message
+// to test your custom operator code locally.
+// We expect the response to come in the format of the MultiOutputResponse protobuf message.
+message CustomCodeOperatorRequest {
+  repeated Input inputs = 1;
+
+  // support arbitrary metadata
+  google.protobuf.Struct metadata = 1002;
+}
+
+message InputsExtractionJob {
+  clarifai.api.status.Status status = 1;
+
+  // ID of extraction job
+  string id = 2;
+
+  // Url of archive or bucket
+  string url = 3;
+
+  // Progress counts of the job
+  InputsExtractionJobProgress progress = 4;
+
+  // When the extraction job was started.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp created_at = 5;
+
+  // Most recent time when the extraction job was updated.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp modified_at = 6;
+
+  // How to handle input ID conflicts.
+  InputIDConflictResolution input_id_conflict_resolution = 7;
+}
+
+message InputsExtractionJobProgress {
+  reserved 1;
+
+  uint64 audio_inputs_count = 2;
+  uint64 image_inputs_count = 3;
+  uint64 video_inputs_count = 4;
+  uint64 text_inputs_count = 5;
+
+  uint64 pending_archives_count = 6;
+  uint64 in_progress_archives_count = 7;
+  uint64 completed_archives_count = 8;
+  uint64 failed_archives_count = 9;
+}
+
+message InputsDataSource {
+  // Collect statistics about created inputs in job with given ID.
+  // On Post call:
+  // * If job ID is empty, then job is automatically created with random ID.
+  // * If job ID is non-empty, then a new job will be created with given ID.
+  string inputs_add_job_id = 1;
+
+  DataSourceURL url = 2;
+
+  // How to handle input ID conflicts.
+  InputIDConflictResolution input_id_conflict_resolution = 3;
+}
+
+message DataSourceURL {
+  // Supported providers are AWS S3, Azure blob, GCP cloud storage.
+  string url = 1;
+
+  // Credentials that would allow access to the provided url
+  DataSourceCredentials credentials = 2;
+}
+
+message DataSourceCredentials {
+  reserved 3;
+  oneof credentials {
+    // AWS S3 credentials for authentication.
+    AWSCreds s3_creds = 1;
+    // GCP Cloud Storage uses service account key data(creds.json) as Byte array for authentication.
+    bytes gcp_creds = 2;
+    // Azure Blob credentials for authentication.
+    AzureBlobCreds azure_blob_creds = 4;
+  }
+}
+
+// AWS S3 storage credentials.
+message AWSCreds {
+  reserved 1;
+
+  string region = 2;
+  string id = 3;
+  string secret = 4;
+  string token = 5;
+}
+
+// Azure Blob storage credentials.
+message AzureBlobCreds {
+  string account_name = 1;
+  string account_key = 2;
+}
+
+message InputsUpload {
+  // Collect statistics about created inputs in job with given ID.
+  // * If job ID is empty, then job is automatically created with random ID.
+  // * If job ID is non-empty, then a new job will be created with given ID.
+  string inputs_add_job_id = 1;
+
+  // Personal Access Token to the application to which inputs are added
+  string app_pat = 2;
+
+  Upload upload = 3;
+
+  // How to handle input ID conflicts.
+  InputIDConflictResolution input_id_conflict_resolution = 4;
+}
+enum InputIDConflictResolution {
+  INPUT_ID_CONFLICT_RESOLUTION_NOT_SET = 0; // Defaults to SKIP
+
+  SKIP = 1;   // Mark duplicate inputs as error and skip processing them.
+  SUFFIX = 2; // Add a suffix to inputs with conflicting IDs. Attempts numeric suffixes "-1" to "-9" and then a randomized suffix. Identical ID's in the same request are still treated as errors.
+}
+
+
+message BookmarkOrigin {
+  // original resource id
+  string id = 1;
+
+  // original resource app id
+  string app_id = 2;
+
+  // original resource user id
+  string user_id = 3;
+
+  enum BookmarkType {
+    unknown = 0;
+    model = 1;
+    workflow = 2;
+    dataset = 3;
+    module = 4;
+  }
+  // resource type.
+  BookmarkType resource_type = 4;
+}
+
+// An app module that a user created in our app module marketplace.
+message Runner {
+  // A unique ID for this app module.
+  string id = 1;
+  // A short description for this app module to be used in grids of modules.
+  string description = 2;
+  // When the app module was created.
+  google.protobuf.Timestamp created_at = 3;
+  // When the app module was last modified.
+  google.protobuf.Timestamp modified_at = 4;
+
+  // To handle arbitrary json metadata you can use a struct field:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  // This is an optional arg.
+  google.protobuf.Struct metadata = 5;
+
+  // The creator of the app module.
+  string user_id = 6;
+
+  // Labels to match.
+  repeated string labels = 7;
+}

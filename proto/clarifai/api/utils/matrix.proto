@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "github.com/Clarifai/clarifai-go-grpc/proto/clarifai/api/utils";
+option java_package = "com.clarifai.grpc.api.utils";
+
+// Store matrix of uint64s values.
+// It is recommended to store the matrix as a 1D array
+// because it produces less bytes during serialization than a 2D array.
+// The matrix does store the number of columns, but it does not store the number of rows.
+// The number of rows can automatically be calculated as length(data)/n_cols.
+message MatrixUint64 {
+  // Number of columns
+  uint64 n_cols = 1;
+
+  // Matrix data stored as an array.
+  // In order to access matrix element at row i & column j, use data[i*n_cols+j].
+  repeated uint64 data = 2;
+}
