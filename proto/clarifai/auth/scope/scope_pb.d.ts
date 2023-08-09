@@ -12,12 +12,10 @@ export class ScopeList extends jspb.Message {
     getScopesList(): Array<S>;
     setScopesList(value: Array<S>): ScopeList;
     addScopes(value: S, index?: number): S;
-
     clearEndpointsList(): void;
     getEndpointsList(): Array<string>;
     setEndpointsList(value: Array<string>): ScopeList;
     addEndpoints(value: string, index?: number): string;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ScopeList.AsObject;
@@ -44,7 +42,6 @@ export enum S {
     UNDEF = 0,
     ALL = 1,
     PREDICT = 2,
-    SEARCH = 3,
     INPUTS_ADD = 4,
     INPUTS_GET = 5,
     INPUTS_PATCH = 7,
@@ -101,4 +98,33 @@ export enum S {
     FINDDUPLICATEANNOTATIONSJOBS_ADD = 102,
     FINDDUPLICATEANNOTATIONSJOBS_GET = 103,
     FINDDUPLICATEANNOTATIONSJOBS_DELETE = 104,
+    DATASETS_GET = 105,
+    DATASETS_ADD = 106,
+    DATASETS_DELETE = 107,
+    MODULES_ADD = 108,
+    MODULES_GET = 109,
+    MODULES_DELETE = 110,
+    INSTALLEDMODULEVERSIONS_ADD = 111,
+    INSTALLEDMODULEVERSIONS_GET = 112,
+    INSTALLEDMODULEVERSIONS_DELETE = 113,
+    SEARCH = 3,
+    SAVEDSEARCH_GET = 114,
+    SAVEDSEARCH_ADD = 115,
+    SAVEDSEARCH_DELETE = 116,
+    MODELVERSIONPUBLICATIONS_ADD = 117,
+    MODELVERSIONPUBLICATIONS_DELETE = 118,
+    WORKFLOWPUBLICATIONS_ADD = 119,
+    WORKFLOWPUBLICATIONS_DELETE = 120,
+    BULKOPERATION_ADD = 121,
+    BULKOPERATION_GET = 122,
+    BULKOPERATION_DELETE = 123,
+    HISTORICALUSAGE_GET = 124,
+    UPLOADS_GET = 128,
+    UPLOADS_ADD = 129,
+    UPLOADS_DELETE = 130,
+    RUNNERS_GET = 131,
+    RUNNERS_ADD = 132,
+    RUNNERS_DELETE = 133,
+    RUNNERITEMS_GET = 134,
+    RUNNERITEMS_ADD = 135,
 }

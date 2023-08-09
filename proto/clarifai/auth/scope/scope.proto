@@ -26,6 +26,7 @@ message ScopeList {
 // cannot make a key that would be useless. Beyond the key creation they are not enforced
 // but rather the scopes are enforce when data is accessed.
 //
+//
 // There is the following conventions in place, make sure you add them to the scopes for all new
 // resource types:
 //
@@ -33,8 +34,19 @@ message ScopeList {
 // 2. *_Delete requires the corresponding _Add and _Get.
 // 3. *_Patch is deprecated and not check anywhere.
 //
+// Think of the dependencies in this file at the DB level. If you cannot make a DB call to Get, Add
+// or Delete a resource without having access to another resource then you should add it here. That
+// should for the most part be the same resource type. In service.proto for the API level you will
+// also specify cl_depending_scopes for each API endpoint. Those cover cases where an endpoint
+// might need to access more than just that one resource type in order to operate (ie. API handlers
+// that make multiple DB calls of various resource types likely have more cl_depending_scopes than
+// the ones listed below). For example: PostCollectors to create a collector we make sure that you
+// can do model predictions, get concepts, etc. so that you don't have a collector that would be
+// useless at the end of that API handler but below you can see that the dependencies of Collector
+// scopes are only on other Collector scopes.
+//
 enum S {
-  reserved 30, 31, 32, 33, 34;
+  reserved 30, 31, 32, 33, 34, 125, 126;
   // introduce undef so that the zero (default/unset) value of the enum is not a real
   // permission.  undef is only present for this purpose and should not be used
   // to indicate any "real" value.
@@ -44,8 +56,6 @@ enum S {
 
   // Make an rpc to our prediction services.
   Predict = 2 [(clarfai_exposed) = true];
-  // Make an rpc to our search services.
-  Search = 3 [(clarfai_exposed) = true];
 
   // Write to the inputs table in the DB.
   Inputs_Add = 4 [(clarfai_exposed) = true,
@@ -316,14 +326,100 @@ enum S {
         (clarifai_depending_scopes) = FindDuplicateAnnotationsJobs_Get];
 
 
+  Datasets_Get = 105 [(clarfai_exposed) = true];
+  Datasets_Add = 106 [(clarfai_exposed) = true,
+                    (clarifai_depending_scopes) = Datasets_Get];
+  Datasets_Delete = 107 [(clarfai_exposed) = true,
+                       (clarifai_depending_scopes) = Datasets_Get,
+                       (clarifai_depending_scopes) = Datasets_Add];
+
+	// Write to the modules DB tables.
+  Modules_Add = 108 [(clarfai_exposed) = true,
+                   (clarifai_depending_scopes) = Modules_Get];
+
+  // Read from the modules and modules versions DB tables.
+  Modules_Get = 109 [(clarfai_exposed) = true];
+
+  // To delete we need read/write.
+  Modules_Delete = 110 [(clarfai_exposed) = true,
+                      (clarifai_depending_scopes) = Modules_Add,
+                      (clarifai_depending_scopes) = Modules_Get];
 
 
+	// Write to the InstalledModuleVersions DB tables.
+  InstalledModuleVersions_Add = 111 [(clarfai_exposed) = true,
+                                     (clarifai_depending_scopes) = InstalledModuleVersions_Get,
+                                     (clarifai_depending_scopes) = Modules_Get];
 
+  // Read from the InstalledModuleVersions and InstalledModuleVersions versions DB tables.
+  InstalledModuleVersions_Get = 112 [(clarfai_exposed) = true,
+                                     (clarifai_depending_scopes) = Modules_Get];
 
+  // To delete we need read/write.
+  InstalledModuleVersions_Delete = 113 [(clarfai_exposed) = true,
+                                        (clarifai_depending_scopes) = InstalledModuleVersions_Add,
+                                        (clarifai_depending_scopes) = InstalledModuleVersions_Get,
+                                        (clarifai_depending_scopes) = Modules_Get];
 
+  // Make an rpc to our search services.
+  Search = 3 [(clarfai_exposed) = true];
 
+  // To get a saved search.
+  SavedSearch_Get = 114 [(clarfai_exposed) = true];
 
+  // To add a saved search
+  SavedSearch_Add = 115 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = SavedSearch_Get];
 
+  // To delete a saved search
+  SavedSearch_Delete=116 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = SavedSearch_Get,
+    (clarifai_depending_scopes) = SavedSearch_Add];
+
+  ModelVersionPublications_Add=117 [(clarfai_exposed) = true];
+  ModelVersionPublications_Delete=118 [(clarfai_exposed) = true];
+
+  WorkflowPublications_Add=119 [(clarfai_exposed) = true];
+  WorkflowPublications_Delete=120 [(clarfai_exposed) = true];
+
+  // To write bulk operations to the DB
+  BulkOperation_Add = 121 [(clarfai_exposed) = true, (clarifai_depending_scopes) = BulkOperation_Get];
+
+  // To Read Bulk Operations from the DB
+  BulkOperation_Get = 122 [(clarfai_exposed) = true];
+
+  // To Delete Bulk Operations from the DB
+  BulkOperation_Delete = 123 [(clarfai_exposed) = true, (clarifai_depending_scopes) = BulkOperation_Add,
+    (clarifai_depending_scopes) = BulkOperation_Get];
+
+  // To read historical usage from usage.dashboard_items table
+  HistoricalUsage_Get = 124;
+
+  // To read uploaded files and archives info from Uploads endpoints
+  Uploads_Get = 128 [(clarfai_exposed) = true];
+
+  // To upload files or archives through the Uploads endpoints
+  Uploads_Add = 129 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = Uploads_Get];
+
+  Uploads_Delete = 130 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = Uploads_Get,
+    (clarifai_depending_scopes) = Uploads_Add];
+
+  // To read allo control over remote runners
+  Runners_Get = 131 [(clarfai_exposed) = true];
+
+  Runners_Add = 132 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = Runners_Get];
+
+  Runners_Delete = 133 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = Runners_Get,
+    (clarifai_depending_scopes) = Runners_Add];
+
+  RunnerItems_Get = 134 [(clarfai_exposed) = true];
+
+  RunnerItems_Add = 135 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = RunnerItems_Get];
 }
 
 extend google.protobuf.EnumValueOptions {
