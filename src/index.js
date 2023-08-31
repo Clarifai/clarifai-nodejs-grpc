@@ -38,12 +38,18 @@ class ClarifaiStub {
         if (base === undefined)
             base = "api.clarifai.com"
         const grpcProtoDescriptor = grpc.loadPackageDefinition(packageDefinition);
-        return new grpcProtoDescriptor.clarifai.api.V2(base, grpc.ChannelCredentials.createSsl());
+        const options = {
+            'grpc.max_receive_message_length': 128 *1024 * 1024, // 128 MB
+          };
+        return new grpcProtoDescriptor.clarifai.api.V2(base, grpc.ChannelCredentials.createSsl(), options);
     }
 
     static insecureGrpc() {
         const grpcProtoDescriptor = grpc.loadPackageDefinition(packageDefinition);
-        return new grpcProtoDescriptor.clarifai.api.V2('api-grpc.clarifai.com:18080', grpc.credentials.createInsecure());
+        const options = {
+            'grpc.max_receive_message_length': 128 *1024 * 1024, // 128 MB
+          };
+        return new grpcProtoDescriptor.clarifai.api.V2('api-grpc.clarifai.com:18080', grpc.credentials.createInsecure(), options);
     }
 
     /**
