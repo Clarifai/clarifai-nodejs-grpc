@@ -7,17 +7,36 @@
   "author": "Clarifai Inc.",
   "license": "Apache-2.0",
   "scripts": {
-    "test": "mocha 'tests/**/*.js' --recursive --timeout 30000"
+    "test": "mocha 'tests/**/*.js' --recursive --timeout 30000",
+    "test-ts": "mocha 'tests/**/*.ts' --recursive --timeout 30000"
   },
   "keywords": [],
   "dependencies": {
     "@grpc/grpc-js": "^1.4.2",
     "@grpc/proto-loader": "^0.5.5",
     "axios": "^0.21.1",
-    "protobufjs": "^6.10.2",
-    "google-protobuf": "^3.14.0"
+    "fs": "0.0.1-security",
+    "google-protobuf": "^3.14.0",
+    "protobufjs": "^6.10.2"
   },
   "devDependencies": {
+    "@types/mocha": "^10.0.1",
     "mocha": "^8.2.1"
+  },
+  "mocha": {
+    "require": [
+      "ts-node/register",
+      "tsconfig-paths/register"
+    ],
+    "watch-files": [
+      "./src/**/*.ts",
+      "./tests/**/*.spec.ts"
+    ],
+    "spec": "./tests/**/*.spec.ts"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=6.0.0",
+    "pnpm": ">=8.6.6"
   }
 }
