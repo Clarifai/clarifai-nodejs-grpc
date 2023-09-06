@@ -379,6 +379,9 @@ message Concept {
 
   // Information about keypoints for this concept
   KeypointInfo keypoint_info = 11;
+
+  // Optional extra info.
+  ConceptExtraInfo extra_info = 12;
 }
 
 message KeypointInfo {
@@ -392,6 +395,13 @@ message KeypointInfo {
 message KeypointEdge {
   uint32 k1 = 1;
   uint32 k2 = 2;
+}
+
+// ConceptExtraInfo represents extra information related to a concept that is context-dependent.
+// It is only set when requested in ConceptExtraInfoRequest.
+message ConceptExtraInfo {
+  // Whether this concept is rankable based on ConceptExtraInfoRequest configuration.
+  bool is_rankable = 1;
 }
 
 // ConceptCount
@@ -1796,6 +1806,8 @@ message ConfusionMatrixEntry {
   string predicted = 1;
   string actual = 2;
   float value = 4 [(clarifai.api.utils.cl_show_if_empty) = true];
+  Concept predicted_concept = 5;
+  Concept actual_concept = 6;
 }
 
 // ConfusionMatrix
