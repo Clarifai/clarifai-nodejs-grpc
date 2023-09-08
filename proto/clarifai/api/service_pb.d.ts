@@ -443,6 +443,8 @@ export class ListAppsRequest extends jspb.Message {
     setQuery(value: string): ListAppsRequest;
     getName(): string;
     setName(value: string): ListAppsRequest;
+    getId(): string;
+    setId(value: string): ListAppsRequest;
     getFeaturedOnly(): boolean;
     setFeaturedOnly(value: boolean): ListAppsRequest;
     getStarredOnly(): boolean;
@@ -476,6 +478,7 @@ export namespace ListAppsRequest {
         sortByStarCount: boolean,
         query: string,
         name: string,
+        id: string,
         featuredOnly: boolean,
         starredOnly: boolean,
         additionalFieldsList: Array<string>,
@@ -1145,6 +1148,11 @@ export class PostConceptsSearchesRequest extends jspb.Message {
     getConceptQuery(): proto_clarifai_api_resources_pb.ConceptQuery | undefined;
     setConceptQuery(value?: proto_clarifai_api_resources_pb.ConceptQuery): PostConceptsSearchesRequest;
 
+    hasExtraInfo(): boolean;
+    clearExtraInfo(): void;
+    getExtraInfo(): ConceptExtraInfoRequest | undefined;
+    setExtraInfo(value?: ConceptExtraInfoRequest): PostConceptsSearchesRequest;
+
     hasPagination(): boolean;
     clearPagination(): void;
     getPagination(): Pagination | undefined;
@@ -1164,7 +1172,31 @@ export namespace PostConceptsSearchesRequest {
     export type AsObject = {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         conceptQuery?: proto_clarifai_api_resources_pb.ConceptQuery.AsObject,
+        extraInfo?: ConceptExtraInfoRequest.AsObject,
         pagination?: Pagination.AsObject,
+    }
+}
+
+export class ConceptExtraInfoRequest extends jspb.Message { 
+
+    hasRankableModel(): boolean;
+    clearRankableModel(): void;
+    getRankableModel(): proto_clarifai_api_resources_pb.Model | undefined;
+    setRankableModel(value?: proto_clarifai_api_resources_pb.Model): ConceptExtraInfoRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ConceptExtraInfoRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ConceptExtraInfoRequest): ConceptExtraInfoRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ConceptExtraInfoRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ConceptExtraInfoRequest;
+    static deserializeBinaryFromReader(message: ConceptExtraInfoRequest, reader: jspb.BinaryReader): ConceptExtraInfoRequest;
+}
+
+export namespace ConceptExtraInfoRequest {
+    export type AsObject = {
+        rankableModel?: proto_clarifai_api_resources_pb.Model.AsObject,
     }
 }
 
@@ -2266,6 +2298,11 @@ export class ListDatasetsRequest extends jspb.Message {
     clearSortByModifiedAt(): void;
     getSortByModifiedAt(): boolean;
     setSortByModifiedAt(value: boolean): ListDatasetsRequest;
+
+    hasSortById(): boolean;
+    clearSortById(): void;
+    getSortById(): boolean;
+    setSortById(value: boolean): ListDatasetsRequest;
     getBookmark(): boolean;
     setBookmark(value: boolean): ListDatasetsRequest;
 
@@ -2292,6 +2329,7 @@ export namespace ListDatasetsRequest {
         sortByCreatedAt: boolean,
         sortByStarCount: boolean,
         sortByModifiedAt: boolean,
+        sortById: boolean,
         bookmark: boolean,
     }
 
@@ -2300,6 +2338,7 @@ export namespace ListDatasetsRequest {
         SORT_BY_CREATED_AT = 7,
         SORT_BY_STAR_COUNT = 8,
         SORT_BY_MODIFIED_AT = 9,
+        SORT_BY_ID = 11,
     }
 
 }
@@ -4689,6 +4728,35 @@ export class ListEvaluationsRequest extends jspb.Message {
     getSortByRecall(): boolean;
     setSortByRecall(value: boolean): ListEvaluationsRequest;
 
+    hasSortByModelId(): boolean;
+    clearSortByModelId(): void;
+    getSortByModelId(): boolean;
+    setSortByModelId(value: boolean): ListEvaluationsRequest;
+
+    hasSortByEvalDatasetId(): boolean;
+    clearSortByEvalDatasetId(): void;
+    getSortByEvalDatasetId(): boolean;
+    setSortByEvalDatasetId(value: boolean): ListEvaluationsRequest;
+
+    hasSortByTrainDatasetId(): boolean;
+    clearSortByTrainDatasetId(): void;
+    getSortByTrainDatasetId(): boolean;
+    setSortByTrainDatasetId(value: boolean): ListEvaluationsRequest;
+    getModelTypeId(): string;
+    setModelTypeId(value: string): ListEvaluationsRequest;
+    clearEvalDatasetIdsList(): void;
+    getEvalDatasetIdsList(): Array<string>;
+    setEvalDatasetIdsList(value: Array<string>): ListEvaluationsRequest;
+    addEvalDatasetIds(value: string, index?: number): string;
+    clearTrainDatasetIdsList(): void;
+    getTrainDatasetIdsList(): Array<string>;
+    setTrainDatasetIdsList(value: Array<string>): ListEvaluationsRequest;
+    addTrainDatasetIds(value: string, index?: number): string;
+    clearConceptIdsList(): void;
+    getConceptIdsList(): Array<string>;
+    setConceptIdsList(value: Array<string>): ListEvaluationsRequest;
+    addConceptIds(value: string, index?: number): string;
+
     getSortByCase(): ListEvaluationsRequest.SortByCase;
 
     serializeBinary(): Uint8Array;
@@ -4714,6 +4782,13 @@ export namespace ListEvaluationsRequest {
         sortByMeanAvgPrecision: boolean,
         sortByPrecision: boolean,
         sortByRecall: boolean,
+        sortByModelId: boolean,
+        sortByEvalDatasetId: boolean,
+        sortByTrainDatasetId: boolean,
+        modelTypeId: string,
+        evalDatasetIdsList: Array<string>,
+        trainDatasetIdsList: Array<string>,
+        conceptIdsList: Array<string>,
     }
 
     export enum SortByCase {
@@ -4725,6 +4800,9 @@ export namespace ListEvaluationsRequest {
         SORT_BY_MEAN_AVG_PRECISION = 9,
         SORT_BY_PRECISION = 10,
         SORT_BY_RECALL = 11,
+        SORT_BY_MODEL_ID = 16,
+        SORT_BY_EVAL_DATASET_ID = 17,
+        SORT_BY_TRAIN_DATASET_ID = 18,
     }
 
 }
@@ -8248,6 +8326,11 @@ export class ListModulesRequest extends jspb.Message {
     clearSortByModifiedAt(): void;
     getSortByModifiedAt(): boolean;
     setSortByModifiedAt(value: boolean): ListModulesRequest;
+
+    hasSortById(): boolean;
+    clearSortById(): void;
+    getSortById(): boolean;
+    setSortById(value: boolean): ListModulesRequest;
     getBookmark(): boolean;
     setBookmark(value: boolean): ListModulesRequest;
 
@@ -8274,6 +8357,7 @@ export namespace ListModulesRequest {
         sortByCreatedAt: boolean,
         sortByStarCount: boolean,
         sortByModifiedAt: boolean,
+        sortById: boolean,
         bookmark: boolean,
     }
 
@@ -8282,6 +8366,7 @@ export namespace ListModulesRequest {
         SORT_BY_CREATED_AT = 7,
         SORT_BY_STAR_COUNT = 8,
         SORT_BY_MODIFIED_AT = 9,
+        SORT_BY_ID = 11,
     }
 
 }

@@ -582,6 +582,11 @@ export class Concept extends jspb.Message {
     getKeypointInfo(): KeypointInfo | undefined;
     setKeypointInfo(value?: KeypointInfo): Concept;
 
+    hasExtraInfo(): boolean;
+    clearExtraInfo(): void;
+    getExtraInfo(): ConceptExtraInfo | undefined;
+    setExtraInfo(value?: ConceptExtraInfo): Concept;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Concept.AsObject;
     static toObject(includeInstance: boolean, msg: Concept): Concept.AsObject;
@@ -605,6 +610,7 @@ export namespace Concept {
         visibility?: Visibility.AsObject,
         userId: string,
         keypointInfo?: KeypointInfo.AsObject,
+        extraInfo?: ConceptExtraInfo.AsObject,
     }
 }
 
@@ -655,6 +661,26 @@ export namespace KeypointEdge {
     export type AsObject = {
         k1: number,
         k2: number,
+    }
+}
+
+export class ConceptExtraInfo extends jspb.Message { 
+    getIsRankable(): boolean;
+    setIsRankable(value: boolean): ConceptExtraInfo;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ConceptExtraInfo.AsObject;
+    static toObject(includeInstance: boolean, msg: ConceptExtraInfo): ConceptExtraInfo.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ConceptExtraInfo, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ConceptExtraInfo;
+    static deserializeBinaryFromReader(message: ConceptExtraInfo, reader: jspb.BinaryReader): ConceptExtraInfo;
+}
+
+export namespace ConceptExtraInfo {
+    export type AsObject = {
+        isRankable: boolean,
     }
 }
 
@@ -3402,6 +3428,16 @@ export class ConfusionMatrixEntry extends jspb.Message {
     getValue(): number;
     setValue(value: number): ConfusionMatrixEntry;
 
+    hasPredictedConcept(): boolean;
+    clearPredictedConcept(): void;
+    getPredictedConcept(): Concept | undefined;
+    setPredictedConcept(value?: Concept): ConfusionMatrixEntry;
+
+    hasActualConcept(): boolean;
+    clearActualConcept(): void;
+    getActualConcept(): Concept | undefined;
+    setActualConcept(value?: Concept): ConfusionMatrixEntry;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ConfusionMatrixEntry.AsObject;
     static toObject(includeInstance: boolean, msg: ConfusionMatrixEntry): ConfusionMatrixEntry.AsObject;
@@ -3417,6 +3453,8 @@ export namespace ConfusionMatrixEntry {
         predicted: string,
         actual: string,
         value: number,
+        predictedConcept?: Concept.AsObject,
+        actualConcept?: Concept.AsObject,
     }
 }
 
