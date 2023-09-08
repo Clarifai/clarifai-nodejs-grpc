@@ -10,7 +10,7 @@ const {config} = require('dotenv')
 config()
 
 const metadata = new grpc.Metadata();
-metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY);
+metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY.trim());
 
 describe("Integration Tests - dynamic", () => {
     it ("Lists concepts", done => {

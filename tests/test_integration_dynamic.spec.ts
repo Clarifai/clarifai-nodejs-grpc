@@ -9,7 +9,7 @@ import {config} from 'dotenv'
 config()
 
 const metadata = new grpc.Metadata();
-metadata.set('authorization', 'Key ' + process.env.CLARIFAI_API_KEY);
+metadata.set('authorization', 'Key ' + process.env.CLARIFAI_API_KEY.trim());
 
 // FIXME: requires fix
 describe('Integration Tests - dynamic', () => {
