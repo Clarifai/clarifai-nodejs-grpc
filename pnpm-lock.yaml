@@ -28,6 +28,9 @@ devDependencies:
   '@types/mocha':
     specifier: ^10.0.1
     version: 10.0.1
+  dotenv:
+    specifier: ^16.3.1
+    version: 16.3.1
   mocha:
     specifier: ^8.2.1
     version: 8.4.0
@@ -334,6 +337,11 @@ packages:
   /diff@5.0.0:
     resolution: {integrity: sha512-/VTCrvm5Z0JGty/BWHljh+BAiw3IK+2j87NGMu8Nwc/f48WoDAC395uomO9ZD117ZOBaHmkX1oyLvkVM/aIT3w==}
     engines: {node: '>=0.3.1'}
+    dev: true
+
+  /dotenv@16.3.1:
+    resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
+    engines: {node: '>=12'}
     dev: true
 
   /emoji-regex@8.0.0:

@@ -4,6 +4,10 @@ import { ClarifaiStub, grpc } from '../src/index';
 import common from './common';
 import fs from 'fs'
 
+import {config} from 'dotenv'
+
+config()
+
 const metadata = new grpc.Metadata();
 metadata.set('authorization', 'Key ' + process.env.CLARIFAI_API_KEY);
 
