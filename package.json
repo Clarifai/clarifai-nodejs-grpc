@@ -21,7 +21,9 @@
   },
   "devDependencies": {
     "@types/mocha": "^10.0.1",
-    "mocha": "^8.2.1"
+    "mocha": "^8.2.1",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0"
   },
   "mocha": {
     "require": [

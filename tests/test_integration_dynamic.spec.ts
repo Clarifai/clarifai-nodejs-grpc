@@ -59,6 +59,8 @@ function testListConceptsDynamic(done: Mocha.Done, stub: any) {
 }
 
 function testPredictImageUrlDynamic(done: Mocha.Done, stub: grpc.ClientUnaryCall) {
+    // @ts-ignore
+    // @ts-ignore
     stub.PostModelOutputs(
         {
             model_id: common.GENERIC_MODEL_ID,
@@ -86,6 +88,7 @@ function testPredictImageUrlDynamic(done: Mocha.Done, stub: grpc.ClientUnaryCall
 function testPredictImageFileDynamic(done: Mocha.Done, stub: grpc.ClientUnaryCall) {
     const imageBytes = fs.readFileSync(common.METRO_NORTH_IMAGE_FILE_PATH);
 
+    // @ts-ignore
     stub.PostModelOutputs(
         {
             model_id: common.GENERIC_MODEL_ID,
@@ -111,6 +114,7 @@ function testPredictImageFileDynamic(done: Mocha.Done, stub: grpc.ClientUnaryCal
 }
 
 function testFailedPredictDynamic(done: Mocha.Done, stub: grpc.ClientUnaryCall) {
+    // @ts-ignore
     stub.PostModelOutputs(
         {
             model_id: common.GENERIC_MODEL_ID,
@@ -143,6 +147,7 @@ function testFailedPredictDynamic(done: Mocha.Done, stub: grpc.ClientUnaryCall) 
 }
 
 function testListModelsWithPagination1Dynamic(done: Mocha.Done, stub: grpc.ClientUnaryCall) {
+    // @ts-ignore
     stub.ListModels(
         {
             per_page: 2,
@@ -167,6 +172,7 @@ function testListModelsWithPagination1Dynamic(done: Mocha.Done, stub: grpc.Clien
 }
 
 function testListModelsWithPagination2Dynamic(done: Mocha.Done, stub: grpc.ClientUnaryCall) {
+    // @ts-ignore
     stub.ListModels(
         {
             // We shouldn't have 1000*500 number of models, so the result should be empty.
@@ -195,6 +201,7 @@ function testListModelsWithPagination2Dynamic(done: Mocha.Done, stub: grpc.Clien
 function testPromiseWrappersDynamic(done: Mocha.Done, stub: grpc.ClientUnaryCall) {
     function postInputsAsync(...params: any[]) {
         return new Promise<void>((resolve, reject) => {
+            // @ts-ignore
             stub.PostInputs(...params, (err: Error | null, response: any) => {
                 if (err !== null) reject(err);
                 else if (response.status.code !== 10000) reject(response);
@@ -205,6 +212,7 @@ function testPromiseWrappersDynamic(done: Mocha.Done, stub: grpc.ClientUnaryCall
 
     function getInputAsync(...params: any[]) {
         return new Promise<void>((resolve, reject) => {
+            // @ts-ignore
             stub.GetInput(...params, (err: Error | null, response: any) => {
                 if (err !== null) reject(err);
                 else if (response.status.code !== 10000) reject(response);
@@ -215,6 +223,7 @@ function testPromiseWrappersDynamic(done: Mocha.Done, stub: grpc.ClientUnaryCall
 
     function deleteInputAsync(...params: any[]) {
         return new Promise<void>((resolve, reject) => {
+            // @ts-ignore
             stub.DeleteInput(...params, (err: Error | null, response: any) => {
                 if (err !== null) reject(err);
                 else if (response.status.code !== 10000) reject(response);
