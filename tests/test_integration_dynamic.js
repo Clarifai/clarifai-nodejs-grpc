@@ -5,6 +5,10 @@ const {ClarifaiStub, grpc} = require('../src/index');
 
 const common = require("./common");
 
+const {config} = require('dotenv')
+
+config()
+
 const metadata = new grpc.Metadata();
 metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY);
 
