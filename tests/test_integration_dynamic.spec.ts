@@ -64,7 +64,6 @@ function testListConceptsDynamic(done: Mocha.Done, stub: any) {
 
 function testPredictImageUrlDynamic(done: Mocha.Done, stub: grpc.ClientUnaryCall) {
     // @ts-ignore
-    // @ts-ignore
     stub.PostModelOutputs(
         {
             model_id: common.GENERIC_MODEL_ID,
