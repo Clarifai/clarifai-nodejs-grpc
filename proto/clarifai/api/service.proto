@@ -3983,6 +3983,8 @@ message ListConceptsRequest {
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
   // to 128.
   uint32 per_page = 3;
+  // Fuzzy match on concept ID
+  string id = 4;
 }
 
 // ListModelConceptsRequest
@@ -4438,6 +4440,8 @@ message ListDatasetsRequest {
   }
   // Filter datasets by bookmark. If set, only return bookmarked datasets. Otherwise none bookmarked datasets only.
   bool bookmark = 10;
+  // Fuzzy filter on dataset ID
+  string id = 12;
 }
 
 // GetDatasetRequest

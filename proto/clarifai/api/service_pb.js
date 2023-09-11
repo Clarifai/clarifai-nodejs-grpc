@@ -15037,7 +15037,8 @@ proto.clarifai.api.ListConceptsRequest.toObject = function(includeInstance, msg)
   var f, obj = {
     userAppId: (f = msg.getUserAppId()) && proto_clarifai_api_resources_pb.UserAppIDSet.toObject(includeInstance, f),
     page: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    perPage: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    perPage: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    id: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -15087,6 +15088,10 @@ proto.clarifai.api.ListConceptsRequest.deserializeBinaryFromReader = function(ms
       var value = /** @type {number} */ (reader.readUint32());
       msg.setPerPage(value);
       break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setId(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -15135,6 +15140,13 @@ proto.clarifai.api.ListConceptsRequest.serializeBinaryToWriter = function(messag
   if (f !== 0) {
     writer.writeUint32(
       3,
+      f
+    );
+  }
+  f = message.getId();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
       f
     );
   }
@@ -15211,6 +15223,24 @@ proto.clarifai.api.ListConceptsRequest.prototype.getPerPage = function() {
  */
 proto.clarifai.api.ListConceptsRequest.prototype.setPerPage = function(value) {
   return jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional string id = 4;
+ * @return {string}
+ */
+proto.clarifai.api.ListConceptsRequest.prototype.getId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.ListConceptsRequest} returns this
+ */
+proto.clarifai.api.ListConceptsRequest.prototype.setId = function(value) {
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -23959,7 +23989,8 @@ proto.clarifai.api.ListDatasetsRequest.toObject = function(includeInstance, msg)
     sortByStarCount: jspb.Message.getBooleanFieldWithDefault(msg, 8, false),
     sortByModifiedAt: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
     sortById: jspb.Message.getBooleanFieldWithDefault(msg, 11, false),
-    bookmark: jspb.Message.getBooleanFieldWithDefault(msg, 10, false)
+    bookmark: jspb.Message.getBooleanFieldWithDefault(msg, 10, false),
+    id: jspb.Message.getFieldWithDefault(msg, 12, "")
   };
 
   if (includeInstance) {
@@ -24040,6 +24071,10 @@ proto.clarifai.api.ListDatasetsRequest.deserializeBinaryFromReader = function(ms
     case 10:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setBookmark(value);
+      break;
+    case 12:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setId(value);
       break;
     default:
       reader.skipField();
@@ -24145,6 +24180,13 @@ proto.clarifai.api.ListDatasetsRequest.serializeBinaryToWriter = function(messag
   if (f) {
     writer.writeBool(
       10,
+      f
+    );
+  }
+  f = message.getId();
+  if (f.length > 0) {
+    writer.writeString(
+      12,
       f
     );
   }
@@ -24456,6 +24498,24 @@ proto.clarifai.api.ListDatasetsRequest.prototype.getBookmark = function() {
  */
 proto.clarifai.api.ListDatasetsRequest.prototype.setBookmark = function(value) {
   return jspb.Message.setProto3BooleanField(this, 10, value);
+};
+
+
+/**
+ * optional string id = 12;
+ * @return {string}
+ */
+proto.clarifai.api.ListDatasetsRequest.prototype.getId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 12, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.ListDatasetsRequest} returns this
+ */
+proto.clarifai.api.ListDatasetsRequest.prototype.setId = function(value) {
+  return jspb.Message.setProto3StringField(this, 12, value);
 };
 
 

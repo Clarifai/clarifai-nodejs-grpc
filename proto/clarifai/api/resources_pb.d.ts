@@ -2659,6 +2659,11 @@ export class TrainInfo extends jspb.Message {
     getParams(): google_protobuf_struct_pb.Struct | undefined;
     setParams(value?: google_protobuf_struct_pb.Struct): TrainInfo;
 
+    hasDataset(): boolean;
+    clearDataset(): void;
+    getDataset(): Dataset | undefined;
+    setDataset(value?: Dataset): TrainInfo;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): TrainInfo.AsObject;
     static toObject(includeInstance: boolean, msg: TrainInfo): TrainInfo.AsObject;
@@ -2672,6 +2677,7 @@ export class TrainInfo extends jspb.Message {
 export namespace TrainInfo {
     export type AsObject = {
         params?: google_protobuf_struct_pb.Struct.AsObject,
+        dataset?: Dataset.AsObject,
     }
 }
 
@@ -3008,6 +3014,8 @@ export namespace ModelTypeField {
     DATASET_ID = 16,
     DATASET_VERSION_ID = 17,
     ARRAY_OF_MODEL_CONCEPTS = 18,
+    DATASET = 19,
+    DATASET_VERSION = 20,
     }
 
 }
@@ -5854,6 +5862,8 @@ export class APIPostModelOutputsCollectorSource extends jspb.Message {
     setModelVersionId(value: string): APIPostModelOutputsCollectorSource;
     getPostInputsKeyId(): string;
     setPostInputsKeyId(value: string): APIPostModelOutputsCollectorSource;
+    getCallerUserId(): string;
+    setCallerUserId(value: string): APIPostModelOutputsCollectorSource;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): APIPostModelOutputsCollectorSource.AsObject;
@@ -5872,6 +5882,7 @@ export namespace APIPostModelOutputsCollectorSource {
         modelId: string,
         modelVersionId: string,
         postInputsKeyId: string,
+        callerUserId: string,
     }
 }
 
