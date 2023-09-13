@@ -24913,7 +24913,8 @@ proto.clarifai.api.TrainInfo.prototype.toObject = function(opt_includeInstance) 
  */
 proto.clarifai.api.TrainInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
-    params: (f = msg.getParams()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f)
+    params: (f = msg.getParams()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
+    dataset: (f = msg.getDataset()) && proto.clarifai.api.Dataset.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -24955,6 +24956,11 @@ proto.clarifai.api.TrainInfo.deserializeBinaryFromReader = function(msg, reader)
       reader.readMessage(value,google_protobuf_struct_pb.Struct.deserializeBinaryFromReader);
       msg.setParams(value);
       break;
+    case 2:
+      var value = new proto.clarifai.api.Dataset;
+      reader.readMessage(value,proto.clarifai.api.Dataset.deserializeBinaryFromReader);
+      msg.setDataset(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -24990,6 +24996,14 @@ proto.clarifai.api.TrainInfo.serializeBinaryToWriter = function(message, writer)
       1,
       f,
       google_protobuf_struct_pb.Struct.serializeBinaryToWriter
+    );
+  }
+  f = message.getDataset();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.clarifai.api.Dataset.serializeBinaryToWriter
     );
   }
 };
@@ -25029,6 +25043,43 @@ proto.clarifai.api.TrainInfo.prototype.clearParams = function() {
  */
 proto.clarifai.api.TrainInfo.prototype.hasParams = function() {
   return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional Dataset dataset = 2;
+ * @return {?proto.clarifai.api.Dataset}
+ */
+proto.clarifai.api.TrainInfo.prototype.getDataset = function() {
+  return /** @type{?proto.clarifai.api.Dataset} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Dataset, 2));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Dataset|undefined} value
+ * @return {!proto.clarifai.api.TrainInfo} returns this
+*/
+proto.clarifai.api.TrainInfo.prototype.setDataset = function(value) {
+  return jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.TrainInfo} returns this
+ */
+proto.clarifai.api.TrainInfo.prototype.clearDataset = function() {
+  return this.setDataset(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.TrainInfo.prototype.hasDataset = function() {
+  return jspb.Message.getField(this, 2) != null;
 };
 
 
@@ -27422,7 +27473,9 @@ proto.clarifai.api.ModelTypeField.ModelTypeFieldType = {
   PYTHON_CODE: 15,
   DATASET_ID: 16,
   DATASET_VERSION_ID: 17,
-  ARRAY_OF_MODEL_CONCEPTS: 18
+  ARRAY_OF_MODEL_CONCEPTS: 18,
+  DATASET: 19,
+  DATASET_VERSION: 20
 };
 
 /**
@@ -49835,7 +49888,8 @@ proto.clarifai.api.APIPostModelOutputsCollectorSource.toObject = function(includ
     modelAppId: jspb.Message.getFieldWithDefault(msg, 2, ""),
     modelId: jspb.Message.getFieldWithDefault(msg, 3, ""),
     modelVersionId: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    postInputsKeyId: jspb.Message.getFieldWithDefault(msg, 5, "")
+    postInputsKeyId: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    callerUserId: jspb.Message.getFieldWithDefault(msg, 6, "")
   };
 
   if (includeInstance) {
@@ -49891,6 +49945,10 @@ proto.clarifai.api.APIPostModelOutputsCollectorSource.deserializeBinaryFromReade
     case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.setPostInputsKeyId(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCallerUserId(value);
       break;
     default:
       reader.skipField();
@@ -49953,6 +50011,13 @@ proto.clarifai.api.APIPostModelOutputsCollectorSource.serializeBinaryToWriter = 
   if (f.length > 0) {
     writer.writeString(
       5,
+      f
+    );
+  }
+  f = message.getCallerUserId();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
       f
     );
   }
@@ -50046,6 +50111,24 @@ proto.clarifai.api.APIPostModelOutputsCollectorSource.prototype.getPostInputsKey
  */
 proto.clarifai.api.APIPostModelOutputsCollectorSource.prototype.setPostInputsKeyId = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional string caller_user_id = 6;
+ * @return {string}
+ */
+proto.clarifai.api.APIPostModelOutputsCollectorSource.prototype.getCallerUserId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.APIPostModelOutputsCollectorSource} returns this
+ */
+proto.clarifai.api.APIPostModelOutputsCollectorSource.prototype.setCallerUserId = function(value) {
+  return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 

@@ -1394,6 +1394,8 @@ message TrainInfo {
   // defined for each ModelType as a Struct (JSON object) here. During training, the settings
   // contained within are sent to the training processor to alter the training process.
   google.protobuf.Struct params = 1;
+  // The dataset and dataset version this model version was or will be trained on
+  Dataset dataset = 2;
 }
 
 message EvalInfo {
@@ -1589,6 +1591,10 @@ message ModelTypeField {
     DATASET_VERSION_ID = 17;
     // For auto-completing to concepts in the model.
     ARRAY_OF_MODEL_CONCEPTS = 18;
+    // For selecting a dataset
+    DATASET = 19;
+    // For selecting a dataset version
+    DATASET_VERSION = 20;
   }
   // The field for this field.
   ModelTypeFieldType field_type = 2;
@@ -1743,6 +1749,7 @@ message ModelVersion {
   TrainInfo train_info = 21;
   // Configuration used to import model from third-party toolkits
   ImportInfo import_info = 22;
+  // Contains the training logs if available
   string train_log = 23;
 }
 
@@ -3192,6 +3199,7 @@ message APIPostModelOutputsCollectorSource {
 
   // This is a private field that defaults to the app owner for public users.
   // If this is left blank then this collector will collect from ALL users calling the given model.
+  string caller_user_id = 6;
 }
 
 // StatValue

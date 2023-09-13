@@ -1082,6 +1082,8 @@ export class ListConceptsRequest extends jspb.Message {
     setPage(value: number): ListConceptsRequest;
     getPerPage(): number;
     setPerPage(value: number): ListConceptsRequest;
+    getId(): string;
+    setId(value: string): ListConceptsRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListConceptsRequest.AsObject;
@@ -1098,6 +1100,7 @@ export namespace ListConceptsRequest {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         page: number,
         perPage: number,
+        id: string,
     }
 }
 
@@ -2305,6 +2308,8 @@ export class ListDatasetsRequest extends jspb.Message {
     setSortById(value: boolean): ListDatasetsRequest;
     getBookmark(): boolean;
     setBookmark(value: boolean): ListDatasetsRequest;
+    getId(): string;
+    setId(value: string): ListDatasetsRequest;
 
     getSortByCase(): ListDatasetsRequest.SortByCase;
 
@@ -2331,6 +2336,7 @@ export namespace ListDatasetsRequest {
         sortByModifiedAt: boolean,
         sortById: boolean,
         bookmark: boolean,
+        id: string,
     }
 
     export enum SortByCase {
