@@ -872,6 +872,17 @@ function deserialize_clarifai_api_ListAnnotationSearchMetricsRequest(buffer_arg)
   return proto_clarifai_api_service_pb.ListAnnotationSearchMetricsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_ListAnnotationWorkersRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListAnnotationWorkersRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListAnnotationWorkersRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListAnnotationWorkersRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListAnnotationWorkersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_ListAnnotationsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.ListAnnotationsRequest)) {
     throw new Error('Expected argument of type clarifai.api.ListAnnotationsRequest');
@@ -1970,6 +1981,17 @@ function serialize_clarifai_api_MultiUploadResponse(arg) {
 
 function deserialize_clarifai_api_MultiUploadResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiUploadResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MultiWorkerResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiWorkerResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiWorkerResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiWorkerResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiWorkerResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiWorkflowResponse(arg) {
@@ -3760,6 +3782,19 @@ postAnnotationsSearches: {
     requestDeserialize: deserialize_clarifai_api_PostAnnotationsSearchesRequest,
     responseSerialize: serialize_clarifai_api_MultiSearchResponse,
     responseDeserialize: deserialize_clarifai_api_MultiSearchResponse,
+  },
+  // ListAnnotationWorkers lists users, models, and workflows (collectively
+// known as "workers") that have added annotations to the application.
+listAnnotationWorkers: {
+    path: '/clarifai.api.V2/ListAnnotationWorkers',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListAnnotationWorkersRequest,
+    responseType: proto_clarifai_api_service_pb.MultiWorkerResponse,
+    requestSerialize: serialize_clarifai_api_ListAnnotationWorkersRequest,
+    requestDeserialize: deserialize_clarifai_api_ListAnnotationWorkersRequest,
+    responseSerialize: serialize_clarifai_api_MultiWorkerResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiWorkerResponse,
   },
   // Get input count per status.
 getInputCount: {

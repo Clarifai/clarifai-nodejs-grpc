@@ -479,6 +479,23 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // to know the concepts and models in your default workflow.
   }
 
+  // ListAnnotationWorkers lists users, models, and workflows (collectively
+  // known as "workers") that have added annotations to the application.
+  rpc ListAnnotationWorkers (ListAnnotationWorkersRequest) returns (MultiWorkerResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations/workers"
+      additional_bindings {
+        get: "/v2/annotations/workers"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Collaborators_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+  }
+
   // Get input count per status.
   rpc GetInputCount (GetInputCountRequest) returns (SingleInputCountResponse) {
     option (google.api.http) = {
@@ -3727,6 +3744,32 @@ message MultiAnnotationResponse {
   repeated Annotation annotations = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+// ListAnnotationWorkersRequest
+message ListAnnotationWorkersRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 3;
+
+  // (optional URL parameter) List of additional fields to be included in the response.
+  // Currently supported: all, names
+  repeated string additional_fields = 4;
+
+  // (optional URL parameter) Only list workers that have created trusted annotations.
+  bool trusted_only = 5;
+}
+
+// MultiWorkerResponse
+message MultiWorkerResponse {
+  clarifai.api.status.Status status = 1;
+
+  repeated Worker workers = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
 // GetAppRequest
 message GetAppRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -5205,6 +5248,8 @@ message ListEvaluationsRequest {
   repeated string train_dataset_ids = 14;
   // Filter on concept IDs specified in the modele version's output_info
   repeated string concept_ids = 15;
+  // Whether to show failed metrics, defaults to false
+  bool show_failed_metrics = 19; 
 }
 
 message GetEvaluationRequest{

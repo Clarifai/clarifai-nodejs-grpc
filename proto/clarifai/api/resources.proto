@@ -72,6 +72,23 @@ message Annotation {
   string workflow_version_id = 20;
 }
 
+// Worker is the author of an annotation.
+message Worker {
+  oneof worker {
+    // User is the human that created the annotation.
+    //
+    // By default no real names of users are returned in responses. These can
+    // be requested with the 'names' additional field.
+    User user = 1;
+
+    // Model is the model that created the annotation.
+    Model model = 2;
+
+    // Workflow is the workflow that created the annotation.
+    Workflow workflow = 3;
+  }
+}
+
 // Application with tasks and datasets
 message App {
   reserved 10, 11, 12;
@@ -3861,6 +3878,9 @@ message InputsExtractionJob {
 
   // How to handle input ID conflicts.
   InputIDConflictResolution input_id_conflict_resolution = 7;
+
+  // Fields set in the template are added to all generated inputs
+  Input input_template = 8;
 }
 
 message InputsExtractionJobProgress {
@@ -3888,6 +3908,9 @@ message InputsDataSource {
 
   // How to handle input ID conflicts.
   InputIDConflictResolution input_id_conflict_resolution = 3;
+
+  // Fields set in the template will also be added to all generated inputs
+  Input input_template = 4;
 }
 
 message DataSourceURL {
@@ -3939,6 +3962,9 @@ message InputsUpload {
 
   // How to handle input ID conflicts.
   InputIDConflictResolution input_id_conflict_resolution = 4;
+
+  // Fields set in the template will also be added to all generated inputs
+  Input input_template = 5;
 }
 enum InputIDConflictResolution {
   INPUT_ID_CONFLICT_RESOLUTION_NOT_SET = 0; // Defaults to SKIP

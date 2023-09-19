@@ -43,6 +43,7 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     deleteAnnotations: IV2Service_IDeleteAnnotations;
     patchAnnotationsSearches: IV2Service_IPatchAnnotationsSearches;
     postAnnotationsSearches: IV2Service_IPostAnnotationsSearches;
+    listAnnotationWorkers: IV2Service_IListAnnotationWorkers;
     getInputCount: IV2Service_IGetInputCount;
     streamInputs: IV2Service_IStreamInputs;
     getInputSamples: IV2Service_IGetInputSamples;
@@ -465,6 +466,15 @@ interface IV2Service_IPostAnnotationsSearches extends grpc.MethodDefinition<prot
     requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostAnnotationsSearchesRequest>;
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiSearchResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiSearchResponse>;
+}
+interface IV2Service_IListAnnotationWorkers extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListAnnotationWorkersRequest, proto_clarifai_api_service_pb.MultiWorkerResponse> {
+    path: "/clarifai.api.V2/ListAnnotationWorkers";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListAnnotationWorkersRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListAnnotationWorkersRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiWorkerResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiWorkerResponse>;
 }
 interface IV2Service_IGetInputCount extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetInputCountRequest, proto_clarifai_api_service_pb.SingleInputCountResponse> {
     path: "/clarifai.api.V2/GetInputCount";
@@ -2179,6 +2189,7 @@ export interface IV2Server {
     deleteAnnotations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteAnnotationsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     patchAnnotationsSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse>;
     postAnnotationsSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostAnnotationsSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse>;
+    listAnnotationWorkers: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListAnnotationWorkersRequest, proto_clarifai_api_service_pb.MultiWorkerResponse>;
     getInputCount: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetInputCountRequest, proto_clarifai_api_service_pb.SingleInputCountResponse>;
     streamInputs: grpc.handleUnaryCall<proto_clarifai_api_service_pb.StreamInputsRequest, proto_clarifai_api_service_pb.MultiInputResponse>;
     getInputSamples: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetInputSamplesRequest, proto_clarifai_api_service_pb.MultiInputAnnotationResponse>;
@@ -2447,6 +2458,9 @@ export interface IV2Client {
     postAnnotationsSearches(request: proto_clarifai_api_service_pb.PostAnnotationsSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     postAnnotationsSearches(request: proto_clarifai_api_service_pb.PostAnnotationsSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     postAnnotationsSearches(request: proto_clarifai_api_service_pb.PostAnnotationsSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
+    listAnnotationWorkers(request: proto_clarifai_api_service_pb.ListAnnotationWorkersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkerResponse) => void): grpc.ClientUnaryCall;
+    listAnnotationWorkers(request: proto_clarifai_api_service_pb.ListAnnotationWorkersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkerResponse) => void): grpc.ClientUnaryCall;
+    listAnnotationWorkers(request: proto_clarifai_api_service_pb.ListAnnotationWorkersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkerResponse) => void): grpc.ClientUnaryCall;
     getInputCount(request: proto_clarifai_api_service_pb.GetInputCountRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleInputCountResponse) => void): grpc.ClientUnaryCall;
     getInputCount(request: proto_clarifai_api_service_pb.GetInputCountRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleInputCountResponse) => void): grpc.ClientUnaryCall;
     getInputCount(request: proto_clarifai_api_service_pb.GetInputCountRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleInputCountResponse) => void): grpc.ClientUnaryCall;
@@ -3090,6 +3104,9 @@ export class V2Client extends grpc.Client implements IV2Client {
     public postAnnotationsSearches(request: proto_clarifai_api_service_pb.PostAnnotationsSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     public postAnnotationsSearches(request: proto_clarifai_api_service_pb.PostAnnotationsSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     public postAnnotationsSearches(request: proto_clarifai_api_service_pb.PostAnnotationsSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
+    public listAnnotationWorkers(request: proto_clarifai_api_service_pb.ListAnnotationWorkersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkerResponse) => void): grpc.ClientUnaryCall;
+    public listAnnotationWorkers(request: proto_clarifai_api_service_pb.ListAnnotationWorkersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkerResponse) => void): grpc.ClientUnaryCall;
+    public listAnnotationWorkers(request: proto_clarifai_api_service_pb.ListAnnotationWorkersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkerResponse) => void): grpc.ClientUnaryCall;
     public getInputCount(request: proto_clarifai_api_service_pb.GetInputCountRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleInputCountResponse) => void): grpc.ClientUnaryCall;
     public getInputCount(request: proto_clarifai_api_service_pb.GetInputCountRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleInputCountResponse) => void): grpc.ClientUnaryCall;
     public getInputCount(request: proto_clarifai_api_service_pb.GetInputCountRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleInputCountResponse) => void): grpc.ClientUnaryCall;

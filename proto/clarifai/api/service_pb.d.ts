@@ -379,6 +379,71 @@ export namespace MultiAnnotationResponse {
     }
 }
 
+export class ListAnnotationWorkersRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): ListAnnotationWorkersRequest;
+    getPage(): number;
+    setPage(value: number): ListAnnotationWorkersRequest;
+    getPerPage(): number;
+    setPerPage(value: number): ListAnnotationWorkersRequest;
+    clearAdditionalFieldsList(): void;
+    getAdditionalFieldsList(): Array<string>;
+    setAdditionalFieldsList(value: Array<string>): ListAnnotationWorkersRequest;
+    addAdditionalFields(value: string, index?: number): string;
+    getTrustedOnly(): boolean;
+    setTrustedOnly(value: boolean): ListAnnotationWorkersRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListAnnotationWorkersRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListAnnotationWorkersRequest): ListAnnotationWorkersRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListAnnotationWorkersRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListAnnotationWorkersRequest;
+    static deserializeBinaryFromReader(message: ListAnnotationWorkersRequest, reader: jspb.BinaryReader): ListAnnotationWorkersRequest;
+}
+
+export namespace ListAnnotationWorkersRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        page: number,
+        perPage: number,
+        additionalFieldsList: Array<string>,
+        trustedOnly: boolean,
+    }
+}
+
+export class MultiWorkerResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiWorkerResponse;
+    clearWorkersList(): void;
+    getWorkersList(): Array<proto_clarifai_api_resources_pb.Worker>;
+    setWorkersList(value: Array<proto_clarifai_api_resources_pb.Worker>): MultiWorkerResponse;
+    addWorkers(value?: proto_clarifai_api_resources_pb.Worker, index?: number): proto_clarifai_api_resources_pb.Worker;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiWorkerResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiWorkerResponse): MultiWorkerResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiWorkerResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiWorkerResponse;
+    static deserializeBinaryFromReader(message: MultiWorkerResponse, reader: jspb.BinaryReader): MultiWorkerResponse;
+}
+
+export namespace MultiWorkerResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        workersList: Array<proto_clarifai_api_resources_pb.Worker.AsObject>,
+    }
+}
+
 export class GetAppRequest extends jspb.Message { 
 
     hasUserAppId(): boolean;
@@ -4762,6 +4827,8 @@ export class ListEvaluationsRequest extends jspb.Message {
     getConceptIdsList(): Array<string>;
     setConceptIdsList(value: Array<string>): ListEvaluationsRequest;
     addConceptIds(value: string, index?: number): string;
+    getShowFailedMetrics(): boolean;
+    setShowFailedMetrics(value: boolean): ListEvaluationsRequest;
 
     getSortByCase(): ListEvaluationsRequest.SortByCase;
 
@@ -4795,6 +4862,7 @@ export namespace ListEvaluationsRequest {
         evalDatasetIdsList: Array<string>,
         trainDatasetIdsList: Array<string>,
         conceptIdsList: Array<string>,
+        showFailedMetrics: boolean,
     }
 
     export enum SortByCase {
