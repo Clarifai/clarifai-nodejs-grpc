@@ -17660,7 +17660,8 @@ proto.clarifai.api.Dataset.toObject = function(includeInstance, msg) {
     version: (f = msg.getVersion()) && proto.clarifai.api.DatasetVersion.toObject(includeInstance, f),
     isStarred: jspb.Message.getBooleanFieldWithDefault(msg, 14, false),
     starCount: jspb.Message.getFieldWithDefault(msg, 15, 0),
-    bookmarkOrigin: (f = msg.getBookmarkOrigin()) && proto.clarifai.api.BookmarkOrigin.toObject(includeInstance, f)
+    bookmarkOrigin: (f = msg.getBookmarkOrigin()) && proto.clarifai.api.BookmarkOrigin.toObject(includeInstance, f),
+    image: (f = msg.getImage()) && proto.clarifai.api.Image.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -17764,6 +17765,11 @@ proto.clarifai.api.Dataset.deserializeBinaryFromReader = function(msg, reader) {
       var value = new proto.clarifai.api.BookmarkOrigin;
       reader.readMessage(value,proto.clarifai.api.BookmarkOrigin.deserializeBinaryFromReader);
       msg.setBookmarkOrigin(value);
+      break;
+    case 18:
+      var value = new proto.clarifai.api.Image;
+      reader.readMessage(value,proto.clarifai.api.Image.deserializeBinaryFromReader);
+      msg.setImage(value);
       break;
     default:
       reader.skipField();
@@ -17905,6 +17911,14 @@ proto.clarifai.api.Dataset.serializeBinaryToWriter = function(message, writer) {
       17,
       f,
       proto.clarifai.api.BookmarkOrigin.serializeBinaryToWriter
+    );
+  }
+  f = message.getImage();
+  if (f != null) {
+    writer.writeMessage(
+      18,
+      f,
+      proto.clarifai.api.Image.serializeBinaryToWriter
     );
   }
 };
@@ -18329,6 +18343,43 @@ proto.clarifai.api.Dataset.prototype.clearBookmarkOrigin = function() {
  */
 proto.clarifai.api.Dataset.prototype.hasBookmarkOrigin = function() {
   return jspb.Message.getField(this, 17) != null;
+};
+
+
+/**
+ * optional Image image = 18;
+ * @return {?proto.clarifai.api.Image}
+ */
+proto.clarifai.api.Dataset.prototype.getImage = function() {
+  return /** @type{?proto.clarifai.api.Image} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Image, 18));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Image|undefined} value
+ * @return {!proto.clarifai.api.Dataset} returns this
+*/
+proto.clarifai.api.Dataset.prototype.setImage = function(value) {
+  return jspb.Message.setWrapperField(this, 18, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.Dataset} returns this
+ */
+proto.clarifai.api.Dataset.prototype.clearImage = function() {
+  return this.setImage(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.Dataset.prototype.hasImage = function() {
+  return jspb.Message.getField(this, 18) != null;
 };
 
 
@@ -22894,7 +22945,8 @@ proto.clarifai.api.Model.toObject = function(includeInstance, msg) {
     isStarred: jspb.Message.getBooleanFieldWithDefault(msg, 22, false),
     starCount: jspb.Message.getFieldWithDefault(msg, 23, 0),
     workflowRecommended: (f = msg.getWorkflowRecommended()) && google_protobuf_wrappers_pb.BoolValue.toObject(includeInstance, f),
-    bookmarkOrigin: (f = msg.getBookmarkOrigin()) && proto.clarifai.api.BookmarkOrigin.toObject(includeInstance, f)
+    bookmarkOrigin: (f = msg.getBookmarkOrigin()) && proto.clarifai.api.BookmarkOrigin.toObject(includeInstance, f),
+    image: (f = msg.getImage()) && proto.clarifai.api.Image.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -23045,6 +23097,11 @@ proto.clarifai.api.Model.deserializeBinaryFromReader = function(msg, reader) {
       var value = new proto.clarifai.api.BookmarkOrigin;
       reader.readMessage(value,proto.clarifai.api.BookmarkOrigin.deserializeBinaryFromReader);
       msg.setBookmarkOrigin(value);
+      break;
+    case 34:
+      var value = new proto.clarifai.api.Image;
+      reader.readMessage(value,proto.clarifai.api.Image.deserializeBinaryFromReader);
+      msg.setImage(value);
       break;
     default:
       reader.skipField();
@@ -23266,6 +23323,14 @@ proto.clarifai.api.Model.serializeBinaryToWriter = function(message, writer) {
       33,
       f,
       proto.clarifai.api.BookmarkOrigin.serializeBinaryToWriter
+    );
+  }
+  f = message.getImage();
+  if (f != null) {
+    writer.writeMessage(
+      34,
+      f,
+      proto.clarifai.api.Image.serializeBinaryToWriter
     );
   }
 };
@@ -24022,6 +24087,43 @@ proto.clarifai.api.Model.prototype.clearBookmarkOrigin = function() {
  */
 proto.clarifai.api.Model.prototype.hasBookmarkOrigin = function() {
   return jspb.Message.getField(this, 33) != null;
+};
+
+
+/**
+ * optional Image image = 34;
+ * @return {?proto.clarifai.api.Image}
+ */
+proto.clarifai.api.Model.prototype.getImage = function() {
+  return /** @type{?proto.clarifai.api.Image} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Image, 34));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Image|undefined} value
+ * @return {!proto.clarifai.api.Model} returns this
+*/
+proto.clarifai.api.Model.prototype.setImage = function(value) {
+  return jspb.Message.setWrapperField(this, 34, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.Model} returns this
+ */
+proto.clarifai.api.Model.prototype.clearImage = function() {
+  return this.setImage(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.Model.prototype.hasImage = function() {
+  return jspb.Message.getField(this, 34) != null;
 };
 
 
@@ -27778,7 +27880,8 @@ proto.clarifai.api.ModelTypeField.ModelTypeFieldType = {
   DATASET_VERSION_ID: 17,
   ARRAY_OF_MODEL_CONCEPTS: 18,
   DATASET: 19,
-  DATASET_VERSION: 20
+  DATASET_VERSION: 20,
+  ENCRYPTED_STRING: 21
 };
 
 /**
@@ -42278,7 +42381,8 @@ proto.clarifai.api.Workflow.toObject = function(includeInstance, msg) {
     notes: jspb.Message.getFieldWithDefault(msg, 13, ""),
     useCasesList: (f = jspb.Message.getRepeatedField(msg, 14)) == null ? undefined : f,
     checkConsentsList: (f = jspb.Message.getRepeatedField(msg, 15)) == null ? undefined : f,
-    bookmarkOrigin: (f = msg.getBookmarkOrigin()) && proto.clarifai.api.BookmarkOrigin.toObject(includeInstance, f)
+    bookmarkOrigin: (f = msg.getBookmarkOrigin()) && proto.clarifai.api.BookmarkOrigin.toObject(includeInstance, f),
+    image: (f = msg.getImage()) && proto.clarifai.api.Image.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -42385,6 +42489,11 @@ proto.clarifai.api.Workflow.deserializeBinaryFromReader = function(msg, reader) 
       var value = new proto.clarifai.api.BookmarkOrigin;
       reader.readMessage(value,proto.clarifai.api.BookmarkOrigin.deserializeBinaryFromReader);
       msg.setBookmarkOrigin(value);
+      break;
+    case 17:
+      var value = new proto.clarifai.api.Image;
+      reader.readMessage(value,proto.clarifai.api.Image.deserializeBinaryFromReader);
+      msg.setImage(value);
       break;
     default:
       reader.skipField();
@@ -42532,6 +42641,14 @@ proto.clarifai.api.Workflow.serializeBinaryToWriter = function(message, writer) 
       16,
       f,
       proto.clarifai.api.BookmarkOrigin.serializeBinaryToWriter
+    );
+  }
+  f = message.getImage();
+  if (f != null) {
+    writer.writeMessage(
+      17,
+      f,
+      proto.clarifai.api.Image.serializeBinaryToWriter
     );
   }
 };
@@ -42994,6 +43111,43 @@ proto.clarifai.api.Workflow.prototype.clearBookmarkOrigin = function() {
  */
 proto.clarifai.api.Workflow.prototype.hasBookmarkOrigin = function() {
   return jspb.Message.getField(this, 16) != null;
+};
+
+
+/**
+ * optional Image image = 17;
+ * @return {?proto.clarifai.api.Image}
+ */
+proto.clarifai.api.Workflow.prototype.getImage = function() {
+  return /** @type{?proto.clarifai.api.Image} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Image, 17));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Image|undefined} value
+ * @return {!proto.clarifai.api.Workflow} returns this
+*/
+proto.clarifai.api.Workflow.prototype.setImage = function(value) {
+  return jspb.Message.setWrapperField(this, 17, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.Workflow} returns this
+ */
+proto.clarifai.api.Workflow.prototype.clearImage = function() {
+  return this.setImage(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.Workflow.prototype.hasImage = function() {
+  return jspb.Message.getField(this, 17) != null;
 };
 
 
@@ -53472,7 +53626,8 @@ proto.clarifai.api.Module.toObject = function(includeInstance, msg) {
     moduleVersion: (f = msg.getModuleVersion()) && proto.clarifai.api.ModuleVersion.toObject(includeInstance, f),
     isStarred: jspb.Message.getBooleanFieldWithDefault(msg, 12, false),
     starCount: jspb.Message.getFieldWithDefault(msg, 13, 0),
-    bookmarkOrigin: (f = msg.getBookmarkOrigin()) && proto.clarifai.api.BookmarkOrigin.toObject(includeInstance, f)
+    bookmarkOrigin: (f = msg.getBookmarkOrigin()) && proto.clarifai.api.BookmarkOrigin.toObject(includeInstance, f),
+    image: (f = msg.getImage()) && proto.clarifai.api.Image.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -53562,6 +53717,11 @@ proto.clarifai.api.Module.deserializeBinaryFromReader = function(msg, reader) {
       var value = new proto.clarifai.api.BookmarkOrigin;
       reader.readMessage(value,proto.clarifai.api.BookmarkOrigin.deserializeBinaryFromReader);
       msg.setBookmarkOrigin(value);
+      break;
+    case 15:
+      var value = new proto.clarifai.api.Image;
+      reader.readMessage(value,proto.clarifai.api.Image.deserializeBinaryFromReader);
+      msg.setImage(value);
       break;
     default:
       reader.skipField();
@@ -53680,6 +53840,14 @@ proto.clarifai.api.Module.serializeBinaryToWriter = function(message, writer) {
       14,
       f,
       proto.clarifai.api.BookmarkOrigin.serializeBinaryToWriter
+    );
+  }
+  f = message.getImage();
+  if (f != null) {
+    writer.writeMessage(
+      15,
+      f,
+      proto.clarifai.api.Image.serializeBinaryToWriter
     );
   }
 };
@@ -54012,6 +54180,43 @@ proto.clarifai.api.Module.prototype.clearBookmarkOrigin = function() {
  */
 proto.clarifai.api.Module.prototype.hasBookmarkOrigin = function() {
   return jspb.Message.getField(this, 14) != null;
+};
+
+
+/**
+ * optional Image image = 15;
+ * @return {?proto.clarifai.api.Image}
+ */
+proto.clarifai.api.Module.prototype.getImage = function() {
+  return /** @type{?proto.clarifai.api.Image} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Image, 15));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Image|undefined} value
+ * @return {!proto.clarifai.api.Module} returns this
+*/
+proto.clarifai.api.Module.prototype.setImage = function(value) {
+  return jspb.Message.setWrapperField(this, 15, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.Module} returns this
+ */
+proto.clarifai.api.Module.prototype.clearImage = function() {
+  return this.setImage(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.Module.prototype.hasImage = function() {
+  return jspb.Message.getField(this, 15) != null;
 };
 
 

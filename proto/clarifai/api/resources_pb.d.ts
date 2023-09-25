@@ -1794,6 +1794,11 @@ export class Dataset extends jspb.Message {
     getBookmarkOrigin(): BookmarkOrigin | undefined;
     setBookmarkOrigin(value?: BookmarkOrigin): Dataset;
 
+    hasImage(): boolean;
+    clearImage(): void;
+    getImage(): Image | undefined;
+    setImage(value?: Image): Dataset;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Dataset.AsObject;
     static toObject(includeInstance: boolean, msg: Dataset): Dataset.AsObject;
@@ -1821,6 +1826,7 @@ export namespace Dataset {
         isStarred: boolean,
         starCount: number,
         bookmarkOrigin?: BookmarkOrigin.AsObject,
+        image?: Image.AsObject,
     }
 }
 
@@ -2504,6 +2510,11 @@ export class Model extends jspb.Message {
     getBookmarkOrigin(): BookmarkOrigin | undefined;
     setBookmarkOrigin(value?: BookmarkOrigin): Model;
 
+    hasImage(): boolean;
+    clearImage(): void;
+    getImage(): Image | undefined;
+    setImage(value?: Image): Model;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Model.AsObject;
     static toObject(includeInstance: boolean, msg: Model): Model.AsObject;
@@ -2542,6 +2553,7 @@ export namespace Model {
         starCount: number,
         workflowRecommended?: google_protobuf_wrappers_pb.BoolValue.AsObject,
         bookmarkOrigin?: BookmarkOrigin.AsObject,
+        image?: Image.AsObject,
     }
 }
 
@@ -3061,6 +3073,7 @@ export namespace ModelTypeField {
     ARRAY_OF_MODEL_CONCEPTS = 18,
     DATASET = 19,
     DATASET_VERSION = 20,
+    ENCRYPTED_STRING = 21,
     }
 
 }
@@ -4908,6 +4921,11 @@ export class Workflow extends jspb.Message {
     getBookmarkOrigin(): BookmarkOrigin | undefined;
     setBookmarkOrigin(value?: BookmarkOrigin): Workflow;
 
+    hasImage(): boolean;
+    clearImage(): void;
+    getImage(): Image | undefined;
+    setImage(value?: Image): Workflow;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Workflow.AsObject;
     static toObject(includeInstance: boolean, msg: Workflow): Workflow.AsObject;
@@ -4936,6 +4954,7 @@ export namespace Workflow {
         useCasesList: Array<string>,
         checkConsentsList: Array<string>,
         bookmarkOrigin?: BookmarkOrigin.AsObject,
+        image?: Image.AsObject,
     }
 }
 
@@ -6386,6 +6405,11 @@ export class Module extends jspb.Message {
     getBookmarkOrigin(): BookmarkOrigin | undefined;
     setBookmarkOrigin(value?: BookmarkOrigin): Module;
 
+    hasImage(): boolean;
+    clearImage(): void;
+    getImage(): Image | undefined;
+    setImage(value?: Image): Module;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Module.AsObject;
     static toObject(includeInstance: boolean, msg: Module): Module.AsObject;
@@ -6410,6 +6434,7 @@ export namespace Module {
         isStarred: boolean,
         starCount: number,
         bookmarkOrigin?: BookmarkOrigin.AsObject,
+        image?: Image.AsObject,
     }
 }
 

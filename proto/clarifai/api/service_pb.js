@@ -69970,7 +69970,9 @@ proto.clarifai.api.ListModulesRequest.toObject = function(includeInstance, msg) 
     sortByStarCount: jspb.Message.getBooleanFieldWithDefault(msg, 8, false),
     sortByModifiedAt: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
     sortById: jspb.Message.getBooleanFieldWithDefault(msg, 11, false),
-    bookmark: jspb.Message.getBooleanFieldWithDefault(msg, 10, false)
+    bookmark: jspb.Message.getBooleanFieldWithDefault(msg, 10, false),
+    name: jspb.Message.getFieldWithDefault(msg, 12, ""),
+    filterByUserId: jspb.Message.getBooleanFieldWithDefault(msg, 13, false)
   };
 
   if (includeInstance) {
@@ -70051,6 +70053,14 @@ proto.clarifai.api.ListModulesRequest.deserializeBinaryFromReader = function(msg
     case 10:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setBookmark(value);
+      break;
+    case 12:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
+    case 13:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setFilterByUserId(value);
       break;
     default:
       reader.skipField();
@@ -70156,6 +70166,20 @@ proto.clarifai.api.ListModulesRequest.serializeBinaryToWriter = function(message
   if (f) {
     writer.writeBool(
       10,
+      f
+    );
+  }
+  f = message.getName();
+  if (f.length > 0) {
+    writer.writeString(
+      12,
+      f
+    );
+  }
+  f = message.getFilterByUserId();
+  if (f) {
+    writer.writeBool(
+      13,
       f
     );
   }
@@ -70467,6 +70491,42 @@ proto.clarifai.api.ListModulesRequest.prototype.getBookmark = function() {
  */
 proto.clarifai.api.ListModulesRequest.prototype.setBookmark = function(value) {
   return jspb.Message.setProto3BooleanField(this, 10, value);
+};
+
+
+/**
+ * optional string name = 12;
+ * @return {string}
+ */
+proto.clarifai.api.ListModulesRequest.prototype.getName = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 12, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.ListModulesRequest} returns this
+ */
+proto.clarifai.api.ListModulesRequest.prototype.setName = function(value) {
+  return jspb.Message.setProto3StringField(this, 12, value);
+};
+
+
+/**
+ * optional bool filter_by_user_id = 13;
+ * @return {boolean}
+ */
+proto.clarifai.api.ListModulesRequest.prototype.getFilterByUserId = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 13, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.ListModulesRequest} returns this
+ */
+proto.clarifai.api.ListModulesRequest.prototype.setFilterByUserId = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 13, value);
 };
 
 

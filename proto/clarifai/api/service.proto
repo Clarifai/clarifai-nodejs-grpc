@@ -2200,6 +2200,7 @@ service V2 {
 
 
 
+
   // Get a saved legacy search.
   rpc GetSearch (GetSearchRequest) returns (SingleSearchResponse) {
     option (google.api.http) = {
@@ -3803,9 +3804,9 @@ message ListAppsRequest {
    }
 
   // Filtering options:
-  // Query various text fields that can contain the words in the query string
+  // Query various text fields ( id, name, description, and notes) that can contain the words in the query string
   string query = 8;
-  // Filter by the name of the app. This supports wilcard queries like "gen*" to match "general" as an example.
+  // Filter by the id, name and notes of the app. This supports wilcard queries like "gen*" to match "general" as an example.
   // Deprecated in favor of query
   string name = 4 [deprecated = true];
   // Filter by the user-unique-id of the app. This supports wilcard queries like "gen*" to match "general" as an example.
@@ -5948,6 +5949,7 @@ enum OrganizationInvitationStatus {
 
 
 
+
 // GetWorkflowRequest
 message GetWorkflowRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -5985,13 +5987,14 @@ message ListWorkflowsRequest {
     // Whether to order by the modified_at time.
     // If none of the sort options is set to true, will sort by modified_at.
     bool sort_by_modified_at = 7;
+
     // Whether to order by the created_at time.
     bool sort_by_created_at = 13;
     // Whether to order by the number of users stared the workflow
     bool sort_by_star_count = 14;
   }
 
-  // Query various text fields that can contain the words in the query string.
+  // Query various text fields (id, description and notes) that can contain the words in the query string.
   string query = 8;
   // Filter by the id of the workflow. This supports wilcard queries like "gen*" to match "general" as an example.
   // Deprecated in favor of query
@@ -6003,7 +6006,7 @@ message ListWorkflowsRequest {
   // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars
   repeated string additional_fields = 10;
 
-  // (optional) search_term. Full text and prefix matching on description, id, owner id. Searchable fields may be added
+  // (optional) search_term. Full text and prefix matching on id, owner id, description and notes. Searchable fields may be added
   string search_term = 12;
 
   // Filter workflows by bookmark. If set, only return bookmarked workflows. Otherwise none bookmarked workflows only.
@@ -6591,6 +6594,11 @@ message ListModulesRequest {
 
   // Filter modules by bookmark. If set, only return bookmarked modules. Otherwise none bookmarked modules only.
   bool bookmark = 10;
+
+  // Filter by the description and name of the model. This supports wildcard queries like "gen*" to match "general" as an example.
+  string name = 12;
+  // Filter by the application owner whose this module belongs to
+  bool filter_by_user_id = 13;
 }
 
 // PostModulesRequest
