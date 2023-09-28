@@ -1394,6 +1394,7 @@ message OutputInfo {
   // that the ModelTypeField defines. During inference, the settings contained within are sent
   // to the model predictor to alter predictions from this Model.
   google.protobuf.Struct params = 7;
+  repeated ModelTypeField params_specs = 8;
 }
 
 // InputInfo
@@ -3426,12 +3427,13 @@ message TimeSegment {
 
 // TimeInfo
 message TimeInfo {
+  reserved 2,3;
   // Number of frames
   uint32 num_frames = 1;
   // Timestamp where track begins.
-  uint32 begin_time = 2;
+  float begin_time = 4;
   // Timestamp where track ends.
-  uint32 end_time = 3;
+  float end_time = 5;
 }
 
 

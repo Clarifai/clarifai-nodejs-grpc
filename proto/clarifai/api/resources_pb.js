@@ -1641,7 +1641,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.clarifai.api.OutputInfo = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.clarifai.api.OutputInfo.repeatedFields_, null);
 };
 goog.inherits(proto.clarifai.api.OutputInfo, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -24700,6 +24700,13 @@ proto.clarifai.api.ModelVersionInputExample.prototype.setDescription = function(
 
 
 
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.clarifai.api.OutputInfo.repeatedFields_ = [8];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -24735,7 +24742,9 @@ proto.clarifai.api.OutputInfo.toObject = function(includeInstance, msg) {
     outputConfig: (f = msg.getOutputConfig()) && proto.clarifai.api.OutputConfig.toObject(includeInstance, f),
     message: jspb.Message.getFieldWithDefault(msg, 3, ""),
     fieldsMap: (f = msg.getFieldsMap()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
-    params: (f = msg.getParams()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f)
+    params: (f = msg.getParams()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
+    paramsSpecsList: jspb.Message.toObjectList(msg.getParamsSpecsList(),
+    proto.clarifai.api.ModelTypeField.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -24795,6 +24804,11 @@ proto.clarifai.api.OutputInfo.deserializeBinaryFromReader = function(msg, reader
       var value = new google_protobuf_struct_pb.Struct;
       reader.readMessage(value,google_protobuf_struct_pb.Struct.deserializeBinaryFromReader);
       msg.setParams(value);
+      break;
+    case 8:
+      var value = new proto.clarifai.api.ModelTypeField;
+      reader.readMessage(value,proto.clarifai.api.ModelTypeField.deserializeBinaryFromReader);
+      msg.addParamsSpecs(value);
       break;
     default:
       reader.skipField();
@@ -24862,6 +24876,14 @@ proto.clarifai.api.OutputInfo.serializeBinaryToWriter = function(message, writer
       7,
       f,
       google_protobuf_struct_pb.Struct.serializeBinaryToWriter
+    );
+  }
+  f = message.getParamsSpecsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      8,
+      f,
+      proto.clarifai.api.ModelTypeField.serializeBinaryToWriter
     );
   }
 };
@@ -25030,6 +25052,44 @@ proto.clarifai.api.OutputInfo.prototype.clearParams = function() {
  */
 proto.clarifai.api.OutputInfo.prototype.hasParams = function() {
   return jspb.Message.getField(this, 7) != null;
+};
+
+
+/**
+ * repeated ModelTypeField params_specs = 8;
+ * @return {!Array<!proto.clarifai.api.ModelTypeField>}
+ */
+proto.clarifai.api.OutputInfo.prototype.getParamsSpecsList = function() {
+  return /** @type{!Array<!proto.clarifai.api.ModelTypeField>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.clarifai.api.ModelTypeField, 8));
+};
+
+
+/**
+ * @param {!Array<!proto.clarifai.api.ModelTypeField>} value
+ * @return {!proto.clarifai.api.OutputInfo} returns this
+*/
+proto.clarifai.api.OutputInfo.prototype.setParamsSpecsList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 8, value);
+};
+
+
+/**
+ * @param {!proto.clarifai.api.ModelTypeField=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.ModelTypeField}
+ */
+proto.clarifai.api.OutputInfo.prototype.addParamsSpecs = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 8, opt_value, proto.clarifai.api.ModelTypeField, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.OutputInfo} returns this
+ */
+proto.clarifai.api.OutputInfo.prototype.clearParamsSpecsList = function() {
+  return this.setParamsSpecsList([]);
 };
 
 
@@ -53166,8 +53226,8 @@ proto.clarifai.api.TimeInfo.prototype.toObject = function(opt_includeInstance) {
 proto.clarifai.api.TimeInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
     numFrames: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    beginTime: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    endTime: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    beginTime: jspb.Message.getFloatingPointFieldWithDefault(msg, 4, 0.0),
+    endTime: jspb.Message.getFloatingPointFieldWithDefault(msg, 5, 0.0)
   };
 
   if (includeInstance) {
@@ -53208,12 +53268,12 @@ proto.clarifai.api.TimeInfo.deserializeBinaryFromReader = function(msg, reader) 
       var value = /** @type {number} */ (reader.readUint32());
       msg.setNumFrames(value);
       break;
-    case 2:
-      var value = /** @type {number} */ (reader.readUint32());
+    case 4:
+      var value = /** @type {number} */ (reader.readFloat());
       msg.setBeginTime(value);
       break;
-    case 3:
-      var value = /** @type {number} */ (reader.readUint32());
+    case 5:
+      var value = /** @type {number} */ (reader.readFloat());
       msg.setEndTime(value);
       break;
     default:
@@ -53253,16 +53313,16 @@ proto.clarifai.api.TimeInfo.serializeBinaryToWriter = function(message, writer) 
     );
   }
   f = message.getBeginTime();
-  if (f !== 0) {
-    writer.writeUint32(
-      2,
+  if (f !== 0.0) {
+    writer.writeFloat(
+      4,
       f
     );
   }
   f = message.getEndTime();
-  if (f !== 0) {
-    writer.writeUint32(
-      3,
+  if (f !== 0.0) {
+    writer.writeFloat(
+      5,
       f
     );
   }
@@ -53288,11 +53348,11 @@ proto.clarifai.api.TimeInfo.prototype.setNumFrames = function(value) {
 
 
 /**
- * optional uint32 begin_time = 2;
+ * optional float begin_time = 4;
  * @return {number}
  */
 proto.clarifai.api.TimeInfo.prototype.getBeginTime = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 4, 0.0));
 };
 
 
@@ -53301,16 +53361,16 @@ proto.clarifai.api.TimeInfo.prototype.getBeginTime = function() {
  * @return {!proto.clarifai.api.TimeInfo} returns this
  */
 proto.clarifai.api.TimeInfo.prototype.setBeginTime = function(value) {
-  return jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3FloatField(this, 4, value);
 };
 
 
 /**
- * optional uint32 end_time = 3;
+ * optional float end_time = 5;
  * @return {number}
  */
 proto.clarifai.api.TimeInfo.prototype.getEndTime = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 5, 0.0));
 };
 
 
@@ -53319,7 +53379,7 @@ proto.clarifai.api.TimeInfo.prototype.getEndTime = function() {
  * @return {!proto.clarifai.api.TimeInfo} returns this
  */
 proto.clarifai.api.TimeInfo.prototype.setEndTime = function(value) {
-  return jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3FloatField(this, 5, value);
 };
 
 

@@ -2653,6 +2653,10 @@ export class OutputInfo extends jspb.Message {
     clearParams(): void;
     getParams(): google_protobuf_struct_pb.Struct | undefined;
     setParams(value?: google_protobuf_struct_pb.Struct): OutputInfo;
+    clearParamsSpecsList(): void;
+    getParamsSpecsList(): Array<ModelTypeField>;
+    setParamsSpecsList(value: Array<ModelTypeField>): OutputInfo;
+    addParamsSpecs(value?: ModelTypeField, index?: number): ModelTypeField;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): OutputInfo.AsObject;
@@ -2671,6 +2675,7 @@ export namespace OutputInfo {
         message: string,
         fieldsMap?: google_protobuf_struct_pb.Struct.AsObject,
         params?: google_protobuf_struct_pb.Struct.AsObject,
+        paramsSpecsList: Array<ModelTypeField.AsObject>,
     }
 }
 
