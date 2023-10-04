@@ -144,6 +144,19 @@ message App {
 
   // Representative image for this app
   Image image = 22;
+
+  AppExtraInfo extra_info = 24;
+}
+
+message AppExtraInfo {
+  // Revision marker for this application.
+  // The value of the revision changes when
+  // * inputs are added, updated or deleted
+  // * annotations are added, updated or deleted
+  // * inputs are added to or removed from datasets
+  // For example, this value can be used to detect if client side caches related to searching should be invalidated.
+  // Field not filled in for list endpoints, use GetApp
+  string search_revision_marker = 1;
 }
 
 // App query

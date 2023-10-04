@@ -195,6 +195,11 @@ export class App extends jspb.Message {
     getImage(): Image | undefined;
     setImage(value?: Image): App;
 
+    hasExtraInfo(): boolean;
+    clearExtraInfo(): void;
+    getExtraInfo(): AppExtraInfo | undefined;
+    setExtraInfo(value?: AppExtraInfo): App;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): App.AsObject;
     static toObject(includeInstance: boolean, msg: App): App.AsObject;
@@ -225,6 +230,27 @@ export namespace App {
         starCount: number,
         notes: string,
         image?: Image.AsObject,
+        extraInfo?: AppExtraInfo.AsObject,
+    }
+}
+
+export class AppExtraInfo extends jspb.Message { 
+    getSearchRevisionMarker(): string;
+    setSearchRevisionMarker(value: string): AppExtraInfo;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): AppExtraInfo.AsObject;
+    static toObject(includeInstance: boolean, msg: AppExtraInfo): AppExtraInfo.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: AppExtraInfo, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): AppExtraInfo;
+    static deserializeBinaryFromReader(message: AppExtraInfo, reader: jspb.BinaryReader): AppExtraInfo;
+}
+
+export namespace AppExtraInfo {
+    export type AsObject = {
+        searchRevisionMarker: string,
     }
 }
 
