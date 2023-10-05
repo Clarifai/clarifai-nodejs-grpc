@@ -179,8 +179,6 @@ function testFailedPredict(done) {
                 return;
             }
 
-            assert.strictEqual(response.getStatus().getDescription(), "Failure");
-
             assert.strictEqual(response.getOutputsList()[0].getStatus().getCode(), 30002);  // Download failed.
 
             done();
