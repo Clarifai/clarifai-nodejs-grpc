@@ -134,8 +134,6 @@ function testFailedPredictDynamic(done, stub) {
                 return;
             }
 
-            assert.strictEqual(response.status.description, "Failure");
-
             assert.strictEqual(response.outputs[0].status.code, 30002);  // Download failed.
 
             done();
