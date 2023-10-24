@@ -1961,6 +1961,17 @@ function deserialize_clarifai_api_MultiTaskResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiTaskResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_MultiTrainingTimeEstimateResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiTrainingTimeEstimateResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiTrainingTimeEstimateResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_MultiTrendingMetricsViewResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse)) {
     throw new Error('Expected argument of type clarifai.api.MultiTrendingMetricsViewResponse');
@@ -2751,6 +2762,17 @@ function serialize_clarifai_api_PostModelVersionsRequest(arg) {
 
 function deserialize_clarifai_api_PostModelVersionsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostModelVersionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PostModelVersionsTrainingTimeEstimateRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostModelVersionsTrainingTimeEstimateRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostModelVersionsTrainingTimeEstimateRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PostModelVersionsUnPublishRequest(arg) {
@@ -6105,6 +6127,17 @@ postRunnerItemOutputs: {
     requestDeserialize: deserialize_clarifai_api_PostRunnerItemOutputsRequest,
     responseSerialize: serialize_clarifai_api_MultiRunnerItemOutputResponse,
     responseDeserialize: deserialize_clarifai_api_MultiRunnerItemOutputResponse,
+  },
+  postModelVersionsTrainingTimeEstimate: {
+    path: '/clarifai.api.V2/PostModelVersionsTrainingTimeEstimate',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest,
+    responseType: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse,
+    requestSerialize: serialize_clarifai_api_PostModelVersionsTrainingTimeEstimateRequest,
+    requestDeserialize: deserialize_clarifai_api_PostModelVersionsTrainingTimeEstimateRequest,
+    responseSerialize: serialize_clarifai_api_MultiTrainingTimeEstimateResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiTrainingTimeEstimateResponse,
   },
 };
 

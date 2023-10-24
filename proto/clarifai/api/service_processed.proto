@@ -3589,6 +3589,19 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
     option (clarifai.auth.util.cl_depending_scopes) = RunnerItems_Get;
     option (clarifai.auth.util.cl_depending_scopes) = RunnerItems_Add;
+  }  // Get the training time estimate based off train request and estimated input count.
+  rpc PostModelVersionsTrainingTimeEstimate (PostModelVersionsTrainingTimeEstimateRequest) returns (MultiTrainingTimeEstimateResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/time_estimate"
+      body: "*"
+      additional_bindings176 {
+        post: "/v2/models/{model_id}/versions/time_estimate"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }}
 
 
@@ -3788,10 +3801,13 @@ message ListAppsRequest {
   // to 128.
   uint32 per_page = 3;
 
-  // Sorting opitons:
-   // Whether to sort in ascending order. If false, will order in descending order.
-   bool sort_ascending = 5;
-   oneof sort_by {
+  // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars
+  repeated string additional_fields = 10;
+
+  // Sorting options:
+  // Whether to sort in ascending order. If false, will order in descending order.
+  bool sort_ascending = 5;
+  oneof sort_by {
     // Whether to order by the name
     bool sort_by_name = 6;
     // Whether to order by the modified_at time.
@@ -3801,22 +3817,38 @@ message ListAppsRequest {
     bool sort_by_created_at = 12;
     // Whether to order by the number of users stared the app
     bool sort_by_star_count = 13;
-   }
+  }
 
   // Filtering options:
-  // Query various text fields ( id, name, description, and notes) that can contain the words in the query string
-  string query = 8;
-  // Filter by the id, name and notes of the app. This supports wilcard queries like "gen*" to match "general" as an example.
-  // Deprecated in favor of query
-  string name = 4 [deprecated = true];
-  // Filter by the user-unique-id of the app. This supports wilcard queries like "gen*" to match "general" as an example.
-  string id = 14;
   // If true, we only return apps that are handpicked by clarifai staff
   bool featured_only = 9;
   // If true, we only return apps that are starred by the requesting user
   bool starred_only = 11;
-  // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars
-  repeated string additional_fields = 10;
+
+  // Searching options:
+  // Specify a search parameter in order to perform keyword search on the
+  // following fields of the application:
+  //   - id
+  //   - name
+  //   - description
+  //   - notes
+  //   - user_id (unless user_app_id.user_id is already set)
+  //
+  // Keywords are both normalized for search (so searching for "satisfy" matches "satisfied")
+  // and used for partial prefix-matching (so searching for "clari" matches "clarifai").
+  //
+  // NOTE: Both the list of fields searched and the exact keyword matching
+  // rules are subject to change and not guaranteed to be backwards-compatible.
+  string search = 15;
+  // Query various text fields (id, name, description, and notes) that can contain the words in the query string
+  // Deprecated: use search instead.
+  string query = 8 [deprecated = true];
+  // Filter by the id, name and notes of the app. This supports wilcard queries like "gen*" to match "general" as an example.
+  // Deprecated: use search instead.
+  string name = 4 [deprecated = true];
+  // Filter by the user-unique-id of the app. This supports wilcard queries like "gen*" to match "general" as an example.
+  // Deprecated: use search instead.
+  string id = 14 [deprecated = true];
 }
 
 // PostAppsRequest
@@ -4467,9 +4499,10 @@ message ListDatasetsRequest {
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
   // to 128.
   uint32 per_page = 3;
-  bool starred_only = 4;
+
   repeated string additional_fields = 5;
-  // Sorting opitons:
+
+  // Sorting options:
   // Whether to sort in ascending order. If false, will order in descending order.
   bool sort_ascending = 6;
   oneof sort_by {
@@ -4482,10 +4515,29 @@ message ListDatasetsRequest {
     // Whether to order by the external id
     bool sort_by_id = 11;
   }
+
+  // Filtering options:
+  bool starred_only = 4;
   // Filter datasets by bookmark. If set, only return bookmarked datasets. Otherwise none bookmarked datasets only.
   bool bookmark = 10;
+
+  // Searching options:
+  // Specify a search parameter in order to perform keyword search on the
+  // following fields of the dataset:
+  //   - id
+  //   - description
+  //   - notes
+  //   - user_id (unless user_app_id.user_id is already set)
+  //
+  // Keywords are both normalized for search (so searching for "satisfy" matches "satisfied")
+  // and used for partial prefix-matching (so searching for "clari" matches "clarifai").
+  //
+  // NOTE: Both the list of fields searched and the exact keyword matching
+  // rules are subject to change and not guaranteed to be backwards-compatible.
+  string search = 13;
   // Fuzzy filter on dataset ID
-  string id = 12;
+  // Deprecated: use search instead.
+  string id = 12 [deprecated = true];
 }
 
 // GetDatasetRequest
@@ -4859,6 +4911,9 @@ message ListModelsRequest {
   // to 128.
   uint32 per_page = 3;
 
+  // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars, outputs, presets
+  repeated string additional_fields = 19;
+
   // Sorting options:
   // Whether to sort in ascending order. If false, will order in descending order.
   bool sort_ascending = 10;
@@ -4877,12 +4932,6 @@ message ListModelsRequest {
   }
 
   // Filtering options:
-  // Query name, description and id fields, that can contain the words in the query string. Does NOT support wildcards - full words only. Supports operators "OR" and "-" as NOT.
-  string query = 14;
-  // Filter by the description and id of the model. This supports wildcard queries like "gen*" to match "general" as an example.
-  string name = 5;
-  // Extends the name filter to include the user_id of the application owner that the model belongs to.
-  bool filter_by_user_id = 22;
   // Filter models by the specific model_type_id. See ListModelTypes for the list of ModelType.Id's
   // supported.
   string model_type_id = 6;
@@ -4906,16 +4955,38 @@ message ListModelsRequest {
   repeated string use_cases = 18;
   // List of language tags to filter by
   repeated string languages = 21;
-  // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars, outputs, presets
-  repeated string additional_fields = 19;
   // Old API behavior resulted in returning clarifai main models when calling ListModels while scoped to an app. While we transition
   // away from that, we can use this flag to not always fetch clarifai main models, unless that is the app we are explicitly listing for.
   bool dont_fetch_from_main = 23;
-
   // Filter models by bookmark. If set, only return bookmarked models. Otherwise none bookmarked models only.
   // Note: you can not filter `trained_only` and bookmark at the same time.
   // When filter by bookmark, we will return trained and untrained models.
   bool bookmark = 26;
+
+  // Searching options:
+  // Specify a search parameter in order to perform keyword search on the
+  // following fields of the model:
+  //   - id
+  //   - name
+  //   - description
+  //   - notes
+  //   - user_id (unless user_app_id.user_id is already set)
+  //
+  // Keywords are both normalized for search (so searching for "satisfy" matches "satisfied")
+  // and used for partial prefix-matching (so searching for "clari" matches "clarifai").
+  //
+  // NOTE: Both the list of fields searched and the exact keyword matching
+  // rules are subject to change and not guaranteed to be backwards-compatible.
+  string search = 27;
+  // Query name, description and id fields, that can contain the words in the query string. Does NOT support wildcards - full words only. Supports operators "OR" and "-" as NOT.
+  // Deprecated: use search instead.
+  string query = 14 [deprecated = true];
+  // Filter by the description and id of the model. This supports wildcard queries like "gen*" to match "general" as an example.
+  // Deprecated: use search instead.
+  string name = 5 [deprecated = true];
+  // Extends the name filter to include the user_id of the application owner that the model belongs to.
+  // Deprecated: use search instead of name.
+  bool filter_by_user_id = 22 [deprecated = true];
 }
 
 // ResourceCountRequest
@@ -5978,7 +6049,10 @@ message ListWorkflowsRequest {
   // to 128.
   uint32 per_page = 3;
 
-    // Sorting options:
+  // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars
+  repeated string additional_fields = 10;
+
+  // Sorting options:
   // Whether to sort in ascending order. If false, will order in descending order.
   bool sort_ascending = 5;
   oneof sort_by {
@@ -5994,23 +6068,37 @@ message ListWorkflowsRequest {
     bool sort_by_star_count = 14;
   }
 
-  // Query various text fields (id, description and notes) that can contain the words in the query string.
-  string query = 8;
-  // Filter by the id of the workflow. This supports wilcard queries like "gen*" to match "general" as an example.
-  // Deprecated in favor of query
-  string id = 4 [deprecated = true];
+  // Filtering options:
   // If true, we only return workflows that are handpicked by clarifai staff
   bool featured_only = 9;
   // If true, we only return workflows that are starred by the requesting user
   bool starred_only = 11;
-  // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars
-  repeated string additional_fields = 10;
-
-  // (optional) search_term. Full text and prefix matching on id, owner id, description and notes. Searchable fields may be added
-  string search_term = 12;
-
   // Filter workflows by bookmark. If set, only return bookmarked workflows. Otherwise none bookmarked workflows only.
   bool bookmark = 15;
+
+  // Searching options:
+  // Specify a search parameter in order to perform keyword search on the
+  // following fields of the workflow:
+  //   - id
+  //   - description
+  //   - notes
+  //   - user_id (unless user_app_id.user_id is already set)
+  //
+  // Keywords are both normalized for search (so searching for "satisfy" matches "satisfied")
+  // and used for partial prefix-matching (so searching for "clari" matches "clarifai").
+  //
+  // NOTE: Both the list of fields searched and the exact keyword matching
+  // rules are subject to change and not guaranteed to be backwards-compatible.
+  string search = 16;
+  // Query various text fields (id, description and notes) that can contain the words in the query string.
+  // Deprecated: use search instead.
+  string query = 8 [deprecated = true];
+  // Filter by the id of the workflow. This supports wilcard queries like "gen*" to match "general" as an example.
+  // Deprecated: use search instead.
+  string id = 4 [deprecated = true];
+  // Full text and prefix matching on id, owner id, description and notes. Searchable fields may be added
+  // Deprecated: use search instead.
+  string search_term = 12 [deprecated = true];
 }
 
 
@@ -6574,11 +6662,9 @@ message ListModulesRequest {
   // to 128.
   uint32 per_page = 3;
 
-  bool starred_only = 4;
-
   repeated string additional_fields = 5;
 
-  // Sorting opitons:
+  // Sorting options:
   // Whether to sort in ascending order. If false, will order in descending order.
   bool sort_ascending = 6;
   oneof sort_by {
@@ -6592,13 +6678,30 @@ message ListModulesRequest {
     bool sort_by_id = 11;
   }
 
+  // Filtering options:
+  bool starred_only = 4;
   // Filter modules by bookmark. If set, only return bookmarked modules. Otherwise none bookmarked modules only.
   bool bookmark = 10;
 
-  // Filter by the description and name of the model. This supports wildcard queries like "gen*" to match "general" as an example.
-  string name = 12;
+  // Searching options:
+  // Specify a search parameter in order to perform keyword search on the
+  // following fields of the module:
+  //   - id
+  //   - description
+  //   - user_id (unless user_app_id.user_id is already set)
+  //
+  // Keywords are both normalized for search (so searching for "satisfy" matches "satisfied")
+  // and used for partial prefix-matching (so searching for "clari" matches "clarifai").
+  //
+  // NOTE: Both the list of fields searched and the exact keyword matching
+  // rules are subject to change and not guaranteed to be backwards-compatible.
+  string search = 14;
+  // Filter by the id and description of the module. This supports wildcard queries like "gen*" to match "general" as an example.
+  // Deprecated: use search instead.
+  string name = 12 [deprecated = true];
   // Filter by the application owner whose this module belongs to
-  bool filter_by_user_id = 13;
+  // Deprecated: use search instead of name.
+  bool filter_by_user_id = 13 [deprecated = true];
 }
 
 // PostModulesRequest
@@ -7065,4 +7168,18 @@ message RunnerItemOutput {
 message MultiRunnerItemOutputResponse {
   clarifai.api.status.Status status = 1;
   repeated RunnerItemOutput runner_item_outputs = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+// Get the estimated training time for a model version
+message PostModelVersionsTrainingTimeEstimateRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+  repeated ModelVersion model_versions = 3;
+  uint64 estimated_input_count = 4;
+}
+
+// Estimated training time in seconds
+message MultiTrainingTimeEstimateResponse {
+  clarifai.api.status.Status status = 1;
+  repeated google.protobuf.Duration training_time_estimates = 2;
 }

@@ -2004,6 +2004,11 @@ message EvalMetrics {
   // Evaluation parameters to pass. Expected to match what
   // is defined in the model type for the respective model.
   EvalInfo eval_info = 12;
+  ExtendedMetrics extended_metrics = 17;
+}
+
+message ExtendedMetrics {
+  google.protobuf.Struct user_metrics = 1;
 }
 
 // FieldsValue

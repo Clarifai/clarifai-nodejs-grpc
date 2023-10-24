@@ -231,6 +231,7 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     deleteRunners: IV2Service_IDeleteRunners;
     listRunnerItems: IV2Service_IListRunnerItems;
     postRunnerItemOutputs: IV2Service_IPostRunnerItemOutputs;
+    postModelVersionsTrainingTimeEstimate: IV2Service_IPostModelVersionsTrainingTimeEstimate;
 }
 
 interface IV2Service_IListConceptRelations extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListConceptRelationsRequest, proto_clarifai_api_service_pb.MultiConceptRelationResponse> {
@@ -2159,6 +2160,15 @@ interface IV2Service_IPostRunnerItemOutputs extends grpc.MethodDefinition<proto_
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse>;
 }
+interface IV2Service_IPostModelVersionsTrainingTimeEstimate extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse> {
+    path: "/clarifai.api.V2/PostModelVersionsTrainingTimeEstimate";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse>;
+}
 
 export const V2Service: IV2Service;
 
@@ -2377,6 +2387,7 @@ export interface IV2Server {
     deleteRunners: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteRunnersRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     listRunnerItems: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListRunnerItemsRequest, proto_clarifai_api_service_pb.MultiRunnerItemResponse>;
     postRunnerItemOutputs: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse>;
+    postModelVersionsTrainingTimeEstimate: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse>;
 }
 
 export interface IV2Client {
@@ -3022,6 +3033,9 @@ export interface IV2Client {
     postRunnerItemOutputs(request: proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse) => void): grpc.ClientUnaryCall;
     postRunnerItemOutputs(request: proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse) => void): grpc.ClientUnaryCall;
     postRunnerItemOutputs(request: proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse) => void): grpc.ClientUnaryCall;
+    postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
+    postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
+    postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
 }
 
 export class V2Client extends grpc.Client implements IV2Client {
@@ -3668,4 +3682,7 @@ export class V2Client extends grpc.Client implements IV2Client {
     public postRunnerItemOutputs(request: proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse) => void): grpc.ClientUnaryCall;
     public postRunnerItemOutputs(request: proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse) => void): grpc.ClientUnaryCall;
     public postRunnerItemOutputs(request: proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse) => void): grpc.ClientUnaryCall;
+    public postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
+    public postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
+    public postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
 }
