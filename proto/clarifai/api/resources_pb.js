@@ -39840,6 +39840,7 @@ proto.clarifai.api.User.toObject = function(includeInstance, msg) {
     companyName: jspb.Message.getFieldWithDefault(msg, 5, ""),
     jobTitle: jspb.Message.getFieldWithDefault(msg, 19, ""),
     jobRole: jspb.Message.getFieldWithDefault(msg, 20, ""),
+    intention: jspb.Message.getFieldWithDefault(msg, 24, ""),
     billType: jspb.Message.getFieldWithDefault(msg, 7, ""),
     createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     dateGdprConsent: (f = msg.getDateGdprConsent()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
@@ -39918,6 +39919,10 @@ proto.clarifai.api.User.deserializeBinaryFromReader = function(msg, reader) {
     case 20:
       var value = /** @type {string} */ (reader.readString());
       msg.setJobRole(value);
+      break;
+    case 24:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setIntention(value);
       break;
     case 7:
       var value = /** @type {string} */ (reader.readString());
@@ -40059,6 +40064,13 @@ proto.clarifai.api.User.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeString(
       20,
+      f
+    );
+  }
+  f = message.getIntention();
+  if (f.length > 0) {
+    writer.writeString(
+      24,
       f
     );
   }
@@ -40295,6 +40307,24 @@ proto.clarifai.api.User.prototype.getJobRole = function() {
  */
 proto.clarifai.api.User.prototype.setJobRole = function(value) {
   return jspb.Message.setProto3StringField(this, 20, value);
+};
+
+
+/**
+ * optional string intention = 24;
+ * @return {string}
+ */
+proto.clarifai.api.User.prototype.getIntention = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 24, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.User} returns this
+ */
+proto.clarifai.api.User.prototype.setIntention = function(value) {
+  return jspb.Message.setProto3StringField(this, 24, value);
 };
 
 

@@ -4576,6 +4576,8 @@ export class User extends jspb.Message {
     setJobTitle(value: string): User;
     getJobRole(): string;
     setJobRole(value: string): User;
+    getIntention(): string;
+    setIntention(value: string): User;
     getBillType(): string;
     setBillType(value: string): User;
 
@@ -4650,6 +4652,7 @@ export namespace User {
         companyName: string,
         jobTitle: string,
         jobRole: string,
+        intention: string,
         billType: string,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         dateGdprConsent?: google_protobuf_timestamp_pb.Timestamp.AsObject,

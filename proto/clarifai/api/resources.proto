@@ -2444,7 +2444,8 @@ message User {
   string company_name = 5;
   string job_title = 19;
   string job_role = 20;
-
+  // This specifies user intent when registering on clarifai
+  string intention = 24;
   string bill_type = 7 [deprecated = true];
 
   // When the user was created. We follow the XXXX timestamp
