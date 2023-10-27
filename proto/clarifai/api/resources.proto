@@ -2572,10 +2572,14 @@ message Video {
 
   // URL of thumbnail image, which is currently frame at position of 1s. This field is currently
   // used only in response.
-  string thumbnail_url = 5;
+  // Deprecated in favour of thumbnail_hosted, which also contains alternate sizes of thumbnail
+  string thumbnail_url = 5 [deprecated = true];
   // The hosted field lists original video hosted in Clarifai storage. This field is currently used
   // only in response.
   HostedURL hosted = 6;
+  // The hosted field lists various sizes of the vide thumbnail hosted in Clarifai storage, with 'thumbnail' as the full size
+  // This field is currently used only in response.
+  HostedURL hosted_thumbnail = 8;
   // video info
   VideoInfo video_info = 7;
 }

@@ -4862,6 +4862,11 @@ export class Video extends jspb.Message {
     getHosted(): HostedURL | undefined;
     setHosted(value?: HostedURL): Video;
 
+    hasHostedThumbnail(): boolean;
+    clearHostedThumbnail(): void;
+    getHostedThumbnail(): HostedURL | undefined;
+    setHostedThumbnail(value?: HostedURL): Video;
+
     hasVideoInfo(): boolean;
     clearVideoInfo(): void;
     getVideoInfo(): VideoInfo | undefined;
@@ -4884,6 +4889,7 @@ export namespace Video {
         allowDuplicateUrl: boolean,
         thumbnailUrl: string,
         hosted?: HostedURL.AsObject,
+        hostedThumbnail?: HostedURL.AsObject,
         videoInfo?: VideoInfo.AsObject,
     }
 }

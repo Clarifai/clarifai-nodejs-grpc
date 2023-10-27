@@ -42224,6 +42224,7 @@ proto.clarifai.api.Video.toObject = function(includeInstance, msg) {
     allowDuplicateUrl: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
     thumbnailUrl: jspb.Message.getFieldWithDefault(msg, 5, ""),
     hosted: (f = msg.getHosted()) && proto.clarifai.api.HostedURL.toObject(includeInstance, f),
+    hostedThumbnail: (f = msg.getHostedThumbnail()) && proto.clarifai.api.HostedURL.toObject(includeInstance, f),
     videoInfo: (f = msg.getVideoInfo()) && proto.clarifai.api.VideoInfo.toObject(includeInstance, f)
   };
 
@@ -42281,6 +42282,11 @@ proto.clarifai.api.Video.deserializeBinaryFromReader = function(msg, reader) {
       var value = new proto.clarifai.api.HostedURL;
       reader.readMessage(value,proto.clarifai.api.HostedURL.deserializeBinaryFromReader);
       msg.setHosted(value);
+      break;
+    case 8:
+      var value = new proto.clarifai.api.HostedURL;
+      reader.readMessage(value,proto.clarifai.api.HostedURL.deserializeBinaryFromReader);
+      msg.setHostedThumbnail(value);
       break;
     case 7:
       var value = new proto.clarifai.api.VideoInfo;
@@ -42348,6 +42354,14 @@ proto.clarifai.api.Video.serializeBinaryToWriter = function(message, writer) {
   if (f != null) {
     writer.writeMessage(
       6,
+      f,
+      proto.clarifai.api.HostedURL.serializeBinaryToWriter
+    );
+  }
+  f = message.getHostedThumbnail();
+  if (f != null) {
+    writer.writeMessage(
+      8,
       f,
       proto.clarifai.api.HostedURL.serializeBinaryToWriter
     );
@@ -42493,6 +42507,43 @@ proto.clarifai.api.Video.prototype.clearHosted = function() {
  */
 proto.clarifai.api.Video.prototype.hasHosted = function() {
   return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
+ * optional HostedURL hosted_thumbnail = 8;
+ * @return {?proto.clarifai.api.HostedURL}
+ */
+proto.clarifai.api.Video.prototype.getHostedThumbnail = function() {
+  return /** @type{?proto.clarifai.api.HostedURL} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.HostedURL, 8));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.HostedURL|undefined} value
+ * @return {!proto.clarifai.api.Video} returns this
+*/
+proto.clarifai.api.Video.prototype.setHostedThumbnail = function(value) {
+  return jspb.Message.setWrapperField(this, 8, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.Video} returns this
+ */
+proto.clarifai.api.Video.prototype.clearHostedThumbnail = function() {
+  return this.setHostedThumbnail(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.Video.prototype.hasHostedThumbnail = function() {
+  return jspb.Message.getField(this, 8) != null;
 };
 
 
