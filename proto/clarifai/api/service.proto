@@ -3869,7 +3869,10 @@ message PatchAppsRequest {
   repeated App apps = 2;
 
   // The action to perform on the patched App objects except App.Metadata
-  // For now only action 'overwrite' is supported
+  // Supported values: 'overwrite' and 'remove'.
+  //
+  // Note that 'remove' can only be used to remove the app image by setting
+  // 'image.url' in the request to the current value returned for that app.
   string action = 3;
 
   // The action to perform on the patched App.Metadata
@@ -3885,7 +3888,10 @@ message PatchAppRequest {
   App app = 2;
 
   // The action to perform on the patched App object except App.Metadata
-  // For now only action 'overwrite' is supported
+  // Supported values: 'overwrite' and 'remove'.
+  //
+  // Note that 'remove' can only be used to remove the app image by setting
+  // 'image.url' in the request to the current value returned for the app.
   string action = 3;
 
   // The action to perform on the patched App.Metadata
@@ -4568,7 +4574,10 @@ message PatchDatasetsRequest {
   repeated Dataset datasets = 2;
 
   // The action to perform on the patched objects
-  // Supported values: 'overwrite' and 'merge'
+  // Supported values: 'overwrite', 'merge', and 'remove'.
+  //
+  // Note that 'remove' can only be used to remove the dataset image by setting
+  // 'image.url' in the request to the current value returned for that dataset.
   string action = 3;
 }
 
@@ -5089,6 +5098,10 @@ message PatchModelsRequest {
 
   // The action to perform on the patched objects
   // For now actions 'merge', 'overwrite', and 'remove' are supported
+  //
+  // Note that 'remove' can be used to remove the model image by setting
+  // 'image.url' in the request to the current value returned for that model.
+  // This cannot be used in a request that is patching other fields as well.
   string action = 3;
 }
 
@@ -6118,6 +6131,10 @@ message PatchWorkflowsRequest {
 
   // The action to perform on the patched objects
   // For now actions 'merge', 'overwrite', and 'remove' are supported
+  //
+  // Note that 'remove' can be used to remove the workflow image by setting
+  // 'image.url' in the request to the current value returned for that workflow.
+  // This cannot be used in a request that is patching other fields as well.
   string action = 3;
 }
 
@@ -6720,7 +6737,10 @@ message PatchModulesRequest {
   repeated Module modules = 2;
 
   // The action to perform on the patched objects
-  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  // Supported values: 'overwrite' and 'remove'.
+  //
+  // Note that 'remove' can only be used to remove the module image by setting
+  // 'image.url' in the request to the current value returned for that module.
   string action = 3;
 }
 
