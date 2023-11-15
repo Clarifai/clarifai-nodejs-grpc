@@ -5389,6 +5389,7 @@ proto.clarifai.api.App.toObject = function(includeInstance, msg) {
     starCount: jspb.Message.getFieldWithDefault(msg, 20, 0),
     notes: jspb.Message.getFieldWithDefault(msg, 21, ""),
     image: (f = msg.getImage()) && proto.clarifai.api.Image.toObject(includeInstance, f),
+    isTemplate: (f = msg.getIsTemplate()) && google_protobuf_wrappers_pb.BoolValue.toObject(includeInstance, f),
     extraInfo: (f = msg.getExtraInfo()) && proto.clarifai.api.AppExtraInfo.toObject(includeInstance, f)
   };
 
@@ -5503,6 +5504,11 @@ proto.clarifai.api.App.deserializeBinaryFromReader = function(msg, reader) {
       var value = new proto.clarifai.api.Image;
       reader.readMessage(value,proto.clarifai.api.Image.deserializeBinaryFromReader);
       msg.setImage(value);
+      break;
+    case 25:
+      var value = new google_protobuf_wrappers_pb.BoolValue;
+      reader.readMessage(value,google_protobuf_wrappers_pb.BoolValue.deserializeBinaryFromReader);
+      msg.setIsTemplate(value);
       break;
     case 24:
       var value = new proto.clarifai.api.AppExtraInfo;
@@ -5668,6 +5674,14 @@ proto.clarifai.api.App.serializeBinaryToWriter = function(message, writer) {
       22,
       f,
       proto.clarifai.api.Image.serializeBinaryToWriter
+    );
+  }
+  f = message.getIsTemplate();
+  if (f != null) {
+    writer.writeMessage(
+      25,
+      f,
+      google_protobuf_wrappers_pb.BoolValue.serializeBinaryToWriter
     );
   }
   f = message.getExtraInfo();
@@ -6116,6 +6130,43 @@ proto.clarifai.api.App.prototype.clearImage = function() {
  */
 proto.clarifai.api.App.prototype.hasImage = function() {
   return jspb.Message.getField(this, 22) != null;
+};
+
+
+/**
+ * optional google.protobuf.BoolValue is_template = 25;
+ * @return {?proto.google.protobuf.BoolValue}
+ */
+proto.clarifai.api.App.prototype.getIsTemplate = function() {
+  return /** @type{?proto.google.protobuf.BoolValue} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_wrappers_pb.BoolValue, 25));
+};
+
+
+/**
+ * @param {?proto.google.protobuf.BoolValue|undefined} value
+ * @return {!proto.clarifai.api.App} returns this
+*/
+proto.clarifai.api.App.prototype.setIsTemplate = function(value) {
+  return jspb.Message.setWrapperField(this, 25, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.App} returns this
+ */
+proto.clarifai.api.App.prototype.clearIsTemplate = function() {
+  return this.setIsTemplate(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.App.prototype.hasIsTemplate = function() {
+  return jspb.Message.getField(this, 25) != null;
 };
 
 
@@ -18645,7 +18696,7 @@ proto.clarifai.api.AnnotationFilter.toObject = function(includeInstance, msg) {
     modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     userId: jspb.Message.getFieldWithDefault(msg, 4, ""),
     appId: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    savedSearch: (f = msg.getSavedSearch()) && proto.clarifai.api.Search.toObject(includeInstance, f)
+    search: (f = msg.getSearch()) && proto.clarifai.api.Search.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -18704,10 +18755,10 @@ proto.clarifai.api.AnnotationFilter.deserializeBinaryFromReader = function(msg, 
       var value = /** @type {string} */ (reader.readString());
       msg.setAppId(value);
       break;
-    case 8:
+    case 9:
       var value = new proto.clarifai.api.Search;
       reader.readMessage(value,proto.clarifai.api.Search.deserializeBinaryFromReader);
-      msg.setSavedSearch(value);
+      msg.setSearch(value);
       break;
     default:
       reader.skipField();
@@ -18775,10 +18826,10 @@ proto.clarifai.api.AnnotationFilter.serializeBinaryToWriter = function(message, 
       f
     );
   }
-  f = message.getSavedSearch();
+  f = message.getSearch();
   if (f != null) {
     writer.writeMessage(
-      8,
+      9,
       f,
       proto.clarifai.api.Search.serializeBinaryToWriter
     );
@@ -18915,12 +18966,12 @@ proto.clarifai.api.AnnotationFilter.prototype.setAppId = function(value) {
 
 
 /**
- * optional Search saved_search = 8;
+ * optional Search search = 9;
  * @return {?proto.clarifai.api.Search}
  */
-proto.clarifai.api.AnnotationFilter.prototype.getSavedSearch = function() {
+proto.clarifai.api.AnnotationFilter.prototype.getSearch = function() {
   return /** @type{?proto.clarifai.api.Search} */ (
-    jspb.Message.getWrapperField(this, proto.clarifai.api.Search, 8));
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Search, 9));
 };
 
 
@@ -18928,8 +18979,8 @@ proto.clarifai.api.AnnotationFilter.prototype.getSavedSearch = function() {
  * @param {?proto.clarifai.api.Search|undefined} value
  * @return {!proto.clarifai.api.AnnotationFilter} returns this
 */
-proto.clarifai.api.AnnotationFilter.prototype.setSavedSearch = function(value) {
-  return jspb.Message.setWrapperField(this, 8, value);
+proto.clarifai.api.AnnotationFilter.prototype.setSearch = function(value) {
+  return jspb.Message.setWrapperField(this, 9, value);
 };
 
 
@@ -18937,8 +18988,8 @@ proto.clarifai.api.AnnotationFilter.prototype.setSavedSearch = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.clarifai.api.AnnotationFilter} returns this
  */
-proto.clarifai.api.AnnotationFilter.prototype.clearSavedSearch = function() {
-  return this.setSavedSearch(undefined);
+proto.clarifai.api.AnnotationFilter.prototype.clearSearch = function() {
+  return this.setSearch(undefined);
 };
 
 
@@ -18946,8 +18997,8 @@ proto.clarifai.api.AnnotationFilter.prototype.clearSavedSearch = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.clarifai.api.AnnotationFilter.prototype.hasSavedSearch = function() {
-  return jspb.Message.getField(this, 8) != null;
+proto.clarifai.api.AnnotationFilter.prototype.hasSearch = function() {
+  return jspb.Message.getField(this, 9) != null;
 };
 
 
@@ -45309,13 +45360,14 @@ proto.clarifai.api.AppDuplication.prototype.toObject = function(opt_includeInsta
 proto.clarifai.api.AppDuplication.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    existingAppId: jspb.Message.getFieldWithDefault(msg, 8, ""),
     newAppId: jspb.Message.getFieldWithDefault(msg, 2, ""),
     newAppName: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    newAppDescription: jspb.Message.getFieldWithDefault(msg, 10, ""),
     status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f),
     createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     lastModifiedAt: (f = msg.getLastModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     filter: (f = msg.getFilter()) && proto.clarifai.api.AppDuplicationFilters.toObject(includeInstance, f),
-    existingAppId: jspb.Message.getFieldWithDefault(msg, 8, ""),
     progressList: jspb.Message.toObjectList(msg.getProgressList(),
     proto.clarifai.api.AppCopyProgress.toObject, includeInstance)
   };
@@ -45358,6 +45410,10 @@ proto.clarifai.api.AppDuplication.deserializeBinaryFromReader = function(msg, re
       var value = /** @type {string} */ (reader.readString());
       msg.setId(value);
       break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setExistingAppId(value);
+      break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
       msg.setNewAppId(value);
@@ -45365,6 +45421,10 @@ proto.clarifai.api.AppDuplication.deserializeBinaryFromReader = function(msg, re
     case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setNewAppName(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setNewAppDescription(value);
       break;
     case 4:
       var value = new proto_clarifai_api_status_status_pb.Status;
@@ -45385,10 +45445,6 @@ proto.clarifai.api.AppDuplication.deserializeBinaryFromReader = function(msg, re
       var value = new proto.clarifai.api.AppDuplicationFilters;
       reader.readMessage(value,proto.clarifai.api.AppDuplicationFilters.deserializeBinaryFromReader);
       msg.setFilter(value);
-      break;
-    case 8:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setExistingAppId(value);
       break;
     case 9:
       var value = new proto.clarifai.api.AppCopyProgress;
@@ -45431,6 +45487,13 @@ proto.clarifai.api.AppDuplication.serializeBinaryToWriter = function(message, wr
       f
     );
   }
+  f = message.getExistingAppId();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
+      f
+    );
+  }
   f = message.getNewAppId();
   if (f.length > 0) {
     writer.writeString(
@@ -45442,6 +45505,13 @@ proto.clarifai.api.AppDuplication.serializeBinaryToWriter = function(message, wr
   if (f.length > 0) {
     writer.writeString(
       3,
+      f
+    );
+  }
+  f = message.getNewAppDescription();
+  if (f.length > 0) {
+    writer.writeString(
+      10,
       f
     );
   }
@@ -45477,13 +45547,6 @@ proto.clarifai.api.AppDuplication.serializeBinaryToWriter = function(message, wr
       proto.clarifai.api.AppDuplicationFilters.serializeBinaryToWriter
     );
   }
-  f = message.getExistingAppId();
-  if (f.length > 0) {
-    writer.writeString(
-      8,
-      f
-    );
-  }
   f = message.getProgressList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
@@ -45510,6 +45573,24 @@ proto.clarifai.api.AppDuplication.prototype.getId = function() {
  */
 proto.clarifai.api.AppDuplication.prototype.setId = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string existing_app_id = 8;
+ * @return {string}
+ */
+proto.clarifai.api.AppDuplication.prototype.getExistingAppId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.AppDuplication} returns this
+ */
+proto.clarifai.api.AppDuplication.prototype.setExistingAppId = function(value) {
+  return jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
@@ -45546,6 +45627,24 @@ proto.clarifai.api.AppDuplication.prototype.getNewAppName = function() {
  */
 proto.clarifai.api.AppDuplication.prototype.setNewAppName = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string new_app_description = 10;
+ * @return {string}
+ */
+proto.clarifai.api.AppDuplication.prototype.getNewAppDescription = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.AppDuplication} returns this
+ */
+proto.clarifai.api.AppDuplication.prototype.setNewAppDescription = function(value) {
+  return jspb.Message.setProto3StringField(this, 10, value);
 };
 
 
@@ -45694,24 +45793,6 @@ proto.clarifai.api.AppDuplication.prototype.clearFilter = function() {
  */
 proto.clarifai.api.AppDuplication.prototype.hasFilter = function() {
   return jspb.Message.getField(this, 7) != null;
-};
-
-
-/**
- * optional string existing_app_id = 8;
- * @return {string}
- */
-proto.clarifai.api.AppDuplication.prototype.getExistingAppId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.clarifai.api.AppDuplication} returns this
- */
-proto.clarifai.api.AppDuplication.prototype.setExistingAppId = function(value) {
-  return jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
