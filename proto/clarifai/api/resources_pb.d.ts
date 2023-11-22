@@ -2758,6 +2758,11 @@ export class TrainInfo extends jspb.Message {
     getDataset(): Dataset | undefined;
     setDataset(value?: Dataset): TrainInfo;
 
+    hasResumeFromModel(): boolean;
+    clearResumeFromModel(): void;
+    getResumeFromModel(): Model | undefined;
+    setResumeFromModel(value?: Model): TrainInfo;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): TrainInfo.AsObject;
     static toObject(includeInstance: boolean, msg: TrainInfo): TrainInfo.AsObject;
@@ -2772,6 +2777,7 @@ export namespace TrainInfo {
     export type AsObject = {
         params?: google_protobuf_struct_pb.Struct.AsObject,
         dataset?: Dataset.AsObject,
+        resumeFromModel?: Model.AsObject,
     }
 }
 
@@ -3111,6 +3117,7 @@ export namespace ModelTypeField {
     DATASET = 19,
     DATASET_VERSION = 20,
     ENCRYPTED_STRING = 21,
+    CHECKPOINT_MODEL = 22,
     }
 
 }

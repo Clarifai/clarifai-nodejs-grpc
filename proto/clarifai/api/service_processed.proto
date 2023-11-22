@@ -1114,7 +1114,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
   }
 
   // Search over the models to find one or more you're looking for.
@@ -3705,13 +3705,18 @@ message PatchAnnotationsRequest {
 // PatchAnnotationsStatusRequest
 message PatchAnnotationsStatusRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
-  // Annotation Status code
-  clarifai.api.status.StatusCode status_code = 2;
+  // Filter by user IDs
   repeated string user_ids = 3;
+  // Filter by task ID
   string task_id = 4;
+  // Filter by Status codes
+  repeated clarifai.api.status.StatusCode status_codes = 6;
+
   // 'overwrite' is supported
   string action = 5;
 
+  // Update filtered annotations to this status
+  clarifai.api.status.StatusCode status_code = 2;
 }
 
 // PatchAnnotationsStatusResponse
@@ -3825,6 +3830,8 @@ message ListAppsRequest {
   bool featured_only = 9;
   // If true, we only return apps that are starred by the requesting user
   bool starred_only = 11;
+  // If true, we only return apps that are marked as a template by the app owner.
+  bool template_only = 16;
 
   // Searching options:
   // Specify a search parameter in order to perform keyword search on the
@@ -3977,6 +3984,16 @@ message DeleteCollaboratorsRequest{
 message MultiCollaboratorsResponse {
   clarifai.api.status.Status status = 1;
   repeated Collaborator collaborators = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+
+  // The owner of the application.
+  //
+  // When listing users that have access to the application, i.e. collaborators,
+  // it is often relevant to also include the application owner, so return
+  // their information here for convenience.
+  //
+  // Note: app_owner is only returned by ListCollaborators and only if the
+  // owner is a regular user, not an organization.
+  User app_owner = 3;
 }
 
 // ListCollaborationsRequest
@@ -3988,6 +4005,10 @@ message ListCollaborationsRequest {
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
   // to 128.
   uint32 per_page = 3;
+
+  // Filtering options:
+  // If true, we only return collaborations on apps that are marked as a template by the app owner.
+  bool template_only = 4;
 }
 
 // MultiCollaborationsResponse
@@ -5013,6 +5034,7 @@ message GetResourceCountsResponse {
   int64 models = 3;
   int64 workflows = 4;
   int64 modules = 5;
+  int64 inputs = 6;
 }
 
 message PatchModelToolkitsRequest {
@@ -5337,7 +5359,7 @@ message ListEvaluationsRequest {
   // Filter on concept IDs specified in the modele version's output_info
   repeated string concept_ids = 15;
   // Whether to show failed metrics, defaults to false
-  bool show_failed_metrics = 19; 
+  bool show_failed_metrics = 19;
 }
 
 message GetEvaluationRequest{

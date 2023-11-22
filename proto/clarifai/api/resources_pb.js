@@ -25655,7 +25655,8 @@ proto.clarifai.api.TrainInfo.prototype.toObject = function(opt_includeInstance) 
 proto.clarifai.api.TrainInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
     params: (f = msg.getParams()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
-    dataset: (f = msg.getDataset()) && proto.clarifai.api.Dataset.toObject(includeInstance, f)
+    dataset: (f = msg.getDataset()) && proto.clarifai.api.Dataset.toObject(includeInstance, f),
+    resumeFromModel: (f = msg.getResumeFromModel()) && proto.clarifai.api.Model.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -25702,6 +25703,11 @@ proto.clarifai.api.TrainInfo.deserializeBinaryFromReader = function(msg, reader)
       reader.readMessage(value,proto.clarifai.api.Dataset.deserializeBinaryFromReader);
       msg.setDataset(value);
       break;
+    case 3:
+      var value = new proto.clarifai.api.Model;
+      reader.readMessage(value,proto.clarifai.api.Model.deserializeBinaryFromReader);
+      msg.setResumeFromModel(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -25745,6 +25751,14 @@ proto.clarifai.api.TrainInfo.serializeBinaryToWriter = function(message, writer)
       2,
       f,
       proto.clarifai.api.Dataset.serializeBinaryToWriter
+    );
+  }
+  f = message.getResumeFromModel();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      proto.clarifai.api.Model.serializeBinaryToWriter
     );
   }
 };
@@ -25821,6 +25835,43 @@ proto.clarifai.api.TrainInfo.prototype.clearDataset = function() {
  */
 proto.clarifai.api.TrainInfo.prototype.hasDataset = function() {
   return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional Model resume_from_model = 3;
+ * @return {?proto.clarifai.api.Model}
+ */
+proto.clarifai.api.TrainInfo.prototype.getResumeFromModel = function() {
+  return /** @type{?proto.clarifai.api.Model} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Model, 3));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Model|undefined} value
+ * @return {!proto.clarifai.api.TrainInfo} returns this
+*/
+proto.clarifai.api.TrainInfo.prototype.setResumeFromModel = function(value) {
+  return jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.TrainInfo} returns this
+ */
+proto.clarifai.api.TrainInfo.prototype.clearResumeFromModel = function() {
+  return this.setResumeFromModel(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.TrainInfo.prototype.hasResumeFromModel = function() {
+  return jspb.Message.getField(this, 3) != null;
 };
 
 
@@ -28217,7 +28268,8 @@ proto.clarifai.api.ModelTypeField.ModelTypeFieldType = {
   ARRAY_OF_MODEL_CONCEPTS: 18,
   DATASET: 19,
   DATASET_VERSION: 20,
-  ENCRYPTED_STRING: 21
+  ENCRYPTED_STRING: 21,
+  CHECKPOINT_MODEL: 22
 };
 
 /**

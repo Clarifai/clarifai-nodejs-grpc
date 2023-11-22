@@ -198,16 +198,20 @@ export class PatchAnnotationsStatusRequest extends jspb.Message {
     clearUserAppId(): void;
     getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
     setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PatchAnnotationsStatusRequest;
-    getStatusCode(): proto_clarifai_api_status_status_code_pb.StatusCode;
-    setStatusCode(value: proto_clarifai_api_status_status_code_pb.StatusCode): PatchAnnotationsStatusRequest;
     clearUserIdsList(): void;
     getUserIdsList(): Array<string>;
     setUserIdsList(value: Array<string>): PatchAnnotationsStatusRequest;
     addUserIds(value: string, index?: number): string;
     getTaskId(): string;
     setTaskId(value: string): PatchAnnotationsStatusRequest;
+    clearStatusCodesList(): void;
+    getStatusCodesList(): Array<proto_clarifai_api_status_status_code_pb.StatusCode>;
+    setStatusCodesList(value: Array<proto_clarifai_api_status_status_code_pb.StatusCode>): PatchAnnotationsStatusRequest;
+    addStatusCodes(value: proto_clarifai_api_status_status_code_pb.StatusCode, index?: number): proto_clarifai_api_status_status_code_pb.StatusCode;
     getAction(): string;
     setAction(value: string): PatchAnnotationsStatusRequest;
+    getStatusCode(): proto_clarifai_api_status_status_code_pb.StatusCode;
+    setStatusCode(value: proto_clarifai_api_status_status_code_pb.StatusCode): PatchAnnotationsStatusRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PatchAnnotationsStatusRequest.AsObject;
@@ -222,10 +226,11 @@ export class PatchAnnotationsStatusRequest extends jspb.Message {
 export namespace PatchAnnotationsStatusRequest {
     export type AsObject = {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
-        statusCode: proto_clarifai_api_status_status_code_pb.StatusCode,
         userIdsList: Array<string>,
         taskId: string,
+        statusCodesList: Array<proto_clarifai_api_status_status_code_pb.StatusCode>,
         action: string,
+        statusCode: proto_clarifai_api_status_status_code_pb.StatusCode,
     }
 }
 
@@ -512,6 +517,8 @@ export class ListAppsRequest extends jspb.Message {
     setFeaturedOnly(value: boolean): ListAppsRequest;
     getStarredOnly(): boolean;
     setStarredOnly(value: boolean): ListAppsRequest;
+    getTemplateOnly(): boolean;
+    setTemplateOnly(value: boolean): ListAppsRequest;
     getSearch(): string;
     setSearch(value: string): ListAppsRequest;
     getQuery(): string;
@@ -546,6 +553,7 @@ export namespace ListAppsRequest {
         sortByStarCount: boolean,
         featuredOnly: boolean,
         starredOnly: boolean,
+        templateOnly: boolean,
         search: string,
         query: string,
         name: string,
@@ -952,6 +960,11 @@ export class MultiCollaboratorsResponse extends jspb.Message {
     setCollaboratorsList(value: Array<proto_clarifai_api_resources_pb.Collaborator>): MultiCollaboratorsResponse;
     addCollaborators(value?: proto_clarifai_api_resources_pb.Collaborator, index?: number): proto_clarifai_api_resources_pb.Collaborator;
 
+    hasAppOwner(): boolean;
+    clearAppOwner(): void;
+    getAppOwner(): proto_clarifai_api_resources_pb.User | undefined;
+    setAppOwner(value?: proto_clarifai_api_resources_pb.User): MultiCollaboratorsResponse;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): MultiCollaboratorsResponse.AsObject;
     static toObject(includeInstance: boolean, msg: MultiCollaboratorsResponse): MultiCollaboratorsResponse.AsObject;
@@ -966,6 +979,7 @@ export namespace MultiCollaboratorsResponse {
     export type AsObject = {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         collaboratorsList: Array<proto_clarifai_api_resources_pb.Collaborator.AsObject>,
+        appOwner?: proto_clarifai_api_resources_pb.User.AsObject,
     }
 }
 
@@ -979,6 +993,8 @@ export class ListCollaborationsRequest extends jspb.Message {
     setPage(value: number): ListCollaborationsRequest;
     getPerPage(): number;
     setPerPage(value: number): ListCollaborationsRequest;
+    getTemplateOnly(): boolean;
+    setTemplateOnly(value: boolean): ListCollaborationsRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListCollaborationsRequest.AsObject;
@@ -995,6 +1011,7 @@ export namespace ListCollaborationsRequest {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         page: number,
         perPage: number,
+        templateOnly: boolean,
     }
 }
 
@@ -3724,6 +3741,8 @@ export class GetResourceCountsResponse extends jspb.Message {
     setWorkflows(value: number): GetResourceCountsResponse;
     getModules(): number;
     setModules(value: number): GetResourceCountsResponse;
+    getInputs(): number;
+    setInputs(value: number): GetResourceCountsResponse;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetResourceCountsResponse.AsObject;
@@ -3742,6 +3761,7 @@ export namespace GetResourceCountsResponse {
         models: number,
         workflows: number,
         modules: number,
+        inputs: number,
     }
 }
 

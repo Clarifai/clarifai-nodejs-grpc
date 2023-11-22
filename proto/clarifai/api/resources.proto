@@ -1438,6 +1438,8 @@ message TrainInfo {
   google.protobuf.Struct params = 1;
   // The dataset and dataset version this model version was or will be trained on
   Dataset dataset = 2;
+  // The model to resume training from.
+  Model resume_from_model = 3;
 }
 
 message EvalInfo {
@@ -1618,7 +1620,6 @@ message ModelTypeField {
     // Such as [1.0, 2.0, 3.5]
     ARRAY_OF_NUMBERS = 11;
     // For selecting the embed_model_version_id for context based models.
-    // This is a string type in the API request.
     WORKFLOW_EMBED_MODELS = 12;
     // Such as ['a', 'b', 'cantaloupe']
     ARRAY_OF_STRINGS = 13;
@@ -1639,6 +1640,8 @@ message ModelTypeField {
     DATASET_VERSION = 20;
     // To pass a string downstream, that is encrypted in the DB and API.
     ENCRYPTED_STRING = 21;
+    // For selecting a model version of the same model type to resume training from. 
+    CHECKPOINT_MODEL = 22;
   }
   // The field for this field.
   ModelTypeFieldType field_type = 2;
