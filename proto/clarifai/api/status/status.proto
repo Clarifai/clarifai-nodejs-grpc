@@ -30,6 +30,8 @@ message Status {
   string internal_details = 8 [(clarifai.auth.util.cl_private_field) = true];
   // Resource location info for redirect, when resource location has been changed.
   RedirectInfo redirect_info = 9 [(clarifai.auth.util.cl_private_field) = true];
+  // Notes for developer.
+  string developer_notes = 10;
 }
 
 message RedirectInfo {

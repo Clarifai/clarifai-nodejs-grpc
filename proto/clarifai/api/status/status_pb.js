@@ -138,7 +138,8 @@ proto.clarifai.api.status.Status.toObject = function(includeInstance, msg) {
     timeRemaining: jspb.Message.getFieldWithDefault(msg, 6, 0),
     reqId: jspb.Message.getFieldWithDefault(msg, 7, ""),
     internalDetails: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    redirectInfo: (f = msg.getRedirectInfo()) && proto.clarifai.api.status.RedirectInfo.toObject(includeInstance, f)
+    redirectInfo: (f = msg.getRedirectInfo()) && proto.clarifai.api.status.RedirectInfo.toObject(includeInstance, f),
+    developerNotes: jspb.Message.getFieldWithDefault(msg, 10, "")
   };
 
   if (includeInstance) {
@@ -211,6 +212,10 @@ proto.clarifai.api.status.Status.deserializeBinaryFromReader = function(msg, rea
       var value = new proto.clarifai.api.status.RedirectInfo;
       reader.readMessage(value,proto.clarifai.api.status.RedirectInfo.deserializeBinaryFromReader);
       msg.setRedirectInfo(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDeveloperNotes(value);
       break;
     default:
       reader.skipField();
@@ -303,6 +308,13 @@ proto.clarifai.api.status.Status.serializeBinaryToWriter = function(message, wri
       9,
       f,
       proto.clarifai.api.status.RedirectInfo.serializeBinaryToWriter
+    );
+  }
+  f = message.getDeveloperNotes();
+  if (f.length > 0) {
+    writer.writeString(
+      10,
+      f
     );
   }
 };
@@ -505,6 +517,24 @@ proto.clarifai.api.status.Status.prototype.clearRedirectInfo = function() {
  */
 proto.clarifai.api.status.Status.prototype.hasRedirectInfo = function() {
   return jspb.Message.getField(this, 9) != null;
+};
+
+
+/**
+ * optional string developer_notes = 10;
+ * @return {string}
+ */
+proto.clarifai.api.status.Status.prototype.getDeveloperNotes = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.status.Status} returns this
+ */
+proto.clarifai.api.status.Status.prototype.setDeveloperNotes = function(value) {
+  return jspb.Message.setProto3StringField(this, 10, value);
 };
 
 
