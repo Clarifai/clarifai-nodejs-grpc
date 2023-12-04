@@ -6173,53 +6173,6 @@ export namespace StatValueAggregateQuery {
     }
 }
 
-export class DatasetInputsSearchAddJob extends jspb.Message { 
-    getId(): string;
-    setId(value: string): DatasetInputsSearchAddJob;
-
-    hasCreatedAt(): boolean;
-    clearCreatedAt(): void;
-    getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): DatasetInputsSearchAddJob;
-
-    hasModifiedAt(): boolean;
-    clearModifiedAt(): void;
-    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): DatasetInputsSearchAddJob;
-
-    hasStatus(): boolean;
-    clearStatus(): void;
-    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
-    setStatus(value?: proto_clarifai_api_status_status_pb.Status): DatasetInputsSearchAddJob;
-    getDatasetId(): string;
-    setDatasetId(value: string): DatasetInputsSearchAddJob;
-
-    hasSearch(): boolean;
-    clearSearch(): void;
-    getSearch(): Search | undefined;
-    setSearch(value?: Search): DatasetInputsSearchAddJob;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): DatasetInputsSearchAddJob.AsObject;
-    static toObject(includeInstance: boolean, msg: DatasetInputsSearchAddJob): DatasetInputsSearchAddJob.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: DatasetInputsSearchAddJob, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): DatasetInputsSearchAddJob;
-    static deserializeBinaryFromReader(message: DatasetInputsSearchAddJob, reader: jspb.BinaryReader): DatasetInputsSearchAddJob;
-}
-
-export namespace DatasetInputsSearchAddJob {
-    export type AsObject = {
-        id: string,
-        createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
-        datasetId: string,
-        search?: Search.AsObject,
-    }
-}
-
 export class PCAProjectionComparator extends jspb.Message { 
     getDistanceThreshold(): number;
     setDistanceThreshold(value: number): PCAProjectionComparator;

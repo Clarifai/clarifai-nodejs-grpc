@@ -2568,7 +2568,8 @@ service V2 {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/duplications"
         body: "*"
     };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
@@ -3255,19 +3256,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = BulkOperation_Add;
     option (clarifai.auth.util.cl_depending_scopes) = BulkOperation_Get;
     option (clarifai.auth.util.cl_depending_scopes) = BulkOperation_Delete;
-  }
-
-  // Get a specific job.
-  rpc GetDatasetInputsSearchAddJob (GetDatasetInputsSearchAddJobRequest) returns (SingleDatasetInputsSearchAddJobResponse) {
-    option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/datasets/inputs/search_add/jobs/{job_id}"
-      additional_bindings {
-        get: "/v2/datasets/inputs/search_add/jobs/{job_id}"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
   }
 
   // List next non-labeled and unassigned inputs from task's dataset
@@ -4672,9 +4660,10 @@ message DeleteDatasetInputsRequest {
 
 // MultiDatasetInputResponse
 message MultiDatasetInputResponse {
+  reserved 3;
   clarifai.api.status.Status status = 1;
   repeated DatasetInput dataset_inputs = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
-  DatasetInputsSearchAddJob dataset_inputs_search_add_job = 3;
+  BulkOperation bulk_operation = 4;
 }
 
 // SingleDatasetInputResponse
@@ -4806,18 +4795,6 @@ message MultiDatasetVersionMetricsGroupResponse {
 message SingleDatasetVersionResponse {
   clarifai.api.status.Status status = 1;
   DatasetVersion dataset_version = 2;
-}
-
-message GetDatasetInputsSearchAddJobRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-
-  string job_id = 2;
-}
-
-message SingleDatasetInputsSearchAddJobResponse {
-  clarifai.api.status.Status status = 1;
-
-  DatasetInputsSearchAddJob job = 2;
 }
 
 ////////////////////////////////////////////////////

@@ -2568,7 +2568,8 @@ service V2 {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/duplications"
         body: "*"
     };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
@@ -3257,24 +3258,11 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = BulkOperation_Delete;
   }
 
-  // Get a specific job.
-  rpc GetDatasetInputsSearchAddJob (GetDatasetInputsSearchAddJobRequest) returns (SingleDatasetInputsSearchAddJobResponse) {
-    option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/datasets/inputs/search_add/jobs/{job_id}"
-      additional_bindings161 {
-        get: "/v2/datasets/inputs/search_add/jobs/{job_id}"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
-  }
-
   // List next non-labeled and unassigned inputs from task's dataset
   rpc ListNextTaskAssignments (ListNextTaskAssignmentsRequest) returns (MultiInputResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/assignments"
-      additional_bindings162 {
+      additional_bindings161 {
         get: "/v2/tasks/{task_id}/assignments"
       }
     };
@@ -3309,7 +3297,7 @@ service V2 {
   rpc ListInputsAddJobs (ListInputsAddJobsRequest) returns (MultiInputsAddJobResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/add"
-      additional_bindings163 {
+      additional_bindings162 {
         get: "/v2/inputs/jobs/add"
       }
     };
@@ -3322,7 +3310,7 @@ service V2 {
   rpc GetInputsAddJob (GetInputsAddJobRequest) returns (SingleInputsAddJobResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/add/{id}"
-      additional_bindings164 {
+      additional_bindings163 {
         get: "/v2/inputs/jobs/add/{id}"
       }
     };
@@ -3336,7 +3324,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/add/{id}"
       body: "*"
-      additional_bindings165 {
+      additional_bindings164 {
         patch: "/v2/inputs/jobs/add/{id}"
         body: "*"
       }
@@ -3351,7 +3339,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads"
       body: "*"
-      additional_bindings166 {
+      additional_bindings165 {
         post: "/v2/uploads"
         body: "*"
       }
@@ -3367,7 +3355,7 @@ service V2 {
   rpc PutUploadContentParts (PutUploadContentPartsRequest) returns (SingleUploadResponse) {
     option (google.api.http) = {
       put: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads/{upload_id}/content_parts"
-      additional_bindings167 {
+      additional_bindings166 {
         put: "/v2/uploads/{upload_id}/content_parts"
       }
       body: "*"
@@ -3381,7 +3369,7 @@ service V2 {
   rpc GetUpload (GetUploadRequest) returns (SingleUploadResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads/{upload_id}"
-      additional_bindings168 {
+      additional_bindings167 {
         get: "/v2/uploads/{upload_id}"
       }
     };
@@ -3393,7 +3381,7 @@ service V2 {
   rpc ListUploads (ListUploadsRequest) returns (MultiUploadResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads"
-      additional_bindings169 {
+      additional_bindings168 {
         get: "/v2/uploads"
       }
     };
@@ -3406,7 +3394,7 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads"
       body: "*"
-      additional_bindings170 {
+      additional_bindings169 {
         delete: "/v2/uploads"
         body: "*"
       }
@@ -3435,7 +3423,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/data_sources"
       body: "*"
-      additional_bindings171 {
+      additional_bindings170 {
         post: "/v2/inputs/data_sources"
         body: "*"
       }
@@ -3456,7 +3444,7 @@ service V2 {
   rpc GetInputsExtractionJob (GetInputsExtractionJobRequest) returns (SingleInputsExtractionJobResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/extraction/{inputs_extraction_job_id}"
-      additional_bindings172 {
+      additional_bindings171 {
         get: "/v2/inputs/jobs/extraction/{inputs_extraction_job_id}"
       }
     };
@@ -3469,7 +3457,7 @@ service V2 {
   rpc ListInputsExtractionJobs (ListInputsExtractionJobsRequest) returns (MultiInputsExtractionJobResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/extraction"
-      additional_bindings173 {
+      additional_bindings172 {
         get: "/v2/inputs/jobs/extraction"
       }
     };
@@ -3482,7 +3470,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/extraction"
       body: "*"
-      additional_bindings174 {
+      additional_bindings173 {
         patch: "/v2/inputs/jobs/extraction"
         body: "*"
       }
@@ -3502,7 +3490,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/uploads"
       body: "*"
-      additional_bindings175 {
+      additional_bindings174 {
         post: "/v2/inputs/uploads"
         body: "*"
       }
@@ -3595,7 +3583,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/time_estimate"
       body: "*"
-      additional_bindings176 {
+      additional_bindings175 {
         post: "/v2/models/{model_id}/versions/time_estimate"
         body: "*"
       }
@@ -4672,9 +4660,10 @@ message DeleteDatasetInputsRequest {
 
 // MultiDatasetInputResponse
 message MultiDatasetInputResponse {
+  reserved 3;
   clarifai.api.status.Status status = 1;
   repeated DatasetInput dataset_inputs = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
-  DatasetInputsSearchAddJob dataset_inputs_search_add_job = 3;
+  BulkOperation bulk_operation = 4;
 }
 
 // SingleDatasetInputResponse
@@ -4806,18 +4795,6 @@ message MultiDatasetVersionMetricsGroupResponse {
 message SingleDatasetVersionResponse {
   clarifai.api.status.Status status = 1;
   DatasetVersion dataset_version = 2;
-}
-
-message GetDatasetInputsSearchAddJobRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-
-  string job_id = 2;
-}
-
-message SingleDatasetInputsSearchAddJobResponse {
-  clarifai.api.status.Status status = 1;
-
-  DatasetInputsSearchAddJob job = 2;
 }
 
 ////////////////////////////////////////////////////

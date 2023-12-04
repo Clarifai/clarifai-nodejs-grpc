@@ -209,7 +209,6 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     getBulkOperation: IV2Service_IGetBulkOperation;
     cancelBulkOperations: IV2Service_ICancelBulkOperations;
     deleteBulkOperations: IV2Service_IDeleteBulkOperations;
-    getDatasetInputsSearchAddJob: IV2Service_IGetDatasetInputsSearchAddJob;
     listNextTaskAssignments: IV2Service_IListNextTaskAssignments;
     putTaskAssignments: IV2Service_IPutTaskAssignments;
     listInputsAddJobs: IV2Service_IListInputsAddJobs;
@@ -1962,15 +1961,6 @@ interface IV2Service_IDeleteBulkOperations extends grpc.MethodDefinition<proto_c
     responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
 }
-interface IV2Service_IGetDatasetInputsSearchAddJob extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetDatasetInputsSearchAddJobRequest, proto_clarifai_api_service_pb.SingleDatasetInputsSearchAddJobResponse> {
-    path: "/clarifai.api.V2/GetDatasetInputsSearchAddJob";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.GetDatasetInputsSearchAddJobRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.GetDatasetInputsSearchAddJobRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleDatasetInputsSearchAddJobResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleDatasetInputsSearchAddJobResponse>;
-}
 interface IV2Service_IListNextTaskAssignments extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListNextTaskAssignmentsRequest, proto_clarifai_api_service_pb.MultiInputResponse> {
     path: "/clarifai.api.V2/ListNextTaskAssignments";
     requestStream: false;
@@ -2365,7 +2355,6 @@ export interface IV2Server {
     getBulkOperation: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetBulkOperationRequest, proto_clarifai_api_service_pb.SingleBulkOperationsResponse>;
     cancelBulkOperations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.CancelBulkOperationRequest, proto_clarifai_api_service_pb.MultiBulkOperationsResponse>;
     deleteBulkOperations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteBulkOperationRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
-    getDatasetInputsSearchAddJob: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetDatasetInputsSearchAddJobRequest, proto_clarifai_api_service_pb.SingleDatasetInputsSearchAddJobResponse>;
     listNextTaskAssignments: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListNextTaskAssignmentsRequest, proto_clarifai_api_service_pb.MultiInputResponse>;
     putTaskAssignments: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PutTaskAssignmentsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     listInputsAddJobs: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListInputsAddJobsRequest, proto_clarifai_api_service_pb.MultiInputsAddJobResponse>;
@@ -2967,9 +2956,6 @@ export interface IV2Client {
     deleteBulkOperations(request: proto_clarifai_api_service_pb.DeleteBulkOperationRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteBulkOperations(request: proto_clarifai_api_service_pb.DeleteBulkOperationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteBulkOperations(request: proto_clarifai_api_service_pb.DeleteBulkOperationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    getDatasetInputsSearchAddJob(request: proto_clarifai_api_service_pb.GetDatasetInputsSearchAddJobRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleDatasetInputsSearchAddJobResponse) => void): grpc.ClientUnaryCall;
-    getDatasetInputsSearchAddJob(request: proto_clarifai_api_service_pb.GetDatasetInputsSearchAddJobRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleDatasetInputsSearchAddJobResponse) => void): grpc.ClientUnaryCall;
-    getDatasetInputsSearchAddJob(request: proto_clarifai_api_service_pb.GetDatasetInputsSearchAddJobRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleDatasetInputsSearchAddJobResponse) => void): grpc.ClientUnaryCall;
     listNextTaskAssignments(request: proto_clarifai_api_service_pb.ListNextTaskAssignmentsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputResponse) => void): grpc.ClientUnaryCall;
     listNextTaskAssignments(request: proto_clarifai_api_service_pb.ListNextTaskAssignmentsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputResponse) => void): grpc.ClientUnaryCall;
     listNextTaskAssignments(request: proto_clarifai_api_service_pb.ListNextTaskAssignmentsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputResponse) => void): grpc.ClientUnaryCall;
@@ -3616,9 +3602,6 @@ export class V2Client extends grpc.Client implements IV2Client {
     public deleteBulkOperations(request: proto_clarifai_api_service_pb.DeleteBulkOperationRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteBulkOperations(request: proto_clarifai_api_service_pb.DeleteBulkOperationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteBulkOperations(request: proto_clarifai_api_service_pb.DeleteBulkOperationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public getDatasetInputsSearchAddJob(request: proto_clarifai_api_service_pb.GetDatasetInputsSearchAddJobRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleDatasetInputsSearchAddJobResponse) => void): grpc.ClientUnaryCall;
-    public getDatasetInputsSearchAddJob(request: proto_clarifai_api_service_pb.GetDatasetInputsSearchAddJobRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleDatasetInputsSearchAddJobResponse) => void): grpc.ClientUnaryCall;
-    public getDatasetInputsSearchAddJob(request: proto_clarifai_api_service_pb.GetDatasetInputsSearchAddJobRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleDatasetInputsSearchAddJobResponse) => void): grpc.ClientUnaryCall;
     public listNextTaskAssignments(request: proto_clarifai_api_service_pb.ListNextTaskAssignmentsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputResponse) => void): grpc.ClientUnaryCall;
     public listNextTaskAssignments(request: proto_clarifai_api_service_pb.ListNextTaskAssignmentsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputResponse) => void): grpc.ClientUnaryCall;
     public listNextTaskAssignments(request: proto_clarifai_api_service_pb.ListNextTaskAssignmentsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputResponse) => void): grpc.ClientUnaryCall;

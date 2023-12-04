@@ -1640,7 +1640,7 @@ message ModelTypeField {
     DATASET_VERSION = 20;
     // To pass a string downstream, that is encrypted in the DB and API.
     ENCRYPTED_STRING = 21;
-    // For selecting a model version of the same model type to resume training from. 
+    // For selecting a model version of the same model type to resume training from.
     CHECKPOINT_MODEL = 22;
   }
   // The field for this field.
@@ -3376,26 +3376,6 @@ enum StatTimeAggType {
 
 
 
-
-message DatasetInputsSearchAddJob {
-  // The id of this job
-  string id = 1;
-
-  // When the job was created.
-  google.protobuf.Timestamp created_at = 2;
-
-  // When the job was last modified.
-  google.protobuf.Timestamp modified_at = 3;
-
-  // Status of the job and rough estimated progress
-  clarifai.api.status.Status status = 4;
-
-  // Dataset which will receive inputs
-  string dataset_id = 5;
-
-  // The search that the job uses
-  Search search = 6;
-}
 
 // PCAProjectionComparator
 message PCAProjectionComparator {

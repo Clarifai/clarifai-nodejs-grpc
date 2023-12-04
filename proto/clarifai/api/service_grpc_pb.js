@@ -487,17 +487,6 @@ function deserialize_clarifai_api_GetDatasetInputRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.GetDatasetInputRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_GetDatasetInputsSearchAddJobRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.GetDatasetInputsSearchAddJobRequest)) {
-    throw new Error('Expected argument of type clarifai.api.GetDatasetInputsSearchAddJobRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_GetDatasetInputsSearchAddJobRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.GetDatasetInputsSearchAddJobRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_clarifai_api_GetDatasetRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.GetDatasetRequest)) {
     throw new Error('Expected argument of type clarifai.api.GetDatasetRequest');
@@ -3147,17 +3136,6 @@ function serialize_clarifai_api_SingleDatasetInputResponse(arg) {
 
 function deserialize_clarifai_api_SingleDatasetInputResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.SingleDatasetInputResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_SingleDatasetInputsSearchAddJobResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.SingleDatasetInputsSearchAddJobResponse)) {
-    throw new Error('Expected argument of type clarifai.api.SingleDatasetInputsSearchAddJobResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_SingleDatasetInputsSearchAddJobResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.SingleDatasetInputsSearchAddJobResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_SingleDatasetResponse(arg) {
@@ -5851,18 +5829,6 @@ deleteBulkOperations: {
     requestDeserialize: deserialize_clarifai_api_DeleteBulkOperationRequest,
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
-  },
-  // Get a specific job.
-getDatasetInputsSearchAddJob: {
-    path: '/clarifai.api.V2/GetDatasetInputsSearchAddJob',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.GetDatasetInputsSearchAddJobRequest,
-    responseType: proto_clarifai_api_service_pb.SingleDatasetInputsSearchAddJobResponse,
-    requestSerialize: serialize_clarifai_api_GetDatasetInputsSearchAddJobRequest,
-    requestDeserialize: deserialize_clarifai_api_GetDatasetInputsSearchAddJobRequest,
-    responseSerialize: serialize_clarifai_api_SingleDatasetInputsSearchAddJobResponse,
-    responseDeserialize: deserialize_clarifai_api_SingleDatasetInputsSearchAddJobResponse,
   },
   // List next non-labeled and unassigned inputs from task's dataset
 listNextTaskAssignments: {
