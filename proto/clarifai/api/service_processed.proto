@@ -2499,6 +2499,7 @@ service V2 {
 
 
 
+
   // owner list users who the app is shared with
   rpc ListCollaborators (ListCollaboratorsRequest) returns (MultiCollaboratorsResponse) {
     option (google.api.http) = {
@@ -4040,6 +4041,8 @@ message MultiCollaborationsResponse {
 
 
 
+
+
 // GetStatusCodeRequest
 message GetStatusCodeRequest {
   string status_code_id = 1;
@@ -4095,6 +4098,18 @@ message ListModelConceptsRequest {
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
   // to 128.
   uint32 per_page = 5;
+
+  // Searching options:
+  // Specify a search parameter in order to perform keyword search on the
+  // following fields of the concept:
+  //   - id
+  //   - name
+  //
+  // Keywords are used for partial prefix-matching (so searching for "larif" matches "clarifai").
+  //
+  // NOTE: Both the list of fields searched and the exact keyword matching
+  // rules are subject to change and not guaranteed to be backwards-compatible.
+  string search = 6;
 }
 
 // PostConceptsSearchesRequest
@@ -6519,7 +6534,6 @@ message DeleteCollectorsRequest {
 // Request to GET a single Collector.
 message GetCollectorRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
-  //The collecgtor id
   string collector_id = 2;
 }
 

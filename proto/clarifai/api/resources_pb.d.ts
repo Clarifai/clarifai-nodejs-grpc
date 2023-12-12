@@ -5942,6 +5942,8 @@ export class Collector extends jspb.Message {
     setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): Collector;
     getPreQueueWorkflowId(): string;
     setPreQueueWorkflowId(value: string): Collector;
+    getPreQueueRandomSample(): number;
+    setPreQueueRandomSample(value: number): Collector;
     getPostQueueWorkflowId(): string;
     setPostQueueWorkflowId(value: string): Collector;
 
@@ -5971,6 +5973,7 @@ export namespace Collector {
         description: string,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         preQueueWorkflowId: string,
+        preQueueRandomSample: number,
         postQueueWorkflowId: string,
         collectorSource?: CollectorSource.AsObject,
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,

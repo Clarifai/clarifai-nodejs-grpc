@@ -13,9 +13,11 @@ option objc_class_prefix = "CAIP";
 message Status {
   // Status code from internal codes.
   StatusCode code = 1;
-  // A longer description of the error.
+  // A short description of the error.
   string description = 2;
   // More details of the given error.
+  // These details may be exposed to non-technical users.
+  // For technical details, try to use developer_notes field.
   string details = 3;
   // For some environment we may return a stack trace to help debug
   // any issues.
@@ -24,13 +26,15 @@ message Status {
   uint32 percent_completed = 5;
   // if status is pending, how much time is remaining (in seconds)
   uint32 time_remaining = 6;
-  // If we want to return a request id in the base status field
+  // A request ID may be present, to help monitoring and tracking requests
   string req_id = 7;
   // Internal Annotation (do not set in production, for internal Clarifai use only).
   string internal_details = 8 [(clarifai.auth.util.cl_private_field) = true];
   // Resource location info for redirect, when resource location has been changed.
   RedirectInfo redirect_info = 9 [(clarifai.auth.util.cl_private_field) = true];
   // Notes for developer.
+  // These notes are rather technical details for developers how to interpret the status,
+  // e.g. why an error occurred and how to avoid getting the error.
   string developer_notes = 10;
 }
 

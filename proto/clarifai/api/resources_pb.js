@@ -50500,6 +50500,7 @@ proto.clarifai.api.Collector.toObject = function(includeInstance, msg) {
     description: jspb.Message.getFieldWithDefault(msg, 2, ""),
     createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     preQueueWorkflowId: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    preQueueRandomSample: jspb.Message.getFloatingPointFieldWithDefault(msg, 8, 0.0),
     postQueueWorkflowId: jspb.Message.getFieldWithDefault(msg, 5, ""),
     collectorSource: (f = msg.getCollectorSource()) && proto.clarifai.api.CollectorSource.toObject(includeInstance, f),
     status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f)
@@ -50555,6 +50556,10 @@ proto.clarifai.api.Collector.deserializeBinaryFromReader = function(msg, reader)
     case 4:
       var value = /** @type {string} */ (reader.readString());
       msg.setPreQueueWorkflowId(value);
+      break;
+    case 8:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setPreQueueRandomSample(value);
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
@@ -50625,6 +50630,13 @@ proto.clarifai.api.Collector.serializeBinaryToWriter = function(message, writer)
   if (f.length > 0) {
     writer.writeString(
       4,
+      f
+    );
+  }
+  f = message.getPreQueueRandomSample();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      8,
       f
     );
   }
@@ -50742,6 +50754,24 @@ proto.clarifai.api.Collector.prototype.getPreQueueWorkflowId = function() {
  */
 proto.clarifai.api.Collector.prototype.setPreQueueWorkflowId = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional float pre_queue_random_sample = 8;
+ * @return {number}
+ */
+proto.clarifai.api.Collector.prototype.getPreQueueRandomSample = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 8, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.Collector} returns this
+ */
+proto.clarifai.api.Collector.prototype.setPreQueueRandomSample = function(value) {
+  return jspb.Message.setProto3FloatField(this, 8, value);
 };
 
 

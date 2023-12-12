@@ -16024,7 +16024,8 @@ proto.clarifai.api.ListModelConceptsRequest.toObject = function(includeInstance,
     modelId: jspb.Message.getFieldWithDefault(msg, 2, ""),
     versionId: jspb.Message.getFieldWithDefault(msg, 3, ""),
     page: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    perPage: jspb.Message.getFieldWithDefault(msg, 5, 0)
+    perPage: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    search: jspb.Message.getFieldWithDefault(msg, 6, "")
   };
 
   if (includeInstance) {
@@ -16081,6 +16082,10 @@ proto.clarifai.api.ListModelConceptsRequest.deserializeBinaryFromReader = functi
     case 5:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setPerPage(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSearch(value);
       break;
     default:
       reader.skipField();
@@ -16144,6 +16149,13 @@ proto.clarifai.api.ListModelConceptsRequest.serializeBinaryToWriter = function(m
   if (f !== 0) {
     writer.writeUint32(
       5,
+      f
+    );
+  }
+  f = message.getSearch();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
       f
     );
   }
@@ -16256,6 +16268,24 @@ proto.clarifai.api.ListModelConceptsRequest.prototype.getPerPage = function() {
  */
 proto.clarifai.api.ListModelConceptsRequest.prototype.setPerPage = function(value) {
   return jspb.Message.setProto3IntField(this, 5, value);
+};
+
+
+/**
+ * optional string search = 6;
+ * @return {string}
+ */
+proto.clarifai.api.ListModelConceptsRequest.prototype.getSearch = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.ListModelConceptsRequest} returns this
+ */
+proto.clarifai.api.ListModelConceptsRequest.prototype.setSearch = function(value) {
+  return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
