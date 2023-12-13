@@ -2826,43 +2826,66 @@ message WorkflowState {
 
 // AppDuplication
 message AppDuplication {
-  // the id of app duplication
+  // The unique identifier of an app duplication job.
   string id = 1;
+
+  // The destination application where resources are written.
+  //
+  // If the destination does not exist, then the fields from the request are
+  // used to create the application. If a field is not set or not supported,
+  // then it will be copied from the source app, unless otherwise noted.
+  //
+  // Note: this field can be empty when reading app duplication jobs in cases
+  // where the app has been deleted or is just not visible to the caller.
+  //
+  // ########## Supported fields ##########
+  //  - description
+  //  - id      - if not set, then generated automatically
+  //  - user_id - if not set, then the calling user is used as the app owner
+  App destination_app = 10;
 
   // The ID of an existing app you want to copy data into.
   //
   // If not provided, then we will create a new application as the destination instead.
   // The various new_app_* fields can be used to set fields of this new application.
-  string existing_app_id = 8;
+  //
+  // Deprecated: Use destination_app.id with an existing ID instead.
+  string existing_app_id = 8 [deprecated = true];
 
   // The ID to use when creating a new application.
   // You cannot set this field when copying into an existing app, i.e., when existing_app_is is set.
   //
   // If not provided, then it will be generated automatically.
-  string new_app_id = 2;
+  //
+  // Deprecated: Use destination_app.id with a new ID instead.
+  string new_app_id = 2 [deprecated = true];
 
   // The name to use when creating a new application.
   // You cannot set this field when copying into an existing app, i.e., when existing_app_is is set.
   //
   // If not provided, then the ID of the new application is also used as the name.
-  string new_app_name = 3;
-
-  // The description to use when creating a new application.
-  // You cannot set this field when copying into an existing app, i.e., when existing_app_is is set.
   //
-  // If not provided, then the description of the source application is copied.
-  string new_app_description = 10;
+  // Deprecated: Application names are deprecated, use application IDs instead.
+  string new_app_name = 3 [deprecated = true];
 
-  // the status of app duplication
+  // The status of the app duplication job.
   clarifai.api.status.Status status = 4;
-  // when is the app duplication triggered
+
+  // The time when the app duplication job was created.
   google.protobuf.Timestamp created_at = 5;
-  // The last time when is the status got updated
+
+  // The last time when the app duplication job status was updated.
   google.protobuf.Timestamp last_modified_at = 6;
-  // Only copy resources depending on the filters
+
+  // The filter specifies which resources are copied by the app duplication job.
   AppDuplicationFilters filter = 7;
 
-  // contains progress for each requested filter
+  // Copy progress for each resource type requested by the filter. Possible fields:
+  //  - inputs
+  //  - concepts
+  //  - annotations
+  //  - models
+  //  - workflows
   repeated AppCopyProgress progress = 9;
 }
 
@@ -2873,15 +2896,16 @@ message AppCopyProgress {
 
 // AppDuplicationFilters
 message AppDuplicationFilters {
-  // Copy inputs what what it depends on: input level annotation and concepts
+  // Copy inputs. Requires that copy_concepts is also set.
+  // Note that this will still copy input-level annotations even if copy_annotations is not set.
   bool copy_inputs = 1;
-  // Copy only concepts
+  // Copy concepts.
   bool copy_concepts = 2;
-  // Copy annotations and what it depends on: inputs and concepts
+  // Copy annotations. Requires that copy_inputs and copy_concepts are also set.
   bool copy_annotations = 3;
-  // Copy models and what it depends on: concepts
+  // Copy models. Requires that copy_concepts is also set.
   bool copy_models = 4;
-  // Copy workflows and what it depends on: models and concepts
+  // Copy workflows. Requires that copy_models and copy_concepts are also set.
   bool copy_workflows = 5;
 }
 

@@ -5239,14 +5239,17 @@ export namespace WorkflowState {
 export class AppDuplication extends jspb.Message { 
     getId(): string;
     setId(value: string): AppDuplication;
+
+    hasDestinationApp(): boolean;
+    clearDestinationApp(): void;
+    getDestinationApp(): App | undefined;
+    setDestinationApp(value?: App): AppDuplication;
     getExistingAppId(): string;
     setExistingAppId(value: string): AppDuplication;
     getNewAppId(): string;
     setNewAppId(value: string): AppDuplication;
     getNewAppName(): string;
     setNewAppName(value: string): AppDuplication;
-    getNewAppDescription(): string;
-    setNewAppDescription(value: string): AppDuplication;
 
     hasStatus(): boolean;
     clearStatus(): void;
@@ -5285,10 +5288,10 @@ export class AppDuplication extends jspb.Message {
 export namespace AppDuplication {
     export type AsObject = {
         id: string,
+        destinationApp?: App.AsObject,
         existingAppId: string,
         newAppId: string,
         newAppName: string,
-        newAppDescription: string,
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         lastModifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,

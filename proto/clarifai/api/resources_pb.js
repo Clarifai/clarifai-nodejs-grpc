@@ -45390,10 +45390,10 @@ proto.clarifai.api.AppDuplication.prototype.toObject = function(opt_includeInsta
 proto.clarifai.api.AppDuplication.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    destinationApp: (f = msg.getDestinationApp()) && proto.clarifai.api.App.toObject(includeInstance, f),
     existingAppId: jspb.Message.getFieldWithDefault(msg, 8, ""),
     newAppId: jspb.Message.getFieldWithDefault(msg, 2, ""),
     newAppName: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    newAppDescription: jspb.Message.getFieldWithDefault(msg, 10, ""),
     status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f),
     createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     lastModifiedAt: (f = msg.getLastModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
@@ -45440,6 +45440,11 @@ proto.clarifai.api.AppDuplication.deserializeBinaryFromReader = function(msg, re
       var value = /** @type {string} */ (reader.readString());
       msg.setId(value);
       break;
+    case 10:
+      var value = new proto.clarifai.api.App;
+      reader.readMessage(value,proto.clarifai.api.App.deserializeBinaryFromReader);
+      msg.setDestinationApp(value);
+      break;
     case 8:
       var value = /** @type {string} */ (reader.readString());
       msg.setExistingAppId(value);
@@ -45451,10 +45456,6 @@ proto.clarifai.api.AppDuplication.deserializeBinaryFromReader = function(msg, re
     case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setNewAppName(value);
-      break;
-    case 10:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setNewAppDescription(value);
       break;
     case 4:
       var value = new proto_clarifai_api_status_status_pb.Status;
@@ -45517,6 +45518,14 @@ proto.clarifai.api.AppDuplication.serializeBinaryToWriter = function(message, wr
       f
     );
   }
+  f = message.getDestinationApp();
+  if (f != null) {
+    writer.writeMessage(
+      10,
+      f,
+      proto.clarifai.api.App.serializeBinaryToWriter
+    );
+  }
   f = message.getExistingAppId();
   if (f.length > 0) {
     writer.writeString(
@@ -45535,13 +45544,6 @@ proto.clarifai.api.AppDuplication.serializeBinaryToWriter = function(message, wr
   if (f.length > 0) {
     writer.writeString(
       3,
-      f
-    );
-  }
-  f = message.getNewAppDescription();
-  if (f.length > 0) {
-    writer.writeString(
-      10,
       f
     );
   }
@@ -45607,6 +45609,43 @@ proto.clarifai.api.AppDuplication.prototype.setId = function(value) {
 
 
 /**
+ * optional App destination_app = 10;
+ * @return {?proto.clarifai.api.App}
+ */
+proto.clarifai.api.AppDuplication.prototype.getDestinationApp = function() {
+  return /** @type{?proto.clarifai.api.App} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.App, 10));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.App|undefined} value
+ * @return {!proto.clarifai.api.AppDuplication} returns this
+*/
+proto.clarifai.api.AppDuplication.prototype.setDestinationApp = function(value) {
+  return jspb.Message.setWrapperField(this, 10, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.AppDuplication} returns this
+ */
+proto.clarifai.api.AppDuplication.prototype.clearDestinationApp = function() {
+  return this.setDestinationApp(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.AppDuplication.prototype.hasDestinationApp = function() {
+  return jspb.Message.getField(this, 10) != null;
+};
+
+
+/**
  * optional string existing_app_id = 8;
  * @return {string}
  */
@@ -45657,24 +45696,6 @@ proto.clarifai.api.AppDuplication.prototype.getNewAppName = function() {
  */
 proto.clarifai.api.AppDuplication.prototype.setNewAppName = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
-};
-
-
-/**
- * optional string new_app_description = 10;
- * @return {string}
- */
-proto.clarifai.api.AppDuplication.prototype.getNewAppDescription = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.clarifai.api.AppDuplication} returns this
- */
-proto.clarifai.api.AppDuplication.prototype.setNewAppDescription = function(value) {
-  return jspb.Message.setProto3StringField(this, 10, value);
 };
 
 
