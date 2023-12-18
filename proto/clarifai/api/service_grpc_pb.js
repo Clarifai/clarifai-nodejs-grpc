@@ -696,6 +696,17 @@ function deserialize_clarifai_api_GetModuleVersionRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.GetModuleVersionRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_GetModuleVersionUsageCountRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.GetModuleVersionUsageCountRequest)) {
+    throw new Error('Expected argument of type clarifai.api.GetModuleVersionUsageCountRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_GetModuleVersionUsageCountRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.GetModuleVersionUsageCountRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_GetResourceCountsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.GetResourceCountsRequest)) {
     throw new Error('Expected argument of type clarifai.api.GetResourceCountsRequest');
@@ -3314,6 +3325,17 @@ function deserialize_clarifai_api_SingleModuleVersionResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.SingleModuleVersionResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_SingleModuleVersionUsageCountResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.SingleModuleVersionUsageCountResponse)) {
+    throw new Error('Expected argument of type clarifai.api.SingleModuleVersionUsageCountResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_SingleModuleVersionUsageCountResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.SingleModuleVersionUsageCountResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_SinglePasswordValidationResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.SinglePasswordValidationResponse)) {
     throw new Error('Expected argument of type clarifai.api.SinglePasswordValidationResponse');
@@ -5713,6 +5735,18 @@ deleteModuleVersions: {
     requestDeserialize: deserialize_clarifai_api_DeleteModuleVersionsRequest,
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
+  // Get usage count for specific module version.
+getModuleVersionUsageCount: {
+    path: '/clarifai.api.V2/GetModuleVersionUsageCount',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.GetModuleVersionUsageCountRequest,
+    responseType: proto_clarifai_api_service_pb.SingleModuleVersionUsageCountResponse,
+    requestSerialize: serialize_clarifai_api_GetModuleVersionUsageCountRequest,
+    requestDeserialize: deserialize_clarifai_api_GetModuleVersionUsageCountRequest,
+    responseSerialize: serialize_clarifai_api_SingleModuleVersionUsageCountResponse,
+    responseDeserialize: deserialize_clarifai_api_SingleModuleVersionUsageCountResponse,
   },
   // Get installed modules vesrions for an app.
 getInstalledModuleVersion: {

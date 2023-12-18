@@ -3113,6 +3113,17 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Keys_Add;
   }
 
+  // Get usage count for specific module version.
+  rpc GetModuleVersionUsageCount (GetModuleVersionUsageCountRequest) returns (SingleModuleVersionUsageCountResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/modules/{module_id}/versions/{module_version_id}/usage_count"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Get;
+  }
+
   // Get installed modules vesrions for an app.
   rpc GetInstalledModuleVersion (GetInstalledModuleVersionRequest) returns (SingleInstalledModuleVersionResponse) {
     option (google.api.http) = {
@@ -6820,6 +6831,13 @@ message DeleteModuleVersionsRequest {
   repeated string ids = 3;
 }
 
+// Request to get the number of installations (by all users) for the module version 
+message GetModuleVersionUsageCountRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string module_id = 2;
+  string module_version_id = 3;
+}
+
 // SingleModuleVersionResponse
 message SingleModuleVersionResponse {
   clarifai.api.status.Status status = 1;
@@ -6832,7 +6850,11 @@ message MultiModuleVersionResponse {
   repeated ModuleVersion module_versions = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
-
+// SingleModuleVersionUsageCountResponse
+message SingleModuleVersionUsageCountResponse {
+  clarifai.api.status.Status status = 1;
+  uint32 usage_count = 2;
+}
 
 // GetInstalledModuleVersionRequest
 message GetInstalledModuleVersionRequest {
