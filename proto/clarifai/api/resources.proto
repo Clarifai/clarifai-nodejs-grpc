@@ -3313,6 +3313,10 @@ message Collector {
   // Status for the collector. This allows you to pause a collector without having to delete it as
   // an example.
   clarifai.api.status.Status status = 7;
+
+  // Whether to collect outputs or not. Default is false. If selected, outputs from the 
+  // original model predict call will be posted as annotations along with the input with success status.
+  bool collect_outputs = 9;
 }
 
 // Configuration for the source to collect data from.

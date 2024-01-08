@@ -4392,7 +4392,7 @@ patchModelLanguages: {
     responseSerialize: serialize_clarifai_api_MultiModelLanguageResponse,
     responseDeserialize: deserialize_clarifai_api_MultiModelLanguageResponse,
   },
-  // List all the inputs.
+  // Deprecated: Unmaintained and ideally replaced with usage of datasets
 listModelInputs: {
     path: '/clarifai.api.V2/ListModelInputs',
     requestStream: false,

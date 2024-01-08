@@ -50524,7 +50524,8 @@ proto.clarifai.api.Collector.toObject = function(includeInstance, msg) {
     preQueueRandomSample: jspb.Message.getFloatingPointFieldWithDefault(msg, 8, 0.0),
     postQueueWorkflowId: jspb.Message.getFieldWithDefault(msg, 5, ""),
     collectorSource: (f = msg.getCollectorSource()) && proto.clarifai.api.CollectorSource.toObject(includeInstance, f),
-    status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f)
+    status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f),
+    collectOutputs: jspb.Message.getBooleanFieldWithDefault(msg, 9, false)
   };
 
   if (includeInstance) {
@@ -50595,6 +50596,10 @@ proto.clarifai.api.Collector.deserializeBinaryFromReader = function(msg, reader)
       var value = new proto_clarifai_api_status_status_pb.Status;
       reader.readMessage(value,proto_clarifai_api_status_status_pb.Status.deserializeBinaryFromReader);
       msg.setStatus(value);
+      break;
+    case 9:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setCollectOutputs(value);
       break;
     default:
       reader.skipField();
@@ -50682,6 +50687,13 @@ proto.clarifai.api.Collector.serializeBinaryToWriter = function(message, writer)
       7,
       f,
       proto_clarifai_api_status_status_pb.Status.serializeBinaryToWriter
+    );
+  }
+  f = message.getCollectOutputs();
+  if (f) {
+    writer.writeBool(
+      9,
+      f
     );
   }
 };
@@ -50885,6 +50897,24 @@ proto.clarifai.api.Collector.prototype.clearStatus = function() {
  */
 proto.clarifai.api.Collector.prototype.hasStatus = function() {
   return jspb.Message.getField(this, 7) != null;
+};
+
+
+/**
+ * optional bool collect_outputs = 9;
+ * @return {boolean}
+ */
+proto.clarifai.api.Collector.prototype.getCollectOutputs = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 9, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.Collector} returns this
+ */
+proto.clarifai.api.Collector.prototype.setCollectOutputs = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 9, value);
 };
 
 
