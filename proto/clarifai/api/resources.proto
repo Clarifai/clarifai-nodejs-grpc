@@ -1501,25 +1501,31 @@ message OutputConfig {
   google.protobuf.Struct model_metadata = 17 [deprecated = true];
 }
 
-// ModelSpec is a definition of a Model type. This is used in model mode of portal
-// to list out the possible models that can be created and can be used to understand more about
-// the possible models in our platform.
+// ModelType is a definition of a set of models that generally have the same input and output fields. 
+// This is used to understand more about the possible models in our platform.
 message ModelType {
   reserved 7, 4, 13, 14, 15;
-  // A unique identifies for this model type. This is differnt than the 'type' field below because
-  // the 'type' can be re-used for differnet input and output combinations whereas 'id' is always
-  // unique.
+  
+  // A unique identifier for this model type.
   string id = 1;
-  // title for this model in model gallery
+  // A display title for this model.
   string title = 2;
   // Description of this model type.
   string description = 3;
-  // The list of input fields that this model accepts. These are the keys of the Model's
-  // InputInfo.fields_map
+  
+  // For both input_fields and output_fields below, the following hold true:
+  // - They are both lists of strings that name the fields from the Data proto
+  // - Individual entries in the list can be comma-separated lists. Each element of it is expected to be present in an incoming data example.
+  // - There is not currently a notion of fields that can be "OR separated". "OR separated" meaning any combination of the fields can be present.
+  // - Multiple entries in the list imply that inputs come from different input sources.
+  // - Both are used to validate which models can be chained before and after each other inside a workflow.
+
+  // The list of input fields that this model expects as inputs.
+  // Used to validate that request input data has the expected fields.
   repeated string input_fields = 5;
-  // The list of output fields that this model accepts. These are the keys of the Model's
-  // OutputInfo.fields_map
+  // The list of output fields that this model accepts.
   repeated string output_fields = 6;
+
   // Is this model trainable in our platform.
   bool trainable = 8;
   // Is this model creatable. We have some pre-trained model types that users cannot create yet in
@@ -1529,22 +1535,19 @@ message ModelType {
   bool internal_only = 10;
 
   // The remaining fields are definitions of the configurable fields that exist.
-  // Each field has path into the Model object such as "name" as a top level or "output_info.data"
-  // if it's the Data object within the OutputInfo object. We decided to not break these up
-  // into input_info, train_info and output_info related parameters and instead use the path
-  // so that they are most flexible.
   repeated ModelTypeField model_type_fields = 11;
 
   // For sequence models we need to know when processing that they require temporal time frames
   // in sequential order. This will be true for model types like trackers as an example.
   bool requires_sequential_frames = 12;
 
-  // Expected input layers of an uploaded model
+  // Expected input layers of an uploaded model.
   repeated ModelLayerInfo expected_input_layers = 16;
 
   // Expected output layers of an uploaded model
   repeated ModelLayerInfo expected_output_layers = 17;
 
+  // What type of evaluation is supported for this model type.
   EvaluationType evaluation_type = 18;
 }
 
@@ -1587,7 +1590,7 @@ message LayerShape {
 
 // ModelTypeField stores a field value of a configurable type.
 message ModelTypeField {
-  // The path where the value of the field will be stored.
+  // The path where the value of the field will be stored in the model version object.
   // Example:
   // "output_info.data" would be the Data message in the OutputInfo message.
   // "output_info.output_config.language" is in the OutputConfig message within OutputInfo
@@ -1789,11 +1792,14 @@ message ModelVersion {
 
   string license = 17;
 
-  // Info about the model's output and configuration.
+  // Info about the model's output. Besides `output_info.data`, these fields should
+  // be reserved for parameters that affect the models outputs when inferencing.
+  // `output_info.data` is used to specify the training concepts for this model version.
   OutputInfo output_info = 19;
-  // Info about the models' input and configuration of them.
+  // Info about preprocessing the models inputs, before they are sent to this model for training or inferencing.
+  // E.g.: `input_info.base_embed_model` lets us know inputs should be ran through a base model before being sent to an embedding-classifier.
   InputInfo input_info = 20;
-  // Configuration for the training process of this model.
+  // Configuration for the training process of this model version.
   TrainInfo train_info = 21;
   // Configuration used to import model from third-party toolkits
   ImportInfo import_info = 22;
