@@ -2007,6 +2007,8 @@ message EvalMetrics {
   Model model = 13;
   // The ground truth dataset
   Dataset ground_truth_dataset = 14;
+  // The dataset with predictions
+  Dataset predictions_dataset = 18;
 
   MetricsSummary summary = 2;
   ConfusionMatrix confusion_matrix = 3;

@@ -34673,6 +34673,7 @@ proto.clarifai.api.EvalMetrics.toObject = function(includeInstance, msg) {
     id: jspb.Message.getFieldWithDefault(msg, 10, ""),
     model: (f = msg.getModel()) && proto.clarifai.api.Model.toObject(includeInstance, f),
     groundTruthDataset: (f = msg.getGroundTruthDataset()) && proto.clarifai.api.Dataset.toObject(includeInstance, f),
+    predictionsDataset: (f = msg.getPredictionsDataset()) && proto.clarifai.api.Dataset.toObject(includeInstance, f),
     summary: (f = msg.getSummary()) && proto.clarifai.api.MetricsSummary.toObject(includeInstance, f),
     confusionMatrix: (f = msg.getConfusionMatrix()) && proto.clarifai.api.ConfusionMatrix.toObject(includeInstance, f),
     cooccurrenceMatrix: (f = msg.getCooccurrenceMatrix()) && proto.clarifai.api.CooccurrenceMatrix.toObject(includeInstance, f),
@@ -34751,6 +34752,11 @@ proto.clarifai.api.EvalMetrics.deserializeBinaryFromReader = function(msg, reade
       var value = new proto.clarifai.api.Dataset;
       reader.readMessage(value,proto.clarifai.api.Dataset.deserializeBinaryFromReader);
       msg.setGroundTruthDataset(value);
+      break;
+    case 18:
+      var value = new proto.clarifai.api.Dataset;
+      reader.readMessage(value,proto.clarifai.api.Dataset.deserializeBinaryFromReader);
+      msg.setPredictionsDataset(value);
       break;
     case 2:
       var value = new proto.clarifai.api.MetricsSummary;
@@ -34877,6 +34883,14 @@ proto.clarifai.api.EvalMetrics.serializeBinaryToWriter = function(message, write
   if (f != null) {
     writer.writeMessage(
       14,
+      f,
+      proto.clarifai.api.Dataset.serializeBinaryToWriter
+    );
+  }
+  f = message.getPredictionsDataset();
+  if (f != null) {
+    writer.writeMessage(
+      18,
       f,
       proto.clarifai.api.Dataset.serializeBinaryToWriter
     );
@@ -35134,6 +35148,43 @@ proto.clarifai.api.EvalMetrics.prototype.clearGroundTruthDataset = function() {
  */
 proto.clarifai.api.EvalMetrics.prototype.hasGroundTruthDataset = function() {
   return jspb.Message.getField(this, 14) != null;
+};
+
+
+/**
+ * optional Dataset predictions_dataset = 18;
+ * @return {?proto.clarifai.api.Dataset}
+ */
+proto.clarifai.api.EvalMetrics.prototype.getPredictionsDataset = function() {
+  return /** @type{?proto.clarifai.api.Dataset} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Dataset, 18));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Dataset|undefined} value
+ * @return {!proto.clarifai.api.EvalMetrics} returns this
+*/
+proto.clarifai.api.EvalMetrics.prototype.setPredictionsDataset = function(value) {
+  return jspb.Message.setWrapperField(this, 18, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.EvalMetrics} returns this
+ */
+proto.clarifai.api.EvalMetrics.prototype.clearPredictionsDataset = function() {
+  return this.setPredictionsDataset(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.EvalMetrics.prototype.hasPredictionsDataset = function() {
+  return jspb.Message.getField(this, 18) != null;
 };
 
 

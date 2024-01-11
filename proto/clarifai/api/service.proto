@@ -47,6 +47,9 @@ service V2 {
 
 
 
+
+
+
   // List concept relations between concepts in the platform.
   // MUST be above ListConcepts so that if concept_id is empty this will still match
   // /concepts/relations to list all the concept relations in the app.
@@ -6832,7 +6835,7 @@ message DeleteModuleVersionsRequest {
   repeated string ids = 3;
 }
 
-// Request to get the number of installations (by all users) for the module version 
+// Request to get the number of installations (by all users) for the module version
 message GetModuleVersionUsageCountRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string module_id = 2;
