@@ -2335,6 +2335,17 @@ function deserialize_clarifai_api_PatchModelsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PatchModelsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PatchModuleVersionsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PatchModuleVersionsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PatchModuleVersionsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PatchModuleVersionsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PatchModuleVersionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PatchModulesRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PatchModulesRequest)) {
     throw new Error('Expected argument of type clarifai.api.PatchModulesRequest');
@@ -5721,6 +5732,18 @@ postModuleVersions: {
     responseType: proto_clarifai_api_service_pb.MultiModuleVersionResponse,
     requestSerialize: serialize_clarifai_api_PostModuleVersionsRequest,
     requestDeserialize: deserialize_clarifai_api_PostModuleVersionsRequest,
+    responseSerialize: serialize_clarifai_api_MultiModuleVersionResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiModuleVersionResponse,
+  },
+  // Modify details of an existing module version.
+patchModuleVersions: {
+    path: '/clarifai.api.V2/PatchModuleVersions',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PatchModuleVersionsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiModuleVersionResponse,
+    requestSerialize: serialize_clarifai_api_PatchModuleVersionsRequest,
+    requestDeserialize: deserialize_clarifai_api_PatchModuleVersionsRequest,
     responseSerialize: serialize_clarifai_api_MultiModuleVersionResponse,
     responseDeserialize: deserialize_clarifai_api_MultiModuleVersionResponse,
   },

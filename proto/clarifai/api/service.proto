@@ -3098,6 +3098,18 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
   }
 
+  // Modify details of an existing module version.
+  rpc PatchModuleVersions (PatchModuleVersionsRequest) returns (MultiModuleVersionResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/modules/{module_id}/versions"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Modules_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
+  }
+
   // Delete a multiple module version.
   rpc DeleteModuleVersions (DeleteModuleVersionsRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
@@ -6826,6 +6838,27 @@ message PostModuleVersionsRequest {
   string module_id = 2;
   // This allows you to create one or more module by posting it to the API.
   repeated ModuleVersion module_versions = 3;
+}
+
+// PatchModuleVersionsRequest
+message PatchModuleVersionsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string module_id = 2;
+  // This allows you to modify the module version details.
+  // ########## Supported fields ##########
+  // - description
+  // - id
+  // - metadata.fields
+  // - module_nav.module_sub_navs[].query_key
+  // - module_nav.module_sub_navs[].query_value
+  // - module_nav.module_sub_navs[].title
+  // - module_nav.title
+  // - notes
+  // - visibility.gettable
+  repeated ModuleVersion module_versions = 3;
+  // The action to perform on the patched objects
+  // For now only action 'merge' is supported
+  string action = 4;
 }
 
 // Request to delete several module versions by the list of ids.
