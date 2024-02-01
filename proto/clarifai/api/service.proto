@@ -2583,18 +2583,11 @@ service V2 {
       body: "*"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Models_Train;
-    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
 
