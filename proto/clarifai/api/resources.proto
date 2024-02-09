@@ -2899,7 +2899,7 @@ message AppDuplication {
 
 message AppCopyProgress {
   string field = 1;
-  int32 value = 2;
+  int32 value = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
 // AppDuplicationFilters

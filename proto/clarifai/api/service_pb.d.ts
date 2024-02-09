@@ -7509,6 +7509,10 @@ export class ListTasksRequest extends jspb.Message {
     getAdditionalFieldsList(): Array<string>;
     setAdditionalFieldsList(value: Array<string>): ListTasksRequest;
     addAdditionalFields(value: string, index?: number): string;
+    clearIdsList(): void;
+    getIdsList(): Array<string>;
+    setIdsList(value: Array<string>): ListTasksRequest;
+    addIds(value: string, index?: number): string;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListTasksRequest.AsObject;
@@ -7530,6 +7534,7 @@ export namespace ListTasksRequest {
         labelOrderIdsList: Array<string>,
         includingLabelOrderTasks: boolean,
         additionalFieldsList: Array<string>,
+        idsList: Array<string>,
     }
 }
 

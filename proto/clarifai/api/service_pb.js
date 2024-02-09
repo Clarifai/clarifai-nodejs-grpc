@@ -63409,7 +63409,7 @@ proto.clarifai.api.GetTaskRequest.prototype.clearAdditionalFieldsList = function
  * @private {!Array<number>}
  * @const
  */
-proto.clarifai.api.ListTasksRequest.repeatedFields_ = [4,5,8,7];
+proto.clarifai.api.ListTasksRequest.repeatedFields_ = [4,5,8,7,9];
 
 
 
@@ -63449,7 +63449,8 @@ proto.clarifai.api.ListTasksRequest.toObject = function(includeInstance, msg) {
     reviewUserIdsList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f,
     labelOrderIdsList: (f = jspb.Message.getRepeatedField(msg, 8)) == null ? undefined : f,
     includingLabelOrderTasks: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
-    additionalFieldsList: (f = jspb.Message.getRepeatedField(msg, 7)) == null ? undefined : f
+    additionalFieldsList: (f = jspb.Message.getRepeatedField(msg, 7)) == null ? undefined : f,
+    idsList: (f = jspb.Message.getRepeatedField(msg, 9)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -63518,6 +63519,10 @@ proto.clarifai.api.ListTasksRequest.deserializeBinaryFromReader = function(msg, 
     case 7:
       var value = /** @type {string} */ (reader.readString());
       msg.addAdditionalFields(value);
+      break;
+    case 9:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addIds(value);
       break;
     default:
       reader.skipField();
@@ -63602,6 +63607,13 @@ proto.clarifai.api.ListTasksRequest.serializeBinaryToWriter = function(message, 
   if (f.length > 0) {
     writer.writeRepeatedString(
       7,
+      f
+    );
+  }
+  f = message.getIdsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      9,
       f
     );
   }
@@ -63844,6 +63856,43 @@ proto.clarifai.api.ListTasksRequest.prototype.addAdditionalFields = function(val
  */
 proto.clarifai.api.ListTasksRequest.prototype.clearAdditionalFieldsList = function() {
   return this.setAdditionalFieldsList([]);
+};
+
+
+/**
+ * repeated string ids = 9;
+ * @return {!Array<string>}
+ */
+proto.clarifai.api.ListTasksRequest.prototype.getIdsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 9));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.clarifai.api.ListTasksRequest} returns this
+ */
+proto.clarifai.api.ListTasksRequest.prototype.setIdsList = function(value) {
+  return jspb.Message.setField(this, 9, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.ListTasksRequest} returns this
+ */
+proto.clarifai.api.ListTasksRequest.prototype.addIds = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 9, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.ListTasksRequest} returns this
+ */
+proto.clarifai.api.ListTasksRequest.prototype.clearIdsList = function() {
+  return this.setIdsList([]);
 };
 
 

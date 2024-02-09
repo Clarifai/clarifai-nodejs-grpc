@@ -6428,6 +6428,9 @@ message ListTasksRequest {
   // (optional URL parameter) List of additional fields to be included in the response.
   // Currently supported: all, worker.users, review.users.
   repeated string additional_fields = 7;
+
+  // (optional) task IDs to filter on
+  repeated string ids = 9;
 }
 
 // Request to patch a list of tasks.
