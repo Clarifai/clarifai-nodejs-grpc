@@ -867,6 +867,10 @@ export class ConceptQuery extends jspb.Message {
     setLanguage(value: string): ConceptQuery;
     getWorkflowId(): string;
     setWorkflowId(value: string): ConceptQuery;
+    clearUseCasesList(): void;
+    getUseCasesList(): Array<WorkflowModelUseCase>;
+    setUseCasesList(value: Array<WorkflowModelUseCase>): ConceptQuery;
+    addUseCases(value: WorkflowModelUseCase, index?: number): WorkflowModelUseCase;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ConceptQuery.AsObject;
@@ -883,6 +887,7 @@ export namespace ConceptQuery {
         name: string,
         language: string,
         workflowId: string,
+        useCasesList: Array<WorkflowModelUseCase>,
     }
 }
 
@@ -5340,6 +5345,8 @@ export class AppDuplicationFilters extends jspb.Message {
     setCopyModels(value: boolean): AppDuplicationFilters;
     getCopyWorkflows(): boolean;
     setCopyWorkflows(value: boolean): AppDuplicationFilters;
+    getCopyInstalledModuleVersions(): boolean;
+    setCopyInstalledModuleVersions(value: boolean): AppDuplicationFilters;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): AppDuplicationFilters.AsObject;
@@ -5358,6 +5365,7 @@ export namespace AppDuplicationFilters {
         copyAnnotations: boolean,
         copyModels: boolean,
         copyWorkflows: boolean,
+        copyInstalledModuleVersions: boolean,
     }
 }
 
@@ -7708,6 +7716,12 @@ export namespace Runner {
         userId: string,
         labelsList: Array<string>,
     }
+}
+
+export enum WorkflowModelUseCase {
+    WORKFLOW_MODEL_USE_CASE_NOT_SET = 0,
+    CLASSIFICATION = 1,
+    DETECTION = 2,
 }
 
 export enum DatasetVersionMetricsGroupType {

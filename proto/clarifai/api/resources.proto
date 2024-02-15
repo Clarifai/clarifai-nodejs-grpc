@@ -478,11 +478,26 @@ message DetailConceptCount {
 message ConceptQuery {
   // The name of the concept to search.
   string name = 1;
-  // (optional) The language of the concept name in a search. Defaults to English.
+  // The language of the concept name in a search. Defaults to English.
   string language = 2;
-  // (optional) The id of workflow. If no id is provided, then application base workflow is used.
+  // The id of workflow. If no id is provided, then application base workflow is used.
   string workflow_id = 3;
+  // The concepts must belong to workflow models with specified use cases.
+  // Multiple values are joined using an OR condition.
+  repeated WorkflowModelUseCase use_cases = 4;
 }
+enum WorkflowModelUseCase {
+  WORKFLOW_MODEL_USE_CASE_NOT_SET = 0;
+
+  // Classifier models without a detector parent (recursive check) in a workflow
+  // are used for classification.
+  CLASSIFICATION = 1;
+
+  // Detector models in a workflow are used for detection.
+  // Classifier models that run after a detector model are also used for detection.
+  DETECTION = 2;
+}
+
 
 // This represents a relation (i.e. edge) between the subject concept and the object concept
 message ConceptRelation {
@@ -1501,18 +1516,18 @@ message OutputConfig {
   google.protobuf.Struct model_metadata = 17 [deprecated = true];
 }
 
-// ModelType is a definition of a set of models that generally have the same input and output fields. 
+// ModelType is a definition of a set of models that generally have the same input and output fields.
 // This is used to understand more about the possible models in our platform.
 message ModelType {
   reserved 7, 4, 13, 14, 15;
-  
+
   // A unique identifier for this model type.
   string id = 1;
   // A display title for this model.
   string title = 2;
   // Description of this model type.
   string description = 3;
-  
+
   // For both input_fields and output_fields below, the following hold true:
   // - They are both lists of strings that name the fields from the Data proto
   // - Individual entries in the list can be comma-separated lists. Each element of it is expected to be present in an incoming data example.
@@ -2894,6 +2909,7 @@ message AppDuplication {
   //  - annotations
   //  - models
   //  - workflows
+  //  - installed_module_versions
   repeated AppCopyProgress progress = 9;
 }
 
@@ -2915,6 +2931,8 @@ message AppDuplicationFilters {
   bool copy_models = 4;
   // Copy workflows. Requires that copy_models and copy_concepts are also set.
   bool copy_workflows = 5;
+  // Copy installed module versions.
+  bool copy_installed_module_versions = 6;
 }
 
 // LabelOrder
@@ -3322,7 +3340,7 @@ message Collector {
   // an example.
   clarifai.api.status.Status status = 7;
 
-  // Whether to collect outputs or not. Default is false. If selected, outputs from the 
+  // Whether to collect outputs or not. Default is false. If selected, outputs from the
   // original model predict call will be posted as annotations along with the input with success status.
   bool collect_outputs = 9;
 }

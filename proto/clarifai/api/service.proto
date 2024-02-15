@@ -2589,6 +2589,8 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Get;
   }
 
   // ListAppDuplications lists all app duplication jobs created by the user.

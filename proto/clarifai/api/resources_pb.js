@@ -261,6 +261,7 @@ goog.exportSymbol('proto.clarifai.api.W3C', null, global);
 goog.exportSymbol('proto.clarifai.api.Worker', null, global);
 goog.exportSymbol('proto.clarifai.api.Worker.WorkerCase', null, global);
 goog.exportSymbol('proto.clarifai.api.Workflow', null, global);
+goog.exportSymbol('proto.clarifai.api.WorkflowModelUseCase', null, global);
 goog.exportSymbol('proto.clarifai.api.WorkflowNode', null, global);
 goog.exportSymbol('proto.clarifai.api.WorkflowResult', null, global);
 goog.exportSymbol('proto.clarifai.api.WorkflowResultsSimilarity', null, global);
@@ -739,7 +740,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.clarifai.api.ConceptQuery = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.clarifai.api.ConceptQuery.repeatedFields_, null);
 };
 goog.inherits(proto.clarifai.api.ConceptQuery, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -10883,6 +10884,13 @@ proto.clarifai.api.DetailConceptCount.prototype.hasProcessing = function() {
 
 
 
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.clarifai.api.ConceptQuery.repeatedFields_ = [4];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -10916,7 +10924,8 @@ proto.clarifai.api.ConceptQuery.toObject = function(includeInstance, msg) {
   var f, obj = {
     name: jspb.Message.getFieldWithDefault(msg, 1, ""),
     language: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    workflowId: jspb.Message.getFieldWithDefault(msg, 3, "")
+    workflowId: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    useCasesList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -10965,6 +10974,12 @@ proto.clarifai.api.ConceptQuery.deserializeBinaryFromReader = function(msg, read
       var value = /** @type {string} */ (reader.readString());
       msg.setWorkflowId(value);
       break;
+    case 4:
+      var values = /** @type {!Array<!proto.clarifai.api.WorkflowModelUseCase>} */ (reader.isDelimited() ? reader.readPackedEnum() : [reader.readEnum()]);
+      for (var i = 0; i < values.length; i++) {
+        msg.addUseCases(values[i]);
+      }
+      break;
     default:
       reader.skipField();
       break;
@@ -11012,6 +11027,13 @@ proto.clarifai.api.ConceptQuery.serializeBinaryToWriter = function(message, writ
   if (f.length > 0) {
     writer.writeString(
       3,
+      f
+    );
+  }
+  f = message.getUseCasesList();
+  if (f.length > 0) {
+    writer.writePackedEnum(
+      4,
       f
     );
   }
@@ -11069,6 +11091,43 @@ proto.clarifai.api.ConceptQuery.prototype.getWorkflowId = function() {
  */
 proto.clarifai.api.ConceptQuery.prototype.setWorkflowId = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * repeated WorkflowModelUseCase use_cases = 4;
+ * @return {!Array<!proto.clarifai.api.WorkflowModelUseCase>}
+ */
+proto.clarifai.api.ConceptQuery.prototype.getUseCasesList = function() {
+  return /** @type {!Array<!proto.clarifai.api.WorkflowModelUseCase>} */ (jspb.Message.getRepeatedField(this, 4));
+};
+
+
+/**
+ * @param {!Array<!proto.clarifai.api.WorkflowModelUseCase>} value
+ * @return {!proto.clarifai.api.ConceptQuery} returns this
+ */
+proto.clarifai.api.ConceptQuery.prototype.setUseCasesList = function(value) {
+  return jspb.Message.setField(this, 4, value || []);
+};
+
+
+/**
+ * @param {!proto.clarifai.api.WorkflowModelUseCase} value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.ConceptQuery} returns this
+ */
+proto.clarifai.api.ConceptQuery.prototype.addUseCases = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 4, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.ConceptQuery} returns this
+ */
+proto.clarifai.api.ConceptQuery.prototype.clearUseCasesList = function() {
+  return this.setUseCasesList([]);
 };
 
 
@@ -46132,7 +46191,8 @@ proto.clarifai.api.AppDuplicationFilters.toObject = function(includeInstance, ms
     copyConcepts: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
     copyAnnotations: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
     copyModels: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
-    copyWorkflows: jspb.Message.getBooleanFieldWithDefault(msg, 5, false)
+    copyWorkflows: jspb.Message.getBooleanFieldWithDefault(msg, 5, false),
+    copyInstalledModuleVersions: jspb.Message.getBooleanFieldWithDefault(msg, 6, false)
   };
 
   if (includeInstance) {
@@ -46188,6 +46248,10 @@ proto.clarifai.api.AppDuplicationFilters.deserializeBinaryFromReader = function(
     case 5:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setCopyWorkflows(value);
+      break;
+    case 6:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setCopyInstalledModuleVersions(value);
       break;
     default:
       reader.skipField();
@@ -46250,6 +46314,13 @@ proto.clarifai.api.AppDuplicationFilters.serializeBinaryToWriter = function(mess
   if (f) {
     writer.writeBool(
       5,
+      f
+    );
+  }
+  f = message.getCopyInstalledModuleVersions();
+  if (f) {
+    writer.writeBool(
+      6,
       f
     );
   }
@@ -46343,6 +46414,24 @@ proto.clarifai.api.AppDuplicationFilters.prototype.getCopyWorkflows = function()
  */
 proto.clarifai.api.AppDuplicationFilters.prototype.setCopyWorkflows = function(value) {
   return jspb.Message.setProto3BooleanField(this, 5, value);
+};
+
+
+/**
+ * optional bool copy_installed_module_versions = 6;
+ * @return {boolean}
+ */
+proto.clarifai.api.AppDuplicationFilters.prototype.getCopyInstalledModuleVersions = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 6, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.AppDuplicationFilters} returns this
+ */
+proto.clarifai.api.AppDuplicationFilters.prototype.setCopyInstalledModuleVersions = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
 
@@ -63640,6 +63729,15 @@ proto.clarifai.api.Runner.prototype.clearLabelsList = function() {
   return this.setLabelsList([]);
 };
 
+
+/**
+ * @enum {number}
+ */
+proto.clarifai.api.WorkflowModelUseCase = {
+  WORKFLOW_MODEL_USE_CASE_NOT_SET: 0,
+  CLASSIFICATION: 1,
+  DETECTION: 2
+};
 
 /**
  * @enum {number}
