@@ -6403,7 +6403,7 @@ message GetTaskRequest {
   string task_id = 2;
 
   // (optional URL parameter) List of additional fields to be included in the response.
-  // Currently supported: all, worker.users, review.users.
+  // Currently supported: all, worker.users, review.users, metrics.estimated_labeled_inputs_count.
   repeated string additional_fields = 3;
 }
 
@@ -6428,7 +6428,7 @@ message ListTasksRequest {
   bool including_label_order_tasks = 6;
 
   // (optional URL parameter) List of additional fields to be included in the response.
-  // Currently supported: all, worker.users, review.users.
+  // Currently supported: all, worker.users, review.users, metrics.estimated_labeled_inputs_count.
   repeated string additional_fields = 7;
 
   // (optional) task IDs to filter on
