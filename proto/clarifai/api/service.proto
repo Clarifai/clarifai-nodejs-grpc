@@ -612,7 +612,6 @@ service V2 {
 
 
 
-
   // Patch one or more inputs.
   rpc PatchInputs (PatchInputsRequest) returns (MultiInputResponse) {
     option (google.api.http) = {
@@ -1740,6 +1739,11 @@ service V2 {
 
 
   // Add a workflow to an app.
+  // Note(zeiler): the order of the workflows that are returned from this endpoint
+  // may be different than the order in which the user provides them. This is because
+  // we reorder by a sort that optimizes for performance of the graph and its dependencies.
+  // When using the workflow in any future call the order returned by this endpoint
+  // will be used.
   rpc PostWorkflows (PostWorkflowsRequest) returns (MultiWorkflowResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows"
@@ -2371,7 +2375,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Add;
     option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Delete;
   }
-
 
   // List all the annotation filters.
   rpc ListAnnotationFilters (ListAnnotationFiltersRequest) returns (MultiAnnotationFilterResponse) {
@@ -4481,7 +4484,6 @@ message PostInputsRequest {
 
 
 
-
 // PatchInputsRequest
 message PatchInputsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -5590,6 +5592,7 @@ message MultiModelReferenceResponse {
 // MultiOutputResponse
 message MultiOutputResponse {
   clarifai.api.status.Status status = 1;
+  // For each input processed during model prediction we create one output.
   repeated Output outputs = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
@@ -5751,6 +5754,7 @@ message DeleteSearchRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string id = 2;
 }
+
 
 
 // Execute a new annotation search and optionally save it

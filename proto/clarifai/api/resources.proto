@@ -2224,8 +2224,6 @@ message And {
   Annotation annotation = 4;
 }
 
-
-
 // This is the search query used in /searches, model training requests, bulk data exports, etc.
 message Query {
   // The query syntax is simply a list of And operatiosn that will be ANDed together to fetch
@@ -2822,6 +2820,7 @@ message NodeInput {
 }
 
 // WorkflowResult
+// One result per input in the workflow.
 message WorkflowResult {
   string id = 1;
   clarifai.api.status.Status status = 2;
@@ -2831,8 +2830,13 @@ message WorkflowResult {
   // the following from the API:
   // "2017-04-11T21:50:50.223962Z"
   google.protobuf.Timestamp created_at = 3;
-  Model model = 4;
+  // The model that this WorkflowResult is for.
+  // DEPRECATED: not sure why there ever was a model here because each output shows the model
+  // that process this given input.
+  Model model = 4  [deprecated = true];
+  // The input that ran through the workflow to generate the outputs in this WorkflowResult.
   Input input = 5;
+  // For each model in the workflow we return an Output.
   repeated Output outputs = 6;
   // Indicate if the output of this model is suppressed.
   bool suppress_output = 7;
