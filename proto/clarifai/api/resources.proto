@@ -3072,25 +3072,22 @@ message AiAssistParameters {
   repeated string concept_relation_ids = 3;
 }
 
-// TaskWorker
+// TaskWorker includes information about the workers that will work on this task.
 message TaskWorker {
+  reserved 5, 6;
+
   // Worker strategy.
   TaskWorkerStrategy strategy = 1;
 
   // Who will work on this task.
-  // DEPRECATED: Use users.id instead.
+  // DEPRECATED: Use workers.user.id instead.
   repeated string user_ids = 2 [deprecated = true];
 
   // Users who will work on this task.
   // When the 'worker.users' field is additionally requested, then all user
   // info is filled for the workers. Otherwise, only the user 'id' is filled.
-  repeated User users = 4;
-
-  // Models that will work on this task. For Auto Annotation Tasks. Currently only supports 1 entry.
-  repeated Model models = 5;
-
-  // Workflows that will work on this task. For Auto Annotation Tasks. Currently only supports 1 entry.
-  repeated Workflow workflows = 6;
+  // DEPRECATED: Use workers.user instead.
+  repeated User users = 4 [deprecated = true];
 
   // Info based on the worker strategy,
   oneof strategy_info { TaskWorkerPartitionedStrategyInfo partitioned_strategy_info = 3; }
@@ -3107,6 +3104,16 @@ message TaskWorker {
     // Each worker will label all inputs from input source.
     FULL = 3;
   }
+
+  // Workers that will work on this task.
+  //
+  // For Auto Annotation Tasks:
+  //   the worker can be either a model or a workflow;
+  //   currently only supports 1 worker.
+  // For manual labeling Tasks:
+  //   the workers can only be users;
+  //   no limitation on number of workers.
+  repeated Worker workers = 7;
 }
 
 // TaskWorkerPartitionedStrategyInfo

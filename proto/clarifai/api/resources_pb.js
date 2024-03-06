@@ -48204,7 +48204,7 @@ proto.clarifai.api.AiAssistParameters.prototype.clearConceptRelationIdsList = fu
  * @private {!Array<number>}
  * @const
  */
-proto.clarifai.api.TaskWorker.repeatedFields_ = [2,4,5,6];
+proto.clarifai.api.TaskWorker.repeatedFields_ = [2,4,7];
 
 /**
  * Oneof group definitions for this message. Each group defines the field
@@ -48266,11 +48266,9 @@ proto.clarifai.api.TaskWorker.toObject = function(includeInstance, msg) {
     userIdsList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f,
     usersList: jspb.Message.toObjectList(msg.getUsersList(),
     proto.clarifai.api.User.toObject, includeInstance),
-    modelsList: jspb.Message.toObjectList(msg.getModelsList(),
-    proto.clarifai.api.Model.toObject, includeInstance),
-    workflowsList: jspb.Message.toObjectList(msg.getWorkflowsList(),
-    proto.clarifai.api.Workflow.toObject, includeInstance),
-    partitionedStrategyInfo: (f = msg.getPartitionedStrategyInfo()) && proto.clarifai.api.TaskWorkerPartitionedStrategyInfo.toObject(includeInstance, f)
+    partitionedStrategyInfo: (f = msg.getPartitionedStrategyInfo()) && proto.clarifai.api.TaskWorkerPartitionedStrategyInfo.toObject(includeInstance, f),
+    workersList: jspb.Message.toObjectList(msg.getWorkersList(),
+    proto.clarifai.api.Worker.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -48320,20 +48318,15 @@ proto.clarifai.api.TaskWorker.deserializeBinaryFromReader = function(msg, reader
       reader.readMessage(value,proto.clarifai.api.User.deserializeBinaryFromReader);
       msg.addUsers(value);
       break;
-    case 5:
-      var value = new proto.clarifai.api.Model;
-      reader.readMessage(value,proto.clarifai.api.Model.deserializeBinaryFromReader);
-      msg.addModels(value);
-      break;
-    case 6:
-      var value = new proto.clarifai.api.Workflow;
-      reader.readMessage(value,proto.clarifai.api.Workflow.deserializeBinaryFromReader);
-      msg.addWorkflows(value);
-      break;
     case 3:
       var value = new proto.clarifai.api.TaskWorkerPartitionedStrategyInfo;
       reader.readMessage(value,proto.clarifai.api.TaskWorkerPartitionedStrategyInfo.deserializeBinaryFromReader);
       msg.setPartitionedStrategyInfo(value);
+      break;
+    case 7:
+      var value = new proto.clarifai.api.Worker;
+      reader.readMessage(value,proto.clarifai.api.Worker.deserializeBinaryFromReader);
+      msg.addWorkers(value);
       break;
     default:
       reader.skipField();
@@ -48386,28 +48379,20 @@ proto.clarifai.api.TaskWorker.serializeBinaryToWriter = function(message, writer
       proto.clarifai.api.User.serializeBinaryToWriter
     );
   }
-  f = message.getModelsList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
-      5,
-      f,
-      proto.clarifai.api.Model.serializeBinaryToWriter
-    );
-  }
-  f = message.getWorkflowsList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
-      6,
-      f,
-      proto.clarifai.api.Workflow.serializeBinaryToWriter
-    );
-  }
   f = message.getPartitionedStrategyInfo();
   if (f != null) {
     writer.writeMessage(
       3,
       f,
       proto.clarifai.api.TaskWorkerPartitionedStrategyInfo.serializeBinaryToWriter
+    );
+  }
+  f = message.getWorkersList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      7,
+      f,
+      proto.clarifai.api.Worker.serializeBinaryToWriter
     );
   }
 };
@@ -48516,82 +48501,6 @@ proto.clarifai.api.TaskWorker.prototype.clearUsersList = function() {
 
 
 /**
- * repeated Model models = 5;
- * @return {!Array<!proto.clarifai.api.Model>}
- */
-proto.clarifai.api.TaskWorker.prototype.getModelsList = function() {
-  return /** @type{!Array<!proto.clarifai.api.Model>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.clarifai.api.Model, 5));
-};
-
-
-/**
- * @param {!Array<!proto.clarifai.api.Model>} value
- * @return {!proto.clarifai.api.TaskWorker} returns this
-*/
-proto.clarifai.api.TaskWorker.prototype.setModelsList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 5, value);
-};
-
-
-/**
- * @param {!proto.clarifai.api.Model=} opt_value
- * @param {number=} opt_index
- * @return {!proto.clarifai.api.Model}
- */
-proto.clarifai.api.TaskWorker.prototype.addModels = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 5, opt_value, proto.clarifai.api.Model, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
- * @return {!proto.clarifai.api.TaskWorker} returns this
- */
-proto.clarifai.api.TaskWorker.prototype.clearModelsList = function() {
-  return this.setModelsList([]);
-};
-
-
-/**
- * repeated Workflow workflows = 6;
- * @return {!Array<!proto.clarifai.api.Workflow>}
- */
-proto.clarifai.api.TaskWorker.prototype.getWorkflowsList = function() {
-  return /** @type{!Array<!proto.clarifai.api.Workflow>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.clarifai.api.Workflow, 6));
-};
-
-
-/**
- * @param {!Array<!proto.clarifai.api.Workflow>} value
- * @return {!proto.clarifai.api.TaskWorker} returns this
-*/
-proto.clarifai.api.TaskWorker.prototype.setWorkflowsList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 6, value);
-};
-
-
-/**
- * @param {!proto.clarifai.api.Workflow=} opt_value
- * @param {number=} opt_index
- * @return {!proto.clarifai.api.Workflow}
- */
-proto.clarifai.api.TaskWorker.prototype.addWorkflows = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 6, opt_value, proto.clarifai.api.Workflow, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
- * @return {!proto.clarifai.api.TaskWorker} returns this
- */
-proto.clarifai.api.TaskWorker.prototype.clearWorkflowsList = function() {
-  return this.setWorkflowsList([]);
-};
-
-
-/**
  * optional TaskWorkerPartitionedStrategyInfo partitioned_strategy_info = 3;
  * @return {?proto.clarifai.api.TaskWorkerPartitionedStrategyInfo}
  */
@@ -48625,6 +48534,44 @@ proto.clarifai.api.TaskWorker.prototype.clearPartitionedStrategyInfo = function(
  */
 proto.clarifai.api.TaskWorker.prototype.hasPartitionedStrategyInfo = function() {
   return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * repeated Worker workers = 7;
+ * @return {!Array<!proto.clarifai.api.Worker>}
+ */
+proto.clarifai.api.TaskWorker.prototype.getWorkersList = function() {
+  return /** @type{!Array<!proto.clarifai.api.Worker>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.clarifai.api.Worker, 7));
+};
+
+
+/**
+ * @param {!Array<!proto.clarifai.api.Worker>} value
+ * @return {!proto.clarifai.api.TaskWorker} returns this
+*/
+proto.clarifai.api.TaskWorker.prototype.setWorkersList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 7, value);
+};
+
+
+/**
+ * @param {!proto.clarifai.api.Worker=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.Worker}
+ */
+proto.clarifai.api.TaskWorker.prototype.addWorkers = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 7, opt_value, proto.clarifai.api.Worker, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.TaskWorker} returns this
+ */
+proto.clarifai.api.TaskWorker.prototype.clearWorkersList = function() {
+  return this.setWorkersList([]);
 };
 
 
