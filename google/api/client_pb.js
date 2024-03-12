@@ -287,7 +287,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.google.api.MethodSettings = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.google.api.MethodSettings.repeatedFields_, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.google.api.MethodSettings, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -3071,13 +3071,6 @@ proto.google.api.GoSettings.prototype.hasCommon = function() {
 
 
 
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.google.api.MethodSettings.repeatedFields_ = [3];
-
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -3110,8 +3103,7 @@ proto.google.api.MethodSettings.prototype.toObject = function(opt_includeInstanc
 proto.google.api.MethodSettings.toObject = function(includeInstance, msg) {
   var f, obj = {
     selector: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    longRunning: (f = msg.getLongRunning()) && proto.google.api.MethodSettings.LongRunning.toObject(includeInstance, f),
-    autoPopulatedFieldsList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f
+    longRunning: (f = msg.getLongRunning()) && proto.google.api.MethodSettings.LongRunning.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -3157,10 +3149,6 @@ proto.google.api.MethodSettings.deserializeBinaryFromReader = function(msg, read
       reader.readMessage(value,proto.google.api.MethodSettings.LongRunning.deserializeBinaryFromReader);
       msg.setLongRunning(value);
       break;
-    case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.addAutoPopulatedFields(value);
-      break;
     default:
       reader.skipField();
       break;
@@ -3203,13 +3191,6 @@ proto.google.api.MethodSettings.serializeBinaryToWriter = function(message, writ
       2,
       f,
       proto.google.api.MethodSettings.LongRunning.serializeBinaryToWriter
-    );
-  }
-  f = message.getAutoPopulatedFieldsList();
-  if (f.length > 0) {
-    writer.writeRepeatedString(
-      3,
-      f
     );
   }
 };
@@ -3550,43 +3531,6 @@ proto.google.api.MethodSettings.prototype.clearLongRunning = function() {
  */
 proto.google.api.MethodSettings.prototype.hasLongRunning = function() {
   return jspb.Message.getField(this, 2) != null;
-};
-
-
-/**
- * repeated string auto_populated_fields = 3;
- * @return {!Array<string>}
- */
-proto.google.api.MethodSettings.prototype.getAutoPopulatedFieldsList = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 3));
-};
-
-
-/**
- * @param {!Array<string>} value
- * @return {!proto.google.api.MethodSettings} returns this
- */
-proto.google.api.MethodSettings.prototype.setAutoPopulatedFieldsList = function(value) {
-  return jspb.Message.setField(this, 3, value || []);
-};
-
-
-/**
- * @param {string} value
- * @param {number=} opt_index
- * @return {!proto.google.api.MethodSettings} returns this
- */
-proto.google.api.MethodSettings.prototype.addAutoPopulatedFields = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 3, value, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
- * @return {!proto.google.api.MethodSettings} returns this
- */
-proto.google.api.MethodSettings.prototype.clearAutoPopulatedFieldsList = function() {
-  return this.setAutoPopulatedFieldsList([]);
 };
 
 
