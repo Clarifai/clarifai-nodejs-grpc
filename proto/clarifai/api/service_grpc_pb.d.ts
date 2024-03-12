@@ -100,6 +100,9 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     postModelVersions: IV2Service_IPostModelVersions;
     patchModelVersions: IV2Service_IPatchModelVersions;
     deleteModelVersion: IV2Service_IDeleteModelVersion;
+    postModelVersionsUpload: IV2Service_IPostModelVersionsUpload;
+    putModelVersionExports: IV2Service_IPutModelVersionExports;
+    getModelVersionExport: IV2Service_IGetModelVersionExport;
     getModelVersionMetrics: IV2Service_IGetModelVersionMetrics;
     postModelVersionMetrics: IV2Service_IPostModelVersionMetrics;
     postModelVersionEvaluations: IV2Service_IPostModelVersionEvaluations;
@@ -161,6 +164,7 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     deleteAnnotationFilters: IV2Service_IDeleteAnnotationFilters;
     listStatusCodes: IV2Service_IListStatusCodes;
     getStatusCode: IV2Service_IGetStatusCode;
+    getResourcePrice: IV2Service_IGetResourcePrice;
     listCollaborators: IV2Service_IListCollaborators;
     postCollaborators: IV2Service_IPostCollaborators;
     patchCollaborators: IV2Service_IPatchCollaborators;
@@ -982,6 +986,33 @@ interface IV2Service_IDeleteModelVersion extends grpc.MethodDefinition<proto_cla
     responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
 }
+interface IV2Service_IPostModelVersionsUpload extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostModelVersionsUploadRequest, proto_clarifai_api_service_pb.PostModelVersionsUploadResponse> {
+    path: "/clarifai.api.V2/PostModelVersionsUpload";
+    requestStream: true;
+    responseStream: true;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostModelVersionsUploadRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostModelVersionsUploadRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostModelVersionsUploadResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostModelVersionsUploadResponse>;
+}
+interface IV2Service_IPutModelVersionExports extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PutModelVersionExportsRequest, proto_clarifai_api_service_pb.SingleModelVersionExportResponse> {
+    path: "/clarifai.api.V2/PutModelVersionExports";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PutModelVersionExportsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PutModelVersionExportsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleModelVersionExportResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleModelVersionExportResponse>;
+}
+interface IV2Service_IGetModelVersionExport extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetModelVersionExportRequest, proto_clarifai_api_service_pb.SingleModelVersionExportResponse> {
+    path: "/clarifai.api.V2/GetModelVersionExport";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.GetModelVersionExportRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.GetModelVersionExportRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleModelVersionExportResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleModelVersionExportResponse>;
+}
 interface IV2Service_IGetModelVersionMetrics extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetModelVersionMetricsRequest, proto_clarifai_api_service_pb.SingleModelVersionResponse> {
     path: "/clarifai.api.V2/GetModelVersionMetrics";
     requestStream: false;
@@ -1531,6 +1562,15 @@ interface IV2Service_IGetStatusCode extends grpc.MethodDefinition<proto_clarifai
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleStatusCodeResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleStatusCodeResponse>;
 }
+interface IV2Service_IGetResourcePrice extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetResourcePriceRequest, proto_clarifai_api_service_pb.GetResourcePriceResponse> {
+    path: "/clarifai.api.V2/GetResourcePrice";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.GetResourcePriceRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.GetResourcePriceRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.GetResourcePriceResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.GetResourcePriceResponse>;
+}
 interface IV2Service_IListCollaborators extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListCollaboratorsRequest, proto_clarifai_api_service_pb.MultiCollaboratorsResponse> {
     path: "/clarifai.api.V2/ListCollaborators";
     requestStream: false;
@@ -1990,14 +2030,14 @@ interface IV2Service_IListNextTaskAssignments extends grpc.MethodDefinition<prot
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiInputResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiInputResponse>;
 }
-interface IV2Service_IPutTaskAssignments extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PutTaskAssignmentsRequest, proto_clarifai_api_status_status_pb.BaseResponse> {
+interface IV2Service_IPutTaskAssignments extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PutTaskAssignmentsRequest, proto_clarifai_api_service_pb.MultiTaskAssignmentResponse> {
     path: "/clarifai.api.V2/PutTaskAssignments";
     requestStream: false;
     responseStream: false;
     requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PutTaskAssignmentsRequest>;
     requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PutTaskAssignmentsRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiTaskAssignmentResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiTaskAssignmentResponse>;
 }
 interface IV2Service_IListInputsAddJobs extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListInputsAddJobsRequest, proto_clarifai_api_service_pb.MultiInputsAddJobResponse> {
     path: "/clarifai.api.V2/ListInputsAddJobs";
@@ -2266,6 +2306,9 @@ export interface IV2Server {
     postModelVersions: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostModelVersionsRequest, proto_clarifai_api_service_pb.SingleModelResponse>;
     patchModelVersions: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchModelVersionsRequest, proto_clarifai_api_service_pb.MultiModelVersionResponse>;
     deleteModelVersion: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteModelVersionRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
+    postModelVersionsUpload: grpc.handleBidiStreamingCall<proto_clarifai_api_service_pb.PostModelVersionsUploadRequest, proto_clarifai_api_service_pb.PostModelVersionsUploadResponse>;
+    putModelVersionExports: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PutModelVersionExportsRequest, proto_clarifai_api_service_pb.SingleModelVersionExportResponse>;
+    getModelVersionExport: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetModelVersionExportRequest, proto_clarifai_api_service_pb.SingleModelVersionExportResponse>;
     getModelVersionMetrics: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetModelVersionMetricsRequest, proto_clarifai_api_service_pb.SingleModelVersionResponse>;
     postModelVersionMetrics: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostModelVersionMetricsRequest, proto_clarifai_api_service_pb.SingleModelVersionResponse>;
     postModelVersionEvaluations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostModelVersionEvaluationsRequest, proto_clarifai_api_service_pb.MultiEvalMetricsResponse>;
@@ -2327,6 +2370,7 @@ export interface IV2Server {
     deleteAnnotationFilters: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteAnnotationFiltersRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     listStatusCodes: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListStatusCodesRequest, proto_clarifai_api_service_pb.MultiStatusCodeResponse>;
     getStatusCode: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetStatusCodeRequest, proto_clarifai_api_service_pb.SingleStatusCodeResponse>;
+    getResourcePrice: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetResourcePriceRequest, proto_clarifai_api_service_pb.GetResourcePriceResponse>;
     listCollaborators: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListCollaboratorsRequest, proto_clarifai_api_service_pb.MultiCollaboratorsResponse>;
     postCollaborators: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostCollaboratorsRequest, proto_clarifai_api_service_pb.MultiCollaboratorsResponse>;
     patchCollaborators: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchCollaboratorsRequest, proto_clarifai_api_service_pb.MultiCollaboratorsResponse>;
@@ -2378,7 +2422,7 @@ export interface IV2Server {
     cancelBulkOperations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.CancelBulkOperationRequest, proto_clarifai_api_service_pb.MultiBulkOperationsResponse>;
     deleteBulkOperations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteBulkOperationRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     listNextTaskAssignments: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListNextTaskAssignmentsRequest, proto_clarifai_api_service_pb.MultiInputResponse>;
-    putTaskAssignments: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PutTaskAssignmentsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
+    putTaskAssignments: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PutTaskAssignmentsRequest, proto_clarifai_api_service_pb.MultiTaskAssignmentResponse>;
     listInputsAddJobs: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListInputsAddJobsRequest, proto_clarifai_api_service_pb.MultiInputsAddJobResponse>;
     getInputsAddJob: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetInputsAddJobRequest, proto_clarifai_api_service_pb.SingleInputsAddJobResponse>;
     cancelInputsAddJob: grpc.handleUnaryCall<proto_clarifai_api_service_pb.CancelInputsAddJobRequest, proto_clarifai_api_service_pb.SingleInputsAddJobResponse>;
@@ -2651,6 +2695,15 @@ export interface IV2Client {
     deleteModelVersion(request: proto_clarifai_api_service_pb.DeleteModelVersionRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteModelVersion(request: proto_clarifai_api_service_pb.DeleteModelVersionRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteModelVersion(request: proto_clarifai_api_service_pb.DeleteModelVersionRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    postModelVersionsUpload(): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostModelVersionsUploadRequest, proto_clarifai_api_service_pb.PostModelVersionsUploadResponse>;
+    postModelVersionsUpload(options: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostModelVersionsUploadRequest, proto_clarifai_api_service_pb.PostModelVersionsUploadResponse>;
+    postModelVersionsUpload(metadata: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostModelVersionsUploadRequest, proto_clarifai_api_service_pb.PostModelVersionsUploadResponse>;
+    putModelVersionExports(request: proto_clarifai_api_service_pb.PutModelVersionExportsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionExportResponse) => void): grpc.ClientUnaryCall;
+    putModelVersionExports(request: proto_clarifai_api_service_pb.PutModelVersionExportsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionExportResponse) => void): grpc.ClientUnaryCall;
+    putModelVersionExports(request: proto_clarifai_api_service_pb.PutModelVersionExportsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionExportResponse) => void): grpc.ClientUnaryCall;
+    getModelVersionExport(request: proto_clarifai_api_service_pb.GetModelVersionExportRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionExportResponse) => void): grpc.ClientUnaryCall;
+    getModelVersionExport(request: proto_clarifai_api_service_pb.GetModelVersionExportRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionExportResponse) => void): grpc.ClientUnaryCall;
+    getModelVersionExport(request: proto_clarifai_api_service_pb.GetModelVersionExportRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionExportResponse) => void): grpc.ClientUnaryCall;
     getModelVersionMetrics(request: proto_clarifai_api_service_pb.GetModelVersionMetricsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionResponse) => void): grpc.ClientUnaryCall;
     getModelVersionMetrics(request: proto_clarifai_api_service_pb.GetModelVersionMetricsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionResponse) => void): grpc.ClientUnaryCall;
     getModelVersionMetrics(request: proto_clarifai_api_service_pb.GetModelVersionMetricsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionResponse) => void): grpc.ClientUnaryCall;
@@ -2834,6 +2887,9 @@ export interface IV2Client {
     getStatusCode(request: proto_clarifai_api_service_pb.GetStatusCodeRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleStatusCodeResponse) => void): grpc.ClientUnaryCall;
     getStatusCode(request: proto_clarifai_api_service_pb.GetStatusCodeRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleStatusCodeResponse) => void): grpc.ClientUnaryCall;
     getStatusCode(request: proto_clarifai_api_service_pb.GetStatusCodeRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleStatusCodeResponse) => void): grpc.ClientUnaryCall;
+    getResourcePrice(request: proto_clarifai_api_service_pb.GetResourcePriceRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.GetResourcePriceResponse) => void): grpc.ClientUnaryCall;
+    getResourcePrice(request: proto_clarifai_api_service_pb.GetResourcePriceRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.GetResourcePriceResponse) => void): grpc.ClientUnaryCall;
+    getResourcePrice(request: proto_clarifai_api_service_pb.GetResourcePriceRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.GetResourcePriceResponse) => void): grpc.ClientUnaryCall;
     listCollaborators(request: proto_clarifai_api_service_pb.ListCollaboratorsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCollaboratorsResponse) => void): grpc.ClientUnaryCall;
     listCollaborators(request: proto_clarifai_api_service_pb.ListCollaboratorsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCollaboratorsResponse) => void): grpc.ClientUnaryCall;
     listCollaborators(request: proto_clarifai_api_service_pb.ListCollaboratorsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCollaboratorsResponse) => void): grpc.ClientUnaryCall;
@@ -2987,9 +3043,9 @@ export interface IV2Client {
     listNextTaskAssignments(request: proto_clarifai_api_service_pb.ListNextTaskAssignmentsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputResponse) => void): grpc.ClientUnaryCall;
     listNextTaskAssignments(request: proto_clarifai_api_service_pb.ListNextTaskAssignmentsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputResponse) => void): grpc.ClientUnaryCall;
     listNextTaskAssignments(request: proto_clarifai_api_service_pb.ListNextTaskAssignmentsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputResponse) => void): grpc.ClientUnaryCall;
-    putTaskAssignments(request: proto_clarifai_api_service_pb.PutTaskAssignmentsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    putTaskAssignments(request: proto_clarifai_api_service_pb.PutTaskAssignmentsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    putTaskAssignments(request: proto_clarifai_api_service_pb.PutTaskAssignmentsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    putTaskAssignments(request: proto_clarifai_api_service_pb.PutTaskAssignmentsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTaskAssignmentResponse) => void): grpc.ClientUnaryCall;
+    putTaskAssignments(request: proto_clarifai_api_service_pb.PutTaskAssignmentsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTaskAssignmentResponse) => void): grpc.ClientUnaryCall;
+    putTaskAssignments(request: proto_clarifai_api_service_pb.PutTaskAssignmentsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTaskAssignmentResponse) => void): grpc.ClientUnaryCall;
     listInputsAddJobs(request: proto_clarifai_api_service_pb.ListInputsAddJobsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputsAddJobResponse) => void): grpc.ClientUnaryCall;
     listInputsAddJobs(request: proto_clarifai_api_service_pb.ListInputsAddJobsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputsAddJobResponse) => void): grpc.ClientUnaryCall;
     listInputsAddJobs(request: proto_clarifai_api_service_pb.ListInputsAddJobsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputsAddJobResponse) => void): grpc.ClientUnaryCall;
@@ -3303,6 +3359,14 @@ export class V2Client extends grpc.Client implements IV2Client {
     public deleteModelVersion(request: proto_clarifai_api_service_pb.DeleteModelVersionRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteModelVersion(request: proto_clarifai_api_service_pb.DeleteModelVersionRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteModelVersion(request: proto_clarifai_api_service_pb.DeleteModelVersionRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public postModelVersionsUpload(options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostModelVersionsUploadRequest, proto_clarifai_api_service_pb.PostModelVersionsUploadResponse>;
+    public postModelVersionsUpload(metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostModelVersionsUploadRequest, proto_clarifai_api_service_pb.PostModelVersionsUploadResponse>;
+    public putModelVersionExports(request: proto_clarifai_api_service_pb.PutModelVersionExportsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionExportResponse) => void): grpc.ClientUnaryCall;
+    public putModelVersionExports(request: proto_clarifai_api_service_pb.PutModelVersionExportsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionExportResponse) => void): grpc.ClientUnaryCall;
+    public putModelVersionExports(request: proto_clarifai_api_service_pb.PutModelVersionExportsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionExportResponse) => void): grpc.ClientUnaryCall;
+    public getModelVersionExport(request: proto_clarifai_api_service_pb.GetModelVersionExportRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionExportResponse) => void): grpc.ClientUnaryCall;
+    public getModelVersionExport(request: proto_clarifai_api_service_pb.GetModelVersionExportRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionExportResponse) => void): grpc.ClientUnaryCall;
+    public getModelVersionExport(request: proto_clarifai_api_service_pb.GetModelVersionExportRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionExportResponse) => void): grpc.ClientUnaryCall;
     public getModelVersionMetrics(request: proto_clarifai_api_service_pb.GetModelVersionMetricsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionResponse) => void): grpc.ClientUnaryCall;
     public getModelVersionMetrics(request: proto_clarifai_api_service_pb.GetModelVersionMetricsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionResponse) => void): grpc.ClientUnaryCall;
     public getModelVersionMetrics(request: proto_clarifai_api_service_pb.GetModelVersionMetricsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionResponse) => void): grpc.ClientUnaryCall;
@@ -3486,6 +3550,9 @@ export class V2Client extends grpc.Client implements IV2Client {
     public getStatusCode(request: proto_clarifai_api_service_pb.GetStatusCodeRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleStatusCodeResponse) => void): grpc.ClientUnaryCall;
     public getStatusCode(request: proto_clarifai_api_service_pb.GetStatusCodeRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleStatusCodeResponse) => void): grpc.ClientUnaryCall;
     public getStatusCode(request: proto_clarifai_api_service_pb.GetStatusCodeRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleStatusCodeResponse) => void): grpc.ClientUnaryCall;
+    public getResourcePrice(request: proto_clarifai_api_service_pb.GetResourcePriceRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.GetResourcePriceResponse) => void): grpc.ClientUnaryCall;
+    public getResourcePrice(request: proto_clarifai_api_service_pb.GetResourcePriceRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.GetResourcePriceResponse) => void): grpc.ClientUnaryCall;
+    public getResourcePrice(request: proto_clarifai_api_service_pb.GetResourcePriceRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.GetResourcePriceResponse) => void): grpc.ClientUnaryCall;
     public listCollaborators(request: proto_clarifai_api_service_pb.ListCollaboratorsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCollaboratorsResponse) => void): grpc.ClientUnaryCall;
     public listCollaborators(request: proto_clarifai_api_service_pb.ListCollaboratorsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCollaboratorsResponse) => void): grpc.ClientUnaryCall;
     public listCollaborators(request: proto_clarifai_api_service_pb.ListCollaboratorsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCollaboratorsResponse) => void): grpc.ClientUnaryCall;
@@ -3639,9 +3706,9 @@ export class V2Client extends grpc.Client implements IV2Client {
     public listNextTaskAssignments(request: proto_clarifai_api_service_pb.ListNextTaskAssignmentsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputResponse) => void): grpc.ClientUnaryCall;
     public listNextTaskAssignments(request: proto_clarifai_api_service_pb.ListNextTaskAssignmentsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputResponse) => void): grpc.ClientUnaryCall;
     public listNextTaskAssignments(request: proto_clarifai_api_service_pb.ListNextTaskAssignmentsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputResponse) => void): grpc.ClientUnaryCall;
-    public putTaskAssignments(request: proto_clarifai_api_service_pb.PutTaskAssignmentsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public putTaskAssignments(request: proto_clarifai_api_service_pb.PutTaskAssignmentsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public putTaskAssignments(request: proto_clarifai_api_service_pb.PutTaskAssignmentsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public putTaskAssignments(request: proto_clarifai_api_service_pb.PutTaskAssignmentsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTaskAssignmentResponse) => void): grpc.ClientUnaryCall;
+    public putTaskAssignments(request: proto_clarifai_api_service_pb.PutTaskAssignmentsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTaskAssignmentResponse) => void): grpc.ClientUnaryCall;
+    public putTaskAssignments(request: proto_clarifai_api_service_pb.PutTaskAssignmentsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTaskAssignmentResponse) => void): grpc.ClientUnaryCall;
     public listInputsAddJobs(request: proto_clarifai_api_service_pb.ListInputsAddJobsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputsAddJobResponse) => void): grpc.ClientUnaryCall;
     public listInputsAddJobs(request: proto_clarifai_api_service_pb.ListInputsAddJobsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputsAddJobResponse) => void): grpc.ClientUnaryCall;
     public listInputsAddJobs(request: proto_clarifai_api_service_pb.ListInputsAddJobsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInputsAddJobResponse) => void): grpc.ClientUnaryCall;

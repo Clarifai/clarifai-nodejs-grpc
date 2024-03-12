@@ -3351,6 +3351,35 @@ export namespace ModelVersion {
     }
 }
 
+export class ModelVersionExport extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): ModelVersionExport;
+    getUrl(): string;
+    setUrl(value: string): ModelVersionExport;
+    getSize(): number;
+    setSize(value: number): ModelVersionExport;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ModelVersionExport.AsObject;
+    static toObject(includeInstance: boolean, msg: ModelVersionExport): ModelVersionExport.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ModelVersionExport, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ModelVersionExport;
+    static deserializeBinaryFromReader(message: ModelVersionExport, reader: jspb.BinaryReader): ModelVersionExport;
+}
+
+export namespace ModelVersionExport {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        url: string,
+        size: number,
+    }
+}
+
 export class PretrainedModelConfig extends jspb.Message { 
 
     hasInputFieldsMap(): boolean;
@@ -5595,19 +5624,15 @@ export class TaskWorker extends jspb.Message {
     getUsersList(): Array<User>;
     setUsersList(value: Array<User>): TaskWorker;
     addUsers(value?: User, index?: number): User;
-    clearModelsList(): void;
-    getModelsList(): Array<Model>;
-    setModelsList(value: Array<Model>): TaskWorker;
-    addModels(value?: Model, index?: number): Model;
-    clearWorkflowsList(): void;
-    getWorkflowsList(): Array<Workflow>;
-    setWorkflowsList(value: Array<Workflow>): TaskWorker;
-    addWorkflows(value?: Workflow, index?: number): Workflow;
 
     hasPartitionedStrategyInfo(): boolean;
     clearPartitionedStrategyInfo(): void;
     getPartitionedStrategyInfo(): TaskWorkerPartitionedStrategyInfo | undefined;
     setPartitionedStrategyInfo(value?: TaskWorkerPartitionedStrategyInfo): TaskWorker;
+    clearWorkersList(): void;
+    getWorkersList(): Array<Worker>;
+    setWorkersList(value: Array<Worker>): TaskWorker;
+    addWorkers(value?: Worker, index?: number): Worker;
 
     getStrategyInfoCase(): TaskWorker.StrategyInfoCase;
 
@@ -5626,9 +5651,8 @@ export namespace TaskWorker {
         strategy: TaskWorker.TaskWorkerStrategy,
         userIdsList: Array<string>,
         usersList: Array<User.AsObject>,
-        modelsList: Array<Model.AsObject>,
-        workflowsList: Array<Workflow.AsObject>,
         partitionedStrategyInfo?: TaskWorkerPartitionedStrategyInfo.AsObject,
+        workersList: Array<Worker.AsObject>,
     }
 
     export enum TaskWorkerStrategy {
@@ -5831,6 +5855,56 @@ export namespace TaskAIAssistant {
     }
 }
 
+export class TaskAssignment extends jspb.Message { 
+    getId(): string;
+    setId(value: string): TaskAssignment;
+
+    hasCreatedAt(): boolean;
+    clearCreatedAt(): void;
+    getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): TaskAssignment;
+
+    hasModifiedAt(): boolean;
+    clearModifiedAt(): void;
+    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): TaskAssignment;
+
+    hasWorker(): boolean;
+    clearWorker(): void;
+    getWorker(): Worker | undefined;
+    setWorker(value?: Worker): TaskAssignment;
+
+    hasInput(): boolean;
+    clearInput(): void;
+    getInput(): Input | undefined;
+    setInput(value?: Input): TaskAssignment;
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): TaskAssignment;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): TaskAssignment.AsObject;
+    static toObject(includeInstance: boolean, msg: TaskAssignment): TaskAssignment.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: TaskAssignment, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): TaskAssignment;
+    static deserializeBinaryFromReader(message: TaskAssignment, reader: jspb.BinaryReader): TaskAssignment;
+}
+
+export namespace TaskAssignment {
+    export type AsObject = {
+        id: string,
+        createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        worker?: Worker.AsObject,
+        input?: Input.AsObject,
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+    }
+}
+
 export class TaskStatusCountPerUser extends jspb.Message { 
     getUserId(): string;
     setUserId(value: string): TaskStatusCountPerUser;
@@ -5954,8 +6028,11 @@ export namespace TaskConcept {
 }
 
 export class TaskMetrics extends jspb.Message { 
-    getEstimatedLabeledInputsCount(): number;
-    setEstimatedLabeledInputsCount(value: number): TaskMetrics;
+
+    hasWork(): boolean;
+    clearWork(): void;
+    getWork(): TaskWorkMetrics | undefined;
+    setWork(value?: TaskWorkMetrics): TaskMetrics;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): TaskMetrics.AsObject;
@@ -5969,7 +6046,30 @@ export class TaskMetrics extends jspb.Message {
 
 export namespace TaskMetrics {
     export type AsObject = {
-        estimatedLabeledInputsCount: number,
+        work?: TaskWorkMetrics.AsObject,
+    }
+}
+
+export class TaskWorkMetrics extends jspb.Message { 
+    getInputsCountEstimated(): number;
+    setInputsCountEstimated(value: number): TaskWorkMetrics;
+    getInputsPercentEstimated(): number;
+    setInputsPercentEstimated(value: number): TaskWorkMetrics;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): TaskWorkMetrics.AsObject;
+    static toObject(includeInstance: boolean, msg: TaskWorkMetrics): TaskWorkMetrics.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: TaskWorkMetrics, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): TaskWorkMetrics;
+    static deserializeBinaryFromReader(message: TaskWorkMetrics, reader: jspb.BinaryReader): TaskWorkMetrics;
+}
+
+export namespace TaskWorkMetrics {
+    export type AsObject = {
+        inputsCountEstimated: number,
+        inputsPercentEstimated: number,
     }
 }
 

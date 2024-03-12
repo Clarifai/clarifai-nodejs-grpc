@@ -1823,6 +1823,16 @@ message ModelVersion {
   string train_log = 23;
 }
 
+// ModelVersionExport contains metadata for a single Model version export.
+message ModelVersionExport {
+  // status is the current status of the dataset version export.
+  clarifai.api.status.Status status = 1;
+  // url is the URL from where the model version export can be downloaded.
+  string url = 2;
+  // size of model file
+  int64 size = 3;
+}
+
 // PretrainedModelConfig
 message PretrainedModelConfig {
   reserved 2, 5;
@@ -2608,7 +2618,6 @@ message Password {
 }
 
 
-
 // PasswordViolations
 message PasswordViolations {
   // when new password length is shorter than minimum length set
@@ -3072,25 +3081,22 @@ message AiAssistParameters {
   repeated string concept_relation_ids = 3;
 }
 
-// TaskWorker
+// TaskWorker includes information about the workers that will work on this task.
 message TaskWorker {
+  reserved 5, 6;
+
   // Worker strategy.
   TaskWorkerStrategy strategy = 1;
 
   // Who will work on this task.
-  // DEPRECATED: Use users.id instead.
+  // DEPRECATED: Use workers.user.id instead.
   repeated string user_ids = 2 [deprecated = true];
 
   // Users who will work on this task.
   // When the 'worker.users' field is additionally requested, then all user
   // info is filled for the workers. Otherwise, only the user 'id' is filled.
-  repeated User users = 4;
-
-  // Models that will work on this task. For Auto Annotation Tasks. Currently only supports 1 entry.
-  repeated Model models = 5;
-
-  // Workflows that will work on this task. For Auto Annotation Tasks. Currently only supports 1 entry.
-  repeated Workflow workflows = 6;
+  // DEPRECATED: Use workers.user instead.
+  repeated User users = 4 [deprecated = true];
 
   // Info based on the worker strategy,
   oneof strategy_info { TaskWorkerPartitionedStrategyInfo partitioned_strategy_info = 3; }
@@ -3107,6 +3113,16 @@ message TaskWorker {
     // Each worker will label all inputs from input source.
     FULL = 3;
   }
+
+  // Workers that will work on this task.
+  //
+  // For Auto Annotation Tasks:
+  //   the worker can be either a model or a workflow;
+  //   currently only supports 1 worker.
+  // For manual labeling Tasks:
+  //   the workers can only be users;
+  //   no limitation on number of workers.
+  repeated Worker workers = 7;
 }
 
 // TaskWorkerPartitionedStrategyInfo
@@ -3229,6 +3245,30 @@ message TaskAIAssistant {
   string workflow_id = 1;
 }
 
+message TaskAssignment {
+  string id = 1;
+
+  // Creation time.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp created_at = 2;
+
+  // Most recent modification time.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp modified_at = 3;
+
+  // Assigned worker.
+  Worker worker = 4;
+
+  // Assigned input.
+  Input input = 5;
+
+  // Assignment status.
+  // Read as: This is the status of the work assigned to worker W, on input I in task T.
+  clarifai.api.status.Status status = 6;
+}
+
 // TaskStatusCountPerUser can represents count of human created annotations for a user for each valid status,
 // count of inputs (anchor annotation) for a user for each valid status
 message TaskStatusCountPerUser {
@@ -3281,7 +3321,17 @@ enum AnnotationDataType {
 
 
 message TaskMetrics {
-  uint64 estimated_labeled_inputs_count = 1;
+  reserved 1;
+
+  TaskWorkMetrics work = 2;
+}
+
+message TaskWorkMetrics {
+  // Estimated number of inputs that workers have worked on.
+  uint64 inputs_count_estimated = 1;
+  // Estimated percent of inputs that workers have worked on.
+  // This is a value between 0 and 100, where 0 = 0% and 100 = 100%.
+  uint32 inputs_percent_estimated = 2;
 }
 
 enum RoleType {

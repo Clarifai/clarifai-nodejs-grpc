@@ -1484,6 +1484,54 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
 
+  // This is a streaming endpoint, the request has a field, upload_data, which can either be the config for the upload or the actual data to upload.
+  // The config must be sent first before the model_bytes can be uploaded.
+  // Once the config has been sent, the server will respond with a confirmation containing the model_version_id.
+  // This is so that if your upload is interrupted, you can resume the upload by sending the config again with the model_version_id specified for your model_version.
+  // The actual upload will be done via a multipart upload, the latest successful part_id will be sent from the server in the response to the model_bytes.
+  rpc PostModelVersionsUpload (stream PostModelVersionsUploadRequest) returns (stream PostModelVersionsUploadResponse) {
+    option (google.api.http) = {
+      post: "/v2/models/versions/upload"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Train;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // Needs to check the base workflow to build off of.
+  }
+
+   // Export a model
+
+
+   // Export a model
+  rpc PutModelVersionExports (PutModelVersionExportsRequest) returns (SingleModelVersionExportResponse) {
+    option (google.api.http) = {
+      put: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/exports"
+      additional_bindings {
+        put: "/v2/models/{model_id}/versions/{version_id}/exports"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  }
+
+  // GetModelVersionExport
+  rpc GetModelVersionExport (GetModelVersionExportRequest) returns (SingleModelVersionExportResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/exports"
+      additional_bindings {
+        get: "/v2/models/{model_id}/versions/{version_id}/exports"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  }
+
   // Deprecated: Use GetEvaluation instead
   // Get the evaluation metrics for a model version.
   rpc GetModelVersionMetrics (GetModelVersionMetricsRequest) returns (SingleModelVersionResponse) {
@@ -2149,8 +2197,6 @@ service V2 {
 
 
 
-
-
   // Validate new password in real-time for a user
   rpc PostValidatePassword (PostValidatePasswordRequest) returns (SinglePasswordValidationResponse) {
     option (google.api.http) = {
@@ -2502,6 +2548,16 @@ service V2 {
 
 
 
+  rpc GetResourcePrice (GetResourcePriceRequest) returns (GetResourcePriceResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/resource_price"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+  }
+
 
 
 
@@ -2587,13 +2643,6 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Get;
   }
 
   // ListAppDuplications lists all app duplication jobs created by the user.
@@ -3311,7 +3360,7 @@ service V2 {
   }
 
   // PutTaskAssignments evaluates all the annotations by labeler (authenticated user) for given task (task_id) and input (input_id).
-  rpc PutTaskAssignments (PutTaskAssignmentsRequest) returns (clarifai.api.status.BaseResponse) {
+  rpc PutTaskAssignments (PutTaskAssignmentsRequest) returns (MultiTaskAssignmentResponse) {
     option (google.api.http) = {
       put: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/assignments"
       body: "*"
@@ -4076,6 +4125,27 @@ message MultiCollaborationsResponse {
 
 
 
+
+// Get Resource Price - new billing
+message GetResourcePriceRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  oneof resource {
+    // ########## Supported fields ##########
+    // - id
+    // - model_version.id
+    Model model = 2;
+    // ########## Supported fields ##########
+    // - id
+    // - version.id
+    Workflow workflow = 3;
+  }
+}
+
+message GetResourcePriceResponse {
+  clarifai.api.status.Status status = 1;
+  // Price is in millicents, i.e. $1/100000
+  int64 price = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
 
 // GetStatusCodeRequest
 message GetStatusCodeRequest {
@@ -5292,6 +5362,46 @@ message PostModelVersionsRequest {
   EvalInfo eval_info = 10;
 }
 
+message PostModelVersionsUploadRequest {
+   oneof upload_data {
+    PostModelVersionsUploadConfig upload_config = 1;
+    UploadContentPart content_part = 2;
+  }
+}
+
+message PostModelVersionsUploadResponse {
+  clarifai.api.status.Status status = 1;
+  uint64 bytes_remaining = 2;
+  string model_version_id = 3; // ID of the model version being uploaded
+}
+
+message PostModelVersionsUploadConfig {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2; // model to create version of
+  ModelVersion model_version = 3; // specification for the model version to be uploaded
+  uint64 total_size = 4; // number of bytes in the model files to be uploaded
+}
+
+// PutModelVersionExportsRequest
+message PutModelVersionExportsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+  string version_id = 3;
+}
+
+// GetModelVersionExportRequest
+message GetModelVersionExportRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+  string version_id = 3;
+}
+
+// SingleModelVersionExportResponse
+message SingleModelVersionExportResponse {
+  clarifai.api.status.Status status = 1;
+  ModelVersionExport export = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
 message PostWorkflowVersionsUnPublishRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string workflow_id = 2;
@@ -5983,10 +6093,6 @@ message SingleUserResponse {
 
 
 
-
-
-
-
 // PostValidatePasswordRequest
 message PostValidatePasswordRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -6407,7 +6513,12 @@ message GetTaskRequest {
   string task_id = 2;
 
   // (optional URL parameter) List of additional fields to be included in the response.
-  // Currently supported: all, worker.users, review.users, metrics.estimated_labeled_inputs_count.
+  // Currently supported additional fields:
+  // - all
+  // - worker.users
+  // - review.users
+  // - metrics.work.inputs_count_estimated
+  // - metrics.work.inputs_percent_estimated
   repeated string additional_fields = 3;
 }
 
@@ -6432,7 +6543,12 @@ message ListTasksRequest {
   bool including_label_order_tasks = 6;
 
   // (optional URL parameter) List of additional fields to be included in the response.
-  // Currently supported: all, worker.users, review.users, metrics.estimated_labeled_inputs_count.
+  // Currently supported additional fields:
+  // - all
+  // - worker.users
+  // - review.users
+  // - metrics.work.inputs_count_estimated
+  // - metrics.work.inputs_percent_estimated
   repeated string additional_fields = 7;
 
   // (optional) task IDs to filter on
@@ -7015,8 +7131,41 @@ message MultiBulkOperationsResponse {
 // PutTaskAssignmentsRequest
 message PutTaskAssignmentsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
+
   string task_id = 2;
+
+  // Deprecated: use action and action_config instead.
+  // Supported for backwards compatibility: setting this field is equivalent with
+  // * action = LABEL_SUBMIT
+  // * label_submit_config = [{"task_assignments": {"input": {"id": <input-id>}}}]
   string input_id = 3;
+
+  // Action to perform on selected task.
+  PutTaskAssignmentsRequestAction action = 4;
+
+  oneof action_config {
+    LabelSubmitConfig label_submit_config = 6;
+  }
+}
+enum PutTaskAssignmentsRequestAction {
+  PUT_TASK_ASSIGNMENTS_REQUEST_ACTION_NOT_SET = 0;
+
+  LABEL_START = 1;
+  LABEL_SUBMIT = 2;
+
+  REVIEW_START = 10;
+  REVIEW_APPROVE = 11;
+  REVIEW_REQUEST_CHANGES = 12;
+}
+
+
+message LabelSubmitConfig {
+  repeated TaskAssignment task_assignments = 1;
+}
+
+message MultiTaskAssignmentResponse {
+  clarifai.api.status.Status status = 1;
+  repeated TaskAssignment task_assignments = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
 

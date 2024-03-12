@@ -641,6 +641,17 @@ function deserialize_clarifai_api_GetModelVersionEvaluationRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.GetModelVersionEvaluationRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_GetModelVersionExportRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.GetModelVersionExportRequest)) {
+    throw new Error('Expected argument of type clarifai.api.GetModelVersionExportRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_GetModelVersionExportRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.GetModelVersionExportRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_GetModelVersionInputExampleRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.GetModelVersionInputExampleRequest)) {
     throw new Error('Expected argument of type clarifai.api.GetModelVersionInputExampleRequest');
@@ -727,6 +738,28 @@ function serialize_clarifai_api_GetResourceCountsResponse(arg) {
 
 function deserialize_clarifai_api_GetResourceCountsResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.GetResourceCountsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_GetResourcePriceRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.GetResourcePriceRequest)) {
+    throw new Error('Expected argument of type clarifai.api.GetResourcePriceRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_GetResourcePriceRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.GetResourcePriceRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_GetResourcePriceResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.GetResourcePriceResponse)) {
+    throw new Error('Expected argument of type clarifai.api.GetResourcePriceResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_GetResourcePriceResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.GetResourcePriceResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_GetRunnerRequest(arg) {
@@ -1950,6 +1983,17 @@ function deserialize_clarifai_api_MultiStatusCodeResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiStatusCodeResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_MultiTaskAssignmentResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiTaskAssignmentResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiTaskAssignmentResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiTaskAssignmentResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiTaskAssignmentResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_MultiTaskResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.MultiTaskResponse)) {
     throw new Error('Expected argument of type clarifai.api.MultiTaskResponse');
@@ -2797,6 +2841,28 @@ function deserialize_clarifai_api_PostModelVersionsUnPublishRequest(buffer_arg) 
   return proto_clarifai_api_service_pb.PostModelVersionsUnPublishRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PostModelVersionsUploadRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostModelVersionsUploadRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostModelVersionsUploadRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostModelVersionsUploadRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostModelVersionsUploadRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PostModelVersionsUploadResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostModelVersionsUploadResponse)) {
+    throw new Error('Expected argument of type clarifai.api.PostModelVersionsUploadResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostModelVersionsUploadResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostModelVersionsUploadResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PostModelsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PostModelsRequest)) {
     throw new Error('Expected argument of type clarifai.api.PostModelsRequest');
@@ -3037,6 +3103,17 @@ function serialize_clarifai_api_PutDatasetVersionExportsRequest(arg) {
 
 function deserialize_clarifai_api_PutDatasetVersionExportsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PutDatasetVersionExportsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PutModelVersionExportsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PutModelVersionExportsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PutModelVersionExportsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PutModelVersionExportsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PutModelVersionExportsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PutTaskAssignmentsRequest(arg) {
@@ -3290,6 +3367,17 @@ function serialize_clarifai_api_SingleModelTypeResponse(arg) {
 
 function deserialize_clarifai_api_SingleModelTypeResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.SingleModelTypeResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_SingleModelVersionExportResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.SingleModelVersionExportResponse)) {
+    throw new Error('Expected argument of type clarifai.api.SingleModelVersionExportResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_SingleModelVersionExportResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.SingleModelVersionExportResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_SingleModelVersionInputExampleResponse(arg) {
@@ -4523,6 +4611,48 @@ deleteModelVersion: {
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },
+  // This is a streaming endpoint, the request has a field, upload_data, which can either be the config for the upload or the actual data to upload.
+// The config must be sent first before the model_bytes can be uploaded.
+// Once the config has been sent, the server will respond with a confirmation containing the model_version_id.
+// This is so that if your upload is interrupted, you can resume the upload by sending the config again with the model_version_id specified for your model_version.
+// The actual upload will be done via a multipart upload, the latest successful part_id will be sent from the server in the response to the model_bytes.
+postModelVersionsUpload: {
+    path: '/clarifai.api.V2/PostModelVersionsUpload',
+    requestStream: true,
+    responseStream: true,
+    requestType: proto_clarifai_api_service_pb.PostModelVersionsUploadRequest,
+    responseType: proto_clarifai_api_service_pb.PostModelVersionsUploadResponse,
+    requestSerialize: serialize_clarifai_api_PostModelVersionsUploadRequest,
+    requestDeserialize: deserialize_clarifai_api_PostModelVersionsUploadRequest,
+    responseSerialize: serialize_clarifai_api_PostModelVersionsUploadResponse,
+    responseDeserialize: deserialize_clarifai_api_PostModelVersionsUploadResponse,
+  },
+  // Export a model
+//
+// Export a model
+putModelVersionExports: {
+    path: '/clarifai.api.V2/PutModelVersionExports',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PutModelVersionExportsRequest,
+    responseType: proto_clarifai_api_service_pb.SingleModelVersionExportResponse,
+    requestSerialize: serialize_clarifai_api_PutModelVersionExportsRequest,
+    requestDeserialize: deserialize_clarifai_api_PutModelVersionExportsRequest,
+    responseSerialize: serialize_clarifai_api_SingleModelVersionExportResponse,
+    responseDeserialize: deserialize_clarifai_api_SingleModelVersionExportResponse,
+  },
+  // GetModelVersionExport
+getModelVersionExport: {
+    path: '/clarifai.api.V2/GetModelVersionExport',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.GetModelVersionExportRequest,
+    responseType: proto_clarifai_api_service_pb.SingleModelVersionExportResponse,
+    requestSerialize: serialize_clarifai_api_GetModelVersionExportRequest,
+    requestDeserialize: deserialize_clarifai_api_GetModelVersionExportRequest,
+    responseSerialize: serialize_clarifai_api_SingleModelVersionExportResponse,
+    responseDeserialize: deserialize_clarifai_api_SingleModelVersionExportResponse,
+  },
   // Deprecated: Use GetEvaluation instead
 // Get the evaluation metrics for a model version.
 getModelVersionMetrics: {
@@ -5275,6 +5405,17 @@ getStatusCode: {
     responseSerialize: serialize_clarifai_api_SingleStatusCodeResponse,
     responseDeserialize: deserialize_clarifai_api_SingleStatusCodeResponse,
   },
+  getResourcePrice: {
+    path: '/clarifai.api.V2/GetResourcePrice',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.GetResourcePriceRequest,
+    responseType: proto_clarifai_api_service_pb.GetResourcePriceResponse,
+    requestSerialize: serialize_clarifai_api_GetResourcePriceRequest,
+    requestDeserialize: deserialize_clarifai_api_GetResourcePriceRequest,
+    responseSerialize: serialize_clarifai_api_GetResourcePriceResponse,
+    responseDeserialize: deserialize_clarifai_api_GetResourcePriceResponse,
+  },
   // owner list users who the app is shared with
 listCollaborators: {
     path: '/clarifai.api.V2/ListCollaborators',
@@ -5919,11 +6060,11 @@ putTaskAssignments: {
     requestStream: false,
     responseStream: false,
     requestType: proto_clarifai_api_service_pb.PutTaskAssignmentsRequest,
-    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
+    responseType: proto_clarifai_api_service_pb.MultiTaskAssignmentResponse,
     requestSerialize: serialize_clarifai_api_PutTaskAssignmentsRequest,
     requestDeserialize: deserialize_clarifai_api_PutTaskAssignmentsRequest,
-    responseSerialize: serialize_clarifai_api_status_BaseResponse,
-    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+    responseSerialize: serialize_clarifai_api_MultiTaskAssignmentResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiTaskAssignmentResponse,
   },
   // List all the inputs add jobs
 listInputsAddJobs: {
