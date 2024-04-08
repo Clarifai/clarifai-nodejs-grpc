@@ -740,28 +740,6 @@ function deserialize_clarifai_api_GetResourceCountsResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.GetResourceCountsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_GetResourcePriceRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.GetResourcePriceRequest)) {
-    throw new Error('Expected argument of type clarifai.api.GetResourcePriceRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_GetResourcePriceRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.GetResourcePriceRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_GetResourcePriceResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.GetResourcePriceResponse)) {
-    throw new Error('Expected argument of type clarifai.api.GetResourcePriceResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_GetResourcePriceResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.GetResourcePriceResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_clarifai_api_GetRunnerRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.GetRunnerRequest)) {
     throw new Error('Expected argument of type clarifai.api.GetRunnerRequest');
@@ -4075,7 +4053,23 @@ postModelOutputs: {
     responseSerialize: serialize_clarifai_api_MultiOutputResponse,
     responseDeserialize: deserialize_clarifai_api_MultiOutputResponse,
   },
-  // List all the datasets.
+  // // TODO(zeiler): will need to
+// // Single request but streaming resopnses.
+// rpc GeneratePostModelOutputs (PostModelOutputsRequest) returns (stream MultiOutputResponse) {
+//   option (google.api.http) = {
+//     post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/outputs"
+//     body: "*"
+//   };
+//   option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+//   option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+//   option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+//   option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+//   option (clarifai.auth.util.cl_depending_scopes) = Predict;
+//   option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+//   option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
+// }
+//
+// List all the datasets.
 listDatasets: {
     path: '/clarifai.api.V2/ListDatasets',
     requestStream: false,
@@ -4527,7 +4521,24 @@ listModelVersions: {
     responseSerialize: serialize_clarifai_api_MultiModelVersionResponse,
     responseDeserialize: deserialize_clarifai_api_MultiModelVersionResponse,
   },
-  postWorkflowVersionsUnPublish: {
+  // TODO(zeiler): in future we can add endpoints like this for listing runners for a specific model
+// List all the runners currently handling work for the given model.
+// By default this lists the runners available in your account as well as all the orgs you have
+// access to.
+// Could have RunnerSelector to break it down by Nodepool or Deployment.
+// Addition filters on the request can select specific user/org to list from or nodepool.
+// rpc ListModelVersionRunners (ListModelVersionRunnersRequest) returns (MultiRunnerResponse) {
+//   option (google.api.http) = {
+//     get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/runners"
+//   };
+//   option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+//   option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+//   option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+//   option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+//   option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+// }
+//
+postWorkflowVersionsUnPublish: {
     path: '/clarifai.api.V2/PostWorkflowVersionsUnPublish',
     requestStream: false,
     responseStream: false,
@@ -5405,17 +5416,6 @@ getStatusCode: {
     responseSerialize: serialize_clarifai_api_SingleStatusCodeResponse,
     responseDeserialize: deserialize_clarifai_api_SingleStatusCodeResponse,
   },
-  getResourcePrice: {
-    path: '/clarifai.api.V2/GetResourcePrice',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.GetResourcePriceRequest,
-    responseType: proto_clarifai_api_service_pb.GetResourcePriceResponse,
-    requestSerialize: serialize_clarifai_api_GetResourcePriceRequest,
-    requestDeserialize: deserialize_clarifai_api_GetResourcePriceRequest,
-    responseSerialize: serialize_clarifai_api_GetResourcePriceResponse,
-    responseDeserialize: deserialize_clarifai_api_GetResourcePriceResponse,
-  },
   // owner list users who the app is shared with
 listCollaborators: {
     path: '/clarifai.api.V2/ListCollaborators',
@@ -6054,7 +6054,9 @@ listNextTaskAssignments: {
     responseSerialize: serialize_clarifai_api_MultiInputResponse,
     responseDeserialize: deserialize_clarifai_api_MultiInputResponse,
   },
-  // PutTaskAssignments evaluates all the annotations by labeler (authenticated user) for given task (task_id) and input (input_id).
+  // PutTaskAssignments performs an action for the task assignments in given task.
+// All the actions are theoretically idempotent, but practically, in the current implementation,
+// the REVIEW_START action is not idempotent. See PutTaskAssignmentsRequestAction for more details.
 putTaskAssignments: {
     path: '/clarifai.api.V2/PutTaskAssignments',
     requestStream: false,
@@ -6234,7 +6236,8 @@ postInputsUploads: {
     responseSerialize: serialize_clarifai_api_MultiInputsAddJobResponse,
     responseDeserialize: deserialize_clarifai_api_MultiInputsAddJobResponse,
   },
-  // Get a specific runner from an app.
+  // Get a specific runner.
+// TODO(zeiler): runner_id is a UUID so can list globally as well.
 getRunner: {
     path: '/clarifai.api.V2/GetRunner',
     requestStream: false,
@@ -6246,7 +6249,7 @@ getRunner: {
     responseSerialize: serialize_clarifai_api_SingleRunnerResponse,
     responseDeserialize: deserialize_clarifai_api_SingleRunnerResponse,
   },
-  // List all the runners in community, by user or by app.
+  // List all the runners for the user.
 listRunners: {
     path: '/clarifai.api.V2/ListRunners',
     requestStream: false,
@@ -6258,7 +6261,7 @@ listRunners: {
     responseSerialize: serialize_clarifai_api_MultiRunnerResponse,
     responseDeserialize: deserialize_clarifai_api_MultiRunnerResponse,
   },
-  // Add a runners to an app.
+  // Add a runners to a user.
 postRunners: {
     path: '/clarifai.api.V2/PostRunners',
     requestStream: false,
@@ -6283,6 +6286,7 @@ deleteRunners: {
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },
   // List items for the remote runner to work on.
+// since the runner_id is a UUID we can access it directly too.
 listRunnerItems: {
     path: '/clarifai.api.V2/ListRunnerItems',
     requestStream: false,
@@ -6295,6 +6299,7 @@ listRunnerItems: {
     responseDeserialize: deserialize_clarifai_api_MultiRunnerItemResponse,
   },
   // Post back outputs from remote runners
+// since the runner_id is a UUID we can access it directly too.
 postRunnerItemOutputs: {
     path: '/clarifai.api.V2/PostRunnerItemOutputs',
     requestStream: false,

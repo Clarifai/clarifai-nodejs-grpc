@@ -1043,76 +1043,6 @@ export namespace MultiCollaborationsResponse {
     }
 }
 
-export class GetResourcePriceRequest extends jspb.Message { 
-
-    hasUserAppId(): boolean;
-    clearUserAppId(): void;
-    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
-    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): GetResourcePriceRequest;
-
-    hasModel(): boolean;
-    clearModel(): void;
-    getModel(): proto_clarifai_api_resources_pb.Model | undefined;
-    setModel(value?: proto_clarifai_api_resources_pb.Model): GetResourcePriceRequest;
-
-    hasWorkflow(): boolean;
-    clearWorkflow(): void;
-    getWorkflow(): proto_clarifai_api_resources_pb.Workflow | undefined;
-    setWorkflow(value?: proto_clarifai_api_resources_pb.Workflow): GetResourcePriceRequest;
-
-    getResourceCase(): GetResourcePriceRequest.ResourceCase;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): GetResourcePriceRequest.AsObject;
-    static toObject(includeInstance: boolean, msg: GetResourcePriceRequest): GetResourcePriceRequest.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: GetResourcePriceRequest, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): GetResourcePriceRequest;
-    static deserializeBinaryFromReader(message: GetResourcePriceRequest, reader: jspb.BinaryReader): GetResourcePriceRequest;
-}
-
-export namespace GetResourcePriceRequest {
-    export type AsObject = {
-        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
-        model?: proto_clarifai_api_resources_pb.Model.AsObject,
-        workflow?: proto_clarifai_api_resources_pb.Workflow.AsObject,
-    }
-
-    export enum ResourceCase {
-        RESOURCE_NOT_SET = 0,
-        MODEL = 2,
-        WORKFLOW = 3,
-    }
-
-}
-
-export class GetResourcePriceResponse extends jspb.Message { 
-
-    hasStatus(): boolean;
-    clearStatus(): void;
-    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
-    setStatus(value?: proto_clarifai_api_status_status_pb.Status): GetResourcePriceResponse;
-    getPrice(): number;
-    setPrice(value: number): GetResourcePriceResponse;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): GetResourcePriceResponse.AsObject;
-    static toObject(includeInstance: boolean, msg: GetResourcePriceResponse): GetResourcePriceResponse.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: GetResourcePriceResponse, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): GetResourcePriceResponse;
-    static deserializeBinaryFromReader(message: GetResourcePriceResponse, reader: jspb.BinaryReader): GetResourcePriceResponse;
-}
-
-export namespace GetResourcePriceResponse {
-    export type AsObject = {
-        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
-        price: number,
-    }
-}
-
 export class GetStatusCodeRequest extends jspb.Message { 
     getStatusCodeId(): string;
     setStatusCodeId(value: string): GetStatusCodeRequest;
@@ -3251,6 +3181,11 @@ export class PostModelOutputsRequest extends jspb.Message {
     getModel(): proto_clarifai_api_resources_pb.Model | undefined;
     setModel(value?: proto_clarifai_api_resources_pb.Model): PostModelOutputsRequest;
 
+    hasRunnerSelector(): boolean;
+    clearRunnerSelector(): void;
+    getRunnerSelector(): proto_clarifai_api_resources_pb.RunnerSelector | undefined;
+    setRunnerSelector(value?: proto_clarifai_api_resources_pb.RunnerSelector): PostModelOutputsRequest;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PostModelOutputsRequest.AsObject;
     static toObject(includeInstance: boolean, msg: PostModelOutputsRequest): PostModelOutputsRequest.AsObject;
@@ -3268,6 +3203,7 @@ export namespace PostModelOutputsRequest {
         versionId: string,
         inputsList: Array<proto_clarifai_api_resources_pb.Input.AsObject>,
         model?: proto_clarifai_api_resources_pb.Model.AsObject,
+        runnerSelector?: proto_clarifai_api_resources_pb.RunnerSelector.AsObject,
     }
 }
 
@@ -9545,6 +9481,21 @@ export class PutTaskAssignmentsRequest extends jspb.Message {
     getLabelSubmitConfig(): LabelSubmitConfig | undefined;
     setLabelSubmitConfig(value?: LabelSubmitConfig): PutTaskAssignmentsRequest;
 
+    hasReviewApproveConfig(): boolean;
+    clearReviewApproveConfig(): void;
+    getReviewApproveConfig(): ReviewApproveConfig | undefined;
+    setReviewApproveConfig(value?: ReviewApproveConfig): PutTaskAssignmentsRequest;
+
+    hasReviewRequestChangesConfig(): boolean;
+    clearReviewRequestChangesConfig(): void;
+    getReviewRequestChangesConfig(): ReviewRequestChangesConfig | undefined;
+    setReviewRequestChangesConfig(value?: ReviewRequestChangesConfig): PutTaskAssignmentsRequest;
+
+    hasReviewRejectConfig(): boolean;
+    clearReviewRejectConfig(): void;
+    getReviewRejectConfig(): ReviewRejectConfig | undefined;
+    setReviewRejectConfig(value?: ReviewRejectConfig): PutTaskAssignmentsRequest;
+
     getActionConfigCase(): PutTaskAssignmentsRequest.ActionConfigCase;
 
     serializeBinary(): Uint8Array;
@@ -9564,11 +9515,17 @@ export namespace PutTaskAssignmentsRequest {
         inputId: string,
         action: PutTaskAssignmentsRequestAction,
         labelSubmitConfig?: LabelSubmitConfig.AsObject,
+        reviewApproveConfig?: ReviewApproveConfig.AsObject,
+        reviewRequestChangesConfig?: ReviewRequestChangesConfig.AsObject,
+        reviewRejectConfig?: ReviewRejectConfig.AsObject,
     }
 
     export enum ActionConfigCase {
         ACTION_CONFIG_NOT_SET = 0,
         LABEL_SUBMIT_CONFIG = 6,
+        REVIEW_APPROVE_CONFIG = 7,
+        REVIEW_REQUEST_CHANGES_CONFIG = 8,
+        REVIEW_REJECT_CONFIG = 9,
     }
 
 }
@@ -9592,6 +9549,87 @@ export class LabelSubmitConfig extends jspb.Message {
 export namespace LabelSubmitConfig {
     export type AsObject = {
         taskAssignmentsList: Array<proto_clarifai_api_resources_pb.TaskAssignment.AsObject>,
+    }
+}
+
+export class ReviewApproveConfig extends jspb.Message { 
+    clearTaskAssignmentsList(): void;
+    getTaskAssignmentsList(): Array<proto_clarifai_api_resources_pb.TaskAssignment>;
+    setTaskAssignmentsList(value: Array<proto_clarifai_api_resources_pb.TaskAssignment>): ReviewApproveConfig;
+    addTaskAssignments(value?: proto_clarifai_api_resources_pb.TaskAssignment, index?: number): proto_clarifai_api_resources_pb.TaskAssignment;
+    clearWorkersList(): void;
+    getWorkersList(): Array<proto_clarifai_api_resources_pb.Worker>;
+    setWorkersList(value: Array<proto_clarifai_api_resources_pb.Worker>): ReviewApproveConfig;
+    addWorkers(value?: proto_clarifai_api_resources_pb.Worker, index?: number): proto_clarifai_api_resources_pb.Worker;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ReviewApproveConfig.AsObject;
+    static toObject(includeInstance: boolean, msg: ReviewApproveConfig): ReviewApproveConfig.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ReviewApproveConfig, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ReviewApproveConfig;
+    static deserializeBinaryFromReader(message: ReviewApproveConfig, reader: jspb.BinaryReader): ReviewApproveConfig;
+}
+
+export namespace ReviewApproveConfig {
+    export type AsObject = {
+        taskAssignmentsList: Array<proto_clarifai_api_resources_pb.TaskAssignment.AsObject>,
+        workersList: Array<proto_clarifai_api_resources_pb.Worker.AsObject>,
+    }
+}
+
+export class ReviewRequestChangesConfig extends jspb.Message { 
+    clearTaskAssignmentsList(): void;
+    getTaskAssignmentsList(): Array<proto_clarifai_api_resources_pb.TaskAssignment>;
+    setTaskAssignmentsList(value: Array<proto_clarifai_api_resources_pb.TaskAssignment>): ReviewRequestChangesConfig;
+    addTaskAssignments(value?: proto_clarifai_api_resources_pb.TaskAssignment, index?: number): proto_clarifai_api_resources_pb.TaskAssignment;
+    clearWorkersList(): void;
+    getWorkersList(): Array<proto_clarifai_api_resources_pb.Worker>;
+    setWorkersList(value: Array<proto_clarifai_api_resources_pb.Worker>): ReviewRequestChangesConfig;
+    addWorkers(value?: proto_clarifai_api_resources_pb.Worker, index?: number): proto_clarifai_api_resources_pb.Worker;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ReviewRequestChangesConfig.AsObject;
+    static toObject(includeInstance: boolean, msg: ReviewRequestChangesConfig): ReviewRequestChangesConfig.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ReviewRequestChangesConfig, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ReviewRequestChangesConfig;
+    static deserializeBinaryFromReader(message: ReviewRequestChangesConfig, reader: jspb.BinaryReader): ReviewRequestChangesConfig;
+}
+
+export namespace ReviewRequestChangesConfig {
+    export type AsObject = {
+        taskAssignmentsList: Array<proto_clarifai_api_resources_pb.TaskAssignment.AsObject>,
+        workersList: Array<proto_clarifai_api_resources_pb.Worker.AsObject>,
+    }
+}
+
+export class ReviewRejectConfig extends jspb.Message { 
+    clearTaskAssignmentsList(): void;
+    getTaskAssignmentsList(): Array<proto_clarifai_api_resources_pb.TaskAssignment>;
+    setTaskAssignmentsList(value: Array<proto_clarifai_api_resources_pb.TaskAssignment>): ReviewRejectConfig;
+    addTaskAssignments(value?: proto_clarifai_api_resources_pb.TaskAssignment, index?: number): proto_clarifai_api_resources_pb.TaskAssignment;
+    clearWorkersList(): void;
+    getWorkersList(): Array<proto_clarifai_api_resources_pb.Worker>;
+    setWorkersList(value: Array<proto_clarifai_api_resources_pb.Worker>): ReviewRejectConfig;
+    addWorkers(value?: proto_clarifai_api_resources_pb.Worker, index?: number): proto_clarifai_api_resources_pb.Worker;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ReviewRejectConfig.AsObject;
+    static toObject(includeInstance: boolean, msg: ReviewRejectConfig): ReviewRejectConfig.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ReviewRejectConfig, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ReviewRejectConfig;
+    static deserializeBinaryFromReader(message: ReviewRejectConfig, reader: jspb.BinaryReader): ReviewRejectConfig;
+}
+
+export namespace ReviewRejectConfig {
+    export type AsObject = {
+        taskAssignmentsList: Array<proto_clarifai_api_resources_pb.TaskAssignment.AsObject>,
+        workersList: Array<proto_clarifai_api_resources_pb.Worker.AsObject>,
     }
 }
 
@@ -10576,4 +10614,5 @@ export enum PutTaskAssignmentsRequestAction {
     REVIEW_START = 10,
     REVIEW_APPROVE = 11,
     REVIEW_REQUEST_CHANGES = 12,
+    REVIEW_REJECT = 13,
 }

@@ -129,6 +129,13 @@ enum S {
   // Internal only model syncing.
   Models_Sync = 27 [(clarifai_depending_scopes) = Models_Get];
 
+  // To get model version export
+  ModelExports_Get = 142 [(clarfai_exposed) = true];
+
+  // To create model version export
+  ModelExports_Add = 143 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = ModelExports_Get];
+
   // TODO: No model get metrics scope.
 
   // Write to the workflows DB table.
@@ -406,7 +413,7 @@ enum S {
     (clarifai_depending_scopes) = Uploads_Get,
     (clarifai_depending_scopes) = Uploads_Add];
 
-  // To read allo control over remote runners
+  // To control remote runners
   Runners_Get = 131 [(clarfai_exposed) = true];
 
   Runners_Add = 132 [(clarfai_exposed) = true,
@@ -420,6 +427,26 @@ enum S {
 
   RunnerItems_Add = 135 [(clarfai_exposed) = true,
     (clarifai_depending_scopes) = RunnerItems_Get];
+
+  // // Pools of compute resources.
+  // Nodepools_Get = 136 [(clarfai_exposed) = true];
+
+  // Nodepools_Add = 137 [(clarfai_exposed) = true,
+  //   (clarifai_depending_scopes) = Nodepools_Get];
+
+  // Nodepools_Delete = 138 [(clarfai_exposed) = true,
+  //   (clarifai_depending_scopes) = Nodepools_Get,
+  //   (clarifai_depending_scopes) = Nodepools_Add];
+
+  // // How to autoscale resources within nodepools.
+  // Deployments_Get = 139 [(clarfai_exposed) = true];
+
+  // Deployments_Add = 140 [(clarfai_exposed) = true,
+  //   (clarifai_depending_scopes) = Deployments_Get];
+
+  // Deployments_Delete = 141 [(clarfai_exposed) = true,
+  //   (clarifai_depending_scopes) = Deployments_Get,
+  //   (clarifai_depending_scopes) = Deployments_Add];
 }
 
 extend google.protobuf.EnumValueOptions {

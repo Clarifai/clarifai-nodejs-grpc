@@ -728,13 +728,37 @@ service V2 {
         post: "/v2/models/{model_id}/outputs"
         body: "*"
       }
+      additional_bindings { // call a deployment directly as an endpoint.
+        post: "/v2/users/{runner_selector.deployment.user_id}/deployments/{runner_selector.deployment.id}/outputs"
+        body: "*"
+      }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Predict;
+    // TODO(zeiler): will need to add these for model prediction requests.
+    // option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    // option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
   }
+
+
+  // // TODO(zeiler): will need to
+  // // Single request but streaming resopnses.
+  // rpc GeneratePostModelOutputs (PostModelOutputsRequest) returns (stream MultiOutputResponse) {
+  //   option (google.api.http) = {
+  //     post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/outputs"
+  //     body: "*"
+  //   };
+  //   option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Predict;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
+  // }
 
   // List all the datasets.
   rpc ListDatasets (ListDatasetsRequest) returns (MultiDatasetResponse) {
@@ -1116,7 +1140,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
   }
 
   // Search over the models to find one or more you're looking for.
@@ -1333,6 +1356,24 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
 
+
+  // TODO(zeiler): in future we can add endpoints like this for listing runners for a specific model
+  // List all the runners currently handling work for the given model.
+  // By default this lists the runners available in your account as well as all the orgs you have
+  // access to.
+  // Could have RunnerSelector to break it down by Nodepool or Deployment.
+  // Addition filters on the request can select specific user/org to list from or nodepool.
+  // rpc ListModelVersionRunners (ListModelVersionRunnersRequest) returns (MultiRunnerResponse) {
+  //   option (google.api.http) = {
+  //     get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/runners"
+  //   };
+  //   option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+  // }
+
   rpc PostWorkflowVersionsUnPublish (PostWorkflowVersionsUnPublishRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/unpublish"
@@ -1515,8 +1556,9 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ModelExports_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ModelExports_Add;
   }
 
   // GetModelVersionExport
@@ -1530,6 +1572,7 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ModelExports_Get;
   }
 
   // Deprecated: Use GetEvaluation instead
@@ -2086,8 +2129,11 @@ service V2 {
   rpc GetApp (GetAppRequest) returns (SingleAppResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}"
+      additional_bindings {
+        get: "/v2/app"
+      }
     };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
@@ -2548,15 +2594,6 @@ service V2 {
 
 
 
-  rpc GetResourcePrice (GetResourcePriceRequest) returns (GetResourcePriceResponse) {
-    option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/resource_price"
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
-  }
 
 
 
@@ -2786,6 +2823,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Delete;
   }
+
 
 
 
@@ -3359,7 +3397,9 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
   }
 
-  // PutTaskAssignments evaluates all the annotations by labeler (authenticated user) for given task (task_id) and input (input_id).
+  // PutTaskAssignments performs an action for the task assignments in given task.
+  // All the actions are theoretically idempotent, but practically, in the current implementation,
+  // the REVIEW_START action is not idempotent. See PutTaskAssignmentsRequestAction for more details.
   rpc PutTaskAssignments (PutTaskAssignmentsRequest) returns (MultiTaskAssignmentResponse) {
     option (google.api.http) = {
       put: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/assignments"
@@ -3595,31 +3635,42 @@ service V2 {
 
 
 
-  // Get a specific runner from an app.
+  // Get a specific runner.
+  // TODO(zeiler): runner_id is a UUID so can list globally as well.
   rpc GetRunner (GetRunnerRequest) returns (SingleRunnerResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/runners/{runner_id}"
+      // additional_bindings { // TODO(zeiler): add runner selector to this to get runners for a specific nodepool
+      //   get: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners/{runner_id}"
+      // }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
   }
 
-  // List all the runners in community, by user or by app.
+  // List all the runners for the user.
   rpc ListRunners (ListRunnersRequest) returns (MultiRunnerResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/runners"
+      // additional_bindings { // TODO(zeiler): add runner selector to this to get runners for a specific nodepool
+      //   get: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners"
+      // }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
   }
 
-  // Add a runners to an app.
+  // Add a runners to a user.
   rpc PostRunners (PostRunnersRequest) returns (MultiRunnerResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/runners"
       body: "*"
+      // additional_bindings { // TODO(zeiler): add runner selector to this to get runners for a specific nodepool
+      //   post: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners"
+      //   body: "*"
+      // }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
@@ -3632,6 +3683,10 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/runners"
       body: "*"
+      // additional_bindings { // TODO(zeiler): add runner selector to this to get runners for a specific nodepool
+      //   delete: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners"
+      //   body: "*"
+      // }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
@@ -3641,9 +3696,13 @@ service V2 {
   }
 
   // List items for the remote runner to work on.
+  // since the runner_id is a UUID we can access it directly too.
   rpc ListRunnerItems (ListRunnerItemsRequest) returns (MultiRunnerItemResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/runners/{runner_id}/items"
+      // additional_bindings { // TODO(zeiler): add runner selector to this to get runners for a specific nodepool
+      //   get: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners/{runner_id}/items"
+      // }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
@@ -3652,10 +3711,15 @@ service V2 {
   }
 
   // Post back outputs from remote runners
+  // since the runner_id is a UUID we can access it directly too.
   rpc PostRunnerItemOutputs (PostRunnerItemOutputsRequest) returns (MultiRunnerItemOutputResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/runners/{runner_id}/items/{item_id}/outputs"
       body: "*"
+      // additional_bindings { // TODO(zeiler): add runner selector to this to get runners for a specific nodepool
+      //   post: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners/{runner_id}/items/{item_id}/outputs"
+      //   body: "*"
+      // }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
@@ -3675,7 +3739,20 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
-  }}
+  }
+
+
+
+
+
+
+
+
+
+
+}
+
+
 
 
 
@@ -4126,26 +4203,7 @@ message MultiCollaborationsResponse {
 
 
 
-// Get Resource Price - new billing
-message GetResourcePriceRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  oneof resource {
-    // ########## Supported fields ##########
-    // - id
-    // - model_version.id
-    Model model = 2;
-    // ########## Supported fields ##########
-    // - id
-    // - version.id
-    Workflow workflow = 3;
-  }
-}
 
-message GetResourcePriceResponse {
-  clarifai.api.status.Status status = 1;
-  // Price is in millicents, i.e. $1/100000
-  int64 price = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
-}
 
 // GetStatusCodeRequest
 message GetStatusCodeRequest {
@@ -4927,6 +4985,9 @@ message PostModelOutputsRequest {
   // This allows you to specify config options for the model such as
   // the language which appear's in the model's output_info.
   Model model = 5;
+
+  // Allow filtering of prediction requests down to specific Nodepools, Deploymetns or Runners
+  RunnerSelector runner_selector = 6;
 }
 
 // Listing the inputs that went into training this model.
@@ -5709,7 +5770,7 @@ message MultiOutputResponse {
 // ListScopesRequest
 message ListScopesRequest {
   // If "personal_access_token" include scopes and endpoints available to personal access tokens.
-  // If "api_key" include scopes and endpoints available to app-specific keys. (default)
+  // If "app_specific_key" include scopes and endpoints available to app-specific keys. (default)
   string key_type = 1;
 
   // For all user specific information we include user_app_id to get the user_id in a consistent way
@@ -6607,6 +6668,8 @@ message SingleTaskCountResponse {
 
 
 
+
+
 ////////////////////////////////////////////////////////////////////////////////
 // Label Orders
 ////////////////////////////////////////////////////////////////////////////////
@@ -7137,7 +7200,7 @@ message PutTaskAssignmentsRequest {
   // Deprecated: use action and action_config instead.
   // Supported for backwards compatibility: setting this field is equivalent with
   // * action = LABEL_SUBMIT
-  // * label_submit_config = [{"task_assignments": {"input": {"id": <input-id>}}}]
+  // * label_submit_config = [{"task_assignments": {{"id": "<task-assignment-id-for-input-id>"}}]
   string input_id = 3;
 
   // Action to perform on selected task.
@@ -7145,22 +7208,89 @@ message PutTaskAssignmentsRequest {
 
   oneof action_config {
     LabelSubmitConfig label_submit_config = 6;
+    ReviewApproveConfig review_approve_config = 7;
+    ReviewRequestChangesConfig review_request_changes_config = 8;
+    ReviewRejectConfig review_reject_config = 9;
   }
 }
 enum PutTaskAssignmentsRequestAction {
   PUT_TASK_ASSIGNMENTS_REQUEST_ACTION_NOT_SET = 0;
 
+  // Create a list of task assignments for labeler => 10 inputs are assigned to the labeler.
+  // This is a fully sync action.
+  // If task assignments already exist, then return existing task assignments.
   LABEL_START = 1;
+
+  // Submit task assignments => mark task assignment work as completed.
+  // This is a partially sync action.
+  // Sync: task assignments are updated as follows:
+  // * when review_strategy is NONE, then task assignment status is updated to SUCCESS.
+  // * when review strategy is CONSENSUS, then task assignment status is updated to AWAITING_CONSENSUS_REVIEW.
+  // * when review strategy is MANUAL, then task assignment status is updated to AWAITING_REVIEW.
+  // If task assignments are already submitted, then no update is performed on them.
+  // Async: annotations added for the same input as the task assignment are updated as follows:
+  // * when review_strategy is NONE, then annotation status is updated to SUCCESS.
+  // * when review strategy is CONSENSUS, then annotation status is updated to SUCCESS (if it reaches consensus) or AWAITING_REVIEW (if it does not reach consensus).
+  // * when review strategy is MANUAL, then annotation status is updated to AWAITING_REVIEW.
   LABEL_SUBMIT = 2;
 
+  // Return a list of task assignments for reviewer to review => 10 inputs are assigned to the reviewer.
+  // This is a fully sync action.
+  // NOT idempotent:
+  //  In the current implementation, we don't actually store the reviewer in the task assignment,
+  //  as the task assignment still stays assigned to the labeler.
+  //  Therefore, multiple calls to this endpoint may result in different set of task assignments to review.
+  //  For now, this action is practically not idempotent.
+  //  In the future, we could however store the reviewer in the task assignment and
+  //  return existing task assignments already assigned to the reviewer => this will make this action idempotent.
   REVIEW_START = 10;
+
+  // Approve task assignments.
+  // There are two types of configurations:
+  // * Batch approve: approve a list of task assignment IDs;
+  // * Bulk approve: approve all task assignments from a list of workers.
+  // This is a partially sync action.
+  // Sync: task assignments are updated to SUCCESS
+  // Async: annotations added for the same input as the task assignment are updated to SUCCESS
   REVIEW_APPROVE = 11;
+
+  // Request changes for task assignments.
+  // There are two types of configurations:
+  // * Batch request changes: request changes for a list of task assignment IDs;
+  // * Bulk request changes: request changes for all task assignments from a list of workers.
+  // This is a partially sync action.
+  // Sync: task assignments are updated to PENDING
+  // Async: annotations added for the same input as the task assignment are updated to PENDING
   REVIEW_REQUEST_CHANGES = 12;
+
+  // Reject task assignments.
+  // There are two types of configurations:
+  // * Batch reject: reject a list of task assignment IDs;
+  // * Bulk reject: reject all task assignments from a list of workers.
+  // This is a partially sync action.
+  // Sync: task assignments are updated to REVIEW_DENIED
+  // Async: annotations added for the same input as the task assignment are updated to REVIEW_DENIED
+  REVIEW_REJECT = 13;
 }
 
 
 message LabelSubmitConfig {
   repeated TaskAssignment task_assignments = 1;
+}
+
+message ReviewApproveConfig {
+  repeated TaskAssignment task_assignments = 1;
+  repeated Worker workers = 2;
+}
+
+message ReviewRequestChangesConfig {
+  repeated TaskAssignment task_assignments = 1;
+  repeated Worker workers = 2;
+}
+
+message ReviewRejectConfig {
+  repeated TaskAssignment task_assignments = 1;
+  repeated Worker workers = 2;
 }
 
 message MultiTaskAssignmentResponse {
@@ -7340,6 +7470,10 @@ message ListRunnersRequest {
   uint32 per_page = 3;
 }
 
+
+
+
+
 // PostRunnersRequest
 message PostRunnersRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -7440,3 +7574,16 @@ message MultiTrainingTimeEstimateResponse {
   clarifai.api.status.Status status = 1;
   repeated google.protobuf.Duration training_time_estimates = 2;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

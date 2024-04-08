@@ -164,7 +164,6 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     deleteAnnotationFilters: IV2Service_IDeleteAnnotationFilters;
     listStatusCodes: IV2Service_IListStatusCodes;
     getStatusCode: IV2Service_IGetStatusCode;
-    getResourcePrice: IV2Service_IGetResourcePrice;
     listCollaborators: IV2Service_IListCollaborators;
     postCollaborators: IV2Service_IPostCollaborators;
     patchCollaborators: IV2Service_IPatchCollaborators;
@@ -1562,15 +1561,6 @@ interface IV2Service_IGetStatusCode extends grpc.MethodDefinition<proto_clarifai
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleStatusCodeResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleStatusCodeResponse>;
 }
-interface IV2Service_IGetResourcePrice extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetResourcePriceRequest, proto_clarifai_api_service_pb.GetResourcePriceResponse> {
-    path: "/clarifai.api.V2/GetResourcePrice";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.GetResourcePriceRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.GetResourcePriceRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.GetResourcePriceResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.GetResourcePriceResponse>;
-}
 interface IV2Service_IListCollaborators extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListCollaboratorsRequest, proto_clarifai_api_service_pb.MultiCollaboratorsResponse> {
     path: "/clarifai.api.V2/ListCollaborators";
     requestStream: false;
@@ -2370,7 +2360,6 @@ export interface IV2Server {
     deleteAnnotationFilters: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteAnnotationFiltersRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     listStatusCodes: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListStatusCodesRequest, proto_clarifai_api_service_pb.MultiStatusCodeResponse>;
     getStatusCode: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetStatusCodeRequest, proto_clarifai_api_service_pb.SingleStatusCodeResponse>;
-    getResourcePrice: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetResourcePriceRequest, proto_clarifai_api_service_pb.GetResourcePriceResponse>;
     listCollaborators: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListCollaboratorsRequest, proto_clarifai_api_service_pb.MultiCollaboratorsResponse>;
     postCollaborators: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostCollaboratorsRequest, proto_clarifai_api_service_pb.MultiCollaboratorsResponse>;
     patchCollaborators: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchCollaboratorsRequest, proto_clarifai_api_service_pb.MultiCollaboratorsResponse>;
@@ -2887,9 +2876,6 @@ export interface IV2Client {
     getStatusCode(request: proto_clarifai_api_service_pb.GetStatusCodeRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleStatusCodeResponse) => void): grpc.ClientUnaryCall;
     getStatusCode(request: proto_clarifai_api_service_pb.GetStatusCodeRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleStatusCodeResponse) => void): grpc.ClientUnaryCall;
     getStatusCode(request: proto_clarifai_api_service_pb.GetStatusCodeRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleStatusCodeResponse) => void): grpc.ClientUnaryCall;
-    getResourcePrice(request: proto_clarifai_api_service_pb.GetResourcePriceRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.GetResourcePriceResponse) => void): grpc.ClientUnaryCall;
-    getResourcePrice(request: proto_clarifai_api_service_pb.GetResourcePriceRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.GetResourcePriceResponse) => void): grpc.ClientUnaryCall;
-    getResourcePrice(request: proto_clarifai_api_service_pb.GetResourcePriceRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.GetResourcePriceResponse) => void): grpc.ClientUnaryCall;
     listCollaborators(request: proto_clarifai_api_service_pb.ListCollaboratorsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCollaboratorsResponse) => void): grpc.ClientUnaryCall;
     listCollaborators(request: proto_clarifai_api_service_pb.ListCollaboratorsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCollaboratorsResponse) => void): grpc.ClientUnaryCall;
     listCollaborators(request: proto_clarifai_api_service_pb.ListCollaboratorsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCollaboratorsResponse) => void): grpc.ClientUnaryCall;
@@ -3550,9 +3536,6 @@ export class V2Client extends grpc.Client implements IV2Client {
     public getStatusCode(request: proto_clarifai_api_service_pb.GetStatusCodeRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleStatusCodeResponse) => void): grpc.ClientUnaryCall;
     public getStatusCode(request: proto_clarifai_api_service_pb.GetStatusCodeRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleStatusCodeResponse) => void): grpc.ClientUnaryCall;
     public getStatusCode(request: proto_clarifai_api_service_pb.GetStatusCodeRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleStatusCodeResponse) => void): grpc.ClientUnaryCall;
-    public getResourcePrice(request: proto_clarifai_api_service_pb.GetResourcePriceRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.GetResourcePriceResponse) => void): grpc.ClientUnaryCall;
-    public getResourcePrice(request: proto_clarifai_api_service_pb.GetResourcePriceRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.GetResourcePriceResponse) => void): grpc.ClientUnaryCall;
-    public getResourcePrice(request: proto_clarifai_api_service_pb.GetResourcePriceRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.GetResourcePriceResponse) => void): grpc.ClientUnaryCall;
     public listCollaborators(request: proto_clarifai_api_service_pb.ListCollaboratorsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCollaboratorsResponse) => void): grpc.ClientUnaryCall;
     public listCollaborators(request: proto_clarifai_api_service_pb.ListCollaboratorsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCollaboratorsResponse) => void): grpc.ClientUnaryCall;
     public listCollaborators(request: proto_clarifai_api_service_pb.ListCollaboratorsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCollaboratorsResponse) => void): grpc.ClientUnaryCall;

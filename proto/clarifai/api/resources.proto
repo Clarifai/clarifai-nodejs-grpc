@@ -1821,6 +1821,21 @@ message ModelVersion {
   ImportInfo import_info = 22;
   // Contains the training logs if available
   string train_log = 23;
+
+  // The minimum required compute resource for this model for inference.
+  ComputeInfo inference_compute_info = 24;
+
+  // Build information for the model version
+  BuildInfo build_info = 25;
+}
+
+message BuildInfo {
+  // Docker image name
+  string docker_image_name = 1;
+  // Docker image tag
+  string docker_image_tag = 2;
+  // Docker image digest
+  string docker_image_digest = 3;
 }
 
 // ModelVersionExport contains metadata for a single Model version export.
@@ -1964,7 +1979,11 @@ message EvalTestSetEntry {
   // Only region-based/frame-based app contains this annotation
   // Each annotation only contains one region
   // And the concepts is in ground_truth_concepts instead of this annotation
-  Annotation annotation = 5;
+  Annotation annotation = 5 [deprecated = true];
+
+  // For region based models, region and associated concepts are stored together.
+  Annotation predicted_annotation = 7;
+  Annotation ground_truth_annotation = 8;
 }
 
 // LOPQEvalResult
@@ -2943,7 +2962,7 @@ message AppDuplicationFilters {
   bool copy_annotations = 3;
   // Copy models. Requires that copy_concepts is also set.
   bool copy_models = 4;
-  // Copy workflows. Requires that copy_models and copy_concepts are also set.
+  // Copy workflows.
   bool copy_workflows = 5;
   // Copy installed module versions.
   bool copy_installed_module_versions = 6;
@@ -4213,9 +4232,18 @@ message BookmarkOrigin {
   BookmarkType resource_type = 4;
 }
 
-// An app module that a user created in our app module marketplace.
+
+// Moving the runner label matching into it's own object so that it can be used
+// next to other resource types that a Runner might match work on.
+// message RunnerLabels { // FUTURE
+//   repeated string labels = 1;
+// }
+
+// A worker for compute within a nodepool of instances.
+// This asks the API for work
 message Runner {
   // A unique ID for this app module.
+  // This is a UUID since runners can be automatically orchestrated.
   string id = 1;
   // A short description for this app module to be used in grids of modules.
   string description = 2;
@@ -4229,9 +4257,287 @@ message Runner {
   // This is an optional arg.
   google.protobuf.Struct metadata = 5;
 
-  // The creator of the app module.
+  // The owner of the runner. Runners belong to a user/org account.
   string user_id = 6;
 
-  // Labels to match.
-  repeated string labels = 7;
+  // Labels to match in order to find work.
+  repeated string labels = 7 [deprecated = true];
+
+  // RunnerObject
+  // Instead of just matching on labels we might want to have more explicit matching of what
+  // work this runner is looking for.
+  // The thing that the autoscaling cnfig applies to for this nodepool.
+  oneof object {
+    // Model: match work to only a specific model.
+    Model model = 9;
+    // Workflow: match work to only a specific workflow.
+    Workflow workflow = 10;
+    // We could also support matching by labels here for future "job" like functionality where
+    // the item itself fully defines the work that needs to be done.
+    // RunnerLabels runner_labels = 11; // FUTURE
+  }
+
+  // Runners are defined within nodepools so this field needs the id and user_id of the nodepool
+  // to be provided when creating a Runner.
+  // This nodepool must be accessible to you or an org you are part of.
+  Nodepool nodepool = 12;
+
+  ////////////////////////////
+  // Need resources on the runner so we can schedule this Runner into the Nodepool.
+  // If this runner is being orchestrated for a model then the orchestrator will set this to the
+  // model resource requirements. If a workflow then it'll compute those requirements and set
+  // populate this resource field.
+  // Having this on the underlying object like Model and Workflow allows us to represent the minimum
+  // requirements on those object, which may be less than what the Runner allocates (as a safety
+  // margin for the runner to for sure run the resource).
+  ComputeInfo compute_info = 13;
+}
+
+
+
+
+
+// A nodepool is a set of nodes dedicated for a given user's compute needs.
+// This compute will typically be consumed by runners and in the future other objects
+// like UI modules may be assigned to node pools.
+message Nodepool {
+  // The user defined ID of the nodepool.
+  string id = 1;
+
+  // The user/org that this nodepool belongs to.
+  string user_id = 2;
+
+  // Which cloud region this nodepool is within.
+  CloudRegion cloud_region = 3;
+
+  // Type of nodes that are ok for instances in this pool.
+  // If both spot and on-demand are provided then the runner will be able to run on either
+  // with a preference for spot until they are not available.
+  enum CapacityType {
+    UKNOWN_CAPACITY_TYPE = 0;
+    ONDEMAND_TYPE = 1;
+    SPOT_TYPE = 2;
+  }
+  repeated CapacityType capacity_types = 4;
+
+  //////////////////////////////////////
+  // The instance types that will be available in this pool of nodes.
+  // Clarifai offers multiple different choices that combine cpu cores, memory and accelerator.
+  repeated string instance_types = 8;
+  //////////////////////////////////////
+
+
+  // Minimum number of instances in this nodepool. This allows the nodeool to scale down to this
+  // amount. A nodepool needs a minimum of 1 instance.
+  uint32 min_instances = 9;
+
+  // An upper limit on the number of instances in this nodepool. This allows the nodepool to scale
+  // up to this amount.
+  uint32 max_instances = 10;
+
+  // Other future configuration we can add:
+  // - disk information
+  // - architecture type (ARM/x86)
+  // - base OS
+  // - repeated availability zones.
+}
+
+
+
+// We define a cloud region here to be used in Nodepools and by the cloud agent.
+// There will be one cloud agent per CloudRegion.
+// This allows us to define CloudRegions that are VPCs within one physical cloud and have that
+// managed by one cloud agent which can list all nodepools for that VPC to deploy them and
+// orchestrate work within them.
+message CloudRegion {
+  string id = 1;
+
+  enum Cloud {
+    UNKOWN_CLOUD = 0;
+    // Run on a user's own infrastructure. This has restrictions on who can access resources
+    // that are being run by SELF_HOSTED runners. Only those who are part of the user/org where they
+    // exist can leverage them.
+    SELF_HOSTED = 1;
+    AWS = 2;
+    GCP = 3;
+    AZURE = 4;
+    LAMBDA = 5;
+  }
+  Cloud cloud = 3;
+
+  // The region. The naming here depends on the cloud choice above and will be validated
+  // against which clouds+regions that Clarifai currently supports.
+  string region = 4;
+
+  // For future support of different VPC.
+  // To support splitting a region into multiple VPCs.
+  // string vpc_id = 5; // FUTURE
+  // The user/org that this VPC belongs to.
+  // string vpc_user_id = 6; // FUTURE
+
+  // this is the base url for the API for all runners in this nodepool to communicate with.
+  // This is necesary for multi-region / multi-cloud support since runners should only pick up
+  // work from the region/cloud that they are within. The runners will be orchestrated within the
+  // nodepool so can have this base_api_url injected as the CLARIFAI_API_BASE env variable.
+  // We include this in the proto in case a user needs to create a nodepool on their own
+  // infrastructure that talks with a specific region.
+  // string base_api_url = 7; // FUTURE
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// These are the resource needs of a given API object such as a model.
+// This is what they require as a minimum to run and will be used upon scheduling
+// as the request and limit for the k8s pod. If we want to separate limits and requests in the
+// future we can allow setting a limits ComputeInfo and a requests ComputeInfo.
+message ComputeInfo {
+  // Number of CPUs.
+  uint32 num_cpus = 1;
+  // Amount of CPU memory to use as a minimum.
+  string cpu_memory = 2;
+  // Number of accelerators (typically GPUs, TPUs, etc. not CPUs) for this resource.
+  uint32 num_accelerators = 3;
+  // Amount of accelerator/GPU memory to use as a minimum.
+  // This is defined per accelerator.
+  // This follows the format used by kubernetes like 1Ki, 2Mi, 3Gi, 4Ti.
+  string accelerator_memory = 4;
+  // The supported accelerators that the resource can run on. If the resource requires a specific
+  // accelerator type then it will only be scheduled on nodes that have that type of accelerator.
+  // If there is no hard requirements beyond the number of accelerators and their memory then this
+  // field can be left empty.
+  // This setting will cause an error if num_accelerators == 0
+
+  // Or should it be removed completely and use the nodepool accelerator type itself.
+  // These are the supported accelerators that the model can run on.
+  repeated string accelerator_type = 5;
+
+  // Future potential things we may add:
+  // - disk information
+  // - architecture type (ARM/x86)
+  // - number of nodes for each replica of this resource to run on for multi-node things.
+  // - classes of accelerators like Nvidia or "Ampere", etc.
+
+  // The number of nodes of this type needed to serve this resource.
+  // Since 0 is not valid, this will default to 1 if 0 is provided.
+  // uint32 num_nodes = 6; // FUTURE
+}
+
+
+
+// It might be better to do this as runner autoscaling so that resources
+// of a model are very simply what that model needs at minimum.
+// Note that resources for things like modes inside runners are not
+// related to how many replicas of those runners are needed to handle traffic.
+message AutoscaleConfig {
+
+  // The minimum number of replicas for the runner to have.
+  // Defaults to 0 which means autoscaling can scale down to zero.
+  // If you want a replica always up then set to >= 1.
+  uint32 min_replicas = 1;
+  // The maximium number of replicas to scale up the runner to.
+  uint32 max_replicas = 2;
+
+  // The number of seconds of traffic history to consider when autoscaling.
+  uint32 traffic_history_seconds = 3;
+  // The time to wait before scaling down after the last request.
+  uint32 scale_down_delay_seconds = 4;
+  // The time to wait between scaling up replicas without burst traffic.
+  uint32 scale_up_delay_seconds = 5;
+
+  // Depending on your plan you may be able to enable packing of resources into a single node
+  // for more compute and cost efficiency.
+  bool enable_packing = 6;
+}
+
+
+
+
+
+
+
+// A deployment allows you to configure how runners for a particular type of resource will
+// scale up and down. These are unique per user_id, nodepool and model so for differnet nodepools
+// you can scale differently.
+message Deployment {
+  // An id for this configured deployment.
+  string id = 1;
+  // The user who owns the deployment. These live in the user/org account.
+  string user_id = 2;
+  // How to autoscale the object.
+  AutoscaleConfig autoscale_config = 3;
+  // You can configure different autoscaling per nodepool(s).
+  // These nodepools have to be also owned by the same user_id/org as this deployment.
+  // If there is more than one nodepool we use the model's ComputeInfo to match
+  // with what the nodepool provides to decide which one can handle it combined with the
+  // NodepoolRank below. Note: even within a single nodepool if it is heterogeneous then
+  // we need a way to rank scheduling choices when we don't know how to decide (like a model
+  // supports
+  repeated Nodepool nodepools = 4;
+
+  // The thing that the autoscaling config applies to for this nodepool.
+  // For a given user_id, nodepool_id, and object ID we can only have one deployment as it defines
+  oneof object {
+    // Model
+    Model model = 5;
+    // Workflow
+    Workflow workflow = 6;
+    // We could also support matching by labels here for future "job" like functionality where
+    // the item itself fully defines the work that needs to be done.
+    // This would match any resources that have these runner labels defined on them.
+    // RunnerLabels runner_labels = 11; // FUTURE
+  }
+
+  // In some scenarios it may not be obvous how we should schedule a resource to underlying nodes
+  // within the nodepool(s) above. The SchedulerChoice allows us to specify how to decide which
+  // nodepool to use when there are multiple nodepools and how to decide which type of node
+  // within a nodepool if there are multiple types.
+  // If here are multiple nondepools then a decision on which to use comes into play
+  // if it is not specified in the prediction request.
+  // Even with a single nodepool a choice may come up such as when a resource that needs scheduling
+  // has not specified the accelerator types it supports and the nodepool has multiple types.
+  enum SchedulingChoice {
+    UNKNOWN_SCHEDULING_CHOICE = 0;
+    FAIL = 1; // fail if there is any ambiguity.
+    RANDOM = 2; // randomly pick amongst the nodepools/nodes to assign.
+    PRICE = 3; // choose the compute that is cheaper
+    PERFORMANCE = 4; // schedule to the fastest known iption.
+    NETWORK = 5; // optimize based on network latency.
+    UTILIZATION = 6; // send to the least used nodepool based on it's capacity.
+    PREFER_SPOT = 7; // choose spot instances over on-demand
+    PREFER_ONDEMAND = 8; // choose on-demand instances over spot.
+  }
+  SchedulingChoice scheduling_choice = 7;
+}
+
+
+
+//////////////////////////////////////////
+// Don't need RunnerSelector if we're opening up endpoints for deployments.
+//////////////////////////////////////////
+// The RunnerSelector is an optional field we can provide during runtime
+// of model/workflow predictions to specify which particular runner we want to process the work.
+// This can optionally be used to select a particular nodepool and then within that nodepool
+// a particular runner.
+message RunnerSelector {
+  // A particular nodepool for the resource to be run within. This request the id and user_id of
+  // the nodepool to be specified. Runners will be scaled according to a deployment for the given
+  // resource to be run. There should not be more than one deployment in this nodepool for the
+  // particular resource to run. If no deployments then default autoscaling will be used.
+  Nodepool nodepool = 1;
+  // Optionally a partcular runner within the nodepool.
+  Runner runner = 2;
+  // Optionally a partcular deployment within the nodepool.
+  Deployment deployment = 3;
+  // In future as we support matching runners based on just labels:
+  // RunnerLabels runner_labels = 3; // FUTURE
 }
