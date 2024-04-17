@@ -3823,6 +3823,9 @@ patchAnnotations: {
     responseDeserialize: deserialize_clarifai_api_MultiAnnotationResponse,
   },
   // Patch annotations status by worker id and task id.
+// Deprecated: Use PutTaskAssignments to update task annotations.
+//   For example, you can use PutTaskAssignments with action REVIEW_APPROVE
+//   to approve task assignments and associated annotations in bulk.
 patchAnnotationsStatus: {
     path: '/clarifai.api.V2/PatchAnnotationsStatus',
     requestStream: false,
@@ -4053,23 +4056,32 @@ postModelOutputs: {
     responseSerialize: serialize_clarifai_api_MultiOutputResponse,
     responseDeserialize: deserialize_clarifai_api_MultiOutputResponse,
   },
-  // // TODO(zeiler): will need to
-// // Single request but streaming resopnses.
-// rpc GeneratePostModelOutputs (PostModelOutputsRequest) returns (stream MultiOutputResponse) {
-//   option (google.api.http) = {
-//     post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/outputs"
-//     body: "*"
-//   };
-//   option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-//   option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-//   option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
-//   option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
-//   option (clarifai.auth.util.cl_depending_scopes) = Predict;
-//   option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
-//   option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
-// }
-//
-// List all the datasets.
+  // TODO(zeiler): will need to
+// Single request but streaming resopnses.
+generateModelOutputs: {
+    path: '/clarifai.api.V2/GenerateModelOutputs',
+    requestStream: false,
+    responseStream: true,
+    requestType: proto_clarifai_api_service_pb.PostModelOutputsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiOutputResponse,
+    requestSerialize: serialize_clarifai_api_PostModelOutputsRequest,
+    requestDeserialize: deserialize_clarifai_api_PostModelOutputsRequest,
+    responseSerialize: serialize_clarifai_api_MultiOutputResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiOutputResponse,
+  },
+  // Stream of requests and stream of responses
+streamModelOutputs: {
+    path: '/clarifai.api.V2/StreamModelOutputs',
+    requestStream: true,
+    responseStream: true,
+    requestType: proto_clarifai_api_service_pb.PostModelOutputsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiOutputResponse,
+    requestSerialize: serialize_clarifai_api_PostModelOutputsRequest,
+    requestDeserialize: deserialize_clarifai_api_PostModelOutputsRequest,
+    responseSerialize: serialize_clarifai_api_MultiOutputResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiOutputResponse,
+  },
+  // List all the datasets.
 listDatasets: {
     path: '/clarifai.api.V2/ListDatasets',
     requestStream: false,
@@ -4486,6 +4498,7 @@ patchModelLanguages: {
     responseDeserialize: deserialize_clarifai_api_MultiModelLanguageResponse,
   },
   // Deprecated: Unmaintained and ideally replaced with usage of datasets
+//   The server may refuse to accept requests to this endpoint.
 listModelInputs: {
     path: '/clarifai.api.V2/ListModelInputs',
     requestStream: false,
@@ -4664,8 +4677,9 @@ getModelVersionExport: {
     responseSerialize: serialize_clarifai_api_SingleModelVersionExportResponse,
     responseDeserialize: deserialize_clarifai_api_SingleModelVersionExportResponse,
   },
-  // Deprecated: Use GetEvaluation instead
-// Get the evaluation metrics for a model version.
+  // Get the evaluation metrics for a model version.
+// Deprecated: Use GetEvaluation instead
+//   The server may refuse to accept requests to this endpoint.
 getModelVersionMetrics: {
     path: '/clarifai.api.V2/GetModelVersionMetrics',
     requestStream: false,
@@ -5249,6 +5263,7 @@ patchSearches: {
   // Execute a new search and optionally save it.
 //
 // Deprecated: Use PostInputsSearches or PostAnnotationsSearches instead.
+//  The server may refuse to accept requests to this endpoint.
 postSearches: {
     path: '/clarifai.api.V2/PostSearches',
     requestStream: false,
@@ -6042,7 +6057,11 @@ deleteBulkOperations: {
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },
-  // List next non-labeled and unassigned inputs from task's dataset
+  // Deprecated: Use PutTaskAssignments with action=LABEL_START.
+//   This endpoint has initially been designed as a GET request,
+//   but has been re-designed to serve a PUT logic.
+//   In order to clearly highlight that this endpoint serves a PUT request,
+//   this endpoint has been deprecated and replaced by PutTaskAssignments with action=LABEL_START.
 listNextTaskAssignments: {
     path: '/clarifai.api.V2/ListNextTaskAssignments',
     requestStream: false,
@@ -6311,7 +6330,25 @@ postRunnerItemOutputs: {
     responseSerialize: serialize_clarifai_api_MultiRunnerItemOutputResponse,
     responseDeserialize: deserialize_clarifai_api_MultiRunnerItemOutputResponse,
   },
-  postModelVersionsTrainingTimeEstimate: {
+  // This maintains a single request for asking the API if there is any work to be done, processing
+// it and streaming back results.
+// To do that first handshake the MultiRunnerItemOutputResponse will have RUNNER_STREAM_START
+// status filled in so that the API knows to respond with a MultiRunnerItemResponse.
+// For now there will only be one of those if the model prediction only has one request.
+// NOTE(zeiler): downside of this is you can't use HTTP REST requests to do runner work.
+processRunnerItems: {
+    path: '/clarifai.api.V2/ProcessRunnerItems',
+    requestStream: true,
+    responseStream: true,
+    requestType: proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiRunnerItemResponse,
+    requestSerialize: serialize_clarifai_api_PostRunnerItemOutputsRequest,
+    requestDeserialize: deserialize_clarifai_api_PostRunnerItemOutputsRequest,
+    responseSerialize: serialize_clarifai_api_MultiRunnerItemResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiRunnerItemResponse,
+  },
+  // Get the training time estimate based off train request and estimated input count.
+postModelVersionsTrainingTimeEstimate: {
     path: '/clarifai.api.V2/PostModelVersionsTrainingTimeEstimate',
     requestStream: false,
     responseStream: false,

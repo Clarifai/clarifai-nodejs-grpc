@@ -57,6 +57,8 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     patchInputsSearches: IV2Service_IPatchInputsSearches;
     postInputsSearches: IV2Service_IPostInputsSearches;
     postModelOutputs: IV2Service_IPostModelOutputs;
+    generateModelOutputs: IV2Service_IGenerateModelOutputs;
+    streamModelOutputs: IV2Service_IStreamModelOutputs;
     listDatasets: IV2Service_IListDatasets;
     getDataset: IV2Service_IGetDataset;
     postDatasets: IV2Service_IPostDatasets;
@@ -235,6 +237,7 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     deleteRunners: IV2Service_IDeleteRunners;
     listRunnerItems: IV2Service_IListRunnerItems;
     postRunnerItemOutputs: IV2Service_IPostRunnerItemOutputs;
+    processRunnerItems: IV2Service_IProcessRunnerItems;
     postModelVersionsTrainingTimeEstimate: IV2Service_IPostModelVersionsTrainingTimeEstimate;
 }
 
@@ -593,6 +596,24 @@ interface IV2Service_IPostModelOutputs extends grpc.MethodDefinition<proto_clari
     path: "/clarifai.api.V2/PostModelOutputs";
     requestStream: false;
     responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostModelOutputsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostModelOutputsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiOutputResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiOutputResponse>;
+}
+interface IV2Service_IGenerateModelOutputs extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostModelOutputsRequest, proto_clarifai_api_service_pb.MultiOutputResponse> {
+    path: "/clarifai.api.V2/GenerateModelOutputs";
+    requestStream: false;
+    responseStream: true;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostModelOutputsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostModelOutputsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiOutputResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiOutputResponse>;
+}
+interface IV2Service_IStreamModelOutputs extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostModelOutputsRequest, proto_clarifai_api_service_pb.MultiOutputResponse> {
+    path: "/clarifai.api.V2/StreamModelOutputs";
+    requestStream: true;
+    responseStream: true;
     requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostModelOutputsRequest>;
     requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostModelOutputsRequest>;
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiOutputResponse>;
@@ -2200,6 +2221,15 @@ interface IV2Service_IPostRunnerItemOutputs extends grpc.MethodDefinition<proto_
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse>;
 }
+interface IV2Service_IProcessRunnerItems extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, proto_clarifai_api_service_pb.MultiRunnerItemResponse> {
+    path: "/clarifai.api.V2/ProcessRunnerItems";
+    requestStream: true;
+    responseStream: true;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiRunnerItemResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiRunnerItemResponse>;
+}
 interface IV2Service_IPostModelVersionsTrainingTimeEstimate extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse> {
     path: "/clarifai.api.V2/PostModelVersionsTrainingTimeEstimate";
     requestStream: false;
@@ -2253,6 +2283,8 @@ export interface IV2Server {
     patchInputsSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchInputsSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse>;
     postInputsSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostInputsSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse>;
     postModelOutputs: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostModelOutputsRequest, proto_clarifai_api_service_pb.MultiOutputResponse>;
+    generateModelOutputs: grpc.handleServerStreamingCall<proto_clarifai_api_service_pb.PostModelOutputsRequest, proto_clarifai_api_service_pb.MultiOutputResponse>;
+    streamModelOutputs: grpc.handleBidiStreamingCall<proto_clarifai_api_service_pb.PostModelOutputsRequest, proto_clarifai_api_service_pb.MultiOutputResponse>;
     listDatasets: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListDatasetsRequest, proto_clarifai_api_service_pb.MultiDatasetResponse>;
     getDataset: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetDatasetRequest, proto_clarifai_api_service_pb.SingleDatasetResponse>;
     postDatasets: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostDatasetsRequest, proto_clarifai_api_service_pb.MultiDatasetResponse>;
@@ -2431,6 +2463,7 @@ export interface IV2Server {
     deleteRunners: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteRunnersRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     listRunnerItems: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListRunnerItemsRequest, proto_clarifai_api_service_pb.MultiRunnerItemResponse>;
     postRunnerItemOutputs: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse>;
+    processRunnerItems: grpc.handleBidiStreamingCall<proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, proto_clarifai_api_service_pb.MultiRunnerItemResponse>;
     postModelVersionsTrainingTimeEstimate: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse>;
 }
 
@@ -2555,6 +2588,11 @@ export interface IV2Client {
     postModelOutputs(request: proto_clarifai_api_service_pb.PostModelOutputsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiOutputResponse) => void): grpc.ClientUnaryCall;
     postModelOutputs(request: proto_clarifai_api_service_pb.PostModelOutputsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiOutputResponse) => void): grpc.ClientUnaryCall;
     postModelOutputs(request: proto_clarifai_api_service_pb.PostModelOutputsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiOutputResponse) => void): grpc.ClientUnaryCall;
+    generateModelOutputs(request: proto_clarifai_api_service_pb.PostModelOutputsRequest, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.MultiOutputResponse>;
+    generateModelOutputs(request: proto_clarifai_api_service_pb.PostModelOutputsRequest, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.MultiOutputResponse>;
+    streamModelOutputs(): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostModelOutputsRequest, proto_clarifai_api_service_pb.MultiOutputResponse>;
+    streamModelOutputs(options: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostModelOutputsRequest, proto_clarifai_api_service_pb.MultiOutputResponse>;
+    streamModelOutputs(metadata: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostModelOutputsRequest, proto_clarifai_api_service_pb.MultiOutputResponse>;
     listDatasets(request: proto_clarifai_api_service_pb.ListDatasetsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDatasetResponse) => void): grpc.ClientUnaryCall;
     listDatasets(request: proto_clarifai_api_service_pb.ListDatasetsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDatasetResponse) => void): grpc.ClientUnaryCall;
     listDatasets(request: proto_clarifai_api_service_pb.ListDatasetsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDatasetResponse) => void): grpc.ClientUnaryCall;
@@ -3089,6 +3127,9 @@ export interface IV2Client {
     postRunnerItemOutputs(request: proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse) => void): grpc.ClientUnaryCall;
     postRunnerItemOutputs(request: proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse) => void): grpc.ClientUnaryCall;
     postRunnerItemOutputs(request: proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse) => void): grpc.ClientUnaryCall;
+    processRunnerItems(): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, proto_clarifai_api_service_pb.MultiRunnerItemResponse>;
+    processRunnerItems(options: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, proto_clarifai_api_service_pb.MultiRunnerItemResponse>;
+    processRunnerItems(metadata: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, proto_clarifai_api_service_pb.MultiRunnerItemResponse>;
     postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
     postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
     postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
@@ -3216,6 +3257,10 @@ export class V2Client extends grpc.Client implements IV2Client {
     public postModelOutputs(request: proto_clarifai_api_service_pb.PostModelOutputsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiOutputResponse) => void): grpc.ClientUnaryCall;
     public postModelOutputs(request: proto_clarifai_api_service_pb.PostModelOutputsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiOutputResponse) => void): grpc.ClientUnaryCall;
     public postModelOutputs(request: proto_clarifai_api_service_pb.PostModelOutputsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiOutputResponse) => void): grpc.ClientUnaryCall;
+    public generateModelOutputs(request: proto_clarifai_api_service_pb.PostModelOutputsRequest, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.MultiOutputResponse>;
+    public generateModelOutputs(request: proto_clarifai_api_service_pb.PostModelOutputsRequest, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.MultiOutputResponse>;
+    public streamModelOutputs(options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostModelOutputsRequest, proto_clarifai_api_service_pb.MultiOutputResponse>;
+    public streamModelOutputs(metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostModelOutputsRequest, proto_clarifai_api_service_pb.MultiOutputResponse>;
     public listDatasets(request: proto_clarifai_api_service_pb.ListDatasetsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDatasetResponse) => void): grpc.ClientUnaryCall;
     public listDatasets(request: proto_clarifai_api_service_pb.ListDatasetsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDatasetResponse) => void): grpc.ClientUnaryCall;
     public listDatasets(request: proto_clarifai_api_service_pb.ListDatasetsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDatasetResponse) => void): grpc.ClientUnaryCall;
@@ -3749,6 +3794,8 @@ export class V2Client extends grpc.Client implements IV2Client {
     public postRunnerItemOutputs(request: proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse) => void): grpc.ClientUnaryCall;
     public postRunnerItemOutputs(request: proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse) => void): grpc.ClientUnaryCall;
     public postRunnerItemOutputs(request: proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse) => void): grpc.ClientUnaryCall;
+    public processRunnerItems(options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, proto_clarifai_api_service_pb.MultiRunnerItemResponse>;
+    public processRunnerItems(metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, proto_clarifai_api_service_pb.MultiRunnerItemResponse>;
     public postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
     public postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
     public postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;

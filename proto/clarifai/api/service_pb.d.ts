@@ -89,6 +89,10 @@ export class ListAnnotationsRequest extends jspb.Message {
     getModelVersionIdsList(): Array<string>;
     setModelVersionIdsList(value: Array<string>): ListAnnotationsRequest;
     addModelVersionIds(value: string, index?: number): string;
+    clearWorkflowVersionIdsList(): void;
+    getWorkflowVersionIdsList(): Array<string>;
+    setWorkflowVersionIdsList(value: Array<string>): ListAnnotationsRequest;
+    addWorkflowVersionIds(value: string, index?: number): string;
     clearStatusesList(): void;
     getStatusesList(): Array<proto_clarifai_api_status_status_pb.Status>;
     setStatusesList(value: Array<proto_clarifai_api_status_status_pb.Status>): ListAnnotationsRequest;
@@ -121,6 +125,7 @@ export namespace ListAnnotationsRequest {
         inputIdsList: Array<string>,
         userIdsList: Array<string>,
         modelVersionIdsList: Array<string>,
+        workflowVersionIdsList: Array<string>,
         statusesList: Array<proto_clarifai_api_status_status_pb.Status.AsObject>,
         listAllAnnotations: boolean,
         returnModelOutput: boolean,
@@ -2819,6 +2824,10 @@ export class ListDatasetVersionsRequest extends jspb.Message {
     setPage(value: number): ListDatasetVersionsRequest;
     getPerPage(): number;
     setPerPage(value: number): ListDatasetVersionsRequest;
+    clearRequestOriginsList(): void;
+    getRequestOriginsList(): Array<proto_clarifai_api_resources_pb.DatasetVersionRequestOrigin>;
+    setRequestOriginsList(value: Array<proto_clarifai_api_resources_pb.DatasetVersionRequestOrigin>): ListDatasetVersionsRequest;
+    addRequestOrigins(value: proto_clarifai_api_resources_pb.DatasetVersionRequestOrigin, index?: number): proto_clarifai_api_resources_pb.DatasetVersionRequestOrigin;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListDatasetVersionsRequest.AsObject;
@@ -2836,6 +2845,7 @@ export namespace ListDatasetVersionsRequest {
         datasetId: string,
         page: number,
         perPage: number,
+        requestOriginsList: Array<proto_clarifai_api_resources_pb.DatasetVersionRequestOrigin>,
     }
 }
 
@@ -7861,6 +7871,14 @@ export class GetTaskCountRequest extends jspb.Message {
     getUserIdsList(): Array<string>;
     setUserIdsList(value: Array<string>): GetTaskCountRequest;
     addUserIds(value: string, index?: number): string;
+    clearModelVersionIdsList(): void;
+    getModelVersionIdsList(): Array<string>;
+    setModelVersionIdsList(value: Array<string>): GetTaskCountRequest;
+    addModelVersionIds(value: string, index?: number): string;
+    clearWorkflowVersionIdsList(): void;
+    getWorkflowVersionIdsList(): Array<string>;
+    setWorkflowVersionIdsList(value: Array<string>): GetTaskCountRequest;
+    addWorkflowVersionIds(value: string, index?: number): string;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetTaskCountRequest.AsObject;
@@ -7877,6 +7895,8 @@ export namespace GetTaskCountRequest {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         taskId: string,
         userIdsList: Array<string>,
+        modelVersionIdsList: Array<string>,
+        workflowVersionIdsList: Array<string>,
     }
 }
 
@@ -10402,12 +10422,17 @@ export class PostRunnerItemOutputsRequest extends jspb.Message {
     setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PostRunnerItemOutputsRequest;
     getRunnerId(): string;
     setRunnerId(value: string): PostRunnerItemOutputsRequest;
-    getItemId(): string;
-    setItemId(value: string): PostRunnerItemOutputsRequest;
+    getRunnerItemId(): string;
+    setRunnerItemId(value: string): PostRunnerItemOutputsRequest;
     clearRunnerItemOutputsList(): void;
     getRunnerItemOutputsList(): Array<RunnerItemOutput>;
     setRunnerItemOutputsList(value: Array<RunnerItemOutput>): PostRunnerItemOutputsRequest;
     addRunnerItemOutputs(value?: RunnerItemOutput, index?: number): RunnerItemOutput;
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): PostRunnerItemOutputsRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PostRunnerItemOutputsRequest.AsObject;
@@ -10423,8 +10448,9 @@ export namespace PostRunnerItemOutputsRequest {
     export type AsObject = {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         runnerId: string,
-        itemId: string,
+        runnerItemId: string,
         runnerItemOutputsList: Array<RunnerItemOutput.AsObject>,
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
     }
 }
 
@@ -10434,10 +10460,10 @@ export class MultiRunnerItemResponse extends jspb.Message {
     clearStatus(): void;
     getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
     setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiRunnerItemResponse;
-    clearItemsList(): void;
-    getItemsList(): Array<RunnerItem>;
-    setItemsList(value: Array<RunnerItem>): MultiRunnerItemResponse;
-    addItems(value?: RunnerItem, index?: number): RunnerItem;
+    clearRunnerItemsList(): void;
+    getRunnerItemsList(): Array<RunnerItem>;
+    setRunnerItemsList(value: Array<RunnerItem>): MultiRunnerItemResponse;
+    addRunnerItems(value?: RunnerItem, index?: number): RunnerItem;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): MultiRunnerItemResponse.AsObject;
@@ -10452,7 +10478,7 @@ export class MultiRunnerItemResponse extends jspb.Message {
 export namespace MultiRunnerItemResponse {
     export type AsObject = {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
-        itemsList: Array<RunnerItem.AsObject>,
+        runnerItemsList: Array<RunnerItem.AsObject>,
     }
 }
 
@@ -10462,10 +10488,17 @@ export class RunnerItem extends jspb.Message {
     getDescription(): string;
     setDescription(value: string): RunnerItem;
 
+    hasProcessingInfo(): boolean;
+    clearProcessingInfo(): void;
+    getProcessingInfo(): proto_clarifai_api_resources_pb.ProcessingInfo | undefined;
+    setProcessingInfo(value?: proto_clarifai_api_resources_pb.ProcessingInfo): RunnerItem;
+
     hasPostModelOutputsRequest(): boolean;
     clearPostModelOutputsRequest(): void;
     getPostModelOutputsRequest(): PostModelOutputsRequest | undefined;
     setPostModelOutputsRequest(value?: PostModelOutputsRequest): RunnerItem;
+
+    getRequestCase(): RunnerItem.RequestCase;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): RunnerItem.AsObject;
@@ -10481,8 +10514,15 @@ export namespace RunnerItem {
     export type AsObject = {
         id: string,
         description: string,
+        processingInfo?: proto_clarifai_api_resources_pb.ProcessingInfo.AsObject,
         postModelOutputsRequest?: PostModelOutputsRequest.AsObject,
     }
+
+    export enum RequestCase {
+        REQUEST_NOT_SET = 0,
+        POST_MODEL_OUTPUTS_REQUEST = 4,
+    }
+
 }
 
 export class RunnerItemOutput extends jspb.Message { 
@@ -10491,6 +10531,8 @@ export class RunnerItemOutput extends jspb.Message {
     clearMultiOutputResponse(): void;
     getMultiOutputResponse(): MultiOutputResponse | undefined;
     setMultiOutputResponse(value?: MultiOutputResponse): RunnerItemOutput;
+
+    getResponseCase(): RunnerItemOutput.ResponseCase;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): RunnerItemOutput.AsObject;
@@ -10506,6 +10548,12 @@ export namespace RunnerItemOutput {
     export type AsObject = {
         multiOutputResponse?: MultiOutputResponse.AsObject,
     }
+
+    export enum ResponseCase {
+        RESPONSE_NOT_SET = 0,
+        MULTI_OUTPUT_RESPONSE = 1,
+    }
+
 }
 
 export class MultiRunnerItemOutputResponse extends jspb.Message { 

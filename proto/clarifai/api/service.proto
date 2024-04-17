@@ -388,6 +388,9 @@ service V2 {
   }
 
   // Patch annotations status by worker id and task id.
+  // Deprecated: Use PutTaskAssignments to update task annotations.
+  //   For example, you can use PutTaskAssignments with action REVIEW_APPROVE
+  //   to approve task assignments and associated annotations in bulk.
   rpc PatchAnnotationsStatus (PatchAnnotationsStatusRequest) returns (PatchAnnotationsStatusResponse) {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/task/{task_id}/annotations/status"
@@ -743,22 +746,38 @@ service V2 {
     // option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
   }
 
+  // TODO(zeiler): will need to
+  // Single request but streaming resopnses.
+  rpc GenerateModelOutputs (PostModelOutputsRequest) returns (stream MultiOutputResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/outputs/generate"
+      body: "*"
+      additional_bindings {
+        post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/outputs/generate"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Predict;
+    // TODO(zeiler): will need to add these for model prediction requests.
+    // option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    // option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
+  }
 
-  // // TODO(zeiler): will need to
-  // // Single request but streaming resopnses.
-  // rpc GeneratePostModelOutputs (PostModelOutputsRequest) returns (stream MultiOutputResponse) {
-  //   option (google.api.http) = {
-  //     post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/outputs"
-  //     body: "*"
-  //   };
-  //   option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-  //   option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-  //   option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
-  //   option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
-  //   option (clarifai.auth.util.cl_depending_scopes) = Predict;
-  //   option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
-  //   option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
-  // }
+  // Stream of requests and stream of responses
+  rpc StreamModelOutputs (stream PostModelOutputsRequest) returns (stream MultiOutputResponse) {
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Predict;
+    // TODO(zeiler): will need to add these for model prediction requests.
+    // option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    // option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
+  }
 
   // List all the datasets.
   rpc ListDatasets (ListDatasetsRequest) returns (MultiDatasetResponse) {
@@ -1306,6 +1325,7 @@ service V2 {
   }
 
   // Deprecated: Unmaintained and ideally replaced with usage of datasets
+  //   The server may refuse to accept requests to this endpoint.
   rpc ListModelInputs (ListModelInputsRequest) returns (MultiInputResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/inputs"
@@ -1575,8 +1595,9 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = ModelExports_Get;
   }
 
-  // Deprecated: Use GetEvaluation instead
   // Get the evaluation metrics for a model version.
+  // Deprecated: Use GetEvaluation instead
+  //   The server may refuse to accept requests to this endpoint.
   rpc GetModelVersionMetrics (GetModelVersionMetricsRequest) returns (SingleModelVersionResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/metrics"
@@ -2346,6 +2367,7 @@ service V2 {
   // Execute a new search and optionally save it.
   //
   // Deprecated: Use PostInputsSearches or PostAnnotationsSearches instead.
+  //  The server may refuse to accept requests to this endpoint.
   rpc PostSearches (PostSearchesRequest) returns (MultiSearchResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches"
@@ -3380,7 +3402,11 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = BulkOperation_Delete;
   }
 
-  // List next non-labeled and unassigned inputs from task's dataset
+  // Deprecated: Use PutTaskAssignments with action=LABEL_START.
+  //   This endpoint has initially been designed as a GET request,
+  //   but has been re-designed to serve a PUT logic.
+  //   In order to clearly highlight that this endpoint serves a PUT request,
+  //   this endpoint has been deprecated and replaced by PutTaskAssignments with action=LABEL_START.
   rpc ListNextTaskAssignments (ListNextTaskAssignmentsRequest) returns (MultiInputResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/assignments"
@@ -3714,10 +3740,10 @@ service V2 {
   // since the runner_id is a UUID we can access it directly too.
   rpc PostRunnerItemOutputs (PostRunnerItemOutputsRequest) returns (MultiRunnerItemOutputResponse) {
     option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/runners/{runner_id}/items/{item_id}/outputs"
+      post: "/v2/users/{user_app_id.user_id}/runners/{runner_id}/items/{runner_item_id}/outputs"
       body: "*"
       // additional_bindings { // TODO(zeiler): add runner selector to this to get runners for a specific nodepool
-      //   post: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners/{runner_id}/items/{item_id}/outputs"
+      //   post: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners/{runner_id}/items/{runner_item_id}/outputs"
       //   body: "*"
       // }
     };
@@ -3726,7 +3752,23 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
     option (clarifai.auth.util.cl_depending_scopes) = RunnerItems_Get;
     option (clarifai.auth.util.cl_depending_scopes) = RunnerItems_Add;
-  }  // Get the training time estimate based off train request and estimated input count.
+  }
+
+  // This maintains a single request for asking the API if there is any work to be done, processing
+  // it and streaming back results.
+  // To do that first handshake the MultiRunnerItemOutputResponse will have RUNNER_STREAM_START
+  // status filled in so that the API knows to respond with a MultiRunnerItemResponse.
+  // For now there will only be one of those if the model prediction only has one request.
+  // NOTE(zeiler): downside of this is you can't use HTTP REST requests to do runner work.
+  rpc ProcessRunnerItems (stream PostRunnerItemOutputsRequest) returns (stream MultiRunnerItemResponse) {
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = RunnerItems_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = RunnerItems_Add;
+  }
+
+  // Get the training time estimate based off train request and estimated input count.
   rpc PostModelVersionsTrainingTimeEstimate (PostModelVersionsTrainingTimeEstimateRequest) returns (MultiTrainingTimeEstimateResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/time_estimate"
@@ -3792,19 +3834,24 @@ message ListAnnotationsRequest {
 
   // Only return the annotations that has one of these user IDs, effectively operating as an
   // OR among them to filter down the results.
-  // If model_version_ids are also provided these user_ids are OR'd with them as well since
-  // annotations are either provided by users or model versions and we want the union of any
-  // provided user or model version annotations in the results of ListAnnotations request.
-  // If no user_ids are provided then annotations from all users are returned.
+  // If model_version_ids or workflow_version_ids are also provided, these user_ids are OR'd with them as well because
+  // we want the union of all worker (user, model or workflow) annotations in the results of ListAnnotations request.
+  // Setting user_ids does also set list_all_annotations=True.
   repeated string user_ids = 9;
 
   // Only return the annotations that has one of these model version IDs, effectively operating as an
   // OR among them to filter down the results.
-  // If user_ids are also provided these model_versions_ids are OR'd with them as well since
-  // annotations are either provided by users or model versions and we want the union of any
-  // provided user or model version annotations in the results of ListAnnotations request.
-  // If no model_version_ids are provided then annotations from all model versions are returned.
+  // If user_ids or workflow_version_ids are also provided, these model_version_ids are OR'd with them as well because
+  // we want the union of all worker (user, model or workflow) annotations in the results of ListAnnotations request.
+  // Setting model_version_ids does also set list_all_annotations=True.
   repeated string model_version_ids = 10;
+
+  // Only return the annotations that has one of these workflow version IDs, effectively operating as an
+  // OR among them to filter down the results.
+  // If user_ids or model_version_ids are also provided, these workflow_version_ids are OR'd with them as well because
+  // we want the union of all worker (user, model or workflow) annotations in the results of ListAnnotations request.
+  // Setting workflow_version_ids does also set list_all_annotations=True.
+  repeated string workflow_version_ids = 13;
 
   // Set status to filter by a list of statuses
   // If not statuses are provided then annotations with any status will be returned.
@@ -3942,7 +3989,7 @@ message MultiWorkerResponse {
 // GetAppRequest
 message GetAppRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
-  // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars
+  // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars, counts
   repeated string additional_fields = 2;
 }
 
@@ -3956,7 +4003,7 @@ message ListAppsRequest {
   // to 128.
   uint32 per_page = 3;
 
-  // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars
+  // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars, counts
   repeated string additional_fields = 10;
 
   // Sorting options:
@@ -4862,6 +4909,9 @@ message ListDatasetVersionsRequest {
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
   // to 128.
   uint32 per_page = 4;
+
+  // (optional URL parameter) Filter by origin of dataset version
+  repeated DatasetVersionRequestOrigin request_origins = 5;
 }
 
 // GetDatasetVersionRequest
@@ -6645,20 +6695,33 @@ message SingleTaskResponse {
 
 // GetTaskCountRequest can be used for fetching -
 // 1. Task annotation count per user, per status
-// 1. Task input (anchor annotations) count per user, per status
-message GetTaskCountRequest{
+// 1. Task input count per user (i.e. task assignment count), per status
+message GetTaskCountRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 
   // task_id for which count per user per status is needed
   string task_id = 2;
 
-  // for given task_id, user_ids to filter on (optional)
-  repeated string user_ids= 3;
+  // Only return counts for these user IDs, effectively operating as an
+  // OR among them to filter down the results.
+  // If model_version_ids or workflow_version_ids are also provided, these user_ids are OR'd with them as well because
+  // we want the union of all worker (user, model or workflow) counts in the results.
+  repeated string user_ids = 3;
+
+  // Only return counts for these model version IDs, effectively operating as an
+  // OR among them to filter down the results.
+  // If user_ids or workflow_version_ids are also provided, these model_version_ids are OR'd with them as well because
+  // we want the union of all worker (user, model or workflow) counts in the results.
+  repeated string model_version_ids = 4;
+
+  // Only return counts for these workflow version IDs, effectively operating as an
+  // OR among them to filter down the results.
+  // If user_ids or model_version_ids are also provided, these workflow_version_ids are OR'd with them as well because
+  // we want the union of all worker (user, model or workflow) counts in the results.
+  repeated string workflow_version_ids = 5;
 }
 
-
-
-// SingleTaskCountResponse represent counts of annotations or inputs(anchor annotations) for labelers in given task
+// SingleTaskCountResponse represents counts of task annotations or inputs (i.e. task assignments) for labelers in given task
 message SingleTaskCountResponse {
   clarifai.api.status.Status status = 1;
   string app_id = 2;
@@ -7513,10 +7576,17 @@ message ListRunnerItemsRequest {
 // PostRunnerItemOutputsRequest
 message PostRunnerItemOutputsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
+  // The particular runner that processed the work.
   string runner_id = 2;
-  string item_id = 3;
+  // The particular item of work processed.
+  string runner_item_id = 3;
   // This allows you to create one or more runner by posting it to the API.
   repeated RunnerItemOutput runner_item_outputs = 4;
+
+  // This request has a status so that it can communicate to the API from runners and
+  // communicate status, errors, etc. This is on the request since runners operate
+  // in a reverse protocol.
+  clarifai.api.status.Status status = 5;
 }
 
 
@@ -7526,9 +7596,10 @@ message PostRunnerItemOutputsRequest {
 // MultiRunnerItemResponse
 message MultiRunnerItemResponse {
   clarifai.api.status.Status status = 1;
-  repeated RunnerItem items = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+  repeated RunnerItem runner_items = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+// This is a piece of work for a runner to process.
 message RunnerItem {
   // A UUID hash for this work item.
   string id = 1;
@@ -7536,22 +7607,26 @@ message RunnerItem {
   // A description of the work to be done in case needed for UIs.
   string description = 2;
 
-  // TODO(zeiler): make these options a oneof.
-  // first work to do would be an inference runner.
-  PostModelOutputsRequest post_model_outputs_request = 3;
-  // training request next.
+  // Information on how to process the given RunnerItem.
+  ProcessingInfo processing_info = 3;
+
+  oneof request {
+    // Model prediction request from a user.
+    PostModelOutputsRequest post_model_outputs_request = 4;
+    // Workflow request from a user.  // FUTURE
+    // training request next, etc.
+  }
 }
 
 
 
 message RunnerItemOutput {
-  // The output of the first task type.
-  // TODO(zeiler): should the interface be more like pairs of things wiht request/response in one "item"?
-  MultiOutputResponse multi_output_response = 1;
-
-  // training response ??? or is it a model upload.
-  // again knowing what to send back from an implementation is goin gto be confusing unless we pair
-  // up the request and response.
+  oneof response {
+    // The output of a model prediction request.
+    MultiOutputResponse multi_output_response = 1;
+    // Workflow response. // FUTURE
+    // training response ???
+  }
 }
 
 
