@@ -161,12 +161,21 @@ message AppExtraInfo {
   // For example, this value can be used to detect if client side caches related to searching should be invalidated.
   // Field not filled in for list endpoints, use GetApp
   string search_revision_marker = 1;
+  AppResourceCounts counts = 2;
 }
 
 // App query
 message AppQuery {
   // Query by application name. This supports wildcard queries like "gen*" to match "general" as an example.
   string name = 1;
+}
+
+message AppResourceCounts {
+  int64 datasets = 1;
+  int64 models = 2;
+  int64 workflows = 3;
+  int64 modules = 4;
+  int64 inputs = 5;
 }
 
 // Collaborator - invited user, who shares an access to an application
@@ -972,6 +981,14 @@ message DatasetInput {
   // The input data.
   Input input = 2;
 }
+enum DatasetVersionRequestOrigin {
+    DATASET_VERSION_REQUEST_ORIGIN_NOT_SET = 0;
+    MANUAL = 1;
+    TRAINING = 2;
+    EVAL_GROUND_TRUTH = 3;
+    EVAL_PREDICTIONS = 4;
+  }
+
 
 // DatasetVersion
 message DatasetVersion {
@@ -1035,6 +1052,10 @@ message DatasetVersion {
 
   // The embedding models to return embeddings for. If empty, no embeddings are returned.
   repeated string embed_model_version_ids = 14;
+
+  // Read Only. Cannot be Set
+  // Origin of request for new dataset version
+  DatasetVersionRequestOrigin request_origin = 20;
 }
 
 message AnnotationFilterConfig {
@@ -3288,15 +3309,20 @@ message TaskAssignment {
   clarifai.api.status.Status status = 6;
 }
 
-// TaskStatusCountPerUser can represents count of human created annotations for a user for each valid status,
-// count of inputs (anchor annotation) for a user for each valid status
+// TaskStatusCountPerUser can represent one of the following:
+// * count of task annotations created by a worker for each valid status,
+// * count of task inputs assigned to a worker  (i.e. task assignments) for each valid status
 message TaskStatusCountPerUser {
-  string user_id = 1;
+  // Deprecated: Use worker instead.
+  string user_id = 1 [deprecated = true];
+
   uint32 pending = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
   uint32 awaiting_review = 3 [(clarifai.api.utils.cl_show_if_empty) = true];
   uint32 success = 4 [(clarifai.api.utils.cl_show_if_empty) = true];
   uint32 review_denied = 5 [(clarifai.api.utils.cl_show_if_empty) = true];
   uint32 awaiting_consensus_review = 6 [(clarifai.api.utils.cl_show_if_empty) = true];
+
+  Worker worker = 7;
 }
 
 message ThresholdRange {
@@ -4382,6 +4408,9 @@ message CloudRegion {
   // We include this in the proto in case a user needs to create a nodepool on their own
   // infrastructure that talks with a specific region.
   // string base_api_url = 7; // FUTURE
+
+  // The available set of instance types in this cluster.
+  // InstanceType instance_types = 8; // FUTURE
 }
 
 
@@ -4540,4 +4569,22 @@ message RunnerSelector {
   Deployment deployment = 3;
   // In future as we support matching runners based on just labels:
   // RunnerLabels runner_labels = 3; // FUTURE
+}
+enum RunnerMethodType {
+  UNKNOWN = 0;
+  UNARY_UNARY = 1; // single request, single response. predict() in code
+  UNARY_STREAMING = 2; // single request, streamed response. generate() in code
+  STREAMING_UNARY = 3; // stream of requests, single response.
+  STREAMING_STREAMING = 4; // stream of requests, stream of responses. stream() in code
+  // In the future we may support other things here like long running processes, etc.
+}
+
+
+// Processing info tells the runner how to process a RunnerItem
+message ProcessingInfo {
+  // The type of method witin the runner to call.
+  RunnerMethodType runner_method_type = 1;
+  // A status of the processing. We use this for signalling end of a request stream, a runner
+  // item's processing should be cancelled, etc.
+  clarifai.api.status.Status status = 2;
 }

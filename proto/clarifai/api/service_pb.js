@@ -345,7 +345,9 @@ goog.exportSymbol('proto.clarifai.api.ReviewApproveConfig', null, global);
 goog.exportSymbol('proto.clarifai.api.ReviewRejectConfig', null, global);
 goog.exportSymbol('proto.clarifai.api.ReviewRequestChangesConfig', null, global);
 goog.exportSymbol('proto.clarifai.api.RunnerItem', null, global);
+goog.exportSymbol('proto.clarifai.api.RunnerItem.RequestCase', null, global);
 goog.exportSymbol('proto.clarifai.api.RunnerItemOutput', null, global);
+goog.exportSymbol('proto.clarifai.api.RunnerItemOutput.ResponseCase', null, global);
 goog.exportSymbol('proto.clarifai.api.SingleAnnotationFilterResponse', null, global);
 goog.exportSymbol('proto.clarifai.api.SingleAnnotationResponse', null, global);
 goog.exportSymbol('proto.clarifai.api.SingleAppDuplicationResponse', null, global);
@@ -2245,7 +2247,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.clarifai.api.ListDatasetVersionsRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.clarifai.api.ListDatasetVersionsRequest.repeatedFields_, null);
 };
 goog.inherits(proto.clarifai.api.ListDatasetVersionsRequest, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -7306,7 +7308,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.clarifai.api.RunnerItem = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.clarifai.api.RunnerItem.oneofGroups_);
 };
 goog.inherits(proto.clarifai.api.RunnerItem, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -7327,7 +7329,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.clarifai.api.RunnerItemOutput = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.clarifai.api.RunnerItemOutput.oneofGroups_);
 };
 goog.inherits(proto.clarifai.api.RunnerItemOutput, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -7777,7 +7779,7 @@ proto.clarifai.api.GetAnnotationRequest.prototype.setInputId = function(value) {
  * @private {!Array<number>}
  * @const
  */
-proto.clarifai.api.ListAnnotationsRequest.repeatedFields_ = [2,3,9,10,5];
+proto.clarifai.api.ListAnnotationsRequest.repeatedFields_ = [2,3,9,10,13,5];
 
 
 
@@ -7815,6 +7817,7 @@ proto.clarifai.api.ListAnnotationsRequest.toObject = function(includeInstance, m
     inputIdsList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f,
     userIdsList: (f = jspb.Message.getRepeatedField(msg, 9)) == null ? undefined : f,
     modelVersionIdsList: (f = jspb.Message.getRepeatedField(msg, 10)) == null ? undefined : f,
+    workflowVersionIdsList: (f = jspb.Message.getRepeatedField(msg, 13)) == null ? undefined : f,
     statusesList: jspb.Message.toObjectList(msg.getStatusesList(),
     proto_clarifai_api_status_status_pb.Status.toObject, includeInstance),
     listAllAnnotations: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
@@ -7878,6 +7881,10 @@ proto.clarifai.api.ListAnnotationsRequest.deserializeBinaryFromReader = function
     case 10:
       var value = /** @type {string} */ (reader.readString());
       msg.addModelVersionIds(value);
+      break;
+    case 13:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addWorkflowVersionIds(value);
       break;
     case 5:
       var value = new proto_clarifai_api_status_status_pb.Status;
@@ -7966,6 +7973,13 @@ proto.clarifai.api.ListAnnotationsRequest.serializeBinaryToWriter = function(mes
   if (f.length > 0) {
     writer.writeRepeatedString(
       10,
+      f
+    );
+  }
+  f = message.getWorkflowVersionIdsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      13,
       f
     );
   }
@@ -8197,6 +8211,43 @@ proto.clarifai.api.ListAnnotationsRequest.prototype.addModelVersionIds = functio
  */
 proto.clarifai.api.ListAnnotationsRequest.prototype.clearModelVersionIdsList = function() {
   return this.setModelVersionIdsList([]);
+};
+
+
+/**
+ * repeated string workflow_version_ids = 13;
+ * @return {!Array<string>}
+ */
+proto.clarifai.api.ListAnnotationsRequest.prototype.getWorkflowVersionIdsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 13));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.clarifai.api.ListAnnotationsRequest} returns this
+ */
+proto.clarifai.api.ListAnnotationsRequest.prototype.setWorkflowVersionIdsList = function(value) {
+  return jspb.Message.setField(this, 13, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.ListAnnotationsRequest} returns this
+ */
+proto.clarifai.api.ListAnnotationsRequest.prototype.addWorkflowVersionIds = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 13, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.ListAnnotationsRequest} returns this
+ */
+proto.clarifai.api.ListAnnotationsRequest.prototype.clearWorkflowVersionIdsList = function() {
+  return this.setWorkflowVersionIdsList([]);
 };
 
 
@@ -28389,6 +28440,13 @@ proto.clarifai.api.SingleDatasetInputResponse.prototype.hasDatasetInput = functi
 
 
 
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.clarifai.api.ListDatasetVersionsRequest.repeatedFields_ = [5];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -28423,7 +28481,8 @@ proto.clarifai.api.ListDatasetVersionsRequest.toObject = function(includeInstanc
     userAppId: (f = msg.getUserAppId()) && proto_clarifai_api_resources_pb.UserAppIDSet.toObject(includeInstance, f),
     datasetId: jspb.Message.getFieldWithDefault(msg, 2, ""),
     page: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    perPage: jspb.Message.getFieldWithDefault(msg, 4, 0)
+    perPage: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    requestOriginsList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -28476,6 +28535,12 @@ proto.clarifai.api.ListDatasetVersionsRequest.deserializeBinaryFromReader = func
     case 4:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setPerPage(value);
+      break;
+    case 5:
+      var values = /** @type {!Array<!proto.clarifai.api.DatasetVersionRequestOrigin>} */ (reader.isDelimited() ? reader.readPackedEnum() : [reader.readEnum()]);
+      for (var i = 0; i < values.length; i++) {
+        msg.addRequestOrigins(values[i]);
+      }
       break;
     default:
       reader.skipField();
@@ -28532,6 +28597,13 @@ proto.clarifai.api.ListDatasetVersionsRequest.serializeBinaryToWriter = function
   if (f !== 0) {
     writer.writeUint32(
       4,
+      f
+    );
+  }
+  f = message.getRequestOriginsList();
+  if (f.length > 0) {
+    writer.writePackedEnum(
+      5,
       f
     );
   }
@@ -28626,6 +28698,43 @@ proto.clarifai.api.ListDatasetVersionsRequest.prototype.getPerPage = function() 
  */
 proto.clarifai.api.ListDatasetVersionsRequest.prototype.setPerPage = function(value) {
   return jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+/**
+ * repeated DatasetVersionRequestOrigin request_origins = 5;
+ * @return {!Array<!proto.clarifai.api.DatasetVersionRequestOrigin>}
+ */
+proto.clarifai.api.ListDatasetVersionsRequest.prototype.getRequestOriginsList = function() {
+  return /** @type {!Array<!proto.clarifai.api.DatasetVersionRequestOrigin>} */ (jspb.Message.getRepeatedField(this, 5));
+};
+
+
+/**
+ * @param {!Array<!proto.clarifai.api.DatasetVersionRequestOrigin>} value
+ * @return {!proto.clarifai.api.ListDatasetVersionsRequest} returns this
+ */
+proto.clarifai.api.ListDatasetVersionsRequest.prototype.setRequestOriginsList = function(value) {
+  return jspb.Message.setField(this, 5, value || []);
+};
+
+
+/**
+ * @param {!proto.clarifai.api.DatasetVersionRequestOrigin} value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.ListDatasetVersionsRequest} returns this
+ */
+proto.clarifai.api.ListDatasetVersionsRequest.prototype.addRequestOrigins = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 5, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.ListDatasetVersionsRequest} returns this
+ */
+proto.clarifai.api.ListDatasetVersionsRequest.prototype.clearRequestOriginsList = function() {
+  return this.setRequestOriginsList([]);
 };
 
 
@@ -66384,7 +66493,7 @@ proto.clarifai.api.SingleTaskResponse.prototype.hasTask = function() {
  * @private {!Array<number>}
  * @const
  */
-proto.clarifai.api.GetTaskCountRequest.repeatedFields_ = [3];
+proto.clarifai.api.GetTaskCountRequest.repeatedFields_ = [3,4,5];
 
 
 
@@ -66419,7 +66528,9 @@ proto.clarifai.api.GetTaskCountRequest.toObject = function(includeInstance, msg)
   var f, obj = {
     userAppId: (f = msg.getUserAppId()) && proto_clarifai_api_resources_pb.UserAppIDSet.toObject(includeInstance, f),
     taskId: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    userIdsList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f
+    userIdsList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f,
+    modelVersionIdsList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f,
+    workflowVersionIdsList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -66469,6 +66580,14 @@ proto.clarifai.api.GetTaskCountRequest.deserializeBinaryFromReader = function(ms
       var value = /** @type {string} */ (reader.readString());
       msg.addUserIds(value);
       break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addModelVersionIds(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addWorkflowVersionIds(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -66517,6 +66636,20 @@ proto.clarifai.api.GetTaskCountRequest.serializeBinaryToWriter = function(messag
   if (f.length > 0) {
     writer.writeRepeatedString(
       3,
+      f
+    );
+  }
+  f = message.getModelVersionIdsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      4,
+      f
+    );
+  }
+  f = message.getWorkflowVersionIdsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      5,
       f
     );
   }
@@ -66612,6 +66745,80 @@ proto.clarifai.api.GetTaskCountRequest.prototype.addUserIds = function(value, op
  */
 proto.clarifai.api.GetTaskCountRequest.prototype.clearUserIdsList = function() {
   return this.setUserIdsList([]);
+};
+
+
+/**
+ * repeated string model_version_ids = 4;
+ * @return {!Array<string>}
+ */
+proto.clarifai.api.GetTaskCountRequest.prototype.getModelVersionIdsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 4));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.clarifai.api.GetTaskCountRequest} returns this
+ */
+proto.clarifai.api.GetTaskCountRequest.prototype.setModelVersionIdsList = function(value) {
+  return jspb.Message.setField(this, 4, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.GetTaskCountRequest} returns this
+ */
+proto.clarifai.api.GetTaskCountRequest.prototype.addModelVersionIds = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 4, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.GetTaskCountRequest} returns this
+ */
+proto.clarifai.api.GetTaskCountRequest.prototype.clearModelVersionIdsList = function() {
+  return this.setModelVersionIdsList([]);
+};
+
+
+/**
+ * repeated string workflow_version_ids = 5;
+ * @return {!Array<string>}
+ */
+proto.clarifai.api.GetTaskCountRequest.prototype.getWorkflowVersionIdsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 5));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.clarifai.api.GetTaskCountRequest} returns this
+ */
+proto.clarifai.api.GetTaskCountRequest.prototype.setWorkflowVersionIdsList = function(value) {
+  return jspb.Message.setField(this, 5, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.GetTaskCountRequest} returns this
+ */
+proto.clarifai.api.GetTaskCountRequest.prototype.addWorkflowVersionIds = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 5, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.GetTaskCountRequest} returns this
+ */
+proto.clarifai.api.GetTaskCountRequest.prototype.clearWorkflowVersionIdsList = function() {
+  return this.setWorkflowVersionIdsList([]);
 };
 
 
@@ -85220,9 +85427,10 @@ proto.clarifai.api.PostRunnerItemOutputsRequest.toObject = function(includeInsta
   var f, obj = {
     userAppId: (f = msg.getUserAppId()) && proto_clarifai_api_resources_pb.UserAppIDSet.toObject(includeInstance, f),
     runnerId: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    itemId: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    runnerItemId: jspb.Message.getFieldWithDefault(msg, 3, ""),
     runnerItemOutputsList: jspb.Message.toObjectList(msg.getRunnerItemOutputsList(),
-    proto.clarifai.api.RunnerItemOutput.toObject, includeInstance)
+    proto.clarifai.api.RunnerItemOutput.toObject, includeInstance),
+    status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -85270,12 +85478,17 @@ proto.clarifai.api.PostRunnerItemOutputsRequest.deserializeBinaryFromReader = fu
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setItemId(value);
+      msg.setRunnerItemId(value);
       break;
     case 4:
       var value = new proto.clarifai.api.RunnerItemOutput;
       reader.readMessage(value,proto.clarifai.api.RunnerItemOutput.deserializeBinaryFromReader);
       msg.addRunnerItemOutputs(value);
+      break;
+    case 5:
+      var value = new proto_clarifai_api_status_status_pb.Status;
+      reader.readMessage(value,proto_clarifai_api_status_status_pb.Status.deserializeBinaryFromReader);
+      msg.setStatus(value);
       break;
     default:
       reader.skipField();
@@ -85321,7 +85534,7 @@ proto.clarifai.api.PostRunnerItemOutputsRequest.serializeBinaryToWriter = functi
       f
     );
   }
-  f = message.getItemId();
+  f = message.getRunnerItemId();
   if (f.length > 0) {
     writer.writeString(
       3,
@@ -85334,6 +85547,14 @@ proto.clarifai.api.PostRunnerItemOutputsRequest.serializeBinaryToWriter = functi
       4,
       f,
       proto.clarifai.api.RunnerItemOutput.serializeBinaryToWriter
+    );
+  }
+  f = message.getStatus();
+  if (f != null) {
+    writer.writeMessage(
+      5,
+      f,
+      proto_clarifai_api_status_status_pb.Status.serializeBinaryToWriter
     );
   }
 };
@@ -85395,10 +85616,10 @@ proto.clarifai.api.PostRunnerItemOutputsRequest.prototype.setRunnerId = function
 
 
 /**
- * optional string item_id = 3;
+ * optional string runner_item_id = 3;
  * @return {string}
  */
-proto.clarifai.api.PostRunnerItemOutputsRequest.prototype.getItemId = function() {
+proto.clarifai.api.PostRunnerItemOutputsRequest.prototype.getRunnerItemId = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -85407,7 +85628,7 @@ proto.clarifai.api.PostRunnerItemOutputsRequest.prototype.getItemId = function()
  * @param {string} value
  * @return {!proto.clarifai.api.PostRunnerItemOutputsRequest} returns this
  */
-proto.clarifai.api.PostRunnerItemOutputsRequest.prototype.setItemId = function(value) {
+proto.clarifai.api.PostRunnerItemOutputsRequest.prototype.setRunnerItemId = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
@@ -85447,6 +85668,43 @@ proto.clarifai.api.PostRunnerItemOutputsRequest.prototype.addRunnerItemOutputs =
  */
 proto.clarifai.api.PostRunnerItemOutputsRequest.prototype.clearRunnerItemOutputsList = function() {
   return this.setRunnerItemOutputsList([]);
+};
+
+
+/**
+ * optional status.Status status = 5;
+ * @return {?proto.clarifai.api.status.Status}
+ */
+proto.clarifai.api.PostRunnerItemOutputsRequest.prototype.getStatus = function() {
+  return /** @type{?proto.clarifai.api.status.Status} */ (
+    jspb.Message.getWrapperField(this, proto_clarifai_api_status_status_pb.Status, 5));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.status.Status|undefined} value
+ * @return {!proto.clarifai.api.PostRunnerItemOutputsRequest} returns this
+*/
+proto.clarifai.api.PostRunnerItemOutputsRequest.prototype.setStatus = function(value) {
+  return jspb.Message.setWrapperField(this, 5, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.PostRunnerItemOutputsRequest} returns this
+ */
+proto.clarifai.api.PostRunnerItemOutputsRequest.prototype.clearStatus = function() {
+  return this.setStatus(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.PostRunnerItemOutputsRequest.prototype.hasStatus = function() {
+  return jspb.Message.getField(this, 5) != null;
 };
 
 
@@ -85490,7 +85748,7 @@ proto.clarifai.api.MultiRunnerItemResponse.prototype.toObject = function(opt_inc
 proto.clarifai.api.MultiRunnerItemResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f),
-    itemsList: jspb.Message.toObjectList(msg.getItemsList(),
+    runnerItemsList: jspb.Message.toObjectList(msg.getRunnerItemsList(),
     proto.clarifai.api.RunnerItem.toObject, includeInstance)
   };
 
@@ -85536,7 +85794,7 @@ proto.clarifai.api.MultiRunnerItemResponse.deserializeBinaryFromReader = functio
     case 2:
       var value = new proto.clarifai.api.RunnerItem;
       reader.readMessage(value,proto.clarifai.api.RunnerItem.deserializeBinaryFromReader);
-      msg.addItems(value);
+      msg.addRunnerItems(value);
       break;
     default:
       reader.skipField();
@@ -85575,7 +85833,7 @@ proto.clarifai.api.MultiRunnerItemResponse.serializeBinaryToWriter = function(me
       proto_clarifai_api_status_status_pb.Status.serializeBinaryToWriter
     );
   }
-  f = message.getItemsList();
+  f = message.getRunnerItemsList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
       2,
@@ -85624,10 +85882,10 @@ proto.clarifai.api.MultiRunnerItemResponse.prototype.hasStatus = function() {
 
 
 /**
- * repeated RunnerItem items = 2;
+ * repeated RunnerItem runner_items = 2;
  * @return {!Array<!proto.clarifai.api.RunnerItem>}
  */
-proto.clarifai.api.MultiRunnerItemResponse.prototype.getItemsList = function() {
+proto.clarifai.api.MultiRunnerItemResponse.prototype.getRunnerItemsList = function() {
   return /** @type{!Array<!proto.clarifai.api.RunnerItem>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.clarifai.api.RunnerItem, 2));
 };
@@ -85637,7 +85895,7 @@ proto.clarifai.api.MultiRunnerItemResponse.prototype.getItemsList = function() {
  * @param {!Array<!proto.clarifai.api.RunnerItem>} value
  * @return {!proto.clarifai.api.MultiRunnerItemResponse} returns this
 */
-proto.clarifai.api.MultiRunnerItemResponse.prototype.setItemsList = function(value) {
+proto.clarifai.api.MultiRunnerItemResponse.prototype.setRunnerItemsList = function(value) {
   return jspb.Message.setRepeatedWrapperField(this, 2, value);
 };
 
@@ -85647,7 +85905,7 @@ proto.clarifai.api.MultiRunnerItemResponse.prototype.setItemsList = function(val
  * @param {number=} opt_index
  * @return {!proto.clarifai.api.RunnerItem}
  */
-proto.clarifai.api.MultiRunnerItemResponse.prototype.addItems = function(opt_value, opt_index) {
+proto.clarifai.api.MultiRunnerItemResponse.prototype.addRunnerItems = function(opt_value, opt_index) {
   return jspb.Message.addToRepeatedWrapperField(this, 2, opt_value, proto.clarifai.api.RunnerItem, opt_index);
 };
 
@@ -85656,11 +85914,36 @@ proto.clarifai.api.MultiRunnerItemResponse.prototype.addItems = function(opt_val
  * Clears the list making it empty but non-null.
  * @return {!proto.clarifai.api.MultiRunnerItemResponse} returns this
  */
-proto.clarifai.api.MultiRunnerItemResponse.prototype.clearItemsList = function() {
-  return this.setItemsList([]);
+proto.clarifai.api.MultiRunnerItemResponse.prototype.clearRunnerItemsList = function() {
+  return this.setRunnerItemsList([]);
 };
 
 
+
+/**
+ * Oneof group definitions for this message. Each group defines the field
+ * numbers belonging to that group. When of these fields' value is set, all
+ * other fields in the group are cleared. During deserialization, if multiple
+ * fields are encountered for a group, only the last value seen will be kept.
+ * @private {!Array<!Array<number>>}
+ * @const
+ */
+proto.clarifai.api.RunnerItem.oneofGroups_ = [[4]];
+
+/**
+ * @enum {number}
+ */
+proto.clarifai.api.RunnerItem.RequestCase = {
+  REQUEST_NOT_SET: 0,
+  POST_MODEL_OUTPUTS_REQUEST: 4
+};
+
+/**
+ * @return {proto.clarifai.api.RunnerItem.RequestCase}
+ */
+proto.clarifai.api.RunnerItem.prototype.getRequestCase = function() {
+  return /** @type {proto.clarifai.api.RunnerItem.RequestCase} */(jspb.Message.computeOneofCase(this, proto.clarifai.api.RunnerItem.oneofGroups_[0]));
+};
 
 
 
@@ -85695,6 +85978,7 @@ proto.clarifai.api.RunnerItem.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     description: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    processingInfo: (f = msg.getProcessingInfo()) && proto_clarifai_api_resources_pb.ProcessingInfo.toObject(includeInstance, f),
     postModelOutputsRequest: (f = msg.getPostModelOutputsRequest()) && proto.clarifai.api.PostModelOutputsRequest.toObject(includeInstance, f)
   };
 
@@ -85741,6 +86025,11 @@ proto.clarifai.api.RunnerItem.deserializeBinaryFromReader = function(msg, reader
       msg.setDescription(value);
       break;
     case 3:
+      var value = new proto_clarifai_api_resources_pb.ProcessingInfo;
+      reader.readMessage(value,proto_clarifai_api_resources_pb.ProcessingInfo.deserializeBinaryFromReader);
+      msg.setProcessingInfo(value);
+      break;
+    case 4:
       var value = new proto.clarifai.api.PostModelOutputsRequest;
       reader.readMessage(value,proto.clarifai.api.PostModelOutputsRequest.deserializeBinaryFromReader);
       msg.setPostModelOutputsRequest(value);
@@ -85788,10 +86077,18 @@ proto.clarifai.api.RunnerItem.serializeBinaryToWriter = function(message, writer
       f
     );
   }
-  f = message.getPostModelOutputsRequest();
+  f = message.getProcessingInfo();
   if (f != null) {
     writer.writeMessage(
       3,
+      f,
+      proto_clarifai_api_resources_pb.ProcessingInfo.serializeBinaryToWriter
+    );
+  }
+  f = message.getPostModelOutputsRequest();
+  if (f != null) {
+    writer.writeMessage(
+      4,
       f,
       proto.clarifai.api.PostModelOutputsRequest.serializeBinaryToWriter
     );
@@ -85836,12 +86133,49 @@ proto.clarifai.api.RunnerItem.prototype.setDescription = function(value) {
 
 
 /**
- * optional PostModelOutputsRequest post_model_outputs_request = 3;
+ * optional ProcessingInfo processing_info = 3;
+ * @return {?proto.clarifai.api.ProcessingInfo}
+ */
+proto.clarifai.api.RunnerItem.prototype.getProcessingInfo = function() {
+  return /** @type{?proto.clarifai.api.ProcessingInfo} */ (
+    jspb.Message.getWrapperField(this, proto_clarifai_api_resources_pb.ProcessingInfo, 3));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.ProcessingInfo|undefined} value
+ * @return {!proto.clarifai.api.RunnerItem} returns this
+*/
+proto.clarifai.api.RunnerItem.prototype.setProcessingInfo = function(value) {
+  return jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.RunnerItem} returns this
+ */
+proto.clarifai.api.RunnerItem.prototype.clearProcessingInfo = function() {
+  return this.setProcessingInfo(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.RunnerItem.prototype.hasProcessingInfo = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional PostModelOutputsRequest post_model_outputs_request = 4;
  * @return {?proto.clarifai.api.PostModelOutputsRequest}
  */
 proto.clarifai.api.RunnerItem.prototype.getPostModelOutputsRequest = function() {
   return /** @type{?proto.clarifai.api.PostModelOutputsRequest} */ (
-    jspb.Message.getWrapperField(this, proto.clarifai.api.PostModelOutputsRequest, 3));
+    jspb.Message.getWrapperField(this, proto.clarifai.api.PostModelOutputsRequest, 4));
 };
 
 
@@ -85850,7 +86184,7 @@ proto.clarifai.api.RunnerItem.prototype.getPostModelOutputsRequest = function() 
  * @return {!proto.clarifai.api.RunnerItem} returns this
 */
 proto.clarifai.api.RunnerItem.prototype.setPostModelOutputsRequest = function(value) {
-  return jspb.Message.setWrapperField(this, 3, value);
+  return jspb.Message.setOneofWrapperField(this, 4, proto.clarifai.api.RunnerItem.oneofGroups_[0], value);
 };
 
 
@@ -85868,10 +86202,35 @@ proto.clarifai.api.RunnerItem.prototype.clearPostModelOutputsRequest = function(
  * @return {boolean}
  */
 proto.clarifai.api.RunnerItem.prototype.hasPostModelOutputsRequest = function() {
-  return jspb.Message.getField(this, 3) != null;
+  return jspb.Message.getField(this, 4) != null;
 };
 
 
+
+/**
+ * Oneof group definitions for this message. Each group defines the field
+ * numbers belonging to that group. When of these fields' value is set, all
+ * other fields in the group are cleared. During deserialization, if multiple
+ * fields are encountered for a group, only the last value seen will be kept.
+ * @private {!Array<!Array<number>>}
+ * @const
+ */
+proto.clarifai.api.RunnerItemOutput.oneofGroups_ = [[1]];
+
+/**
+ * @enum {number}
+ */
+proto.clarifai.api.RunnerItemOutput.ResponseCase = {
+  RESPONSE_NOT_SET: 0,
+  MULTI_OUTPUT_RESPONSE: 1
+};
+
+/**
+ * @return {proto.clarifai.api.RunnerItemOutput.ResponseCase}
+ */
+proto.clarifai.api.RunnerItemOutput.prototype.getResponseCase = function() {
+  return /** @type {proto.clarifai.api.RunnerItemOutput.ResponseCase} */(jspb.Message.computeOneofCase(this, proto.clarifai.api.RunnerItemOutput.oneofGroups_[0]));
+};
 
 
 
@@ -86001,7 +86360,7 @@ proto.clarifai.api.RunnerItemOutput.prototype.getMultiOutputResponse = function(
  * @return {!proto.clarifai.api.RunnerItemOutput} returns this
 */
 proto.clarifai.api.RunnerItemOutput.prototype.setMultiOutputResponse = function(value) {
-  return jspb.Message.setWrapperField(this, 1, value);
+  return jspb.Message.setOneofWrapperField(this, 1, proto.clarifai.api.RunnerItemOutput.oneofGroups_[0], value);
 };
 
 

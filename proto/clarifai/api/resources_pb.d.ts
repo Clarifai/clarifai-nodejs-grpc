@@ -244,6 +244,11 @@ export class AppExtraInfo extends jspb.Message {
     getSearchRevisionMarker(): string;
     setSearchRevisionMarker(value: string): AppExtraInfo;
 
+    hasCounts(): boolean;
+    clearCounts(): void;
+    getCounts(): AppResourceCounts | undefined;
+    setCounts(value?: AppResourceCounts): AppExtraInfo;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): AppExtraInfo.AsObject;
     static toObject(includeInstance: boolean, msg: AppExtraInfo): AppExtraInfo.AsObject;
@@ -257,6 +262,7 @@ export class AppExtraInfo extends jspb.Message {
 export namespace AppExtraInfo {
     export type AsObject = {
         searchRevisionMarker: string,
+        counts?: AppResourceCounts.AsObject,
     }
 }
 
@@ -277,6 +283,38 @@ export class AppQuery extends jspb.Message {
 export namespace AppQuery {
     export type AsObject = {
         name: string,
+    }
+}
+
+export class AppResourceCounts extends jspb.Message { 
+    getDatasets(): number;
+    setDatasets(value: number): AppResourceCounts;
+    getModels(): number;
+    setModels(value: number): AppResourceCounts;
+    getWorkflows(): number;
+    setWorkflows(value: number): AppResourceCounts;
+    getModules(): number;
+    setModules(value: number): AppResourceCounts;
+    getInputs(): number;
+    setInputs(value: number): AppResourceCounts;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): AppResourceCounts.AsObject;
+    static toObject(includeInstance: boolean, msg: AppResourceCounts): AppResourceCounts.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: AppResourceCounts, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): AppResourceCounts;
+    static deserializeBinaryFromReader(message: AppResourceCounts, reader: jspb.BinaryReader): AppResourceCounts;
+}
+
+export namespace AppResourceCounts {
+    export type AsObject = {
+        datasets: number,
+        models: number,
+        workflows: number,
+        modules: number,
+        inputs: number,
     }
 }
 
@@ -2003,6 +2041,8 @@ export class DatasetVersion extends jspb.Message {
     getEmbedModelVersionIdsList(): Array<string>;
     setEmbedModelVersionIdsList(value: Array<string>): DatasetVersion;
     addEmbedModelVersionIds(value: string, index?: number): string;
+    getRequestOrigin(): DatasetVersionRequestOrigin;
+    setRequestOrigin(value: DatasetVersionRequestOrigin): DatasetVersion;
 
     getDataConfigCase(): DatasetVersion.DataConfigCase;
 
@@ -2035,6 +2075,7 @@ export namespace DatasetVersion {
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
         visibility?: Visibility.AsObject,
         embedModelVersionIdsList: Array<string>,
+        requestOrigin: DatasetVersionRequestOrigin,
     }
 
     export enum DataConfigCase {
@@ -5969,6 +6010,11 @@ export class TaskStatusCountPerUser extends jspb.Message {
     getAwaitingConsensusReview(): number;
     setAwaitingConsensusReview(value: number): TaskStatusCountPerUser;
 
+    hasWorker(): boolean;
+    clearWorker(): void;
+    getWorker(): Worker | undefined;
+    setWorker(value?: Worker): TaskStatusCountPerUser;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): TaskStatusCountPerUser.AsObject;
     static toObject(includeInstance: boolean, msg: TaskStatusCountPerUser): TaskStatusCountPerUser.AsObject;
@@ -5987,6 +6033,7 @@ export namespace TaskStatusCountPerUser {
         success: number,
         reviewDenied: number,
         awaitingConsensusReview: number,
+        worker?: Worker.AsObject,
     }
 }
 
@@ -8190,10 +8237,44 @@ export namespace RunnerSelector {
     }
 }
 
+export class ProcessingInfo extends jspb.Message { 
+    getRunnerMethodType(): RunnerMethodType;
+    setRunnerMethodType(value: RunnerMethodType): ProcessingInfo;
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): ProcessingInfo;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ProcessingInfo.AsObject;
+    static toObject(includeInstance: boolean, msg: ProcessingInfo): ProcessingInfo.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ProcessingInfo, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ProcessingInfo;
+    static deserializeBinaryFromReader(message: ProcessingInfo, reader: jspb.BinaryReader): ProcessingInfo;
+}
+
+export namespace ProcessingInfo {
+    export type AsObject = {
+        runnerMethodType: RunnerMethodType,
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+    }
+}
+
 export enum WorkflowModelUseCase {
     WORKFLOW_MODEL_USE_CASE_NOT_SET = 0,
     CLASSIFICATION = 1,
     DETECTION = 2,
+}
+
+export enum DatasetVersionRequestOrigin {
+    DATASET_VERSION_REQUEST_ORIGIN_NOT_SET = 0,
+    MANUAL = 1,
+    TRAINING = 2,
+    EVAL_GROUND_TRUTH = 3,
+    EVAL_PREDICTIONS = 4,
 }
 
 export enum DatasetVersionMetricsGroupType {
@@ -8312,4 +8393,12 @@ export enum InputIDConflictResolution {
     INPUT_ID_CONFLICT_RESOLUTION_NOT_SET = 0,
     SKIP = 1,
     SUFFIX = 2,
+}
+
+export enum RunnerMethodType {
+    UNKNOWN = 0,
+    UNARY_UNARY = 1,
+    UNARY_STREAMING = 2,
+    STREAMING_UNARY = 3,
+    STREAMING_STREAMING = 4,
 }
