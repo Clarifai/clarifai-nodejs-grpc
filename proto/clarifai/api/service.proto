@@ -769,6 +769,10 @@ service V2 {
 
   // Stream of requests and stream of responses
   rpc StreamModelOutputs (stream PostModelOutputsRequest) returns (stream MultiOutputResponse) {
+    option (google.api.http) = {
+      post: "/v2/models/outputs/stream"
+      body: "*"
+    };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
