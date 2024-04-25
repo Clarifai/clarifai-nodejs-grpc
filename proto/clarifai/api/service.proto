@@ -3765,6 +3765,10 @@ service V2 {
   // For now there will only be one of those if the model prediction only has one request.
   // NOTE(zeiler): downside of this is you can't use HTTP REST requests to do runner work.
   rpc ProcessRunnerItems (stream PostRunnerItemOutputsRequest) returns (stream MultiRunnerItemResponse) {
+    option (google.api.http) = {
+      post: "/v2/runners/items/process"
+      body: "*"
+    };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;

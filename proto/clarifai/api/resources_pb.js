@@ -4701,7 +4701,7 @@ proto.clarifai.api.Annotation.toObject = function(includeInstance, msg) {
     inputLevel: jspb.Message.getBooleanFieldWithDefault(msg, 17, false),
     consensusInfo: (f = msg.getConsensusInfo()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
     taskId: jspb.Message.getFieldWithDefault(msg, 19, ""),
-    workflowVersionId: jspb.Message.getFieldWithDefault(msg, 20, "")
+    worker: (f = msg.getWorker()) && proto.clarifai.api.Worker.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -4800,9 +4800,10 @@ proto.clarifai.api.Annotation.deserializeBinaryFromReader = function(msg, reader
       var value = /** @type {string} */ (reader.readString());
       msg.setTaskId(value);
       break;
-    case 20:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setWorkflowVersionId(value);
+    case 21:
+      var value = new proto.clarifai.api.Worker;
+      reader.readMessage(value,proto.clarifai.api.Worker.deserializeBinaryFromReader);
+      msg.setWorker(value);
       break;
     default:
       reader.skipField();
@@ -4937,11 +4938,12 @@ proto.clarifai.api.Annotation.serializeBinaryToWriter = function(message, writer
       f
     );
   }
-  f = message.getWorkflowVersionId();
-  if (f.length > 0) {
-    writer.writeString(
-      20,
-      f
+  f = message.getWorker();
+  if (f != null) {
+    writer.writeMessage(
+      21,
+      f,
+      proto.clarifai.api.Worker.serializeBinaryToWriter
     );
   }
 };
@@ -5314,20 +5316,39 @@ proto.clarifai.api.Annotation.prototype.setTaskId = function(value) {
 
 
 /**
- * optional string workflow_version_id = 20;
- * @return {string}
+ * optional Worker worker = 21;
+ * @return {?proto.clarifai.api.Worker}
  */
-proto.clarifai.api.Annotation.prototype.getWorkflowVersionId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 20, ""));
+proto.clarifai.api.Annotation.prototype.getWorker = function() {
+  return /** @type{?proto.clarifai.api.Worker} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Worker, 21));
 };
 
 
 /**
- * @param {string} value
+ * @param {?proto.clarifai.api.Worker|undefined} value
+ * @return {!proto.clarifai.api.Annotation} returns this
+*/
+proto.clarifai.api.Annotation.prototype.setWorker = function(value) {
+  return jspb.Message.setWrapperField(this, 21, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
  * @return {!proto.clarifai.api.Annotation} returns this
  */
-proto.clarifai.api.Annotation.prototype.setWorkflowVersionId = function(value) {
-  return jspb.Message.setProto3StringField(this, 20, value);
+proto.clarifai.api.Annotation.prototype.clearWorker = function() {
+  return this.setWorker(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.Annotation.prototype.hasWorker = function() {
+  return jspb.Message.getField(this, 21) != null;
 };
 
 
