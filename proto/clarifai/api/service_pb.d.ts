@@ -4594,6 +4594,8 @@ export class PostModelVersionsUploadConfig extends jspb.Message {
     setModelVersion(value?: proto_clarifai_api_resources_pb.ModelVersion): PostModelVersionsUploadConfig;
     getTotalSize(): number;
     setTotalSize(value: number): PostModelVersionsUploadConfig;
+    getIsV3(): boolean;
+    setIsV3(value: boolean): PostModelVersionsUploadConfig;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PostModelVersionsUploadConfig.AsObject;
@@ -4611,6 +4613,7 @@ export namespace PostModelVersionsUploadConfig {
         modelId: string,
         modelVersion?: proto_clarifai_api_resources_pb.ModelVersion.AsObject,
         totalSize: number,
+        isV3: boolean,
     }
 }
 
@@ -10643,6 +10646,205 @@ export namespace MultiTrainingTimeEstimateResponse {
     export type AsObject = {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         trainingTimeEstimatesList: Array<google_protobuf_duration_pb.Duration.AsObject>,
+    }
+}
+
+export class GetNodepoolRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): GetNodepoolRequest;
+    getNodepoolId(): string;
+    setNodepoolId(value: string): GetNodepoolRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetNodepoolRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: GetNodepoolRequest): GetNodepoolRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetNodepoolRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetNodepoolRequest;
+    static deserializeBinaryFromReader(message: GetNodepoolRequest, reader: jspb.BinaryReader): GetNodepoolRequest;
+}
+
+export namespace GetNodepoolRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        nodepoolId: string,
+    }
+}
+
+export class ListNodepoolsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): ListNodepoolsRequest;
+    getPage(): number;
+    setPage(value: number): ListNodepoolsRequest;
+    getPerPage(): number;
+    setPerPage(value: number): ListNodepoolsRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListNodepoolsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListNodepoolsRequest): ListNodepoolsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListNodepoolsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListNodepoolsRequest;
+    static deserializeBinaryFromReader(message: ListNodepoolsRequest, reader: jspb.BinaryReader): ListNodepoolsRequest;
+}
+
+export namespace ListNodepoolsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        page: number,
+        perPage: number,
+    }
+}
+
+export class PostNodepoolsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PostNodepoolsRequest;
+    clearNodepoolsList(): void;
+    getNodepoolsList(): Array<proto_clarifai_api_resources_pb.Nodepool>;
+    setNodepoolsList(value: Array<proto_clarifai_api_resources_pb.Nodepool>): PostNodepoolsRequest;
+    addNodepools(value?: proto_clarifai_api_resources_pb.Nodepool, index?: number): proto_clarifai_api_resources_pb.Nodepool;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PostNodepoolsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PostNodepoolsRequest): PostNodepoolsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PostNodepoolsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PostNodepoolsRequest;
+    static deserializeBinaryFromReader(message: PostNodepoolsRequest, reader: jspb.BinaryReader): PostNodepoolsRequest;
+}
+
+export namespace PostNodepoolsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        nodepoolsList: Array<proto_clarifai_api_resources_pb.Nodepool.AsObject>,
+    }
+}
+
+export class PatchNodepoolsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PatchNodepoolsRequest;
+    clearNodepoolsList(): void;
+    getNodepoolsList(): Array<proto_clarifai_api_resources_pb.Nodepool>;
+    setNodepoolsList(value: Array<proto_clarifai_api_resources_pb.Nodepool>): PatchNodepoolsRequest;
+    addNodepools(value?: proto_clarifai_api_resources_pb.Nodepool, index?: number): proto_clarifai_api_resources_pb.Nodepool;
+    getAction(): string;
+    setAction(value: string): PatchNodepoolsRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PatchNodepoolsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PatchNodepoolsRequest): PatchNodepoolsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PatchNodepoolsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PatchNodepoolsRequest;
+    static deserializeBinaryFromReader(message: PatchNodepoolsRequest, reader: jspb.BinaryReader): PatchNodepoolsRequest;
+}
+
+export namespace PatchNodepoolsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        nodepoolsList: Array<proto_clarifai_api_resources_pb.Nodepool.AsObject>,
+        action: string,
+    }
+}
+
+export class DeleteNodepoolsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): DeleteNodepoolsRequest;
+    clearIdsList(): void;
+    getIdsList(): Array<string>;
+    setIdsList(value: Array<string>): DeleteNodepoolsRequest;
+    addIds(value: string, index?: number): string;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DeleteNodepoolsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: DeleteNodepoolsRequest): DeleteNodepoolsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DeleteNodepoolsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DeleteNodepoolsRequest;
+    static deserializeBinaryFromReader(message: DeleteNodepoolsRequest, reader: jspb.BinaryReader): DeleteNodepoolsRequest;
+}
+
+export namespace DeleteNodepoolsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        idsList: Array<string>,
+    }
+}
+
+export class SingleNodepoolResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): SingleNodepoolResponse;
+
+    hasNodepool(): boolean;
+    clearNodepool(): void;
+    getNodepool(): proto_clarifai_api_resources_pb.Nodepool | undefined;
+    setNodepool(value?: proto_clarifai_api_resources_pb.Nodepool): SingleNodepoolResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): SingleNodepoolResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: SingleNodepoolResponse): SingleNodepoolResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: SingleNodepoolResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): SingleNodepoolResponse;
+    static deserializeBinaryFromReader(message: SingleNodepoolResponse, reader: jspb.BinaryReader): SingleNodepoolResponse;
+}
+
+export namespace SingleNodepoolResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        nodepool?: proto_clarifai_api_resources_pb.Nodepool.AsObject,
+    }
+}
+
+export class MultiNodepoolResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiNodepoolResponse;
+    clearNodepoolsList(): void;
+    getNodepoolsList(): Array<proto_clarifai_api_resources_pb.Nodepool>;
+    setNodepoolsList(value: Array<proto_clarifai_api_resources_pb.Nodepool>): MultiNodepoolResponse;
+    addNodepools(value?: proto_clarifai_api_resources_pb.Nodepool, index?: number): proto_clarifai_api_resources_pb.Nodepool;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiNodepoolResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiNodepoolResponse): MultiNodepoolResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiNodepoolResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiNodepoolResponse;
+    static deserializeBinaryFromReader(message: MultiNodepoolResponse, reader: jspb.BinaryReader): MultiNodepoolResponse;
+}
+
+export namespace MultiNodepoolResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        nodepoolsList: Array<proto_clarifai_api_resources_pb.Nodepool.AsObject>,
     }
 }
 

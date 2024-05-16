@@ -491,11 +491,27 @@ message ConceptQuery {
   string name = 1;
   // The language of the concept name in a search. Defaults to English.
   string language = 2;
-  // The id of workflow. If no id is provided, then application base workflow is used.
-  string workflow_id = 3;
-  // The concepts must belong to workflow models with specified use cases.
+
+  // Deprecated: Use workflow.id instead.
+  string workflow_id = 3 [deprecated = true];
+
+  // The concepts must belong to models with specified use cases.
   // Multiple values are joined using an OR condition.
   repeated WorkflowModelUseCase use_cases = 4;
+
+  // By default, we return app concepts combined with concepts from this source.
+  // If source is not set, then application default workflow is used as source.
+  // ########## Supported fields ##########
+  //  - model.id                - fetch concepts from this model
+  //  - model.model_version.id  - if set, then use the specified model version. if not set, use latest model version
+  //
+  //  - workflow.id             - fetch concepts from this workflow
+  //  - workflow.version.id     - if set, then use the specified workflow version. if not set, use latest workflow version
+  // ######################################
+  oneof source {
+    Model model = 5;
+    Workflow workflow = 6;
+  }
 }
 enum WorkflowModelUseCase {
   WORKFLOW_MODEL_USE_CASE_NOT_SET = 0;
@@ -3359,12 +3375,21 @@ message TaskMetrics {
   reserved 1;
 
   TaskWorkMetrics work = 2;
+  TaskReviewMetrics review = 3;
 }
 
 message TaskWorkMetrics {
   // Estimated number of inputs that workers have worked on.
   uint64 inputs_count_estimated = 1;
   // Estimated percent of inputs that workers have worked on.
+  // This is a value between 0 and 100, where 0 = 0% and 100 = 100%.
+  uint32 inputs_percent_estimated = 2;
+}
+
+message TaskReviewMetrics {
+  // Estimated number of reviewed inputs.
+  uint64 inputs_count_estimated = 1;
+  // Estimated percent of inputs that were reviewed. Calculated as count of reviewed inputs / total task inputs
   // This is a value between 0 and 100, where 0 = 0% and 100 = 100%.
   uint32 inputs_percent_estimated = 2;
 }
@@ -3578,14 +3603,6 @@ enum StatTimeAggType {
   HOUR = 5;
   MINUTE = 6;
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -4258,14 +4275,14 @@ message BookmarkOrigin {
 // A worker for compute within a nodepool of instances.
 // This asks the API for work
 message Runner {
-  // A unique ID for this app module.
+  // A unique ID for this runner.
   // This is a UUID since runners can be automatically orchestrated.
   string id = 1;
-  // A short description for this app module to be used in grids of modules.
+  // short description about the runner.
   string description = 2;
-  // When the app module was created.
+  // When the runner was created.
   google.protobuf.Timestamp created_at = 3;
-  // When the app module was last modified.
+  // When the runner was last modified.
   google.protobuf.Timestamp modified_at = 4;
 
   // To handle arbitrary json metadata you can use a struct field:
@@ -4319,37 +4336,39 @@ message Runner {
 message Nodepool {
   // The user defined ID of the nodepool.
   string id = 1;
+  // Short description about the nodepool.
+  string description = 2;
+  // When the nodepool was created.
+  google.protobuf.Timestamp created_at = 3;
+  // When the nodepool was last modified.
+  google.protobuf.Timestamp modified_at = 4;
 
   // The user/org that this nodepool belongs to.
-  string user_id = 2;
+  string user_id = 5;
 
-  // Which cloud region this nodepool is within.
-  CloudRegion cloud_region = 3;
+  // Which cluster this nodepool is within.
+  ComputeCluster compute_cluster = 6;
 
-  // Type of nodes that are ok for instances in this pool.
-  // If both spot and on-demand are provided then the runner will be able to run on either
-  // with a preference for spot until they are not available.
-  enum CapacityType {
-    UKNOWN_CAPACITY_TYPE = 0;
-    ONDEMAND_TYPE = 1;
-    SPOT_TYPE = 2;
-  }
-  repeated CapacityType capacity_types = 4;
+  NodeCapacityType node_capacity_type = 7;
 
-  //////////////////////////////////////
-  // The instance types that will be available in this pool of nodes.
-  // Clarifai offers multiple different choices that combine cpu cores, memory and accelerator.
-  repeated string instance_types = 8;
-  //////////////////////////////////////
+  repeated InstanceType instance_types = 8;
 
-
-  // Minimum number of instances in this nodepool. This allows the nodeool to scale down to this
+  // Minimum number of instances in this nodepool. This allows the nodepool to scale down to this
   // amount. A nodepool needs a minimum of 1 instance.
   uint32 min_instances = 9;
 
   // An upper limit on the number of instances in this nodepool. This allows the nodepool to scale
   // up to this amount.
   uint32 max_instances = 10;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 11;
+
+  // To handle arbitrary json metadata:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  google.protobuf.Struct metadata = 12;
 
   // Other future configuration we can add:
   // - disk information
@@ -4358,31 +4377,50 @@ message Nodepool {
   // - repeated availability zones.
 }
 
-
-
-// We define a cloud region here to be used in Nodepools and by the cloud agent.
-// There will be one cloud agent per CloudRegion.
-// This allows us to define CloudRegions that are VPCs within one physical cloud and have that
-// managed by one cloud agent which can list all nodepools for that VPC to deploy them and
-// orchestrate work within them.
-message CloudRegion {
-  string id = 1;
-
-  enum Cloud {
-    UNKOWN_CLOUD = 0;
-    // Run on a user's own infrastructure. This has restrictions on who can access resources
-    // that are being run by SELF_HOSTED runners. Only those who are part of the user/org where they
-    // exist can leverage them.
-    SELF_HOSTED = 1;
-    AWS = 2;
-    GCP = 3;
-    AZURE = 4;
-    LAMBDA = 5;
+// Type of nodes that are ok for instances in this pool.
+// If both spot and on-demand are provided then the runner will be able to run on either
+// with a preference for spot until they are not available.
+message NodeCapacityType {
+  enum CapacityType {
+    UKNOWN_CAPACITY_TYPE = 0;
+    ON_DEMAND_TYPE = 1;
+    SPOT_TYPE = 2;
   }
-  Cloud cloud = 3;
+  repeated CapacityType capacity_types = 1;
+}
 
-  // The region. The naming here depends on the cloud choice above and will be validated
-  // against which clouds+regions that Clarifai currently supports.
+// The instance types that will be available in this pool of nodes.
+// Clarifai offers multiple different choices that combine cpu cores, memory and accelerator.
+message InstanceType {
+  string id = 1;
+  // Short description of instance type.
+  string description = 2;
+  ComputeInfo compute_info = 3;
+}
+
+// CloudProvider represents the entity that provides the infrastructure where the Nodepools are deployed.
+// This could be a public cloud provider like AWS, GCP, Azure, etc., or a self-hosted infrastructure.
+message CloudProvider {
+  // Unique identifier of the cloud provider.
+  string id = 1;
+  // Name of the cloud provider.
+  string name = 2;
+}
+
+// We define a cluster here to be used in Nodepools and by the cloud provider.
+// There will be one cloud provider per Cluster.
+// This allows us to define Clusters that are VPCs within one physical cloud and have that
+// managed by one cloud provider which can list all nodepools for that VPC to deploy them and
+// orchestrate work within them.
+message ComputeCluster {
+  string id = 1;
+  // Short description of cluster region.
+  string description = 2;
+
+  CloudProvider cloud_provider = 3;
+
+  // The region. The naming here depends on the cluster choice above and will be validated
+  // against which clusters+regions that Clarifai currently supports.
   string region = 4;
 
   // For future support of different VPC.
@@ -4402,16 +4440,6 @@ message CloudRegion {
   // The available set of instance types in this cluster.
   // InstanceType instance_types = 8; // FUTURE
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -4536,6 +4564,15 @@ message Deployment {
     PREFER_ONDEMAND = 8; // choose on-demand instances over spot.
   }
   SchedulingChoice scheduling_choice = 7;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 8;
+
+  // To handle arbitrary json metadata:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  google.protobuf.Struct metadata = 9;
 }
 
 

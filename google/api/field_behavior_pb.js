@@ -56,11 +56,11 @@ proto.google.api.fieldBehaviorList = new jspb.ExtensionFieldInfo(
 
 google_protobuf_descriptor_pb.FieldOptions.extensionsBinary[1052] = new jspb.ExtensionFieldBinaryInfo(
     proto.google.api.fieldBehaviorList,
-    jspb.BinaryReader.prototype.readEnum,
-    jspb.BinaryWriter.prototype.writeRepeatedEnum,
+    jspb.BinaryReader.prototype.readPackedEnum,
+    jspb.BinaryWriter.prototype.writePackedEnum,
     undefined,
     undefined,
-    false);
+    true);
 // This registers the extension field with the extended class, so that
 // toObject() will function correctly.
 google_protobuf_descriptor_pb.FieldOptions.extensions[1052] = proto.google.api.fieldBehaviorList;

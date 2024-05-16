@@ -2326,6 +2326,7 @@ service V2 {
 
 
 
+
   // Get a saved legacy search.
   rpc GetSearch (GetSearchRequest) returns (SingleSearchResponse) {
     option (google.api.http) = {
@@ -2681,7 +2682,9 @@ service V2 {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/collaborations"
     };
-    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Collaborators_Get;
   }
 
 
@@ -3072,8 +3075,6 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
   }
-
-
 
 
 
@@ -3675,7 +3676,6 @@ service V2 {
       // }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
   }
 
@@ -3688,7 +3688,6 @@ service V2 {
       // }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
   }
 
@@ -3703,7 +3702,6 @@ service V2 {
       // }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Add;
   }
@@ -3719,7 +3717,6 @@ service V2 {
       // }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Delete;
@@ -3735,7 +3732,6 @@ service V2 {
       // }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
     option (clarifai.auth.util.cl_depending_scopes) = RunnerItems_Get;
   }
@@ -3752,7 +3748,6 @@ service V2 {
       // }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
     option (clarifai.auth.util.cl_depending_scopes) = RunnerItems_Get;
     option (clarifai.auth.util.cl_depending_scopes) = RunnerItems_Add;
@@ -3793,9 +3788,72 @@ service V2 {
 
 
 
+  // TODO(zeiler): i mocked these up bu tleft them commented for now because they will build all the
+  // handlers and we have to stub those out. Me/Sai will do that in follow up PRs, i just want to
+  // check in the protos so we can start using them first work through some of the routing stuff.
 
+  // // ListCloudAgentInformation with special auth.
+  // rpc ListCloudAgentInformation (ListCloudAgentInformationRequest) returns (MultiCloudAgentInformationResponse) {
+  //   option (google.api.http) = {
+  //     get: "/v2/cloud_agent_info"
+  //   };
+  //   option (clarifai.auth.util.cl_auth_type) = CloudAgentAuth;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
+  // }
 
+  // Nodepools CRUD
+  rpc GetNodepool (GetNodepoolRequest) returns (SingleNodepoolResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+  }
 
+  rpc ListNodepools (ListNodepoolsRequest) returns (MultiNodepoolResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/nodepools"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+  }
+
+  rpc PostNodepools (PostNodepoolsRequest) returns (MultiNodepoolResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/nodepools"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Add;
+  }
+
+  rpc PatchNodepools (PatchNodepoolsRequest) returns (MultiNodepoolResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/nodepools"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+  }
+
+  // Delete multiple nodepools in one request.
+  rpc DeleteNodepools (DeleteNodepoolsRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/nodepools"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Delete;
+  }
 
 
 
@@ -5491,14 +5549,20 @@ message PostModelVersionsUploadRequest {
 message PostModelVersionsUploadResponse {
   clarifai.api.status.Status status = 1;
   uint64 bytes_remaining = 2;
-  string model_version_id = 3; // ID of the model version being uploaded
+  // ID of the model version being uploaded
+  string model_version_id = 3; 
 }
 
 message PostModelVersionsUploadConfig {
   clarifai.api.UserAppIDSet user_app_id = 1;
-  string model_id = 2; // model to create version of
-  ModelVersion model_version = 3; // specification for the model version to be uploaded
-  uint64 total_size = 4; // number of bytes in the model files to be uploaded
+  // Model to create version for
+  string model_id = 2; 
+  // Specification for the model version to be uploaded
+  ModelVersion model_version = 3; 
+  // Number of bytes in the model files to be uploaded
+  uint64 total_size = 4; 
+  // Whether the uploaded package will be a .tar.gz which contains a Dockerfile or the standard .zip
+  bool is_v3 = 5; 
 }
 
 // PutModelVersionExportsRequest
@@ -6311,6 +6375,7 @@ enum OrganizationInvitationStatus {
 
 
 
+
 // GetWorkflowRequest
 message GetWorkflowRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -6638,6 +6703,8 @@ message GetTaskRequest {
   // - review.users
   // - metrics.work.inputs_count_estimated
   // - metrics.work.inputs_percent_estimated
+  // - metrics.review.inputs_count_estimated
+  // - metrics.review.inputs_percent_estimated
   repeated string additional_fields = 3;
 }
 
@@ -6668,6 +6735,8 @@ message ListTasksRequest {
   // - review.users
   // - metrics.work.inputs_count_estimated
   // - metrics.work.inputs_percent_estimated
+  // - metrics.review.inputs_count_estimated
+  // - metrics.review.inputs_percent_estimated
   repeated string additional_fields = 7;
 
   // (optional) task IDs to filter on
@@ -6883,10 +6952,6 @@ message MultiStatValueAggregateResponse {
   // The aggregate results for each query passedin.
   repeated StatValueAggregateResult stat_value_aggregate_results = 2;
 }
-
-
-
-
 
 
 
@@ -7662,9 +7727,55 @@ message MultiTrainingTimeEstimateResponse {
 
 
 
+// TODO(zeiler): these might not be 100% correct and will be updated as we uncomment the endpoints.
+// Nodepool CRUD requests and responses
+message GetNodepoolRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string nodepool_id = 2;
+}
 
+message ListNodepoolsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 3;
+}
 
+message PostNodepoolsRequest {
+  // Only the user_id is used from this.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // This allows you to create one or more nodepools by posting it to the API.
+  repeated Nodepool nodepools = 2;
+}
 
+// PatchNodepoolsRequest
+message PatchNodepoolsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated Nodepool nodepools = 3;
+  // The action to perform on the patched objects
+  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  string action = 4;
+}
+
+message DeleteNodepoolsRequest {
+  // Only the user_id is used from this.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // List of nodepool ids to be deleted
+  repeated string ids = 2;
+}
+
+message SingleNodepoolResponse {
+  clarifai.api.status.Status status = 1;
+  Nodepool nodepool = 2;
+}
+
+message MultiNodepoolResponse {
+  clarifai.api.status.Status status = 1;
+  repeated Nodepool nodepools = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
 
 
 

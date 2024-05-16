@@ -428,15 +428,15 @@ enum S {
   RunnerItems_Add = 135 [(clarfai_exposed) = true,
     (clarifai_depending_scopes) = RunnerItems_Get];
 
-  // // Pools of compute resources.
-  // Nodepools_Get = 136 [(clarfai_exposed) = true];
+  // Pools of compute resources.
+  Nodepools_Get = 136 [(clarfai_exposed) = true];
 
-  // Nodepools_Add = 137 [(clarfai_exposed) = true,
-  //   (clarifai_depending_scopes) = Nodepools_Get];
+  Nodepools_Add = 137 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = Nodepools_Get];
 
-  // Nodepools_Delete = 138 [(clarfai_exposed) = true,
-  //   (clarifai_depending_scopes) = Nodepools_Get,
-  //   (clarifai_depending_scopes) = Nodepools_Add];
+  Nodepools_Delete = 138 [(clarfai_exposed) = true,
+   (clarifai_depending_scopes) = Nodepools_Get,
+   (clarifai_depending_scopes) = Nodepools_Add];
 
   // // How to autoscale resources within nodepools.
   // Deployments_Get = 139 [(clarfai_exposed) = true];
