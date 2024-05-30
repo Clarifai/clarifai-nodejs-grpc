@@ -985,9 +985,6 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
   }
 
   // Add dataset versions to a dataset.
@@ -2326,6 +2323,7 @@ service V2 {
 
 
 
+
   // Get a saved legacy search.
   rpc GetSearch (GetSearchRequest) returns (SingleSearchResponse) {
     option (google.api.http) = {
@@ -2681,7 +2679,9 @@ service V2 {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/collaborations"
     };
-    option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Collaborators_Get;
   }
 
 
@@ -3072,8 +3072,6 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
   }
-
-
 
 
 
@@ -3669,73 +3667,68 @@ service V2 {
   // TODO(zeiler): runner_id is a UUID so can list globally as well.
   rpc GetRunner (GetRunnerRequest) returns (SingleRunnerResponse) {
     option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/runners/{runner_id}"
-      // additional_bindings { // TODO(zeiler): add runner selector to this to get runners for a specific nodepool
-      //   get: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners/{runner_id}"
-      // }
+      get: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners/{runner_id}"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
   }
 
   // List all the runners for the user.
   rpc ListRunners (ListRunnersRequest) returns (MultiRunnerResponse) {
     option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/runners"
-      // additional_bindings { // TODO(zeiler): add runner selector to this to get runners for a specific nodepool
-      //   get: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners"
-      // }
+      get: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
   }
 
   // Add a runners to a user.
   rpc PostRunners (PostRunnersRequest) returns (MultiRunnerResponse) {
     option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/runners"
+      post: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners"
       body: "*"
-      // additional_bindings { // TODO(zeiler): add runner selector to this to get runners for a specific nodepool
-      //   post: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners"
-      //   body: "*"
-      // }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
   }
 
   // Delete multiple runners in one request.
   rpc DeleteRunners (DeleteRunnersRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
-      delete: "/v2/users/{user_app_id.user_id}/runners"
+      delete: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners"
       body: "*"
-      // additional_bindings { // TODO(zeiler): add runner selector to this to get runners for a specific nodepool
-      //   delete: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners"
-      //   body: "*"
-      // }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
   }
 
   // List items for the remote runner to work on.
   // since the runner_id is a UUID we can access it directly too.
   rpc ListRunnerItems (ListRunnerItemsRequest) returns (MultiRunnerItemResponse) {
     option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/runners/{runner_id}/items"
-      // additional_bindings { // TODO(zeiler): add runner selector to this to get runners for a specific nodepool
-      //   get: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners/{runner_id}/items"
-      // }
+      get: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners/{runner_id}/items"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
     option (clarifai.auth.util.cl_depending_scopes) = RunnerItems_Get;
   }
@@ -3744,15 +3737,10 @@ service V2 {
   // since the runner_id is a UUID we can access it directly too.
   rpc PostRunnerItemOutputs (PostRunnerItemOutputsRequest) returns (MultiRunnerItemOutputResponse) {
     option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/runners/{runner_id}/items/{runner_item_id}/outputs"
+      post: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners/{runner_id}/items/{runner_item_id}/outputs"
       body: "*"
-      // additional_bindings { // TODO(zeiler): add runner selector to this to get runners for a specific nodepool
-      //   post: "/v2/users/{user_app_id.user_id}/nodepools/{nodepool_id}/runners/{runner_id}/items/{runner_item_id}/outputs"
-      //   body: "*"
-      // }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
     option (clarifai.auth.util.cl_depending_scopes) = RunnerItems_Get;
     option (clarifai.auth.util.cl_depending_scopes) = RunnerItems_Add;
@@ -3793,9 +3781,121 @@ service V2 {
 
 
 
+  // TODO(zeiler): i mocked these up bu tleft them commented for now because they will build all the
+  // handlers and we have to stub those out. Me/Sai will do that in follow up PRs, i just want to
+  // check in the protos so we can start using them first work through some of the routing stuff.
 
+  // // ListCloudAgentInformation with special auth.
+  // rpc ListCloudAgentInformation (ListCloudAgentInformationRequest) returns (MultiCloudAgentInformationResponse) {
+  //   option (google.api.http) = {
+  //     get: "/v2/cloud_agent_info"
+  //   };
+  //   option (clarifai.auth.util.cl_auth_type) = CloudAgentAuth;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
+  //   option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
+  // }
 
+  // ComputeCluster CRUD
+  rpc GetComputeCluster (GetComputeClusterRequest) returns (SingleComputeClusterResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+  }
 
+  rpc ListComputeClusters (ListComputeClustersRequest) returns (MultiComputeClusterResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/compute_clusters"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+  }
+
+  rpc PostComputeClusters (PostComputeClustersRequest) returns (MultiComputeClusterResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/compute_clusters"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Add;
+  }
+
+  // Delete multiple compute_clusters in one request.
+  rpc DeleteComputeClusters (DeleteComputeClustersRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/compute_clusters"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Delete;
+  }
+
+  // Nodepools CRUD
+  rpc GetNodepool (GetNodepoolRequest) returns (SingleNodepoolResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+  }
+
+  rpc ListNodepools (ListNodepoolsRequest) returns (MultiNodepoolResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+  }
+
+  rpc PostNodepools (PostNodepoolsRequest) returns (MultiNodepoolResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+  }
+
+  rpc PatchNodepools (PatchNodepoolsRequest) returns (MultiNodepoolResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+  }
+
+  // Delete multiple nodepools in one request.
+  rpc DeleteNodepools (DeleteNodepoolsRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Delete;
+  }
 
 
 
@@ -5491,14 +5591,20 @@ message PostModelVersionsUploadRequest {
 message PostModelVersionsUploadResponse {
   clarifai.api.status.Status status = 1;
   uint64 bytes_remaining = 2;
-  string model_version_id = 3; // ID of the model version being uploaded
+  // ID of the model version being uploaded
+  string model_version_id = 3;
 }
 
 message PostModelVersionsUploadConfig {
   clarifai.api.UserAppIDSet user_app_id = 1;
-  string model_id = 2; // model to create version of
-  ModelVersion model_version = 3; // specification for the model version to be uploaded
-  uint64 total_size = 4; // number of bytes in the model files to be uploaded
+  // Model to create version for
+  string model_id = 2;
+  // Specification for the model version to be uploaded
+  ModelVersion model_version = 3;
+  // Number of bytes in the model files to be uploaded
+  uint64 total_size = 4;
+  // Whether the uploaded package will be a .tar.gz which contains a Dockerfile or the standard .zip
+  bool is_v3 = 5;
 }
 
 // PutModelVersionExportsRequest
@@ -6311,6 +6417,7 @@ enum OrganizationInvitationStatus {
 
 
 
+
 // GetWorkflowRequest
 message GetWorkflowRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -6638,6 +6745,8 @@ message GetTaskRequest {
   // - review.users
   // - metrics.work.inputs_count_estimated
   // - metrics.work.inputs_percent_estimated
+  // - metrics.review.inputs_count_estimated
+  // - metrics.review.inputs_percent_estimated
   repeated string additional_fields = 3;
 }
 
@@ -6668,6 +6777,8 @@ message ListTasksRequest {
   // - review.users
   // - metrics.work.inputs_count_estimated
   // - metrics.work.inputs_percent_estimated
+  // - metrics.review.inputs_count_estimated
+  // - metrics.review.inputs_percent_estimated
   repeated string additional_fields = 7;
 
   // (optional) task IDs to filter on
@@ -6883,10 +6994,6 @@ message MultiStatValueAggregateResponse {
   // The aggregate results for each query passedin.
   repeated StatValueAggregateResult stat_value_aggregate_results = 2;
 }
-
-
-
-
 
 
 
@@ -7527,18 +7634,20 @@ message PostInputsUploadsRequest {
 // GetRunnerRequest
 message GetRunnerRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
-  string runner_id = 2;
+  string nodepool_id = 2;
+  string runner_id = 3;
 }
 
 // ListRunnersRequest
 message ListRunnersRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
+  string nodepool_id = 2;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
   // Defaults to 1.
-  uint32 page = 2;
+  uint32 page = 3;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
   // to 128.
-  uint32 per_page = 3;
+  uint32 per_page = 4;
 }
 
 
@@ -7548,6 +7657,7 @@ message ListRunnersRequest {
 // PostRunnersRequest
 message PostRunnersRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
+  string nodepool_id = 2;
   // This allows you to create one or more runner by posting it to the API.
   repeated Runner runners = 3;
 }
@@ -7555,7 +7665,8 @@ message PostRunnersRequest {
 // Request to delete several things by the list of ids.
 message DeleteRunnersRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
-  repeated string ids = 2;
+  string nodepool_id = 2;
+  repeated string ids = 3;
 }
 
 
@@ -7578,23 +7689,26 @@ message MultiRunnerResponse {
 
 message ListRunnerItemsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
-  string runner_id = 2;
+  string nodepool_id = 2;
+  string runner_id = 3;
 }
 
 // PostRunnerItemOutputsRequest
 message PostRunnerItemOutputsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
+  // The particular nodepool that runner belongs to
+  string nodepool_id = 2;
   // The particular runner that processed the work.
-  string runner_id = 2;
+  string runner_id = 3;
   // The particular item of work processed.
-  string runner_item_id = 3;
+  string runner_item_id = 4;
   // This allows you to create one or more runner by posting it to the API.
-  repeated RunnerItemOutput runner_item_outputs = 4;
+  repeated RunnerItemOutput runner_item_outputs = 5;
 
   // This request has a status so that it can communicate to the API from runners and
   // communicate status, errors, etc. This is on the request since runners operate
   // in a reverse protocol.
-  clarifai.api.status.Status status = 5;
+  clarifai.api.status.Status status = 6;
 }
 
 
@@ -7658,13 +7772,103 @@ message MultiTrainingTimeEstimateResponse {
   repeated google.protobuf.Duration training_time_estimates = 2;
 }
 
+// ComputeCLuster CRUD requests and responses
+message GetComputeClusterRequest {
+  // Only the user_id is used from this.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string compute_cluster_id = 2;
+}
 
+message ListComputeClustersRequest {
+  // Only the user_id is used from this.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 3;
+}
 
+message PostComputeClustersRequest {
+  // Only the user_id is used from this.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // This allows you to create one or more compute_clusters by posting it to the API.
+  repeated ComputeCluster compute_clusters = 2;
+}
 
+message DeleteComputeClustersRequest {
+  // Only the user_id is used from this.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // List of nodepool ids to be deleted
+  repeated string ids = 2;
+}
 
+message SingleComputeClusterResponse {
+  clarifai.api.status.Status status = 1;
+  ComputeCluster compute_cluster = 2;
+}
 
+message MultiComputeClusterResponse {
+  clarifai.api.status.Status status = 1;
+  repeated ComputeCluster compute_clusters = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
 
+// TODO(zeiler): these might not be 100% correct and will be updated as we uncomment the endpoints.
+// Nodepool CRUD requests and responses
+message GetNodepoolRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string compute_cluster_id = 2;
+  string nodepool_id = 3;
+}
 
+message ListNodepoolsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string compute_cluster_id = 2;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 3;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 4;
+
+}
+
+message PostNodepoolsRequest {
+  // Only the user_id is used from this.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string compute_cluster_id = 2;
+  // This allows you to create one or more nodepools by posting it to the API.
+  repeated Nodepool nodepools = 3;
+}
+
+// PatchNodepoolsRequest
+message PatchNodepoolsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string compute_cluster_id = 2;
+  repeated Nodepool nodepools = 3;
+  // The action to perform on the patched objects
+  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  string action = 4;
+}
+
+message DeleteNodepoolsRequest {
+  // Only the user_id is used from this.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string compute_cluster_id = 2;
+  // List of nodepool ids to be deleted
+  repeated string ids = 3;
+}
+
+message SingleNodepoolResponse {
+  clarifai.api.status.Status status = 1;
+  Nodepool nodepool = 2;
+}
+
+message MultiNodepoolResponse {
+  clarifai.api.status.Status status = 1;
+  repeated Nodepool nodepools = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
 
 
 
