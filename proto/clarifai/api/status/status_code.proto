@@ -57,6 +57,10 @@ enum StatusCode {
   MODEL_UPLOADING_FAILED = 21105;
   MODEL_TRAINING_FAILED = 21106; // generic err msg for any type of model training err.
 
+  MODEL_BUILDING = 21107; // For new V3 DockerInternalType models which are built images
+  MODEL_BUILDING_FAILED = 21108; // Failed to build image for model.
+  MODEL_BUILD_UNEXPECTED_ERROR = 21109; // Failed to build image for model.
+
   MODEL_TRAINING_NO_DATA = 21110; // Custom model training had no data.  FIXME(yang): deprecate this. Use the 21106 + errStatusMsg
   MODEL_TRAINING_NO_POSITIVES = 21111; // Custom model training had no positive examples. FIXME(yang): deprecate this. Use the 21106 + errStatusMsg
   MODEL_TRAINING_ONE_VS_N_SINGLE_CLASS = 21112; // Custom model training was ONE_VS_N but with a single class. FIXME(yang): deprecate this. Use the 21106 + errStatusMsg
@@ -210,6 +214,16 @@ enum StatusCode {
   RUNNER_STREAM_END = 25606;
   RUNNER_ITEM_CANCELLED = 25607;
   RUNNER_PROCESSING_FAILED = 25608;
+
+  // Nodepool related codes 257xx
+  NODEPOOL_DOES_NOT_EXIST = 25700;
+  NODEPOOL_INVALID_ARGUMENT = 25701;
+  NODEPOOL_INVALID_REQUEST = 25702;
+
+  // ComputeCluster related codes 258xx
+  COMPUTE_CLUSTER_DOES_NOT_EXIST = 25800;
+  COMPUTE_CLUSTER_INVALID_ARGUMENT = 25801;
+  COMPUTE_CLUSTER_INVALID_REQUEST = 25802;
 
   // Input:Image related 30xxx
   INPUT_DOWNLOAD_SUCCESS = 30000;

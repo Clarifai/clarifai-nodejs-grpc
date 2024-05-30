@@ -135,6 +135,17 @@ function deserialize_clarifai_api_DeleteCollectorsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.DeleteCollectorsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_DeleteComputeClustersRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.DeleteComputeClustersRequest)) {
+    throw new Error('Expected argument of type clarifai.api.DeleteComputeClustersRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_DeleteComputeClustersRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.DeleteComputeClustersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_DeleteConceptRelationsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.DeleteConceptRelationsRequest)) {
     throw new Error('Expected argument of type clarifai.api.DeleteConceptRelationsRequest');
@@ -289,6 +300,17 @@ function deserialize_clarifai_api_DeleteModulesRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.DeleteModulesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_DeleteNodepoolsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.DeleteNodepoolsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.DeleteNodepoolsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_DeleteNodepoolsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.DeleteNodepoolsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_DeleteRunnersRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.DeleteRunnersRequest)) {
     throw new Error('Expected argument of type clarifai.api.DeleteRunnersRequest');
@@ -441,6 +463,17 @@ function serialize_clarifai_api_GetCollectorRequest(arg) {
 
 function deserialize_clarifai_api_GetCollectorRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.GetCollectorRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_GetComputeClusterRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.GetComputeClusterRequest)) {
+    throw new Error('Expected argument of type clarifai.api.GetComputeClusterRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_GetComputeClusterRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.GetComputeClusterRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_GetConceptCountsRequest(arg) {
@@ -718,6 +751,17 @@ function deserialize_clarifai_api_GetModuleVersionUsageCountRequest(buffer_arg) 
   return proto_clarifai_api_service_pb.GetModuleVersionUsageCountRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_GetNodepoolRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.GetNodepoolRequest)) {
+    throw new Error('Expected argument of type clarifai.api.GetNodepoolRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_GetNodepoolRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.GetNodepoolRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_GetResourceCountsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.GetResourceCountsRequest)) {
     throw new Error('Expected argument of type clarifai.api.GetResourceCountsRequest');
@@ -980,6 +1024,17 @@ function serialize_clarifai_api_ListCollectorsRequest(arg) {
 
 function deserialize_clarifai_api_ListCollectorsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListCollectorsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_ListComputeClustersRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListComputeClustersRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListComputeClustersRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListComputeClustersRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListComputeClustersRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_ListConceptLanguagesRequest(arg) {
@@ -1268,6 +1323,17 @@ function deserialize_clarifai_api_ListNextTaskAssignmentsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListNextTaskAssignmentsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_ListNodepoolsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListNodepoolsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListNodepoolsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListNodepoolsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListNodepoolsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_ListOpenSourceLicensesRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.ListOpenSourceLicensesRequest)) {
     throw new Error('Expected argument of type clarifai.api.ListOpenSourceLicensesRequest');
@@ -1497,6 +1563,17 @@ function serialize_clarifai_api_MultiCollectorResponse(arg) {
 
 function deserialize_clarifai_api_MultiCollectorResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiCollectorResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MultiComputeClusterResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiComputeClusterResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiComputeClusterResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiComputeClusterResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiComputeClusterResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiConceptCountResponse(arg) {
@@ -1827,6 +1904,17 @@ function serialize_clarifai_api_MultiModuleVersionResponse(arg) {
 
 function deserialize_clarifai_api_MultiModuleVersionResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiModuleVersionResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MultiNodepoolResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiNodepoolResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiNodepoolResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiNodepoolResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiNodepoolResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiOutputResponse(arg) {
@@ -2379,6 +2467,17 @@ function deserialize_clarifai_api_PatchModulesRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PatchModulesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PatchNodepoolsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PatchNodepoolsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PatchNodepoolsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PatchNodepoolsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PatchNodepoolsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PatchSearchesRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PatchSearchesRequest)) {
     throw new Error('Expected argument of type clarifai.api.PatchSearchesRequest');
@@ -2542,6 +2641,17 @@ function serialize_clarifai_api_PostCollectorsRequest(arg) {
 
 function deserialize_clarifai_api_PostCollectorsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostCollectorsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PostComputeClustersRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostComputeClustersRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostComputeClustersRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostComputeClustersRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostComputeClustersRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PostConceptLanguagesRequest(arg) {
@@ -2885,6 +2995,17 @@ function deserialize_clarifai_api_PostModulesRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostModulesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PostNodepoolsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostNodepoolsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostNodepoolsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostNodepoolsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostNodepoolsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PostRunnerItemOutputsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest)) {
     throw new Error('Expected argument of type clarifai.api.PostRunnerItemOutputsRequest');
@@ -3182,6 +3303,17 @@ function deserialize_clarifai_api_SingleCollectorResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.SingleCollectorResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_SingleComputeClusterResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.SingleComputeClusterResponse)) {
+    throw new Error('Expected argument of type clarifai.api.SingleComputeClusterResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_SingleComputeClusterResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.SingleComputeClusterResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_SingleConceptLanguageResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.SingleConceptLanguageResponse)) {
     throw new Error('Expected argument of type clarifai.api.SingleConceptLanguageResponse');
@@ -3411,6 +3543,17 @@ function serialize_clarifai_api_SingleModuleVersionUsageCountResponse(arg) {
 
 function deserialize_clarifai_api_SingleModuleVersionUsageCountResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.SingleModuleVersionUsageCountResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_SingleNodepoolResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.SingleNodepoolResponse)) {
+    throw new Error('Expected argument of type clarifai.api.SingleNodepoolResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_SingleNodepoolResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.SingleNodepoolResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_SinglePasswordValidationResponse(arg) {
@@ -6358,6 +6501,127 @@ postModelVersionsTrainingTimeEstimate: {
     requestDeserialize: deserialize_clarifai_api_PostModelVersionsTrainingTimeEstimateRequest,
     responseSerialize: serialize_clarifai_api_MultiTrainingTimeEstimateResponse,
     responseDeserialize: deserialize_clarifai_api_MultiTrainingTimeEstimateResponse,
+  },
+  // TODO(zeiler): i mocked these up bu tleft them commented for now because they will build all the
+// handlers and we have to stub those out. Me/Sai will do that in follow up PRs, i just want to
+// check in the protos so we can start using them first work through some of the routing stuff.
+//
+// // ListCloudAgentInformation with special auth.
+// rpc ListCloudAgentInformation (ListCloudAgentInformationRequest) returns (MultiCloudAgentInformationResponse) {
+//   option (google.api.http) = {
+//     get: "/v2/cloud_agent_info"
+//   };
+//   option (clarifai.auth.util.cl_auth_type) = CloudAgentAuth;
+//   option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+//   option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+//   option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+//   option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+//   option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
+//   option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
+// }
+//
+// ComputeCluster CRUD
+getComputeCluster: {
+    path: '/clarifai.api.V2/GetComputeCluster',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.GetComputeClusterRequest,
+    responseType: proto_clarifai_api_service_pb.SingleComputeClusterResponse,
+    requestSerialize: serialize_clarifai_api_GetComputeClusterRequest,
+    requestDeserialize: deserialize_clarifai_api_GetComputeClusterRequest,
+    responseSerialize: serialize_clarifai_api_SingleComputeClusterResponse,
+    responseDeserialize: deserialize_clarifai_api_SingleComputeClusterResponse,
+  },
+  listComputeClusters: {
+    path: '/clarifai.api.V2/ListComputeClusters',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListComputeClustersRequest,
+    responseType: proto_clarifai_api_service_pb.MultiComputeClusterResponse,
+    requestSerialize: serialize_clarifai_api_ListComputeClustersRequest,
+    requestDeserialize: deserialize_clarifai_api_ListComputeClustersRequest,
+    responseSerialize: serialize_clarifai_api_MultiComputeClusterResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiComputeClusterResponse,
+  },
+  postComputeClusters: {
+    path: '/clarifai.api.V2/PostComputeClusters',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostComputeClustersRequest,
+    responseType: proto_clarifai_api_service_pb.MultiComputeClusterResponse,
+    requestSerialize: serialize_clarifai_api_PostComputeClustersRequest,
+    requestDeserialize: deserialize_clarifai_api_PostComputeClustersRequest,
+    responseSerialize: serialize_clarifai_api_MultiComputeClusterResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiComputeClusterResponse,
+  },
+  // Delete multiple compute_clusters in one request.
+deleteComputeClusters: {
+    path: '/clarifai.api.V2/DeleteComputeClusters',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.DeleteComputeClustersRequest,
+    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
+    requestSerialize: serialize_clarifai_api_DeleteComputeClustersRequest,
+    requestDeserialize: deserialize_clarifai_api_DeleteComputeClustersRequest,
+    responseSerialize: serialize_clarifai_api_status_BaseResponse,
+    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
+  // Nodepools CRUD
+getNodepool: {
+    path: '/clarifai.api.V2/GetNodepool',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.GetNodepoolRequest,
+    responseType: proto_clarifai_api_service_pb.SingleNodepoolResponse,
+    requestSerialize: serialize_clarifai_api_GetNodepoolRequest,
+    requestDeserialize: deserialize_clarifai_api_GetNodepoolRequest,
+    responseSerialize: serialize_clarifai_api_SingleNodepoolResponse,
+    responseDeserialize: deserialize_clarifai_api_SingleNodepoolResponse,
+  },
+  listNodepools: {
+    path: '/clarifai.api.V2/ListNodepools',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListNodepoolsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiNodepoolResponse,
+    requestSerialize: serialize_clarifai_api_ListNodepoolsRequest,
+    requestDeserialize: deserialize_clarifai_api_ListNodepoolsRequest,
+    responseSerialize: serialize_clarifai_api_MultiNodepoolResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiNodepoolResponse,
+  },
+  postNodepools: {
+    path: '/clarifai.api.V2/PostNodepools',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostNodepoolsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiNodepoolResponse,
+    requestSerialize: serialize_clarifai_api_PostNodepoolsRequest,
+    requestDeserialize: deserialize_clarifai_api_PostNodepoolsRequest,
+    responseSerialize: serialize_clarifai_api_MultiNodepoolResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiNodepoolResponse,
+  },
+  patchNodepools: {
+    path: '/clarifai.api.V2/PatchNodepools',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PatchNodepoolsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiNodepoolResponse,
+    requestSerialize: serialize_clarifai_api_PatchNodepoolsRequest,
+    requestDeserialize: deserialize_clarifai_api_PatchNodepoolsRequest,
+    responseSerialize: serialize_clarifai_api_MultiNodepoolResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiNodepoolResponse,
+  },
+  // Delete multiple nodepools in one request.
+deleteNodepools: {
+    path: '/clarifai.api.V2/DeleteNodepools',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.DeleteNodepoolsRequest,
+    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
+    requestSerialize: serialize_clarifai_api_DeleteNodepoolsRequest,
+    requestDeserialize: deserialize_clarifai_api_DeleteNodepoolsRequest,
+    responseSerialize: serialize_clarifai_api_status_BaseResponse,
+    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },
 };
 
