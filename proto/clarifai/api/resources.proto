@@ -594,14 +594,6 @@ message KnowledgeGraph {
 }
 
 
-// ConceptMappingJob
-message ConceptMappingJob {
-  // The id of the knowledge graph being used for this concept mapping job
-  string knowledge_graph_id = 1;
-  // The ids of the concepts being mapped
-  repeated string concept_ids = 2;
-}
-
 // This represents a link to an outside source for the given concept.
 // The values from here are sticked into Concept message into the name and definition fields when
 // returning from the API in your default language. The "id" field here becomes the "language"
@@ -3378,6 +3370,7 @@ message TaskMetrics {
 
   TaskWorkMetrics work = 2;
   TaskReviewMetrics review = 3;
+  TaskInputSourceMetrics input_source = 4;
 }
 
 message TaskWorkMetrics {
@@ -3394,6 +3387,11 @@ message TaskReviewMetrics {
   // Estimated percent of inputs that were reviewed. Calculated as count of reviewed inputs / total task inputs
   // This is a value between 0 and 100, where 0 = 0% and 100 = 100%.
   uint32 inputs_percent_estimated = 2;
+}
+
+message TaskInputSourceMetrics {
+  // Estimated number of inputs that are in the source of data
+  uint64 inputs_count_estimated = 1;
 }
 
 enum RoleType {
@@ -4317,6 +4315,10 @@ message Runner {
   // requirements on those object, which may be less than what the Runner allocates (as a safety
   // margin for the runner to for sure run the resource).
   ComputeInfo compute_info = 10;
+
+  // Number of replicas that this runner should have up.
+  // We keep it separate from ComputeInfo which defines how many resources each replica needs.
+  uint32 num_replicas = 11;
 }
 
 
@@ -4347,7 +4349,7 @@ message Nodepool {
   repeated InstanceType instance_types = 8;
 
   // Minimum number of instances in this nodepool. This allows the nodepool to scale down to this
-  // amount. A nodepool needs a minimum of 1 instance.
+  // amount.
   uint32 min_instances = 9;
 
   // An upper limit on the number of instances in this nodepool. This allows the nodepool to scale
@@ -4516,6 +4518,7 @@ message AutoscaleConfig {
 // scale up and down. These are unique per user_id, nodepool and model so for differnet nodepools
 // you can scale differently.
 message Deployment {
+  reserved 5, 6;
   // An id for this configured deployment.
   string id = 1;
   // The user who owns the deployment. These live in the user/org account.
@@ -4530,19 +4533,6 @@ message Deployment {
   // we need a way to rank scheduling choices when we don't know how to decide (like a model
   // supports
   repeated Nodepool nodepools = 4;
-
-  // The thing that the autoscaling config applies to for this nodepool.
-  // For a given user_id, nodepool_id, and object ID we can only have one deployment as it defines
-  oneof object {
-    // Model
-    Model model = 5;
-    // Workflow
-    Workflow workflow = 6;
-    // We could also support matching by labels here for future "job" like functionality where
-    // the item itself fully defines the work that needs to be done.
-    // This would match any resources that have these runner labels defined on them.
-    // RunnerLabels runner_labels = 11; // FUTURE
-  }
 
   // In some scenarios it may not be obvous how we should schedule a resource to underlying nodes
   // within the nodepool(s) above. The SchedulerChoice allows us to specify how to decide which
@@ -4573,6 +4563,18 @@ message Deployment {
   // To handle arbitrary json metadata:
   // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
   google.protobuf.Struct metadata = 9;
+
+  // Short description of deployment.
+  string description = 10;
+
+  // The thing that the autoscaling config applies to for this nodepool.
+  // For a given user_id, nodepool_id, and object ID we can only have one deployment as it defines
+  Worker worker = 11;
+
+  // When the deployment was created.
+  google.protobuf.Timestamp created_at = 12;
+  // When the deployment was last modified.
+  google.protobuf.Timestamp modified_at = 13;
 }
 
 

@@ -190,6 +190,17 @@ function deserialize_clarifai_api_DeleteDatasetsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.DeleteDatasetsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_DeleteDeploymentsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.DeleteDeploymentsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.DeleteDeploymentsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_DeleteDeploymentsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.DeleteDeploymentsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_DeleteInputRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.DeleteInputRequest)) {
     throw new Error('Expected argument of type clarifai.api.DeleteInputRequest');
@@ -540,6 +551,17 @@ function serialize_clarifai_api_GetDatasetVersionRequest(arg) {
 
 function deserialize_clarifai_api_GetDatasetVersionRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.GetDatasetVersionRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_GetDeploymentRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.GetDeploymentRequest)) {
+    throw new Error('Expected argument of type clarifai.api.GetDeploymentRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_GetDeploymentRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.GetDeploymentRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_GetEvaluationRequest(arg) {
@@ -1114,6 +1136,17 @@ function deserialize_clarifai_api_ListDatasetsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListDatasetsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_ListDeploymentsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListDeploymentsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListDeploymentsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListDeploymentsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListDeploymentsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_ListEvaluationsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.ListEvaluationsRequest)) {
     throw new Error('Expected argument of type clarifai.api.ListEvaluationsRequest');
@@ -1598,17 +1631,6 @@ function deserialize_clarifai_api_MultiConceptLanguageResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiConceptLanguageResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_MultiConceptMappingJobResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.MultiConceptMappingJobResponse)) {
-    throw new Error('Expected argument of type clarifai.api.MultiConceptMappingJobResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_MultiConceptMappingJobResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.MultiConceptMappingJobResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_clarifai_api_MultiConceptRelationResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.MultiConceptRelationResponse)) {
     throw new Error('Expected argument of type clarifai.api.MultiConceptRelationResponse');
@@ -1684,6 +1706,17 @@ function serialize_clarifai_api_MultiDatasetVersionResponse(arg) {
 
 function deserialize_clarifai_api_MultiDatasetVersionResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiDatasetVersionResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MultiDeploymentResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiDeploymentResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiDeploymentResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiDeploymentResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiDeploymentResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiEvalMetricsResponse(arg) {
@@ -2324,6 +2357,17 @@ function deserialize_clarifai_api_PatchDatasetsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PatchDatasetsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PatchDeploymentsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PatchDeploymentsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PatchDeploymentsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PatchDeploymentsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PatchDeploymentsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PatchInputsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PatchInputsRequest)) {
     throw new Error('Expected argument of type clarifai.api.PatchInputsRequest');
@@ -2665,17 +2709,6 @@ function deserialize_clarifai_api_PostConceptLanguagesRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostConceptLanguagesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_PostConceptMappingJobsRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.PostConceptMappingJobsRequest)) {
-    throw new Error('Expected argument of type clarifai.api.PostConceptMappingJobsRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_PostConceptMappingJobsRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.PostConceptMappingJobsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_clarifai_api_PostConceptRelationsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PostConceptRelationsRequest)) {
     throw new Error('Expected argument of type clarifai.api.PostConceptRelationsRequest');
@@ -2740,6 +2773,17 @@ function serialize_clarifai_api_PostDatasetsRequest(arg) {
 
 function deserialize_clarifai_api_PostDatasetsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostDatasetsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PostDeploymentsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostDeploymentsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostDeploymentsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostDeploymentsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostDeploymentsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PostEvaluationsRequest(arg) {
@@ -3369,6 +3413,17 @@ function deserialize_clarifai_api_SingleDatasetVersionResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.SingleDatasetVersionResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_SingleDeploymentResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.SingleDeploymentResponse)) {
+    throw new Error('Expected argument of type clarifai.api.SingleDeploymentResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_SingleDeploymentResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.SingleDeploymentResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_SingleEvalMetricsResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.SingleEvalMetricsResponse)) {
     throw new Error('Expected argument of type clarifai.api.SingleEvalMetricsResponse');
@@ -3904,18 +3959,6 @@ postKnowledgeGraphs: {
     requestDeserialize: deserialize_clarifai_api_PostKnowledgeGraphsRequest,
     responseSerialize: serialize_clarifai_api_MultiKnowledgeGraphResponse,
     responseDeserialize: deserialize_clarifai_api_MultiKnowledgeGraphResponse,
-  },
-  // Start concept mapping jobs.
-postConceptMappingJobs: {
-    path: '/clarifai.api.V2/PostConceptMappingJobs',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.PostConceptMappingJobsRequest,
-    responseType: proto_clarifai_api_service_pb.MultiConceptMappingJobResponse,
-    requestSerialize: serialize_clarifai_api_PostConceptMappingJobsRequest,
-    requestDeserialize: deserialize_clarifai_api_PostConceptMappingJobsRequest,
-    responseSerialize: serialize_clarifai_api_MultiConceptMappingJobResponse,
-    responseDeserialize: deserialize_clarifai_api_MultiConceptMappingJobResponse,
   },
   // Get a specific annotation from an app.
 getAnnotation: {
@@ -6620,6 +6663,63 @@ deleteNodepools: {
     responseType: proto_clarifai_api_status_status_pb.BaseResponse,
     requestSerialize: serialize_clarifai_api_DeleteNodepoolsRequest,
     requestDeserialize: deserialize_clarifai_api_DeleteNodepoolsRequest,
+    responseSerialize: serialize_clarifai_api_status_BaseResponse,
+    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
+  // Deployments CRUD
+getDeployment: {
+    path: '/clarifai.api.V2/GetDeployment',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.GetDeploymentRequest,
+    responseType: proto_clarifai_api_service_pb.SingleDeploymentResponse,
+    requestSerialize: serialize_clarifai_api_GetDeploymentRequest,
+    requestDeserialize: deserialize_clarifai_api_GetDeploymentRequest,
+    responseSerialize: serialize_clarifai_api_SingleDeploymentResponse,
+    responseDeserialize: deserialize_clarifai_api_SingleDeploymentResponse,
+  },
+  listDeployments: {
+    path: '/clarifai.api.V2/ListDeployments',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListDeploymentsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiDeploymentResponse,
+    requestSerialize: serialize_clarifai_api_ListDeploymentsRequest,
+    requestDeserialize: deserialize_clarifai_api_ListDeploymentsRequest,
+    responseSerialize: serialize_clarifai_api_MultiDeploymentResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiDeploymentResponse,
+  },
+  postDeployments: {
+    path: '/clarifai.api.V2/PostDeployments',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostDeploymentsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiDeploymentResponse,
+    requestSerialize: serialize_clarifai_api_PostDeploymentsRequest,
+    requestDeserialize: deserialize_clarifai_api_PostDeploymentsRequest,
+    responseSerialize: serialize_clarifai_api_MultiDeploymentResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiDeploymentResponse,
+  },
+  patchDeployments: {
+    path: '/clarifai.api.V2/PatchDeployments',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PatchDeploymentsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiDeploymentResponse,
+    requestSerialize: serialize_clarifai_api_PatchDeploymentsRequest,
+    requestDeserialize: deserialize_clarifai_api_PatchDeploymentsRequest,
+    responseSerialize: serialize_clarifai_api_MultiDeploymentResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiDeploymentResponse,
+  },
+  // Delete multiple deployments in one request.
+deleteDeployments: {
+    path: '/clarifai.api.V2/DeleteDeployments',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.DeleteDeploymentsRequest,
+    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
+    requestSerialize: serialize_clarifai_api_DeleteDeploymentsRequest,
+    requestDeserialize: deserialize_clarifai_api_DeleteDeploymentsRequest,
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },

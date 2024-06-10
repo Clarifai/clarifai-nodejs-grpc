@@ -33,7 +33,6 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     patchConceptLanguages: IV2Service_IPatchConceptLanguages;
     listKnowledgeGraphs: IV2Service_IListKnowledgeGraphs;
     postKnowledgeGraphs: IV2Service_IPostKnowledgeGraphs;
-    postConceptMappingJobs: IV2Service_IPostConceptMappingJobs;
     getAnnotation: IV2Service_IGetAnnotation;
     listAnnotations: IV2Service_IListAnnotations;
     postAnnotations: IV2Service_IPostAnnotations;
@@ -248,6 +247,11 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     postNodepools: IV2Service_IPostNodepools;
     patchNodepools: IV2Service_IPatchNodepools;
     deleteNodepools: IV2Service_IDeleteNodepools;
+    getDeployment: IV2Service_IGetDeployment;
+    listDeployments: IV2Service_IListDeployments;
+    postDeployments: IV2Service_IPostDeployments;
+    patchDeployments: IV2Service_IPatchDeployments;
+    deleteDeployments: IV2Service_IDeleteDeployments;
 }
 
 interface IV2Service_IListConceptRelations extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListConceptRelationsRequest, proto_clarifai_api_service_pb.MultiConceptRelationResponse> {
@@ -393,15 +397,6 @@ interface IV2Service_IPostKnowledgeGraphs extends grpc.MethodDefinition<proto_cl
     requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostKnowledgeGraphsRequest>;
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiKnowledgeGraphResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiKnowledgeGraphResponse>;
-}
-interface IV2Service_IPostConceptMappingJobs extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostConceptMappingJobsRequest, proto_clarifai_api_service_pb.MultiConceptMappingJobResponse> {
-    path: "/clarifai.api.V2/PostConceptMappingJobs";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostConceptMappingJobsRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostConceptMappingJobsRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiConceptMappingJobResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiConceptMappingJobResponse>;
 }
 interface IV2Service_IGetAnnotation extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetAnnotationRequest, proto_clarifai_api_service_pb.SingleAnnotationResponse> {
     path: "/clarifai.api.V2/GetAnnotation";
@@ -2329,6 +2324,51 @@ interface IV2Service_IDeleteNodepools extends grpc.MethodDefinition<proto_clarif
     responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
 }
+interface IV2Service_IGetDeployment extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetDeploymentRequest, proto_clarifai_api_service_pb.SingleDeploymentResponse> {
+    path: "/clarifai.api.V2/GetDeployment";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.GetDeploymentRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.GetDeploymentRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleDeploymentResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleDeploymentResponse>;
+}
+interface IV2Service_IListDeployments extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListDeploymentsRequest, proto_clarifai_api_service_pb.MultiDeploymentResponse> {
+    path: "/clarifai.api.V2/ListDeployments";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListDeploymentsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListDeploymentsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiDeploymentResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiDeploymentResponse>;
+}
+interface IV2Service_IPostDeployments extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostDeploymentsRequest, proto_clarifai_api_service_pb.MultiDeploymentResponse> {
+    path: "/clarifai.api.V2/PostDeployments";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostDeploymentsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostDeploymentsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiDeploymentResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiDeploymentResponse>;
+}
+interface IV2Service_IPatchDeployments extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PatchDeploymentsRequest, proto_clarifai_api_service_pb.MultiDeploymentResponse> {
+    path: "/clarifai.api.V2/PatchDeployments";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PatchDeploymentsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PatchDeploymentsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiDeploymentResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiDeploymentResponse>;
+}
+interface IV2Service_IDeleteDeployments extends grpc.MethodDefinition<proto_clarifai_api_service_pb.DeleteDeploymentsRequest, proto_clarifai_api_status_status_pb.BaseResponse> {
+    path: "/clarifai.api.V2/DeleteDeployments";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.DeleteDeploymentsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.DeleteDeploymentsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
+}
 
 export const V2Service: IV2Service;
 
@@ -2349,7 +2389,6 @@ export interface IV2Server {
     patchConceptLanguages: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchConceptLanguagesRequest, proto_clarifai_api_service_pb.MultiConceptLanguageResponse>;
     listKnowledgeGraphs: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListKnowledgeGraphsRequest, proto_clarifai_api_service_pb.MultiKnowledgeGraphResponse>;
     postKnowledgeGraphs: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostKnowledgeGraphsRequest, proto_clarifai_api_service_pb.MultiKnowledgeGraphResponse>;
-    postConceptMappingJobs: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostConceptMappingJobsRequest, proto_clarifai_api_service_pb.MultiConceptMappingJobResponse>;
     getAnnotation: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetAnnotationRequest, proto_clarifai_api_service_pb.SingleAnnotationResponse>;
     listAnnotations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListAnnotationsRequest, proto_clarifai_api_service_pb.MultiAnnotationResponse>;
     postAnnotations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostAnnotationsRequest, proto_clarifai_api_service_pb.MultiAnnotationResponse>;
@@ -2564,6 +2603,11 @@ export interface IV2Server {
     postNodepools: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostNodepoolsRequest, proto_clarifai_api_service_pb.MultiNodepoolResponse>;
     patchNodepools: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchNodepoolsRequest, proto_clarifai_api_service_pb.MultiNodepoolResponse>;
     deleteNodepools: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteNodepoolsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
+    getDeployment: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetDeploymentRequest, proto_clarifai_api_service_pb.SingleDeploymentResponse>;
+    listDeployments: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListDeploymentsRequest, proto_clarifai_api_service_pb.MultiDeploymentResponse>;
+    postDeployments: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostDeploymentsRequest, proto_clarifai_api_service_pb.MultiDeploymentResponse>;
+    patchDeployments: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchDeploymentsRequest, proto_clarifai_api_service_pb.MultiDeploymentResponse>;
+    deleteDeployments: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteDeploymentsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
 }
 
 export interface IV2Client {
@@ -2615,9 +2659,6 @@ export interface IV2Client {
     postKnowledgeGraphs(request: proto_clarifai_api_service_pb.PostKnowledgeGraphsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiKnowledgeGraphResponse) => void): grpc.ClientUnaryCall;
     postKnowledgeGraphs(request: proto_clarifai_api_service_pb.PostKnowledgeGraphsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiKnowledgeGraphResponse) => void): grpc.ClientUnaryCall;
     postKnowledgeGraphs(request: proto_clarifai_api_service_pb.PostKnowledgeGraphsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiKnowledgeGraphResponse) => void): grpc.ClientUnaryCall;
-    postConceptMappingJobs(request: proto_clarifai_api_service_pb.PostConceptMappingJobsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiConceptMappingJobResponse) => void): grpc.ClientUnaryCall;
-    postConceptMappingJobs(request: proto_clarifai_api_service_pb.PostConceptMappingJobsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiConceptMappingJobResponse) => void): grpc.ClientUnaryCall;
-    postConceptMappingJobs(request: proto_clarifai_api_service_pb.PostConceptMappingJobsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiConceptMappingJobResponse) => void): grpc.ClientUnaryCall;
     getAnnotation(request: proto_clarifai_api_service_pb.GetAnnotationRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleAnnotationResponse) => void): grpc.ClientUnaryCall;
     getAnnotation(request: proto_clarifai_api_service_pb.GetAnnotationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleAnnotationResponse) => void): grpc.ClientUnaryCall;
     getAnnotation(request: proto_clarifai_api_service_pb.GetAnnotationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleAnnotationResponse) => void): grpc.ClientUnaryCall;
@@ -3259,6 +3300,21 @@ export interface IV2Client {
     deleteNodepools(request: proto_clarifai_api_service_pb.DeleteNodepoolsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteNodepools(request: proto_clarifai_api_service_pb.DeleteNodepoolsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteNodepools(request: proto_clarifai_api_service_pb.DeleteNodepoolsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    getDeployment(request: proto_clarifai_api_service_pb.GetDeploymentRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleDeploymentResponse) => void): grpc.ClientUnaryCall;
+    getDeployment(request: proto_clarifai_api_service_pb.GetDeploymentRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleDeploymentResponse) => void): grpc.ClientUnaryCall;
+    getDeployment(request: proto_clarifai_api_service_pb.GetDeploymentRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleDeploymentResponse) => void): grpc.ClientUnaryCall;
+    listDeployments(request: proto_clarifai_api_service_pb.ListDeploymentsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDeploymentResponse) => void): grpc.ClientUnaryCall;
+    listDeployments(request: proto_clarifai_api_service_pb.ListDeploymentsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDeploymentResponse) => void): grpc.ClientUnaryCall;
+    listDeployments(request: proto_clarifai_api_service_pb.ListDeploymentsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDeploymentResponse) => void): grpc.ClientUnaryCall;
+    postDeployments(request: proto_clarifai_api_service_pb.PostDeploymentsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDeploymentResponse) => void): grpc.ClientUnaryCall;
+    postDeployments(request: proto_clarifai_api_service_pb.PostDeploymentsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDeploymentResponse) => void): grpc.ClientUnaryCall;
+    postDeployments(request: proto_clarifai_api_service_pb.PostDeploymentsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDeploymentResponse) => void): grpc.ClientUnaryCall;
+    patchDeployments(request: proto_clarifai_api_service_pb.PatchDeploymentsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDeploymentResponse) => void): grpc.ClientUnaryCall;
+    patchDeployments(request: proto_clarifai_api_service_pb.PatchDeploymentsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDeploymentResponse) => void): grpc.ClientUnaryCall;
+    patchDeployments(request: proto_clarifai_api_service_pb.PatchDeploymentsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDeploymentResponse) => void): grpc.ClientUnaryCall;
+    deleteDeployments(request: proto_clarifai_api_service_pb.DeleteDeploymentsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    deleteDeployments(request: proto_clarifai_api_service_pb.DeleteDeploymentsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    deleteDeployments(request: proto_clarifai_api_service_pb.DeleteDeploymentsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
 }
 
 export class V2Client extends grpc.Client implements IV2Client {
@@ -3311,9 +3367,6 @@ export class V2Client extends grpc.Client implements IV2Client {
     public postKnowledgeGraphs(request: proto_clarifai_api_service_pb.PostKnowledgeGraphsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiKnowledgeGraphResponse) => void): grpc.ClientUnaryCall;
     public postKnowledgeGraphs(request: proto_clarifai_api_service_pb.PostKnowledgeGraphsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiKnowledgeGraphResponse) => void): grpc.ClientUnaryCall;
     public postKnowledgeGraphs(request: proto_clarifai_api_service_pb.PostKnowledgeGraphsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiKnowledgeGraphResponse) => void): grpc.ClientUnaryCall;
-    public postConceptMappingJobs(request: proto_clarifai_api_service_pb.PostConceptMappingJobsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiConceptMappingJobResponse) => void): grpc.ClientUnaryCall;
-    public postConceptMappingJobs(request: proto_clarifai_api_service_pb.PostConceptMappingJobsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiConceptMappingJobResponse) => void): grpc.ClientUnaryCall;
-    public postConceptMappingJobs(request: proto_clarifai_api_service_pb.PostConceptMappingJobsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiConceptMappingJobResponse) => void): grpc.ClientUnaryCall;
     public getAnnotation(request: proto_clarifai_api_service_pb.GetAnnotationRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleAnnotationResponse) => void): grpc.ClientUnaryCall;
     public getAnnotation(request: proto_clarifai_api_service_pb.GetAnnotationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleAnnotationResponse) => void): grpc.ClientUnaryCall;
     public getAnnotation(request: proto_clarifai_api_service_pb.GetAnnotationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleAnnotationResponse) => void): grpc.ClientUnaryCall;
@@ -3952,4 +4005,19 @@ export class V2Client extends grpc.Client implements IV2Client {
     public deleteNodepools(request: proto_clarifai_api_service_pb.DeleteNodepoolsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteNodepools(request: proto_clarifai_api_service_pb.DeleteNodepoolsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteNodepools(request: proto_clarifai_api_service_pb.DeleteNodepoolsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public getDeployment(request: proto_clarifai_api_service_pb.GetDeploymentRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleDeploymentResponse) => void): grpc.ClientUnaryCall;
+    public getDeployment(request: proto_clarifai_api_service_pb.GetDeploymentRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleDeploymentResponse) => void): grpc.ClientUnaryCall;
+    public getDeployment(request: proto_clarifai_api_service_pb.GetDeploymentRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleDeploymentResponse) => void): grpc.ClientUnaryCall;
+    public listDeployments(request: proto_clarifai_api_service_pb.ListDeploymentsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDeploymentResponse) => void): grpc.ClientUnaryCall;
+    public listDeployments(request: proto_clarifai_api_service_pb.ListDeploymentsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDeploymentResponse) => void): grpc.ClientUnaryCall;
+    public listDeployments(request: proto_clarifai_api_service_pb.ListDeploymentsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDeploymentResponse) => void): grpc.ClientUnaryCall;
+    public postDeployments(request: proto_clarifai_api_service_pb.PostDeploymentsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDeploymentResponse) => void): grpc.ClientUnaryCall;
+    public postDeployments(request: proto_clarifai_api_service_pb.PostDeploymentsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDeploymentResponse) => void): grpc.ClientUnaryCall;
+    public postDeployments(request: proto_clarifai_api_service_pb.PostDeploymentsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDeploymentResponse) => void): grpc.ClientUnaryCall;
+    public patchDeployments(request: proto_clarifai_api_service_pb.PatchDeploymentsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDeploymentResponse) => void): grpc.ClientUnaryCall;
+    public patchDeployments(request: proto_clarifai_api_service_pb.PatchDeploymentsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDeploymentResponse) => void): grpc.ClientUnaryCall;
+    public patchDeployments(request: proto_clarifai_api_service_pb.PatchDeploymentsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiDeploymentResponse) => void): grpc.ClientUnaryCall;
+    public deleteDeployments(request: proto_clarifai_api_service_pb.DeleteDeploymentsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public deleteDeployments(request: proto_clarifai_api_service_pb.DeleteDeploymentsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public deleteDeployments(request: proto_clarifai_api_service_pb.DeleteDeploymentsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
 }

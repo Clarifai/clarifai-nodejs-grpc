@@ -435,8 +435,8 @@ enum S {
     (clarifai_depending_scopes) = Nodepools_Get];
 
   Nodepools_Delete = 138 [(clarfai_exposed) = true,
-   (clarifai_depending_scopes) = Nodepools_Get,
-   (clarifai_depending_scopes) = Nodepools_Add];
+    (clarifai_depending_scopes) = Nodepools_Get,
+    (clarifai_depending_scopes) = Nodepools_Add];
 
   // Cluster of machines in a region of cloud
   ComputeClusters_Get = 139 [(clarfai_exposed) = true];
@@ -445,18 +445,18 @@ enum S {
     (clarifai_depending_scopes) = ComputeClusters_Get];
 
   ComputeClusters_Delete = 141 [(clarfai_exposed) = true,
-   (clarifai_depending_scopes) = ComputeClusters_Get,
-   (clarifai_depending_scopes) = ComputeClusters_Add];
+    (clarifai_depending_scopes) = ComputeClusters_Get,
+    (clarifai_depending_scopes) = ComputeClusters_Add];
 
-  // // How to autoscale resources within nodepools.
-  // Deployments_Get = 142 [(clarfai_exposed) = true];
+  // How to autoscale resources within nodepools.
+  Deployments_Get = 144 [(clarfai_exposed) = true];
 
-  // Deployments_Add = 143 [(clarfai_exposed) = true,
-  //   (clarifai_depending_scopes) = Deployments_Get];
+  Deployments_Add = 145 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = Deployments_Get];
 
-  // Deployments_Delete = 144 [(clarfai_exposed) = true,
-  //   (clarifai_depending_scopes) = Deployments_Get,
-  //   (clarifai_depending_scopes) = Deployments_Add];
+  Deployments_Delete = 146 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = Deployments_Get,
+    (clarifai_depending_scopes) = Deployments_Add];
 }
 
 extend google.protobuf.EnumValueOptions {

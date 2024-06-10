@@ -299,22 +299,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
   }
 
-  // Start concept mapping jobs.
-  rpc PostConceptMappingJobs (PostConceptMappingJobsRequest) returns (MultiConceptMappingJobResponse) {
-    option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/concepts/mappings/jobs"
-      body: "*"
-      additional_bindings {
-        post: "/v2/concepts/mappings/jobs"
-        body: "*"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
-  }
-
 
 
   // Get a specific annotation from an app.
@@ -3897,9 +3881,77 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Delete;
   }
 
+  // Deployments CRUD
+  rpc GetDeployment (GetDeploymentRequest) returns (SingleDeploymentResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/deployments/{deployment_id}"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+  }
 
+  rpc ListDeployments (ListDeploymentsRequest) returns (MultiDeploymentResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/deployments"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+  }
 
+  rpc PostDeployments (PostDeploymentsRequest) returns (MultiDeploymentResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/deployments"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Deployments_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+  }
 
+  rpc PatchDeployments (PatchDeploymentsRequest) returns (MultiDeploymentResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/deployments"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Deployments_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+  }
+
+  // Delete multiple deployments in one request.
+  rpc DeleteDeployments (DeleteDeploymentsRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/deployments"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Deployments_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Deployments_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+  }
 }
 
 
@@ -4586,14 +4638,6 @@ message PostKnowledgeGraphsRequest {
 
 
 
-// Start concept mapping jobs
-message PostConceptMappingJobsRequest {
-  // The user_id and app_id information.
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  // The concept mapping jobs that are being started
-  repeated ConceptMappingJob concept_mapping_jobs = 2;
-}
-
 
 // MultiConceptRelationResponse
 message MultiConceptRelationResponse {
@@ -4613,15 +4657,6 @@ message MultiKnowledgeGraphResponse {
 }
 
 
-
-
-// MultiConceptMappingJobResponse
-message MultiConceptMappingJobResponse {
-  // The response status.
-  clarifai.api.status.Status status = 1;
-  // The ids of the concept mapping jobs underway.
-  repeated string ids = 2;
-}
 
 // GET single concept language for the given concept.
 message GetConceptLanguageRequest {
@@ -6743,6 +6778,7 @@ message GetTaskRequest {
   // - all
   // - worker.users
   // - review.users
+  // - metrics.input_source.inputs_count_estimated
   // - metrics.work.inputs_count_estimated
   // - metrics.work.inputs_percent_estimated
   // - metrics.review.inputs_count_estimated
@@ -6775,6 +6811,7 @@ message ListTasksRequest {
   // - all
   // - worker.users
   // - review.users
+  // - metrics.input_source.inputs_count_estimated
   // - metrics.work.inputs_count_estimated
   // - metrics.work.inputs_percent_estimated
   // - metrics.review.inputs_count_estimated
@@ -7651,9 +7688,6 @@ message ListRunnersRequest {
 }
 
 
-
-
-
 // PostRunnersRequest
 message PostRunnersRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -7669,8 +7703,6 @@ message DeleteRunnersRequest {
   repeated string ids = 3;
 }
 
-
-
 // SingleRunnerResponse
 message SingleRunnerResponse {
   clarifai.api.status.Status status = 1;
@@ -7683,10 +7715,6 @@ message MultiRunnerResponse {
   repeated Runner runners = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
-
-
-
-
 message ListRunnerItemsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string nodepool_id = 2;
@@ -7694,6 +7722,11 @@ message ListRunnerItemsRequest {
 }
 
 // PostRunnerItemOutputsRequest
+// This is the message that runners send to the API to communicate.
+// At the end of the request it will have the RunnerItemOutput filled in
+// with results of the workload the runner is processing. Other messages
+// from the runner use this same proto to communicate over to the API
+// and do handshakes.
 message PostRunnerItemOutputsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // The particular nodepool that runner belongs to
@@ -7707,13 +7740,18 @@ message PostRunnerItemOutputsRequest {
 
   // This request has a status so that it can communicate to the API from runners and
   // communicate status, errors, etc. This is on the request since runners operate
-  // in a reverse protocol.
+  // in a reverse protocol. This status is also used to initiate the
+  // ProcessRunnerItems request with RUNNER_STREAM_START code.
   clarifai.api.status.Status status = 6;
+
+  // A unique ID to represent the runner. This may be tied to an underlying compute instance
+  // information or just an UUID.
+  string runner_replica_id = 7;
+
+
+  // FUTURE
+  // Advanced metrics coming back from the runner.
 }
-
-
-
-
 
 // MultiRunnerItemResponse
 message MultiRunnerItemResponse {
@@ -7721,7 +7759,9 @@ message MultiRunnerItemResponse {
   repeated RunnerItem runner_items = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
-// This is a piece of work for a runner to process.
+// This is a unit of work for a runner to process. This comes from the API
+// in the MultiRunnerItemResponse and contains the user's requests
+// to process.
 message RunnerItem {
   // A UUID hash for this work item.
   string id = 1;
@@ -7740,8 +7780,9 @@ message RunnerItem {
   }
 }
 
-
-
+// This contains the response of the user's request once processing is done.
+// The runner should fill in the matching output to the RunnerItem.request
+// oneof field. This is sent to the API within PostRunnerItemOutputsRequest
 message RunnerItemOutput {
   oneof response {
     // The output of a model prediction request.
@@ -7750,8 +7791,6 @@ message RunnerItemOutput {
     // training response ???
   }
 }
-
-
 
 message MultiRunnerItemOutputResponse {
   clarifai.api.status.Status status = 1;
@@ -7870,7 +7909,53 @@ message MultiNodepoolResponse {
   repeated Nodepool nodepools = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+// Deployments CRUD requests and responses
+message GetDeploymentRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string deployment_id = 2;
+}
 
+message ListDeploymentsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) Nodepool ID. To list all deployed workers in a Nodepool
+  string nodepool_id = 2;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 3;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 4;
+}
 
+message PostDeploymentsRequest {
+  // Only the user_id is used from this.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // This allows you to create one or more deployments by posting it to the API.
+  repeated Deployment deployments = 2;
+}
 
+message DeleteDeploymentsRequest {
+  // Only the user_id is used from this.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // List of deployment ids to be deleted
+  repeated string ids = 2;
+}
 
+message PatchDeploymentsRequest {
+  // Only the user_id is used from this.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated Deployment deployments = 3;
+  // The action to perform on the patched objects
+  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  string action = 4;
+}
+
+message SingleDeploymentResponse {
+  clarifai.api.status.Status status = 1;
+  Deployment deployment = 2;
+}
+
+message MultiDeploymentResponse {
+  clarifai.api.status.Status status = 1;
+  repeated Deployment deployments = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
