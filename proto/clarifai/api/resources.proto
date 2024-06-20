@@ -1443,12 +1443,12 @@ message ModelVersionInputExample {
 // our JSON REST APIs). This allows each ModelType to define the set of fields, their default values
 // and description of each field so that we can display those in Portal and make the creation of
 // Model's very extensible. The OutputConfig object will eventually go away in favor of
-// infer_params struct.
+// output_info.params struct.
 message OutputInfo {
   reserved 4, 5;
   // List of concepts or other output related data for the model.
   Data data = 1;
-  // Model configuration...going away in favor of infer_params and train_params over time.
+  // Model configuration...going away in favor of output_info.params and train_params over time.
   // TO BE DEPRECATED
   OutputConfig output_config = 2;
   // For returning where to look for the Output info if not returning it.
@@ -1501,7 +1501,7 @@ message ImportInfo {
 }
 
 // OutputConfig is a collection of parameters controlling either inference or training settings for
-// the given Model. This message will be deprecated over time in favor or infer_params and
+// the given Model. This message will be deprecated over time in favor or output_info.params and
 // train_params in OutputInfo which are cleaner and more extensible for many ModelTypes.
 message OutputConfig {
   reserved 11, 12, 16, 18;
