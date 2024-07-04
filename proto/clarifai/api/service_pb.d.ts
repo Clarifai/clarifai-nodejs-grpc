@@ -666,6 +666,37 @@ export namespace PatchAppsRequest {
     }
 }
 
+export class PatchAppsDetailsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PatchAppsDetailsRequest;
+    clearAppsList(): void;
+    getAppsList(): Array<proto_clarifai_api_resources_pb.App>;
+    setAppsList(value: Array<proto_clarifai_api_resources_pb.App>): PatchAppsDetailsRequest;
+    addApps(value?: proto_clarifai_api_resources_pb.App, index?: number): proto_clarifai_api_resources_pb.App;
+    getAction(): string;
+    setAction(value: string): PatchAppsDetailsRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PatchAppsDetailsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PatchAppsDetailsRequest): PatchAppsDetailsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PatchAppsDetailsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PatchAppsDetailsRequest;
+    static deserializeBinaryFromReader(message: PatchAppsDetailsRequest, reader: jspb.BinaryReader): PatchAppsDetailsRequest;
+}
+
+export namespace PatchAppsDetailsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        appsList: Array<proto_clarifai_api_resources_pb.App.AsObject>,
+        action: string,
+    }
+}
+
 export class PatchAppRequest extends jspb.Message { 
 
     hasUserAppId(): boolean;
@@ -9448,6 +9479,11 @@ export class PutTaskAssignmentsRequest extends jspb.Message {
     getLabelSubmitConfig(): LabelSubmitConfig | undefined;
     setLabelSubmitConfig(value?: LabelSubmitConfig): PutTaskAssignmentsRequest;
 
+    hasReviewStartConfig(): boolean;
+    clearReviewStartConfig(): void;
+    getReviewStartConfig(): ReviewStartConfig | undefined;
+    setReviewStartConfig(value?: ReviewStartConfig): PutTaskAssignmentsRequest;
+
     hasReviewApproveConfig(): boolean;
     clearReviewApproveConfig(): void;
     getReviewApproveConfig(): ReviewApproveConfig | undefined;
@@ -9482,6 +9518,7 @@ export namespace PutTaskAssignmentsRequest {
         inputId: string,
         action: PutTaskAssignmentsRequestAction,
         labelSubmitConfig?: LabelSubmitConfig.AsObject,
+        reviewStartConfig?: ReviewStartConfig.AsObject,
         reviewApproveConfig?: ReviewApproveConfig.AsObject,
         reviewRequestChangesConfig?: ReviewRequestChangesConfig.AsObject,
         reviewRejectConfig?: ReviewRejectConfig.AsObject,
@@ -9490,6 +9527,7 @@ export namespace PutTaskAssignmentsRequest {
     export enum ActionConfigCase {
         ACTION_CONFIG_NOT_SET = 0,
         LABEL_SUBMIT_CONFIG = 6,
+        REVIEW_START_CONFIG = 10,
         REVIEW_APPROVE_CONFIG = 7,
         REVIEW_REQUEST_CHANGES_CONFIG = 8,
         REVIEW_REJECT_CONFIG = 9,
@@ -9516,6 +9554,28 @@ export class LabelSubmitConfig extends jspb.Message {
 export namespace LabelSubmitConfig {
     export type AsObject = {
         taskAssignmentsList: Array<proto_clarifai_api_resources_pb.TaskAssignment.AsObject>,
+    }
+}
+
+export class ReviewStartConfig extends jspb.Message { 
+    clearWorkersList(): void;
+    getWorkersList(): Array<proto_clarifai_api_resources_pb.Worker>;
+    setWorkersList(value: Array<proto_clarifai_api_resources_pb.Worker>): ReviewStartConfig;
+    addWorkers(value?: proto_clarifai_api_resources_pb.Worker, index?: number): proto_clarifai_api_resources_pb.Worker;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ReviewStartConfig.AsObject;
+    static toObject(includeInstance: boolean, msg: ReviewStartConfig): ReviewStartConfig.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ReviewStartConfig, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ReviewStartConfig;
+    static deserializeBinaryFromReader(message: ReviewStartConfig, reader: jspb.BinaryReader): ReviewStartConfig;
+}
+
+export namespace ReviewStartConfig {
+    export type AsObject = {
+        workersList: Array<proto_clarifai_api_resources_pb.Worker.AsObject>,
     }
 }
 
@@ -10177,6 +10237,8 @@ export class GetRunnerRequest extends jspb.Message {
     setNodepoolId(value: string): GetRunnerRequest;
     getRunnerId(): string;
     setRunnerId(value: string): GetRunnerRequest;
+    getComputeClusterId(): string;
+    setComputeClusterId(value: string): GetRunnerRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetRunnerRequest.AsObject;
@@ -10193,6 +10255,7 @@ export namespace GetRunnerRequest {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         nodepoolId: string,
         runnerId: string,
+        computeClusterId: string,
     }
 }
 
@@ -10208,6 +10271,8 @@ export class ListRunnersRequest extends jspb.Message {
     setPage(value: number): ListRunnersRequest;
     getPerPage(): number;
     setPerPage(value: number): ListRunnersRequest;
+    getComputeClusterId(): string;
+    setComputeClusterId(value: string): ListRunnersRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListRunnersRequest.AsObject;
@@ -10225,6 +10290,7 @@ export namespace ListRunnersRequest {
         nodepoolId: string,
         page: number,
         perPage: number,
+        computeClusterId: string,
     }
 }
 
@@ -10240,6 +10306,8 @@ export class PostRunnersRequest extends jspb.Message {
     getRunnersList(): Array<proto_clarifai_api_resources_pb.Runner>;
     setRunnersList(value: Array<proto_clarifai_api_resources_pb.Runner>): PostRunnersRequest;
     addRunners(value?: proto_clarifai_api_resources_pb.Runner, index?: number): proto_clarifai_api_resources_pb.Runner;
+    getComputeClusterId(): string;
+    setComputeClusterId(value: string): PostRunnersRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PostRunnersRequest.AsObject;
@@ -10256,6 +10324,7 @@ export namespace PostRunnersRequest {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         nodepoolId: string,
         runnersList: Array<proto_clarifai_api_resources_pb.Runner.AsObject>,
+        computeClusterId: string,
     }
 }
 
@@ -10271,6 +10340,8 @@ export class DeleteRunnersRequest extends jspb.Message {
     getIdsList(): Array<string>;
     setIdsList(value: Array<string>): DeleteRunnersRequest;
     addIds(value: string, index?: number): string;
+    getComputeClusterId(): string;
+    setComputeClusterId(value: string): DeleteRunnersRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): DeleteRunnersRequest.AsObject;
@@ -10287,6 +10358,7 @@ export namespace DeleteRunnersRequest {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         nodepoolId: string,
         idsList: Array<string>,
+        computeClusterId: string,
     }
 }
 
@@ -10357,6 +10429,8 @@ export class ListRunnerItemsRequest extends jspb.Message {
     setNodepoolId(value: string): ListRunnerItemsRequest;
     getRunnerId(): string;
     setRunnerId(value: string): ListRunnerItemsRequest;
+    getComputeClusterId(): string;
+    setComputeClusterId(value: string): ListRunnerItemsRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListRunnerItemsRequest.AsObject;
@@ -10373,6 +10447,7 @@ export namespace ListRunnerItemsRequest {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         nodepoolId: string,
         runnerId: string,
+        computeClusterId: string,
     }
 }
 
@@ -10399,6 +10474,8 @@ export class PostRunnerItemOutputsRequest extends jspb.Message {
     setStatus(value?: proto_clarifai_api_status_status_pb.Status): PostRunnerItemOutputsRequest;
     getRunnerReplicaId(): string;
     setRunnerReplicaId(value: string): PostRunnerItemOutputsRequest;
+    getComputeClusterId(): string;
+    setComputeClusterId(value: string): PostRunnerItemOutputsRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PostRunnerItemOutputsRequest.AsObject;
@@ -10419,6 +10496,7 @@ export namespace PostRunnerItemOutputsRequest {
         runnerItemOutputsList: Array<RunnerItemOutput.AsObject>,
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         runnerReplicaId: string,
+        computeClusterId: string,
     }
 }
 

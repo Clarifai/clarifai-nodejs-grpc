@@ -2269,6 +2269,17 @@ function deserialize_clarifai_api_PatchAppRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PatchAppRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PatchAppsDetailsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PatchAppsDetailsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PatchAppsDetailsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PatchAppsDetailsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PatchAppsDetailsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PatchAppsIdsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PatchAppsIdsRequest)) {
     throw new Error('Expected argument of type clarifai.api.PatchAppsIdsRequest');
@@ -5347,6 +5358,19 @@ patchApps: {
     responseType: proto_clarifai_api_service_pb.MultiAppResponse,
     requestSerialize: serialize_clarifai_api_PatchAppsRequest,
     requestDeserialize: deserialize_clarifai_api_PatchAppsRequest,
+    responseSerialize: serialize_clarifai_api_MultiAppResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiAppResponse,
+  },
+  // Allows to Patch only the below fields in one or more apps.
+// Allowed fields are notes, description and image
+patchAppsDetails: {
+    path: '/clarifai.api.V2/PatchAppsDetails',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PatchAppsDetailsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiAppResponse,
+    requestSerialize: serialize_clarifai_api_PatchAppsDetailsRequest,
+    requestDeserialize: deserialize_clarifai_api_PatchAppsDetailsRequest,
     responseSerialize: serialize_clarifai_api_MultiAppResponse,
     responseDeserialize: deserialize_clarifai_api_MultiAppResponse,
   },

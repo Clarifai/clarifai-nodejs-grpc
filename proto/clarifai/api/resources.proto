@@ -4275,6 +4275,7 @@ message BookmarkOrigin {
 // A worker for compute within a nodepool of instances.
 // This asks the API for work
 message Runner {
+  reserved 6;
   // A unique ID for this runner.
   // This is a UUID since runners can be automatically orchestrated.
   string id = 1;
@@ -4289,9 +4290,6 @@ message Runner {
   // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
   // This is an optional arg.
   google.protobuf.Struct metadata = 5;
-
-  // The owner of the runner. Runners belong to a user/org account.
-  string user_id = 6;
 
   // Labels to match in order to find work.
   repeated string labels = 7 [deprecated = true];
@@ -4329,6 +4327,7 @@ message Runner {
 // This compute will typically be consumed by runners and in the future other objects
 // like UI modules may be assigned to node pools.
 message Nodepool {
+  reserved 5;
   // The user defined ID of the nodepool.
   string id = 1;
   // Short description about the nodepool.
@@ -4337,9 +4336,6 @@ message Nodepool {
   google.protobuf.Timestamp created_at = 3;
   // When the nodepool was last modified.
   google.protobuf.Timestamp modified_at = 4;
-
-  // The user/org that this nodepool belongs to.
-  string user_id = 5;
 
   // Which cluster this nodepool is within.
   ComputeCluster compute_cluster = 6;
@@ -4425,11 +4421,16 @@ message ComputeCluster {
   // When the compute cluster was last modified.
   google.protobuf.Timestamp modified_at = 7;
 
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 8;
+
   // For future support of different VPC.
   // To support splitting a region into multiple VPCs.
-  // string vpc_id = 8; // FUTURE
+  // string vpc_id = 9; // FUTURE
   // The user/org that this VPC belongs to.
-  // string vpc_user_id = 9; // FUTURE
+  // string vpc_user_id = 10; // FUTURE
 
   // this is the base url for the API for all runners in this nodepool to communicate with.
   // This is necesary for multi-region / multi-cloud support since runners should only pick up
@@ -4437,10 +4438,10 @@ message ComputeCluster {
   // nodepool so can have this base_api_url injected as the CLARIFAI_API_BASE env variable.
   // We include this in the proto in case a user needs to create a nodepool on their own
   // infrastructure that talks with a specific region.
-  // string base_api_url = 10; // FUTURE
+  // string base_api_url = 11; // FUTURE
 
   // The available set of instance types in this cluster.
-  // InstanceType instance_types = 11; // FUTURE
+  // InstanceType instance_types = 12; // FUTURE
 }
 
 

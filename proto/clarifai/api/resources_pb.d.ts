@@ -7969,8 +7969,6 @@ export class Runner extends jspb.Message {
     clearMetadata(): void;
     getMetadata(): google_protobuf_struct_pb.Struct | undefined;
     setMetadata(value?: google_protobuf_struct_pb.Struct): Runner;
-    getUserId(): string;
-    setUserId(value: string): Runner;
     clearLabelsList(): void;
     getLabelsList(): Array<string>;
     setLabelsList(value: Array<string>): Runner;
@@ -8010,7 +8008,6 @@ export namespace Runner {
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
-        userId: string,
         labelsList: Array<string>,
         worker?: Worker.AsObject,
         nodepool?: Nodepool.AsObject,
@@ -8034,8 +8031,6 @@ export class Nodepool extends jspb.Message {
     clearModifiedAt(): void;
     getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
     setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): Nodepool;
-    getUserId(): string;
-    setUserId(value: string): Nodepool;
 
     hasComputeCluster(): boolean;
     clearComputeCluster(): void;
@@ -8081,7 +8076,6 @@ export namespace Nodepool {
         description: string,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        userId: string,
         computeCluster?: ComputeCluster.AsObject,
         nodeCapacityType?: NodeCapacityType.AsObject,
         instanceTypesList: Array<InstanceType.AsObject>,
@@ -8198,6 +8192,11 @@ export class ComputeCluster extends jspb.Message {
     getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
     setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): ComputeCluster;
 
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): Visibility | undefined;
+    setVisibility(value?: Visibility): ComputeCluster;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ComputeCluster.AsObject;
     static toObject(includeInstance: boolean, msg: ComputeCluster): ComputeCluster.AsObject;
@@ -8217,6 +8216,7 @@ export namespace ComputeCluster {
         userId: string,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        visibility?: Visibility.AsObject,
     }
 }
 

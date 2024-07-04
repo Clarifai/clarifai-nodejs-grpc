@@ -143,6 +143,7 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     deleteApp: IV2Service_IDeleteApp;
     postApps: IV2Service_IPostApps;
     patchApps: IV2Service_IPatchApps;
+    patchAppsDetails: IV2Service_IPatchAppsDetails;
     patchAppsIds: IV2Service_IPatchAppsIds;
     patchApp: IV2Service_IPatchApp;
     postAppsSearches: IV2Service_IPostAppsSearches;
@@ -1388,6 +1389,15 @@ interface IV2Service_IPatchApps extends grpc.MethodDefinition<proto_clarifai_api
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiAppResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiAppResponse>;
 }
+interface IV2Service_IPatchAppsDetails extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PatchAppsDetailsRequest, proto_clarifai_api_service_pb.MultiAppResponse> {
+    path: "/clarifai.api.V2/PatchAppsDetails";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PatchAppsDetailsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PatchAppsDetailsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiAppResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiAppResponse>;
+}
 interface IV2Service_IPatchAppsIds extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PatchAppsIdsRequest, proto_clarifai_api_service_pb.MultiAppResponse> {
     path: "/clarifai.api.V2/PatchAppsIds";
     requestStream: false;
@@ -2499,6 +2509,7 @@ export interface IV2Server {
     deleteApp: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteAppRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     postApps: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostAppsRequest, proto_clarifai_api_service_pb.MultiAppResponse>;
     patchApps: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchAppsRequest, proto_clarifai_api_service_pb.MultiAppResponse>;
+    patchAppsDetails: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchAppsDetailsRequest, proto_clarifai_api_service_pb.MultiAppResponse>;
     patchAppsIds: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchAppsIdsRequest, proto_clarifai_api_service_pb.MultiAppResponse>;
     patchApp: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchAppRequest, proto_clarifai_api_service_pb.SingleAppResponse>;
     postAppsSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostAppsSearchesRequest, proto_clarifai_api_service_pb.MultiAppResponse>;
@@ -2988,6 +2999,9 @@ export interface IV2Client {
     patchApps(request: proto_clarifai_api_service_pb.PatchAppsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAppResponse) => void): grpc.ClientUnaryCall;
     patchApps(request: proto_clarifai_api_service_pb.PatchAppsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAppResponse) => void): grpc.ClientUnaryCall;
     patchApps(request: proto_clarifai_api_service_pb.PatchAppsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAppResponse) => void): grpc.ClientUnaryCall;
+    patchAppsDetails(request: proto_clarifai_api_service_pb.PatchAppsDetailsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAppResponse) => void): grpc.ClientUnaryCall;
+    patchAppsDetails(request: proto_clarifai_api_service_pb.PatchAppsDetailsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAppResponse) => void): grpc.ClientUnaryCall;
+    patchAppsDetails(request: proto_clarifai_api_service_pb.PatchAppsDetailsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAppResponse) => void): grpc.ClientUnaryCall;
     patchAppsIds(request: proto_clarifai_api_service_pb.PatchAppsIdsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAppResponse) => void): grpc.ClientUnaryCall;
     patchAppsIds(request: proto_clarifai_api_service_pb.PatchAppsIdsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAppResponse) => void): grpc.ClientUnaryCall;
     patchAppsIds(request: proto_clarifai_api_service_pb.PatchAppsIdsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAppResponse) => void): grpc.ClientUnaryCall;
@@ -3694,6 +3708,9 @@ export class V2Client extends grpc.Client implements IV2Client {
     public patchApps(request: proto_clarifai_api_service_pb.PatchAppsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAppResponse) => void): grpc.ClientUnaryCall;
     public patchApps(request: proto_clarifai_api_service_pb.PatchAppsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAppResponse) => void): grpc.ClientUnaryCall;
     public patchApps(request: proto_clarifai_api_service_pb.PatchAppsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAppResponse) => void): grpc.ClientUnaryCall;
+    public patchAppsDetails(request: proto_clarifai_api_service_pb.PatchAppsDetailsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAppResponse) => void): grpc.ClientUnaryCall;
+    public patchAppsDetails(request: proto_clarifai_api_service_pb.PatchAppsDetailsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAppResponse) => void): grpc.ClientUnaryCall;
+    public patchAppsDetails(request: proto_clarifai_api_service_pb.PatchAppsDetailsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAppResponse) => void): grpc.ClientUnaryCall;
     public patchAppsIds(request: proto_clarifai_api_service_pb.PatchAppsIdsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAppResponse) => void): grpc.ClientUnaryCall;
     public patchAppsIds(request: proto_clarifai_api_service_pb.PatchAppsIdsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAppResponse) => void): grpc.ClientUnaryCall;
     public patchAppsIds(request: proto_clarifai_api_service_pb.PatchAppsIdsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAppResponse) => void): grpc.ClientUnaryCall;
