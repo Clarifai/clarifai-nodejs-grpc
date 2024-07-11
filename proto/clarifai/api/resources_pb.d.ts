@@ -8196,6 +8196,15 @@ export class ComputeCluster extends jspb.Message {
     clearVisibility(): void;
     getVisibility(): Visibility | undefined;
     setVisibility(value?: Visibility): ComputeCluster;
+    getClusterType(): string;
+    setClusterType(value: string): ComputeCluster;
+    getManagedBy(): string;
+    setManagedBy(value: string): ComputeCluster;
+
+    hasKey(): boolean;
+    clearKey(): void;
+    getKey(): Key | undefined;
+    setKey(value?: Key): ComputeCluster;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ComputeCluster.AsObject;
@@ -8217,6 +8226,9 @@ export namespace ComputeCluster {
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         visibility?: Visibility.AsObject,
+        clusterType: string,
+        managedBy: string,
+        key?: Key.AsObject,
     }
 }
 

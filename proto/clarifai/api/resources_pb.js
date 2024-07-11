@@ -67491,7 +67491,10 @@ proto.clarifai.api.ComputeCluster.toObject = function(includeInstance, msg) {
     userId: jspb.Message.getFieldWithDefault(msg, 5, ""),
     createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    visibility: (f = msg.getVisibility()) && proto.clarifai.api.Visibility.toObject(includeInstance, f)
+    visibility: (f = msg.getVisibility()) && proto.clarifai.api.Visibility.toObject(includeInstance, f),
+    clusterType: jspb.Message.getFieldWithDefault(msg, 9, ""),
+    managedBy: jspb.Message.getFieldWithDefault(msg, 10, ""),
+    key: (f = msg.getKey()) && proto.clarifai.api.Key.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -67563,6 +67566,19 @@ proto.clarifai.api.ComputeCluster.deserializeBinaryFromReader = function(msg, re
       var value = new proto.clarifai.api.Visibility;
       reader.readMessage(value,proto.clarifai.api.Visibility.deserializeBinaryFromReader);
       msg.setVisibility(value);
+      break;
+    case 9:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setClusterType(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setManagedBy(value);
+      break;
+    case 11:
+      var value = new proto.clarifai.api.Key;
+      reader.readMessage(value,proto.clarifai.api.Key.deserializeBinaryFromReader);
+      msg.setKey(value);
       break;
     default:
       reader.skipField();
@@ -67651,6 +67667,28 @@ proto.clarifai.api.ComputeCluster.serializeBinaryToWriter = function(message, wr
       8,
       f,
       proto.clarifai.api.Visibility.serializeBinaryToWriter
+    );
+  }
+  f = message.getClusterType();
+  if (f.length > 0) {
+    writer.writeString(
+      9,
+      f
+    );
+  }
+  f = message.getManagedBy();
+  if (f.length > 0) {
+    writer.writeString(
+      10,
+      f
+    );
+  }
+  f = message.getKey();
+  if (f != null) {
+    writer.writeMessage(
+      11,
+      f,
+      proto.clarifai.api.Key.serializeBinaryToWriter
     );
   }
 };
@@ -67873,6 +67911,79 @@ proto.clarifai.api.ComputeCluster.prototype.clearVisibility = function() {
  */
 proto.clarifai.api.ComputeCluster.prototype.hasVisibility = function() {
   return jspb.Message.getField(this, 8) != null;
+};
+
+
+/**
+ * optional string cluster_type = 9;
+ * @return {string}
+ */
+proto.clarifai.api.ComputeCluster.prototype.getClusterType = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.ComputeCluster} returns this
+ */
+proto.clarifai.api.ComputeCluster.prototype.setClusterType = function(value) {
+  return jspb.Message.setProto3StringField(this, 9, value);
+};
+
+
+/**
+ * optional string managed_by = 10;
+ * @return {string}
+ */
+proto.clarifai.api.ComputeCluster.prototype.getManagedBy = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.ComputeCluster} returns this
+ */
+proto.clarifai.api.ComputeCluster.prototype.setManagedBy = function(value) {
+  return jspb.Message.setProto3StringField(this, 10, value);
+};
+
+
+/**
+ * optional Key key = 11;
+ * @return {?proto.clarifai.api.Key}
+ */
+proto.clarifai.api.ComputeCluster.prototype.getKey = function() {
+  return /** @type{?proto.clarifai.api.Key} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Key, 11));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Key|undefined} value
+ * @return {!proto.clarifai.api.ComputeCluster} returns this
+*/
+proto.clarifai.api.ComputeCluster.prototype.setKey = function(value) {
+  return jspb.Message.setWrapperField(this, 11, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.ComputeCluster} returns this
+ */
+proto.clarifai.api.ComputeCluster.prototype.clearKey = function() {
+  return this.setKey(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.ComputeCluster.prototype.hasKey = function() {
+  return jspb.Message.getField(this, 11) != null;
 };
 
 

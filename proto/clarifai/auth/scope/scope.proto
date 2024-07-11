@@ -457,6 +457,7 @@ enum S {
   Deployments_Delete = 146 [(clarfai_exposed) = true,
     (clarifai_depending_scopes) = Deployments_Get,
     (clarifai_depending_scopes) = Deployments_Add];
+
 }
 
 extend google.protobuf.EnumValueOptions {
