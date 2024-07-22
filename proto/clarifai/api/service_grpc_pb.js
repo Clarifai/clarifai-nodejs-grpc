@@ -1202,6 +1202,17 @@ function deserialize_clarifai_api_ListInstalledModuleVersionsRequest(buffer_arg)
   return proto_clarifai_api_service_pb.ListInstalledModuleVersionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_ListInstanceTypesRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListInstanceTypesRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListInstanceTypesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListInstanceTypesRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListInstanceTypesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_ListKeysRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.ListKeysRequest)) {
     throw new Error('Expected argument of type clarifai.api.ListKeysRequest');
@@ -1783,6 +1794,17 @@ function serialize_clarifai_api_MultiInstalledModuleVersionResponse(arg) {
 
 function deserialize_clarifai_api_MultiInstalledModuleVersionResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MultiInstanceTypeResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiInstanceTypeResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiInstanceTypeResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiInstanceTypeResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiInstanceTypeResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiKeyResponse(arg) {
@@ -6568,6 +6590,18 @@ postModelVersionsTrainingTimeEstimate: {
     requestDeserialize: deserialize_clarifai_api_PostModelVersionsTrainingTimeEstimateRequest,
     responseSerialize: serialize_clarifai_api_MultiTrainingTimeEstimateResponse,
     responseDeserialize: deserialize_clarifai_api_MultiTrainingTimeEstimateResponse,
+  },
+  // Get InstanceTypes given Cloud Provider and Region
+listInstanceTypes: {
+    path: '/clarifai.api.V2/ListInstanceTypes',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListInstanceTypesRequest,
+    responseType: proto_clarifai_api_service_pb.MultiInstanceTypeResponse,
+    requestSerialize: serialize_clarifai_api_ListInstanceTypesRequest,
+    requestDeserialize: deserialize_clarifai_api_ListInstanceTypesRequest,
+    responseSerialize: serialize_clarifai_api_MultiInstanceTypeResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiInstanceTypeResponse,
   },
   // ComputeCluster CRUD
 getComputeCluster: {

@@ -3777,6 +3777,15 @@ service V2 {
   }
 
 
+  // Get InstanceTypes given Cloud Provider and Region
+  rpc ListInstanceTypes (ListInstanceTypesRequest) returns (MultiInstanceTypeResponse) {
+    option (google.api.http) = {
+      get: "/v2/cloud_providers/{cloud_provider.id}/regions/{region}/instance_types"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = InstanceTypes_Get;
+  }
+
   // ComputeCluster CRUD
   rpc GetComputeCluster (GetComputeClusterRequest) returns (SingleComputeClusterResponse) {
     option (google.api.http) = {
@@ -7833,6 +7842,21 @@ message PostModelVersionsTrainingTimeEstimateRequest {
 message MultiTrainingTimeEstimateResponse {
   clarifai.api.status.Status status = 1;
   repeated google.protobuf.Duration training_time_estimates = 2;
+}
+
+// List InstanceTypes
+message ListInstanceTypesRequest {
+  // The cloud provider to list compute clusters for.
+  CloudProvider cloud_provider = 1;
+
+  // The region to list for so when there are multiple regions we get only the clusters
+  // that are supposed to be up in that region.
+  string region = 2;
+}
+
+message MultiInstanceTypeResponse {
+  clarifai.api.status.Status status = 1;
+  repeated InstanceType instance_types = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
 // ComputeCLuster CRUD requests and responses

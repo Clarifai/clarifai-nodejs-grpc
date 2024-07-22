@@ -59,6 +59,7 @@ goog.exportSymbol('proto.clarifai.api.AppQuery', null, global);
 goog.exportSymbol('proto.clarifai.api.AppResourceCounts', null, global);
 goog.exportSymbol('proto.clarifai.api.Audio', null, global);
 goog.exportSymbol('proto.clarifai.api.AudioInfo', null, global);
+goog.exportSymbol('proto.clarifai.api.AuditOperationType', null, global);
 goog.exportSymbol('proto.clarifai.api.AutoscaleConfig', null, global);
 goog.exportSymbol('proto.clarifai.api.AzureBlobCreds', null, global);
 goog.exportSymbol('proto.clarifai.api.BinaryMetrics', null, global);
@@ -16934,7 +16935,8 @@ proto.clarifai.api.Image.toObject = function(includeInstance, msg) {
     base64: msg.getBase64_asB64(),
     allowDuplicateUrl: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
     hosted: (f = msg.getHosted()) && proto.clarifai.api.HostedURL.toObject(includeInstance, f),
-    imageInfo: (f = msg.getImageInfo()) && proto.clarifai.api.ImageInfo.toObject(includeInstance, f)
+    imageInfo: (f = msg.getImageInfo()) && proto.clarifai.api.ImageInfo.toObject(includeInstance, f),
+    hostedImageInfoMap: (f = msg.getHostedImageInfoMap()) ? f.toObject(includeInstance, proto.clarifai.api.ImageInfo.toObject) : []
   };
 
   if (includeInstance) {
@@ -16992,6 +16994,12 @@ proto.clarifai.api.Image.deserializeBinaryFromReader = function(msg, reader) {
       var value = new proto.clarifai.api.ImageInfo;
       reader.readMessage(value,proto.clarifai.api.ImageInfo.deserializeBinaryFromReader);
       msg.setImageInfo(value);
+      break;
+    case 7:
+      var value = msg.getHostedImageInfoMap();
+      reader.readMessage(value, function(message, reader) {
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.clarifai.api.ImageInfo.deserializeBinaryFromReader, "", new proto.clarifai.api.ImageInfo());
+         });
       break;
     default:
       reader.skipField();
@@ -17058,6 +17066,10 @@ proto.clarifai.api.Image.serializeBinaryToWriter = function(message, writer) {
       f,
       proto.clarifai.api.ImageInfo.serializeBinaryToWriter
     );
+  }
+  f = message.getHostedImageInfoMap(true);
+  if (f && f.getLength() > 0) {
+    f.serializeBinary(7, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeMessage, proto.clarifai.api.ImageInfo.serializeBinaryToWriter);
   }
 };
 
@@ -17211,6 +17223,29 @@ proto.clarifai.api.Image.prototype.clearImageInfo = function() {
  */
 proto.clarifai.api.Image.prototype.hasImageInfo = function() {
   return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
+ * map<string, ImageInfo> hosted_image_info = 7;
+ * @param {boolean=} opt_noLazyCreate Do not create the map if
+ * empty, instead returning `undefined`
+ * @return {!jspb.Map<string,!proto.clarifai.api.ImageInfo>}
+ */
+proto.clarifai.api.Image.prototype.getHostedImageInfoMap = function(opt_noLazyCreate) {
+  return /** @type {!jspb.Map<string,!proto.clarifai.api.ImageInfo>} */ (
+      jspb.Message.getMapField(this, 7, opt_noLazyCreate,
+      proto.clarifai.api.ImageInfo));
+};
+
+
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.clarifai.api.Image} returns this
+ */
+proto.clarifai.api.Image.prototype.clearHostedImageInfoMap = function() {
+  this.getHostedImageInfoMap().clear();
+  return this;
 };
 
 
@@ -68026,7 +68061,7 @@ proto.clarifai.api.ComputeInfo.prototype.toObject = function(opt_includeInstance
  */
 proto.clarifai.api.ComputeInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
-    numCpus: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    cpuLimit: jspb.Message.getFieldWithDefault(msg, 6, ""),
     cpuMemory: jspb.Message.getFieldWithDefault(msg, 2, ""),
     numAccelerators: jspb.Message.getFieldWithDefault(msg, 3, 0),
     acceleratorMemory: jspb.Message.getFieldWithDefault(msg, 4, ""),
@@ -68067,9 +68102,9 @@ proto.clarifai.api.ComputeInfo.deserializeBinaryFromReader = function(msg, reade
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = /** @type {number} */ (reader.readUint32());
-      msg.setNumCpus(value);
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCpuLimit(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
@@ -68116,10 +68151,10 @@ proto.clarifai.api.ComputeInfo.prototype.serializeBinary = function() {
  */
 proto.clarifai.api.ComputeInfo.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getNumCpus();
-  if (f !== 0) {
-    writer.writeUint32(
-      1,
+  f = message.getCpuLimit();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
       f
     );
   }
@@ -68155,20 +68190,20 @@ proto.clarifai.api.ComputeInfo.serializeBinaryToWriter = function(message, write
 
 
 /**
- * optional uint32 num_cpus = 1;
- * @return {number}
+ * optional string cpu_limit = 6;
+ * @return {string}
  */
-proto.clarifai.api.ComputeInfo.prototype.getNumCpus = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+proto.clarifai.api.ComputeInfo.prototype.getCpuLimit = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
 
 /**
- * @param {number} value
+ * @param {string} value
  * @return {!proto.clarifai.api.ComputeInfo} returns this
  */
-proto.clarifai.api.ComputeInfo.prototype.setNumCpus = function(value) {
-  return jspb.Message.setProto3IntField(this, 1, value);
+proto.clarifai.api.ComputeInfo.prototype.setCpuLimit = function(value) {
+  return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -69770,6 +69805,14 @@ proto.clarifai.api.RunnerMethodType = {
   UNARY_STREAMING: 2,
   STREAMING_UNARY: 3,
   STREAMING_STREAMING: 4
+};
+
+/**
+ * @enum {number}
+ */
+proto.clarifai.api.AuditOperationType = {
+  AUDIT_OPERATION_TYPE_NOT_SET: 0,
+  APPLICATION_CREATE: 100
 };
 
 goog.object.extend(exports, proto.clarifai.api);

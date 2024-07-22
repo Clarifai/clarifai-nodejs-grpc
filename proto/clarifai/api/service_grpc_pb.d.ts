@@ -239,6 +239,7 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     postRunnerItemOutputs: IV2Service_IPostRunnerItemOutputs;
     processRunnerItems: IV2Service_IProcessRunnerItems;
     postModelVersionsTrainingTimeEstimate: IV2Service_IPostModelVersionsTrainingTimeEstimate;
+    listInstanceTypes: IV2Service_IListInstanceTypes;
     getComputeCluster: IV2Service_IGetComputeCluster;
     listComputeClusters: IV2Service_IListComputeClusters;
     postComputeClusters: IV2Service_IPostComputeClusters;
@@ -2253,6 +2254,15 @@ interface IV2Service_IPostModelVersionsTrainingTimeEstimate extends grpc.MethodD
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse>;
 }
+interface IV2Service_IListInstanceTypes extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListInstanceTypesRequest, proto_clarifai_api_service_pb.MultiInstanceTypeResponse> {
+    path: "/clarifai.api.V2/ListInstanceTypes";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListInstanceTypesRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListInstanceTypesRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiInstanceTypeResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiInstanceTypeResponse>;
+}
 interface IV2Service_IGetComputeCluster extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetComputeClusterRequest, proto_clarifai_api_service_pb.SingleComputeClusterResponse> {
     path: "/clarifai.api.V2/GetComputeCluster";
     requestStream: false;
@@ -2605,6 +2615,7 @@ export interface IV2Server {
     postRunnerItemOutputs: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse>;
     processRunnerItems: grpc.handleBidiStreamingCall<proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, proto_clarifai_api_service_pb.MultiRunnerItemResponse>;
     postModelVersionsTrainingTimeEstimate: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse>;
+    listInstanceTypes: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListInstanceTypesRequest, proto_clarifai_api_service_pb.MultiInstanceTypeResponse>;
     getComputeCluster: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetComputeClusterRequest, proto_clarifai_api_service_pb.SingleComputeClusterResponse>;
     listComputeClusters: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListComputeClustersRequest, proto_clarifai_api_service_pb.MultiComputeClusterResponse>;
     postComputeClusters: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostComputeClustersRequest, proto_clarifai_api_service_pb.MultiComputeClusterResponse>;
@@ -3287,6 +3298,9 @@ export interface IV2Client {
     postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
     postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
     postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
+    listInstanceTypes(request: proto_clarifai_api_service_pb.ListInstanceTypesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstanceTypeResponse) => void): grpc.ClientUnaryCall;
+    listInstanceTypes(request: proto_clarifai_api_service_pb.ListInstanceTypesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstanceTypeResponse) => void): grpc.ClientUnaryCall;
+    listInstanceTypes(request: proto_clarifai_api_service_pb.ListInstanceTypesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstanceTypeResponse) => void): grpc.ClientUnaryCall;
     getComputeCluster(request: proto_clarifai_api_service_pb.GetComputeClusterRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleComputeClusterResponse) => void): grpc.ClientUnaryCall;
     getComputeCluster(request: proto_clarifai_api_service_pb.GetComputeClusterRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleComputeClusterResponse) => void): grpc.ClientUnaryCall;
     getComputeCluster(request: proto_clarifai_api_service_pb.GetComputeClusterRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleComputeClusterResponse) => void): grpc.ClientUnaryCall;
@@ -3995,6 +4009,9 @@ export class V2Client extends grpc.Client implements IV2Client {
     public postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
     public postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
     public postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
+    public listInstanceTypes(request: proto_clarifai_api_service_pb.ListInstanceTypesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstanceTypeResponse) => void): grpc.ClientUnaryCall;
+    public listInstanceTypes(request: proto_clarifai_api_service_pb.ListInstanceTypesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstanceTypeResponse) => void): grpc.ClientUnaryCall;
+    public listInstanceTypes(request: proto_clarifai_api_service_pb.ListInstanceTypesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstanceTypeResponse) => void): grpc.ClientUnaryCall;
     public getComputeCluster(request: proto_clarifai_api_service_pb.GetComputeClusterRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleComputeClusterResponse) => void): grpc.ClientUnaryCall;
     public getComputeCluster(request: proto_clarifai_api_service_pb.GetComputeClusterRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleComputeClusterResponse) => void): grpc.ClientUnaryCall;
     public getComputeCluster(request: proto_clarifai_api_service_pb.GetComputeClusterRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleComputeClusterResponse) => void): grpc.ClientUnaryCall;

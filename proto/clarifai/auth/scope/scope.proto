@@ -458,6 +458,8 @@ enum S {
     (clarifai_depending_scopes) = Deployments_Get,
     (clarifai_depending_scopes) = Deployments_Add];
 
+
+  InstanceTypes_Get = 148 [(clarfai_exposed) = true];
 }
 
 extend google.protobuf.EnumValueOptions {

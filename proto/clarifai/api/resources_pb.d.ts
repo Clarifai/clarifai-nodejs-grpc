@@ -1620,6 +1620,9 @@ export class Image extends jspb.Message {
     getImageInfo(): ImageInfo | undefined;
     setImageInfo(value?: ImageInfo): Image;
 
+    getHostedImageInfoMap(): jspb.Map<string, ImageInfo>;
+    clearHostedImageInfoMap(): void;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Image.AsObject;
     static toObject(includeInstance: boolean, msg: Image): Image.AsObject;
@@ -1637,6 +1640,8 @@ export namespace Image {
         allowDuplicateUrl: boolean,
         hosted?: HostedURL.AsObject,
         imageInfo?: ImageInfo.AsObject,
+
+        hostedImageInfoMap: Array<[string, ImageInfo.AsObject]>,
     }
 }
 
@@ -8233,8 +8238,8 @@ export namespace ComputeCluster {
 }
 
 export class ComputeInfo extends jspb.Message { 
-    getNumCpus(): number;
-    setNumCpus(value: number): ComputeInfo;
+    getCpuLimit(): string;
+    setCpuLimit(value: string): ComputeInfo;
     getCpuMemory(): string;
     setCpuMemory(value: string): ComputeInfo;
     getNumAccelerators(): number;
@@ -8258,7 +8263,7 @@ export class ComputeInfo extends jspb.Message {
 
 export namespace ComputeInfo {
     export type AsObject = {
-        numCpus: number,
+        cpuLimit: string,
         cpuMemory: string,
         numAccelerators: number,
         acceleratorMemory: string,
@@ -8583,4 +8588,9 @@ export enum RunnerMethodType {
     UNARY_STREAMING = 2,
     STREAMING_UNARY = 3,
     STREAMING_STREAMING = 4,
+}
+
+export enum AuditOperationType {
+    AUDIT_OPERATION_TYPE_NOT_SET = 0,
+    APPLICATION_CREATE = 100,
 }

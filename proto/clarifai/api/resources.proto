@@ -814,8 +814,11 @@ message Image {
   bool allow_duplicate_url = 4;
   // The hosted field lists images in different sizes hosted in Clarifai storage.
   HostedURL hosted = 5;
-  // image info
+  // image info for original size. for image info for other sizes, use hosted_image_info
   ImageInfo image_info = 6;
+  // The map of hosted image info of different sizes (see hosted.sizes), excluding the original image.
+  // Note: keys(hosted_image_info) = hosted.sizes - "orig"
+  map<string, ImageInfo> hosted_image_info = 7;
 }
 
 message ImageInfo {
@@ -4478,15 +4481,23 @@ message ComputeCluster {
 // as the request and limit for the k8s pod. If we want to separate limits and requests in the
 // future we can allow setting a limits ComputeInfo and a requests ComputeInfo.
 message ComputeInfo {
-  // Number of CPUs.
-  uint32 num_cpus = 1;
-  // Amount of CPU memory to use as a minimum.
+  reserved 1;
+  // Amount of CPUs to use. This follows kubernetes notation like: "1", "100m", "4.5", etc.
+  // See https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/
+  string cpu_limit = 6;
+
+  // Amount of CPU memory to use as a minimum. This follows kubernetes notation like:
+  // 1Ki, 1500Mi, 3Gi, 4Ti, etc.
+  // See https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/
   string cpu_memory = 2;
-  // Number of accelerators (typically GPUs, TPUs, etc. not CPUs) for this resource.
+
+  // Amount of GPU/TPUs to use.
   uint32 num_accelerators = 3;
+
   // Amount of accelerator/GPU memory to use as a minimum.
   // This is defined per accelerator.
   // This follows the format used by kubernetes like 1Ki, 2Mi, 3Gi, 4Ti.
+  // See https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/
   string accelerator_memory = 4;
   // The supported accelerators that the resource can run on. If the resource requires a specific
   // accelerator type then it will only be scheduled on nodes that have that type of accelerator.
@@ -4644,5 +4655,11 @@ message ProcessingInfo {
   // A status of the processing. We use this for signalling end of a request stream, a runner
   // item's processing should be cancelled, etc.
   clarifai.api.status.Status status = 2;
+}
+enum AuditOperationType {
+  AUDIT_OPERATION_TYPE_NOT_SET = 0;
+
+  // APPLICATION event types : 100 - 199
+  APPLICATION_CREATE = 100;
 }
 
