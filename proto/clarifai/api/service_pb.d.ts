@@ -3589,6 +3589,10 @@ export class ListModelsRequest extends jspb.Message {
     setName(value: string): ListModelsRequest;
     getFilterByUserId(): boolean;
     setFilterByUserId(value: boolean): ListModelsRequest;
+    clearModelVersionIdsList(): void;
+    getModelVersionIdsList(): Array<string>;
+    setModelVersionIdsList(value: Array<string>): ListModelsRequest;
+    addModelVersionIds(value: string, index?: number): string;
 
     getSortByCase(): ListModelsRequest.SortByCase;
 
@@ -3630,6 +3634,7 @@ export namespace ListModelsRequest {
         query: string,
         name: string,
         filterByUserId: boolean,
+        modelVersionIdsList: Array<string>,
     }
 
     export enum SortByCase {

@@ -5388,6 +5388,8 @@ message ListModelsRequest {
   // Extends the name filter to include the user_id of the application owner that the model belongs to.
   // Deprecated: use search instead of name.
   bool filter_by_user_id = 22 [deprecated = true];
+  // Filter by the model version ids. If set, only return the model of these versions.
+  repeated string model_version_ids = 28; 
 }
 
 // ResourceCountRequest

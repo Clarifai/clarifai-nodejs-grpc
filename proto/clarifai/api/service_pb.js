@@ -34303,7 +34303,7 @@ proto.clarifai.api.GetModelRequest.prototype.clearAdditionalFieldsList = functio
  * @private {!Array<number>}
  * @const
  */
-proto.clarifai.api.ListModelsRequest.repeatedFields_ = [19,8,9,17,18,21];
+proto.clarifai.api.ListModelsRequest.repeatedFields_ = [19,8,9,17,18,21,28];
 
 /**
  * Oneof group definitions for this message. Each group defines the field
@@ -34390,7 +34390,8 @@ proto.clarifai.api.ListModelsRequest.toObject = function(includeInstance, msg) {
     search: jspb.Message.getFieldWithDefault(msg, 27, ""),
     query: jspb.Message.getFieldWithDefault(msg, 14, ""),
     name: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    filterByUserId: jspb.Message.getBooleanFieldWithDefault(msg, 22, false)
+    filterByUserId: jspb.Message.getBooleanFieldWithDefault(msg, 22, false),
+    modelVersionIdsList: (f = jspb.Message.getRepeatedField(msg, 28)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -34531,6 +34532,10 @@ proto.clarifai.api.ListModelsRequest.deserializeBinaryFromReader = function(msg,
     case 22:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setFilterByUserId(value);
+      break;
+    case 28:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addModelVersionIds(value);
       break;
     default:
       reader.skipField();
@@ -34741,6 +34746,13 @@ proto.clarifai.api.ListModelsRequest.serializeBinaryToWriter = function(message,
   if (f) {
     writer.writeBool(
       22,
+      f
+    );
+  }
+  f = message.getModelVersionIdsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      28,
       f
     );
   }
@@ -35435,6 +35447,43 @@ proto.clarifai.api.ListModelsRequest.prototype.getFilterByUserId = function() {
  */
 proto.clarifai.api.ListModelsRequest.prototype.setFilterByUserId = function(value) {
   return jspb.Message.setProto3BooleanField(this, 22, value);
+};
+
+
+/**
+ * repeated string model_version_ids = 28;
+ * @return {!Array<string>}
+ */
+proto.clarifai.api.ListModelsRequest.prototype.getModelVersionIdsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 28));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.clarifai.api.ListModelsRequest} returns this
+ */
+proto.clarifai.api.ListModelsRequest.prototype.setModelVersionIdsList = function(value) {
+  return jspb.Message.setField(this, 28, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.ListModelsRequest} returns this
+ */
+proto.clarifai.api.ListModelsRequest.prototype.addModelVersionIds = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 28, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.ListModelsRequest} returns this
+ */
+proto.clarifai.api.ListModelsRequest.prototype.clearModelVersionIdsList = function() {
+  return this.setModelVersionIdsList([]);
 };
 
 

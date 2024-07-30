@@ -3151,10 +3151,16 @@ message TaskWorker {
 
     // The inputs will be partitioned in several partitions.
     // Each worker will label one or more input partitions.
+    // All inputs are assigned at task creation.
     PARTITIONED = 2;
 
     // Each worker will label all inputs from input source.
+    // All inputs are assigned at task creation.
     FULL = 3;
+
+    // Each worker will dynamically get 10 inputs assigned at a time.
+    // No inputs are assigned at task creation.
+    DYNAMIC = 4;
   }
 
   // Workers that will work on this task.

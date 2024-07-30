@@ -49725,7 +49725,8 @@ proto.clarifai.api.TaskWorker.serializeBinaryToWriter = function(message, writer
 proto.clarifai.api.TaskWorker.TaskWorkerStrategy = {
   WORKER_STRATEGY_NOT_SET: 0,
   PARTITIONED: 2,
-  FULL: 3
+  FULL: 3,
+  DYNAMIC: 4
 };
 
 /**
