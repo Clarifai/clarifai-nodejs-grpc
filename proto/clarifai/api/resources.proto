@@ -1311,6 +1311,13 @@ enum LicenseScope {
   SEARCH = 3;
 }
 
+enum LicenseType {
+  UNKNOWN_LICENSE_TYPE = 0;
+  FIRST_PARTY = 1;
+  OPEN_SOURCE = 2;
+  CLOSED_SOURCE = 3;
+}
+
 
 // This is the Model object which represents a created model in the platform.
 // Each model has a particular type denoted by the model_type_id.
@@ -1402,6 +1409,17 @@ message Model {
   BookmarkOrigin bookmark_origin = 33;
   // Representative image for this model
   Image image = 34;
+  // License Type
+  LicenseType license_type = 35;
+  // Source of Model
+  enum Source {
+    UNKNOWN_SOURCE = 0;
+    HOSTED = 1;
+    WRAPPED = 2;
+  }
+  Source source = 36;
+  // Creator of Model
+  string creator = 37;
 }
 
 // A link to a html/markdown/text file that stores reference material tied to a model.
@@ -3056,6 +3074,21 @@ message Task {
   // Worker details.
   TaskWorker worker = 6;
 
+  // Who is doing annotations - human Worker or auto-annotation via Model/Workflow.
+  // If set, worker must have be set accordingly to either human worker or model/workflow worker
+  WorkerType worker_type = 22;
+
+  enum WorkerType {
+    // for backward compatibility when task is not setting any type and only sets workers
+    WORKER_TYPE_NOT_SET = 0;
+
+    // only human workers
+    WORKER_HUMAN = 1;
+
+    // auto-annotation tasks. Task must set worker as model or workflow
+    WORKER_AUTO = 2;
+  }
+
   // List of concept ids used in the work of this task.
   // DEPRECATED: Use task.concepts instead.
   repeated string concept_ids = 7 [deprecated = true];
@@ -3085,8 +3118,10 @@ message Task {
 
     // Concepts classification tasks annotate concepts for the overall image, frame of video or section of text.
     CONCEPTS_CLASSIFICATION = 1;
+
     // Bounding box detection tasks annotate rectangular bounding box regions around each concept in an image, frame of video or section of text.
     BOUNDING_BOX_DETECTION = 2;
+
     // Polygon detection tasks annotate free-form regions around concepts in an image, frame of video or section of text.
     POLYGON_DETECTION = 3;
   }
@@ -4662,10 +4697,48 @@ message ProcessingInfo {
   // item's processing should be cancelled, etc.
   clarifai.api.status.Status status = 2;
 }
-enum AuditOperationType {
-  AUDIT_OPERATION_TYPE_NOT_SET = 0;
+enum EventType {
+  EVENT_TYPE_NOT_SET = 0;
 
   // APPLICATION event types : 100 - 199
   APPLICATION_CREATE = 100;
 }
 
+
+
+// AuditLogTarget is a resource on which an operation recorded in an
+// audit log was performed.
+message AuditLogTarget {
+  oneof target {
+    User member = 1; // An organization member, only used in org audit logs.
+  }
+}
+
+// AuditLogEntry is a single operation recorded in an audit log.
+message AuditLogEntry {
+  google.protobuf.Timestamp timestamp = 1; // Time of the operation.
+  User user = 2; // User that performed the operation.
+  EventType operation = 3; // Type of operation that was performed.
+  string description = 4; // A human-readable description of the operation.
+  // Targets of the operation. For example,
+  // - when creating a new model, the targets would be the application and the model,
+  // - when adding a team member, the targets would be the team and the member.
+  repeated AuditLogTarget targets = 5;
+  // Additional human-readable details of the operation. For example,
+  // when patching a resource, these would list what was changed.
+  repeated string details = 6;
+  bool success = 7; // Was the operation successful?
+  string req_id = 8; // Request that triggered the operation.
+  string source_ip = 9; // IP address where the request originated from.
+}
+
+// AuditLogQuery is a query for audit log entries.
+message AuditLogQuery {
+  google.protobuf.Timestamp timestamp_from = 1; // Query operations within this time range.
+  google.protobuf.Timestamp timestamp_to = 2;
+  repeated string user_ids = 3; // Query operations by these users.
+  repeated EventType operations = 4; // Query these types of operations.
+  repeated AuditLogTarget targets = 5; // Query operations with these targets.
+  google.protobuf.BoolValue success = 6; // Query operations by success.
+  repeated string source_ips = 7; // Query operations by source IP address.
+}

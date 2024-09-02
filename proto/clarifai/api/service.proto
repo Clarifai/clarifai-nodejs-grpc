@@ -734,9 +734,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Predict;
-    // TODO(zeiler): will need to add these for model prediction requests.
-    // option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
-    // option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
   }
 
   // TODO(zeiler): will need to
@@ -755,9 +752,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Predict;
-    // TODO(zeiler): will need to add these for model prediction requests.
-    // option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
-    // option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
   }
 
   // Stream of requests and stream of responses
@@ -771,9 +765,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Predict;
-    // TODO(zeiler): will need to add these for model prediction requests.
-    // option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
-    // option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
   }
 
   // List all the datasets.
@@ -3895,12 +3886,15 @@ service V2 {
       body: "*"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Delete;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
 
   // Deployments CRUD
@@ -3974,7 +3968,15 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
   }
-}
+
+  rpc PostAuditLogSearches (PostAuditLogSearchesRequest) returns (MultiAuditLogSearchResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/audit_log/searches"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = AuditLogs_Get;
+  }}
 
 
 
@@ -5404,7 +5406,13 @@ message ListModelsRequest {
   // Deprecated: use search instead of name.
   bool filter_by_user_id = 22 [deprecated = true];
   // Filter by the model version ids. If set, only return the model of these versions.
-  repeated string model_version_ids = 28; 
+  repeated string model_version_ids = 28;
+  // Filter by LicenseType
+  LicenseType license_type = 29;
+  // Filter by Source
+  uint32 source = 30;
+  // Filter by Creator
+  string creator = 31;
 }
 
 // ResourceCountRequest
@@ -8004,6 +8012,22 @@ message DeleteDeploymentsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // List of deployment ids to be deleted
   repeated string ids = 2;
+}
+
+message PostAuditLogSearchesRequest {
+  // Only the user_id is used from this.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  AuditLogQuery audit_log_query = 2;
+  // Sorting options:
+  // Whether to sort by timestamp in ascending order. If false, will order in descending order.
+  bool sort_ascending = 3;
+
+  Pagination pagination = 5;
+}
+
+message MultiAuditLogSearchResponse {
+  clarifai.api.status.Status status = 1;
+  repeated AuditLogEntry entries = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
 message PatchDeploymentsRequest {

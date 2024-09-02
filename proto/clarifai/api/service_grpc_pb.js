@@ -1565,6 +1565,17 @@ function deserialize_clarifai_api_MultiAppResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiAppResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_MultiAuditLogSearchResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiAuditLogSearchResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiAuditLogSearchResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiAuditLogSearchResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiAuditLogSearchResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_MultiBulkOperationsResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.MultiBulkOperationsResponse)) {
     throw new Error('Expected argument of type clarifai.api.MultiBulkOperationsResponse');
@@ -2685,6 +2696,17 @@ function serialize_clarifai_api_PostAppsSearchesRequest(arg) {
 
 function deserialize_clarifai_api_PostAppsSearchesRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostAppsSearchesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PostAuditLogSearchesRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostAuditLogSearchesRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostAuditLogSearchesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostAuditLogSearchesRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostAuditLogSearchesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PostBulkOperationsRequest(arg) {
@@ -6777,6 +6799,17 @@ deleteDeployments: {
     requestDeserialize: deserialize_clarifai_api_DeleteDeploymentsRequest,
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
+  postAuditLogSearches: {
+    path: '/clarifai.api.V2/PostAuditLogSearches',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostAuditLogSearchesRequest,
+    responseType: proto_clarifai_api_service_pb.MultiAuditLogSearchResponse,
+    requestSerialize: serialize_clarifai_api_PostAuditLogSearchesRequest,
+    requestDeserialize: deserialize_clarifai_api_PostAuditLogSearchesRequest,
+    responseSerialize: serialize_clarifai_api_MultiAuditLogSearchResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiAuditLogSearchResponse,
   },
 };
 

@@ -136,6 +136,10 @@ enum S {
   ModelExports_Add = 143 [(clarfai_exposed) = true,
     (clarifai_depending_scopes) = ModelExports_Get];
 
+  // To pull the model version's image
+  Models_Pull = 150 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = Models_Get];
+
   // TODO: No model get metrics scope.
 
   // Write to the workflows DB table.
@@ -460,6 +464,8 @@ enum S {
 
 
   InstanceTypes_Get = 148 [(clarfai_exposed) = true];
+
+  AuditLogs_Get = 149 [(clarfai_exposed) = true];
 }
 
 extend google.protobuf.EnumValueOptions {
