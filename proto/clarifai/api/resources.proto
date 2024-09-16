@@ -429,6 +429,10 @@ message Concept {
 
   // Optional extra info.
   ConceptExtraInfo extra_info = 12;
+
+  // To handle arbitrary json metadata:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  google.protobuf.Struct metadata = 13;
 }
 
 message KeypointInfo {
@@ -1256,13 +1260,6 @@ message FrameInterpolationInfo {
   // If the dataset default is zero or not set, then the input frame prediction
   // sampling rate is used.
   uint32 sample_ms = 1;
-}
-
-// WorkflowResultsSimilarity
-message WorkflowResultsSimilarity {
-  // The input with the specific data compare against all pool results
-  Input probe_input = 1;
-  repeated Hit pool_results = 2;
 }
 
 // Key
@@ -2639,6 +2636,9 @@ message User {
   // information unless the caller has the UserAccounts_Get scope on their key or is the user
   // themselves.
   UserDetail user_detail = 18;
+
+  // Representative image for this User (a.k.a. Profile or cover photo) 
+  Image image = 26;
 }
 
 // This message holds the confidential information from the User object that we don't want to expose
@@ -2892,6 +2892,8 @@ message NodeInput {
 // WorkflowResult
 // One result per input in the workflow.
 message WorkflowResult {
+  reserved 4;
+
   string id = 1;
   clarifai.api.status.Status status = 2;
   // When the object was created. We follow the XXXX timestamp
@@ -2900,10 +2902,6 @@ message WorkflowResult {
   // the following from the API:
   // "2017-04-11T21:50:50.223962Z"
   google.protobuf.Timestamp created_at = 3;
-  // The model that this WorkflowResult is for.
-  // DEPRECATED: not sure why there ever was a model here because each output shows the model
-  // that process this given input.
-  Model model = 4  [deprecated = true];
   // The input that ran through the workflow to generate the outputs in this WorkflowResult.
   Input input = 5;
   // For each model in the workflow we return an Output.
@@ -3148,6 +3146,19 @@ message Task {
 
   // Tasks metrics are filled in upon user-request.
   TaskMetrics metrics = 21;
+
+  // Priority of the task
+  TaskPriority priority = 23;
+
+  enum TaskPriority {
+    TASK_PRIORITY_NOT_SET = 0;
+
+    LOW = 1;
+
+    MEDIUM = 2;
+
+    HIGH = 3;
+  }
 }
 
 // AiAssistParameters
@@ -4156,16 +4167,6 @@ message UploadContentPart {
   uint64 range_start = 1;
   int64 part_number = 2;
   bytes data = 3;
-}
-
-// We use this message to communicate with Custom Code Operator Backend. You can use this message
-// to test your custom operator code locally.
-// We expect the response to come in the format of the MultiOutputResponse protobuf message.
-message CustomCodeOperatorRequest {
-  repeated Input inputs = 1;
-
-  // support arbitrary metadata
-  google.protobuf.Struct metadata = 1002;
 }
 
 message InputsExtractionJob {

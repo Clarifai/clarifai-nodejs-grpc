@@ -1565,15 +1565,15 @@ function deserialize_clarifai_api_MultiAppResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiAppResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_MultiAuditLogSearchResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.MultiAuditLogSearchResponse)) {
-    throw new Error('Expected argument of type clarifai.api.MultiAuditLogSearchResponse');
+function serialize_clarifai_api_MultiAuditLogEntryResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiAuditLogEntryResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiAuditLogEntryResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_clarifai_api_MultiAuditLogSearchResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.MultiAuditLogSearchResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_clarifai_api_MultiAuditLogEntryResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiAuditLogEntryResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiBulkOperationsResponse(arg) {
@@ -3235,28 +3235,6 @@ function serialize_clarifai_api_PostWorkflowResultsResponse(arg) {
 
 function deserialize_clarifai_api_PostWorkflowResultsResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.PostWorkflowResultsResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_PostWorkflowResultsSimilarityRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.PostWorkflowResultsSimilarityRequest)) {
-    throw new Error('Expected argument of type clarifai.api.PostWorkflowResultsSimilarityRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_PostWorkflowResultsSimilarityRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.PostWorkflowResultsSimilarityRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_PostWorkflowResultsSimilarityResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.PostWorkflowResultsSimilarityResponse)) {
-    throw new Error('Expected argument of type clarifai.api.PostWorkflowResultsSimilarityResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_PostWorkflowResultsSimilarityResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.PostWorkflowResultsSimilarityResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PostWorkflowVersionsPublishRequest(arg) {
@@ -5168,18 +5146,6 @@ postWorkflowResults: {
     responseSerialize: serialize_clarifai_api_PostWorkflowResultsResponse,
     responseDeserialize: deserialize_clarifai_api_PostWorkflowResultsResponse,
   },
-  // Compare embeddings distances using a workflow
-postWorkflowResultsSimilarity: {
-    path: '/clarifai.api.V2/PostWorkflowResultsSimilarity',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.PostWorkflowResultsSimilarityRequest,
-    responseType: proto_clarifai_api_service_pb.PostWorkflowResultsSimilarityResponse,
-    requestSerialize: serialize_clarifai_api_PostWorkflowResultsSimilarityRequest,
-    requestDeserialize: deserialize_clarifai_api_PostWorkflowResultsSimilarityRequest,
-    responseSerialize: serialize_clarifai_api_PostWorkflowResultsSimilarityResponse,
-    responseDeserialize: deserialize_clarifai_api_PostWorkflowResultsSimilarityResponse,
-  },
   // List workflow versions.
 listWorkflowVersions: {
     path: '/clarifai.api.V2/ListWorkflowVersions',
@@ -6805,11 +6771,11 @@ deleteDeployments: {
     requestStream: false,
     responseStream: false,
     requestType: proto_clarifai_api_service_pb.PostAuditLogSearchesRequest,
-    responseType: proto_clarifai_api_service_pb.MultiAuditLogSearchResponse,
+    responseType: proto_clarifai_api_service_pb.MultiAuditLogEntryResponse,
     requestSerialize: serialize_clarifai_api_PostAuditLogSearchesRequest,
     requestDeserialize: deserialize_clarifai_api_PostAuditLogSearchesRequest,
-    responseSerialize: serialize_clarifai_api_MultiAuditLogSearchResponse,
-    responseDeserialize: deserialize_clarifai_api_MultiAuditLogSearchResponse,
+    responseSerialize: serialize_clarifai_api_MultiAuditLogEntryResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiAuditLogEntryResponse,
   },
 };
 

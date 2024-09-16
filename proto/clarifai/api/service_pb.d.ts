@@ -7223,79 +7223,6 @@ export namespace PostWorkflowResultsResponse {
     }
 }
 
-export class PostWorkflowResultsSimilarityRequest extends jspb.Message { 
-
-    hasUserAppId(): boolean;
-    clearUserAppId(): void;
-    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
-    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PostWorkflowResultsSimilarityRequest;
-    getWorkflowId(): string;
-    setWorkflowId(value: string): PostWorkflowResultsSimilarityRequest;
-    getVersionId(): string;
-    setVersionId(value: string): PostWorkflowResultsSimilarityRequest;
-    getModelVersionId(): string;
-    setModelVersionId(value: string): PostWorkflowResultsSimilarityRequest;
-    clearProbeInputsList(): void;
-    getProbeInputsList(): Array<proto_clarifai_api_resources_pb.Input>;
-    setProbeInputsList(value: Array<proto_clarifai_api_resources_pb.Input>): PostWorkflowResultsSimilarityRequest;
-    addProbeInputs(value?: proto_clarifai_api_resources_pb.Input, index?: number): proto_clarifai_api_resources_pb.Input;
-    clearPoolInputsList(): void;
-    getPoolInputsList(): Array<proto_clarifai_api_resources_pb.Input>;
-    setPoolInputsList(value: Array<proto_clarifai_api_resources_pb.Input>): PostWorkflowResultsSimilarityRequest;
-    addPoolInputs(value?: proto_clarifai_api_resources_pb.Input, index?: number): proto_clarifai_api_resources_pb.Input;
-    getFavorClarifaiWorkflows(): boolean;
-    setFavorClarifaiWorkflows(value: boolean): PostWorkflowResultsSimilarityRequest;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): PostWorkflowResultsSimilarityRequest.AsObject;
-    static toObject(includeInstance: boolean, msg: PostWorkflowResultsSimilarityRequest): PostWorkflowResultsSimilarityRequest.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: PostWorkflowResultsSimilarityRequest, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): PostWorkflowResultsSimilarityRequest;
-    static deserializeBinaryFromReader(message: PostWorkflowResultsSimilarityRequest, reader: jspb.BinaryReader): PostWorkflowResultsSimilarityRequest;
-}
-
-export namespace PostWorkflowResultsSimilarityRequest {
-    export type AsObject = {
-        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
-        workflowId: string,
-        versionId: string,
-        modelVersionId: string,
-        probeInputsList: Array<proto_clarifai_api_resources_pb.Input.AsObject>,
-        poolInputsList: Array<proto_clarifai_api_resources_pb.Input.AsObject>,
-        favorClarifaiWorkflows: boolean,
-    }
-}
-
-export class PostWorkflowResultsSimilarityResponse extends jspb.Message { 
-
-    hasStatus(): boolean;
-    clearStatus(): void;
-    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
-    setStatus(value?: proto_clarifai_api_status_status_pb.Status): PostWorkflowResultsSimilarityResponse;
-    clearResultsList(): void;
-    getResultsList(): Array<proto_clarifai_api_resources_pb.WorkflowResultsSimilarity>;
-    setResultsList(value: Array<proto_clarifai_api_resources_pb.WorkflowResultsSimilarity>): PostWorkflowResultsSimilarityResponse;
-    addResults(value?: proto_clarifai_api_resources_pb.WorkflowResultsSimilarity, index?: number): proto_clarifai_api_resources_pb.WorkflowResultsSimilarity;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): PostWorkflowResultsSimilarityResponse.AsObject;
-    static toObject(includeInstance: boolean, msg: PostWorkflowResultsSimilarityResponse): PostWorkflowResultsSimilarityResponse.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: PostWorkflowResultsSimilarityResponse, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): PostWorkflowResultsSimilarityResponse;
-    static deserializeBinaryFromReader(message: PostWorkflowResultsSimilarityResponse, reader: jspb.BinaryReader): PostWorkflowResultsSimilarityResponse;
-}
-
-export namespace PostWorkflowResultsSimilarityResponse {
-    export type AsObject = {
-        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
-        resultsList: Array<proto_clarifai_api_resources_pb.WorkflowResultsSimilarity.AsObject>,
-    }
-}
-
 export class ListWorkflowVersionsRequest extends jspb.Message { 
 
     hasUserAppId(): boolean;
@@ -11263,10 +11190,10 @@ export class PostAuditLogSearchesRequest extends jspb.Message {
     getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
     setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PostAuditLogSearchesRequest;
 
-    hasAuditLogQuery(): boolean;
-    clearAuditLogQuery(): void;
-    getAuditLogQuery(): proto_clarifai_api_resources_pb.AuditLogQuery | undefined;
-    setAuditLogQuery(value?: proto_clarifai_api_resources_pb.AuditLogQuery): PostAuditLogSearchesRequest;
+    hasQuery(): boolean;
+    clearQuery(): void;
+    getQuery(): proto_clarifai_api_resources_pb.AuditLogQuery | undefined;
+    setQuery(value?: proto_clarifai_api_resources_pb.AuditLogQuery): PostAuditLogSearchesRequest;
     getSortAscending(): boolean;
     setSortAscending(value: boolean): PostAuditLogSearchesRequest;
 
@@ -11288,34 +11215,34 @@ export class PostAuditLogSearchesRequest extends jspb.Message {
 export namespace PostAuditLogSearchesRequest {
     export type AsObject = {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
-        auditLogQuery?: proto_clarifai_api_resources_pb.AuditLogQuery.AsObject,
+        query?: proto_clarifai_api_resources_pb.AuditLogQuery.AsObject,
         sortAscending: boolean,
         pagination?: Pagination.AsObject,
     }
 }
 
-export class MultiAuditLogSearchResponse extends jspb.Message { 
+export class MultiAuditLogEntryResponse extends jspb.Message { 
 
     hasStatus(): boolean;
     clearStatus(): void;
     getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
-    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiAuditLogSearchResponse;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiAuditLogEntryResponse;
     clearEntriesList(): void;
     getEntriesList(): Array<proto_clarifai_api_resources_pb.AuditLogEntry>;
-    setEntriesList(value: Array<proto_clarifai_api_resources_pb.AuditLogEntry>): MultiAuditLogSearchResponse;
+    setEntriesList(value: Array<proto_clarifai_api_resources_pb.AuditLogEntry>): MultiAuditLogEntryResponse;
     addEntries(value?: proto_clarifai_api_resources_pb.AuditLogEntry, index?: number): proto_clarifai_api_resources_pb.AuditLogEntry;
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): MultiAuditLogSearchResponse.AsObject;
-    static toObject(includeInstance: boolean, msg: MultiAuditLogSearchResponse): MultiAuditLogSearchResponse.AsObject;
+    toObject(includeInstance?: boolean): MultiAuditLogEntryResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiAuditLogEntryResponse): MultiAuditLogEntryResponse.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: MultiAuditLogSearchResponse, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): MultiAuditLogSearchResponse;
-    static deserializeBinaryFromReader(message: MultiAuditLogSearchResponse, reader: jspb.BinaryReader): MultiAuditLogSearchResponse;
+    static serializeBinaryToWriter(message: MultiAuditLogEntryResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiAuditLogEntryResponse;
+    static deserializeBinaryFromReader(message: MultiAuditLogEntryResponse, reader: jspb.BinaryReader): MultiAuditLogEntryResponse;
 }
 
-export namespace MultiAuditLogSearchResponse {
+export namespace MultiAuditLogEntryResponse {
     export type AsObject = {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         entriesList: Array<proto_clarifai_api_resources_pb.AuditLogEntry.AsObject>,

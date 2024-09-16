@@ -1941,28 +1941,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
 
-  // Compare embeddings distances using a workflow
-  rpc PostWorkflowResultsSimilarity(PostWorkflowResultsSimilarityRequest) returns (PostWorkflowResultsSimilarityResponse) {
-    option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{version_id}/results/similarity"
-      body: "*"
-      additional_bindings {
-        post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/results/similarity"
-        body: "*"
-      }
-      additional_bindings {
-        post: "/v2/workflows/{workflow_id}/results/similarity"
-        body: "*"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Predict;
-    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
-  }
-
   // List workflow versions.
   rpc ListWorkflowVersions (ListWorkflowVersionsRequest) returns (MultiWorkflowVersionResponse) {
     option (google.api.http) = {
@@ -2274,6 +2252,7 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = SessionTokenAuth;
   }
+
 
 
 
@@ -3678,6 +3657,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
   }
 
   // List all the runners for the user.
@@ -3691,6 +3671,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
   }
 
   // Add a runners to a user.
@@ -3908,6 +3889,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
   }
 
   rpc ListDeployments (ListDeploymentsRequest) returns (MultiDeploymentResponse) {
@@ -3921,6 +3903,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
   }
 
   rpc PostDeployments (PostDeploymentsRequest) returns (MultiDeploymentResponse) {
@@ -3969,7 +3952,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
   }
 
-  rpc PostAuditLogSearches (PostAuditLogSearchesRequest) returns (MultiAuditLogSearchResponse) {
+  rpc PostAuditLogSearches (PostAuditLogSearchesRequest) returns (MultiAuditLogEntryResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/audit_log/searches"
       body: "*"
@@ -6497,6 +6480,8 @@ enum OrganizationInvitationStatus {
 
 
 
+
+
 // GetWorkflowRequest
 message GetWorkflowRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -6682,29 +6667,6 @@ message PostWorkflowResultsResponse {
   WorkflowState workflow_state = 4;
 }
 
-// PostWorkflowResultsSimilarityRequest
-message PostWorkflowResultsSimilarityRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  string workflow_id = 2;
-  // Workflow version ID to retrieve
-  // If no ID is specified, latest workflow version is used
-  string version_id = 7;
-  // The specific model version whose outputs we are comparing
-  string model_version_id = 3;
-  // Each probe is compared against every pool input
-  repeated Input probe_inputs = 4;
-  // Each pool input is compared against ever probe input
-  repeated Input pool_inputs = 5;
-  // Use this flag to look into clarifai published workflows first for a Workflow ID
-  bool favor_clarifai_workflows = 6;
-}
-
-// PostWorkflowResultsSimilarityResponse
-message PostWorkflowResultsSimilarityResponse {
-  clarifai.api.status.Status status = 1;
-  repeated WorkflowResultsSimilarity results = 2;
-}
-
 // ListWorkflowVersionsRequest
 message ListWorkflowVersionsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -6871,7 +6833,7 @@ message PatchTasksRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated Task tasks = 2;
   // The action to perform on the patched objects
-  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  // For now, only 'overwrite' action is supported
   string action = 3;
 }
 
@@ -8017,7 +7979,7 @@ message DeleteDeploymentsRequest {
 message PostAuditLogSearchesRequest {
   // Only the user_id is used from this.
   clarifai.api.UserAppIDSet user_app_id = 1;
-  AuditLogQuery audit_log_query = 2;
+  AuditLogQuery query = 2;
   // Sorting options:
   // Whether to sort by timestamp in ascending order. If false, will order in descending order.
   bool sort_ascending = 3;
@@ -8025,7 +7987,7 @@ message PostAuditLogSearchesRequest {
   Pagination pagination = 5;
 }
 
-message MultiAuditLogSearchResponse {
+message MultiAuditLogEntryResponse {
   clarifai.api.status.Status status = 1;
   repeated AuditLogEntry entries = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }

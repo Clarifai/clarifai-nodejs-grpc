@@ -1941,33 +1941,11 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
 
-  // Compare embeddings distances using a workflow
-  rpc PostWorkflowResultsSimilarity(PostWorkflowResultsSimilarityRequest) returns (PostWorkflowResultsSimilarityResponse) {
-    option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{version_id}/results/similarity"
-      body: "*"
-      additional_bindings112 {
-        post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/results/similarity"
-        body: "*"
-      }
-      additional_bindings113 {
-        post: "/v2/workflows/{workflow_id}/results/similarity"
-        body: "*"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Predict;
-    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
-  }
-
   // List workflow versions.
   rpc ListWorkflowVersions (ListWorkflowVersionsRequest) returns (MultiWorkflowVersionResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions"
-      additional_bindings114 {
+      additional_bindings112 {
         get: "/v2/workflows/{workflow_id}/versions"
       }
     };
@@ -1981,7 +1959,7 @@ service V2 {
   rpc GetWorkflowVersion (GetWorkflowVersionRequest) returns (SingleWorkflowVersionResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}"
-      additional_bindings115 {
+      additional_bindings113 {
         get: "/v2/workflows/{workflow_id}/versions/{workflow_version_id}"
       }
     };
@@ -1996,7 +1974,7 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions"
       body: "*"
-      additional_bindings116 {
+      additional_bindings114 {
         delete: "/v2/workflows/{workflow_id}/versions"
         body: "*"
       }
@@ -2013,7 +1991,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions"
       body: "*"
-      additional_bindings117 {
+      additional_bindings115 {
         patch: "/v2/workflows/{workflow_id}/versions"
         body: "*"
       }
@@ -2100,10 +2078,10 @@ service V2 {
   rpc MyScopes (MyScopesRequest) returns (MultiScopeResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/myscopes"
-      additional_bindings118 {
+      additional_bindings116 {
         get: "/v2/myscopes"
       }
-      additional_bindings119 {
+      additional_bindings117 {
         get: "/v2/my_scopes"
       }
     };
@@ -2136,7 +2114,7 @@ service V2 {
   rpc GetApp (GetAppRequest) returns (SingleAppResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}"
-      additional_bindings120 {
+      additional_bindings118 {
         get: "/v2/app"
       }
     };
@@ -2149,7 +2127,7 @@ service V2 {
   rpc ListApps (ListAppsRequest) returns (MultiAppResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps"
-      additional_bindings121 {
+      additional_bindings119 {
         get: "/v2/apps"
       }
     };
@@ -2267,7 +2245,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/validate_password"
       body: "*"
-      additional_bindings122 {
+      additional_bindings120 {
         post: "/v2/validate_password"
         body: "*"
       }
@@ -2321,11 +2299,12 @@ service V2 {
 
 
 
+
   // Get a saved legacy search.
   rpc GetSearch (GetSearchRequest) returns (SingleSearchResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches/{id}"
-      additional_bindings123 {
+      additional_bindings121 {
         get: "/v2/searches/{id}"
       }
     };
@@ -2338,7 +2317,7 @@ service V2 {
   rpc ListSearches (ListSearchesRequest) returns (MultiSearchResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches"
-      additional_bindings124 {
+      additional_bindings122 {
         get: "/v2/searches"
       }
     };
@@ -2352,7 +2331,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches"
       body: "*"
-      additional_bindings125 {
+      additional_bindings123 {
         patch: "/v2/searches"
         body: "*"
       }
@@ -2371,7 +2350,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches"
       body: "*"
-      additional_bindings126 {
+      additional_bindings124 {
         post: "/v2/searches"
         body: "*"
       }
@@ -2393,7 +2372,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches/{id}"
       body: "*"
-      additional_bindings127 {
+      additional_bindings125 {
         post: "/v2/searches/{id}"
         body: "*"
       }
@@ -2409,7 +2388,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations/searches/metrics"
       body: "*"
-      additional_bindings128 {
+      additional_bindings126 {
         post: "/v2/annotations/searches/metrics"
         body: "*"
       }
@@ -2429,7 +2408,7 @@ service V2 {
   rpc GetAnnotationSearchMetrics(GetAnnotationSearchMetricsRequest) returns (MultiAnnotationSearchMetricsResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations/searches/metrics/{id}"
-      additional_bindings129 {
+      additional_bindings127 {
         get: "/v2/annotations/searches/metrics/{id}"
       }
     };
@@ -2447,7 +2426,7 @@ service V2 {
   rpc ListAnnotationSearchMetrics(ListAnnotationSearchMetricsRequest) returns (MultiAnnotationSearchMetricsResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations/searches/metrics"
-      additional_bindings130 {
+      additional_bindings128 {
         get: "/v2/annotations/searches/metrics"
       }
     };
@@ -2463,7 +2442,7 @@ service V2 {
   rpc DeleteAnnotationSearchMetrics (DeleteAnnotationSearchMetricsRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations/searches/metrics/{id}"
-      additional_bindings131 {
+      additional_bindings129 {
         delete: "/v2/annotations/searches/metrics/{id}"
       }
     };
@@ -2478,7 +2457,7 @@ service V2 {
   rpc DeleteSearch (DeleteSearchRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/searches/{id}"
-      additional_bindings132 {
+      additional_bindings130 {
         delete: "/v2/searches/{id}"
       }
     };
@@ -2493,7 +2472,7 @@ service V2 {
   rpc ListAnnotationFilters (ListAnnotationFiltersRequest) returns (MultiAnnotationFilterResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotation_filters"
-      additional_bindings133 {
+      additional_bindings131 {
         get: "/v2/annotation_filters"
       }
     };
@@ -2506,7 +2485,7 @@ service V2 {
   rpc GetAnnotationFilter (GetAnnotationFilterRequest) returns (SingleAnnotationFilterResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotation_filters/{annotation_filter_id}"
-      additional_bindings134 {
+      additional_bindings132 {
         get: "/v2/annotation_filters/{annotation_filter_id}"
       }
     };
@@ -2520,7 +2499,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotation_filters"
       body: "*"
-      additional_bindings135 {
+      additional_bindings133 {
         post: "/v2/annotation_filters"
         body: "*"
       }
@@ -2536,7 +2515,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotation_filters"
       body: "*"
-      additional_bindings136 {
+      additional_bindings134 {
         patch: "/v2/annotation_filters"
         body: "*"
       }
@@ -2552,7 +2531,7 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotation_filters"
       body: "*"
-      additional_bindings137 {
+      additional_bindings135 {
         delete: "/v2/annotation_filters"
         body: "*"
       }
@@ -2726,7 +2705,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks"
       body: "*"
-      additional_bindings138 {
+      additional_bindings136 {
         post: "/v2/tasks"
         body: "*"
       }
@@ -2750,7 +2729,7 @@ service V2 {
   rpc GetTaskAnnotationCount (GetTaskCountRequest) returns (SingleTaskCountResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/annotations/count"
-      additional_bindings139 {
+      additional_bindings137 {
         get: "/v2/tasks/{task_id}/annotations/count"
       }
     };
@@ -2763,7 +2742,7 @@ service V2 {
   rpc GetTaskInputCount (GetTaskCountRequest) returns (SingleTaskCountResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/inputs/count"
-      additional_bindings140 {
+      additional_bindings138 {
         get: "/v2/tasks/{task_id}/inputs/count"
       }
     };
@@ -2776,7 +2755,7 @@ service V2 {
   rpc GetTask (GetTaskRequest) returns (SingleTaskResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}"
-      additional_bindings141 {
+      additional_bindings139 {
         get: "/v2/tasks/{task_id}"
       }
     };
@@ -2793,7 +2772,7 @@ service V2 {
   rpc ListTasks (ListTasksRequest) returns (MultiTaskResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks"
-      additional_bindings142 {
+      additional_bindings140 {
         get: "/v2/tasks"
       }
     };
@@ -2811,7 +2790,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks"
       body: "*"
-      additional_bindings143 {
+      additional_bindings141 {
         patch: "/v2/tasks"
         body: "*"
       }
@@ -2835,7 +2814,7 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks"
       body: "*"
-      additional_bindings144 {
+      additional_bindings142 {
         delete: "/v2/tasks"
         body: "*"
       }
@@ -2859,7 +2838,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/label_orders"
       body: "*"
-      additional_bindings145 {
+      additional_bindings143 {
         post: "/v2/label_orders"
         body: "*"
       }
@@ -2882,7 +2861,7 @@ service V2 {
   rpc GetLabelOrder (GetLabelOrderRequest) returns (SingleLabelOrderResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/label_orders/{label_order_id}"
-      additional_bindings146 {
+      additional_bindings144 {
         get: "/v2/label_orders/{label_order_id}"
       }
     };
@@ -2898,7 +2877,7 @@ service V2 {
   rpc ListLabelOrders (ListLabelOrdersRequest) returns (MultiLabelOrderResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/label_orders"
-      additional_bindings147 {
+      additional_bindings145 {
         get: "/v2/label_orders"
       }
     };
@@ -2915,7 +2894,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/label_orders"
       body: "*"
-      additional_bindings148 {
+      additional_bindings146 {
         patch: "/v2/label_orders"
         body: "*"
       }
@@ -2937,7 +2916,7 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/label_orders"
       body: "*"
-      additional_bindings149 {
+      additional_bindings147 {
         delete: "/v2/label_orders"
         body: "*"
       }
@@ -2962,7 +2941,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
       body: "*"
-      additional_bindings150 {
+      additional_bindings148 {
         post: "/v2/collectors"
         body: "*"
       }
@@ -2985,7 +2964,7 @@ service V2 {
   rpc GetCollector (GetCollectorRequest) returns (SingleCollectorResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors/{collector_id}"
-      additional_bindings151 {
+      additional_bindings149 {
         get: "/v2/collectors/{collector_id}"
       }
     };
@@ -2998,7 +2977,7 @@ service V2 {
   rpc ListCollectors (ListCollectorsRequest) returns (MultiCollectorResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
-      additional_bindings152 {
+      additional_bindings150 {
         get: "/v2/collectors"
       }
     };
@@ -3012,7 +2991,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
       body: "*"
-      additional_bindings153 {
+      additional_bindings151 {
         patch: "/v2/collectors"
         body: "*"
       }
@@ -3031,7 +3010,7 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
       body: "*"
-      additional_bindings154 {
+      additional_bindings152 {
         delete: "/v2/collectors"
         body: "*"
       }
@@ -3048,7 +3027,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/stats/values"
       body: "*"
-      additional_bindings155 {
+      additional_bindings153 {
         post: "/v2/stats/values"
         body: "*"
       }
@@ -3061,7 +3040,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/stats/values/aggregate"
       body: "*"
-      additional_bindings156 {
+      additional_bindings154 {
         post: "/v2/stats/values/aggregate"
         body: "*"
       }
@@ -3088,7 +3067,7 @@ service V2 {
   rpc ListTrendingMetricsViews (ListTrendingMetricsViewsRequest) returns (MultiTrendingMetricsViewResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/trending_metrics/views/{view_type}"
-      additional_bindings157 {
+      additional_bindings155 {
         get: "/v2/trending_metrics/views/{view_type}"
       }
     };
@@ -3117,10 +3096,10 @@ service V2 {
   rpc ListModules (ListModulesRequest) returns (MultiModuleResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/modules"
-      additional_bindings158 {
+      additional_bindings156 {
         get: "/v2/users/{user_app_id.user_id}/modules"
       }
-      additional_bindings159 {
+      additional_bindings157 {
         get: "/v2/modules"
       }
     };
@@ -3325,7 +3304,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/bulk_operations"
       body: "*"
-      additional_bindings160 {
+      additional_bindings158 {
         post: "/v2/bulk_operations"
         body: "*"
       }
@@ -3343,7 +3322,7 @@ service V2 {
   rpc ListBulkOperations (ListBulkOperationsRequest) returns (MultiBulkOperationsResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/bulk_operations"
-      additional_bindings161 {
+      additional_bindings159 {
         get: "/v2/bulk_operations"
       }
     };
@@ -3356,7 +3335,7 @@ service V2 {
   rpc GetBulkOperation (GetBulkOperationRequest) returns (SingleBulkOperationsResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/bulk_operations/{id}"
-      additional_bindings162 {
+      additional_bindings160 {
         get: "/v2/bulk_operations/{id}"
       }
     };
@@ -3370,7 +3349,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/bulk_operations"
       body: "*"
-      additional_bindings163 {
+      additional_bindings161 {
         patch: "/v2/bulk_operations"
         body: "*"
       }
@@ -3386,7 +3365,7 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/bulk_operations"
       body: "*"
-      additional_bindings164 {
+      additional_bindings162 {
         delete: "/v2/bulk_operations"
         body: "*"
       }
@@ -3409,7 +3388,7 @@ service V2 {
   rpc ListNextTaskAssignments (ListNextTaskAssignmentsRequest) returns (MultiInputResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/assignments"
-      additional_bindings165 {
+      additional_bindings163 {
         get: "/v2/tasks/{task_id}/assignments"
       }
     };
@@ -3446,7 +3425,7 @@ service V2 {
   rpc ListInputsAddJobs (ListInputsAddJobsRequest) returns (MultiInputsAddJobResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/add"
-      additional_bindings166 {
+      additional_bindings164 {
         get: "/v2/inputs/jobs/add"
       }
     };
@@ -3459,7 +3438,7 @@ service V2 {
   rpc GetInputsAddJob (GetInputsAddJobRequest) returns (SingleInputsAddJobResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/add/{id}"
-      additional_bindings167 {
+      additional_bindings165 {
         get: "/v2/inputs/jobs/add/{id}"
       }
     };
@@ -3473,7 +3452,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/add/{id}"
       body: "*"
-      additional_bindings168 {
+      additional_bindings166 {
         patch: "/v2/inputs/jobs/add/{id}"
         body: "*"
       }
@@ -3493,7 +3472,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads"
       body: "*"
-      additional_bindings169 {
+      additional_bindings167 {
         post: "/v2/uploads"
         body: "*"
       }
@@ -3509,7 +3488,7 @@ service V2 {
   rpc PutUploadContentParts (PutUploadContentPartsRequest) returns (SingleUploadResponse) {
     option (google.api.http) = {
       put: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads/{upload_id}/content_parts"
-      additional_bindings170 {
+      additional_bindings168 {
         put: "/v2/uploads/{upload_id}/content_parts"
       }
       body: "*"
@@ -3523,7 +3502,7 @@ service V2 {
   rpc GetUpload (GetUploadRequest) returns (SingleUploadResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads/{upload_id}"
-      additional_bindings171 {
+      additional_bindings169 {
         get: "/v2/uploads/{upload_id}"
       }
     };
@@ -3535,7 +3514,7 @@ service V2 {
   rpc ListUploads (ListUploadsRequest) returns (MultiUploadResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads"
-      additional_bindings172 {
+      additional_bindings170 {
         get: "/v2/uploads"
       }
     };
@@ -3548,7 +3527,7 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads"
       body: "*"
-      additional_bindings173 {
+      additional_bindings171 {
         delete: "/v2/uploads"
         body: "*"
       }
@@ -3577,7 +3556,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/data_sources"
       body: "*"
-      additional_bindings174 {
+      additional_bindings172 {
         post: "/v2/inputs/data_sources"
         body: "*"
       }
@@ -3598,7 +3577,7 @@ service V2 {
   rpc GetInputsExtractionJob (GetInputsExtractionJobRequest) returns (SingleInputsExtractionJobResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/extraction/{inputs_extraction_job_id}"
-      additional_bindings175 {
+      additional_bindings173 {
         get: "/v2/inputs/jobs/extraction/{inputs_extraction_job_id}"
       }
     };
@@ -3611,7 +3590,7 @@ service V2 {
   rpc ListInputsExtractionJobs (ListInputsExtractionJobsRequest) returns (MultiInputsExtractionJobResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/extraction"
-      additional_bindings176 {
+      additional_bindings174 {
         get: "/v2/inputs/jobs/extraction"
       }
     };
@@ -3624,7 +3603,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/extraction"
       body: "*"
-      additional_bindings177 {
+      additional_bindings175 {
         patch: "/v2/inputs/jobs/extraction"
         body: "*"
       }
@@ -3645,7 +3624,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/uploads"
       body: "*"
-      additional_bindings178 {
+      additional_bindings176 {
         post: "/v2/inputs/uploads"
         body: "*"
       }
@@ -3678,6 +3657,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
   }
 
   // List all the runners for the user.
@@ -3691,6 +3671,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
   }
 
   // Add a runners to a user.
@@ -3772,7 +3753,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/time_estimate"
       body: "*"
-      additional_bindings179 {
+      additional_bindings177 {
         post: "/v2/models/{model_id}/versions/time_estimate"
         body: "*"
       }
@@ -3908,6 +3889,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
   }
 
   rpc ListDeployments (ListDeploymentsRequest) returns (MultiDeploymentResponse) {
@@ -3921,6 +3903,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
   }
 
   rpc PostDeployments (PostDeploymentsRequest) returns (MultiDeploymentResponse) {
@@ -3969,7 +3952,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
   }
 
-  rpc PostAuditLogSearches (PostAuditLogSearchesRequest) returns (MultiAuditLogSearchResponse) {
+  rpc PostAuditLogSearches (PostAuditLogSearchesRequest) returns (MultiAuditLogEntryResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/audit_log/searches"
       body: "*"
@@ -6497,6 +6480,8 @@ enum OrganizationInvitationStatus {
 
 
 
+
+
 // GetWorkflowRequest
 message GetWorkflowRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -6682,29 +6667,6 @@ message PostWorkflowResultsResponse {
   WorkflowState workflow_state = 4;
 }
 
-// PostWorkflowResultsSimilarityRequest
-message PostWorkflowResultsSimilarityRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  string workflow_id = 2;
-  // Workflow version ID to retrieve
-  // If no ID is specified, latest workflow version is used
-  string version_id = 7;
-  // The specific model version whose outputs we are comparing
-  string model_version_id = 3;
-  // Each probe is compared against every pool input
-  repeated Input probe_inputs = 4;
-  // Each pool input is compared against ever probe input
-  repeated Input pool_inputs = 5;
-  // Use this flag to look into clarifai published workflows first for a Workflow ID
-  bool favor_clarifai_workflows = 6;
-}
-
-// PostWorkflowResultsSimilarityResponse
-message PostWorkflowResultsSimilarityResponse {
-  clarifai.api.status.Status status = 1;
-  repeated WorkflowResultsSimilarity results = 2;
-}
-
 // ListWorkflowVersionsRequest
 message ListWorkflowVersionsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -6871,7 +6833,7 @@ message PatchTasksRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated Task tasks = 2;
   // The action to perform on the patched objects
-  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  // For now, only 'overwrite' action is supported
   string action = 3;
 }
 
@@ -8017,7 +7979,7 @@ message DeleteDeploymentsRequest {
 message PostAuditLogSearchesRequest {
   // Only the user_id is used from this.
   clarifai.api.UserAppIDSet user_app_id = 1;
-  AuditLogQuery audit_log_query = 2;
+  AuditLogQuery query = 2;
   // Sorting options:
   // Whether to sort by timestamp in ascending order. If false, will order in descending order.
   bool sort_ascending = 3;
@@ -8025,7 +7987,7 @@ message PostAuditLogSearchesRequest {
   Pagination pagination = 5;
 }
 
-message MultiAuditLogSearchResponse {
+message MultiAuditLogEntryResponse {
   clarifai.api.status.Status status = 1;
   repeated AuditLogEntry entries = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }

@@ -705,6 +705,11 @@ export class Concept extends jspb.Message {
     getExtraInfo(): ConceptExtraInfo | undefined;
     setExtraInfo(value?: ConceptExtraInfo): Concept;
 
+    hasMetadata(): boolean;
+    clearMetadata(): void;
+    getMetadata(): google_protobuf_struct_pb.Struct | undefined;
+    setMetadata(value?: google_protobuf_struct_pb.Struct): Concept;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Concept.AsObject;
     static toObject(includeInstance: boolean, msg: Concept): Concept.AsObject;
@@ -729,6 +734,7 @@ export namespace Concept {
         userId: string,
         keypointInfo?: KeypointInfo.AsObject,
         extraInfo?: ConceptExtraInfo.AsObject,
+        metadata?: google_protobuf_struct_pb.Struct.AsObject,
     }
 }
 
@@ -2409,34 +2415,6 @@ export class FrameInterpolationInfo extends jspb.Message {
 export namespace FrameInterpolationInfo {
     export type AsObject = {
         sampleMs: number,
-    }
-}
-
-export class WorkflowResultsSimilarity extends jspb.Message { 
-
-    hasProbeInput(): boolean;
-    clearProbeInput(): void;
-    getProbeInput(): Input | undefined;
-    setProbeInput(value?: Input): WorkflowResultsSimilarity;
-    clearPoolResultsList(): void;
-    getPoolResultsList(): Array<Hit>;
-    setPoolResultsList(value: Array<Hit>): WorkflowResultsSimilarity;
-    addPoolResults(value?: Hit, index?: number): Hit;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): WorkflowResultsSimilarity.AsObject;
-    static toObject(includeInstance: boolean, msg: WorkflowResultsSimilarity): WorkflowResultsSimilarity.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: WorkflowResultsSimilarity, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): WorkflowResultsSimilarity;
-    static deserializeBinaryFromReader(message: WorkflowResultsSimilarity, reader: jspb.BinaryReader): WorkflowResultsSimilarity;
-}
-
-export namespace WorkflowResultsSimilarity {
-    export type AsObject = {
-        probeInput?: Input.AsObject,
-        poolResultsList: Array<Hit.AsObject>,
     }
 }
 
@@ -4799,6 +4777,11 @@ export class User extends jspb.Message {
     getUserDetail(): UserDetail | undefined;
     setUserDetail(value?: UserDetail): User;
 
+    hasImage(): boolean;
+    clearImage(): void;
+    getImage(): Image | undefined;
+    setImage(value?: Image): User;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): User.AsObject;
     static toObject(includeInstance: boolean, msg: User): User.AsObject;
@@ -4834,6 +4817,7 @@ export namespace User {
         starCount: number,
         visibility?: Visibility.AsObject,
         userDetail?: UserDetail.AsObject,
+        image?: Image.AsObject,
     }
 }
 
@@ -5332,11 +5316,6 @@ export class WorkflowResult extends jspb.Message {
     getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
     setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): WorkflowResult;
 
-    hasModel(): boolean;
-    clearModel(): void;
-    getModel(): Model | undefined;
-    setModel(value?: Model): WorkflowResult;
-
     hasInput(): boolean;
     clearInput(): void;
     getInput(): Input | undefined;
@@ -5363,7 +5342,6 @@ export namespace WorkflowResult {
         id: string,
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        model?: Model.AsObject,
         input?: Input.AsObject,
         outputsList: Array<Output.AsObject>,
         suppressOutput: boolean,
@@ -5656,6 +5634,8 @@ export class Task extends jspb.Message {
     clearMetrics(): void;
     getMetrics(): TaskMetrics | undefined;
     setMetrics(value?: TaskMetrics): Task;
+    getPriority(): Task.TaskPriority;
+    setPriority(value: Task.TaskPriority): Task;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Task.AsObject;
@@ -5691,6 +5671,7 @@ export namespace Task {
         conceptsList: Array<TaskConcept.AsObject>,
         deletePreviousAnnotations: boolean,
         metrics?: TaskMetrics.AsObject,
+        priority: Task.TaskPriority,
     }
 
     export enum WorkerType {
@@ -5704,6 +5685,13 @@ export namespace Task {
     CONCEPTS_CLASSIFICATION = 1,
     BOUNDING_BOX_DETECTION = 2,
     POLYGON_DETECTION = 3,
+    }
+
+    export enum TaskPriority {
+    TASK_PRIORITY_NOT_SET = 0,
+    LOW = 1,
+    MEDIUM = 2,
+    HIGH = 3,
     }
 
 }
@@ -7616,34 +7604,6 @@ export namespace UploadContentPart {
         rangeStart: number,
         partNumber: number,
         data: Uint8Array | string,
-    }
-}
-
-export class CustomCodeOperatorRequest extends jspb.Message { 
-    clearInputsList(): void;
-    getInputsList(): Array<Input>;
-    setInputsList(value: Array<Input>): CustomCodeOperatorRequest;
-    addInputs(value?: Input, index?: number): Input;
-
-    hasMetadata(): boolean;
-    clearMetadata(): void;
-    getMetadata(): google_protobuf_struct_pb.Struct | undefined;
-    setMetadata(value?: google_protobuf_struct_pb.Struct): CustomCodeOperatorRequest;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): CustomCodeOperatorRequest.AsObject;
-    static toObject(includeInstance: boolean, msg: CustomCodeOperatorRequest): CustomCodeOperatorRequest.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: CustomCodeOperatorRequest, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): CustomCodeOperatorRequest;
-    static deserializeBinaryFromReader(message: CustomCodeOperatorRequest, reader: jspb.BinaryReader): CustomCodeOperatorRequest;
-}
-
-export namespace CustomCodeOperatorRequest {
-    export type AsObject = {
-        inputsList: Array<Input.AsObject>,
-        metadata?: google_protobuf_struct_pb.Struct.AsObject,
     }
 }
 
