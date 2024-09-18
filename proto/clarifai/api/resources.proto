@@ -4702,7 +4702,7 @@ enum EventType {
   EVENT_TYPE_NOT_SET = 0;
 
   // APPLICATION event types : 100 - 199
-  APPLICATION_CREATE = 100;
+  APPLICATION_CREATE = 100 [(clarifai.api.utils.description) = "Operation to create an Application"];
 }
 
 

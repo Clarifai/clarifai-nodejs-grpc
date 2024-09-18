@@ -12,3 +12,5 @@ export const clShowIfEmpty: jspb.ExtensionFieldInfo<boolean>;
 export const clMoretags: jspb.ExtensionFieldInfo<string>;
 
 export const clDefaultFloat: jspb.ExtensionFieldInfo<number>;
+
+export const description: jspb.ExtensionFieldInfo<string>;

@@ -23,3 +23,8 @@ extend google.protobuf.FieldOptions {
   // proto requests are expected to always set the field.
   float cl_default_float = 50010;
 }
+
+extend google.protobuf.EnumValueOptions {
+  // A description of the enum value.
+  string description = 1000;
+}
