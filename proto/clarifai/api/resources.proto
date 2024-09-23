@@ -2637,7 +2637,7 @@ message User {
   // themselves.
   UserDetail user_detail = 18;
 
-  // Representative image for this User (a.k.a. Profile or cover photo) 
+  // Representative image for this User (a.k.a. Profile or cover photo)
   Image image = 26;
 }
 

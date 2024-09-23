@@ -61507,7 +61507,8 @@ proto.clarifai.api.PostWorkflowResultsRequest.toObject = function(includeInstanc
     proto_clarifai_api_resources_pb.Input.toObject, includeInstance),
     outputConfig: (f = msg.getOutputConfig()) && proto_clarifai_api_resources_pb.OutputConfig.toObject(includeInstance, f),
     favorClarifaiWorkflows: jspb.Message.getBooleanFieldWithDefault(msg, 5, false),
-    workflowState: (f = msg.getWorkflowState()) && proto_clarifai_api_resources_pb.WorkflowState.toObject(includeInstance, f)
+    workflowState: (f = msg.getWorkflowState()) && proto_clarifai_api_resources_pb.WorkflowState.toObject(includeInstance, f),
+    nodeRunnerSelectorsMap: (f = msg.getNodeRunnerSelectorsMap()) ? f.toObject(includeInstance, proto.clarifai.api.RunnerSelector.toObject) : []
   };
 
   if (includeInstance) {
@@ -61575,6 +61576,12 @@ proto.clarifai.api.PostWorkflowResultsRequest.deserializeBinaryFromReader = func
       var value = new proto_clarifai_api_resources_pb.WorkflowState;
       reader.readMessage(value,proto_clarifai_api_resources_pb.WorkflowState.deserializeBinaryFromReader);
       msg.setWorkflowState(value);
+      break;
+    case 8:
+      var value = msg.getNodeRunnerSelectorsMap();
+      reader.readMessage(value, function(message, reader) {
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.clarifai.api.RunnerSelector.deserializeBinaryFromReader, "", new proto.clarifai.api.RunnerSelector());
+         });
       break;
     default:
       reader.skipField();
@@ -61657,6 +61664,10 @@ proto.clarifai.api.PostWorkflowResultsRequest.serializeBinaryToWriter = function
       f,
       proto_clarifai_api_resources_pb.WorkflowState.serializeBinaryToWriter
     );
+  }
+  f = message.getNodeRunnerSelectorsMap(true);
+  if (f && f.getLength() > 0) {
+    f.serializeBinary(8, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeMessage, proto.clarifai.api.RunnerSelector.serializeBinaryToWriter);
   }
 };
 
@@ -61861,6 +61872,29 @@ proto.clarifai.api.PostWorkflowResultsRequest.prototype.clearWorkflowState = fun
  */
 proto.clarifai.api.PostWorkflowResultsRequest.prototype.hasWorkflowState = function() {
   return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
+ * map<string, RunnerSelector> node_runner_selectors = 8;
+ * @param {boolean=} opt_noLazyCreate Do not create the map if
+ * empty, instead returning `undefined`
+ * @return {!jspb.Map<string,!proto.clarifai.api.RunnerSelector>}
+ */
+proto.clarifai.api.PostWorkflowResultsRequest.prototype.getNodeRunnerSelectorsMap = function(opt_noLazyCreate) {
+  return /** @type {!jspb.Map<string,!proto.clarifai.api.RunnerSelector>} */ (
+      jspb.Message.getMapField(this, 8, opt_noLazyCreate,
+      proto.clarifai.api.RunnerSelector));
+};
+
+
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.clarifai.api.PostWorkflowResultsRequest} returns this
+ */
+proto.clarifai.api.PostWorkflowResultsRequest.prototype.clearNodeRunnerSelectorsMap = function() {
+  this.getNodeRunnerSelectorsMap().clear();
+  return this;
 };
 
 

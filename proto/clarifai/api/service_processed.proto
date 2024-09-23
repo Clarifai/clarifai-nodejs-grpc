@@ -5198,7 +5198,7 @@ message PostModelOutputsRequest {
   // the language which appear's in the model's output_info.
   Model model = 5;
 
-  // Allow filtering of prediction requests down to specific Nodepools, Deploymetns or Runners
+  // Allow filtering of prediction requests down to specific Nodepools, Deployments or Runners
   RunnerSelector runner_selector = 6;
 }
 
@@ -6649,6 +6649,20 @@ message PostWorkflowResultsRequest {
   // If it is not sent in the initial request with workflow_state.id = "init" then no
   // state will be saved or returned in PostWorkflowResultsResponse.
   WorkflowState workflow_state = 6;
+
+  // Specify which compute to use for processing each node of the workflow:
+  // The key is the node.id from the loaded workflow.
+  // The value is a RunnerSelector in which you can specify the deployment or specific nodepool
+  // that you'd like that node to run on.
+  // This allows for use cases like some light models could run on a CPU-only nodepool
+  // while other models in the workflow require large GPUs.
+  //
+  // If node.id is not in the provided map, it will fall back to searching for
+  // an adequate deployment the model owner owns or fall back to
+  // the serverless nodepools provided by Clarifai.
+  // We recommend you specify these RunnerSelectors so that you have better understanding of where
+  // processing occurs.
+  map<string, RunnerSelector> node_runner_selectors = 8;
 }
 
 // PostWorkflowResultsResponse
