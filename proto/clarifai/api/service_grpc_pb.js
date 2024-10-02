@@ -1488,6 +1488,17 @@ function deserialize_clarifai_api_ListUploadsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListUploadsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_ListWorkflowEvaluationTemplatesRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListWorkflowEvaluationTemplatesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListWorkflowEvaluationTemplatesRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_ListWorkflowVersionsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.ListWorkflowVersionsRequest)) {
     throw new Error('Expected argument of type clarifai.api.ListWorkflowVersionsRequest');
@@ -2179,6 +2190,17 @@ function serialize_clarifai_api_MultiWorkerResponse(arg) {
 
 function deserialize_clarifai_api_MultiWorkerResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiWorkerResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MultiWorkflowEvaluationTemplateResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiWorkflowEvaluationTemplateResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiWorkflowEvaluationTemplateResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiWorkflowResponse(arg) {
@@ -4141,8 +4163,7 @@ streamInputs: {
     responseSerialize: serialize_clarifai_api_MultiInputResponse,
     responseDeserialize: deserialize_clarifai_api_MultiInputResponse,
   },
-  // Get a specific input from an app.
-getInputSamples: {
+  getInputSamples: {
     path: '/clarifai.api.V2/GetInputSamples',
     requestStream: false,
     responseStream: false,
@@ -6302,9 +6323,8 @@ listNextTaskAssignments: {
     responseSerialize: serialize_clarifai_api_MultiInputResponse,
     responseDeserialize: deserialize_clarifai_api_MultiInputResponse,
   },
-  // PutTaskAssignments performs an action for the task assignments in given task.
-// All the actions are theoretically idempotent, but practically, in the current implementation,
-// the REVIEW_START action is not idempotent. See PutTaskAssignmentsRequestAction for more details.
+  // PutTaskAssignments performs an idempotent action for the task assignments in given task.
+// See PutTaskAssignmentsRequestAction for more details about possible actions.
 putTaskAssignments: {
     path: '/clarifai.api.V2/PutTaskAssignments',
     requestStream: false,
@@ -6776,6 +6796,17 @@ deleteDeployments: {
     requestDeserialize: deserialize_clarifai_api_PostAuditLogSearchesRequest,
     responseSerialize: serialize_clarifai_api_MultiAuditLogEntryResponse,
     responseDeserialize: deserialize_clarifai_api_MultiAuditLogEntryResponse,
+  },
+  listWorkflowEvaluationTemplates: {
+    path: '/clarifai.api.V2/ListWorkflowEvaluationTemplates',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest,
+    responseType: proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse,
+    requestSerialize: serialize_clarifai_api_ListWorkflowEvaluationTemplatesRequest,
+    requestDeserialize: deserialize_clarifai_api_ListWorkflowEvaluationTemplatesRequest,
+    responseSerialize: serialize_clarifai_api_MultiWorkflowEvaluationTemplateResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiWorkflowEvaluationTemplateResponse,
   },
 };
 

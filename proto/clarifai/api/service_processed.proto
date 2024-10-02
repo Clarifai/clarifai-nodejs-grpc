@@ -516,7 +516,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
   }
 
-  // Get a specific input from an app.
   rpc GetInputSamples (GetInputSamplesRequest) returns (MultiInputAnnotationResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/inputs/samples"
@@ -3401,9 +3400,8 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
   }
 
-  // PutTaskAssignments performs an action for the task assignments in given task.
-  // All the actions are theoretically idempotent, but practically, in the current implementation,
-  // the REVIEW_START action is not idempotent. See PutTaskAssignmentsRequestAction for more details.
+  // PutTaskAssignments performs an idempotent action for the task assignments in given task.
+  // See PutTaskAssignmentsRequestAction for more details about possible actions.
   rpc PutTaskAssignments (PutTaskAssignmentsRequest) returns (MultiTaskAssignmentResponse) {
     option (google.api.http) = {
       put: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/assignments"
@@ -3418,7 +3416,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
   }
-
 
 
   // List all the inputs add jobs
@@ -3650,6 +3647,9 @@ service V2 {
   rpc GetRunner (GetRunnerRequest) returns (SingleRunnerResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners/{runner_id}"
+      additional_bindings177 {
+        get: "/v2/users/{user_app_id.user_id}/runners/{runner_id}"
+      }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
@@ -3753,7 +3753,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/time_estimate"
       body: "*"
-      additional_bindings177 {
+      additional_bindings178 {
         post: "/v2/models/{model_id}/versions/time_estimate"
         body: "*"
       }
@@ -3959,13 +3959,18 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = AuditLogs_Get;
-  }}
+  }
 
+  rpc ListWorkflowEvaluationTemplates (ListWorkflowEvaluationTemplatesRequest) returns (MultiWorkflowEvaluationTemplateResponse) {
+    option (google.api.http) = {
+      get: "/v2/workflow-version-evaluation-templates"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+  }
 
-
-
-
-
+}
 
 
 // Split the results into pages.
@@ -5214,6 +5219,8 @@ message ListModelInputsRequest {
   // to 128.
   uint32 per_page = 5;
 }
+
+
 
 // GetKeyRequest
 message GetKeyRequest {
@@ -7471,15 +7478,9 @@ enum PutTaskAssignmentsRequestAction {
   // * when review strategy is MANUAL, then annotation status is updated to AWAITING_REVIEW.
   LABEL_SUBMIT = 2;
 
-  // Return a list of task assignments for reviewer to review => 10 inputs are assigned to the reviewer.
+  // Assign task assignments for reviewer to review => 10 task assignments are assigned to the reviewer.
   // This is a fully sync action.
-  // NOT idempotent:
-  //  In the current implementation, we don't actually store the reviewer in the task assignment,
-  //  as the task assignment still stays assigned to the labeler.
-  //  Therefore, multiple calls to this endpoint may result in different set of task assignments to review.
-  //  For now, this action is practically not idempotent.
-  //  In the future, we could however store the reviewer in the task assignment and
-  //  return existing task assignments already assigned to the reviewer => this will make this action idempotent.
+  // If task assignments are already assigned for review, then return existing task assignments.
   REVIEW_START = 10;
 
   // Approve task assignments.
@@ -7540,8 +7541,6 @@ message MultiTaskAssignmentResponse {
   clarifai.api.status.Status status = 1;
   repeated TaskAssignment task_assignments = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
-
-
 
 
 
@@ -7974,6 +7973,10 @@ message ListDeploymentsRequest {
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
   // to 128.
   uint32 per_page = 4;
+  // (optional URL parameter) ModelVersion IDs. To list all deployments for the model version
+  repeated string model_version_ids = 5;
+  // (optional URL parameter) WorkflowVersion IDs. To list all deployments for the workflow version
+  repeated string workflow_version_ids = 6;
 }
 
 message PostDeploymentsRequest {
@@ -8027,3 +8030,11 @@ message MultiDeploymentResponse {
 
 
 
+
+
+message ListWorkflowEvaluationTemplatesRequest {}
+
+message MultiWorkflowEvaluationTemplateResponse {
+  clarifai.api.status.Status status = 1;
+  repeated WorkflowVersionEvaluationTemplate workflow_version_evaluation_templates = 2;
+}

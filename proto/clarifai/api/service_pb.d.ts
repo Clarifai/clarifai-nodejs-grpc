@@ -11112,6 +11112,14 @@ export class ListDeploymentsRequest extends jspb.Message {
     setPage(value: number): ListDeploymentsRequest;
     getPerPage(): number;
     setPerPage(value: number): ListDeploymentsRequest;
+    clearModelVersionIdsList(): void;
+    getModelVersionIdsList(): Array<string>;
+    setModelVersionIdsList(value: Array<string>): ListDeploymentsRequest;
+    addModelVersionIds(value: string, index?: number): string;
+    clearWorkflowVersionIdsList(): void;
+    getWorkflowVersionIdsList(): Array<string>;
+    setWorkflowVersionIdsList(value: Array<string>): ListDeploymentsRequest;
+    addWorkflowVersionIds(value: string, index?: number): string;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListDeploymentsRequest.AsObject;
@@ -11129,6 +11137,8 @@ export namespace ListDeploymentsRequest {
         nodepoolId: string,
         page: number,
         perPage: number,
+        modelVersionIdsList: Array<string>,
+        workflowVersionIdsList: Array<string>,
     }
 }
 
@@ -11339,6 +11349,51 @@ export namespace MultiDeploymentResponse {
     export type AsObject = {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         deploymentsList: Array<proto_clarifai_api_resources_pb.Deployment.AsObject>,
+    }
+}
+
+export class ListWorkflowEvaluationTemplatesRequest extends jspb.Message { 
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListWorkflowEvaluationTemplatesRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListWorkflowEvaluationTemplatesRequest): ListWorkflowEvaluationTemplatesRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListWorkflowEvaluationTemplatesRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListWorkflowEvaluationTemplatesRequest;
+    static deserializeBinaryFromReader(message: ListWorkflowEvaluationTemplatesRequest, reader: jspb.BinaryReader): ListWorkflowEvaluationTemplatesRequest;
+}
+
+export namespace ListWorkflowEvaluationTemplatesRequest {
+    export type AsObject = {
+    }
+}
+
+export class MultiWorkflowEvaluationTemplateResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiWorkflowEvaluationTemplateResponse;
+    clearWorkflowVersionEvaluationTemplatesList(): void;
+    getWorkflowVersionEvaluationTemplatesList(): Array<proto_clarifai_api_resources_pb.WorkflowVersionEvaluationTemplate>;
+    setWorkflowVersionEvaluationTemplatesList(value: Array<proto_clarifai_api_resources_pb.WorkflowVersionEvaluationTemplate>): MultiWorkflowEvaluationTemplateResponse;
+    addWorkflowVersionEvaluationTemplates(value?: proto_clarifai_api_resources_pb.WorkflowVersionEvaluationTemplate, index?: number): proto_clarifai_api_resources_pb.WorkflowVersionEvaluationTemplate;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiWorkflowEvaluationTemplateResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiWorkflowEvaluationTemplateResponse): MultiWorkflowEvaluationTemplateResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiWorkflowEvaluationTemplateResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiWorkflowEvaluationTemplateResponse;
+    static deserializeBinaryFromReader(message: MultiWorkflowEvaluationTemplateResponse, reader: jspb.BinaryReader): MultiWorkflowEvaluationTemplateResponse;
+}
+
+export namespace MultiWorkflowEvaluationTemplateResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        workflowVersionEvaluationTemplatesList: Array<proto_clarifai_api_resources_pb.WorkflowVersionEvaluationTemplate.AsObject>,
     }
 }
 
