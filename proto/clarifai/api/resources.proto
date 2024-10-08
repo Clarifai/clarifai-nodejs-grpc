@@ -653,6 +653,15 @@ message Data {
   repeated Hit hits = 17;
   // Heatmap as 2d image
   repeated Image heatmaps = 18;
+  // For data messages that have multiple parts such as multi-modal
+  // requests, we allow you to specify those as a list of Data objects.
+  repeated Part parts = 19;
+}
+
+// A part of data used for multi-modal processing.
+message Part {
+  // The data for this part.
+  Data data = 1;
 }
 
 // A region within the data.

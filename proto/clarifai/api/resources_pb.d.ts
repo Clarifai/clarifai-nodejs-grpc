@@ -1138,6 +1138,10 @@ export class Data extends jspb.Message {
     getHeatmapsList(): Array<Image>;
     setHeatmapsList(value: Array<Image>): Data;
     addHeatmaps(value?: Image, index?: number): Image;
+    clearPartsList(): void;
+    getPartsList(): Array<Part>;
+    setPartsList(value: Array<Part>): Data;
+    addParts(value?: Part, index?: number): Part;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Data.AsObject;
@@ -1167,6 +1171,30 @@ export namespace Data {
         timeSegmentsList: Array<TimeSegment.AsObject>,
         hitsList: Array<Hit.AsObject>,
         heatmapsList: Array<Image.AsObject>,
+        partsList: Array<Part.AsObject>,
+    }
+}
+
+export class Part extends jspb.Message { 
+
+    hasData(): boolean;
+    clearData(): void;
+    getData(): Data | undefined;
+    setData(value?: Data): Part;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): Part.AsObject;
+    static toObject(includeInstance: boolean, msg: Part): Part.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: Part, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): Part;
+    static deserializeBinaryFromReader(message: Part, reader: jspb.BinaryReader): Part;
+}
+
+export namespace Part {
+    export type AsObject = {
+        data?: Data.AsObject,
     }
 }
 
