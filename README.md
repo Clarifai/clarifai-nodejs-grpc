@@ -1,4 +1,5 @@
-![Clarifai logo](docs/logo.png)
+![image](https://github.com/user-attachments/assets/562d54f1-eb2e-444c-8f1f-616d069bff3b)
+
 
 # Clarifai Node.js gRPC Client
 
