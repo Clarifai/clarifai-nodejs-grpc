@@ -433,6 +433,9 @@ message Concept {
   // To handle arbitrary json metadata:
   // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
   google.protobuf.Struct metadata = 13;
+
+  // Representative image for the concept
+  Image image = 22;
 }
 
 message KeypointInfo {
@@ -3072,20 +3075,7 @@ message Task {
   // Worker details.
   TaskWorker worker = 6;
 
-  // Who is doing annotations - human Worker or auto-annotation via Model/Workflow.
-  // If set, worker must have be set accordingly to either human worker or model/workflow worker
-  WorkerType worker_type = 22;
 
-  enum WorkerType {
-    // for backward compatibility when task is not setting any type and only sets workers
-    WORKER_TYPE_NOT_SET = 0;
-
-    // only human workers
-    WORKER_HUMAN = 1;
-
-    // auto-annotation tasks. Task must set worker as model or workflow
-    WORKER_AUTO = 2;
-  }
 
   // List of concept ids used in the work of this task.
   // DEPRECATED: Use task.concepts instead.
@@ -3218,6 +3208,21 @@ message TaskWorker {
   //   the workers can only be users;
   //   no limitation on number of workers.
   repeated Worker workers = 7;
+
+  // Who is doing annotations - human Worker or auto-annotation via Model/Workflow.
+  // If set, worker must have be set accordingly to either human worker or model/workflow worker
+  WorkerType type = 8;
+
+  enum WorkerType {
+    // for backward compatibility when task is not setting any type and only sets workers
+    WORKER_TYPE_NOT_SET = 0;
+
+    // only human workers
+    WORKER_HUMAN = 1;
+
+    // auto-annotation tasks. Task must set worker as model or workflow
+    WORKER_AUTO = 2;
+  }
 }
 
 // TaskWorkerPartitionedStrategyInfo
@@ -3308,12 +3313,14 @@ message TaskReview {
     TASK_REVIEW_STRATEGY_NOT_SET = 0;
 
     // No review is needed.
+    // When a labeler labels an input, the annotations are immediately approved.
     NONE = 1;
 
-    // Manual review strategy.
+    // Human reviewers will review the work done by labelers.
     MANUAL = 2;
 
-    // Consensus review strategy.
+    // Automatically approve inputs when labelers reach consensus.
+    // If consensus is not reached, then it will fallback to human reviewers.
     CONSENSUS = 3;
   }
 }
@@ -3322,6 +3329,13 @@ message TaskReview {
 message TaskReviewManualStrategyInfo {
   // This field represents the percentage of inputs that will be reviewed by reviewers. It is a value between 0 and 1.
   float sample_percentage = 1;
+
+  // The number of reviewers that need to agree in order to approve an input.
+  // Currently, the only allowed values are:
+  // 0  - when not set, it defaults to 1
+  // 1  - only a single reviewer needs to approve each labeled input
+  // -1 - an input will be approved when all reviewers approve it
+  int32 approval_threshold = 2;
 }
 
 // TaskReviewConsensusStrategyInfo
@@ -4088,7 +4102,6 @@ message DatasetSplit {
   }
 }
 
-
 message InputsAddJob {
   reserved 2, 5, 6;
 
@@ -4742,4 +4755,41 @@ message AuditLogQuery {
   repeated AuditLogTarget targets = 5; // Query operations with these targets.
   google.protobuf.BoolValue success = 6; // Query operations by success.
   repeated string source_ips = 7; // Query operations by source IP address.
+}
+
+message WorkflowVersionEvaluationMetric {
+  string id = 1;
+  string summary = 2;
+  string description = 3;
+  // Metric data type - string, float, int
+  DataType data_type = 4;
+  VisualisationType visualisation_type = 5;
+
+  // Enum for data types
+  enum DataType {
+    DATA_TYPE_NOT_SET = 0;
+    FLOAT = 1;
+  }
+
+  // Enum for visualization types
+  enum VisualisationType {
+    VISUALIZATION_TYPE_NOT_SET = 0;
+    CONFUSION_MATRIX = 1;
+    PRECISION_RECALL_CURVE = 2;
+    ROC_AUC_CURVE = 3;
+  }
+}
+
+message WorkflowVersionEvaluationTemplate {
+  string id = 1;
+  string description = 2;
+  // Applicable for the task types like TextClassification, TextGeneration, etc
+  repeated TaskType task_types = 3;
+  // The Workflow Evaluation template metrics
+  repeated WorkflowVersionEvaluationMetric workflow_version_evaluation_metrics = 4;
+
+  enum TaskType {
+    TASK_TYPE_NOT_SET = 0;
+    TEXT_CLASSIFICATION = 1;
+  }
 }

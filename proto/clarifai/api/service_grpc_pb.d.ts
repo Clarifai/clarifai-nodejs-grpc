@@ -254,6 +254,7 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     patchDeployments: IV2Service_IPatchDeployments;
     deleteDeployments: IV2Service_IDeleteDeployments;
     postAuditLogSearches: IV2Service_IPostAuditLogSearches;
+    listWorkflowEvaluationTemplates: IV2Service_IListWorkflowEvaluationTemplates;
 }
 
 interface IV2Service_IListConceptRelations extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListConceptRelationsRequest, proto_clarifai_api_service_pb.MultiConceptRelationResponse> {
@@ -2389,6 +2390,15 @@ interface IV2Service_IPostAuditLogSearches extends grpc.MethodDefinition<proto_c
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiAuditLogEntryResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiAuditLogEntryResponse>;
 }
+interface IV2Service_IListWorkflowEvaluationTemplates extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest, proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse> {
+    path: "/clarifai.api.V2/ListWorkflowEvaluationTemplates";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse>;
+}
 
 export const V2Service: IV2Service;
 
@@ -2630,6 +2640,7 @@ export interface IV2Server {
     patchDeployments: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchDeploymentsRequest, proto_clarifai_api_service_pb.MultiDeploymentResponse>;
     deleteDeployments: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteDeploymentsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     postAuditLogSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostAuditLogSearchesRequest, proto_clarifai_api_service_pb.MultiAuditLogEntryResponse>;
+    listWorkflowEvaluationTemplates: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest, proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse>;
 }
 
 export interface IV2Client {
@@ -3343,6 +3354,9 @@ export interface IV2Client {
     postAuditLogSearches(request: proto_clarifai_api_service_pb.PostAuditLogSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAuditLogEntryResponse) => void): grpc.ClientUnaryCall;
     postAuditLogSearches(request: proto_clarifai_api_service_pb.PostAuditLogSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAuditLogEntryResponse) => void): grpc.ClientUnaryCall;
     postAuditLogSearches(request: proto_clarifai_api_service_pb.PostAuditLogSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAuditLogEntryResponse) => void): grpc.ClientUnaryCall;
+    listWorkflowEvaluationTemplates(request: proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse) => void): grpc.ClientUnaryCall;
+    listWorkflowEvaluationTemplates(request: proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse) => void): grpc.ClientUnaryCall;
+    listWorkflowEvaluationTemplates(request: proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse) => void): grpc.ClientUnaryCall;
 }
 
 export class V2Client extends grpc.Client implements IV2Client {
@@ -4054,4 +4068,7 @@ export class V2Client extends grpc.Client implements IV2Client {
     public postAuditLogSearches(request: proto_clarifai_api_service_pb.PostAuditLogSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAuditLogEntryResponse) => void): grpc.ClientUnaryCall;
     public postAuditLogSearches(request: proto_clarifai_api_service_pb.PostAuditLogSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAuditLogEntryResponse) => void): grpc.ClientUnaryCall;
     public postAuditLogSearches(request: proto_clarifai_api_service_pb.PostAuditLogSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAuditLogEntryResponse) => void): grpc.ClientUnaryCall;
+    public listWorkflowEvaluationTemplates(request: proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse) => void): grpc.ClientUnaryCall;
+    public listWorkflowEvaluationTemplates(request: proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse) => void): grpc.ClientUnaryCall;
+    public listWorkflowEvaluationTemplates(request: proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse) => void): grpc.ClientUnaryCall;
 }
