@@ -656,6 +656,9 @@ message Data {
   // For data messages that have multiple parts such as multi-modal
   // requests, we allow you to specify those as a list of Data objects.
   repeated Part parts = 19;
+  // A proto representation for numpy arrays, useful to pass information from python SDK to a
+  // python based model implementation.
+  NDArray ndarray = 20;
 }
 
 // A part of data used for multi-modal processing.
@@ -736,6 +739,27 @@ message Frame {
   // An ID for the frame.
   string id = 3;
 }
+
+// A representation of a numpy array as a proto.
+// To convert a numpy array 'ndarray' to this proto do:
+// NDArray(buffer=ndarray.tobytes(), shape=ndarray.shape, dtype=str(ndarray.dtype))
+//
+// To convert this proto 'ndarray_proto' to a numpy array:
+// array = np.frombuffer(ndarray_proto.buffer, dtype=ndarray_proto.dtype)
+// array = array.reshape(tuple(ndarray_proto.shape))
+message NDArray {
+  // The bytes of data from the array from array.tobytes()
+  bytes buffer = 1;
+
+  // Simply the shape of the numpy array. array.shape.
+  repeated uint32 shape = 2;
+
+  // Dtype for numpy. You can get it back from this string format using:
+  // np.dtype('float32') for example.
+  string dtype = 3;
+}
+
+
 
 // Segmentation mask.
 message Mask {

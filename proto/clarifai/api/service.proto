@@ -2239,6 +2239,8 @@ service V2 {
 
 
 
+
+
   // Validate new password in real-time for a user
   rpc PostValidatePassword (PostValidatePasswordRequest) returns (SinglePasswordValidationResponse) {
     option (google.api.http) = {
@@ -6376,6 +6378,9 @@ message SingleUserResponse {
   clarifai.api.status.Status status = 1;
   User user = 2;
 }
+
+
+
 
 
 
