@@ -51540,7 +51540,9 @@ proto.clarifai.api.TaskReviewConsensusStrategyInfo.prototype.toObject = function
  */
 proto.clarifai.api.TaskReviewConsensusStrategyInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
-    approvalThreshold: jspb.Message.getFieldWithDefault(msg, 2, 0)
+    approvalThreshold: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    approvalThresholdLabelers: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    approvalThresholdReviewers: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -51581,6 +51583,14 @@ proto.clarifai.api.TaskReviewConsensusStrategyInfo.deserializeBinaryFromReader =
       var value = /** @type {number} */ (reader.readUint32());
       msg.setApprovalThreshold(value);
       break;
+    case 3:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setApprovalThresholdLabelers(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setApprovalThresholdReviewers(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -51617,6 +51627,20 @@ proto.clarifai.api.TaskReviewConsensusStrategyInfo.serializeBinaryToWriter = fun
       f
     );
   }
+  f = message.getApprovalThresholdLabelers();
+  if (f !== 0) {
+    writer.writeUint32(
+      3,
+      f
+    );
+  }
+  f = message.getApprovalThresholdReviewers();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
+      f
+    );
+  }
 };
 
 
@@ -51635,6 +51659,42 @@ proto.clarifai.api.TaskReviewConsensusStrategyInfo.prototype.getApprovalThreshol
  */
 proto.clarifai.api.TaskReviewConsensusStrategyInfo.prototype.setApprovalThreshold = function(value) {
   return jspb.Message.setProto3IntField(this, 2, value);
+};
+
+
+/**
+ * optional uint32 approval_threshold_labelers = 3;
+ * @return {number}
+ */
+proto.clarifai.api.TaskReviewConsensusStrategyInfo.prototype.getApprovalThresholdLabelers = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.TaskReviewConsensusStrategyInfo} returns this
+ */
+proto.clarifai.api.TaskReviewConsensusStrategyInfo.prototype.setApprovalThresholdLabelers = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional int32 approval_threshold_reviewers = 4;
+ * @return {number}
+ */
+proto.clarifai.api.TaskReviewConsensusStrategyInfo.prototype.getApprovalThresholdReviewers = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.TaskReviewConsensusStrategyInfo} returns this
+ */
+proto.clarifai.api.TaskReviewConsensusStrategyInfo.prototype.setApprovalThresholdReviewers = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 

@@ -3819,6 +3819,12 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Delete;
     option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Deployments_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Deployments_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Delete;
   }
 
   // Nodepools CRUD
@@ -3878,6 +3884,10 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Delete;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Deployments_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Deployments_Delete;
   }
 
   // Deployments CRUD
