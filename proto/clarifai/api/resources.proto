@@ -3363,11 +3363,7 @@ message TaskReviewManualStrategyInfo {
   // This field represents the percentage of inputs that will be reviewed by reviewers. It is a value between 0 and 1.
   float sample_percentage = 1;
 
-  // The number of reviewers that need to agree in order to approve an input.
-  // Currently, the only allowed values are:
-  // 0  - when not set, it defaults to 1
-  // 1  - only a single reviewer needs to approve each labeled input
-  // -1 - an input will be approved when all reviewers approve it
+  // Deprecated: Use consensus_strategy_info.approval_threshold_reviewers.
   int32 approval_threshold = 2;
 }
 
@@ -3375,8 +3371,22 @@ message TaskReviewManualStrategyInfo {
 message TaskReviewConsensusStrategyInfo {
   reserved 1;
 
+  // Deprecated: Use approval_threshold_labelers.
+  uint32 approval_threshold = 2 [deprecated = true];
+
   // The number of labelers that need to agree in order to automatically approve an annotation.
-  uint32 approval_threshold = 2;
+  // When 0, labelers consensus is disabled.
+  // When 1, the labels are automatically approved once a single labeler labels the input.
+  // When greater than 1, the labels are automatically approved when the specified number of labelers agree.
+  // If the number of labelers that agree is less than the specified number, then the input will reviewed by reviewers.
+  uint32 approval_threshold_labelers = 3;
+
+  // The number of reviewers that need to agree in order to approve an input.
+  // Currently, the only allowed values are:
+  // 0  - when not set, it defaults to 1
+  // 1  - only a single reviewer needs to approve each labeled input
+  // -1 - an input will be approved when all reviewers approve it
+  int32 approval_threshold_reviewers = 4;
 }
 
 // TaskAIAssistant

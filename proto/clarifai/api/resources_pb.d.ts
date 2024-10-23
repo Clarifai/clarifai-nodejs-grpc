@@ -6003,6 +6003,10 @@ export namespace TaskReviewManualStrategyInfo {
 export class TaskReviewConsensusStrategyInfo extends jspb.Message { 
     getApprovalThreshold(): number;
     setApprovalThreshold(value: number): TaskReviewConsensusStrategyInfo;
+    getApprovalThresholdLabelers(): number;
+    setApprovalThresholdLabelers(value: number): TaskReviewConsensusStrategyInfo;
+    getApprovalThresholdReviewers(): number;
+    setApprovalThresholdReviewers(value: number): TaskReviewConsensusStrategyInfo;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): TaskReviewConsensusStrategyInfo.AsObject;
@@ -6017,6 +6021,8 @@ export class TaskReviewConsensusStrategyInfo extends jspb.Message {
 export namespace TaskReviewConsensusStrategyInfo {
     export type AsObject = {
         approvalThreshold: number,
+        approvalThresholdLabelers: number,
+        approvalThresholdReviewers: number,
     }
 }
 
