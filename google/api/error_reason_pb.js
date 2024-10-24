@@ -56,7 +56,9 @@ proto.google.api.ErrorReason = {
   ORG_RESTRICTION_HEADER_INVALID: 28,
   SERVICE_NOT_VISIBLE: 29,
   GCP_SUSPENDED: 30,
-  LOCATION_POLICY_VIOLATED: 31
+  LOCATION_POLICY_VIOLATED: 31,
+  MISSING_ORIGIN: 33,
+  OVERLOADED_CREDENTIALS: 34
 };
 
 goog.object.extend(exports, proto.google.api);
