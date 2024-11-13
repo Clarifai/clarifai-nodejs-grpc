@@ -506,8 +506,7 @@ message ConceptQuery {
   // Multiple values are joined using an OR condition.
   repeated WorkflowModelUseCase use_cases = 4;
 
-  // By default, we return app concepts combined with concepts from this source.
-  // If source is not set, then application default workflow is used as source.
+  // Search for concepts in a specific model or workflow.
   // ########## Supported fields ##########
   //  - model.id                - fetch concepts from this model
   //  - model.model_version.id  - if set, then use the specified model version. if not set, use latest model version
@@ -519,6 +518,13 @@ message ConceptQuery {
     Model model = 5;
     Workflow workflow = 6;
   }
+
+  // By default, we return app concepts combined with source (model or workflow) concepts.
+  // If source is not set, then we only return app concepts.
+  // If ignore_app_concepts is true, then we only return source concepts.
+  // When use_cases are set, then ignore_app_concepts is always true, because
+  // concept use cases can only be determined in relation to a model or a workflow.
+  bool ignore_app_concepts = 7;
 }
 enum WorkflowModelUseCase {
   WORKFLOW_MODEL_USE_CASE_NOT_SET = 0;
@@ -2697,6 +2703,7 @@ message UserDetail {
   uint32 teams_count = 10;
   string country = 11;
   string state = 12;
+  CommitmentValue commitment_value = 14;
 }
 
 // EmailAddress
@@ -2745,6 +2752,22 @@ message PasswordViolations {
   bool no_overlap_with_old = 13;
   // when password has to be changed becauase it's too old
   bool password_lifespan = 14;
+}
+
+// Commitment Value - used to track users' commitment amount and type
+message CommitmentValue {
+  // The commitment value, in cents
+  int32 value = 1;
+  // The commitment type, can be either 'monthly' or 'annual'
+  CommitmentType type = 2;
+
+  enum CommitmentType {
+    TYPE_NOT_SET = 0;
+
+    MONTHLY = 1;
+
+    ANNUAL = 2;
+  }
 }
 
 // Video
@@ -3506,6 +3529,30 @@ message TaskInputSourceMetrics {
   uint64 inputs_count_estimated = 1;
 }
 
+// Role represents a list of permissions
+message Role {
+  string id = 1;
+
+  // When the role was created.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp created_at = 2;
+
+  // Most recent time when the role was updated.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp modified_at = 3;
+
+  string name = 4;
+  string description = 5;
+
+  // The low-level scopes this role has
+  repeated string scopes = 6;
+  // The endpoint-level scopes this role has
+  repeated string endpoints = 7;
+  // Type of the role 'team' or 'org'
+  RoleType type = 8;
+}
 enum RoleType {
   TEAM = 0;
   ORG = 1;
@@ -3516,6 +3563,27 @@ enum RoleType {
 
 
 
+// Represents a group of users.
+message Team {
+  // Identify the team (unique).
+  string id = 1;
+
+  // When the team was created.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp created_at = 2;
+
+  // Most recent time when the team was updated.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  google.protobuf.Timestamp modified_at = 3;
+
+  // Name the team.
+  string name = 4;
+
+  // When a new application is assigned to the team without an explicit role, then the default role will be used
+  string default_role_id = 5;
+}
 
 
 
@@ -3756,14 +3824,6 @@ message Visibility {
     PUBLIC = 50;
   }
   Gettable gettable = 1;
-}
-
-// TrendingMetric
-message TrendingMetric {
-  string user_id = 1;
-  string app_id = 2;
-  string object_id = 3;
-  uint64 view_count = 4;
 }
 
 enum ValidationErrorType {
@@ -4530,7 +4590,7 @@ message ComputeCluster {
   Visibility visibility = 8;
 
   // We offer different types of compute clusters such as:
-  // 'serverless' which only Clarifai can create.
+  // 'shared' which only Clarifai can create.
   // 'dedicated' where you're in control of defining the nodepools within the cluster
   // 'local-dev' which means you're responsible for starting runners manually which is great for local
   // development but not recommended for production use cases.
@@ -4625,7 +4685,7 @@ message ComputeInfo {
 // Note that resources for things like modes inside runners are not
 // related to how many replicas of those runners are needed to handle traffic.
 message AutoscaleConfig {
-
+  reserved 6;
   // The minimum number of replicas for the runner to have.
   // Defaults to 0 which means autoscaling can scale down to zero.
   // If you want a replica always up then set to >= 1.
@@ -4642,7 +4702,7 @@ message AutoscaleConfig {
 
   // Depending on your plan you may be able to enable packing of resources into a single node
   // for more compute and cost efficiency.
-  bool enable_packing = 6;
+  bool disable_packing = 7;
 }
 
 
@@ -4754,20 +4814,39 @@ message ProcessingInfo {
   // item's processing should be cancelled, etc.
   clarifai.api.status.Status status = 2;
 }
+
 enum EventType {
   EVENT_TYPE_NOT_SET = 0;
 
-  // APPLICATION event types : 100 - 199
-  APPLICATION_CREATE = 100 [(clarifai.api.utils.description) = "Operation to create an Application"];
-}
+  // Event types related to organization memberships and teams: 100 - 199
+  ORGANIZATION_MEMBER_ADD = 100 [(clarifai.api.utils.description) = "Organization members added"];
+  ORGANIZATION_MEMBER_CHANGE = 101 [(clarifai.api.utils.description) = "Organization members' roles changed"];
+  ORGANIZATION_MEMBER_REMOVE = 102 [(clarifai.api.utils.description) = "Organization members removed"];
 
+  ORGANIZATION_MEMBER_INVITATION_CREATE = 103 [(clarifai.api.utils.description) = "Organization member invitations created"];
+  ORGANIZATION_MEMBER_INVITATION_CANCEL = 104 [(clarifai.api.utils.description) = "Organization member invitations canceled"];
+  ORGANIZATION_MEMBER_INVITATION_ACCEPT = 105 [(clarifai.api.utils.description) = "Organization member invitations accepted"];
+  ORGANIZATION_MEMBER_INVITATION_DECLINE = 106 [(clarifai.api.utils.description) = "Organization member invitations declined"];
+
+  ORGANIZATION_TEAM_CREATE = 107 [(clarifai.api.utils.description) = "Organization teams created"];
+  ORGANIZATION_TEAM_UPDATE = 108 [(clarifai.api.utils.description) = "Organization teams updated"];
+  ORGANIZATION_TEAM_DELETE = 109 [(clarifai.api.utils.description) = "Organization teams deleted"];
+
+  ORGANIZATION_TEAM_MEMBER_ADD = 110 [(clarifai.api.utils.description) = "Organization team members added"];
+  ORGANIZATION_TEAM_MEMBER_REMOVE = 111 [(clarifai.api.utils.description) = "Organization team members removed"];
+
+  ORGANIZATION_TEAM_APP_ADD = 112 [(clarifai.api.utils.description) = "Organization team applications added"];
+  ORGANIZATION_TEAM_APP_REMOVE = 113 [(clarifai.api.utils.description) = "Organization team applications removed"];
+}
 
 
 // AuditLogTarget is a resource on which an operation recorded in an
 // audit log was performed.
 message AuditLogTarget {
   oneof target {
-    User member = 1; // An organization member, only used in org audit logs.
+    User user = 1;
+    Role role = 2;
+    Team team = 3;
   }
 }
 
@@ -4784,7 +4863,7 @@ message AuditLogEntry {
   // Additional human-readable details of the operation. For example,
   // when patching a resource, these would list what was changed.
   repeated string details = 6;
-  bool success = 7; // Was the operation successful?
+  bool success = 7  [(clarifai.api.utils.cl_show_if_empty) = true];  // Was the operation successful?
   string req_id = 8; // Request that triggered the operation.
   string source_ip = 9; // IP address where the request originated from.
 }
@@ -4836,3 +4915,8 @@ message WorkflowVersionEvaluationTemplate {
     TEXT_CLASSIFICATION = 1;
   }
 }
+
+
+
+
+

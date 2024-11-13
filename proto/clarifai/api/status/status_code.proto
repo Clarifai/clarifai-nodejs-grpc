@@ -44,6 +44,7 @@ enum StatusCode {
   CONN_INVALID_REQUEST = 11102; // something wrong with a header
   CONN_METHOD_NOT_ALLOWED = 11103; // when a request method is not allowed
   CONN_NO_GDPR_CONSENT = 11104; // lack GDPR consent
+  CONN_INVALID_RANGE = 11105; // when invalid range of a resource is requested
 
   CONN_AUTH_METHOD_DISABLED = 11200; // authentication method is disabled
 

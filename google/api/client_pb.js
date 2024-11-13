@@ -2379,7 +2379,8 @@ proto.google.api.PythonSettings.ExperimentalFeatures.prototype.toObject = functi
  */
 proto.google.api.PythonSettings.ExperimentalFeatures.toObject = function(includeInstance, msg) {
   var f, obj = {
-    restAsyncIoEnabled: jspb.Message.getBooleanFieldWithDefault(msg, 1, false)
+    restAsyncIoEnabled: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
+    protobufPythonicTypesEnabled: jspb.Message.getBooleanFieldWithDefault(msg, 2, false)
   };
 
   if (includeInstance) {
@@ -2420,6 +2421,10 @@ proto.google.api.PythonSettings.ExperimentalFeatures.deserializeBinaryFromReader
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setRestAsyncIoEnabled(value);
       break;
+    case 2:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setProtobufPythonicTypesEnabled(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -2456,6 +2461,13 @@ proto.google.api.PythonSettings.ExperimentalFeatures.serializeBinaryToWriter = f
       f
     );
   }
+  f = message.getProtobufPythonicTypesEnabled();
+  if (f) {
+    writer.writeBool(
+      2,
+      f
+    );
+  }
 };
 
 
@@ -2474,6 +2486,24 @@ proto.google.api.PythonSettings.ExperimentalFeatures.prototype.getRestAsyncIoEna
  */
 proto.google.api.PythonSettings.ExperimentalFeatures.prototype.setRestAsyncIoEnabled = function(value) {
   return jspb.Message.setProto3BooleanField(this, 1, value);
+};
+
+
+/**
+ * optional bool protobuf_pythonic_types_enabled = 2;
+ * @return {boolean}
+ */
+proto.google.api.PythonSettings.ExperimentalFeatures.prototype.getProtobufPythonicTypesEnabled = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 2, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.google.api.PythonSettings.ExperimentalFeatures} returns this
+ */
+proto.google.api.PythonSettings.ExperimentalFeatures.prototype.setProtobufPythonicTypesEnabled = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
