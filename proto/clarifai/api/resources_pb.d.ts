@@ -207,6 +207,8 @@ export class App extends jspb.Message {
     clearExtraInfo(): void;
     getExtraInfo(): AppExtraInfo | undefined;
     setExtraInfo(value?: AppExtraInfo): App;
+    getEmbeddingsStorage(): App.EmbeddingsStorage;
+    setEmbeddingsStorage(value: App.EmbeddingsStorage): App;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): App.AsObject;
@@ -240,7 +242,15 @@ export namespace App {
         image?: Image.AsObject,
         isTemplate?: google_protobuf_wrappers_pb.BoolValue.AsObject,
         extraInfo?: AppExtraInfo.AsObject,
+        embeddingsStorage: App.EmbeddingsStorage,
     }
+
+    export enum EmbeddingsStorage {
+    EMBEDDING_STORAGE_NOT_SET = 0,
+    POSTGRES = 1,
+    QDRANT = 2,
+    }
+
 }
 
 export class AppExtraInfo extends jspb.Message { 

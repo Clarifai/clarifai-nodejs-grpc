@@ -152,6 +152,16 @@ message App {
   google.protobuf.BoolValue is_template = 25;
 
   AppExtraInfo extra_info = 24;
+
+  // Where app embeddings are stored
+  // postgres (default), qdrant
+  EmbeddingsStorage embeddings_storage = 26;
+
+  enum EmbeddingsStorage {
+    EMBEDDING_STORAGE_NOT_SET = 0;
+    POSTGRES = 1;
+    QDRANT = 2;
+  }
 }
 
 message AppExtraInfo {
@@ -267,8 +277,6 @@ message Track {
 
   float quality = 5;
 }
-
-
 
 
 
@@ -2599,11 +2607,6 @@ message TextInfo {
   // text encoding
   string encoding = 2;
 }
-
-
-
-
-
 
 enum APIEventType {
   API_EVENT_TYPE_NOT_SET = 0;

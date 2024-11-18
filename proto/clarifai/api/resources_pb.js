@@ -51,6 +51,7 @@ goog.exportSymbol('proto.clarifai.api.AnnotationFilter', null, global);
 goog.exportSymbol('proto.clarifai.api.AnnotationFilterConfig', null, global);
 goog.exportSymbol('proto.clarifai.api.AnnotationSearchMetrics', null, global);
 goog.exportSymbol('proto.clarifai.api.App', null, global);
+goog.exportSymbol('proto.clarifai.api.App.EmbeddingsStorage', null, global);
 goog.exportSymbol('proto.clarifai.api.AppCopyProgress', null, global);
 goog.exportSymbol('proto.clarifai.api.AppDuplication', null, global);
 goog.exportSymbol('proto.clarifai.api.AppDuplicationFilters', null, global);
@@ -5933,7 +5934,8 @@ proto.clarifai.api.App.toObject = function(includeInstance, msg) {
     notes: jspb.Message.getFieldWithDefault(msg, 21, ""),
     image: (f = msg.getImage()) && proto.clarifai.api.Image.toObject(includeInstance, f),
     isTemplate: (f = msg.getIsTemplate()) && google_protobuf_wrappers_pb.BoolValue.toObject(includeInstance, f),
-    extraInfo: (f = msg.getExtraInfo()) && proto.clarifai.api.AppExtraInfo.toObject(includeInstance, f)
+    extraInfo: (f = msg.getExtraInfo()) && proto.clarifai.api.AppExtraInfo.toObject(includeInstance, f),
+    embeddingsStorage: jspb.Message.getFieldWithDefault(msg, 26, 0)
   };
 
   if (includeInstance) {
@@ -6057,6 +6059,10 @@ proto.clarifai.api.App.deserializeBinaryFromReader = function(msg, reader) {
       var value = new proto.clarifai.api.AppExtraInfo;
       reader.readMessage(value,proto.clarifai.api.AppExtraInfo.deserializeBinaryFromReader);
       msg.setExtraInfo(value);
+      break;
+    case 26:
+      var value = /** @type {!proto.clarifai.api.App.EmbeddingsStorage} */ (reader.readEnum());
+      msg.setEmbeddingsStorage(value);
       break;
     default:
       reader.skipField();
@@ -6235,8 +6241,24 @@ proto.clarifai.api.App.serializeBinaryToWriter = function(message, writer) {
       proto.clarifai.api.AppExtraInfo.serializeBinaryToWriter
     );
   }
+  f = message.getEmbeddingsStorage();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      26,
+      f
+    );
+  }
 };
 
+
+/**
+ * @enum {number}
+ */
+proto.clarifai.api.App.EmbeddingsStorage = {
+  EMBEDDING_STORAGE_NOT_SET: 0,
+  POSTGRES: 1,
+  QDRANT: 2
+};
 
 /**
  * optional string id = 1;
@@ -6747,6 +6769,24 @@ proto.clarifai.api.App.prototype.clearExtraInfo = function() {
  */
 proto.clarifai.api.App.prototype.hasExtraInfo = function() {
   return jspb.Message.getField(this, 24) != null;
+};
+
+
+/**
+ * optional EmbeddingsStorage embeddings_storage = 26;
+ * @return {!proto.clarifai.api.App.EmbeddingsStorage}
+ */
+proto.clarifai.api.App.prototype.getEmbeddingsStorage = function() {
+  return /** @type {!proto.clarifai.api.App.EmbeddingsStorage} */ (jspb.Message.getFieldWithDefault(this, 26, 0));
+};
+
+
+/**
+ * @param {!proto.clarifai.api.App.EmbeddingsStorage} value
+ * @return {!proto.clarifai.api.App} returns this
+ */
+proto.clarifai.api.App.prototype.setEmbeddingsStorage = function(value) {
+  return jspb.Message.setProto3EnumField(this, 26, value);
 };
 
 
