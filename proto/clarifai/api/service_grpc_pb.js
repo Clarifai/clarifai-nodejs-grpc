@@ -1466,17 +1466,6 @@ function deserialize_clarifai_api_ListTasksRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListTasksRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_ListTrendingMetricsViewsRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest)) {
-    throw new Error('Expected argument of type clarifai.api.ListTrendingMetricsViewsRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_ListTrendingMetricsViewsRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_clarifai_api_ListUploadsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.ListUploadsRequest)) {
     throw new Error('Expected argument of type clarifai.api.ListUploadsRequest');
@@ -2157,17 +2146,6 @@ function serialize_clarifai_api_MultiTrainingTimeEstimateResponse(arg) {
 
 function deserialize_clarifai_api_MultiTrainingTimeEstimateResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_MultiTrendingMetricsViewResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse)) {
-    throw new Error('Expected argument of type clarifai.api.MultiTrendingMetricsViewResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_MultiTrendingMetricsViewResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiUploadResponse(arg) {
@@ -3202,17 +3180,6 @@ function serialize_clarifai_api_PostTasksRequest(arg) {
 
 function deserialize_clarifai_api_PostTasksRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostTasksRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_PostTrendingMetricsViewRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest)) {
-    throw new Error('Expected argument of type clarifai.api.PostTrendingMetricsViewRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_PostTrendingMetricsViewRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PostUploadsRequest(arg) {
@@ -6025,30 +5992,6 @@ postStatValuesAggregate: {
     requestDeserialize: deserialize_clarifai_api_PostStatValuesAggregateRequest,
     responseSerialize: serialize_clarifai_api_MultiStatValueAggregateResponse,
     responseDeserialize: deserialize_clarifai_api_MultiStatValueAggregateResponse,
-  },
-  // Increase the view metric for a detail view
-postTrendingMetricsView: {
-    path: '/clarifai.api.V2/PostTrendingMetricsView',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest,
-    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
-    requestSerialize: serialize_clarifai_api_PostTrendingMetricsViewRequest,
-    requestDeserialize: deserialize_clarifai_api_PostTrendingMetricsViewRequest,
-    responseSerialize: serialize_clarifai_api_status_BaseResponse,
-    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
-  },
-  // List the view metrics for a detail view
-listTrendingMetricsViews: {
-    path: '/clarifai.api.V2/ListTrendingMetricsViews',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest,
-    responseType: proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse,
-    requestSerialize: serialize_clarifai_api_ListTrendingMetricsViewsRequest,
-    requestDeserialize: deserialize_clarifai_api_ListTrendingMetricsViewsRequest,
-    responseSerialize: serialize_clarifai_api_MultiTrendingMetricsViewResponse,
-    responseDeserialize: deserialize_clarifai_api_MultiTrendingMetricsViewResponse,
   },
   // Get a specific module from an app.
 getModule: {

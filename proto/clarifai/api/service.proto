@@ -311,6 +311,7 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // to get the model for the worker.
@@ -326,6 +327,7 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // to get the model for the worker.
@@ -399,6 +401,7 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Delete;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
@@ -426,6 +429,7 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Delete;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
@@ -2595,12 +2599,6 @@ service V2 {
 
 
 
-
-
-
-
-
-
   // owner list users who the app is shared with
   rpc ListCollaborators (ListCollaboratorsRequest) returns (MultiCollaboratorsResponse) {
     option (google.api.http) = {
@@ -3054,26 +3052,6 @@ service V2 {
 
 
 
-
-  // Increase the view metric for a detail view
-  rpc PostTrendingMetricsView (PostTrendingMetricsViewRequest) returns (clarifai.api.status.BaseResponse) {
-    option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/trending_metrics/views/{view_type}/{object_id}"
-      body: "*"
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-  }
-
-  // List the view metrics for a detail view
-  rpc ListTrendingMetricsViews (ListTrendingMetricsViewsRequest) returns (MultiTrendingMetricsViewResponse) {
-    option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/trending_metrics/views/{view_type}"
-      additional_bindings {
-        get: "/v2/trending_metrics/views/{view_type}"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-  }
 
 
 
@@ -3982,6 +3960,8 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
 
+
+
 }
 
 
@@ -4194,7 +4174,7 @@ message ListAppsRequest {
   // Whether to sort in ascending order. If false, will order in descending order.
   bool sort_ascending = 5;
   oneof sort_by {
-    // Whether to order by the name
+    // Whether to order by the name.
     bool sort_by_name = 6;
     // Whether to order by the modified_at time.
     // If none of the sort options is set to true, will sort by modified_at.
@@ -4203,6 +4183,8 @@ message ListAppsRequest {
     bool sort_by_created_at = 12;
     // Whether to order by the number of users stared the app
     bool sort_by_star_count = 13;
+    // Whether to order by the id
+    bool sort_by_id = 17;
   }
 
   // Filtering options:
@@ -4408,8 +4390,6 @@ message MultiCollaborationsResponse {
   clarifai.api.status.Status status = 1;
   repeated Collaboration collaborations = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
-
-
 
 
 
@@ -6361,16 +6341,6 @@ message SingleAnnotationFilterResponse {
 
 
 
-
-
-
-
-
-
-
-
-
-
 // GetUserRequest
 message GetUserRequest {
   // we used to have user_id but moved to the standard convention. Since this endpoint
@@ -6681,7 +6651,7 @@ message PostWorkflowResultsRequest {
   //
   // If node.id is not in the provided map, it will fall back to searching for
   // an adequate deployment the model owner owns or fall back to
-  // the serverless nodepools provided by Clarifai.
+  // the shared nodepools provided by Clarifai.
   // We recommend you specify these RunnerSelectors so that you have better understanding of where
   // processing occurs.
   map<string, RunnerSelector> node_runner_selectors = 8;
@@ -7079,36 +7049,6 @@ message MultiStatValueAggregateResponse {
 
 
 
-
-// PostTrendingMetricsViewRequest
-message PostTrendingMetricsViewRequest {
-  // The user_id and app_id information.
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  // For now view types 'apps', 'workflows', and 'models' are supported.
-  string view_type = 2;
-  // ID of the views object.
-  string object_id = 3;
-}
-
-// ListTrendingMetricsViewsRequest
-message ListTrendingMetricsViewsRequest {
-  // The user_id and app_id information.
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  // For now view types 'apps', 'workflows', and 'models' are supported.
-  string view_type = 2;
-  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
-  // Defaults to 1.
-  uint32 page = 3;
-  // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 128.
-  uint32 per_page = 4;
-}
-
-// MultiTrendingMetricsViewResponse
-message MultiTrendingMetricsViewResponse {
-  clarifai.api.status.Status status = 1;
-  repeated TrendingMetric metrics = 2;
-}
 
 
 
@@ -7729,6 +7669,8 @@ message ListRunnersRequest {
   // to 128.
   uint32 per_page = 4;
   string compute_cluster_id = 5;
+  // Only return runners whose replicas are >= min_replicas.
+  uint32 min_replicas = 6;
 }
 
 
@@ -8053,3 +7995,7 @@ message MultiWorkflowEvaluationTemplateResponse {
   clarifai.api.status.Status status = 1;
   repeated WorkflowVersionEvaluationTemplate workflow_version_evaluation_templates = 2;
 }
+
+
+
+

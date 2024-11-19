@@ -30,6 +30,7 @@ goog.object.extend(proto, google_protobuf_duration_pb);
 goog.exportSymbol('proto.google.api.Metric', null, global);
 goog.exportSymbol('proto.google.api.MetricDescriptor', null, global);
 goog.exportSymbol('proto.google.api.MetricDescriptor.MetricDescriptorMetadata', null, global);
+goog.exportSymbol('proto.google.api.MetricDescriptor.MetricDescriptorMetadata.TimeSeriesResourceHierarchyLevel', null, global);
 goog.exportSymbol('proto.google.api.MetricDescriptor.MetricKind', null, global);
 goog.exportSymbol('proto.google.api.MetricDescriptor.ValueType', null, global);
 /**
@@ -64,7 +65,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.google.api.MetricDescriptor.MetricDescriptorMetadata = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.google.api.MetricDescriptor.MetricDescriptorMetadata.repeatedFields_, null);
 };
 goog.inherits(proto.google.api.MetricDescriptor.MetricDescriptorMetadata, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -363,6 +364,13 @@ proto.google.api.MetricDescriptor.ValueType = {
 };
 
 
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.google.api.MetricDescriptor.MetricDescriptorMetadata.repeatedFields_ = [4];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -396,7 +404,8 @@ proto.google.api.MetricDescriptor.MetricDescriptorMetadata.toObject = function(i
   var f, obj = {
     launchStage: jspb.Message.getFieldWithDefault(msg, 1, 0),
     samplePeriod: (f = msg.getSamplePeriod()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
-    ingestDelay: (f = msg.getIngestDelay()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f)
+    ingestDelay: (f = msg.getIngestDelay()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
+    timeSeriesResourceHierarchyLevelList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -446,6 +455,12 @@ proto.google.api.MetricDescriptor.MetricDescriptorMetadata.deserializeBinaryFrom
       var value = new google_protobuf_duration_pb.Duration;
       reader.readMessage(value,google_protobuf_duration_pb.Duration.deserializeBinaryFromReader);
       msg.setIngestDelay(value);
+      break;
+    case 4:
+      var values = /** @type {!Array<!proto.google.api.MetricDescriptor.MetricDescriptorMetadata.TimeSeriesResourceHierarchyLevel>} */ (reader.isDelimited() ? reader.readPackedEnum() : [reader.readEnum()]);
+      for (var i = 0; i < values.length; i++) {
+        msg.addTimeSeriesResourceHierarchyLevel(values[i]);
+      }
       break;
     default:
       reader.skipField();
@@ -499,8 +514,25 @@ proto.google.api.MetricDescriptor.MetricDescriptorMetadata.serializeBinaryToWrit
       google_protobuf_duration_pb.Duration.serializeBinaryToWriter
     );
   }
+  f = message.getTimeSeriesResourceHierarchyLevelList();
+  if (f.length > 0) {
+    writer.writePackedEnum(
+      4,
+      f
+    );
+  }
 };
 
+
+/**
+ * @enum {number}
+ */
+proto.google.api.MetricDescriptor.MetricDescriptorMetadata.TimeSeriesResourceHierarchyLevel = {
+  TIME_SERIES_RESOURCE_HIERARCHY_LEVEL_UNSPECIFIED: 0,
+  PROJECT: 1,
+  ORGANIZATION: 2,
+  FOLDER: 3
+};
 
 /**
  * optional LaunchStage launch_stage = 1;
@@ -591,6 +623,43 @@ proto.google.api.MetricDescriptor.MetricDescriptorMetadata.prototype.clearIngest
  */
 proto.google.api.MetricDescriptor.MetricDescriptorMetadata.prototype.hasIngestDelay = function() {
   return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * repeated TimeSeriesResourceHierarchyLevel time_series_resource_hierarchy_level = 4;
+ * @return {!Array<!proto.google.api.MetricDescriptor.MetricDescriptorMetadata.TimeSeriesResourceHierarchyLevel>}
+ */
+proto.google.api.MetricDescriptor.MetricDescriptorMetadata.prototype.getTimeSeriesResourceHierarchyLevelList = function() {
+  return /** @type {!Array<!proto.google.api.MetricDescriptor.MetricDescriptorMetadata.TimeSeriesResourceHierarchyLevel>} */ (jspb.Message.getRepeatedField(this, 4));
+};
+
+
+/**
+ * @param {!Array<!proto.google.api.MetricDescriptor.MetricDescriptorMetadata.TimeSeriesResourceHierarchyLevel>} value
+ * @return {!proto.google.api.MetricDescriptor.MetricDescriptorMetadata} returns this
+ */
+proto.google.api.MetricDescriptor.MetricDescriptorMetadata.prototype.setTimeSeriesResourceHierarchyLevelList = function(value) {
+  return jspb.Message.setField(this, 4, value || []);
+};
+
+
+/**
+ * @param {!proto.google.api.MetricDescriptor.MetricDescriptorMetadata.TimeSeriesResourceHierarchyLevel} value
+ * @param {number=} opt_index
+ * @return {!proto.google.api.MetricDescriptor.MetricDescriptorMetadata} returns this
+ */
+proto.google.api.MetricDescriptor.MetricDescriptorMetadata.prototype.addTimeSeriesResourceHierarchyLevel = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 4, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.google.api.MetricDescriptor.MetricDescriptorMetadata} returns this
+ */
+proto.google.api.MetricDescriptor.MetricDescriptorMetadata.prototype.clearTimeSeriesResourceHierarchyLevelList = function() {
+  return this.setTimeSeriesResourceHierarchyLevelList([]);
 };
 
 

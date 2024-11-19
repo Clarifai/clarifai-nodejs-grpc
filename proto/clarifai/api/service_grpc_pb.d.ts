@@ -192,8 +192,6 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     deleteCollectors: IV2Service_IDeleteCollectors;
     postStatValues: IV2Service_IPostStatValues;
     postStatValuesAggregate: IV2Service_IPostStatValuesAggregate;
-    postTrendingMetricsView: IV2Service_IPostTrendingMetricsView;
-    listTrendingMetricsViews: IV2Service_IListTrendingMetricsViews;
     getModule: IV2Service_IGetModule;
     listModules: IV2Service_IListModules;
     postModules: IV2Service_IPostModules;
@@ -1832,24 +1830,6 @@ interface IV2Service_IPostStatValuesAggregate extends grpc.MethodDefinition<prot
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiStatValueAggregateResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiStatValueAggregateResponse>;
 }
-interface IV2Service_IPostTrendingMetricsView extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest, proto_clarifai_api_status_status_pb.BaseResponse> {
-    path: "/clarifai.api.V2/PostTrendingMetricsView";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
-}
-interface IV2Service_IListTrendingMetricsViews extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest, proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse> {
-    path: "/clarifai.api.V2/ListTrendingMetricsViews";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse>;
-}
 interface IV2Service_IGetModule extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetModuleRequest, proto_clarifai_api_service_pb.SingleModuleResponse> {
     path: "/clarifai.api.V2/GetModule";
     requestStream: false;
@@ -2578,8 +2558,6 @@ export interface IV2Server {
     deleteCollectors: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteCollectorsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     postStatValues: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostStatValuesRequest, proto_clarifai_api_service_pb.MultiStatValueResponse>;
     postStatValuesAggregate: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, proto_clarifai_api_service_pb.MultiStatValueAggregateResponse>;
-    postTrendingMetricsView: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
-    listTrendingMetricsViews: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest, proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse>;
     getModule: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetModuleRequest, proto_clarifai_api_service_pb.SingleModuleResponse>;
     listModules: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListModulesRequest, proto_clarifai_api_service_pb.MultiModuleResponse>;
     postModules: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostModulesRequest, proto_clarifai_api_service_pb.MultiModuleResponse>;
@@ -3168,12 +3146,6 @@ export interface IV2Client {
     postStatValuesAggregate(request: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse) => void): grpc.ClientUnaryCall;
     postStatValuesAggregate(request: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse) => void): grpc.ClientUnaryCall;
     postStatValuesAggregate(request: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse) => void): grpc.ClientUnaryCall;
-    postTrendingMetricsView(request: proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    postTrendingMetricsView(request: proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    postTrendingMetricsView(request: proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    listTrendingMetricsViews(request: proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse) => void): grpc.ClientUnaryCall;
-    listTrendingMetricsViews(request: proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse) => void): grpc.ClientUnaryCall;
-    listTrendingMetricsViews(request: proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse) => void): grpc.ClientUnaryCall;
     getModule(request: proto_clarifai_api_service_pb.GetModuleRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleResponse) => void): grpc.ClientUnaryCall;
     getModule(request: proto_clarifai_api_service_pb.GetModuleRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleResponse) => void): grpc.ClientUnaryCall;
     getModule(request: proto_clarifai_api_service_pb.GetModuleRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleResponse) => void): grpc.ClientUnaryCall;
@@ -3883,12 +3855,6 @@ export class V2Client extends grpc.Client implements IV2Client {
     public postStatValuesAggregate(request: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse) => void): grpc.ClientUnaryCall;
     public postStatValuesAggregate(request: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse) => void): grpc.ClientUnaryCall;
     public postStatValuesAggregate(request: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse) => void): grpc.ClientUnaryCall;
-    public postTrendingMetricsView(request: proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public postTrendingMetricsView(request: proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public postTrendingMetricsView(request: proto_clarifai_api_service_pb.PostTrendingMetricsViewRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public listTrendingMetricsViews(request: proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse) => void): grpc.ClientUnaryCall;
-    public listTrendingMetricsViews(request: proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse) => void): grpc.ClientUnaryCall;
-    public listTrendingMetricsViews(request: proto_clarifai_api_service_pb.ListTrendingMetricsViewsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrendingMetricsViewResponse) => void): grpc.ClientUnaryCall;
     public getModule(request: proto_clarifai_api_service_pb.GetModuleRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleResponse) => void): grpc.ClientUnaryCall;
     public getModule(request: proto_clarifai_api_service_pb.GetModuleRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleResponse) => void): grpc.ClientUnaryCall;
     public getModule(request: proto_clarifai_api_service_pb.GetModuleRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleResponse) => void): grpc.ClientUnaryCall;
