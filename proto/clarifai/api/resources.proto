@@ -3208,6 +3208,10 @@ message Task {
 
     HIGH = 3;
   }
+
+  // To handle arbitrary json metadata you can use a struct field:
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  google.protobuf.Struct metadata = 24;
 }
 
 // AiAssistParameters

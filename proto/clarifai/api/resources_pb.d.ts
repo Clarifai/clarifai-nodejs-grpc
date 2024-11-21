@@ -5754,6 +5754,11 @@ export class Task extends jspb.Message {
     getPriority(): Task.TaskPriority;
     setPriority(value: Task.TaskPriority): Task;
 
+    hasMetadata(): boolean;
+    clearMetadata(): void;
+    getMetadata(): google_protobuf_struct_pb.Struct | undefined;
+    setMetadata(value?: google_protobuf_struct_pb.Struct): Task;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Task.AsObject;
     static toObject(includeInstance: boolean, msg: Task): Task.AsObject;
@@ -5788,6 +5793,7 @@ export namespace Task {
         deletePreviousAnnotations: boolean,
         metrics?: TaskMetrics.AsObject,
         priority: Task.TaskPriority,
+        metadata?: google_protobuf_struct_pb.Struct.AsObject,
     }
 
     export enum TaskType {

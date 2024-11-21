@@ -49305,7 +49305,8 @@ proto.clarifai.api.Task.toObject = function(includeInstance, msg) {
     proto.clarifai.api.TaskConcept.toObject, includeInstance),
     deletePreviousAnnotations: jspb.Message.getBooleanFieldWithDefault(msg, 20, false),
     metrics: (f = msg.getMetrics()) && proto.clarifai.api.TaskMetrics.toObject(includeInstance, f),
-    priority: jspb.Message.getFieldWithDefault(msg, 23, 0)
+    priority: jspb.Message.getFieldWithDefault(msg, 23, 0),
+    metadata: (f = msg.getMetadata()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -49440,6 +49441,11 @@ proto.clarifai.api.Task.deserializeBinaryFromReader = function(msg, reader) {
     case 23:
       var value = /** @type {!proto.clarifai.api.Task.TaskPriority} */ (reader.readEnum());
       msg.setPriority(value);
+      break;
+    case 24:
+      var value = new google_protobuf_struct_pb.Struct;
+      reader.readMessage(value,google_protobuf_struct_pb.Struct.deserializeBinaryFromReader);
+      msg.setMetadata(value);
       break;
     default:
       reader.skipField();
@@ -49633,6 +49639,14 @@ proto.clarifai.api.Task.serializeBinaryToWriter = function(message, writer) {
     writer.writeEnum(
       23,
       f
+    );
+  }
+  f = message.getMetadata();
+  if (f != null) {
+    writer.writeMessage(
+      24,
+      f,
+      google_protobuf_struct_pb.Struct.serializeBinaryToWriter
     );
   }
 };
@@ -50280,6 +50294,43 @@ proto.clarifai.api.Task.prototype.getPriority = function() {
  */
 proto.clarifai.api.Task.prototype.setPriority = function(value) {
   return jspb.Message.setProto3EnumField(this, 23, value);
+};
+
+
+/**
+ * optional google.protobuf.Struct metadata = 24;
+ * @return {?proto.google.protobuf.Struct}
+ */
+proto.clarifai.api.Task.prototype.getMetadata = function() {
+  return /** @type{?proto.google.protobuf.Struct} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_struct_pb.Struct, 24));
+};
+
+
+/**
+ * @param {?proto.google.protobuf.Struct|undefined} value
+ * @return {!proto.clarifai.api.Task} returns this
+*/
+proto.clarifai.api.Task.prototype.setMetadata = function(value) {
+  return jspb.Message.setWrapperField(this, 24, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.Task} returns this
+ */
+proto.clarifai.api.Task.prototype.clearMetadata = function() {
+  return this.setMetadata(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.Task.prototype.hasMetadata = function() {
+  return jspb.Message.getField(this, 24) != null;
 };
 
 
