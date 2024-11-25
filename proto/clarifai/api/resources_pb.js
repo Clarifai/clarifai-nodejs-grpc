@@ -70914,7 +70914,8 @@ proto.clarifai.api.ProcessingInfo.prototype.toObject = function(opt_includeInsta
 proto.clarifai.api.ProcessingInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
     runnerMethodType: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f)
+    status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f),
+    processingId: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -70960,6 +70961,10 @@ proto.clarifai.api.ProcessingInfo.deserializeBinaryFromReader = function(msg, re
       reader.readMessage(value,proto_clarifai_api_status_status_pb.Status.deserializeBinaryFromReader);
       msg.setStatus(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setProcessingId(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -71002,6 +71007,13 @@ proto.clarifai.api.ProcessingInfo.serializeBinaryToWriter = function(message, wr
       2,
       f,
       proto_clarifai_api_status_status_pb.Status.serializeBinaryToWriter
+    );
+  }
+  f = message.getProcessingId();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
     );
   }
 };
@@ -71059,6 +71071,24 @@ proto.clarifai.api.ProcessingInfo.prototype.clearStatus = function() {
  */
 proto.clarifai.api.ProcessingInfo.prototype.hasStatus = function() {
   return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional string processing_id = 3;
+ * @return {string}
+ */
+proto.clarifai.api.ProcessingInfo.prototype.getProcessingId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.ProcessingInfo} returns this
+ */
+proto.clarifai.api.ProcessingInfo.prototype.setProcessingId = function(value) {
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 

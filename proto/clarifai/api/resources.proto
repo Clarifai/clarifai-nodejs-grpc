@@ -4820,6 +4820,8 @@ message ProcessingInfo {
   // A status of the processing. We use this for signalling end of a request stream, a runner
   // item's processing should be cancelled, etc.
   clarifai.api.status.Status status = 2;
+  // Internal field to track processing. Runners will not have access to this.
+  string processing_id = 3;
 }
 
 enum EventType {

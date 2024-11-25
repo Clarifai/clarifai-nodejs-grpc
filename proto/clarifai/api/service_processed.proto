@@ -3732,6 +3732,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = RunnerItems_Add;
   }
 
+
   // Get the training time estimate based off train request and estimated input count.
   rpc PostModelVersionsTrainingTimeEstimate (PostModelVersionsTrainingTimeEstimateRequest) returns (MultiTrainingTimeEstimateResponse) {
     option (google.api.http) = {
