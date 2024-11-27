@@ -819,6 +819,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Add;
     option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Add;
   }
 
   // Patch one or more datasets.
@@ -839,6 +840,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Add;
     option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Add;
   }
 
   // Delete one or more datasets in a single request.
@@ -910,7 +912,7 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Datasets_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
@@ -929,8 +931,8 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Datasets_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Datasets_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Delete;
     option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
   }
 
@@ -2545,6 +2547,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Get;
     option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = SavedSearch_Delete;
   }
 
 
@@ -2645,8 +2648,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Collaborators_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Collaborators_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Collaborators_Delete;
-    option (clarifai.auth.util.cl_depending_scopes) = Tasks_Add; // when deleting a collaborator, we also delete task workers associated to this collaborator
-    option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
   }
 
   // Collaboration includes the app user are invitied to work on
@@ -3636,6 +3637,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = InstanceTypes_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
   }
@@ -3650,6 +3652,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = InstanceTypes_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
   }
@@ -3667,6 +3670,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = InstanceTypes_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
   }
 
@@ -3727,6 +3731,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = RunnerItems_Get;
     option (clarifai.auth.util.cl_depending_scopes) = RunnerItems_Add;
   }
+
 
   // Get the training time estimate based off train request and estimated input count.
   rpc PostModelVersionsTrainingTimeEstimate (PostModelVersionsTrainingTimeEstimateRequest) returns (MultiTrainingTimeEstimateResponse) {
@@ -3812,6 +3817,7 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = InstanceTypes_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
   }
 
@@ -3821,6 +3827,7 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = InstanceTypes_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
   }
 
@@ -3832,6 +3839,7 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = InstanceTypes_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
   }
 
@@ -3843,6 +3851,7 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = InstanceTypes_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
   }
 
@@ -3876,6 +3885,7 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = InstanceTypes_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
@@ -3891,6 +3901,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = InstanceTypes_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
@@ -3908,6 +3919,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = InstanceTypes_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
   }
 
@@ -3923,6 +3935,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = InstanceTypes_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
   }
 
