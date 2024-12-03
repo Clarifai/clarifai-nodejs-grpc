@@ -3749,6 +3749,22 @@ service V2 {
   }
 
 
+  // List Available Cloud Providers
+  rpc ListCloudProviders (ListCloudProvidersRequest) returns (MultiCloudProviderResponse) {
+    option (google.api.http) = {
+      get: "/v2/cloud_providers"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+  }
+
+  // List Regions for given Cloud Provider
+  rpc ListCloudRegions (ListCloudRegionsRequest) returns (MultiCloudRegionResponse) {
+    option (google.api.http) = {
+      get: "/v2/cloud_providers/{cloud_provider.id}/regions"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+  }
+
   // Get InstanceTypes given Cloud Provider and Region
   rpc ListInstanceTypes (ListInstanceTypesRequest) returns (MultiInstanceTypeResponse) {
     option (google.api.http) = {
@@ -3973,6 +3989,27 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
 
+
+  rpc ListLogEntries (ListLogEntriesRequest) returns (MultiLogEntryResponse) {
+    option (google.api.http) = {
+      // Endpoint to list runner logs.
+      get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners/{runner_id}/{log_type}/logs"
+      // TODO: add convenience endpoint for /users/{user_id}/runners/{runner_id}.
+      // TODO: add endpoint for runner replicas.
+      // Endpoint to list compute cluster's agent logs.
+      additional_bindings178 {
+        get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/{log_type}/logs"
+      }
+      // Endpoint to list builder logs.
+      additional_bindings179 {
+        get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/{log_type}/logs"
+      }
+      // TODO: add endpoint for workflow.
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+
+    option (clarifai.auth.util.cl_depending_scopes) = LogEntries_Get;
+  }
 
 
 
@@ -5228,6 +5265,34 @@ message ListModelInputsRequest {
 
 
 
+message ListLogEntriesRequest {
+  reserved 8;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 1;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 2;
+
+  // The type of log entry. Examples: model, agent, build, training.
+  string log_type = 3;
+
+  // Who the logs are for.
+  // The user app id, if a user produced the logs.
+  clarifai.api.UserAppIDSet user_app_id = 4;
+  // The Model ID, if a model produced the logs.
+  string model_id = 5;
+  // The Version ID, if a model version produced the logs.
+  string model_version_id = 6;
+  // Workflow Id, if a workflow produced the logs.
+  string workflow_id = 7;
+
+  // Where the logs came from.
+  string compute_cluster_id = 9;
+  string nodepool_id = 10;
+  string runner_id = 11;
+}
+
 // GetKeyRequest
 message GetKeyRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -6004,6 +6069,11 @@ message MultiOutputResponse {
   clarifai.api.status.Status status = 1;
   // For each input processed during model prediction we create one output.
   repeated Output outputs = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}// MultiLogEntryResponse
+message MultiLogEntryResponse {
+  clarifai.api.status.Status status = 1;
+  // Log entries.
+  repeated LogEntry log_entries = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
 // ListScopesRequest
@@ -6846,6 +6916,12 @@ message ListTasksRequest {
 
   // (optional) task IDs to filter on
   repeated string ids = 9;
+
+  // (optional) input source type to filter
+  TaskInputSource.TaskInputSourceType input_source_type = 10;
+
+  // (optional) ids of input source to be filtered
+  repeated string input_source_ids = 11;
 }
 
 // Request to patch a list of tasks.
@@ -7813,6 +7889,25 @@ message PostModelVersionsTrainingTimeEstimateRequest {
 message MultiTrainingTimeEstimateResponse {
   clarifai.api.status.Status status = 1;
   repeated google.protobuf.Duration training_time_estimates = 2;
+}
+
+// List Cloud Providers
+message ListCloudProvidersRequest {}
+
+message MultiCloudProviderResponse {
+  clarifai.api.status.Status status = 1;
+  repeated CloudProvider cloud_providers = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+// List CloudProvider Regions
+message ListCloudRegionsRequest {
+  // The cloud provider to list compute clusters for.
+  CloudProvider cloud_provider = 1;
+}
+
+message MultiCloudRegionResponse {
+  clarifai.api.status.Status status = 1;
+  repeated string regions = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
 // List InstanceTypes

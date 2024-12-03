@@ -3234,6 +3234,56 @@ export namespace ListModelInputsRequest {
     }
 }
 
+export class ListLogEntriesRequest extends jspb.Message { 
+    getPage(): number;
+    setPage(value: number): ListLogEntriesRequest;
+    getPerPage(): number;
+    setPerPage(value: number): ListLogEntriesRequest;
+    getLogType(): string;
+    setLogType(value: string): ListLogEntriesRequest;
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): ListLogEntriesRequest;
+    getModelId(): string;
+    setModelId(value: string): ListLogEntriesRequest;
+    getModelVersionId(): string;
+    setModelVersionId(value: string): ListLogEntriesRequest;
+    getWorkflowId(): string;
+    setWorkflowId(value: string): ListLogEntriesRequest;
+    getComputeClusterId(): string;
+    setComputeClusterId(value: string): ListLogEntriesRequest;
+    getNodepoolId(): string;
+    setNodepoolId(value: string): ListLogEntriesRequest;
+    getRunnerId(): string;
+    setRunnerId(value: string): ListLogEntriesRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListLogEntriesRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListLogEntriesRequest): ListLogEntriesRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListLogEntriesRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListLogEntriesRequest;
+    static deserializeBinaryFromReader(message: ListLogEntriesRequest, reader: jspb.BinaryReader): ListLogEntriesRequest;
+}
+
+export namespace ListLogEntriesRequest {
+    export type AsObject = {
+        page: number,
+        perPage: number,
+        logType: string,
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        modelId: string,
+        modelVersionId: string,
+        workflowId: string,
+        computeClusterId: string,
+        nodepoolId: string,
+        runnerId: string,
+    }
+}
+
 export class GetKeyRequest extends jspb.Message { 
 
     hasUserAppId(): boolean;
@@ -5714,6 +5764,34 @@ export namespace MultiOutputResponse {
     }
 }
 
+export class MultiLogEntryResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiLogEntryResponse;
+    clearLogEntriesList(): void;
+    getLogEntriesList(): Array<proto_clarifai_api_resources_pb.LogEntry>;
+    setLogEntriesList(value: Array<proto_clarifai_api_resources_pb.LogEntry>): MultiLogEntryResponse;
+    addLogEntries(value?: proto_clarifai_api_resources_pb.LogEntry, index?: number): proto_clarifai_api_resources_pb.LogEntry;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiLogEntryResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiLogEntryResponse): MultiLogEntryResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiLogEntryResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiLogEntryResponse;
+    static deserializeBinaryFromReader(message: MultiLogEntryResponse, reader: jspb.BinaryReader): MultiLogEntryResponse;
+}
+
+export namespace MultiLogEntryResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        logEntriesList: Array<proto_clarifai_api_resources_pb.LogEntry.AsObject>,
+    }
+}
+
 export class ListScopesRequest extends jspb.Message { 
     getKeyType(): string;
     setKeyType(value: string): ListScopesRequest;
@@ -7649,6 +7727,12 @@ export class ListTasksRequest extends jspb.Message {
     getIdsList(): Array<string>;
     setIdsList(value: Array<string>): ListTasksRequest;
     addIds(value: string, index?: number): string;
+    getInputSourceType(): proto_clarifai_api_resources_pb.TaskInputSource.TaskInputSourceType;
+    setInputSourceType(value: proto_clarifai_api_resources_pb.TaskInputSource.TaskInputSourceType): ListTasksRequest;
+    clearInputSourceIdsList(): void;
+    getInputSourceIdsList(): Array<string>;
+    setInputSourceIdsList(value: Array<string>): ListTasksRequest;
+    addInputSourceIds(value: string, index?: number): string;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListTasksRequest.AsObject;
@@ -7671,6 +7755,8 @@ export namespace ListTasksRequest {
         includingLabelOrderTasks: boolean,
         additionalFieldsList: Array<string>,
         idsList: Array<string>,
+        inputSourceType: proto_clarifai_api_resources_pb.TaskInputSource.TaskInputSourceType,
+        inputSourceIdsList: Array<string>,
     }
 }
 
@@ -10556,6 +10642,102 @@ export namespace MultiTrainingTimeEstimateResponse {
     export type AsObject = {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         trainingTimeEstimatesList: Array<google_protobuf_duration_pb.Duration.AsObject>,
+    }
+}
+
+export class ListCloudProvidersRequest extends jspb.Message { 
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListCloudProvidersRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListCloudProvidersRequest): ListCloudProvidersRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListCloudProvidersRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListCloudProvidersRequest;
+    static deserializeBinaryFromReader(message: ListCloudProvidersRequest, reader: jspb.BinaryReader): ListCloudProvidersRequest;
+}
+
+export namespace ListCloudProvidersRequest {
+    export type AsObject = {
+    }
+}
+
+export class MultiCloudProviderResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiCloudProviderResponse;
+    clearCloudProvidersList(): void;
+    getCloudProvidersList(): Array<proto_clarifai_api_resources_pb.CloudProvider>;
+    setCloudProvidersList(value: Array<proto_clarifai_api_resources_pb.CloudProvider>): MultiCloudProviderResponse;
+    addCloudProviders(value?: proto_clarifai_api_resources_pb.CloudProvider, index?: number): proto_clarifai_api_resources_pb.CloudProvider;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiCloudProviderResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiCloudProviderResponse): MultiCloudProviderResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiCloudProviderResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiCloudProviderResponse;
+    static deserializeBinaryFromReader(message: MultiCloudProviderResponse, reader: jspb.BinaryReader): MultiCloudProviderResponse;
+}
+
+export namespace MultiCloudProviderResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        cloudProvidersList: Array<proto_clarifai_api_resources_pb.CloudProvider.AsObject>,
+    }
+}
+
+export class ListCloudRegionsRequest extends jspb.Message { 
+
+    hasCloudProvider(): boolean;
+    clearCloudProvider(): void;
+    getCloudProvider(): proto_clarifai_api_resources_pb.CloudProvider | undefined;
+    setCloudProvider(value?: proto_clarifai_api_resources_pb.CloudProvider): ListCloudRegionsRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListCloudRegionsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListCloudRegionsRequest): ListCloudRegionsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListCloudRegionsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListCloudRegionsRequest;
+    static deserializeBinaryFromReader(message: ListCloudRegionsRequest, reader: jspb.BinaryReader): ListCloudRegionsRequest;
+}
+
+export namespace ListCloudRegionsRequest {
+    export type AsObject = {
+        cloudProvider?: proto_clarifai_api_resources_pb.CloudProvider.AsObject,
+    }
+}
+
+export class MultiCloudRegionResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiCloudRegionResponse;
+    clearRegionsList(): void;
+    getRegionsList(): Array<string>;
+    setRegionsList(value: Array<string>): MultiCloudRegionResponse;
+    addRegions(value: string, index?: number): string;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiCloudRegionResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiCloudRegionResponse): MultiCloudRegionResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiCloudRegionResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiCloudRegionResponse;
+    static deserializeBinaryFromReader(message: MultiCloudRegionResponse, reader: jspb.BinaryReader): MultiCloudRegionResponse;
+}
+
+export namespace MultiCloudRegionResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        regionsList: Array<string>,
     }
 }
 

@@ -236,6 +236,8 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     postRunnerItemOutputs: IV2Service_IPostRunnerItemOutputs;
     processRunnerItems: IV2Service_IProcessRunnerItems;
     postModelVersionsTrainingTimeEstimate: IV2Service_IPostModelVersionsTrainingTimeEstimate;
+    listCloudProviders: IV2Service_IListCloudProviders;
+    listCloudRegions: IV2Service_IListCloudRegions;
     listInstanceTypes: IV2Service_IListInstanceTypes;
     getComputeCluster: IV2Service_IGetComputeCluster;
     listComputeClusters: IV2Service_IListComputeClusters;
@@ -253,6 +255,7 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     deleteDeployments: IV2Service_IDeleteDeployments;
     postAuditLogSearches: IV2Service_IPostAuditLogSearches;
     listWorkflowEvaluationTemplates: IV2Service_IListWorkflowEvaluationTemplates;
+    listLogEntries: IV2Service_IListLogEntries;
 }
 
 interface IV2Service_IListConceptRelations extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListConceptRelationsRequest, proto_clarifai_api_service_pb.MultiConceptRelationResponse> {
@@ -2226,6 +2229,24 @@ interface IV2Service_IPostModelVersionsTrainingTimeEstimate extends grpc.MethodD
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse>;
 }
+interface IV2Service_IListCloudProviders extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListCloudProvidersRequest, proto_clarifai_api_service_pb.MultiCloudProviderResponse> {
+    path: "/clarifai.api.V2/ListCloudProviders";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListCloudProvidersRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListCloudProvidersRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiCloudProviderResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiCloudProviderResponse>;
+}
+interface IV2Service_IListCloudRegions extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListCloudRegionsRequest, proto_clarifai_api_service_pb.MultiCloudRegionResponse> {
+    path: "/clarifai.api.V2/ListCloudRegions";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListCloudRegionsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListCloudRegionsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiCloudRegionResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiCloudRegionResponse>;
+}
 interface IV2Service_IListInstanceTypes extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListInstanceTypesRequest, proto_clarifai_api_service_pb.MultiInstanceTypeResponse> {
     path: "/clarifai.api.V2/ListInstanceTypes";
     requestStream: false;
@@ -2378,6 +2399,15 @@ interface IV2Service_IListWorkflowEvaluationTemplates extends grpc.MethodDefinit
     requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest>;
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse>;
+}
+interface IV2Service_IListLogEntries extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListLogEntriesRequest, proto_clarifai_api_service_pb.MultiLogEntryResponse> {
+    path: "/clarifai.api.V2/ListLogEntries";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListLogEntriesRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListLogEntriesRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiLogEntryResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiLogEntryResponse>;
 }
 
 export const V2Service: IV2Service;
@@ -2602,6 +2632,8 @@ export interface IV2Server {
     postRunnerItemOutputs: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse>;
     processRunnerItems: grpc.handleBidiStreamingCall<proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, proto_clarifai_api_service_pb.MultiRunnerItemResponse>;
     postModelVersionsTrainingTimeEstimate: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse>;
+    listCloudProviders: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListCloudProvidersRequest, proto_clarifai_api_service_pb.MultiCloudProviderResponse>;
+    listCloudRegions: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListCloudRegionsRequest, proto_clarifai_api_service_pb.MultiCloudRegionResponse>;
     listInstanceTypes: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListInstanceTypesRequest, proto_clarifai_api_service_pb.MultiInstanceTypeResponse>;
     getComputeCluster: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetComputeClusterRequest, proto_clarifai_api_service_pb.SingleComputeClusterResponse>;
     listComputeClusters: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListComputeClustersRequest, proto_clarifai_api_service_pb.MultiComputeClusterResponse>;
@@ -2619,6 +2651,7 @@ export interface IV2Server {
     deleteDeployments: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteDeploymentsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     postAuditLogSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostAuditLogSearchesRequest, proto_clarifai_api_service_pb.MultiAuditLogEntryResponse>;
     listWorkflowEvaluationTemplates: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest, proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse>;
+    listLogEntries: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListLogEntriesRequest, proto_clarifai_api_service_pb.MultiLogEntryResponse>;
 }
 
 export interface IV2Client {
@@ -3278,6 +3311,12 @@ export interface IV2Client {
     postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
     postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
     postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
+    listCloudProviders(request: proto_clarifai_api_service_pb.ListCloudProvidersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCloudProviderResponse) => void): grpc.ClientUnaryCall;
+    listCloudProviders(request: proto_clarifai_api_service_pb.ListCloudProvidersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCloudProviderResponse) => void): grpc.ClientUnaryCall;
+    listCloudProviders(request: proto_clarifai_api_service_pb.ListCloudProvidersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCloudProviderResponse) => void): grpc.ClientUnaryCall;
+    listCloudRegions(request: proto_clarifai_api_service_pb.ListCloudRegionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCloudRegionResponse) => void): grpc.ClientUnaryCall;
+    listCloudRegions(request: proto_clarifai_api_service_pb.ListCloudRegionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCloudRegionResponse) => void): grpc.ClientUnaryCall;
+    listCloudRegions(request: proto_clarifai_api_service_pb.ListCloudRegionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCloudRegionResponse) => void): grpc.ClientUnaryCall;
     listInstanceTypes(request: proto_clarifai_api_service_pb.ListInstanceTypesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstanceTypeResponse) => void): grpc.ClientUnaryCall;
     listInstanceTypes(request: proto_clarifai_api_service_pb.ListInstanceTypesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstanceTypeResponse) => void): grpc.ClientUnaryCall;
     listInstanceTypes(request: proto_clarifai_api_service_pb.ListInstanceTypesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstanceTypeResponse) => void): grpc.ClientUnaryCall;
@@ -3329,6 +3368,9 @@ export interface IV2Client {
     listWorkflowEvaluationTemplates(request: proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse) => void): grpc.ClientUnaryCall;
     listWorkflowEvaluationTemplates(request: proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse) => void): grpc.ClientUnaryCall;
     listWorkflowEvaluationTemplates(request: proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse) => void): grpc.ClientUnaryCall;
+    listLogEntries(request: proto_clarifai_api_service_pb.ListLogEntriesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLogEntryResponse) => void): grpc.ClientUnaryCall;
+    listLogEntries(request: proto_clarifai_api_service_pb.ListLogEntriesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLogEntryResponse) => void): grpc.ClientUnaryCall;
+    listLogEntries(request: proto_clarifai_api_service_pb.ListLogEntriesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLogEntryResponse) => void): grpc.ClientUnaryCall;
 }
 
 export class V2Client extends grpc.Client implements IV2Client {
@@ -3986,6 +4028,12 @@ export class V2Client extends grpc.Client implements IV2Client {
     public postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
     public postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
     public postModelVersionsTrainingTimeEstimate(request: proto_clarifai_api_service_pb.PostModelVersionsTrainingTimeEstimateRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiTrainingTimeEstimateResponse) => void): grpc.ClientUnaryCall;
+    public listCloudProviders(request: proto_clarifai_api_service_pb.ListCloudProvidersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCloudProviderResponse) => void): grpc.ClientUnaryCall;
+    public listCloudProviders(request: proto_clarifai_api_service_pb.ListCloudProvidersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCloudProviderResponse) => void): grpc.ClientUnaryCall;
+    public listCloudProviders(request: proto_clarifai_api_service_pb.ListCloudProvidersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCloudProviderResponse) => void): grpc.ClientUnaryCall;
+    public listCloudRegions(request: proto_clarifai_api_service_pb.ListCloudRegionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCloudRegionResponse) => void): grpc.ClientUnaryCall;
+    public listCloudRegions(request: proto_clarifai_api_service_pb.ListCloudRegionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCloudRegionResponse) => void): grpc.ClientUnaryCall;
+    public listCloudRegions(request: proto_clarifai_api_service_pb.ListCloudRegionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiCloudRegionResponse) => void): grpc.ClientUnaryCall;
     public listInstanceTypes(request: proto_clarifai_api_service_pb.ListInstanceTypesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstanceTypeResponse) => void): grpc.ClientUnaryCall;
     public listInstanceTypes(request: proto_clarifai_api_service_pb.ListInstanceTypesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstanceTypeResponse) => void): grpc.ClientUnaryCall;
     public listInstanceTypes(request: proto_clarifai_api_service_pb.ListInstanceTypesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstanceTypeResponse) => void): grpc.ClientUnaryCall;
@@ -4037,4 +4085,7 @@ export class V2Client extends grpc.Client implements IV2Client {
     public listWorkflowEvaluationTemplates(request: proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse) => void): grpc.ClientUnaryCall;
     public listWorkflowEvaluationTemplates(request: proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse) => void): grpc.ClientUnaryCall;
     public listWorkflowEvaluationTemplates(request: proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse) => void): grpc.ClientUnaryCall;
+    public listLogEntries(request: proto_clarifai_api_service_pb.ListLogEntriesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLogEntryResponse) => void): grpc.ClientUnaryCall;
+    public listLogEntries(request: proto_clarifai_api_service_pb.ListLogEntriesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLogEntryResponse) => void): grpc.ClientUnaryCall;
+    public listLogEntries(request: proto_clarifai_api_service_pb.ListLogEntriesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLogEntryResponse) => void): grpc.ClientUnaryCall;
 }

@@ -1015,6 +1015,28 @@ function deserialize_clarifai_api_ListBulkOperationsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListBulkOperationsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_ListCloudProvidersRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListCloudProvidersRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListCloudProvidersRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListCloudProvidersRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListCloudProvidersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_ListCloudRegionsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListCloudRegionsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListCloudRegionsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListCloudRegionsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListCloudRegionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_ListCollaborationsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.ListCollaborationsRequest)) {
     throw new Error('Expected argument of type clarifai.api.ListCollaborationsRequest');
@@ -1244,6 +1266,17 @@ function serialize_clarifai_api_ListLabelOrdersRequest(arg) {
 
 function deserialize_clarifai_api_ListLabelOrdersRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListLabelOrdersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_ListLogEntriesRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListLogEntriesRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListLogEntriesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListLogEntriesRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListLogEntriesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_ListModelConceptsRequest(arg) {
@@ -1587,6 +1620,28 @@ function deserialize_clarifai_api_MultiBulkOperationsResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiBulkOperationsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_MultiCloudProviderResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiCloudProviderResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiCloudProviderResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiCloudProviderResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiCloudProviderResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MultiCloudRegionResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiCloudRegionResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiCloudRegionResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiCloudRegionResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiCloudRegionResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_MultiCollaborationsResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.MultiCollaborationsResponse)) {
     throw new Error('Expected argument of type clarifai.api.MultiCollaborationsResponse');
@@ -1849,6 +1904,17 @@ function serialize_clarifai_api_MultiLabelOrderResponse(arg) {
 
 function deserialize_clarifai_api_MultiLabelOrderResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiLabelOrderResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MultiLogEntryResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiLogEntryResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiLogEntryResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiLogEntryResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiLogEntryResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiModelCheckConsentResponse(arg) {
@@ -6557,6 +6623,30 @@ postModelVersionsTrainingTimeEstimate: {
     responseSerialize: serialize_clarifai_api_MultiTrainingTimeEstimateResponse,
     responseDeserialize: deserialize_clarifai_api_MultiTrainingTimeEstimateResponse,
   },
+  // List Available Cloud Providers
+listCloudProviders: {
+    path: '/clarifai.api.V2/ListCloudProviders',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListCloudProvidersRequest,
+    responseType: proto_clarifai_api_service_pb.MultiCloudProviderResponse,
+    requestSerialize: serialize_clarifai_api_ListCloudProvidersRequest,
+    requestDeserialize: deserialize_clarifai_api_ListCloudProvidersRequest,
+    responseSerialize: serialize_clarifai_api_MultiCloudProviderResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiCloudProviderResponse,
+  },
+  // List Regions for given Cloud Provider
+listCloudRegions: {
+    path: '/clarifai.api.V2/ListCloudRegions',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListCloudRegionsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiCloudRegionResponse,
+    requestSerialize: serialize_clarifai_api_ListCloudRegionsRequest,
+    requestDeserialize: deserialize_clarifai_api_ListCloudRegionsRequest,
+    responseSerialize: serialize_clarifai_api_MultiCloudRegionResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiCloudRegionResponse,
+  },
   // Get InstanceTypes given Cloud Provider and Region
 listInstanceTypes: {
     path: '/clarifai.api.V2/ListInstanceTypes',
@@ -6750,6 +6840,17 @@ deleteDeployments: {
     requestDeserialize: deserialize_clarifai_api_ListWorkflowEvaluationTemplatesRequest,
     responseSerialize: serialize_clarifai_api_MultiWorkflowEvaluationTemplateResponse,
     responseDeserialize: deserialize_clarifai_api_MultiWorkflowEvaluationTemplateResponse,
+  },
+  listLogEntries: {
+    path: '/clarifai.api.V2/ListLogEntries',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListLogEntriesRequest,
+    responseType: proto_clarifai_api_service_pb.MultiLogEntryResponse,
+    requestSerialize: serialize_clarifai_api_ListLogEntriesRequest,
+    requestDeserialize: deserialize_clarifai_api_ListLogEntriesRequest,
+    responseSerialize: serialize_clarifai_api_MultiLogEntryResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiLogEntryResponse,
   },
 };
 

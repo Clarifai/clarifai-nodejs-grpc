@@ -1878,6 +1878,9 @@ message ModelVersion {
   // number of inputs in the model version
   uint32 total_input_count = 6;
 
+  // When a model has already been trained externally, you can upload
+  // it directly to the platform as a model version directly by
+  // setting the PretrainedModelConfig
   PretrainedModelConfig pretrained_model_config = 7;
 
   // Detailed training stats.
@@ -1960,6 +1963,10 @@ message PretrainedModelConfig {
   //  version 1 folder that contains model files (onnx graph, torch script, python BE model, and etc.)
   string model_zip_url = 6;
   // Whether to overwrite the model for the existing internal id
+  // If this is a local dev model that runs external to the platform, set this to true.
+  // This helps during development of models before uploading them to the platform.
+  // These models MUST run in an associated compute cluster with cluster_type = "local-dev"
+  bool local_dev = 8;
 }
 
 // TrainStats
@@ -4846,6 +4853,15 @@ enum EventType {
 
   ORGANIZATION_TEAM_APP_ADD = 112 [(clarifai.api.utils.description) = "Organization team applications added"];
   ORGANIZATION_TEAM_APP_REMOVE = 113 [(clarifai.api.utils.description) = "Organization team applications removed"];
+
+  // Event types related to modules: 200 - 299
+  MODULE_CREATE = 200 [(clarifai.api.utils.description) = "Modules created"];
+  MODULE_UPDATE = 201 [(clarifai.api.utils.description) = "Modules updated"];
+  MODULE_DELETE = 202 [(clarifai.api.utils.description) = "Modules deleted"];
+
+  MODULE_VERSION_CREATE = 203 [(clarifai.api.utils.description) = "Module versions created"];
+  MODULE_VERSION_UPDATE = 204 [(clarifai.api.utils.description) = "Module versions updated"];
+  MODULE_VERSION_DELETE = 205 [(clarifai.api.utils.description) = "Module versions deleted"];
 }
 
 
@@ -4856,6 +4872,9 @@ message AuditLogTarget {
     User user = 1;
     Role role = 2;
     Team team = 3;
+    App app = 4;
+    Module module = 5;
+    ModuleVersion module_version = 6;
   }
 }
 
@@ -4925,6 +4944,45 @@ message WorkflowVersionEvaluationTemplate {
   }
 }
 
+
+// LogEntry is a single technical log entry (e.g. service log, stack traces, etc).
+message LogEntry {
+  // Text of the log entry.
+  string message = 1;
+
+  // The type of log entry. Examples: model, agent, build, training.
+  string log_type = 2;
+
+  // URL to log file or stream.
+  string url = 3;
+
+  // Deprecated metadata fields.
+  reserved 4, 5, 6, 7, 8;
+
+  // Who and where the metrics are from.
+  ComputeSourceMetadata meta = 9;
+}
+
+// ComputeSourceMetadata describes the source of something computed. The who and where.
+message ComputeSourceMetadata {
+  reserved 5;
+  // The user app id, if any.
+  UserAppIDSet user_app_id = 1;
+
+  // The Model ID, if any.
+  string model_id = 2;
+
+  // The Version ID, if any.
+  string model_version_id = 3;
+
+  // Workflow Id, if any.
+  string workflow_id = 4;
+
+  // Compute Cluster, Nodepool, Runner.
+  string compute_cluster_id = 6;
+  string nodepool_id = 7; 
+  string runner_id = 8; 
+}
 
 
 
