@@ -34974,7 +34974,8 @@ proto.clarifai.api.ListModelsRequest.toObject = function(includeInstance, msg) {
     modelVersionIdsList: (f = jspb.Message.getRepeatedField(msg, 28)) == null ? undefined : f,
     licenseType: jspb.Message.getFieldWithDefault(msg, 29, 0),
     source: jspb.Message.getFieldWithDefault(msg, 30, 0),
-    creator: jspb.Message.getFieldWithDefault(msg, 31, "")
+    creator: jspb.Message.getFieldWithDefault(msg, 31, ""),
+    versionCount: jspb.Message.getBooleanFieldWithDefault(msg, 32, false)
   };
 
   if (includeInstance) {
@@ -35131,6 +35132,10 @@ proto.clarifai.api.ListModelsRequest.deserializeBinaryFromReader = function(msg,
     case 31:
       var value = /** @type {string} */ (reader.readString());
       msg.setCreator(value);
+      break;
+    case 32:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setVersionCount(value);
       break;
     default:
       reader.skipField();
@@ -35369,6 +35374,13 @@ proto.clarifai.api.ListModelsRequest.serializeBinaryToWriter = function(message,
   if (f.length > 0) {
     writer.writeString(
       31,
+      f
+    );
+  }
+  f = message.getVersionCount();
+  if (f) {
+    writer.writeBool(
+      32,
       f
     );
   }
@@ -36154,6 +36166,24 @@ proto.clarifai.api.ListModelsRequest.prototype.getCreator = function() {
  */
 proto.clarifai.api.ListModelsRequest.prototype.setCreator = function(value) {
   return jspb.Message.setProto3StringField(this, 31, value);
+};
+
+
+/**
+ * optional bool version_count = 32;
+ * @return {boolean}
+ */
+proto.clarifai.api.ListModelsRequest.prototype.getVersionCount = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 32, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.ListModelsRequest} returns this
+ */
+proto.clarifai.api.ListModelsRequest.prototype.setVersionCount = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 32, value);
 };
 
 

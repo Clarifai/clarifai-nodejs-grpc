@@ -24635,7 +24635,8 @@ proto.clarifai.api.Model.toObject = function(includeInstance, msg) {
     image: (f = msg.getImage()) && proto.clarifai.api.Image.toObject(includeInstance, f),
     licenseType: jspb.Message.getFieldWithDefault(msg, 35, 0),
     source: jspb.Message.getFieldWithDefault(msg, 36, 0),
-    creator: jspb.Message.getFieldWithDefault(msg, 37, "")
+    creator: jspb.Message.getFieldWithDefault(msg, 37, ""),
+    versionCount: jspb.Message.getFieldWithDefault(msg, 38, 0)
   };
 
   if (includeInstance) {
@@ -24803,6 +24804,10 @@ proto.clarifai.api.Model.deserializeBinaryFromReader = function(msg, reader) {
     case 37:
       var value = /** @type {string} */ (reader.readString());
       msg.setCreator(value);
+      break;
+    case 38:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setVersionCount(value);
       break;
     default:
       reader.skipField();
@@ -25052,6 +25057,13 @@ proto.clarifai.api.Model.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeString(
       37,
+      f
+    );
+  }
+  f = message.getVersionCount();
+  if (f !== 0) {
+    writer.writeInt32(
+      38,
       f
     );
   }
@@ -25909,6 +25921,24 @@ proto.clarifai.api.Model.prototype.getCreator = function() {
  */
 proto.clarifai.api.Model.prototype.setCreator = function(value) {
   return jspb.Message.setProto3StringField(this, 37, value);
+};
+
+
+/**
+ * optional int32 version_count = 38;
+ * @return {number}
+ */
+proto.clarifai.api.Model.prototype.getVersionCount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 38, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.Model} returns this
+ */
+proto.clarifai.api.Model.prototype.setVersionCount = function(value) {
+  return jspb.Message.setProto3IntField(this, 38, value);
 };
 
 

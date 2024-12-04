@@ -1467,6 +1467,8 @@ message Model {
   Source source = 36;
   // Creator of Model
   string creator = 37;
+  
+  int32 version_count = 38;
 }
 
 // A link to a html/markdown/text file that stores reference material tied to a model.

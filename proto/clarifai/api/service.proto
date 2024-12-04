@@ -5474,6 +5474,7 @@ message ListModelsRequest {
   uint32 source = 30;
   // Filter by Creator
   string creator = 31;
+  bool version_count = 32;
 }
 
 // ResourceCountRequest

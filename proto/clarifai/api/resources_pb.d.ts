@@ -2663,6 +2663,8 @@ export class Model extends jspb.Message {
     setSource(value: Model.Source): Model;
     getCreator(): string;
     setCreator(value: string): Model;
+    getVersionCount(): number;
+    setVersionCount(value: number): Model;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Model.AsObject;
@@ -2706,6 +2708,7 @@ export namespace Model {
         licenseType: LicenseType,
         source: Model.Source,
         creator: string,
+        versionCount: number,
     }
 
     export enum Source {
