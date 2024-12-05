@@ -3288,7 +3288,8 @@ proto.google.api.GoSettings.prototype.toObject = function(opt_includeInstance) {
  */
 proto.google.api.GoSettings.toObject = function(includeInstance, msg) {
   var f, obj = {
-    common: (f = msg.getCommon()) && proto.google.api.CommonLanguageSettings.toObject(includeInstance, f)
+    common: (f = msg.getCommon()) && proto.google.api.CommonLanguageSettings.toObject(includeInstance, f),
+    renamedServicesMap: (f = msg.getRenamedServicesMap()) ? f.toObject(includeInstance, undefined) : []
   };
 
   if (includeInstance) {
@@ -3330,6 +3331,12 @@ proto.google.api.GoSettings.deserializeBinaryFromReader = function(msg, reader) 
       reader.readMessage(value,proto.google.api.CommonLanguageSettings.deserializeBinaryFromReader);
       msg.setCommon(value);
       break;
+    case 2:
+      var value = msg.getRenamedServicesMap();
+      reader.readMessage(value, function(message, reader) {
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readString, null, "", "");
+         });
+      break;
     default:
       reader.skipField();
       break;
@@ -3366,6 +3373,10 @@ proto.google.api.GoSettings.serializeBinaryToWriter = function(message, writer) 
       f,
       proto.google.api.CommonLanguageSettings.serializeBinaryToWriter
     );
+  }
+  f = message.getRenamedServicesMap(true);
+  if (f && f.getLength() > 0) {
+    f.serializeBinary(2, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeString);
   }
 };
 
@@ -3404,6 +3415,29 @@ proto.google.api.GoSettings.prototype.clearCommon = function() {
  */
 proto.google.api.GoSettings.prototype.hasCommon = function() {
   return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * map<string, string> renamed_services = 2;
+ * @param {boolean=} opt_noLazyCreate Do not create the map if
+ * empty, instead returning `undefined`
+ * @return {!jspb.Map<string,string>}
+ */
+proto.google.api.GoSettings.prototype.getRenamedServicesMap = function(opt_noLazyCreate) {
+  return /** @type {!jspb.Map<string,string>} */ (
+      jspb.Message.getMapField(this, 2, opt_noLazyCreate,
+      null));
+};
+
+
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.google.api.GoSettings} returns this
+ */
+proto.google.api.GoSettings.prototype.clearRenamedServicesMap = function() {
+  this.getRenamedServicesMap().clear();
+  return this;
 };
 
 
