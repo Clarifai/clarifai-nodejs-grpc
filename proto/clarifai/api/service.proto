@@ -5382,7 +5382,7 @@ message GetModelRequest {
 
 // ListModelsRequest
 message ListModelsRequest {
-  reserved 4;
+  reserved 4, 32;
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
   // Defaults to 1.
@@ -5391,7 +5391,7 @@ message ListModelsRequest {
   // to 128.
   uint32 per_page = 3;
 
-  // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars, outputs, presets
+  // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars, outputs, presets, counts
   repeated string additional_fields = 19;
 
   // Sorting options:
@@ -5475,7 +5475,6 @@ message ListModelsRequest {
   uint32 source = 30;
   // Filter by Creator
   string creator = 31;
-  bool version_count = 32;
 }
 
 // ResourceCountRequest

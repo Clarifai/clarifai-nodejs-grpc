@@ -3656,8 +3656,6 @@ export class ListModelsRequest extends jspb.Message {
     setSource(value: number): ListModelsRequest;
     getCreator(): string;
     setCreator(value: string): ListModelsRequest;
-    getVersionCount(): boolean;
-    setVersionCount(value: boolean): ListModelsRequest;
 
     getSortByCase(): ListModelsRequest.SortByCase;
 
@@ -3703,7 +3701,6 @@ export namespace ListModelsRequest {
         licenseType: proto_clarifai_api_resources_pb.LicenseType,
         source: number,
         creator: string,
-        versionCount: boolean,
     }
 
     export enum SortByCase {
