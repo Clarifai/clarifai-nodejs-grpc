@@ -4864,6 +4864,14 @@ enum EventType {
   MODULE_VERSION_CREATE = 203 [(clarifai.api.utils.description) = "Module versions created"];
   MODULE_VERSION_UPDATE = 204 [(clarifai.api.utils.description) = "Module versions updated"];
   MODULE_VERSION_DELETE = 205 [(clarifai.api.utils.description) = "Module versions deleted"];
+
+  // Event types related to workflows: 400 - 499
+  WORKFLOW_CREATE = 400 [(clarifai.api.utils.description) = "Workflow created"];
+  WORKFLOW_UPDATE = 401 [(clarifai.api.utils.description) = "Workflow updated"];
+  WORKFLOW_DELETE = 402 [(clarifai.api.utils.description) = "Workflow deleted"];
+  WORKFLOW_VERSION_CREATE = 403 [(clarifai.api.utils.description) = "Workflow version created"];
+  WORKFLOW_VERSION_UPDATE = 404 [(clarifai.api.utils.description) = "Workflow version updated"];
+  WORKFLOW_VERSION_DELETE = 405 [(clarifai.api.utils.description) = "Workflow version deleted"];
 }
 
 
@@ -4877,6 +4885,8 @@ message AuditLogTarget {
     App app = 4;
     Module module = 5;
     ModuleVersion module_version = 6;
+    Workflow workflow = 7;
+    WorkflowVersion workflow_version = 8;
   }
 }
 

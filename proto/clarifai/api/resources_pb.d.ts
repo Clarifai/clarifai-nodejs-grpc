@@ -8671,6 +8671,16 @@ export class AuditLogTarget extends jspb.Message {
     getModuleVersion(): ModuleVersion | undefined;
     setModuleVersion(value?: ModuleVersion): AuditLogTarget;
 
+    hasWorkflow(): boolean;
+    clearWorkflow(): void;
+    getWorkflow(): Workflow | undefined;
+    setWorkflow(value?: Workflow): AuditLogTarget;
+
+    hasWorkflowVersion(): boolean;
+    clearWorkflowVersion(): void;
+    getWorkflowVersion(): WorkflowVersion | undefined;
+    setWorkflowVersion(value?: WorkflowVersion): AuditLogTarget;
+
     getTargetCase(): AuditLogTarget.TargetCase;
 
     serializeBinary(): Uint8Array;
@@ -8691,6 +8701,8 @@ export namespace AuditLogTarget {
         app?: App.AsObject,
         module?: Module.AsObject,
         moduleVersion?: ModuleVersion.AsObject,
+        workflow?: Workflow.AsObject,
+        workflowVersion?: WorkflowVersion.AsObject,
     }
 
     export enum TargetCase {
@@ -8701,6 +8713,8 @@ export namespace AuditLogTarget {
         APP = 4,
         MODULE = 5,
         MODULE_VERSION = 6,
+        WORKFLOW = 7,
+        WORKFLOW_VERSION = 8,
     }
 
 }
@@ -9140,4 +9154,10 @@ export enum EventType {
     MODULE_VERSION_CREATE = 203,
     MODULE_VERSION_UPDATE = 204,
     MODULE_VERSION_DELETE = 205,
+    WORKFLOW_CREATE = 400,
+    WORKFLOW_UPDATE = 401,
+    WORKFLOW_DELETE = 402,
+    WORKFLOW_VERSION_CREATE = 403,
+    WORKFLOW_VERSION_UPDATE = 404,
+    WORKFLOW_VERSION_DELETE = 405,
 }
