@@ -1467,7 +1467,7 @@ message Model {
   Source source = 36;
   // Creator of Model
   string creator = 37;
-  
+
   int32 version_count = 38;
 }
 
@@ -4866,12 +4866,17 @@ enum EventType {
   MODULE_VERSION_DELETE = 205 [(clarifai.api.utils.description) = "Module versions deleted"];
 
   // Event types related to workflows: 400 - 499
-  WORKFLOW_CREATE = 400 [(clarifai.api.utils.description) = "Workflow created"];
-  WORKFLOW_UPDATE = 401 [(clarifai.api.utils.description) = "Workflow updated"];
-  WORKFLOW_DELETE = 402 [(clarifai.api.utils.description) = "Workflow deleted"];
-  WORKFLOW_VERSION_CREATE = 403 [(clarifai.api.utils.description) = "Workflow version created"];
-  WORKFLOW_VERSION_UPDATE = 404 [(clarifai.api.utils.description) = "Workflow version updated"];
-  WORKFLOW_VERSION_DELETE = 405 [(clarifai.api.utils.description) = "Workflow version deleted"];
+  WORKFLOW_CREATE = 400 [(clarifai.api.utils.description) = "Workflows created"];
+  WORKFLOW_UPDATE = 401 [(clarifai.api.utils.description) = "Workflows updated"];
+  WORKFLOW_DELETE = 402 [(clarifai.api.utils.description) = "Workflows deleted"];
+  WORKFLOW_VERSION_CREATE = 403 [(clarifai.api.utils.description) = "Workflow versions created"];
+  WORKFLOW_VERSION_UPDATE = 404 [(clarifai.api.utils.description) = "Workflow versions updated"];
+  WORKFLOW_VERSION_DELETE = 405 [(clarifai.api.utils.description) = "Workflow versions deleted"];
+
+  // Event types related to collaborators: 700 - 799
+  COLLABORATOR_ADD = 700 [(clarifai.api.utils.description) = "Collaborators added"];
+  COLLABORATOR_UPDATE = 701 [(clarifai.api.utils.description) = "Collaborators updated"];
+  COLLABORATOR_REMOVE = 702 [(clarifai.api.utils.description) = "Collaborators removed"];
 }
 
 
@@ -4992,8 +4997,8 @@ message ComputeSourceMetadata {
 
   // Compute Cluster, Nodepool, Runner.
   string compute_cluster_id = 6;
-  string nodepool_id = 7; 
-  string runner_id = 8; 
+  string nodepool_id = 7;
+  string runner_id = 8;
 }
 
 
