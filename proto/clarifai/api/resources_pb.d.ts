@@ -7197,6 +7197,11 @@ export class BulkOperation extends jspb.Message {
     getDataset(): Dataset | undefined;
     setDataset(value?: Dataset): BulkOperation;
 
+    hasAnnotationSearch(): boolean;
+    clearAnnotationSearch(): void;
+    getAnnotationSearch(): Search | undefined;
+    setAnnotationSearch(value?: Search): BulkOperation;
+
     hasOperation(): boolean;
     clearOperation(): void;
     getOperation(): Operation | undefined;
@@ -7227,6 +7232,7 @@ export class BulkOperation extends jspb.Message {
     setLastModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): BulkOperation;
 
     getInputSourceCase(): BulkOperation.InputSourceCase;
+    getAnnotationSourceCase(): BulkOperation.AnnotationSourceCase;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): BulkOperation.AsObject;
@@ -7244,6 +7250,7 @@ export namespace BulkOperation {
         inputIds?: InputIDs.AsObject,
         search?: Search.AsObject,
         dataset?: Dataset.AsObject,
+        annotationSearch?: Search.AsObject,
         operation?: Operation.AsObject,
         appId: string,
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
@@ -7258,6 +7265,11 @@ export namespace BulkOperation {
         INPUT_IDS = 2,
         SEARCH = 10,
         DATASET = 11,
+    }
+
+    export enum AnnotationSourceCase {
+        ANNOTATION_SOURCE_NOT_SET = 0,
+        ANNOTATION_SEARCH = 12,
     }
 
 }

@@ -72,6 +72,7 @@ goog.exportSymbol('proto.clarifai.api.BookmarkOrigin.BookmarkType', null, global
 goog.exportSymbol('proto.clarifai.api.BoundingBox', null, global);
 goog.exportSymbol('proto.clarifai.api.BuildInfo', null, global);
 goog.exportSymbol('proto.clarifai.api.BulkOperation', null, global);
+goog.exportSymbol('proto.clarifai.api.BulkOperation.AnnotationSourceCase', null, global);
 goog.exportSymbol('proto.clarifai.api.BulkOperation.InputSourceCase', null, global);
 goog.exportSymbol('proto.clarifai.api.CloudProvider', null, global);
 goog.exportSymbol('proto.clarifai.api.Cluster', null, global);
@@ -60438,7 +60439,7 @@ proto.clarifai.api.InstalledModuleVersion.prototype.setKeyId = function(value) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.clarifai.api.BulkOperation.oneofGroups_ = [[2,10,11]];
+proto.clarifai.api.BulkOperation.oneofGroups_ = [[2,10,11],[12]];
 
 /**
  * @enum {number}
@@ -60455,6 +60456,21 @@ proto.clarifai.api.BulkOperation.InputSourceCase = {
  */
 proto.clarifai.api.BulkOperation.prototype.getInputSourceCase = function() {
   return /** @type {proto.clarifai.api.BulkOperation.InputSourceCase} */(jspb.Message.computeOneofCase(this, proto.clarifai.api.BulkOperation.oneofGroups_[0]));
+};
+
+/**
+ * @enum {number}
+ */
+proto.clarifai.api.BulkOperation.AnnotationSourceCase = {
+  ANNOTATION_SOURCE_NOT_SET: 0,
+  ANNOTATION_SEARCH: 12
+};
+
+/**
+ * @return {proto.clarifai.api.BulkOperation.AnnotationSourceCase}
+ */
+proto.clarifai.api.BulkOperation.prototype.getAnnotationSourceCase = function() {
+  return /** @type {proto.clarifai.api.BulkOperation.AnnotationSourceCase} */(jspb.Message.computeOneofCase(this, proto.clarifai.api.BulkOperation.oneofGroups_[1]));
 };
 
 
@@ -60492,6 +60508,7 @@ proto.clarifai.api.BulkOperation.toObject = function(includeInstance, msg) {
     inputIds: (f = msg.getInputIds()) && proto.clarifai.api.InputIDs.toObject(includeInstance, f),
     search: (f = msg.getSearch()) && proto.clarifai.api.Search.toObject(includeInstance, f),
     dataset: (f = msg.getDataset()) && proto.clarifai.api.Dataset.toObject(includeInstance, f),
+    annotationSearch: (f = msg.getAnnotationSearch()) && proto.clarifai.api.Search.toObject(includeInstance, f),
     operation: (f = msg.getOperation()) && proto.clarifai.api.Operation.toObject(includeInstance, f),
     appId: jspb.Message.getFieldWithDefault(msg, 4, ""),
     status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f),
@@ -60553,6 +60570,11 @@ proto.clarifai.api.BulkOperation.deserializeBinaryFromReader = function(msg, rea
       var value = new proto.clarifai.api.Dataset;
       reader.readMessage(value,proto.clarifai.api.Dataset.deserializeBinaryFromReader);
       msg.setDataset(value);
+      break;
+    case 12:
+      var value = new proto.clarifai.api.Search;
+      reader.readMessage(value,proto.clarifai.api.Search.deserializeBinaryFromReader);
+      msg.setAnnotationSearch(value);
       break;
     case 3:
       var value = new proto.clarifai.api.Operation;
@@ -60645,6 +60667,14 @@ proto.clarifai.api.BulkOperation.serializeBinaryToWriter = function(message, wri
       11,
       f,
       proto.clarifai.api.Dataset.serializeBinaryToWriter
+    );
+  }
+  f = message.getAnnotationSearch();
+  if (f != null) {
+    writer.writeMessage(
+      12,
+      f,
+      proto.clarifai.api.Search.serializeBinaryToWriter
     );
   }
   f = message.getOperation();
@@ -60830,6 +60860,43 @@ proto.clarifai.api.BulkOperation.prototype.clearDataset = function() {
  */
 proto.clarifai.api.BulkOperation.prototype.hasDataset = function() {
   return jspb.Message.getField(this, 11) != null;
+};
+
+
+/**
+ * optional Search annotation_search = 12;
+ * @return {?proto.clarifai.api.Search}
+ */
+proto.clarifai.api.BulkOperation.prototype.getAnnotationSearch = function() {
+  return /** @type{?proto.clarifai.api.Search} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Search, 12));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Search|undefined} value
+ * @return {!proto.clarifai.api.BulkOperation} returns this
+*/
+proto.clarifai.api.BulkOperation.prototype.setAnnotationSearch = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 12, proto.clarifai.api.BulkOperation.oneofGroups_[1], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.BulkOperation} returns this
+ */
+proto.clarifai.api.BulkOperation.prototype.clearAnnotationSearch = function() {
+  return this.setAnnotationSearch(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.BulkOperation.prototype.hasAnnotationSearch = function() {
+  return jspb.Message.getField(this, 12) != null;
 };
 
 

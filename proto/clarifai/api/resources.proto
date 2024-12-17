@@ -4087,6 +4087,11 @@ message BulkOperation {
     Dataset dataset = 11;
   }
 
+  // Annotation Source can be a Search whose results will be a list of annotation ids.
+  oneof annotation_source {
+    clarifai.api.Search annotation_search = 12;
+  }
+
   // Operation to perform
   Operation operation = 3;
 
