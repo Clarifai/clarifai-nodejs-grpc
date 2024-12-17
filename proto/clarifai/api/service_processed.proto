@@ -3994,14 +3994,18 @@ service V2 {
     option (google.api.http) = {
       // Endpoint to list runner logs.
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners/{runner_id}/{log_type}/logs"
+      // Endpoint to list runner logs by model, model version id.
+      additional_bindings178 {
+        get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/{log_type}/logs"
+      }
       // TODO: add convenience endpoint for /users/{user_id}/runners/{runner_id}.
       // TODO: add endpoint for runner replicas.
       // Endpoint to list compute cluster's agent logs.
-      additional_bindings178 {
+      additional_bindings179 {
         get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/{log_type}/logs"
       }
       // Endpoint to list builder logs.
-      additional_bindings179 {
+      additional_bindings180 {
         get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/{log_type}/logs"
       }
       // TODO: add endpoint for workflow.

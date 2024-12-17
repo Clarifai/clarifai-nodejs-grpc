@@ -71205,7 +71205,7 @@ proto.clarifai.api.ProcessingInfo.prototype.setProcessingId = function(value) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.clarifai.api.AuditLogTarget.oneofGroups_ = [[1,2,3,4,5,6]];
+proto.clarifai.api.AuditLogTarget.oneofGroups_ = [[1,2,3,4,5,6,7,8]];
 
 /**
  * @enum {number}
@@ -71217,7 +71217,9 @@ proto.clarifai.api.AuditLogTarget.TargetCase = {
   TEAM: 3,
   APP: 4,
   MODULE: 5,
-  MODULE_VERSION: 6
+  MODULE_VERSION: 6,
+  WORKFLOW: 7,
+  WORKFLOW_VERSION: 8
 };
 
 /**
@@ -71263,7 +71265,9 @@ proto.clarifai.api.AuditLogTarget.toObject = function(includeInstance, msg) {
     team: (f = msg.getTeam()) && proto.clarifai.api.Team.toObject(includeInstance, f),
     app: (f = msg.getApp()) && proto.clarifai.api.App.toObject(includeInstance, f),
     module: (f = msg.getModule()) && proto.clarifai.api.Module.toObject(includeInstance, f),
-    moduleVersion: (f = msg.getModuleVersion()) && proto.clarifai.api.ModuleVersion.toObject(includeInstance, f)
+    moduleVersion: (f = msg.getModuleVersion()) && proto.clarifai.api.ModuleVersion.toObject(includeInstance, f),
+    workflow: (f = msg.getWorkflow()) && proto.clarifai.api.Workflow.toObject(includeInstance, f),
+    workflowVersion: (f = msg.getWorkflowVersion()) && proto.clarifai.api.WorkflowVersion.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -71329,6 +71333,16 @@ proto.clarifai.api.AuditLogTarget.deserializeBinaryFromReader = function(msg, re
       var value = new proto.clarifai.api.ModuleVersion;
       reader.readMessage(value,proto.clarifai.api.ModuleVersion.deserializeBinaryFromReader);
       msg.setModuleVersion(value);
+      break;
+    case 7:
+      var value = new proto.clarifai.api.Workflow;
+      reader.readMessage(value,proto.clarifai.api.Workflow.deserializeBinaryFromReader);
+      msg.setWorkflow(value);
+      break;
+    case 8:
+      var value = new proto.clarifai.api.WorkflowVersion;
+      reader.readMessage(value,proto.clarifai.api.WorkflowVersion.deserializeBinaryFromReader);
+      msg.setWorkflowVersion(value);
       break;
     default:
       reader.skipField();
@@ -71405,6 +71419,22 @@ proto.clarifai.api.AuditLogTarget.serializeBinaryToWriter = function(message, wr
       6,
       f,
       proto.clarifai.api.ModuleVersion.serializeBinaryToWriter
+    );
+  }
+  f = message.getWorkflow();
+  if (f != null) {
+    writer.writeMessage(
+      7,
+      f,
+      proto.clarifai.api.Workflow.serializeBinaryToWriter
+    );
+  }
+  f = message.getWorkflowVersion();
+  if (f != null) {
+    writer.writeMessage(
+      8,
+      f,
+      proto.clarifai.api.WorkflowVersion.serializeBinaryToWriter
     );
   }
 };
@@ -71629,6 +71659,80 @@ proto.clarifai.api.AuditLogTarget.prototype.clearModuleVersion = function() {
  */
 proto.clarifai.api.AuditLogTarget.prototype.hasModuleVersion = function() {
   return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
+ * optional Workflow workflow = 7;
+ * @return {?proto.clarifai.api.Workflow}
+ */
+proto.clarifai.api.AuditLogTarget.prototype.getWorkflow = function() {
+  return /** @type{?proto.clarifai.api.Workflow} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Workflow, 7));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Workflow|undefined} value
+ * @return {!proto.clarifai.api.AuditLogTarget} returns this
+*/
+proto.clarifai.api.AuditLogTarget.prototype.setWorkflow = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 7, proto.clarifai.api.AuditLogTarget.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.AuditLogTarget} returns this
+ */
+proto.clarifai.api.AuditLogTarget.prototype.clearWorkflow = function() {
+  return this.setWorkflow(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.AuditLogTarget.prototype.hasWorkflow = function() {
+  return jspb.Message.getField(this, 7) != null;
+};
+
+
+/**
+ * optional WorkflowVersion workflow_version = 8;
+ * @return {?proto.clarifai.api.WorkflowVersion}
+ */
+proto.clarifai.api.AuditLogTarget.prototype.getWorkflowVersion = function() {
+  return /** @type{?proto.clarifai.api.WorkflowVersion} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.WorkflowVersion, 8));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.WorkflowVersion|undefined} value
+ * @return {!proto.clarifai.api.AuditLogTarget} returns this
+*/
+proto.clarifai.api.AuditLogTarget.prototype.setWorkflowVersion = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 8, proto.clarifai.api.AuditLogTarget.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.AuditLogTarget} returns this
+ */
+proto.clarifai.api.AuditLogTarget.prototype.clearWorkflowVersion = function() {
+  return this.setWorkflowVersion(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.AuditLogTarget.prototype.hasWorkflowVersion = function() {
+  return jspb.Message.getField(this, 8) != null;
 };
 
 
@@ -73902,7 +74006,16 @@ proto.clarifai.api.EventType = {
   MODULE_DELETE: 202,
   MODULE_VERSION_CREATE: 203,
   MODULE_VERSION_UPDATE: 204,
-  MODULE_VERSION_DELETE: 205
+  MODULE_VERSION_DELETE: 205,
+  WORKFLOW_CREATE: 400,
+  WORKFLOW_UPDATE: 401,
+  WORKFLOW_DELETE: 402,
+  WORKFLOW_VERSION_CREATE: 403,
+  WORKFLOW_VERSION_UPDATE: 404,
+  WORKFLOW_VERSION_DELETE: 405,
+  COLLABORATOR_ADD: 700,
+  COLLABORATOR_UPDATE: 701,
+  COLLABORATOR_REMOVE: 702
 };
 
 goog.object.extend(exports, proto.clarifai.api);
