@@ -8997,6 +8997,35 @@ export namespace ComputeSourceMetadata {
     }
 }
 
+export class Pipeline extends jspb.Message { 
+    getId(): string;
+    setId(value: string): Pipeline;
+    getComputeClusterId(): string;
+    setComputeClusterId(value: string): Pipeline;
+    getNodepoolId(): string;
+    setNodepoolId(value: string): Pipeline;
+    getWorkflowDefinitionJson(): string;
+    setWorkflowDefinitionJson(value: string): Pipeline;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): Pipeline.AsObject;
+    static toObject(includeInstance: boolean, msg: Pipeline): Pipeline.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: Pipeline, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): Pipeline;
+    static deserializeBinaryFromReader(message: Pipeline, reader: jspb.BinaryReader): Pipeline;
+}
+
+export namespace Pipeline {
+    export type AsObject = {
+        id: string,
+        computeClusterId: string,
+        nodepoolId: string,
+        workflowDefinitionJson: string,
+    }
+}
+
 export enum WorkflowModelUseCase {
     WORKFLOW_MODEL_USE_CASE_NOT_SET = 0,
     CLASSIFICATION = 1,

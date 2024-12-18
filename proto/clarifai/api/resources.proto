@@ -5013,3 +5013,12 @@ message ComputeSourceMetadata {
 
 
 
+
+
+message Pipeline {
+  string id = 1;
+  string compute_cluster_id = 2;
+  string nodepool_id = 3;
+  // github.com.argoproj.argo_workflows.v3.pkg.apis.workflow.v1alpha1.Workflow will be encoded to string and stored in this field
+  string workflow_definition_json = 4;
+}
