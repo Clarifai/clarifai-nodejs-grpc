@@ -17858,7 +17858,8 @@ proto.clarifai.api.Image.toObject = function(includeInstance, msg) {
     allowDuplicateUrl: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
     hosted: (f = msg.getHosted()) && proto.clarifai.api.HostedURL.toObject(includeInstance, f),
     imageInfo: (f = msg.getImageInfo()) && proto.clarifai.api.ImageInfo.toObject(includeInstance, f),
-    hostedImageInfoMap: (f = msg.getHostedImageInfoMap()) ? f.toObject(includeInstance, proto.clarifai.api.ImageInfo.toObject) : []
+    hostedImageInfoMap: (f = msg.getHostedImageInfoMap()) ? f.toObject(includeInstance, proto.clarifai.api.ImageInfo.toObject) : [],
+    decodedBytes: msg.getDecodedBytes_asB64()
   };
 
   if (includeInstance) {
@@ -17922,6 +17923,10 @@ proto.clarifai.api.Image.deserializeBinaryFromReader = function(msg, reader) {
       reader.readMessage(value, function(message, reader) {
         jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.clarifai.api.ImageInfo.deserializeBinaryFromReader, "", new proto.clarifai.api.ImageInfo());
          });
+      break;
+    case 8:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setDecodedBytes(value);
       break;
     default:
       reader.skipField();
@@ -17992,6 +17997,13 @@ proto.clarifai.api.Image.serializeBinaryToWriter = function(message, writer) {
   f = message.getHostedImageInfoMap(true);
   if (f && f.getLength() > 0) {
     f.serializeBinary(7, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeMessage, proto.clarifai.api.ImageInfo.serializeBinaryToWriter);
+  }
+  f = message.getDecodedBytes_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      8,
+      f
+    );
   }
 };
 
@@ -18171,6 +18183,48 @@ proto.clarifai.api.Image.prototype.clearHostedImageInfoMap = function() {
 };
 
 
+/**
+ * optional bytes decoded_bytes = 8;
+ * @return {!(string|Uint8Array)}
+ */
+proto.clarifai.api.Image.prototype.getDecodedBytes = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/**
+ * optional bytes decoded_bytes = 8;
+ * This is a type-conversion wrapper around `getDecodedBytes()`
+ * @return {string}
+ */
+proto.clarifai.api.Image.prototype.getDecodedBytes_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getDecodedBytes()));
+};
+
+
+/**
+ * optional bytes decoded_bytes = 8;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getDecodedBytes()`
+ * @return {!Uint8Array}
+ */
+proto.clarifai.api.Image.prototype.getDecodedBytes_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getDecodedBytes()));
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.clarifai.api.Image} returns this
+ */
+proto.clarifai.api.Image.prototype.setDecodedBytes = function(value) {
+  return jspb.Message.setProto3BytesField(this, 8, value);
+};
+
+
 
 
 
@@ -18206,7 +18260,8 @@ proto.clarifai.api.ImageInfo.toObject = function(includeInstance, msg) {
     width: jspb.Message.getFieldWithDefault(msg, 1, 0),
     height: jspb.Message.getFieldWithDefault(msg, 2, 0),
     format: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    colorMode: jspb.Message.getFieldWithDefault(msg, 4, "")
+    colorMode: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    mode: jspb.Message.getFieldWithDefault(msg, 5, "")
   };
 
   if (includeInstance) {
@@ -18258,6 +18313,10 @@ proto.clarifai.api.ImageInfo.deserializeBinaryFromReader = function(msg, reader)
     case 4:
       var value = /** @type {string} */ (reader.readString());
       msg.setColorMode(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMode(value);
       break;
     default:
       reader.skipField();
@@ -18313,6 +18372,13 @@ proto.clarifai.api.ImageInfo.serializeBinaryToWriter = function(message, writer)
   if (f.length > 0) {
     writer.writeString(
       4,
+      f
+    );
+  }
+  f = message.getMode();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
       f
     );
   }
@@ -18388,6 +18454,24 @@ proto.clarifai.api.ImageInfo.prototype.getColorMode = function() {
  */
 proto.clarifai.api.ImageInfo.prototype.setColorMode = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string mode = 5;
+ * @return {string}
+ */
+proto.clarifai.api.ImageInfo.prototype.getMode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.ImageInfo} returns this
+ */
+proto.clarifai.api.ImageInfo.prototype.setMode = function(value) {
+  return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 

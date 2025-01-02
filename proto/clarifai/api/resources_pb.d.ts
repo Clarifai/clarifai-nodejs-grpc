@@ -1711,6 +1711,10 @@ export class Image extends jspb.Message {
 
     getHostedImageInfoMap(): jspb.Map<string, ImageInfo>;
     clearHostedImageInfoMap(): void;
+    getDecodedBytes(): Uint8Array | string;
+    getDecodedBytes_asU8(): Uint8Array;
+    getDecodedBytes_asB64(): string;
+    setDecodedBytes(value: Uint8Array | string): Image;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Image.AsObject;
@@ -1731,6 +1735,7 @@ export namespace Image {
         imageInfo?: ImageInfo.AsObject,
 
         hostedImageInfoMap: Array<[string, ImageInfo.AsObject]>,
+        decodedBytes: Uint8Array | string,
     }
 }
 
@@ -1743,6 +1748,8 @@ export class ImageInfo extends jspb.Message {
     setFormat(value: string): ImageInfo;
     getColorMode(): string;
     setColorMode(value: string): ImageInfo;
+    getMode(): string;
+    setMode(value: string): ImageInfo;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ImageInfo.AsObject;
@@ -1760,6 +1767,7 @@ export namespace ImageInfo {
         height: number,
         format: string,
         colorMode: string,
+        mode: string,
     }
 }
 

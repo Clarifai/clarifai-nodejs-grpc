@@ -873,6 +873,9 @@ message Image {
   // The map of hosted image info of different sizes (see hosted.sizes), excluding the original image.
   // Note: keys(hosted_image_info) = hosted.sizes - "orig"
   map<string, ImageInfo> hosted_image_info = 7;
+
+  // For internal processing of already decoded bytes.
+  bytes decoded_bytes = 8;
 }
 
 message ImageInfo {
@@ -884,6 +887,8 @@ message ImageInfo {
   string format = 3;
   // image color mode
   string color_mode = 4;
+  // mode (when used for decoded_bytes) (RGB, RGBA, P, L, etc.)
+  string mode = 5;
 }
 
 // HostedURL
