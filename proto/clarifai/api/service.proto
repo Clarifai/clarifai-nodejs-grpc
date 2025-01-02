@@ -6883,6 +6883,7 @@ message GetTaskRequest {
   // - metrics.work.inputs_count_estimated
   // - metrics.work.inputs_percent_estimated
   // - metrics.review.inputs_count_estimated
+  // - metrics.review.inputs_count_estimated_per_reviewer
   // - metrics.review.inputs_percent_estimated
   repeated string additional_fields = 3;
 }
@@ -6916,6 +6917,7 @@ message ListTasksRequest {
   // - metrics.work.inputs_count_estimated
   // - metrics.work.inputs_percent_estimated
   // - metrics.review.inputs_count_estimated
+  // - metrics.review.inputs_count_estimated_per_reviewer
   // - metrics.review.inputs_percent_estimated
   repeated string additional_fields = 7;
 

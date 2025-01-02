@@ -38,7 +38,7 @@ message Annotation {
   string user_id = 15 [deprecated = true];
 
   // DEPRECATED: Use worker.model.model_version.id instead
-  string model_version_id = 16 [deprecated=true];
+  string model_version_id = 16 [deprecated = true];
 
   // DEPRECATED.
   string embed_model_version_id = 14 [deprecated = true];
@@ -840,7 +840,7 @@ message GeoLimit {
 }
 
 // GeoBoxedPoint
-message GeoBoxedPoint { GeoPoint geo_point = 1; }
+message GeoBoxedPoint {GeoPoint geo_point = 1;}
 
 // Geo
 message Geo {
@@ -934,7 +934,7 @@ message Input {
 
 // InputBatch is a batch of Input resources. Large amounts of inputs are usually
 // divided into multiple InputBatches.
-message InputBatch { repeated Input inputs = 1; }
+message InputBatch {repeated Input inputs = 1;}
 
 // NOTE: inconsistency: this is weird mix of plural and singular words.
 message InputCount {
@@ -1049,12 +1049,12 @@ message DatasetInput {
   Input input = 2;
 }
 enum DatasetVersionRequestOrigin {
-    DATASET_VERSION_REQUEST_ORIGIN_NOT_SET = 0;
-    MANUAL = 1;
-    TRAINING = 2;
-    EVAL_GROUND_TRUTH = 3;
-    EVAL_PREDICTIONS = 4;
-  }
+  DATASET_VERSION_REQUEST_ORIGIN_NOT_SET = 0;
+  MANUAL = 1;
+  TRAINING = 2;
+  EVAL_GROUND_TRUTH = 3;
+  EVAL_PREDICTIONS = 4;
+}
 
 
 // DatasetVersion
@@ -1972,7 +1972,7 @@ message PretrainedModelConfig {
 }
 
 // TrainStats
-message TrainStats { repeated LossCurveEntry loss_curve = 1; }
+message TrainStats {repeated LossCurveEntry loss_curve = 1;}
 
 // LossCurveEntry
 message LossCurveEntry {
@@ -1993,7 +1993,7 @@ message LabelCount {
 }
 
 // LabelDistribution
-message LabelDistribution { repeated LabelCount positive_label_counts = 1; }
+message LabelDistribution {repeated LabelCount positive_label_counts = 1;}
 
 // NOTE: this is inefficient, should just have the order of the rows/cols
 message CooccurrenceMatrixEntry {
@@ -3143,8 +3143,6 @@ message Task {
   // Worker details.
   TaskWorker worker = 6;
 
-
-
   // List of concept ids used in the work of this task.
   // DEPRECATED: Use task.concepts instead.
   repeated string concept_ids = 7 [deprecated = true];
@@ -3250,7 +3248,7 @@ message TaskWorker {
   repeated User users = 4 [deprecated = true];
 
   // Info based on the worker strategy,
-  oneof strategy_info { TaskWorkerPartitionedStrategyInfo partitioned_strategy_info = 3; }
+  oneof strategy_info {TaskWorkerPartitionedStrategyInfo partitioned_strategy_info = 3;}
 
   enum TaskWorkerStrategy {
     reserved 1;
@@ -3533,10 +3531,25 @@ message TaskWorkMetrics {
 }
 
 message TaskReviewMetrics {
-  // Estimated number of reviewed inputs.
+  // Estimated number of reviewed inputs by at least one reviewer.
   uint64 inputs_count_estimated = 1;
-  // Estimated percent of inputs that were reviewed. Calculated as count of reviewed inputs / total task inputs
+
+  // Estimated number of reviewed inputs per reviewer index.
+  // The reviewer indexes are based on task.review.users.
+  // An input is considered reviewed by a reviewer if:
+  // * the reviewer approved the input
+  // * ANY reviewer rejected the input (as rejection is final)
+  // Note that when a reviewer requests changes for an input, the input is sent to back to work again.
+  // The reviewer will have to review the input again after work has been completed.
+  // As such, the review that requests changes for an input is immediately dis-regarded and not counted in this metric.
+  repeated uint64 inputs_count_estimated_per_reviewer = 3;
+
+  // Estimated percent of review work that was finished.
   // This is a value between 0 and 100, where 0 = 0% and 100 = 100%.
+  // Calculated as sum(inputs_count_estimated_per_reviewer) / (total inputs to review * number of reviewers per input).
+  // The total inputs to review is stored in task.metrics.input_source.inputs_count_estimated.
+  // The number of reviewers per input is based on task review strategy. For example, for consensus review strategy,
+  // the number of reviewers per input is stored in task.review.consensus_strategy_info.approval_threshold_reviewers.
   uint32 inputs_percent_estimated = 2;
 }
 
@@ -3873,7 +3886,7 @@ message TimeSegment {
 
 // TimeInfo
 message TimeInfo {
-  reserved 2,3;
+  reserved 2, 3;
   // Number of frames
   uint32 num_frames = 1;
   // Timestamp where track begins.
@@ -3887,7 +3900,7 @@ message TimeInfo {
 
 
 // DatasetStar
-message DatasetStar { string dataset_id = 1; }
+message DatasetStar {string dataset_id = 1;}
 
 // ModuleStar
 message ModuleStar {
@@ -4117,7 +4130,7 @@ message BulkOperation {
   google.protobuf.Timestamp last_modified_at = 9;
 }
 
-message InputIDs { repeated string input_ids = 1; }
+message InputIDs {repeated string input_ids = 1;}
 
 message Progress {
   uint32 processed = 1;
@@ -4174,9 +4187,17 @@ message Operation {
     AddToDataset add_to_dataset = 8;
     SplitIntoDatasets split_into_datasets = 9;
   }
+
+  // Bulk Operations for Annotations:
+  // Operations: delete_annotations
+  // DeleteAnnotations:
+  //    Delete all the annotations matching the provided annotation source
+  oneof annotation_operation {
+    DeleteAnnotations delete_annotations = 10;
+  }
 }
 
-message AddConcepts { repeated Concept concepts = 1; }
+message AddConcepts {repeated Concept concepts = 1;}
 
 message DeleteConcepts {
   repeated Concept concepts = 1;
@@ -4202,9 +4223,9 @@ message OverwriteGeo {
 
 message DeleteGeo {}
 
-message AddToDataset { string dataset_id = 1; }
+message AddToDataset {string dataset_id = 1;}
 
-message DeleteFromDataset { string dataset_id = 1; }
+message DeleteFromDataset {string dataset_id = 1;}
 
 message SplitIntoDatasets {
   repeated DatasetSplit dataset_splits = 1;
@@ -4224,6 +4245,10 @@ message DatasetSplit {
     // Values from (0,100]
     uint32 percentage = 2;
   }
+}
+
+message DeleteAnnotations {
+  // This operation takes no data (payload).
 }
 
 message InputsAddJob {
@@ -4877,6 +4902,11 @@ enum EventType {
   WORKFLOW_VERSION_CREATE = 403 [(clarifai.api.utils.description) = "Workflow versions created"];
   WORKFLOW_VERSION_UPDATE = 404 [(clarifai.api.utils.description) = "Workflow versions updated"];
   WORKFLOW_VERSION_DELETE = 405 [(clarifai.api.utils.description) = "Workflow versions deleted"];
+
+  // Event types related to applications: 600 - 699
+  APPLICATION_CREATE = 600 [(clarifai.api.utils.description) = "Applications created"];
+  APPLICATION_UPDATE = 601 [(clarifai.api.utils.description) = "Applications updated"];
+  APPLICATION_DELETE = 602 [(clarifai.api.utils.description) = "Applications deleted"];
 
   // Event types related to collaborators: 700 - 799
   COLLABORATOR_ADD = 700 [(clarifai.api.utils.description) = "Collaborators added"];
