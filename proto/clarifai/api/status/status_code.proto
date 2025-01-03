@@ -8,6 +8,8 @@ option java_package = "com.clarifai.grpc.api.status";
 option objc_class_prefix = "CAIP";
 
 enum StatusCode {
+  option allow_alias = true;
+
   reserved
       25407, 33000, 33001, 33002, 33100, 33101, 33102, 33103, 33104, 33105,
       33106, 33200, 33201, 33203, 33210, 39995, 40018, 40019, 41200, 41201,
@@ -241,10 +243,18 @@ enum StatusCode {
   INSTANCE_TYPE_INVALID_REQUEST = 26002;
 
   // Input:Image related 30xxx
-  INPUT_DOWNLOAD_SUCCESS = 30000;
-  INPUT_DOWNLOAD_PENDING = 30001; // when things are async, this is the default status.
-  INPUT_DOWNLOAD_FAILED = 30002; // any type of error downloading and processing
-  INPUT_DOWNLOAD_IN_PROGRESS = 30003;
+  INPUT_SUCCESS = 30000;
+  INPUT_PENDING = 30001; // when things are async, this is the default status.
+  INPUT_FAILED = 30002; // any type of error downloading and processing
+  INPUT_IN_PROGRESS = 30003;
+
+  // use INPUT_SUCCESS, INPUT_PENDING, INPUT_FAILED, INPUT_IN_PROGRESS instead
+  // DOWNLOAD is no longer correct, but keep old statuses for backward compatibility
+  INPUT_DOWNLOAD_SUCCESS = 30000 [deprecated = true];
+  INPUT_DOWNLOAD_PENDING = 30001 [deprecated = true];
+  INPUT_DOWNLOAD_FAILED = 30002 [deprecated = true];
+  INPUT_DOWNLOAD_IN_PROGRESS = 30003 [deprecated = true];
+
   INPUT_STATUS_UPDATE_FAILED = 30004;
   INPUT_DELETE_FAILED = 30005;
   INPUT_DUPLICATE = 30100;
