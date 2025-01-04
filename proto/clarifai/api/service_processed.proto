@@ -5273,10 +5273,10 @@ message ListModelInputsRequest {
 message ListLogEntriesRequest {
   reserved 8;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
-  // Defaults to 1.
+  // Defaults to last page.
   uint32 page = 1;
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 128.
+  // to 32.
   uint32 per_page = 2;
 
   // The type of log entry. Examples: model, agent, build, training.
@@ -6079,6 +6079,10 @@ message MultiLogEntryResponse {
   clarifai.api.status.Status status = 1;
   // Log entries.
   repeated LogEntry log_entries = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+  // The page the log entries are from. If the request's page was omitted or greater than the total pages, then this is set to the last page.
+  uint32 page = 4;
+  // The number of results contained in each page.
+  uint32 per_page = 5;
 }
 
 // ListScopesRequest

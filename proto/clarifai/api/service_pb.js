@@ -51417,7 +51417,9 @@ proto.clarifai.api.MultiLogEntryResponse.toObject = function(includeInstance, ms
   var f, obj = {
     status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f),
     logEntriesList: jspb.Message.toObjectList(msg.getLogEntriesList(),
-    proto_clarifai_api_resources_pb.LogEntry.toObject, includeInstance)
+    proto_clarifai_api_resources_pb.LogEntry.toObject, includeInstance),
+    page: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    perPage: jspb.Message.getFieldWithDefault(msg, 5, 0)
   };
 
   if (includeInstance) {
@@ -51464,6 +51466,14 @@ proto.clarifai.api.MultiLogEntryResponse.deserializeBinaryFromReader = function(
       reader.readMessage(value,proto_clarifai_api_resources_pb.LogEntry.deserializeBinaryFromReader);
       msg.addLogEntries(value);
       break;
+    case 4:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setPage(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setPerPage(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -51507,6 +51517,20 @@ proto.clarifai.api.MultiLogEntryResponse.serializeBinaryToWriter = function(mess
       2,
       f,
       proto_clarifai_api_resources_pb.LogEntry.serializeBinaryToWriter
+    );
+  }
+  f = message.getPage();
+  if (f !== 0) {
+    writer.writeUint32(
+      4,
+      f
+    );
+  }
+  f = message.getPerPage();
+  if (f !== 0) {
+    writer.writeUint32(
+      5,
+      f
     );
   }
 };
@@ -51584,6 +51608,42 @@ proto.clarifai.api.MultiLogEntryResponse.prototype.addLogEntries = function(opt_
  */
 proto.clarifai.api.MultiLogEntryResponse.prototype.clearLogEntriesList = function() {
   return this.setLogEntriesList([]);
+};
+
+
+/**
+ * optional uint32 page = 4;
+ * @return {number}
+ */
+proto.clarifai.api.MultiLogEntryResponse.prototype.getPage = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.MultiLogEntryResponse} returns this
+ */
+proto.clarifai.api.MultiLogEntryResponse.prototype.setPage = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+/**
+ * optional uint32 per_page = 5;
+ * @return {number}
+ */
+proto.clarifai.api.MultiLogEntryResponse.prototype.getPerPage = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.MultiLogEntryResponse} returns this
+ */
+proto.clarifai.api.MultiLogEntryResponse.prototype.setPerPage = function(value) {
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
