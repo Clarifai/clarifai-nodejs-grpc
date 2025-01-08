@@ -71604,7 +71604,7 @@ proto.clarifai.api.ProcessingInfo.prototype.setProcessingId = function(value) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.clarifai.api.AuditLogTarget.oneofGroups_ = [[1,2,3,4,5,6,7,8]];
+proto.clarifai.api.AuditLogTarget.oneofGroups_ = [[1,2,3,4,5,6,7,8,9,10]];
 
 /**
  * @enum {number}
@@ -71618,7 +71618,9 @@ proto.clarifai.api.AuditLogTarget.TargetCase = {
   MODULE: 5,
   MODULE_VERSION: 6,
   WORKFLOW: 7,
-  WORKFLOW_VERSION: 8
+  WORKFLOW_VERSION: 8,
+  MODEL: 9,
+  MODEL_VERSION: 10
 };
 
 /**
@@ -71666,7 +71668,9 @@ proto.clarifai.api.AuditLogTarget.toObject = function(includeInstance, msg) {
     module: (f = msg.getModule()) && proto.clarifai.api.Module.toObject(includeInstance, f),
     moduleVersion: (f = msg.getModuleVersion()) && proto.clarifai.api.ModuleVersion.toObject(includeInstance, f),
     workflow: (f = msg.getWorkflow()) && proto.clarifai.api.Workflow.toObject(includeInstance, f),
-    workflowVersion: (f = msg.getWorkflowVersion()) && proto.clarifai.api.WorkflowVersion.toObject(includeInstance, f)
+    workflowVersion: (f = msg.getWorkflowVersion()) && proto.clarifai.api.WorkflowVersion.toObject(includeInstance, f),
+    model: (f = msg.getModel()) && proto.clarifai.api.Model.toObject(includeInstance, f),
+    modelVersion: (f = msg.getModelVersion()) && proto.clarifai.api.ModelVersion.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -71742,6 +71746,16 @@ proto.clarifai.api.AuditLogTarget.deserializeBinaryFromReader = function(msg, re
       var value = new proto.clarifai.api.WorkflowVersion;
       reader.readMessage(value,proto.clarifai.api.WorkflowVersion.deserializeBinaryFromReader);
       msg.setWorkflowVersion(value);
+      break;
+    case 9:
+      var value = new proto.clarifai.api.Model;
+      reader.readMessage(value,proto.clarifai.api.Model.deserializeBinaryFromReader);
+      msg.setModel(value);
+      break;
+    case 10:
+      var value = new proto.clarifai.api.ModelVersion;
+      reader.readMessage(value,proto.clarifai.api.ModelVersion.deserializeBinaryFromReader);
+      msg.setModelVersion(value);
       break;
     default:
       reader.skipField();
@@ -71834,6 +71848,22 @@ proto.clarifai.api.AuditLogTarget.serializeBinaryToWriter = function(message, wr
       8,
       f,
       proto.clarifai.api.WorkflowVersion.serializeBinaryToWriter
+    );
+  }
+  f = message.getModel();
+  if (f != null) {
+    writer.writeMessage(
+      9,
+      f,
+      proto.clarifai.api.Model.serializeBinaryToWriter
+    );
+  }
+  f = message.getModelVersion();
+  if (f != null) {
+    writer.writeMessage(
+      10,
+      f,
+      proto.clarifai.api.ModelVersion.serializeBinaryToWriter
     );
   }
 };
@@ -72132,6 +72162,80 @@ proto.clarifai.api.AuditLogTarget.prototype.clearWorkflowVersion = function() {
  */
 proto.clarifai.api.AuditLogTarget.prototype.hasWorkflowVersion = function() {
   return jspb.Message.getField(this, 8) != null;
+};
+
+
+/**
+ * optional Model model = 9;
+ * @return {?proto.clarifai.api.Model}
+ */
+proto.clarifai.api.AuditLogTarget.prototype.getModel = function() {
+  return /** @type{?proto.clarifai.api.Model} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Model, 9));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Model|undefined} value
+ * @return {!proto.clarifai.api.AuditLogTarget} returns this
+*/
+proto.clarifai.api.AuditLogTarget.prototype.setModel = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 9, proto.clarifai.api.AuditLogTarget.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.AuditLogTarget} returns this
+ */
+proto.clarifai.api.AuditLogTarget.prototype.clearModel = function() {
+  return this.setModel(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.AuditLogTarget.prototype.hasModel = function() {
+  return jspb.Message.getField(this, 9) != null;
+};
+
+
+/**
+ * optional ModelVersion model_version = 10;
+ * @return {?proto.clarifai.api.ModelVersion}
+ */
+proto.clarifai.api.AuditLogTarget.prototype.getModelVersion = function() {
+  return /** @type{?proto.clarifai.api.ModelVersion} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.ModelVersion, 10));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.ModelVersion|undefined} value
+ * @return {!proto.clarifai.api.AuditLogTarget} returns this
+*/
+proto.clarifai.api.AuditLogTarget.prototype.setModelVersion = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 10, proto.clarifai.api.AuditLogTarget.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.AuditLogTarget} returns this
+ */
+proto.clarifai.api.AuditLogTarget.prototype.clearModelVersion = function() {
+  return this.setModelVersion(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.AuditLogTarget.prototype.hasModelVersion = function() {
+  return jspb.Message.getField(this, 10) != null;
 };
 
 
@@ -74406,6 +74510,12 @@ proto.clarifai.api.EventType = {
   MODULE_VERSION_CREATE: 203,
   MODULE_VERSION_UPDATE: 204,
   MODULE_VERSION_DELETE: 205,
+  MODEL_CREATE: 300,
+  MODEL_UPDATE: 301,
+  MODEL_DELETE: 302,
+  MODEL_VERSION_CREATE: 303,
+  MODEL_VERSION_UPDATE: 304,
+  MODEL_VERSION_DELETE: 305,
   WORKFLOW_CREATE: 400,
   WORKFLOW_UPDATE: 401,
   WORKFLOW_DELETE: 402,
@@ -74417,7 +74527,8 @@ proto.clarifai.api.EventType = {
   APPLICATION_DELETE: 602,
   COLLABORATOR_ADD: 700,
   COLLABORATOR_UPDATE: 701,
-  COLLABORATOR_REMOVE: 702
+  COLLABORATOR_REMOVE: 702,
+  USER_UPDATE: 800
 };
 
 goog.object.extend(exports, proto.clarifai.api);
