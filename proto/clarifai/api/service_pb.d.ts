@@ -5774,6 +5774,10 @@ export class MultiLogEntryResponse extends jspb.Message {
     getLogEntriesList(): Array<proto_clarifai_api_resources_pb.LogEntry>;
     setLogEntriesList(value: Array<proto_clarifai_api_resources_pb.LogEntry>): MultiLogEntryResponse;
     addLogEntries(value?: proto_clarifai_api_resources_pb.LogEntry, index?: number): proto_clarifai_api_resources_pb.LogEntry;
+    getPage(): number;
+    setPage(value: number): MultiLogEntryResponse;
+    getPerPage(): number;
+    setPerPage(value: number): MultiLogEntryResponse;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): MultiLogEntryResponse.AsObject;
@@ -5789,6 +5793,8 @@ export namespace MultiLogEntryResponse {
     export type AsObject = {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         logEntriesList: Array<proto_clarifai_api_resources_pb.LogEntry.AsObject>,
+        page: number,
+        perPage: number,
     }
 }
 
