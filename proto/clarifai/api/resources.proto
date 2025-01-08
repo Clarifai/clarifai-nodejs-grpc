@@ -4900,14 +4900,6 @@ enum EventType {
   MODULE_VERSION_UPDATE = 204 [(clarifai.api.utils.description) = "Module versions updated"];
   MODULE_VERSION_DELETE = 205 [(clarifai.api.utils.description) = "Module versions deleted"];
 
-  // Event types related to models: 300 - 399
-  MODEL_CREATE = 300 [(clarifai.api.utils.description) = "Models created"];
-  MODEL_UPDATE = 301 [(clarifai.api.utils.description) = "Models updated"];
-  MODEL_DELETE = 302 [(clarifai.api.utils.description) = "Models deleted"];
-  MODEL_VERSION_CREATE = 303 [(clarifai.api.utils.description) = "Model versions created"];
-  MODEL_VERSION_UPDATE = 304 [(clarifai.api.utils.description) = "Model versions updated"];
-  MODEL_VERSION_DELETE = 305 [(clarifai.api.utils.description) = "Model versions deleted"];
-
   // Event types related to workflows: 400 - 499
   WORKFLOW_CREATE = 400 [(clarifai.api.utils.description) = "Workflows created"];
   WORKFLOW_UPDATE = 401 [(clarifai.api.utils.description) = "Workflows updated"];
@@ -4915,8 +4907,6 @@ enum EventType {
   WORKFLOW_VERSION_CREATE = 403 [(clarifai.api.utils.description) = "Workflow versions created"];
   WORKFLOW_VERSION_UPDATE = 404 [(clarifai.api.utils.description) = "Workflow versions updated"];
   WORKFLOW_VERSION_DELETE = 405 [(clarifai.api.utils.description) = "Workflow versions deleted"];
-
-  // Event types related to datasets: 500 - 599
 
   // Event types related to applications: 600 - 699
   APPLICATION_CREATE = 600 [(clarifai.api.utils.description) = "Applications created"];
@@ -4927,9 +4917,6 @@ enum EventType {
   COLLABORATOR_ADD = 700 [(clarifai.api.utils.description) = "Collaborators added"];
   COLLABORATOR_UPDATE = 701 [(clarifai.api.utils.description) = "Collaborators updated"];
   COLLABORATOR_REMOVE = 702 [(clarifai.api.utils.description) = "Collaborators removed"];
-
-  // Event types related to users: 800 - 899
-  USER_UPDATE = 800 [(clarifai.api.utils.description) = "Users updated"];
 }
 
 
@@ -4945,8 +4932,6 @@ message AuditLogTarget {
     ModuleVersion module_version = 6;
     Workflow workflow = 7;
     WorkflowVersion workflow_version = 8;
-    Model model = 9;
-    ModelVersion model_version = 10;
   }
 }
 
