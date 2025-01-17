@@ -5763,6 +5763,8 @@ message PostModelVersionsUploadConfig {
   uint64 total_size = 4;
   // Whether the uploaded package will be a .tar.gz which contains a Dockerfile or the standard .zip
   bool is_v3 = 5;
+  // Number of bytes requested for the build process.
+  uint64 storage_request_size = 6;
 }
 
 // PutModelVersionExportsRequest

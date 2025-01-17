@@ -2220,6 +2220,11 @@ message Output {
   // The output data for this Output. For example if we have a concept model then the predicted
   // concepts will appear here.
   Data data = 6;
+
+  // Number of prompt tokens as reported by the model or third-party API.
+  uint32 prompt_tokens = 7;
+  // Number of completion tokens as reported by the model or third-party API.
+  uint32 completion_tokens = 8;
 }
 
 // ScopeDeps
@@ -2479,6 +2484,8 @@ message Filter {
   //                                            - in order to enable this, you need to set the field to an empty object, i.e. `{"data": {"regions": [{"region_info": {"polygon":{}}}]}}`
   //  - data.regions[].region_info.span         - filter only span annotations
   //                                            - in order to enable this, you need to set the field to an empty object, i.e. `{"data": {"regions": [{"region_info": {"span":{}}}]}}`
+  //  - data.regions[].track_id                 - filter annotations by track_id
+  //                                            - in order to enable this, you need to provide "track_id_value" i.e. `{"data": {"regions": [{"track_id" : "track_id_value"}]}}`
   //  - data.time_segments[].time_info          - filter only time-segment annotations
   //                                            - in order to enable this, you need to set the field to an empty object, i.e. `{"data": {"time_segments": [{"time_info": {}}]}}`
   //

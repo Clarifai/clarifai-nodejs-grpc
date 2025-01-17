@@ -38402,7 +38402,9 @@ proto.clarifai.api.Output.toObject = function(includeInstance, msg) {
     createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     model: (f = msg.getModel()) && proto.clarifai.api.Model.toObject(includeInstance, f),
     input: (f = msg.getInput()) && proto.clarifai.api.Input.toObject(includeInstance, f),
-    data: (f = msg.getData()) && proto.clarifai.api.Data.toObject(includeInstance, f)
+    data: (f = msg.getData()) && proto.clarifai.api.Data.toObject(includeInstance, f),
+    promptTokens: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    completionTokens: jspb.Message.getFieldWithDefault(msg, 8, 0)
   };
 
   if (includeInstance) {
@@ -38467,6 +38469,14 @@ proto.clarifai.api.Output.deserializeBinaryFromReader = function(msg, reader) {
       var value = new proto.clarifai.api.Data;
       reader.readMessage(value,proto.clarifai.api.Data.deserializeBinaryFromReader);
       msg.setData(value);
+      break;
+    case 7:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setPromptTokens(value);
+      break;
+    case 8:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setCompletionTokens(value);
       break;
     default:
       reader.skipField();
@@ -38542,6 +38552,20 @@ proto.clarifai.api.Output.serializeBinaryToWriter = function(message, writer) {
       6,
       f,
       proto.clarifai.api.Data.serializeBinaryToWriter
+    );
+  }
+  f = message.getPromptTokens();
+  if (f !== 0) {
+    writer.writeUint32(
+      7,
+      f
+    );
+  }
+  f = message.getCompletionTokens();
+  if (f !== 0) {
+    writer.writeUint32(
+      8,
+      f
     );
   }
 };
@@ -38747,6 +38771,42 @@ proto.clarifai.api.Output.prototype.clearData = function() {
  */
 proto.clarifai.api.Output.prototype.hasData = function() {
   return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
+ * optional uint32 prompt_tokens = 7;
+ * @return {number}
+ */
+proto.clarifai.api.Output.prototype.getPromptTokens = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.Output} returns this
+ */
+proto.clarifai.api.Output.prototype.setPromptTokens = function(value) {
+  return jspb.Message.setProto3IntField(this, 7, value);
+};
+
+
+/**
+ * optional uint32 completion_tokens = 8;
+ * @return {number}
+ */
+proto.clarifai.api.Output.prototype.getCompletionTokens = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.Output} returns this
+ */
+proto.clarifai.api.Output.prototype.setCompletionTokens = function(value) {
+  return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
