@@ -42973,7 +42973,8 @@ proto.clarifai.api.PostModelVersionsUploadConfig.toObject = function(includeInst
     modelId: jspb.Message.getFieldWithDefault(msg, 2, ""),
     modelVersion: (f = msg.getModelVersion()) && proto_clarifai_api_resources_pb.ModelVersion.toObject(includeInstance, f),
     totalSize: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    isV3: jspb.Message.getBooleanFieldWithDefault(msg, 5, false)
+    isV3: jspb.Message.getBooleanFieldWithDefault(msg, 5, false),
+    storageRequestSize: jspb.Message.getFieldWithDefault(msg, 6, 0)
   };
 
   if (includeInstance) {
@@ -43031,6 +43032,10 @@ proto.clarifai.api.PostModelVersionsUploadConfig.deserializeBinaryFromReader = f
     case 5:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setIsV3(value);
+      break;
+    case 6:
+      var value = /** @type {number} */ (reader.readUint64());
+      msg.setStorageRequestSize(value);
       break;
     default:
       reader.skipField();
@@ -43095,6 +43100,13 @@ proto.clarifai.api.PostModelVersionsUploadConfig.serializeBinaryToWriter = funct
   if (f) {
     writer.writeBool(
       5,
+      f
+    );
+  }
+  f = message.getStorageRequestSize();
+  if (f !== 0) {
+    writer.writeUint64(
+      6,
       f
     );
   }
@@ -43226,6 +43238,24 @@ proto.clarifai.api.PostModelVersionsUploadConfig.prototype.getIsV3 = function() 
  */
 proto.clarifai.api.PostModelVersionsUploadConfig.prototype.setIsV3 = function(value) {
   return jspb.Message.setProto3BooleanField(this, 5, value);
+};
+
+
+/**
+ * optional uint64 storage_request_size = 6;
+ * @return {number}
+ */
+proto.clarifai.api.PostModelVersionsUploadConfig.prototype.getStorageRequestSize = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.PostModelVersionsUploadConfig} returns this
+ */
+proto.clarifai.api.PostModelVersionsUploadConfig.prototype.setStorageRequestSize = function(value) {
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
