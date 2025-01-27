@@ -69162,7 +69162,8 @@ proto.clarifai.api.InstanceType.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     description: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    computeInfo: (f = msg.getComputeInfo()) && proto.clarifai.api.ComputeInfo.toObject(includeInstance, f)
+    computeInfo: (f = msg.getComputeInfo()) && proto.clarifai.api.ComputeInfo.toObject(includeInstance, f),
+    price: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -69211,6 +69212,10 @@ proto.clarifai.api.InstanceType.deserializeBinaryFromReader = function(msg, read
       var value = new proto.clarifai.api.ComputeInfo;
       reader.readMessage(value,proto.clarifai.api.ComputeInfo.deserializeBinaryFromReader);
       msg.setComputeInfo(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPrice(value);
       break;
     default:
       reader.skipField();
@@ -69261,6 +69266,13 @@ proto.clarifai.api.InstanceType.serializeBinaryToWriter = function(message, writ
       3,
       f,
       proto.clarifai.api.ComputeInfo.serializeBinaryToWriter
+    );
+  }
+  f = message.getPrice();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
     );
   }
 };
@@ -69336,6 +69348,24 @@ proto.clarifai.api.InstanceType.prototype.clearComputeInfo = function() {
  */
 proto.clarifai.api.InstanceType.prototype.hasComputeInfo = function() {
   return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional string price = 4;
+ * @return {string}
+ */
+proto.clarifai.api.InstanceType.prototype.getPrice = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.InstanceType} returns this
+ */
+proto.clarifai.api.InstanceType.prototype.setPrice = function(value) {
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
