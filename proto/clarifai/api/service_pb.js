@@ -31746,7 +31746,8 @@ proto.clarifai.api.PostModelOutputsRequest.toObject = function(includeInstance, 
     inputsList: jspb.Message.toObjectList(msg.getInputsList(),
     proto_clarifai_api_resources_pb.Input.toObject, includeInstance),
     model: (f = msg.getModel()) && proto_clarifai_api_resources_pb.Model.toObject(includeInstance, f),
-    runnerSelector: (f = msg.getRunnerSelector()) && proto_clarifai_api_resources_pb.RunnerSelector.toObject(includeInstance, f)
+    runnerSelector: (f = msg.getRunnerSelector()) && proto_clarifai_api_resources_pb.RunnerSelector.toObject(includeInstance, f),
+    usePredictCache: jspb.Message.getBooleanFieldWithDefault(msg, 7, false)
   };
 
   if (includeInstance) {
@@ -31810,6 +31811,10 @@ proto.clarifai.api.PostModelOutputsRequest.deserializeBinaryFromReader = functio
       var value = new proto_clarifai_api_resources_pb.RunnerSelector;
       reader.readMessage(value,proto_clarifai_api_resources_pb.RunnerSelector.deserializeBinaryFromReader);
       msg.setRunnerSelector(value);
+      break;
+    case 7:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setUsePredictCache(value);
       break;
     default:
       reader.skipField();
@@ -31884,6 +31889,13 @@ proto.clarifai.api.PostModelOutputsRequest.serializeBinaryToWriter = function(me
       6,
       f,
       proto_clarifai_api_resources_pb.RunnerSelector.serializeBinaryToWriter
+    );
+  }
+  f = message.getUsePredictCache();
+  if (f) {
+    writer.writeBool(
+      7,
+      f
     );
   }
 };
@@ -32071,6 +32083,24 @@ proto.clarifai.api.PostModelOutputsRequest.prototype.clearRunnerSelector = funct
  */
 proto.clarifai.api.PostModelOutputsRequest.prototype.hasRunnerSelector = function() {
   return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
+ * optional bool use_predict_cache = 7;
+ * @return {boolean}
+ */
+proto.clarifai.api.PostModelOutputsRequest.prototype.getUsePredictCache = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 7, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.PostModelOutputsRequest} returns this
+ */
+proto.clarifai.api.PostModelOutputsRequest.prototype.setUsePredictCache = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 7, value);
 };
 
 
