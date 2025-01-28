@@ -5024,6 +5024,7 @@ message WorkflowVersionEvaluationTemplate {
 }
 
 
+
 // LogEntry is a single technical log entry (e.g. service log, stack traces, etc).
 message LogEntry {
   // Text of the log entry.

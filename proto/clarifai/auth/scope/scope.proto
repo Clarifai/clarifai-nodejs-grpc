@@ -468,6 +468,7 @@ enum S {
   AuditLogs_Get = 149 [(clarfai_exposed) = true];
 
   LogEntries_Get = 151 [(clarfai_exposed) = true];
+
 }
 
 extend google.protobuf.EnumValueOptions {
