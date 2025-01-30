@@ -5266,6 +5266,9 @@ message PostModelOutputsRequest {
 
   // Allow filtering of prediction requests down to specific Nodepools, Deployments or Runners
   RunnerSelector runner_selector = 6;
+
+  // Configure the prediction cache to avoid expensive compute for predict requests
+  bool use_predict_cache = 7;
 }
 
 // Listing the inputs that went into training this model.

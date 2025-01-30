@@ -4606,6 +4606,7 @@ message InstanceType {
   // Short description of instance type.
   string description = 2;
   ComputeInfo compute_info = 3;
+  string price = 4;
 }
 
 // CloudProvider represents the entity that provides the infrastructure where the Nodepools are deployed.

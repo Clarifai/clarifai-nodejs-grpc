@@ -242,6 +242,9 @@ enum StatusCode {
   INSTANCE_TYPE_INVALID_ARGUMENT = 26001;
   INSTANCE_TYPE_INVALID_REQUEST = 26002;
 
+  // Compute plane related codes 261xx
+  COMPUTE_PLANE_METRICS_INVALID_REQUEST = 26100;
+
   // Input:Image related 30xxx
   INPUT_SUCCESS = 30000;
   INPUT_PENDING = 30001; // when things are async, this is the default status.
