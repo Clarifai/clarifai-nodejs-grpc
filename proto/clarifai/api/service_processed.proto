@@ -4015,6 +4015,17 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = LogEntries_Get;
   }
 
+  rpc StreamLogEntries (StreamLogEntriesRequest) returns (stream MultiLogEntryResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners/{runner_id}/{log_type}/logs"
+      additional_bindings181 {
+        get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/{log_type}/logs"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = LogEntries_Get;
+  }
+
 
 
 
@@ -5312,6 +5323,26 @@ message ListLogEntriesRequest {
   string compute_cluster_id = 9;
   string nodepool_id = 10;
   string runner_id = 11;
+}
+
+message StreamLogEntriesRequest {
+  // The type of log entry. Examples: model, agent, build, training.
+  string log_type = 1;
+
+  // Who the logs are for.
+  // The user app id, if a user produced the logs.
+  clarifai.api.UserAppIDSet user_app_id = 2;
+  // The Model ID, if a model produced the logs.
+  string model_id = 3;
+  // The Version ID, if a model version produced the logs.
+  string model_version_id = 4;
+  // Workflow Id, if a workflow produced the logs.
+  string workflow_id = 5;
+
+  // Where the logs came from.
+  string compute_cluster_id = 6;
+  string nodepool_id = 7;
+  string runner_id = 8;
 }
 
 // GetKeyRequest

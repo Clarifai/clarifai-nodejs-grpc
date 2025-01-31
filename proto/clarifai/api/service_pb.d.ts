@@ -3287,6 +3287,50 @@ export namespace ListLogEntriesRequest {
     }
 }
 
+export class StreamLogEntriesRequest extends jspb.Message { 
+    getLogType(): string;
+    setLogType(value: string): StreamLogEntriesRequest;
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): StreamLogEntriesRequest;
+    getModelId(): string;
+    setModelId(value: string): StreamLogEntriesRequest;
+    getModelVersionId(): string;
+    setModelVersionId(value: string): StreamLogEntriesRequest;
+    getWorkflowId(): string;
+    setWorkflowId(value: string): StreamLogEntriesRequest;
+    getComputeClusterId(): string;
+    setComputeClusterId(value: string): StreamLogEntriesRequest;
+    getNodepoolId(): string;
+    setNodepoolId(value: string): StreamLogEntriesRequest;
+    getRunnerId(): string;
+    setRunnerId(value: string): StreamLogEntriesRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): StreamLogEntriesRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: StreamLogEntriesRequest): StreamLogEntriesRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: StreamLogEntriesRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): StreamLogEntriesRequest;
+    static deserializeBinaryFromReader(message: StreamLogEntriesRequest, reader: jspb.BinaryReader): StreamLogEntriesRequest;
+}
+
+export namespace StreamLogEntriesRequest {
+    export type AsObject = {
+        logType: string,
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        modelId: string,
+        modelVersionId: string,
+        workflowId: string,
+        computeClusterId: string,
+        nodepoolId: string,
+        runnerId: string,
+    }
+}
+
 export class GetKeyRequest extends jspb.Message { 
 
     hasUserAppId(): boolean;

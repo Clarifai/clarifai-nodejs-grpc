@@ -3820,6 +3820,17 @@ function deserialize_clarifai_api_StreamInputsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.StreamInputsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_StreamLogEntriesRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.StreamLogEntriesRequest)) {
+    throw new Error('Expected argument of type clarifai.api.StreamLogEntriesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_StreamLogEntriesRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.StreamLogEntriesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_status_BaseResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_status_status_pb.BaseResponse)) {
     throw new Error('Expected argument of type clarifai.api.status.BaseResponse');
@@ -6849,6 +6860,17 @@ deleteDeployments: {
     responseType: proto_clarifai_api_service_pb.MultiLogEntryResponse,
     requestSerialize: serialize_clarifai_api_ListLogEntriesRequest,
     requestDeserialize: deserialize_clarifai_api_ListLogEntriesRequest,
+    responseSerialize: serialize_clarifai_api_MultiLogEntryResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiLogEntryResponse,
+  },
+  streamLogEntries: {
+    path: '/clarifai.api.V2/StreamLogEntries',
+    requestStream: false,
+    responseStream: true,
+    requestType: proto_clarifai_api_service_pb.StreamLogEntriesRequest,
+    responseType: proto_clarifai_api_service_pb.MultiLogEntryResponse,
+    requestSerialize: serialize_clarifai_api_StreamLogEntriesRequest,
+    requestDeserialize: deserialize_clarifai_api_StreamLogEntriesRequest,
     responseSerialize: serialize_clarifai_api_MultiLogEntryResponse,
     responseDeserialize: deserialize_clarifai_api_MultiLogEntryResponse,
   },

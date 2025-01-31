@@ -256,6 +256,7 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     postAuditLogSearches: IV2Service_IPostAuditLogSearches;
     listWorkflowEvaluationTemplates: IV2Service_IListWorkflowEvaluationTemplates;
     listLogEntries: IV2Service_IListLogEntries;
+    streamLogEntries: IV2Service_IStreamLogEntries;
 }
 
 interface IV2Service_IListConceptRelations extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListConceptRelationsRequest, proto_clarifai_api_service_pb.MultiConceptRelationResponse> {
@@ -2409,6 +2410,15 @@ interface IV2Service_IListLogEntries extends grpc.MethodDefinition<proto_clarifa
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiLogEntryResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiLogEntryResponse>;
 }
+interface IV2Service_IStreamLogEntries extends grpc.MethodDefinition<proto_clarifai_api_service_pb.StreamLogEntriesRequest, proto_clarifai_api_service_pb.MultiLogEntryResponse> {
+    path: "/clarifai.api.V2/StreamLogEntries";
+    requestStream: false;
+    responseStream: true;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.StreamLogEntriesRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.StreamLogEntriesRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiLogEntryResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiLogEntryResponse>;
+}
 
 export const V2Service: IV2Service;
 
@@ -2652,6 +2662,7 @@ export interface IV2Server {
     postAuditLogSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostAuditLogSearchesRequest, proto_clarifai_api_service_pb.MultiAuditLogEntryResponse>;
     listWorkflowEvaluationTemplates: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest, proto_clarifai_api_service_pb.MultiWorkflowEvaluationTemplateResponse>;
     listLogEntries: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListLogEntriesRequest, proto_clarifai_api_service_pb.MultiLogEntryResponse>;
+    streamLogEntries: grpc.handleServerStreamingCall<proto_clarifai_api_service_pb.StreamLogEntriesRequest, proto_clarifai_api_service_pb.MultiLogEntryResponse>;
 }
 
 export interface IV2Client {
@@ -3371,6 +3382,8 @@ export interface IV2Client {
     listLogEntries(request: proto_clarifai_api_service_pb.ListLogEntriesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLogEntryResponse) => void): grpc.ClientUnaryCall;
     listLogEntries(request: proto_clarifai_api_service_pb.ListLogEntriesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLogEntryResponse) => void): grpc.ClientUnaryCall;
     listLogEntries(request: proto_clarifai_api_service_pb.ListLogEntriesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLogEntryResponse) => void): grpc.ClientUnaryCall;
+    streamLogEntries(request: proto_clarifai_api_service_pb.StreamLogEntriesRequest, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.MultiLogEntryResponse>;
+    streamLogEntries(request: proto_clarifai_api_service_pb.StreamLogEntriesRequest, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.MultiLogEntryResponse>;
 }
 
 export class V2Client extends grpc.Client implements IV2Client {
@@ -4088,4 +4101,6 @@ export class V2Client extends grpc.Client implements IV2Client {
     public listLogEntries(request: proto_clarifai_api_service_pb.ListLogEntriesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLogEntryResponse) => void): grpc.ClientUnaryCall;
     public listLogEntries(request: proto_clarifai_api_service_pb.ListLogEntriesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLogEntryResponse) => void): grpc.ClientUnaryCall;
     public listLogEntries(request: proto_clarifai_api_service_pb.ListLogEntriesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiLogEntryResponse) => void): grpc.ClientUnaryCall;
+    public streamLogEntries(request: proto_clarifai_api_service_pb.StreamLogEntriesRequest, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.MultiLogEntryResponse>;
+    public streamLogEntries(request: proto_clarifai_api_service_pb.StreamLogEntriesRequest, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.MultiLogEntryResponse>;
 }
