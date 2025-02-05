@@ -3622,7 +3622,6 @@ service V2 {
   }
 
 
-
   // Get a specific runner.
   // TODO(zeiler): runner_id is a UUID so can list globally as well.
   rpc GetRunner (GetRunnerRequest) returns (SingleRunnerResponse) {
@@ -4025,7 +4024,6 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = LogEntries_Get;
   }
-
 
 
 
@@ -8164,6 +8162,7 @@ message MultiWorkflowEvaluationTemplateResponse {
   clarifai.api.status.Status status = 1;
   repeated WorkflowVersionEvaluationTemplate workflow_version_evaluation_templates = 2;
 }
+
 
 
 
