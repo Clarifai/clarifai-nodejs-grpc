@@ -6876,4 +6876,4 @@ deleteDeployments: {
   },
 };
 
-exports.V2Client = grpc.makeGenericClientConstructor(V2Service);
+exports.V2Client = grpc.makeGenericClientConstructor(V2Service, 'V2');
