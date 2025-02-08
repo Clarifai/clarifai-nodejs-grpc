@@ -2380,7 +2380,8 @@ proto.google.api.PythonSettings.ExperimentalFeatures.prototype.toObject = functi
 proto.google.api.PythonSettings.ExperimentalFeatures.toObject = function(includeInstance, msg) {
   var f, obj = {
     restAsyncIoEnabled: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
-    protobufPythonicTypesEnabled: jspb.Message.getBooleanFieldWithDefault(msg, 2, false)
+    protobufPythonicTypesEnabled: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
+    unversionedPackageDisabled: jspb.Message.getBooleanFieldWithDefault(msg, 3, false)
   };
 
   if (includeInstance) {
@@ -2425,6 +2426,10 @@ proto.google.api.PythonSettings.ExperimentalFeatures.deserializeBinaryFromReader
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setProtobufPythonicTypesEnabled(value);
       break;
+    case 3:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setUnversionedPackageDisabled(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -2468,6 +2473,13 @@ proto.google.api.PythonSettings.ExperimentalFeatures.serializeBinaryToWriter = f
       f
     );
   }
+  f = message.getUnversionedPackageDisabled();
+  if (f) {
+    writer.writeBool(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -2504,6 +2516,24 @@ proto.google.api.PythonSettings.ExperimentalFeatures.prototype.getProtobufPython
  */
 proto.google.api.PythonSettings.ExperimentalFeatures.prototype.setProtobufPythonicTypesEnabled = function(value) {
   return jspb.Message.setProto3BooleanField(this, 2, value);
+};
+
+
+/**
+ * optional bool unversioned_package_disabled = 3;
+ * @return {boolean}
+ */
+proto.google.api.PythonSettings.ExperimentalFeatures.prototype.getUnversionedPackageDisabled = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 3, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.google.api.PythonSettings.ExperimentalFeatures} returns this
+ */
+proto.google.api.PythonSettings.ExperimentalFeatures.prototype.setUnversionedPackageDisabled = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 

@@ -3988,6 +3988,17 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
 
+  rpc PostLogEntries (PostLogEntriesRequest) returns (clarifai.api.status.BaseResponse) {
+    // Note: http isn't used for posting log entries, but it's required for the proto file to compile.
+    option (google.api.http) = {
+      post: "/v2/log_entries"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+  }
 
   rpc ListLogEntries (ListLogEntriesRequest) returns (MultiLogEntryResponse) {
     option (google.api.http) = {
@@ -4025,6 +4036,17 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = LogEntries_Get;
   }
 
+  rpc PostComputePlaneMetrics (PostComputePlaneMetricsRequest) returns (clarifai.api.status.BaseResponse) {
+    // Note: http isn't used for posting metrics, but it's required for the proto file to compile.
+    option (google.api.http) = {
+      post: "/v2/compute_plane_metrics"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+  }
 
 
 
@@ -5293,7 +5315,15 @@ message ListModelInputsRequest {
   uint32 per_page = 5;
 }
 
+message PostComputePlaneMetricsRequest {
+  // List of ComputePlaneMetrics.
+  repeated ComputePlaneMetrics compute_plane_metrics = 1;
+}
 
+message PostLogEntriesRequest {
+  // List of log entries to be stored.
+  repeated LogEntry log_entries = 1;
+}
 
 message ListLogEntriesRequest {
   reserved 8;
