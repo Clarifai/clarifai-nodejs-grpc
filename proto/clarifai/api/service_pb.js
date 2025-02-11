@@ -91227,8 +91227,7 @@ proto.clarifai.api.ListNodepoolsRequest.toObject = function(includeInstance, msg
     userAppId: (f = msg.getUserAppId()) && proto_clarifai_api_resources_pb.UserAppIDSet.toObject(includeInstance, f),
     computeClusterId: jspb.Message.getFieldWithDefault(msg, 2, ""),
     page: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    perPage: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    minRunnerReplicas: jspb.Message.getFieldWithDefault(msg, 5, 0)
+    perPage: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -91281,10 +91280,6 @@ proto.clarifai.api.ListNodepoolsRequest.deserializeBinaryFromReader = function(m
     case 4:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setPerPage(value);
-      break;
-    case 5:
-      var value = /** @type {number} */ (reader.readUint32());
-      msg.setMinRunnerReplicas(value);
       break;
     default:
       reader.skipField();
@@ -91341,13 +91336,6 @@ proto.clarifai.api.ListNodepoolsRequest.serializeBinaryToWriter = function(messa
   if (f !== 0) {
     writer.writeUint32(
       4,
-      f
-    );
-  }
-  f = message.getMinRunnerReplicas();
-  if (f !== 0) {
-    writer.writeUint32(
-      5,
       f
     );
   }
@@ -91442,24 +91430,6 @@ proto.clarifai.api.ListNodepoolsRequest.prototype.getPerPage = function() {
  */
 proto.clarifai.api.ListNodepoolsRequest.prototype.setPerPage = function(value) {
   return jspb.Message.setProto3IntField(this, 4, value);
-};
-
-
-/**
- * optional uint32 min_runner_replicas = 5;
- * @return {number}
- */
-proto.clarifai.api.ListNodepoolsRequest.prototype.getMinRunnerReplicas = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.clarifai.api.ListNodepoolsRequest} returns this
- */
-proto.clarifai.api.ListNodepoolsRequest.prototype.setMinRunnerReplicas = function(value) {
-  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 

@@ -11104,8 +11104,6 @@ export class ListNodepoolsRequest extends jspb.Message {
     setPage(value: number): ListNodepoolsRequest;
     getPerPage(): number;
     setPerPage(value: number): ListNodepoolsRequest;
-    getMinRunnerReplicas(): number;
-    setMinRunnerReplicas(value: number): ListNodepoolsRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListNodepoolsRequest.AsObject;
@@ -11123,7 +11121,6 @@ export namespace ListNodepoolsRequest {
         computeClusterId: string,
         page: number,
         perPage: number,
-        minRunnerReplicas: number,
     }
 }
 
