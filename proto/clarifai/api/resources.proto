@@ -5024,7 +5024,36 @@ message WorkflowVersionEvaluationTemplate {
   }
 }
 
+// ComputePlaneMetrics captures the compute plane metrics to send back to the control plane.
+// Each message should have the meta filled and one or more of the other fields.
+message ComputePlaneMetrics {
+  // Who and where the metrics are from.
+  ComputeSourceMetadata meta = 1; // required.
+  string cloud = 2; // e.g. aws, azure, on-prem.
+  string region = 3; // e.g. us-east, us-west.
+  string instance_type = 4; // e.g. t3a.medium, g5.xlarge.
+  string reservation_type = 5; // e.g. spot, on-demand.
 
+  // Metrics billing
+  float reservation_price = 6; // cost of the reservation. Spot prices may change over time.
+  int32 runtime_s = 7; // Runtime in seconds.
+
+  // Metrics for latency.
+  google.protobuf.Timestamp timestamp = 8; // Time of the event.
+  string event_type = 9; // e.g. NodeProvisioned, NodeTerminated, ModelDeployed, ModelScheduled, ModelReady.
+
+  repeated GpuMetrics gpu_metrics = 10; // GPU metrics.
+
+  string hostname = 11; // Hostname of the node.
+}
+
+message GpuMetrics {
+  string uuid = 1; // GPU UUID.
+  string model_name = 2; // GPU model name. e.g. NVIDIA_A10G
+  float utilization_pct = 3; // GPU utilization. e.g. DCGM_FI_DEV_GPU_UTIL
+  float tensor_utilization_pct = 4; // Tensor utilization. e.g. DCGM_FI_PROF_PIPE_TENSOR_ACTIVE
+  float memory_utilization_pct = 5; // Memory utilization. e.g. DCGM_FI_PROF_DRAM_ACTIVE
+}
 
 // LogEntry is a single technical log entry (e.g. service log, stack traces, etc).
 message LogEntry {

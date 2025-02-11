@@ -2819,6 +2819,17 @@ function deserialize_clarifai_api_PostComputeClustersRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostComputeClustersRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PostComputePlaneMetricsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostComputePlaneMetricsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostComputePlaneMetricsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostComputePlaneMetricsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostComputePlaneMetricsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PostConceptLanguagesRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PostConceptLanguagesRequest)) {
     throw new Error('Expected argument of type clarifai.api.PostConceptLanguagesRequest');
@@ -3015,6 +3026,17 @@ function serialize_clarifai_api_PostLabelOrdersRequest(arg) {
 
 function deserialize_clarifai_api_PostLabelOrdersRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostLabelOrdersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PostLogEntriesRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostLogEntriesRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostLogEntriesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostLogEntriesRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostLogEntriesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PostModelOutputsRequest(arg) {
@@ -3818,6 +3840,17 @@ function serialize_clarifai_api_StreamInputsRequest(arg) {
 
 function deserialize_clarifai_api_StreamInputsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.StreamInputsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_StreamLogEntriesRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.StreamLogEntriesRequest)) {
+    throw new Error('Expected argument of type clarifai.api.StreamLogEntriesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_StreamLogEntriesRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.StreamLogEntriesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_status_BaseResponse(arg) {
@@ -6841,6 +6874,17 @@ deleteDeployments: {
     responseSerialize: serialize_clarifai_api_MultiWorkflowEvaluationTemplateResponse,
     responseDeserialize: deserialize_clarifai_api_MultiWorkflowEvaluationTemplateResponse,
   },
+  postLogEntries: {
+    path: '/clarifai.api.V2/PostLogEntries',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostLogEntriesRequest,
+    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
+    requestSerialize: serialize_clarifai_api_PostLogEntriesRequest,
+    requestDeserialize: deserialize_clarifai_api_PostLogEntriesRequest,
+    responseSerialize: serialize_clarifai_api_status_BaseResponse,
+    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
   listLogEntries: {
     path: '/clarifai.api.V2/ListLogEntries',
     requestStream: false,
@@ -6852,6 +6896,28 @@ deleteDeployments: {
     responseSerialize: serialize_clarifai_api_MultiLogEntryResponse,
     responseDeserialize: deserialize_clarifai_api_MultiLogEntryResponse,
   },
+  streamLogEntries: {
+    path: '/clarifai.api.V2/StreamLogEntries',
+    requestStream: false,
+    responseStream: true,
+    requestType: proto_clarifai_api_service_pb.StreamLogEntriesRequest,
+    responseType: proto_clarifai_api_service_pb.MultiLogEntryResponse,
+    requestSerialize: serialize_clarifai_api_StreamLogEntriesRequest,
+    requestDeserialize: deserialize_clarifai_api_StreamLogEntriesRequest,
+    responseSerialize: serialize_clarifai_api_MultiLogEntryResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiLogEntryResponse,
+  },
+  postComputePlaneMetrics: {
+    path: '/clarifai.api.V2/PostComputePlaneMetrics',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostComputePlaneMetricsRequest,
+    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
+    requestSerialize: serialize_clarifai_api_PostComputePlaneMetricsRequest,
+    requestDeserialize: deserialize_clarifai_api_PostComputePlaneMetricsRequest,
+    responseSerialize: serialize_clarifai_api_status_BaseResponse,
+    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
 };
 
-exports.V2Client = grpc.makeGenericClientConstructor(V2Service);
+exports.V2Client = grpc.makeGenericClientConstructor(V2Service, 'V2');

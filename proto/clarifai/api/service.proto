@@ -3622,7 +3622,6 @@ service V2 {
   }
 
 
-
   // Get a specific runner.
   // TODO(zeiler): runner_id is a UUID so can list globally as well.
   rpc GetRunner (GetRunnerRequest) returns (SingleRunnerResponse) {
@@ -3989,6 +3988,17 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
   }
 
+  rpc PostLogEntries (PostLogEntriesRequest) returns (clarifai.api.status.BaseResponse) {
+    // Note: http isn't used for posting log entries, but it's required for the proto file to compile.
+    option (google.api.http) = {
+      post: "/v2/log_entries"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+  }
 
   rpc ListLogEntries (ListLogEntriesRequest) returns (MultiLogEntryResponse) {
     option (google.api.http) = {
@@ -4015,7 +4025,28 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = LogEntries_Get;
   }
 
+  rpc StreamLogEntries (StreamLogEntriesRequest) returns (stream MultiLogEntryResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners/{runner_id}/{log_type}/logs"
+      additional_bindings {
+        get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/{log_type}/logs"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = LogEntries_Get;
+  }
 
+  rpc PostComputePlaneMetrics (PostComputePlaneMetricsRequest) returns (clarifai.api.status.BaseResponse) {
+    // Note: http isn't used for posting metrics, but it's required for the proto file to compile.
+    option (google.api.http) = {
+      post: "/v2/compute_plane_metrics"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+  }
 
 
 
@@ -5284,7 +5315,15 @@ message ListModelInputsRequest {
   uint32 per_page = 5;
 }
 
+message PostComputePlaneMetricsRequest {
+  // List of ComputePlaneMetrics.
+  repeated ComputePlaneMetrics compute_plane_metrics = 1;
+}
 
+message PostLogEntriesRequest {
+  // List of log entries to be stored.
+  repeated LogEntry log_entries = 1;
+}
 
 message ListLogEntriesRequest {
   reserved 8;
@@ -5312,6 +5351,26 @@ message ListLogEntriesRequest {
   string compute_cluster_id = 9;
   string nodepool_id = 10;
   string runner_id = 11;
+}
+
+message StreamLogEntriesRequest {
+  // The type of log entry. Examples: model, agent, build, training.
+  string log_type = 1;
+
+  // Who the logs are for.
+  // The user app id, if a user produced the logs.
+  clarifai.api.UserAppIDSet user_app_id = 2;
+  // The Model ID, if a model produced the logs.
+  string model_id = 3;
+  // The Version ID, if a model version produced the logs.
+  string model_version_id = 4;
+  // Workflow Id, if a workflow produced the logs.
+  string workflow_id = 5;
+
+  // Where the logs came from.
+  string compute_cluster_id = 6;
+  string nodepool_id = 7;
+  string runner_id = 8;
 }
 
 // GetKeyRequest
@@ -8133,6 +8192,7 @@ message MultiWorkflowEvaluationTemplateResponse {
   clarifai.api.status.Status status = 1;
   repeated WorkflowVersionEvaluationTemplate workflow_version_evaluation_templates = 2;
 }
+
 
 
 
