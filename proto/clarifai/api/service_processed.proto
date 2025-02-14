@@ -4062,6 +4062,7 @@ service V2 {
 
 
 
+
 }
 
 
@@ -8192,6 +8193,7 @@ message MultiWorkflowEvaluationTemplateResponse {
   clarifai.api.status.Status status = 1;
   repeated WorkflowVersionEvaluationTemplate workflow_version_evaluation_templates = 2;
 }
+
 
 
 
