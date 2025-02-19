@@ -673,12 +673,24 @@ message Data {
   // A proto representation for numpy arrays, useful to pass information from python SDK to a
   // python based model implementation.
   NDArray ndarray = 20;
+  // Input and output integer number 
+  int64 int_value = 21;
+  // Input and output floating number
+  double float_value = 22;
+  // Input and output bytes data
+  bytes bytes_value = 23;
+  // Input and output bool data
+  bool bool_value = 24;
+  // Input and output string data
+  string string_value = 25;
 }
 
 // A part of data used for multi-modal processing.
 message Part {
   // The data for this part.
   Data data = 1;
+  // A unique id for the part.
+  string id = 2;
 }
 
 // A region within the data.
@@ -1474,6 +1486,7 @@ message Model {
   string creator = 37;
 
   int32 version_count = 38;
+  bool uses_tokens = 39;
 }
 
 // A link to a html/markdown/text file that stores reference material tied to a model.

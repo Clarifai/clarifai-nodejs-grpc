@@ -13258,7 +13258,12 @@ proto.clarifai.api.Data.toObject = function(includeInstance, msg) {
     proto.clarifai.api.Image.toObject, includeInstance),
     partsList: jspb.Message.toObjectList(msg.getPartsList(),
     proto.clarifai.api.Part.toObject, includeInstance),
-    ndarray: (f = msg.getNdarray()) && proto.clarifai.api.NDArray.toObject(includeInstance, f)
+    ndarray: (f = msg.getNdarray()) && proto.clarifai.api.NDArray.toObject(includeInstance, f),
+    intValue: jspb.Message.getFieldWithDefault(msg, 21, 0),
+    floatValue: jspb.Message.getFloatingPointFieldWithDefault(msg, 22, 0.0),
+    bytesValue: msg.getBytesValue_asB64(),
+    boolValue: jspb.Message.getBooleanFieldWithDefault(msg, 24, false),
+    stringValue: jspb.Message.getFieldWithDefault(msg, 25, "")
   };
 
   if (includeInstance) {
@@ -13384,6 +13389,26 @@ proto.clarifai.api.Data.deserializeBinaryFromReader = function(msg, reader) {
       var value = new proto.clarifai.api.NDArray;
       reader.readMessage(value,proto.clarifai.api.NDArray.deserializeBinaryFromReader);
       msg.setNdarray(value);
+      break;
+    case 21:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setIntValue(value);
+      break;
+    case 22:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setFloatValue(value);
+      break;
+    case 23:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setBytesValue(value);
+      break;
+    case 24:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setBoolValue(value);
+      break;
+    case 25:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setStringValue(value);
       break;
     default:
       reader.skipField();
@@ -13556,6 +13581,41 @@ proto.clarifai.api.Data.serializeBinaryToWriter = function(message, writer) {
       20,
       f,
       proto.clarifai.api.NDArray.serializeBinaryToWriter
+    );
+  }
+  f = message.getIntValue();
+  if (f !== 0) {
+    writer.writeInt64(
+      21,
+      f
+    );
+  }
+  f = message.getFloatValue();
+  if (f !== 0.0) {
+    writer.writeDouble(
+      22,
+      f
+    );
+  }
+  f = message.getBytesValue_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      23,
+      f
+    );
+  }
+  f = message.getBoolValue();
+  if (f) {
+    writer.writeBool(
+      24,
+      f
+    );
+  }
+  f = message.getStringValue();
+  if (f.length > 0) {
+    writer.writeString(
+      25,
+      f
     );
   }
 };
@@ -14238,6 +14298,120 @@ proto.clarifai.api.Data.prototype.hasNdarray = function() {
 };
 
 
+/**
+ * optional int64 int_value = 21;
+ * @return {number}
+ */
+proto.clarifai.api.Data.prototype.getIntValue = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 21, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.Data} returns this
+ */
+proto.clarifai.api.Data.prototype.setIntValue = function(value) {
+  return jspb.Message.setProto3IntField(this, 21, value);
+};
+
+
+/**
+ * optional double float_value = 22;
+ * @return {number}
+ */
+proto.clarifai.api.Data.prototype.getFloatValue = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 22, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.Data} returns this
+ */
+proto.clarifai.api.Data.prototype.setFloatValue = function(value) {
+  return jspb.Message.setProto3FloatField(this, 22, value);
+};
+
+
+/**
+ * optional bytes bytes_value = 23;
+ * @return {!(string|Uint8Array)}
+ */
+proto.clarifai.api.Data.prototype.getBytesValue = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 23, ""));
+};
+
+
+/**
+ * optional bytes bytes_value = 23;
+ * This is a type-conversion wrapper around `getBytesValue()`
+ * @return {string}
+ */
+proto.clarifai.api.Data.prototype.getBytesValue_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getBytesValue()));
+};
+
+
+/**
+ * optional bytes bytes_value = 23;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getBytesValue()`
+ * @return {!Uint8Array}
+ */
+proto.clarifai.api.Data.prototype.getBytesValue_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getBytesValue()));
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.clarifai.api.Data} returns this
+ */
+proto.clarifai.api.Data.prototype.setBytesValue = function(value) {
+  return jspb.Message.setProto3BytesField(this, 23, value);
+};
+
+
+/**
+ * optional bool bool_value = 24;
+ * @return {boolean}
+ */
+proto.clarifai.api.Data.prototype.getBoolValue = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 24, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.Data} returns this
+ */
+proto.clarifai.api.Data.prototype.setBoolValue = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 24, value);
+};
+
+
+/**
+ * optional string string_value = 25;
+ * @return {string}
+ */
+proto.clarifai.api.Data.prototype.getStringValue = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 25, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.Data} returns this
+ */
+proto.clarifai.api.Data.prototype.setStringValue = function(value) {
+  return jspb.Message.setProto3StringField(this, 25, value);
+};
+
+
 
 
 
@@ -14270,7 +14444,8 @@ proto.clarifai.api.Part.prototype.toObject = function(opt_includeInstance) {
  */
 proto.clarifai.api.Part.toObject = function(includeInstance, msg) {
   var f, obj = {
-    data: (f = msg.getData()) && proto.clarifai.api.Data.toObject(includeInstance, f)
+    data: (f = msg.getData()) && proto.clarifai.api.Data.toObject(includeInstance, f),
+    id: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -14312,6 +14487,10 @@ proto.clarifai.api.Part.deserializeBinaryFromReader = function(msg, reader) {
       reader.readMessage(value,proto.clarifai.api.Data.deserializeBinaryFromReader);
       msg.setData(value);
       break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setId(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -14347,6 +14526,13 @@ proto.clarifai.api.Part.serializeBinaryToWriter = function(message, writer) {
       1,
       f,
       proto.clarifai.api.Data.serializeBinaryToWriter
+    );
+  }
+  f = message.getId();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
     );
   }
 };
@@ -14386,6 +14572,24 @@ proto.clarifai.api.Part.prototype.clearData = function() {
  */
 proto.clarifai.api.Part.prototype.hasData = function() {
   return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional string id = 2;
+ * @return {string}
+ */
+proto.clarifai.api.Part.prototype.getId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.Part} returns this
+ */
+proto.clarifai.api.Part.prototype.setId = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -24788,7 +24992,8 @@ proto.clarifai.api.Model.toObject = function(includeInstance, msg) {
     licenseType: jspb.Message.getFieldWithDefault(msg, 35, 0),
     source: jspb.Message.getFieldWithDefault(msg, 36, 0),
     creator: jspb.Message.getFieldWithDefault(msg, 37, ""),
-    versionCount: jspb.Message.getFieldWithDefault(msg, 38, 0)
+    versionCount: jspb.Message.getFieldWithDefault(msg, 38, 0),
+    usesTokens: jspb.Message.getBooleanFieldWithDefault(msg, 39, false)
   };
 
   if (includeInstance) {
@@ -24960,6 +25165,10 @@ proto.clarifai.api.Model.deserializeBinaryFromReader = function(msg, reader) {
     case 38:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setVersionCount(value);
+      break;
+    case 39:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setUsesTokens(value);
       break;
     default:
       reader.skipField();
@@ -25216,6 +25425,13 @@ proto.clarifai.api.Model.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0) {
     writer.writeInt32(
       38,
+      f
+    );
+  }
+  f = message.getUsesTokens();
+  if (f) {
+    writer.writeBool(
+      39,
       f
     );
   }
@@ -26091,6 +26307,24 @@ proto.clarifai.api.Model.prototype.getVersionCount = function() {
  */
 proto.clarifai.api.Model.prototype.setVersionCount = function(value) {
   return jspb.Message.setProto3IntField(this, 38, value);
+};
+
+
+/**
+ * optional bool uses_tokens = 39;
+ * @return {boolean}
+ */
+proto.clarifai.api.Model.prototype.getUsesTokens = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 39, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.Model} returns this
+ */
+proto.clarifai.api.Model.prototype.setUsesTokens = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 39, value);
 };
 
 

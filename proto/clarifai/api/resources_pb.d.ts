@@ -1160,6 +1160,18 @@ export class Data extends jspb.Message {
     clearNdarray(): void;
     getNdarray(): NDArray | undefined;
     setNdarray(value?: NDArray): Data;
+    getIntValue(): number;
+    setIntValue(value: number): Data;
+    getFloatValue(): number;
+    setFloatValue(value: number): Data;
+    getBytesValue(): Uint8Array | string;
+    getBytesValue_asU8(): Uint8Array;
+    getBytesValue_asB64(): string;
+    setBytesValue(value: Uint8Array | string): Data;
+    getBoolValue(): boolean;
+    setBoolValue(value: boolean): Data;
+    getStringValue(): string;
+    setStringValue(value: string): Data;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Data.AsObject;
@@ -1191,6 +1203,11 @@ export namespace Data {
         heatmapsList: Array<Image.AsObject>,
         partsList: Array<Part.AsObject>,
         ndarray?: NDArray.AsObject,
+        intValue: number,
+        floatValue: number,
+        bytesValue: Uint8Array | string,
+        boolValue: boolean,
+        stringValue: string,
     }
 }
 
@@ -1200,6 +1217,8 @@ export class Part extends jspb.Message {
     clearData(): void;
     getData(): Data | undefined;
     setData(value?: Data): Part;
+    getId(): string;
+    setId(value: string): Part;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Part.AsObject;
@@ -1214,6 +1233,7 @@ export class Part extends jspb.Message {
 export namespace Part {
     export type AsObject = {
         data?: Data.AsObject,
+        id: string,
     }
 }
 
@@ -2673,6 +2693,8 @@ export class Model extends jspb.Message {
     setCreator(value: string): Model;
     getVersionCount(): number;
     setVersionCount(value: number): Model;
+    getUsesTokens(): boolean;
+    setUsesTokens(value: boolean): Model;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Model.AsObject;
@@ -2717,6 +2739,7 @@ export namespace Model {
         source: Model.Source,
         creator: string,
         versionCount: number,
+        usesTokens: boolean,
     }
 
     export enum Source {
