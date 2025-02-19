@@ -1486,6 +1486,7 @@ message Model {
   string creator = 37;
 
   int32 version_count = 38;
+  bool uses_tokens = 39;
 }
 
 // A link to a html/markdown/text file that stores reference material tied to a model.

@@ -24992,7 +24992,8 @@ proto.clarifai.api.Model.toObject = function(includeInstance, msg) {
     licenseType: jspb.Message.getFieldWithDefault(msg, 35, 0),
     source: jspb.Message.getFieldWithDefault(msg, 36, 0),
     creator: jspb.Message.getFieldWithDefault(msg, 37, ""),
-    versionCount: jspb.Message.getFieldWithDefault(msg, 38, 0)
+    versionCount: jspb.Message.getFieldWithDefault(msg, 38, 0),
+    usesTokens: jspb.Message.getBooleanFieldWithDefault(msg, 39, false)
   };
 
   if (includeInstance) {
@@ -25164,6 +25165,10 @@ proto.clarifai.api.Model.deserializeBinaryFromReader = function(msg, reader) {
     case 38:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setVersionCount(value);
+      break;
+    case 39:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setUsesTokens(value);
       break;
     default:
       reader.skipField();
@@ -25420,6 +25425,13 @@ proto.clarifai.api.Model.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0) {
     writer.writeInt32(
       38,
+      f
+    );
+  }
+  f = message.getUsesTokens();
+  if (f) {
+    writer.writeBool(
+      39,
       f
     );
   }
@@ -26295,6 +26307,24 @@ proto.clarifai.api.Model.prototype.getVersionCount = function() {
  */
 proto.clarifai.api.Model.prototype.setVersionCount = function(value) {
   return jspb.Message.setProto3IntField(this, 38, value);
+};
+
+
+/**
+ * optional bool uses_tokens = 39;
+ * @return {boolean}
+ */
+proto.clarifai.api.Model.prototype.getUsesTokens = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 39, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.Model} returns this
+ */
+proto.clarifai.api.Model.prototype.setUsesTokens = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 39, value);
 };
 
 
