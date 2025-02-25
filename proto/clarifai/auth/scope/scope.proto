@@ -303,11 +303,6 @@ enum S {
                             (clarifai_depending_scopes) = LabelOrders_Add,
                             (clarifai_depending_scopes) = LabelOrders_Get];
 
-  // Read from user_feature_configs table
-  UserFeatureConfigs_Get = 71 [(clarfai_exposed) = true];
-
-
-
 
 
 
