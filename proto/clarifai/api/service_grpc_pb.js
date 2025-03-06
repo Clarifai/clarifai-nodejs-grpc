@@ -916,6 +916,17 @@ function deserialize_clarifai_api_GetWorkflowRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.GetWorkflowRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_GetWorkflowVersionEvaluationRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.GetWorkflowVersionEvaluationRequest)) {
+    throw new Error('Expected argument of type clarifai.api.GetWorkflowVersionEvaluationRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_GetWorkflowVersionEvaluationRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.GetWorkflowVersionEvaluationRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_GetWorkflowVersionRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.GetWorkflowVersionRequest)) {
     throw new Error('Expected argument of type clarifai.api.GetWorkflowVersionRequest');
@@ -1519,6 +1530,17 @@ function serialize_clarifai_api_ListWorkflowEvaluationTemplatesRequest(arg) {
 
 function deserialize_clarifai_api_ListWorkflowEvaluationTemplatesRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListWorkflowEvaluationTemplatesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_ListWorkflowVersionEvaluationsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListWorkflowVersionEvaluationsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListWorkflowVersionEvaluationsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListWorkflowVersionEvaluationsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListWorkflowVersionEvaluationsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_ListWorkflowVersionsRequest(arg) {
@@ -2258,6 +2280,17 @@ function deserialize_clarifai_api_MultiWorkflowResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiWorkflowResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_MultiWorkflowVersionEvaluationResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiWorkflowVersionEvaluationResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiWorkflowVersionEvaluationResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_MultiWorkflowVersionResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.MultiWorkflowVersionResponse)) {
     throw new Error('Expected argument of type clarifai.api.MultiWorkflowVersionResponse');
@@ -2665,6 +2698,17 @@ function deserialize_clarifai_api_PatchWorkflowIdsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PatchWorkflowIdsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PatchWorkflowVersionEvaluationsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PatchWorkflowVersionEvaluationsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PatchWorkflowVersionEvaluationsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PatchWorkflowVersionEvaluationsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PatchWorkflowVersionEvaluationsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PatchWorkflowVersionsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PatchWorkflowVersionsRequest)) {
     throw new Error('Expected argument of type clarifai.api.PatchWorkflowVersionsRequest');
@@ -3039,6 +3083,17 @@ function deserialize_clarifai_api_PostLogEntriesRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostLogEntriesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PostModelMigrationRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostModelMigrationRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostModelMigrationRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostModelMigrationRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostModelMigrationRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PostModelOutputsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PostModelOutputsRequest)) {
     throw new Error('Expected argument of type clarifai.api.PostModelOutputsRequest');
@@ -3312,6 +3367,17 @@ function serialize_clarifai_api_PostWorkflowResultsResponse(arg) {
 
 function deserialize_clarifai_api_PostWorkflowResultsResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.PostWorkflowResultsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PostWorkflowVersionEvaluationsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostWorkflowVersionEvaluationsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostWorkflowVersionEvaluationsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostWorkflowVersionEvaluationsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostWorkflowVersionEvaluationsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PostWorkflowVersionsPublishRequest(arg) {
@@ -3818,6 +3884,17 @@ function serialize_clarifai_api_SingleWorkflowResponse(arg) {
 
 function deserialize_clarifai_api_SingleWorkflowResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.SingleWorkflowResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_SingleWorkflowVersionEvaluationResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.SingleWorkflowVersionEvaluationResponse)) {
+    throw new Error('Expected argument of type clarifai.api.SingleWorkflowVersionEvaluationResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_SingleWorkflowVersionEvaluationResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.SingleWorkflowVersionEvaluationResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_SingleWorkflowVersionResponse(arg) {
@@ -4965,6 +5042,18 @@ postModelVersionsUpload: {
     requestDeserialize: deserialize_clarifai_api_PostModelVersionsUploadRequest,
     responseSerialize: serialize_clarifai_api_PostModelVersionsUploadResponse,
     responseDeserialize: deserialize_clarifai_api_PostModelVersionsUploadResponse,
+  },
+  // Kicks off conversion from the old Triton model format to the new Docker model format.
+postModelMigration: {
+    path: '/clarifai.api.V2/PostModelMigration',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostModelMigrationRequest,
+    responseType: proto_clarifai_api_service_pb.SingleModelResponse,
+    requestSerialize: serialize_clarifai_api_PostModelMigrationRequest,
+    requestDeserialize: deserialize_clarifai_api_PostModelMigrationRequest,
+    responseSerialize: serialize_clarifai_api_SingleModelResponse,
+    responseDeserialize: deserialize_clarifai_api_SingleModelResponse,
   },
   // Export a model
 //
@@ -6917,6 +7006,50 @@ deleteDeployments: {
     requestDeserialize: deserialize_clarifai_api_PostComputePlaneMetricsRequest,
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
+  postWorkflowVersionEvaluations: {
+    path: '/clarifai.api.V2/PostWorkflowVersionEvaluations',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostWorkflowVersionEvaluationsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse,
+    requestSerialize: serialize_clarifai_api_PostWorkflowVersionEvaluationsRequest,
+    requestDeserialize: deserialize_clarifai_api_PostWorkflowVersionEvaluationsRequest,
+    responseSerialize: serialize_clarifai_api_MultiWorkflowVersionEvaluationResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiWorkflowVersionEvaluationResponse,
+  },
+  getWorkflowVersionEvaluation: {
+    path: '/clarifai.api.V2/GetWorkflowVersionEvaluation',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.GetWorkflowVersionEvaluationRequest,
+    responseType: proto_clarifai_api_service_pb.SingleWorkflowVersionEvaluationResponse,
+    requestSerialize: serialize_clarifai_api_GetWorkflowVersionEvaluationRequest,
+    requestDeserialize: deserialize_clarifai_api_GetWorkflowVersionEvaluationRequest,
+    responseSerialize: serialize_clarifai_api_SingleWorkflowVersionEvaluationResponse,
+    responseDeserialize: deserialize_clarifai_api_SingleWorkflowVersionEvaluationResponse,
+  },
+  listWorkflowVersionEvaluations: {
+    path: '/clarifai.api.V2/ListWorkflowVersionEvaluations',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListWorkflowVersionEvaluationsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse,
+    requestSerialize: serialize_clarifai_api_ListWorkflowVersionEvaluationsRequest,
+    requestDeserialize: deserialize_clarifai_api_ListWorkflowVersionEvaluationsRequest,
+    responseSerialize: serialize_clarifai_api_MultiWorkflowVersionEvaluationResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiWorkflowVersionEvaluationResponse,
+  },
+  patchWorkflowVersionEvaluations: {
+    path: '/clarifai.api.V2/PatchWorkflowVersionEvaluations',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PatchWorkflowVersionEvaluationsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse,
+    requestSerialize: serialize_clarifai_api_PatchWorkflowVersionEvaluationsRequest,
+    requestDeserialize: deserialize_clarifai_api_PatchWorkflowVersionEvaluationsRequest,
+    responseSerialize: serialize_clarifai_api_MultiWorkflowVersionEvaluationResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiWorkflowVersionEvaluationResponse,
   },
 };
 
