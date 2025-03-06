@@ -5068,6 +5068,8 @@ message ComputePlaneMetrics {
   repeated GpuMetrics gpu_metrics = 10; // GPU metrics.
 
   string hostname = 11; // Hostname of the node.
+
+  repeated CpuMetrics cpu_metrics = 12; // CPU metrics.
 }
 
 message GpuMetrics {
@@ -5076,6 +5078,14 @@ message GpuMetrics {
   float utilization_pct = 3; // GPU utilization. e.g. DCGM_FI_DEV_GPU_UTIL
   float tensor_utilization_pct = 4; // Tensor utilization. e.g. DCGM_FI_PROF_PIPE_TENSOR_ACTIVE
   float memory_utilization_pct = 5; // Memory utilization. e.g. DCGM_FI_PROF_DRAM_ACTIVE
+}
+
+message CpuMetrics {
+  google.protobuf.Timestamp timestamp = 1; // Time of the event.
+  float cpu_utilization_pct = 2; // CPU utilization.
+  float memory_utilization_pct = 3; // Memory utilization.
+  int64 millicores = 4; // CPU millicores.
+  int64 memory_bytes = 5; // Memory bytes.
 }
 
 // LogEntry is a single technical log entry (e.g. service log, stack traces, etc).
