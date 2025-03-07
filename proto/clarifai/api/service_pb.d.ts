@@ -4628,6 +4628,8 @@ export class PostModelVersionsRequest extends jspb.Message {
     clearEvalInfo(): void;
     getEvalInfo(): proto_clarifai_api_resources_pb.EvalInfo | undefined;
     setEvalInfo(value?: proto_clarifai_api_resources_pb.EvalInfo): PostModelVersionsRequest;
+    getDoMigration(): boolean;
+    setDoMigration(value: boolean): PostModelVersionsRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PostModelVersionsRequest.AsObject;
@@ -4646,6 +4648,7 @@ export namespace PostModelVersionsRequest {
         modelVersionsList: Array<proto_clarifai_api_resources_pb.ModelVersion.AsObject>,
         description: string,
         evalInfo?: proto_clarifai_api_resources_pb.EvalInfo.AsObject,
+        doMigration: boolean,
     }
 }
 
@@ -10529,6 +10532,10 @@ export class PostRunnerItemOutputsRequest extends jspb.Message {
     setRunnerReplicaId(value: string): PostRunnerItemOutputsRequest;
     getComputeClusterId(): string;
     setComputeClusterId(value: string): PostRunnerItemOutputsRequest;
+    getCloudProviderId(): string;
+    setCloudProviderId(value: string): PostRunnerItemOutputsRequest;
+    getRegion(): string;
+    setRegion(value: string): PostRunnerItemOutputsRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PostRunnerItemOutputsRequest.AsObject;
@@ -10550,6 +10557,48 @@ export namespace PostRunnerItemOutputsRequest {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         runnerReplicaId: string,
         computeClusterId: string,
+        cloudProviderId: string,
+        region: string,
+    }
+}
+
+export class SyncStateRequest extends jspb.Message { 
+    getOperationType(): string;
+    setOperationType(value: string): SyncStateRequest;
+    clearComputeClustersList(): void;
+    getComputeClustersList(): Array<proto_clarifai_api_resources_pb.ComputeCluster>;
+    setComputeClustersList(value: Array<proto_clarifai_api_resources_pb.ComputeCluster>): SyncStateRequest;
+    addComputeClusters(value?: proto_clarifai_api_resources_pb.ComputeCluster, index?: number): proto_clarifai_api_resources_pb.ComputeCluster;
+    clearNodepoolsList(): void;
+    getNodepoolsList(): Array<proto_clarifai_api_resources_pb.Nodepool>;
+    setNodepoolsList(value: Array<proto_clarifai_api_resources_pb.Nodepool>): SyncStateRequest;
+    addNodepools(value?: proto_clarifai_api_resources_pb.Nodepool, index?: number): proto_clarifai_api_resources_pb.Nodepool;
+    clearRunnersList(): void;
+    getRunnersList(): Array<proto_clarifai_api_resources_pb.Runner>;
+    setRunnersList(value: Array<proto_clarifai_api_resources_pb.Runner>): SyncStateRequest;
+    addRunners(value?: proto_clarifai_api_resources_pb.Runner, index?: number): proto_clarifai_api_resources_pb.Runner;
+    clearPipelineVersionRunsList(): void;
+    getPipelineVersionRunsList(): Array<proto_clarifai_api_resources_pb.PipelineVersionRun>;
+    setPipelineVersionRunsList(value: Array<proto_clarifai_api_resources_pb.PipelineVersionRun>): SyncStateRequest;
+    addPipelineVersionRuns(value?: proto_clarifai_api_resources_pb.PipelineVersionRun, index?: number): proto_clarifai_api_resources_pb.PipelineVersionRun;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): SyncStateRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: SyncStateRequest): SyncStateRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: SyncStateRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): SyncStateRequest;
+    static deserializeBinaryFromReader(message: SyncStateRequest, reader: jspb.BinaryReader): SyncStateRequest;
+}
+
+export namespace SyncStateRequest {
+    export type AsObject = {
+        operationType: string,
+        computeClustersList: Array<proto_clarifai_api_resources_pb.ComputeCluster.AsObject>,
+        nodepoolsList: Array<proto_clarifai_api_resources_pb.Nodepool.AsObject>,
+        runnersList: Array<proto_clarifai_api_resources_pb.Runner.AsObject>,
+        pipelineVersionRunsList: Array<proto_clarifai_api_resources_pb.PipelineVersionRun.AsObject>,
     }
 }
 
@@ -10597,6 +10646,11 @@ export class RunnerItem extends jspb.Message {
     getPostModelOutputsRequest(): PostModelOutputsRequest | undefined;
     setPostModelOutputsRequest(value?: PostModelOutputsRequest): RunnerItem;
 
+    hasSyncStateRequest(): boolean;
+    clearSyncStateRequest(): void;
+    getSyncStateRequest(): SyncStateRequest | undefined;
+    setSyncStateRequest(value?: SyncStateRequest): RunnerItem;
+
     getRequestCase(): RunnerItem.RequestCase;
 
     serializeBinary(): Uint8Array;
@@ -10615,11 +10669,13 @@ export namespace RunnerItem {
         description: string,
         processingInfo?: proto_clarifai_api_resources_pb.ProcessingInfo.AsObject,
         postModelOutputsRequest?: PostModelOutputsRequest.AsObject,
+        syncStateRequest?: SyncStateRequest.AsObject,
     }
 
     export enum RequestCase {
         REQUEST_NOT_SET = 0,
         POST_MODEL_OUTPUTS_REQUEST = 4,
+        SYNC_STATE_REQUEST = 5,
     }
 
 }
@@ -11597,6 +11653,227 @@ export namespace MultiWorkflowEvaluationTemplateResponse {
     export type AsObject = {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         workflowVersionEvaluationTemplatesList: Array<proto_clarifai_api_resources_pb.WorkflowVersionEvaluationTemplate.AsObject>,
+    }
+}
+
+export class PostWorkflowVersionEvaluationsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PostWorkflowVersionEvaluationsRequest;
+    getWorkflowId(): string;
+    setWorkflowId(value: string): PostWorkflowVersionEvaluationsRequest;
+    getWorkflowVersionId(): string;
+    setWorkflowVersionId(value: string): PostWorkflowVersionEvaluationsRequest;
+    clearWorkflowVersionEvaluationsList(): void;
+    getWorkflowVersionEvaluationsList(): Array<proto_clarifai_api_resources_pb.WorkflowVersionEvaluation>;
+    setWorkflowVersionEvaluationsList(value: Array<proto_clarifai_api_resources_pb.WorkflowVersionEvaluation>): PostWorkflowVersionEvaluationsRequest;
+    addWorkflowVersionEvaluations(value?: proto_clarifai_api_resources_pb.WorkflowVersionEvaluation, index?: number): proto_clarifai_api_resources_pb.WorkflowVersionEvaluation;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PostWorkflowVersionEvaluationsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PostWorkflowVersionEvaluationsRequest): PostWorkflowVersionEvaluationsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PostWorkflowVersionEvaluationsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PostWorkflowVersionEvaluationsRequest;
+    static deserializeBinaryFromReader(message: PostWorkflowVersionEvaluationsRequest, reader: jspb.BinaryReader): PostWorkflowVersionEvaluationsRequest;
+}
+
+export namespace PostWorkflowVersionEvaluationsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        workflowId: string,
+        workflowVersionId: string,
+        workflowVersionEvaluationsList: Array<proto_clarifai_api_resources_pb.WorkflowVersionEvaluation.AsObject>,
+    }
+}
+
+export class PatchWorkflowVersionEvaluationsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PatchWorkflowVersionEvaluationsRequest;
+    getWorkflowId(): string;
+    setWorkflowId(value: string): PatchWorkflowVersionEvaluationsRequest;
+    getWorkflowVersionId(): string;
+    setWorkflowVersionId(value: string): PatchWorkflowVersionEvaluationsRequest;
+    clearWorkflowVersionEvaluationsList(): void;
+    getWorkflowVersionEvaluationsList(): Array<proto_clarifai_api_resources_pb.WorkflowVersionEvaluation>;
+    setWorkflowVersionEvaluationsList(value: Array<proto_clarifai_api_resources_pb.WorkflowVersionEvaluation>): PatchWorkflowVersionEvaluationsRequest;
+    addWorkflowVersionEvaluations(value?: proto_clarifai_api_resources_pb.WorkflowVersionEvaluation, index?: number): proto_clarifai_api_resources_pb.WorkflowVersionEvaluation;
+    getAction(): string;
+    setAction(value: string): PatchWorkflowVersionEvaluationsRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PatchWorkflowVersionEvaluationsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PatchWorkflowVersionEvaluationsRequest): PatchWorkflowVersionEvaluationsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PatchWorkflowVersionEvaluationsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PatchWorkflowVersionEvaluationsRequest;
+    static deserializeBinaryFromReader(message: PatchWorkflowVersionEvaluationsRequest, reader: jspb.BinaryReader): PatchWorkflowVersionEvaluationsRequest;
+}
+
+export namespace PatchWorkflowVersionEvaluationsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        workflowId: string,
+        workflowVersionId: string,
+        workflowVersionEvaluationsList: Array<proto_clarifai_api_resources_pb.WorkflowVersionEvaluation.AsObject>,
+        action: string,
+    }
+}
+
+export class MultiWorkflowVersionEvaluationResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiWorkflowVersionEvaluationResponse;
+    clearWorkflowVersionEvaluationsList(): void;
+    getWorkflowVersionEvaluationsList(): Array<proto_clarifai_api_resources_pb.WorkflowVersionEvaluation>;
+    setWorkflowVersionEvaluationsList(value: Array<proto_clarifai_api_resources_pb.WorkflowVersionEvaluation>): MultiWorkflowVersionEvaluationResponse;
+    addWorkflowVersionEvaluations(value?: proto_clarifai_api_resources_pb.WorkflowVersionEvaluation, index?: number): proto_clarifai_api_resources_pb.WorkflowVersionEvaluation;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiWorkflowVersionEvaluationResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiWorkflowVersionEvaluationResponse): MultiWorkflowVersionEvaluationResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiWorkflowVersionEvaluationResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiWorkflowVersionEvaluationResponse;
+    static deserializeBinaryFromReader(message: MultiWorkflowVersionEvaluationResponse, reader: jspb.BinaryReader): MultiWorkflowVersionEvaluationResponse;
+}
+
+export namespace MultiWorkflowVersionEvaluationResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        workflowVersionEvaluationsList: Array<proto_clarifai_api_resources_pb.WorkflowVersionEvaluation.AsObject>,
+    }
+}
+
+export class SingleWorkflowVersionEvaluationResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): SingleWorkflowVersionEvaluationResponse;
+
+    hasWorkflowVersionEvaluation(): boolean;
+    clearWorkflowVersionEvaluation(): void;
+    getWorkflowVersionEvaluation(): proto_clarifai_api_resources_pb.WorkflowVersionEvaluation | undefined;
+    setWorkflowVersionEvaluation(value?: proto_clarifai_api_resources_pb.WorkflowVersionEvaluation): SingleWorkflowVersionEvaluationResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): SingleWorkflowVersionEvaluationResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: SingleWorkflowVersionEvaluationResponse): SingleWorkflowVersionEvaluationResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: SingleWorkflowVersionEvaluationResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): SingleWorkflowVersionEvaluationResponse;
+    static deserializeBinaryFromReader(message: SingleWorkflowVersionEvaluationResponse, reader: jspb.BinaryReader): SingleWorkflowVersionEvaluationResponse;
+}
+
+export namespace SingleWorkflowVersionEvaluationResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        workflowVersionEvaluation?: proto_clarifai_api_resources_pb.WorkflowVersionEvaluation.AsObject,
+    }
+}
+
+export class GetWorkflowVersionEvaluationRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): GetWorkflowVersionEvaluationRequest;
+    getWorkflowId(): string;
+    setWorkflowId(value: string): GetWorkflowVersionEvaluationRequest;
+    getWorkflowVersionId(): string;
+    setWorkflowVersionId(value: string): GetWorkflowVersionEvaluationRequest;
+    getWorkflowVersionEvaluationId(): string;
+    setWorkflowVersionEvaluationId(value: string): GetWorkflowVersionEvaluationRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetWorkflowVersionEvaluationRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: GetWorkflowVersionEvaluationRequest): GetWorkflowVersionEvaluationRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetWorkflowVersionEvaluationRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetWorkflowVersionEvaluationRequest;
+    static deserializeBinaryFromReader(message: GetWorkflowVersionEvaluationRequest, reader: jspb.BinaryReader): GetWorkflowVersionEvaluationRequest;
+}
+
+export namespace GetWorkflowVersionEvaluationRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        workflowId: string,
+        workflowVersionId: string,
+        workflowVersionEvaluationId: string,
+    }
+}
+
+export class ListWorkflowVersionEvaluationsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): ListWorkflowVersionEvaluationsRequest;
+    getWorkflowId(): string;
+    setWorkflowId(value: string): ListWorkflowVersionEvaluationsRequest;
+    getWorkflowVersionId(): string;
+    setWorkflowVersionId(value: string): ListWorkflowVersionEvaluationsRequest;
+    getPage(): number;
+    setPage(value: number): ListWorkflowVersionEvaluationsRequest;
+    getPerPage(): number;
+    setPerPage(value: number): ListWorkflowVersionEvaluationsRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListWorkflowVersionEvaluationsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListWorkflowVersionEvaluationsRequest): ListWorkflowVersionEvaluationsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListWorkflowVersionEvaluationsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListWorkflowVersionEvaluationsRequest;
+    static deserializeBinaryFromReader(message: ListWorkflowVersionEvaluationsRequest, reader: jspb.BinaryReader): ListWorkflowVersionEvaluationsRequest;
+}
+
+export namespace ListWorkflowVersionEvaluationsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        workflowId: string,
+        workflowVersionId: string,
+        page: number,
+        perPage: number,
+    }
+}
+
+export class PostModelMigrationRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PostModelMigrationRequest;
+    getModelId(): string;
+    setModelId(value: string): PostModelMigrationRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PostModelMigrationRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PostModelMigrationRequest): PostModelMigrationRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PostModelMigrationRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PostModelMigrationRequest;
+    static deserializeBinaryFromReader(message: PostModelMigrationRequest, reader: jspb.BinaryReader): PostModelMigrationRequest;
+}
+
+export namespace PostModelMigrationRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        modelId: string,
     }
 }
 

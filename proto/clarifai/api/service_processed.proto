@@ -1554,6 +1554,19 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get; // Needs to check the base workflow to build off of.
   }
 
+  // Kicks off conversion from the old Triton model format to the new Docker model format.
+  rpc PostModelMigration (PostModelMigrationRequest) returns (SingleModelResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/migration"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Train;
+  }
+
    // Export a model
 
 
@@ -2595,6 +2608,7 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = NoAuth;
   }
+
 
 
 
@@ -4048,9 +4062,67 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
   }
 
+  rpc PostWorkflowVersionEvaluations (PostWorkflowVersionEvaluationsRequest) returns (MultiWorkflowVersionEvaluationResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Predict;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Get;
+  }
 
+  rpc GetWorkflowVersionEvaluation (GetWorkflowVersionEvaluationRequest) returns (SingleWorkflowVersionEvaluationResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations/{workflow_version_evaluation_id}"
+      additional_bindings182 {
+        get: "/v2/workflow-version-evaluations/{workflow_version_evaluation_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Get;
+  }
 
+  rpc ListWorkflowVersionEvaluations (ListWorkflowVersionEvaluationsRequest) returns (MultiWorkflowVersionEvaluationResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations"
+      additional_bindings183 {
+        get: "/v2/workflow-version-evaluations"
+      }
+    };
 
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Get;
+  }
+
+  rpc PatchWorkflowVersionEvaluations (PatchWorkflowVersionEvaluationsRequest) returns (MultiWorkflowVersionEvaluationResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations"
+      body: "*"
+    };
+
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Predict;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Get;
+  }
 
 
 
@@ -5800,6 +5872,8 @@ message PostModelVersionsRequest {
   // When evaluate_after_training set to true, we will do evaluation immediately after training finishes.
   // We will merge this with default_eval_info.
   EvalInfo eval_info = 10;
+  // When set to true, we will convert the model into a containerized model after training.
+  bool do_migration = 11;
 }
 
 message PostModelVersionsUploadRequest {
@@ -6489,6 +6563,8 @@ message SingleAnnotationFilterResponse {
 
   AnnotationFilter annotation_filter = 2;
 }
+
+
 
 
 
@@ -7918,8 +7994,27 @@ message PostRunnerItemOutputsRequest {
 
   string compute_cluster_id = 8;
 
+  // Used by agent runners to specify their cloud provider.
+  string cloud_provider_id = 9;
+
+  // Used by agent runners to specify their region.
+  string region = 10;
+
   // FUTURE
   // Advanced metrics coming back from the runner.
+}
+
+// SyncStateRequest is a message that the control plane sends to the agent runner to notify it of
+// changes to objects.
+message SyncStateRequest{
+  // The operation that was performed: create, update, delete.
+  string operation_type = 1;
+
+  // Objects that were affected.
+  repeated ComputeCluster compute_clusters = 2;
+  repeated Nodepool nodepools = 3;
+  repeated Runner runners = 4;
+  repeated PipelineVersionRun pipeline_version_runs = 5;
 }
 
 // MultiRunnerItemResponse
@@ -7944,6 +8039,8 @@ message RunnerItem {
   oneof request {
     // Model prediction request from a user.
     PostModelOutputsRequest post_model_outputs_request = 4;
+    // Agent sync request from control plane.
+    SyncStateRequest sync_state_request = 5;
     // Workflow request from a user.  // FUTURE
     // training request next, etc.
   }
@@ -8042,7 +8139,7 @@ message PostComputeClustersRequest {
 message DeleteComputeClustersRequest {
   // Only the user_id is used from this.
   clarifai.api.UserAppIDSet user_app_id = 1;
-  // List of nodepool ids to be deleted
+  // List of compute cluster ids to be deleted
   repeated string ids = 2;
 }
 
@@ -8194,12 +8291,77 @@ message MultiWorkflowEvaluationTemplateResponse {
   repeated WorkflowVersionEvaluationTemplate workflow_version_evaluation_templates = 2;
 }
 
+message PostWorkflowVersionEvaluationsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string workflow_id = 2;
+  string workflow_version_id = 3;
+
+  // ########## Supported fields ##########
+  // - evaluation_template_id
+  // - ground_truth_dataset_id
+  // - ground_truth_dataset_version_id
+  // - id
+  repeated clarifai.api.WorkflowVersionEvaluation workflow_version_evaluations = 4;
+}
+
+message PatchWorkflowVersionEvaluationsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string workflow_id = 2;
+  string workflow_version_id = 3;
+
+  // ########## Supported fields ##########
+  // - id
+  // - predictions_dataset_id
+  // - predictions_dataset_version_id
+  // - status.code
+  // - status.details
+  // - workflow_evaluation_result.summary.evaluation_metric_values[].evaluation_metric_id
+  // - workflow_evaluation_result.summary.evaluation_metric_values[].explanation
+  // - workflow_evaluation_result.summary.evaluation_metric_values[].metric_value.float_value
+  // - workflow_evaluation_result.summary.evaluation_metric_values[].metric_value.int_value
+  // - workflow_evaluation_result.summary.evaluation_metric_values[].metric_value.string_value
+  // - workflow_evaluation_result.summary.evaluation_metric_values[].per_concept_values
+  repeated clarifai.api.WorkflowVersionEvaluation workflow_version_evaluations = 4;
+
+  // only overwrite supported
+  string action = 5;
+}
+
+message MultiWorkflowVersionEvaluationResponse {
+  clarifai.api.status.Status status = 1;
+  repeated clarifai.api.WorkflowVersionEvaluation workflow_version_evaluations = 2;
+}
 
 
 
+message SingleWorkflowVersionEvaluationResponse {
+  clarifai.api.status.Status status = 1;
+  clarifai.api.WorkflowVersionEvaluation workflow_version_evaluation = 2;
+}
 
+message GetWorkflowVersionEvaluationRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string workflow_id = 2;
+  string workflow_version_id = 3;
+  string workflow_version_evaluation_id = 4;
+}
 
+message ListWorkflowVersionEvaluationsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string workflow_id = 2;
+  string workflow_version_id = 3;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 4;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 5;
+}
 
+message PostModelMigrationRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+}
 
 
 

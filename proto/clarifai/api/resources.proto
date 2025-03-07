@@ -673,7 +673,7 @@ message Data {
   // A proto representation for numpy arrays, useful to pass information from python SDK to a
   // python based model implementation.
   NDArray ndarray = 20;
-  // Input and output integer number 
+  // Input and output integer number
   int64 int_value = 21;
   // Input and output floating number
   double float_value = 22;
@@ -1395,7 +1395,7 @@ enum LicenseType {
 // The fields that are patchable include Model.name, Model.display_name and Model.output_info
 // (except the Model.output_info.type and Model.output_info.type_ext).
 message Model {
-  reserved 8, 10, 11, 12, 13, 24, 28;
+  reserved 8, 10, 11, 12, 13, 24, 28, 39;
 
   // The model's ID. Must be unique within a particular app and URL-friendly.
   string id = 1;
@@ -1484,10 +1484,18 @@ message Model {
   Source source = 36;
   // Creator of Model
   string creator = 37;
-
   int32 version_count = 38;
-  bool uses_tokens = 39;
+  enum BillingType {
+    Unknown = 0;
+    Tokens = 1;
+    Ops = 2;
+  }
+  BillingType billing_type = 40;
 }
+
+
+
+
 
 // A link to a html/markdown/text file that stores reference material tied to a model.
 message ModelReference {
@@ -4775,6 +4783,8 @@ message AutoscaleConfig {
   // Depending on your plan you may be able to enable packing of resources into a single node
   // for more compute and cost efficiency.
   bool disable_packing = 7;
+  // The idle time before scaling down to zero
+  uint32 scale_to_zero_delay_seconds = 8;
 }
 
 
@@ -5107,17 +5117,151 @@ message ComputeSourceMetadata {
   string runner_id = 8;
 }
 
+message WorkflowVersionEvaluation {
+  // Customer-Facing / External ID of the workflow version evaluation.
+  string id = 1;
+  // The ID of the workflow that is used for evaluation.
+  string workflow_id = 2;
+  // The version of the workflow that is used for evaluation.
+  string workflow_version_id = 3;
+  // The ID of the ground-truth dataset that is used for evaluation.
+  string ground_truth_dataset_id = 4;
+  // The version ID of the ground-truth dataset that is used for evaluation.
+  string ground_truth_dataset_version_id = 5;
+  // The ID of the prediction dataset that is used for evaluation.
+  string predictions_dataset_id = 6;
+  // The version ID of the prediction dataset that is used for evaluation.
+  string predictions_dataset_version_id = 7;
+  // Evaluation Template ID
+  string evaluation_template_id = 8;
+  // The evaluation results
+  WorkflowEvaluationResult workflow_evaluation_result = 9;
+  // Status of the evaluation
+  clarifai.api.status.Status status = 10;
+  // When the workflow version evaluation was created.
+  google.protobuf.Timestamp created_at = 11;
+  // When the workflow version evaluation was modified.
+  google.protobuf.Timestamp modified_at = 12;
+}
+
+message WorkflowEvaluationResult {
+  // The summary of the evaluation result.
+  WorkflowEvaluationResultSummary summary = 1;
+}
+
+message WorkflowEvaluationResultSummary {
+  // The evaluation metrics.
+  repeated EvaluationMetricValue evaluation_metric_values = 2;
+}
+
+message EvaluationMetricValue {
+  // The metric values
+  string evaluation_metric_id = 1;
+  // Aggregated metric value
+  MetricValue metric_value = 2;
+  // explanation for the value
+  string explanation = 3;
+  // Metric values for each concept
+  map<string, MetricValue> per_concept_values = 4;
+}
+
+
+message MetricValue {
+  oneof metric_value {
+    string string_value = 1;
+    float float_value = 2;
+    int32 int_value = 3;
+  }
+}
 
 
 
 
+message ArgoOrchestrationSpec {
+  // The API version of the orchestration specification.
+  // Example: "argoproj.io/v1alpha1", "argoproj.io/v1beta1"
+  string api_version = 2;
+
+  // The JSON representation of the Argo orchestration specification.
+  string spec_json = 3;
+}
+
+message OrchestrationSpec {
+  oneof orchestration {
+    ArgoOrchestrationSpec argo_orchestration_spec = 1; // Argo orchestration specification
+
+    // Enable adding other orchestration engines spec here in the future e.g. flyte_orchestration_spec and so on
+  }
+}
 
 
+message PipelineVersion {
+  string id = 1;
 
+  // The app the pipeline version belongs to.
+  string app_id = 2;
 
+  // The user the pipeline version belongs to.
+  string user_id = 3;
 
+  // Orchestration Specification using oneof
+  OrchestrationSpec orchestration_spec = 4;
 
+  // Pipeline's Id
+  string pipeline_id = 5;
 
+  // Short description about this pipeline version
+  string description = 6;
 
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 7;
 
+  // To handle arbitrary json metadata, use a struct field
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  google.protobuf.Struct metadata = 8;
 
+  // When the pipeline was created
+  google.protobuf.Timestamp created_at = 9;
+
+  // When the pipeline was last modified
+  google.protobuf.Timestamp modified_at = 10;
+}
+
+message OrchestrationStatus {
+  // Oneof field for extensibility, supporting different orchestration systems
+  oneof status_details {
+    ArgoOrchestrationStatus argo_status = 1; // Status for Argo Workflow
+
+    // Add other orchestration statuses here as needed similar to OrchestrationSpec
+  }
+
+  // This will help us with filtering the PipelineVersionRuns based on status
+  clarifai.api.status.Status status = 2;
+}
+
+// Argo Workflow Status message
+message ArgoOrchestrationStatus {
+  // Refer https://pkg.go.dev/github.com/argoproj/argo-workflows/v3/pkg/apis/workflow/v1alpha1#WorkflowStatus
+  string status = 1;
+}
+
+message PipelineVersionRun {
+  string id = 1;
+
+  // Pipeline Version associated with this run
+  PipelineVersion pipeline_version = 2;
+
+  // Nodepool(s) used for the Pipeline Version Run
+  repeated Nodepool nodepools = 3;
+
+  // Orchestration Status for this run, supporting multiple orchestration systems
+  OrchestrationStatus orchestration_status = 4;
+
+  // The user the pipeline belongs to
+  string user_id = 5;
+
+  // The app the pipeline belongs to
+  string app_id = 6;
+}

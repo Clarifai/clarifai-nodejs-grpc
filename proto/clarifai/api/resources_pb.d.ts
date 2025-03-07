@@ -2693,8 +2693,8 @@ export class Model extends jspb.Message {
     setCreator(value: string): Model;
     getVersionCount(): number;
     setVersionCount(value: number): Model;
-    getUsesTokens(): boolean;
-    setUsesTokens(value: boolean): Model;
+    getBillingType(): Model.BillingType;
+    setBillingType(value: Model.BillingType): Model;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Model.AsObject;
@@ -2739,13 +2739,19 @@ export namespace Model {
         source: Model.Source,
         creator: string,
         versionCount: number,
-        usesTokens: boolean,
+        billingType: Model.BillingType,
     }
 
     export enum Source {
     UNKNOWN_SOURCE = 0,
     HOSTED = 1,
     WRAPPED = 2,
+    }
+
+    export enum BillingType {
+    UNKNOWN = 0,
+    TOKENS = 1,
+    OPS = 2,
     }
 
 }
@@ -8556,6 +8562,8 @@ export class AutoscaleConfig extends jspb.Message {
     setScaleUpDelaySeconds(value: number): AutoscaleConfig;
     getDisablePacking(): boolean;
     setDisablePacking(value: boolean): AutoscaleConfig;
+    getScaleToZeroDelaySeconds(): number;
+    setScaleToZeroDelaySeconds(value: number): AutoscaleConfig;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): AutoscaleConfig.AsObject;
@@ -8575,6 +8583,7 @@ export namespace AutoscaleConfig {
         scaleDownDelaySeconds: number,
         scaleUpDelaySeconds: number,
         disablePacking: boolean,
+        scaleToZeroDelaySeconds: number,
     }
 }
 
@@ -9172,6 +9181,411 @@ export namespace ComputeSourceMetadata {
         computeClusterId: string,
         nodepoolId: string,
         runnerId: string,
+    }
+}
+
+export class WorkflowVersionEvaluation extends jspb.Message { 
+    getId(): string;
+    setId(value: string): WorkflowVersionEvaluation;
+    getWorkflowId(): string;
+    setWorkflowId(value: string): WorkflowVersionEvaluation;
+    getWorkflowVersionId(): string;
+    setWorkflowVersionId(value: string): WorkflowVersionEvaluation;
+    getGroundTruthDatasetId(): string;
+    setGroundTruthDatasetId(value: string): WorkflowVersionEvaluation;
+    getGroundTruthDatasetVersionId(): string;
+    setGroundTruthDatasetVersionId(value: string): WorkflowVersionEvaluation;
+    getPredictionsDatasetId(): string;
+    setPredictionsDatasetId(value: string): WorkflowVersionEvaluation;
+    getPredictionsDatasetVersionId(): string;
+    setPredictionsDatasetVersionId(value: string): WorkflowVersionEvaluation;
+    getEvaluationTemplateId(): string;
+    setEvaluationTemplateId(value: string): WorkflowVersionEvaluation;
+
+    hasWorkflowEvaluationResult(): boolean;
+    clearWorkflowEvaluationResult(): void;
+    getWorkflowEvaluationResult(): WorkflowEvaluationResult | undefined;
+    setWorkflowEvaluationResult(value?: WorkflowEvaluationResult): WorkflowVersionEvaluation;
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): WorkflowVersionEvaluation;
+
+    hasCreatedAt(): boolean;
+    clearCreatedAt(): void;
+    getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): WorkflowVersionEvaluation;
+
+    hasModifiedAt(): boolean;
+    clearModifiedAt(): void;
+    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): WorkflowVersionEvaluation;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): WorkflowVersionEvaluation.AsObject;
+    static toObject(includeInstance: boolean, msg: WorkflowVersionEvaluation): WorkflowVersionEvaluation.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: WorkflowVersionEvaluation, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): WorkflowVersionEvaluation;
+    static deserializeBinaryFromReader(message: WorkflowVersionEvaluation, reader: jspb.BinaryReader): WorkflowVersionEvaluation;
+}
+
+export namespace WorkflowVersionEvaluation {
+    export type AsObject = {
+        id: string,
+        workflowId: string,
+        workflowVersionId: string,
+        groundTruthDatasetId: string,
+        groundTruthDatasetVersionId: string,
+        predictionsDatasetId: string,
+        predictionsDatasetVersionId: string,
+        evaluationTemplateId: string,
+        workflowEvaluationResult?: WorkflowEvaluationResult.AsObject,
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    }
+}
+
+export class WorkflowEvaluationResult extends jspb.Message { 
+
+    hasSummary(): boolean;
+    clearSummary(): void;
+    getSummary(): WorkflowEvaluationResultSummary | undefined;
+    setSummary(value?: WorkflowEvaluationResultSummary): WorkflowEvaluationResult;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): WorkflowEvaluationResult.AsObject;
+    static toObject(includeInstance: boolean, msg: WorkflowEvaluationResult): WorkflowEvaluationResult.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: WorkflowEvaluationResult, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): WorkflowEvaluationResult;
+    static deserializeBinaryFromReader(message: WorkflowEvaluationResult, reader: jspb.BinaryReader): WorkflowEvaluationResult;
+}
+
+export namespace WorkflowEvaluationResult {
+    export type AsObject = {
+        summary?: WorkflowEvaluationResultSummary.AsObject,
+    }
+}
+
+export class WorkflowEvaluationResultSummary extends jspb.Message { 
+    clearEvaluationMetricValuesList(): void;
+    getEvaluationMetricValuesList(): Array<EvaluationMetricValue>;
+    setEvaluationMetricValuesList(value: Array<EvaluationMetricValue>): WorkflowEvaluationResultSummary;
+    addEvaluationMetricValues(value?: EvaluationMetricValue, index?: number): EvaluationMetricValue;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): WorkflowEvaluationResultSummary.AsObject;
+    static toObject(includeInstance: boolean, msg: WorkflowEvaluationResultSummary): WorkflowEvaluationResultSummary.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: WorkflowEvaluationResultSummary, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): WorkflowEvaluationResultSummary;
+    static deserializeBinaryFromReader(message: WorkflowEvaluationResultSummary, reader: jspb.BinaryReader): WorkflowEvaluationResultSummary;
+}
+
+export namespace WorkflowEvaluationResultSummary {
+    export type AsObject = {
+        evaluationMetricValuesList: Array<EvaluationMetricValue.AsObject>,
+    }
+}
+
+export class EvaluationMetricValue extends jspb.Message { 
+    getEvaluationMetricId(): string;
+    setEvaluationMetricId(value: string): EvaluationMetricValue;
+
+    hasMetricValue(): boolean;
+    clearMetricValue(): void;
+    getMetricValue(): MetricValue | undefined;
+    setMetricValue(value?: MetricValue): EvaluationMetricValue;
+    getExplanation(): string;
+    setExplanation(value: string): EvaluationMetricValue;
+
+    getPerConceptValuesMap(): jspb.Map<string, MetricValue>;
+    clearPerConceptValuesMap(): void;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): EvaluationMetricValue.AsObject;
+    static toObject(includeInstance: boolean, msg: EvaluationMetricValue): EvaluationMetricValue.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: EvaluationMetricValue, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): EvaluationMetricValue;
+    static deserializeBinaryFromReader(message: EvaluationMetricValue, reader: jspb.BinaryReader): EvaluationMetricValue;
+}
+
+export namespace EvaluationMetricValue {
+    export type AsObject = {
+        evaluationMetricId: string,
+        metricValue?: MetricValue.AsObject,
+        explanation: string,
+
+        perConceptValuesMap: Array<[string, MetricValue.AsObject]>,
+    }
+}
+
+export class MetricValue extends jspb.Message { 
+
+    hasStringValue(): boolean;
+    clearStringValue(): void;
+    getStringValue(): string;
+    setStringValue(value: string): MetricValue;
+
+    hasFloatValue(): boolean;
+    clearFloatValue(): void;
+    getFloatValue(): number;
+    setFloatValue(value: number): MetricValue;
+
+    hasIntValue(): boolean;
+    clearIntValue(): void;
+    getIntValue(): number;
+    setIntValue(value: number): MetricValue;
+
+    getMetricValueCase(): MetricValue.MetricValueCase;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MetricValue.AsObject;
+    static toObject(includeInstance: boolean, msg: MetricValue): MetricValue.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MetricValue, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MetricValue;
+    static deserializeBinaryFromReader(message: MetricValue, reader: jspb.BinaryReader): MetricValue;
+}
+
+export namespace MetricValue {
+    export type AsObject = {
+        stringValue: string,
+        floatValue: number,
+        intValue: number,
+    }
+
+    export enum MetricValueCase {
+        METRIC_VALUE_NOT_SET = 0,
+        STRING_VALUE = 1,
+        FLOAT_VALUE = 2,
+        INT_VALUE = 3,
+    }
+
+}
+
+export class ArgoOrchestrationSpec extends jspb.Message { 
+    getApiVersion(): string;
+    setApiVersion(value: string): ArgoOrchestrationSpec;
+    getSpecJson(): string;
+    setSpecJson(value: string): ArgoOrchestrationSpec;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ArgoOrchestrationSpec.AsObject;
+    static toObject(includeInstance: boolean, msg: ArgoOrchestrationSpec): ArgoOrchestrationSpec.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ArgoOrchestrationSpec, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ArgoOrchestrationSpec;
+    static deserializeBinaryFromReader(message: ArgoOrchestrationSpec, reader: jspb.BinaryReader): ArgoOrchestrationSpec;
+}
+
+export namespace ArgoOrchestrationSpec {
+    export type AsObject = {
+        apiVersion: string,
+        specJson: string,
+    }
+}
+
+export class OrchestrationSpec extends jspb.Message { 
+
+    hasArgoOrchestrationSpec(): boolean;
+    clearArgoOrchestrationSpec(): void;
+    getArgoOrchestrationSpec(): ArgoOrchestrationSpec | undefined;
+    setArgoOrchestrationSpec(value?: ArgoOrchestrationSpec): OrchestrationSpec;
+
+    getOrchestrationCase(): OrchestrationSpec.OrchestrationCase;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): OrchestrationSpec.AsObject;
+    static toObject(includeInstance: boolean, msg: OrchestrationSpec): OrchestrationSpec.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: OrchestrationSpec, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): OrchestrationSpec;
+    static deserializeBinaryFromReader(message: OrchestrationSpec, reader: jspb.BinaryReader): OrchestrationSpec;
+}
+
+export namespace OrchestrationSpec {
+    export type AsObject = {
+        argoOrchestrationSpec?: ArgoOrchestrationSpec.AsObject,
+    }
+
+    export enum OrchestrationCase {
+        ORCHESTRATION_NOT_SET = 0,
+        ARGO_ORCHESTRATION_SPEC = 1,
+    }
+
+}
+
+export class PipelineVersion extends jspb.Message { 
+    getId(): string;
+    setId(value: string): PipelineVersion;
+    getAppId(): string;
+    setAppId(value: string): PipelineVersion;
+    getUserId(): string;
+    setUserId(value: string): PipelineVersion;
+
+    hasOrchestrationSpec(): boolean;
+    clearOrchestrationSpec(): void;
+    getOrchestrationSpec(): OrchestrationSpec | undefined;
+    setOrchestrationSpec(value?: OrchestrationSpec): PipelineVersion;
+    getPipelineId(): string;
+    setPipelineId(value: string): PipelineVersion;
+    getDescription(): string;
+    setDescription(value: string): PipelineVersion;
+
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): Visibility | undefined;
+    setVisibility(value?: Visibility): PipelineVersion;
+
+    hasMetadata(): boolean;
+    clearMetadata(): void;
+    getMetadata(): google_protobuf_struct_pb.Struct | undefined;
+    setMetadata(value?: google_protobuf_struct_pb.Struct): PipelineVersion;
+
+    hasCreatedAt(): boolean;
+    clearCreatedAt(): void;
+    getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): PipelineVersion;
+
+    hasModifiedAt(): boolean;
+    clearModifiedAt(): void;
+    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): PipelineVersion;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PipelineVersion.AsObject;
+    static toObject(includeInstance: boolean, msg: PipelineVersion): PipelineVersion.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PipelineVersion, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PipelineVersion;
+    static deserializeBinaryFromReader(message: PipelineVersion, reader: jspb.BinaryReader): PipelineVersion;
+}
+
+export namespace PipelineVersion {
+    export type AsObject = {
+        id: string,
+        appId: string,
+        userId: string,
+        orchestrationSpec?: OrchestrationSpec.AsObject,
+        pipelineId: string,
+        description: string,
+        visibility?: Visibility.AsObject,
+        metadata?: google_protobuf_struct_pb.Struct.AsObject,
+        createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    }
+}
+
+export class OrchestrationStatus extends jspb.Message { 
+
+    hasArgoStatus(): boolean;
+    clearArgoStatus(): void;
+    getArgoStatus(): ArgoOrchestrationStatus | undefined;
+    setArgoStatus(value?: ArgoOrchestrationStatus): OrchestrationStatus;
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): OrchestrationStatus;
+
+    getStatusDetailsCase(): OrchestrationStatus.StatusDetailsCase;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): OrchestrationStatus.AsObject;
+    static toObject(includeInstance: boolean, msg: OrchestrationStatus): OrchestrationStatus.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: OrchestrationStatus, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): OrchestrationStatus;
+    static deserializeBinaryFromReader(message: OrchestrationStatus, reader: jspb.BinaryReader): OrchestrationStatus;
+}
+
+export namespace OrchestrationStatus {
+    export type AsObject = {
+        argoStatus?: ArgoOrchestrationStatus.AsObject,
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+    }
+
+    export enum StatusDetailsCase {
+        STATUS_DETAILS_NOT_SET = 0,
+        ARGO_STATUS = 1,
+    }
+
+}
+
+export class ArgoOrchestrationStatus extends jspb.Message { 
+    getStatus(): string;
+    setStatus(value: string): ArgoOrchestrationStatus;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ArgoOrchestrationStatus.AsObject;
+    static toObject(includeInstance: boolean, msg: ArgoOrchestrationStatus): ArgoOrchestrationStatus.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ArgoOrchestrationStatus, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ArgoOrchestrationStatus;
+    static deserializeBinaryFromReader(message: ArgoOrchestrationStatus, reader: jspb.BinaryReader): ArgoOrchestrationStatus;
+}
+
+export namespace ArgoOrchestrationStatus {
+    export type AsObject = {
+        status: string,
+    }
+}
+
+export class PipelineVersionRun extends jspb.Message { 
+    getId(): string;
+    setId(value: string): PipelineVersionRun;
+
+    hasPipelineVersion(): boolean;
+    clearPipelineVersion(): void;
+    getPipelineVersion(): PipelineVersion | undefined;
+    setPipelineVersion(value?: PipelineVersion): PipelineVersionRun;
+    clearNodepoolsList(): void;
+    getNodepoolsList(): Array<Nodepool>;
+    setNodepoolsList(value: Array<Nodepool>): PipelineVersionRun;
+    addNodepools(value?: Nodepool, index?: number): Nodepool;
+
+    hasOrchestrationStatus(): boolean;
+    clearOrchestrationStatus(): void;
+    getOrchestrationStatus(): OrchestrationStatus | undefined;
+    setOrchestrationStatus(value?: OrchestrationStatus): PipelineVersionRun;
+    getUserId(): string;
+    setUserId(value: string): PipelineVersionRun;
+    getAppId(): string;
+    setAppId(value: string): PipelineVersionRun;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PipelineVersionRun.AsObject;
+    static toObject(includeInstance: boolean, msg: PipelineVersionRun): PipelineVersionRun.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PipelineVersionRun, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PipelineVersionRun;
+    static deserializeBinaryFromReader(message: PipelineVersionRun, reader: jspb.BinaryReader): PipelineVersionRun;
+}
+
+export namespace PipelineVersionRun {
+    export type AsObject = {
+        id: string,
+        pipelineVersion?: PipelineVersion.AsObject,
+        nodepoolsList: Array<Nodepool.AsObject>,
+        orchestrationStatus?: OrchestrationStatus.AsObject,
+        userId: string,
+        appId: string,
     }
 }
 
