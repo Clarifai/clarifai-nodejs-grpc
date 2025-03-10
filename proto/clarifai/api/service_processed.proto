@@ -7043,6 +7043,8 @@ message GetTaskRequest {
   // - metrics.review.inputs_count_estimated
   // - metrics.review.inputs_count_estimated_per_reviewer
   // - metrics.review.inputs_percent_estimated
+  // - metrics.review.inputs_percent_estimated_per_reviewer
+  // - metrics.review.inputs_reviewable_count_estimated_per_reviewer
   repeated string additional_fields = 3;
 }
 
@@ -7077,6 +7079,8 @@ message ListTasksRequest {
   // - metrics.review.inputs_count_estimated
   // - metrics.review.inputs_count_estimated_per_reviewer
   // - metrics.review.inputs_percent_estimated
+  // - metrics.review.inputs_percent_estimated_per_reviewer
+  // - metrics.review.inputs_reviewable_count_estimated_per_reviewer
   repeated string additional_fields = 7;
 
   // (optional) task IDs to filter on

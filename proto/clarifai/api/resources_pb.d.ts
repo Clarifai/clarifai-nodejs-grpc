@@ -6389,12 +6389,20 @@ export namespace TaskWorkMetrics {
 export class TaskReviewMetrics extends jspb.Message { 
     getInputsCountEstimated(): number;
     setInputsCountEstimated(value: number): TaskReviewMetrics;
+    getInputsPercentEstimated(): number;
+    setInputsPercentEstimated(value: number): TaskReviewMetrics;
     clearInputsCountEstimatedPerReviewerList(): void;
     getInputsCountEstimatedPerReviewerList(): Array<number>;
     setInputsCountEstimatedPerReviewerList(value: Array<number>): TaskReviewMetrics;
     addInputsCountEstimatedPerReviewer(value: number, index?: number): number;
-    getInputsPercentEstimated(): number;
-    setInputsPercentEstimated(value: number): TaskReviewMetrics;
+    clearInputsReviewableCountEstimatedPerReviewerList(): void;
+    getInputsReviewableCountEstimatedPerReviewerList(): Array<number>;
+    setInputsReviewableCountEstimatedPerReviewerList(value: Array<number>): TaskReviewMetrics;
+    addInputsReviewableCountEstimatedPerReviewer(value: number, index?: number): number;
+    clearInputsPercentEstimatedPerReviewerList(): void;
+    getInputsPercentEstimatedPerReviewerList(): Array<number>;
+    setInputsPercentEstimatedPerReviewerList(value: Array<number>): TaskReviewMetrics;
+    addInputsPercentEstimatedPerReviewer(value: number, index?: number): number;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): TaskReviewMetrics.AsObject;
@@ -6409,8 +6417,10 @@ export class TaskReviewMetrics extends jspb.Message {
 export namespace TaskReviewMetrics {
     export type AsObject = {
         inputsCountEstimated: number,
-        inputsCountEstimatedPerReviewerList: Array<number>,
         inputsPercentEstimated: number,
+        inputsCountEstimatedPerReviewerList: Array<number>,
+        inputsReviewableCountEstimatedPerReviewerList: Array<number>,
+        inputsPercentEstimatedPerReviewerList: Array<number>,
     }
 }
 

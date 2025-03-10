@@ -54809,7 +54809,7 @@ proto.clarifai.api.TaskWorkMetrics.prototype.setInputsPercentEstimated = functio
  * @private {!Array<number>}
  * @const
  */
-proto.clarifai.api.TaskReviewMetrics.repeatedFields_ = [3];
+proto.clarifai.api.TaskReviewMetrics.repeatedFields_ = [3,4,5];
 
 
 
@@ -54843,8 +54843,10 @@ proto.clarifai.api.TaskReviewMetrics.prototype.toObject = function(opt_includeIn
 proto.clarifai.api.TaskReviewMetrics.toObject = function(includeInstance, msg) {
   var f, obj = {
     inputsCountEstimated: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    inputsPercentEstimated: jspb.Message.getFieldWithDefault(msg, 2, 0),
     inputsCountEstimatedPerReviewerList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f,
-    inputsPercentEstimated: jspb.Message.getFieldWithDefault(msg, 2, 0)
+    inputsReviewableCountEstimatedPerReviewerList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f,
+    inputsPercentEstimatedPerReviewerList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -54885,15 +54887,27 @@ proto.clarifai.api.TaskReviewMetrics.deserializeBinaryFromReader = function(msg,
       var value = /** @type {number} */ (reader.readUint64());
       msg.setInputsCountEstimated(value);
       break;
+    case 2:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setInputsPercentEstimated(value);
+      break;
     case 3:
       var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedUint64() : [reader.readUint64()]);
       for (var i = 0; i < values.length; i++) {
         msg.addInputsCountEstimatedPerReviewer(values[i]);
       }
       break;
-    case 2:
-      var value = /** @type {number} */ (reader.readUint32());
-      msg.setInputsPercentEstimated(value);
+    case 4:
+      var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedUint64() : [reader.readUint64()]);
+      for (var i = 0; i < values.length; i++) {
+        msg.addInputsReviewableCountEstimatedPerReviewer(values[i]);
+      }
+      break;
+    case 5:
+      var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedUint32() : [reader.readUint32()]);
+      for (var i = 0; i < values.length; i++) {
+        msg.addInputsPercentEstimatedPerReviewer(values[i]);
+      }
       break;
     default:
       reader.skipField();
@@ -54931,6 +54945,13 @@ proto.clarifai.api.TaskReviewMetrics.serializeBinaryToWriter = function(message,
       f
     );
   }
+  f = message.getInputsPercentEstimated();
+  if (f !== 0) {
+    writer.writeUint32(
+      2,
+      f
+    );
+  }
   f = message.getInputsCountEstimatedPerReviewerList();
   if (f.length > 0) {
     writer.writePackedUint64(
@@ -54938,10 +54959,17 @@ proto.clarifai.api.TaskReviewMetrics.serializeBinaryToWriter = function(message,
       f
     );
   }
-  f = message.getInputsPercentEstimated();
-  if (f !== 0) {
-    writer.writeUint32(
-      2,
+  f = message.getInputsReviewableCountEstimatedPerReviewerList();
+  if (f.length > 0) {
+    writer.writePackedUint64(
+      4,
+      f
+    );
+  }
+  f = message.getInputsPercentEstimatedPerReviewerList();
+  if (f.length > 0) {
+    writer.writePackedUint32(
+      5,
       f
     );
   }
@@ -54963,6 +54991,24 @@ proto.clarifai.api.TaskReviewMetrics.prototype.getInputsCountEstimated = functio
  */
 proto.clarifai.api.TaskReviewMetrics.prototype.setInputsCountEstimated = function(value) {
   return jspb.Message.setProto3IntField(this, 1, value);
+};
+
+
+/**
+ * optional uint32 inputs_percent_estimated = 2;
+ * @return {number}
+ */
+proto.clarifai.api.TaskReviewMetrics.prototype.getInputsPercentEstimated = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.TaskReviewMetrics} returns this
+ */
+proto.clarifai.api.TaskReviewMetrics.prototype.setInputsPercentEstimated = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -55004,20 +55050,76 @@ proto.clarifai.api.TaskReviewMetrics.prototype.clearInputsCountEstimatedPerRevie
 
 
 /**
- * optional uint32 inputs_percent_estimated = 2;
- * @return {number}
+ * repeated uint64 inputs_reviewable_count_estimated_per_reviewer = 4;
+ * @return {!Array<number>}
  */
-proto.clarifai.api.TaskReviewMetrics.prototype.getInputsPercentEstimated = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+proto.clarifai.api.TaskReviewMetrics.prototype.getInputsReviewableCountEstimatedPerReviewerList = function() {
+  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 4));
+};
+
+
+/**
+ * @param {!Array<number>} value
+ * @return {!proto.clarifai.api.TaskReviewMetrics} returns this
+ */
+proto.clarifai.api.TaskReviewMetrics.prototype.setInputsReviewableCountEstimatedPerReviewerList = function(value) {
+  return jspb.Message.setField(this, 4, value || []);
 };
 
 
 /**
  * @param {number} value
+ * @param {number=} opt_index
  * @return {!proto.clarifai.api.TaskReviewMetrics} returns this
  */
-proto.clarifai.api.TaskReviewMetrics.prototype.setInputsPercentEstimated = function(value) {
-  return jspb.Message.setProto3IntField(this, 2, value);
+proto.clarifai.api.TaskReviewMetrics.prototype.addInputsReviewableCountEstimatedPerReviewer = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 4, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.TaskReviewMetrics} returns this
+ */
+proto.clarifai.api.TaskReviewMetrics.prototype.clearInputsReviewableCountEstimatedPerReviewerList = function() {
+  return this.setInputsReviewableCountEstimatedPerReviewerList([]);
+};
+
+
+/**
+ * repeated uint32 inputs_percent_estimated_per_reviewer = 5;
+ * @return {!Array<number>}
+ */
+proto.clarifai.api.TaskReviewMetrics.prototype.getInputsPercentEstimatedPerReviewerList = function() {
+  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 5));
+};
+
+
+/**
+ * @param {!Array<number>} value
+ * @return {!proto.clarifai.api.TaskReviewMetrics} returns this
+ */
+proto.clarifai.api.TaskReviewMetrics.prototype.setInputsPercentEstimatedPerReviewerList = function(value) {
+  return jspb.Message.setField(this, 5, value || []);
+};
+
+
+/**
+ * @param {number} value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.TaskReviewMetrics} returns this
+ */
+proto.clarifai.api.TaskReviewMetrics.prototype.addInputsPercentEstimatedPerReviewer = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 5, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.TaskReviewMetrics} returns this
+ */
+proto.clarifai.api.TaskReviewMetrics.prototype.clearInputsPercentEstimatedPerReviewerList = function() {
+  return this.setInputsPercentEstimatedPerReviewerList([]);
 };
 
 
