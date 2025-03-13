@@ -3305,6 +3305,12 @@ export class ListLogEntriesRequest extends jspb.Message {
     setNodepoolId(value: string): ListLogEntriesRequest;
     getRunnerId(): string;
     setRunnerId(value: string): ListLogEntriesRequest;
+    getPipelineId(): string;
+    setPipelineId(value: string): ListLogEntriesRequest;
+    getPipelineVersionId(): string;
+    setPipelineVersionId(value: string): ListLogEntriesRequest;
+    getPipelineVersionRunId(): string;
+    setPipelineVersionRunId(value: string): ListLogEntriesRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListLogEntriesRequest.AsObject;
@@ -3328,6 +3334,9 @@ export namespace ListLogEntriesRequest {
         computeClusterId: string,
         nodepoolId: string,
         runnerId: string,
+        pipelineId: string,
+        pipelineVersionId: string,
+        pipelineVersionRunId: string,
     }
 }
 
@@ -3351,6 +3360,12 @@ export class StreamLogEntriesRequest extends jspb.Message {
     setNodepoolId(value: string): StreamLogEntriesRequest;
     getRunnerId(): string;
     setRunnerId(value: string): StreamLogEntriesRequest;
+    getPipelineId(): string;
+    setPipelineId(value: string): StreamLogEntriesRequest;
+    getPipelineVersionId(): string;
+    setPipelineVersionId(value: string): StreamLogEntriesRequest;
+    getPipelineVersionRunId(): string;
+    setPipelineVersionRunId(value: string): StreamLogEntriesRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): StreamLogEntriesRequest.AsObject;
@@ -3372,6 +3387,9 @@ export namespace StreamLogEntriesRequest {
         computeClusterId: string,
         nodepoolId: string,
         runnerId: string,
+        pipelineId: string,
+        pipelineVersionId: string,
+        pipelineVersionRunId: string,
     }
 }
 
@@ -10381,6 +10399,43 @@ export namespace PostRunnersRequest {
         nodepoolId: string,
         runnersList: Array<proto_clarifai_api_resources_pb.Runner.AsObject>,
         computeClusterId: string,
+    }
+}
+
+export class PatchRunnersRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PatchRunnersRequest;
+    getNodepoolId(): string;
+    setNodepoolId(value: string): PatchRunnersRequest;
+    clearRunnersList(): void;
+    getRunnersList(): Array<proto_clarifai_api_resources_pb.Runner>;
+    setRunnersList(value: Array<proto_clarifai_api_resources_pb.Runner>): PatchRunnersRequest;
+    addRunners(value?: proto_clarifai_api_resources_pb.Runner, index?: number): proto_clarifai_api_resources_pb.Runner;
+    getComputeClusterId(): string;
+    setComputeClusterId(value: string): PatchRunnersRequest;
+    getAction(): string;
+    setAction(value: string): PatchRunnersRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PatchRunnersRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PatchRunnersRequest): PatchRunnersRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PatchRunnersRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PatchRunnersRequest;
+    static deserializeBinaryFromReader(message: PatchRunnersRequest, reader: jspb.BinaryReader): PatchRunnersRequest;
+}
+
+export namespace PatchRunnersRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        nodepoolId: string,
+        runnersList: Array<proto_clarifai_api_resources_pb.Runner.AsObject>,
+        computeClusterId: string,
+        action: string,
     }
 }
 

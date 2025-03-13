@@ -232,6 +232,7 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     getRunner: IV2Service_IGetRunner;
     listRunners: IV2Service_IListRunners;
     postRunners: IV2Service_IPostRunners;
+    patchRunners: IV2Service_IPatchRunners;
     deleteRunners: IV2Service_IDeleteRunners;
     listRunnerItems: IV2Service_IListRunnerItems;
     postRunnerItemOutputs: IV2Service_IPostRunnerItemOutputs;
@@ -2201,6 +2202,15 @@ interface IV2Service_IPostRunners extends grpc.MethodDefinition<proto_clarifai_a
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiRunnerResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiRunnerResponse>;
 }
+interface IV2Service_IPatchRunners extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PatchRunnersRequest, proto_clarifai_api_service_pb.MultiRunnerResponse> {
+    path: "/clarifai.api.V2/PatchRunners";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PatchRunnersRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PatchRunnersRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiRunnerResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiRunnerResponse>;
+}
 interface IV2Service_IDeleteRunners extends grpc.MethodDefinition<proto_clarifai_api_service_pb.DeleteRunnersRequest, proto_clarifai_api_status_status_pb.BaseResponse> {
     path: "/clarifai.api.V2/DeleteRunners";
     requestStream: false;
@@ -2708,6 +2718,7 @@ export interface IV2Server {
     getRunner: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetRunnerRequest, proto_clarifai_api_service_pb.SingleRunnerResponse>;
     listRunners: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListRunnersRequest, proto_clarifai_api_service_pb.MultiRunnerResponse>;
     postRunners: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostRunnersRequest, proto_clarifai_api_service_pb.MultiRunnerResponse>;
+    patchRunners: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchRunnersRequest, proto_clarifai_api_service_pb.MultiRunnerResponse>;
     deleteRunners: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteRunnersRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     listRunnerItems: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListRunnerItemsRequest, proto_clarifai_api_service_pb.MultiRunnerItemResponse>;
     postRunnerItemOutputs: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest, proto_clarifai_api_service_pb.MultiRunnerItemOutputResponse>;
@@ -3387,6 +3398,9 @@ export interface IV2Client {
     postRunners(request: proto_clarifai_api_service_pb.PostRunnersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerResponse) => void): grpc.ClientUnaryCall;
     postRunners(request: proto_clarifai_api_service_pb.PostRunnersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerResponse) => void): grpc.ClientUnaryCall;
     postRunners(request: proto_clarifai_api_service_pb.PostRunnersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerResponse) => void): grpc.ClientUnaryCall;
+    patchRunners(request: proto_clarifai_api_service_pb.PatchRunnersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerResponse) => void): grpc.ClientUnaryCall;
+    patchRunners(request: proto_clarifai_api_service_pb.PatchRunnersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerResponse) => void): grpc.ClientUnaryCall;
+    patchRunners(request: proto_clarifai_api_service_pb.PatchRunnersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerResponse) => void): grpc.ClientUnaryCall;
     deleteRunners(request: proto_clarifai_api_service_pb.DeleteRunnersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteRunners(request: proto_clarifai_api_service_pb.DeleteRunnersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteRunners(request: proto_clarifai_api_service_pb.DeleteRunnersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
@@ -4128,6 +4142,9 @@ export class V2Client extends grpc.Client implements IV2Client {
     public postRunners(request: proto_clarifai_api_service_pb.PostRunnersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerResponse) => void): grpc.ClientUnaryCall;
     public postRunners(request: proto_clarifai_api_service_pb.PostRunnersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerResponse) => void): grpc.ClientUnaryCall;
     public postRunners(request: proto_clarifai_api_service_pb.PostRunnersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerResponse) => void): grpc.ClientUnaryCall;
+    public patchRunners(request: proto_clarifai_api_service_pb.PatchRunnersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerResponse) => void): grpc.ClientUnaryCall;
+    public patchRunners(request: proto_clarifai_api_service_pb.PatchRunnersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerResponse) => void): grpc.ClientUnaryCall;
+    public patchRunners(request: proto_clarifai_api_service_pb.PatchRunnersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiRunnerResponse) => void): grpc.ClientUnaryCall;
     public deleteRunners(request: proto_clarifai_api_service_pb.DeleteRunnersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteRunners(request: proto_clarifai_api_service_pb.DeleteRunnersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteRunners(request: proto_clarifai_api_service_pb.DeleteRunnersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;

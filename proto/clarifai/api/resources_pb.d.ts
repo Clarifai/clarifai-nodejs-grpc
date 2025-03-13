@@ -6389,12 +6389,20 @@ export namespace TaskWorkMetrics {
 export class TaskReviewMetrics extends jspb.Message { 
     getInputsCountEstimated(): number;
     setInputsCountEstimated(value: number): TaskReviewMetrics;
+    getInputsPercentEstimated(): number;
+    setInputsPercentEstimated(value: number): TaskReviewMetrics;
     clearInputsCountEstimatedPerReviewerList(): void;
     getInputsCountEstimatedPerReviewerList(): Array<number>;
     setInputsCountEstimatedPerReviewerList(value: Array<number>): TaskReviewMetrics;
     addInputsCountEstimatedPerReviewer(value: number, index?: number): number;
-    getInputsPercentEstimated(): number;
-    setInputsPercentEstimated(value: number): TaskReviewMetrics;
+    clearInputsReviewableCountEstimatedPerReviewerList(): void;
+    getInputsReviewableCountEstimatedPerReviewerList(): Array<number>;
+    setInputsReviewableCountEstimatedPerReviewerList(value: Array<number>): TaskReviewMetrics;
+    addInputsReviewableCountEstimatedPerReviewer(value: number, index?: number): number;
+    clearInputsPercentEstimatedPerReviewerList(): void;
+    getInputsPercentEstimatedPerReviewerList(): Array<number>;
+    setInputsPercentEstimatedPerReviewerList(value: Array<number>): TaskReviewMetrics;
+    addInputsPercentEstimatedPerReviewer(value: number, index?: number): number;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): TaskReviewMetrics.AsObject;
@@ -6409,8 +6417,10 @@ export class TaskReviewMetrics extends jspb.Message {
 export namespace TaskReviewMetrics {
     export type AsObject = {
         inputsCountEstimated: number,
-        inputsCountEstimatedPerReviewerList: Array<number>,
         inputsPercentEstimated: number,
+        inputsCountEstimatedPerReviewerList: Array<number>,
+        inputsReviewableCountEstimatedPerReviewerList: Array<number>,
+        inputsPercentEstimatedPerReviewerList: Array<number>,
     }
 }
 
@@ -9052,6 +9062,10 @@ export class ComputePlaneMetrics extends jspb.Message {
     addGpuMetrics(value?: GpuMetrics, index?: number): GpuMetrics;
     getHostname(): string;
     setHostname(value: string): ComputePlaneMetrics;
+    clearCpuMetricsList(): void;
+    getCpuMetricsList(): Array<CpuMetrics>;
+    setCpuMetricsList(value: Array<CpuMetrics>): ComputePlaneMetrics;
+    addCpuMetrics(value?: CpuMetrics, index?: number): CpuMetrics;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ComputePlaneMetrics.AsObject;
@@ -9076,6 +9090,7 @@ export namespace ComputePlaneMetrics {
         eventType: string,
         gpuMetricsList: Array<GpuMetrics.AsObject>,
         hostname: string,
+        cpuMetricsList: Array<CpuMetrics.AsObject>,
     }
 }
 
@@ -9108,6 +9123,41 @@ export namespace GpuMetrics {
         utilizationPct: number,
         tensorUtilizationPct: number,
         memoryUtilizationPct: number,
+    }
+}
+
+export class CpuMetrics extends jspb.Message { 
+
+    hasTimestamp(): boolean;
+    clearTimestamp(): void;
+    getTimestamp(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setTimestamp(value?: google_protobuf_timestamp_pb.Timestamp): CpuMetrics;
+    getCpuUtilizationPct(): number;
+    setCpuUtilizationPct(value: number): CpuMetrics;
+    getMemoryUtilizationPct(): number;
+    setMemoryUtilizationPct(value: number): CpuMetrics;
+    getMillicores(): number;
+    setMillicores(value: number): CpuMetrics;
+    getMemoryBytes(): number;
+    setMemoryBytes(value: number): CpuMetrics;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): CpuMetrics.AsObject;
+    static toObject(includeInstance: boolean, msg: CpuMetrics): CpuMetrics.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: CpuMetrics, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): CpuMetrics;
+    static deserializeBinaryFromReader(message: CpuMetrics, reader: jspb.BinaryReader): CpuMetrics;
+}
+
+export namespace CpuMetrics {
+    export type AsObject = {
+        timestamp?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        cpuUtilizationPct: number,
+        memoryUtilizationPct: number,
+        millicores: number,
+        memoryBytes: number,
     }
 }
 
@@ -9161,6 +9211,12 @@ export class ComputeSourceMetadata extends jspb.Message {
     setNodepoolId(value: string): ComputeSourceMetadata;
     getRunnerId(): string;
     setRunnerId(value: string): ComputeSourceMetadata;
+    getPipelineId(): string;
+    setPipelineId(value: string): ComputeSourceMetadata;
+    getPipelineVersionId(): string;
+    setPipelineVersionId(value: string): ComputeSourceMetadata;
+    getPipelineVersionRunId(): string;
+    setPipelineVersionRunId(value: string): ComputeSourceMetadata;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ComputeSourceMetadata.AsObject;
@@ -9181,6 +9237,9 @@ export namespace ComputeSourceMetadata {
         computeClusterId: string,
         nodepoolId: string,
         runnerId: string,
+        pipelineId: string,
+        pipelineVersionId: string,
+        pipelineVersionRunId: string,
     }
 }
 
