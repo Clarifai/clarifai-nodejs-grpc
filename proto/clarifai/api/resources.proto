@@ -5145,6 +5145,11 @@ message ComputeSourceMetadata {
   string compute_cluster_id = 6;
   string nodepool_id = 7;
   string runner_id = 8;
+
+  // Pipeline related data, if any
+  string pipeline_id = 9;
+  string pipeline_version_id = 10;
+  string pipeline_version_run_id = 11;
 }
 
 message WorkflowVersionEvaluation {

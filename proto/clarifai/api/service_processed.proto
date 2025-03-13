@@ -3687,6 +3687,23 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
   }
 
+  // Patch runners of a user.
+  rpc PatchRunners (PatchRunnersRequest) returns (MultiRunnerResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = InstanceTypes_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+  }
+
   // Delete multiple runners in one request.
   rpc DeleteRunners (DeleteRunnersRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
@@ -4033,6 +4050,11 @@ service V2 {
       additional_bindings180 {
         get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/{log_type}/logs"
       }
+
+      // Endpoint to list pipeline version run logs
+      additional_bindings181 {
+        get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs/{pipeline_version_run_id}/{log_type}/logs"
+      }
       // TODO: add endpoint for workflow.
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
@@ -4043,8 +4065,12 @@ service V2 {
   rpc StreamLogEntries (StreamLogEntriesRequest) returns (stream MultiLogEntryResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners/{runner_id}/{log_type}/logs"
-      additional_bindings181 {
+      additional_bindings182 {
         get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/{log_type}/logs"
+      }
+      // Endpoint to stream pipeline version run logs
+      additional_bindings183 {
+        get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs/{pipeline_version_run_id}/{log_type}/stream/logs"
       }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
@@ -4082,7 +4108,7 @@ service V2 {
   rpc GetWorkflowVersionEvaluation (GetWorkflowVersionEvaluationRequest) returns (SingleWorkflowVersionEvaluationResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations/{workflow_version_evaluation_id}"
-      additional_bindings182 {
+      additional_bindings184 {
         get: "/v2/workflow-version-evaluations/{workflow_version_evaluation_id}"
       }
     };
@@ -4096,7 +4122,7 @@ service V2 {
   rpc ListWorkflowVersionEvaluations (ListWorkflowVersionEvaluationsRequest) returns (MultiWorkflowVersionEvaluationResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations"
-      additional_bindings183 {
+      additional_bindings185 {
         get: "/v2/workflow-version-evaluations"
       }
     };
@@ -5425,6 +5451,11 @@ message ListLogEntriesRequest {
   string compute_cluster_id = 9;
   string nodepool_id = 10;
   string runner_id = 11;
+
+  // Pipelines that produced the logs.
+  string pipeline_id = 12;
+  string pipeline_version_id = 13;
+  string pipeline_version_run_id = 14;
 }
 
 message StreamLogEntriesRequest {
@@ -5445,6 +5476,11 @@ message StreamLogEntriesRequest {
   string compute_cluster_id = 6;
   string nodepool_id = 7;
   string runner_id = 8;
+
+  // Pipelines that produced the logs.
+  string pipeline_id = 12;
+  string pipeline_version_id = 13;
+  string pipeline_version_run_id = 14;
 }
 
 // GetKeyRequest
@@ -7941,6 +7977,18 @@ message PostRunnersRequest {
   // This allows you to create one or more runner by posting it to the API.
   repeated Runner runners = 3;
   string compute_cluster_id = 4;
+}
+
+// PatchRunnersRequest
+message PatchRunnersRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string nodepool_id = 2;
+  // This allows you to create one or more runner by posting it to the API.
+  repeated Runner runners = 3;
+  string compute_cluster_id = 4;
+  // The action to perform on the patched objects
+  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  string action = 5;
 }
 
 // Request to delete several things by the list of ids.

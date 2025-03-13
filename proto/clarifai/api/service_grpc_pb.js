@@ -2665,6 +2665,17 @@ function deserialize_clarifai_api_PatchNodepoolsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PatchNodepoolsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PatchRunnersRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PatchRunnersRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PatchRunnersRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PatchRunnersRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PatchRunnersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PatchSearchesRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PatchSearchesRequest)) {
     throw new Error('Expected argument of type clarifai.api.PatchSearchesRequest');
@@ -6675,6 +6686,18 @@ postRunners: {
     responseType: proto_clarifai_api_service_pb.MultiRunnerResponse,
     requestSerialize: serialize_clarifai_api_PostRunnersRequest,
     requestDeserialize: deserialize_clarifai_api_PostRunnersRequest,
+    responseSerialize: serialize_clarifai_api_MultiRunnerResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiRunnerResponse,
+  },
+  // Patch runners of a user.
+patchRunners: {
+    path: '/clarifai.api.V2/PatchRunners',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PatchRunnersRequest,
+    responseType: proto_clarifai_api_service_pb.MultiRunnerResponse,
+    requestSerialize: serialize_clarifai_api_PatchRunnersRequest,
+    requestDeserialize: deserialize_clarifai_api_PatchRunnersRequest,
     responseSerialize: serialize_clarifai_api_MultiRunnerResponse,
     responseDeserialize: deserialize_clarifai_api_MultiRunnerResponse,
   },
