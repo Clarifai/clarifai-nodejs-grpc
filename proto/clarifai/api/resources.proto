@@ -1557,6 +1557,9 @@ message OutputInfo {
   // that the ModelTypeField defines. During inference, the settings contained within are sent
   // to the model predictor to alter predictions from this Model.
   google.protobuf.Struct params = 7;
+  // These allow you to specifcy addition fields that a specific model supports beyond those defined
+  // in it's ModelType. This field is to be deprecated and will be replaced by MethodSignature
+  // proto.
   repeated ModelTypeField params_specs = 8;
 }
 
@@ -1691,6 +1694,11 @@ message ModelType {
 
   // What type of evaluation is supported for this model type.
   EvaluationType evaluation_type = 18;
+
+  // method signature for this model type
+  // This will be used in the future to replace input_fields, output_fields, and model_type_fields
+  // as it can define any python function call.
+  repeated MethodSignature method_signatures = 19;
 }
 
 message ModelLayerInfo {
@@ -1789,7 +1797,8 @@ message ModelTypeField {
     // For selecting a model version of the same model type to resume training from.
     CHECKPOINT_MODEL = 22;
   }
-  // The field for this field.
+  // The field for this field. This is often used for displaying the field in the UI whereas
+  // the DataType enum below defines the specific type of datain the Python function.
   ModelTypeFieldType field_type = 2;
   // A default value. We use the Value field because we want to have structured data (just like
   // google.protobuf.Struct but this is just a single value).
@@ -1808,6 +1817,73 @@ message ModelTypeField {
   bool required = 8;
   // If the field_type is RANGE, this must be filled in.
   ModelTypeRangeInfo model_type_range_info = 9;
+
+
+
+  /////////////////////////////////////
+  // New fields for MethodSignature
+  /////////////////////////////////////
+  // The fields below were added when we introduced ability to call an arbitrary python function
+  // from the client side. This is used to define the method signature of the python function
+  // that we want to call. The above fields are still relevant to decide what a UI should display.
+  // Some of the above fields above will be relevant like definition, required, etc.
+
+
+  // name of method signature argument
+  string name = 10;
+  // DataType is used in MethodSignature to define all the possible types that a python function
+  // may have that we want to support. These include built-ins like int, float, str, bool, and
+  // more complex types like JSON, numpy arrays, List, Tuple, Dict (as Named Fields), as well as Clarifai provided
+  // unstructured types like Image, Video, Text, etc.
+  enum DataType {
+    NOT_SET = 0;
+    // A string value.
+    STR = 1;
+    // A byte string. This is used for binary data.
+    BYTES = 2;
+    // An integer value.
+    INT = 3;
+    // A float value.
+    FLOAT = 4;
+    // A boolean value.
+    BOOL = 5;
+    // A proto representation for numpy arrays.
+    NDARRAY = 6;
+    // For arbitrary json object: "{...}"
+    JSON_DATA = 7;
+    // For text data
+    TEXT = 8;
+    // A image is a image proto for url or bytes.
+    IMAGE = 9;
+    // A concept is a concept proto that represents a concept in the app.
+    CONCEPT = 10;
+    // A region is a bounding box in an image or video frame.
+    REGION = 11;
+    // A frame is a single image in a video stream
+    FRAME = 12;
+    // A audio is a audio proto for url or bytes.
+    AUDIO = 13;
+    // A video is a video proto for url or bytes.
+    VIDEO = 14;
+    // this can be used to store named fields with values similar to Dict
+    NAMED_FIELDS = 20;
+    // An arg that is a tuple.
+    TUPLE = 21;
+    // An arg that is a list.
+    LIST = 22;
+  }
+  // The type of the argument.
+  DataType type = 11;
+  // type enum, and recursively set type_args with
+  // the inner type argumets in complex objects (e.g. List[Tuple[int, str]])
+  repeated ModelTypeField type_args = 12;
+  // this will be use to define whether the method argument supports streaming as an iterator.
+  bool iterator = 13;
+  // This specify the default value of the method argument. We define this as a string
+  // because the default value can be a string, int, float, bool, or a complex object like a JSON
+  // The default_value field above should not also be used.
+  string default = 14;
+  /////////////////////////////////////
 }
 
 // ModelTypeRangeInfo
@@ -1957,6 +2033,25 @@ message ModelVersion {
 
   // Build information for the model version
   BuildInfo build_info = 25;
+
+  // Model signature information for the model version
+  repeated MethodSignature method_signature = 26;
+}
+
+// MethodSignature is a definition of a method that a model can have.
+// This is used to communicate between a python method definition of any arbitrary function
+// to the client or UI on how to call that function from the client side.
+message MethodSignature {
+  // The name of the method on the server.
+  string name = 1;
+  // whether the method is for predict(unary-unary), generate(unary-stream), stream(stream-stream)
+  RunnerMethodType method_type = 2;
+  // description from the docstring of the method on the server.
+  string description = 3;
+  // input fields and signature of every method arguments
+  repeated ModelTypeField input_fields = 4;
+  // output signature of method
+  repeated ModelTypeField output_fields = 5;
 }
 
 message BuildInfo {

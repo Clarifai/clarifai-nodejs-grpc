@@ -3095,6 +3095,10 @@ export class ModelType extends jspb.Message {
     addExpectedOutputLayers(value?: ModelLayerInfo, index?: number): ModelLayerInfo;
     getEvaluationType(): EvaluationType;
     setEvaluationType(value: EvaluationType): ModelType;
+    clearMethodSignaturesList(): void;
+    getMethodSignaturesList(): Array<MethodSignature>;
+    setMethodSignaturesList(value: Array<MethodSignature>): ModelType;
+    addMethodSignatures(value?: MethodSignature, index?: number): MethodSignature;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ModelType.AsObject;
@@ -3121,6 +3125,7 @@ export namespace ModelType {
         expectedInputLayersList: Array<ModelLayerInfo.AsObject>,
         expectedOutputLayersList: Array<ModelLayerInfo.AsObject>,
         evaluationType: EvaluationType,
+        methodSignaturesList: Array<MethodSignature.AsObject>,
     }
 }
 
@@ -3238,6 +3243,18 @@ export class ModelTypeField extends jspb.Message {
     clearModelTypeRangeInfo(): void;
     getModelTypeRangeInfo(): ModelTypeRangeInfo | undefined;
     setModelTypeRangeInfo(value?: ModelTypeRangeInfo): ModelTypeField;
+    getName(): string;
+    setName(value: string): ModelTypeField;
+    getType(): ModelTypeField.DataType;
+    setType(value: ModelTypeField.DataType): ModelTypeField;
+    clearTypeArgsList(): void;
+    getTypeArgsList(): Array<ModelTypeField>;
+    setTypeArgsList(value: Array<ModelTypeField>): ModelTypeField;
+    addTypeArgs(value?: ModelTypeField, index?: number): ModelTypeField;
+    getIterator(): boolean;
+    setIterator(value: boolean): ModelTypeField;
+    getDefault(): string;
+    setDefault(value: string): ModelTypeField;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ModelTypeField.AsObject;
@@ -3260,6 +3277,11 @@ export namespace ModelTypeField {
         internalOnly: boolean,
         required: boolean,
         modelTypeRangeInfo?: ModelTypeRangeInfo.AsObject,
+        name: string,
+        type: ModelTypeField.DataType,
+        typeArgsList: Array<ModelTypeField.AsObject>,
+        iterator: boolean,
+        pb_default: string,
     }
 
     export enum ModelTypeFieldType {
@@ -3285,6 +3307,27 @@ export namespace ModelTypeField {
     DATASET_VERSION = 20,
     ENCRYPTED_STRING = 21,
     CHECKPOINT_MODEL = 22,
+    }
+
+    export enum DataType {
+    NOT_SET = 0,
+    STR = 1,
+    BYTES = 2,
+    INT = 3,
+    FLOAT = 4,
+    BOOL = 5,
+    NDARRAY = 6,
+    JSON_DATA = 7,
+    TEXT = 8,
+    IMAGE = 9,
+    CONCEPT = 10,
+    REGION = 11,
+    FRAME = 12,
+    AUDIO = 13,
+    VIDEO = 14,
+    NAMED_FIELDS = 20,
+    TUPLE = 21,
+    LIST = 22,
     }
 
 }
@@ -3487,6 +3530,10 @@ export class ModelVersion extends jspb.Message {
     clearBuildInfo(): void;
     getBuildInfo(): BuildInfo | undefined;
     setBuildInfo(value?: BuildInfo): ModelVersion;
+    clearMethodSignatureList(): void;
+    getMethodSignatureList(): Array<MethodSignature>;
+    setMethodSignatureList(value: Array<MethodSignature>): ModelVersion;
+    addMethodSignature(value?: MethodSignature, index?: number): MethodSignature;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ModelVersion.AsObject;
@@ -3522,6 +3569,43 @@ export namespace ModelVersion {
         trainLog: string,
         inferenceComputeInfo?: ComputeInfo.AsObject,
         buildInfo?: BuildInfo.AsObject,
+        methodSignatureList: Array<MethodSignature.AsObject>,
+    }
+}
+
+export class MethodSignature extends jspb.Message { 
+    getName(): string;
+    setName(value: string): MethodSignature;
+    getMethodType(): RunnerMethodType;
+    setMethodType(value: RunnerMethodType): MethodSignature;
+    getDescription(): string;
+    setDescription(value: string): MethodSignature;
+    clearInputFieldsList(): void;
+    getInputFieldsList(): Array<ModelTypeField>;
+    setInputFieldsList(value: Array<ModelTypeField>): MethodSignature;
+    addInputFields(value?: ModelTypeField, index?: number): ModelTypeField;
+    clearOutputFieldsList(): void;
+    getOutputFieldsList(): Array<ModelTypeField>;
+    setOutputFieldsList(value: Array<ModelTypeField>): MethodSignature;
+    addOutputFields(value?: ModelTypeField, index?: number): ModelTypeField;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MethodSignature.AsObject;
+    static toObject(includeInstance: boolean, msg: MethodSignature): MethodSignature.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MethodSignature, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MethodSignature;
+    static deserializeBinaryFromReader(message: MethodSignature, reader: jspb.BinaryReader): MethodSignature;
+}
+
+export namespace MethodSignature {
+    export type AsObject = {
+        name: string,
+        methodType: RunnerMethodType,
+        description: string,
+        inputFieldsList: Array<ModelTypeField.AsObject>,
+        outputFieldsList: Array<ModelTypeField.AsObject>,
     }
 }
 
