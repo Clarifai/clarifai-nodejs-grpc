@@ -31871,7 +31871,7 @@ proto.clarifai.api.ModelVersion.toObject = function(includeInstance, msg) {
     trainLog: jspb.Message.getFieldWithDefault(msg, 23, ""),
     inferenceComputeInfo: (f = msg.getInferenceComputeInfo()) && proto.clarifai.api.ComputeInfo.toObject(includeInstance, f),
     buildInfo: (f = msg.getBuildInfo()) && proto.clarifai.api.BuildInfo.toObject(includeInstance, f),
-    methodSignatureList: jspb.Message.toObjectList(msg.getMethodSignatureList(),
+    methodSignaturesList: jspb.Message.toObjectList(msg.getMethodSignaturesList(),
     proto.clarifai.api.MethodSignature.toObject, includeInstance)
   };
 
@@ -32014,7 +32014,7 @@ proto.clarifai.api.ModelVersion.deserializeBinaryFromReader = function(msg, read
     case 26:
       var value = new proto.clarifai.api.MethodSignature;
       reader.readMessage(value,proto.clarifai.api.MethodSignature.deserializeBinaryFromReader);
-      msg.addMethodSignature(value);
+      msg.addMethodSignatures(value);
       break;
     default:
       reader.skipField();
@@ -32213,7 +32213,7 @@ proto.clarifai.api.ModelVersion.serializeBinaryToWriter = function(message, writ
       proto.clarifai.api.BuildInfo.serializeBinaryToWriter
     );
   }
-  f = message.getMethodSignatureList();
+  f = message.getMethodSignaturesList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
       26,
@@ -32887,10 +32887,10 @@ proto.clarifai.api.ModelVersion.prototype.hasBuildInfo = function() {
 
 
 /**
- * repeated MethodSignature method_signature = 26;
+ * repeated MethodSignature method_signatures = 26;
  * @return {!Array<!proto.clarifai.api.MethodSignature>}
  */
-proto.clarifai.api.ModelVersion.prototype.getMethodSignatureList = function() {
+proto.clarifai.api.ModelVersion.prototype.getMethodSignaturesList = function() {
   return /** @type{!Array<!proto.clarifai.api.MethodSignature>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.clarifai.api.MethodSignature, 26));
 };
@@ -32900,7 +32900,7 @@ proto.clarifai.api.ModelVersion.prototype.getMethodSignatureList = function() {
  * @param {!Array<!proto.clarifai.api.MethodSignature>} value
  * @return {!proto.clarifai.api.ModelVersion} returns this
 */
-proto.clarifai.api.ModelVersion.prototype.setMethodSignatureList = function(value) {
+proto.clarifai.api.ModelVersion.prototype.setMethodSignaturesList = function(value) {
   return jspb.Message.setRepeatedWrapperField(this, 26, value);
 };
 
@@ -32910,7 +32910,7 @@ proto.clarifai.api.ModelVersion.prototype.setMethodSignatureList = function(valu
  * @param {number=} opt_index
  * @return {!proto.clarifai.api.MethodSignature}
  */
-proto.clarifai.api.ModelVersion.prototype.addMethodSignature = function(opt_value, opt_index) {
+proto.clarifai.api.ModelVersion.prototype.addMethodSignatures = function(opt_value, opt_index) {
   return jspb.Message.addToRepeatedWrapperField(this, 26, opt_value, proto.clarifai.api.MethodSignature, opt_index);
 };
 
@@ -32919,8 +32919,8 @@ proto.clarifai.api.ModelVersion.prototype.addMethodSignature = function(opt_valu
  * Clears the list making it empty but non-null.
  * @return {!proto.clarifai.api.ModelVersion} returns this
  */
-proto.clarifai.api.ModelVersion.prototype.clearMethodSignatureList = function() {
-  return this.setMethodSignatureList([]);
+proto.clarifai.api.ModelVersion.prototype.clearMethodSignaturesList = function() {
+  return this.setMethodSignaturesList([]);
 };
 
 

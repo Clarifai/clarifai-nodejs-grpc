@@ -2035,7 +2035,7 @@ message ModelVersion {
   BuildInfo build_info = 25;
 
   // Model signature information for the model version
-  repeated MethodSignature method_signature = 26;
+  repeated MethodSignature method_signatures = 26;
 }
 
 // MethodSignature is a definition of a method that a model can have.
