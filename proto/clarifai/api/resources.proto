@@ -4581,7 +4581,8 @@ message InputsUpload {
   string inputs_add_job_id = 1;
 
   // Personal Access Token to the application to which inputs are added
-  string app_pat = 2;
+  // Deprecated: No need to send app_pat, it will be generated internally if not present
+  string app_pat = 2 [deprecated = true];
 
   Upload upload = 3;
 

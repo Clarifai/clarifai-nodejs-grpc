@@ -3554,6 +3554,8 @@ service V2 {
       }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Keys_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
@@ -7901,7 +7903,8 @@ message PostInputsDataSourcesRequest {
   string call_back_url = 3;
 
   // Personal Access Token to the application to which inputs are added
-  string app_pat = 4;
+  // Deprecated: No need to send app_pat, it will be generated internally if not present
+  string app_pat = 4 [deprecated = true];
 }
 
 message GetInputsExtractionJobRequest {
