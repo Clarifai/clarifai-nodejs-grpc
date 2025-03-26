@@ -4700,12 +4700,18 @@ message Nodepool {
   repeated InstanceType instance_types = 8;
 
   // Minimum number of instances in this nodepool. This allows the nodepool to scale down to this
-  // amount.
+  // amount. This is the user desired minimum.
   uint32 min_instances = 9;
 
   // An upper limit on the number of instances in this nodepool. This allows the nodepool to scale
-  // up to this amount.
+  // up to this amount. This is the user desired maximum.
   uint32 max_instances = 10;
+
+  // The actual minimum number of instances. Enforced by the user's plan limits.
+  uint32 enforced_min_instances = 13;
+
+  // The actual maximum number of instances. Enforced by the user's plan limits.
+  uint32 enforced_max_instances = 14;
 
   // The visibility field represents whether this message is privately/publicly visible.
   // To be visible to the public the App that contains it AND the User that contains the App must

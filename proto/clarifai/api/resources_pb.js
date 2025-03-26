@@ -69717,6 +69717,8 @@ proto.clarifai.api.Nodepool.toObject = function(includeInstance, msg) {
     proto.clarifai.api.InstanceType.toObject, includeInstance),
     minInstances: jspb.Message.getFieldWithDefault(msg, 9, 0),
     maxInstances: jspb.Message.getFieldWithDefault(msg, 10, 0),
+    enforcedMinInstances: jspb.Message.getFieldWithDefault(msg, 13, 0),
+    enforcedMaxInstances: jspb.Message.getFieldWithDefault(msg, 14, 0),
     visibility: (f = msg.getVisibility()) && proto.clarifai.api.Visibility.toObject(includeInstance, f),
     metadata: (f = msg.getMetadata()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f)
   };
@@ -69795,6 +69797,14 @@ proto.clarifai.api.Nodepool.deserializeBinaryFromReader = function(msg, reader) 
     case 10:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setMaxInstances(value);
+      break;
+    case 13:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setEnforcedMinInstances(value);
+      break;
+    case 14:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setEnforcedMaxInstances(value);
       break;
     case 11:
       var value = new proto.clarifai.api.Visibility;
@@ -69900,6 +69910,20 @@ proto.clarifai.api.Nodepool.serializeBinaryToWriter = function(message, writer) 
   if (f !== 0) {
     writer.writeUint32(
       10,
+      f
+    );
+  }
+  f = message.getEnforcedMinInstances();
+  if (f !== 0) {
+    writer.writeUint32(
+      13,
+      f
+    );
+  }
+  f = message.getEnforcedMaxInstances();
+  if (f !== 0) {
+    writer.writeUint32(
+      14,
       f
     );
   }
@@ -70177,6 +70201,42 @@ proto.clarifai.api.Nodepool.prototype.getMaxInstances = function() {
  */
 proto.clarifai.api.Nodepool.prototype.setMaxInstances = function(value) {
   return jspb.Message.setProto3IntField(this, 10, value);
+};
+
+
+/**
+ * optional uint32 enforced_min_instances = 13;
+ * @return {number}
+ */
+proto.clarifai.api.Nodepool.prototype.getEnforcedMinInstances = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 13, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.Nodepool} returns this
+ */
+proto.clarifai.api.Nodepool.prototype.setEnforcedMinInstances = function(value) {
+  return jspb.Message.setProto3IntField(this, 13, value);
+};
+
+
+/**
+ * optional uint32 enforced_max_instances = 14;
+ * @return {number}
+ */
+proto.clarifai.api.Nodepool.prototype.getEnforcedMaxInstances = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 14, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.Nodepool} returns this
+ */
+proto.clarifai.api.Nodepool.prototype.setEnforcedMaxInstances = function(value) {
+  return jspb.Message.setProto3IntField(this, 14, value);
 };
 
 

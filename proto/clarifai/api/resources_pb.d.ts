@@ -8423,6 +8423,10 @@ export class Nodepool extends jspb.Message {
     setMinInstances(value: number): Nodepool;
     getMaxInstances(): number;
     setMaxInstances(value: number): Nodepool;
+    getEnforcedMinInstances(): number;
+    setEnforcedMinInstances(value: number): Nodepool;
+    getEnforcedMaxInstances(): number;
+    setEnforcedMaxInstances(value: number): Nodepool;
 
     hasVisibility(): boolean;
     clearVisibility(): void;
@@ -8455,6 +8459,8 @@ export namespace Nodepool {
         instanceTypesList: Array<InstanceType.AsObject>,
         minInstances: number,
         maxInstances: number,
+        enforcedMinInstances: number,
+        enforcedMaxInstances: number,
         visibility?: Visibility.AsObject,
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
     }
