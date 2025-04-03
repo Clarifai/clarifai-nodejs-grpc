@@ -5279,6 +5279,8 @@ message WorkflowVersionEvaluation {
   google.protobuf.Timestamp created_at = 11;
   // When the workflow version evaluation was modified.
   google.protobuf.Timestamp modified_at = 12;
+  // The ID of the node that is being evaluated.
+  string target_node_id = 13;
 }
 
 message WorkflowEvaluationResult {

@@ -96176,7 +96176,7 @@ proto.clarifai.api.MultiWorkflowEvaluationTemplateResponse.prototype.clearWorkfl
  * @private {!Array<number>}
  * @const
  */
-proto.clarifai.api.PostWorkflowVersionEvaluationsRequest.repeatedFields_ = [4];
+proto.clarifai.api.PostWorkflowVersionEvaluationsRequest.repeatedFields_ = [4,5];
 
 
 
@@ -96213,7 +96213,9 @@ proto.clarifai.api.PostWorkflowVersionEvaluationsRequest.toObject = function(inc
     workflowId: jspb.Message.getFieldWithDefault(msg, 2, ""),
     workflowVersionId: jspb.Message.getFieldWithDefault(msg, 3, ""),
     workflowVersionEvaluationsList: jspb.Message.toObjectList(msg.getWorkflowVersionEvaluationsList(),
-    proto_clarifai_api_resources_pb.WorkflowVersionEvaluation.toObject, includeInstance)
+    proto_clarifai_api_resources_pb.WorkflowVersionEvaluation.toObject, includeInstance),
+    runnerSelectorsList: jspb.Message.toObjectList(msg.getRunnerSelectorsList(),
+    proto_clarifai_api_resources_pb.RunnerSelector.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -96267,6 +96269,11 @@ proto.clarifai.api.PostWorkflowVersionEvaluationsRequest.deserializeBinaryFromRe
       var value = new proto_clarifai_api_resources_pb.WorkflowVersionEvaluation;
       reader.readMessage(value,proto_clarifai_api_resources_pb.WorkflowVersionEvaluation.deserializeBinaryFromReader);
       msg.addWorkflowVersionEvaluations(value);
+      break;
+    case 5:
+      var value = new proto_clarifai_api_resources_pb.RunnerSelector;
+      reader.readMessage(value,proto_clarifai_api_resources_pb.RunnerSelector.deserializeBinaryFromReader);
+      msg.addRunnerSelectors(value);
       break;
     default:
       reader.skipField();
@@ -96325,6 +96332,14 @@ proto.clarifai.api.PostWorkflowVersionEvaluationsRequest.serializeBinaryToWriter
       4,
       f,
       proto_clarifai_api_resources_pb.WorkflowVersionEvaluation.serializeBinaryToWriter
+    );
+  }
+  f = message.getRunnerSelectorsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      5,
+      f,
+      proto_clarifai_api_resources_pb.RunnerSelector.serializeBinaryToWriter
     );
   }
 };
@@ -96438,6 +96453,44 @@ proto.clarifai.api.PostWorkflowVersionEvaluationsRequest.prototype.addWorkflowVe
  */
 proto.clarifai.api.PostWorkflowVersionEvaluationsRequest.prototype.clearWorkflowVersionEvaluationsList = function() {
   return this.setWorkflowVersionEvaluationsList([]);
+};
+
+
+/**
+ * repeated RunnerSelector runner_selectors = 5;
+ * @return {!Array<!proto.clarifai.api.RunnerSelector>}
+ */
+proto.clarifai.api.PostWorkflowVersionEvaluationsRequest.prototype.getRunnerSelectorsList = function() {
+  return /** @type{!Array<!proto.clarifai.api.RunnerSelector>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto_clarifai_api_resources_pb.RunnerSelector, 5));
+};
+
+
+/**
+ * @param {!Array<!proto.clarifai.api.RunnerSelector>} value
+ * @return {!proto.clarifai.api.PostWorkflowVersionEvaluationsRequest} returns this
+*/
+proto.clarifai.api.PostWorkflowVersionEvaluationsRequest.prototype.setRunnerSelectorsList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 5, value);
+};
+
+
+/**
+ * @param {!proto.clarifai.api.RunnerSelector=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.RunnerSelector}
+ */
+proto.clarifai.api.PostWorkflowVersionEvaluationsRequest.prototype.addRunnerSelectors = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 5, opt_value, proto.clarifai.api.RunnerSelector, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.PostWorkflowVersionEvaluationsRequest} returns this
+ */
+proto.clarifai.api.PostWorkflowVersionEvaluationsRequest.prototype.clearRunnerSelectorsList = function() {
+  return this.setRunnerSelectorsList([]);
 };
 
 

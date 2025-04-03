@@ -76963,7 +76963,8 @@ proto.clarifai.api.WorkflowVersionEvaluation.toObject = function(includeInstance
     workflowEvaluationResult: (f = msg.getWorkflowEvaluationResult()) && proto.clarifai.api.WorkflowEvaluationResult.toObject(includeInstance, f),
     status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f),
     createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f)
+    modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+    targetNodeId: jspb.Message.getFieldWithDefault(msg, 13, "")
   };
 
   if (includeInstance) {
@@ -77051,6 +77052,10 @@ proto.clarifai.api.WorkflowVersionEvaluation.deserializeBinaryFromReader = funct
       var value = new google_protobuf_timestamp_pb.Timestamp;
       reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
       msg.setModifiedAt(value);
+      break;
+    case 13:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setTargetNodeId(value);
       break;
     default:
       reader.skipField();
@@ -77167,6 +77172,13 @@ proto.clarifai.api.WorkflowVersionEvaluation.serializeBinaryToWriter = function(
       12,
       f,
       google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
+    );
+  }
+  f = message.getTargetNodeId();
+  if (f.length > 0) {
+    writer.writeString(
+      13,
+      f
     );
   }
 };
@@ -77461,6 +77473,24 @@ proto.clarifai.api.WorkflowVersionEvaluation.prototype.clearModifiedAt = functio
  */
 proto.clarifai.api.WorkflowVersionEvaluation.prototype.hasModifiedAt = function() {
   return jspb.Message.getField(this, 12) != null;
+};
+
+
+/**
+ * optional string target_node_id = 13;
+ * @return {string}
+ */
+proto.clarifai.api.WorkflowVersionEvaluation.prototype.getTargetNodeId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 13, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.WorkflowVersionEvaluation} returns this
+ */
+proto.clarifai.api.WorkflowVersionEvaluation.prototype.setTargetNodeId = function(value) {
+  return jspb.Message.setProto3StringField(this, 13, value);
 };
 
 
