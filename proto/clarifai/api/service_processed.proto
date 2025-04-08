@@ -3554,6 +3554,8 @@ service V2 {
       }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Keys_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
@@ -4101,6 +4103,8 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Predict;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipeline_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipeline_Add;
     option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Add;
     option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Get;
   }
@@ -4115,6 +4119,7 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipeline_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Get;
   }
@@ -4130,6 +4135,7 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipeline_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Get;
   }
@@ -4150,6 +4156,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Add;
     option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Get;
   }
+
 
 
 
@@ -7900,7 +7907,8 @@ message PostInputsDataSourcesRequest {
   string call_back_url = 3;
 
   // Personal Access Token to the application to which inputs are added
-  string app_pat = 4;
+  // Deprecated: No need to send app_pat, it will be generated internally if not present
+  string app_pat = 4 [deprecated = true];
 }
 
 message GetInputsExtractionJobRequest {
@@ -8354,7 +8362,9 @@ message PostWorkflowVersionEvaluationsRequest {
   // - ground_truth_dataset_id
   // - ground_truth_dataset_version_id
   // - id
+  // - target_node_id
   repeated clarifai.api.WorkflowVersionEvaluation workflow_version_evaluations = 4;
+  repeated RunnerSelector runner_selectors = 5;
 }
 
 message PatchWorkflowVersionEvaluationsRequest {
@@ -8415,6 +8425,8 @@ message PostModelMigrationRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string model_id = 2;
 }
+
+
 
 
 

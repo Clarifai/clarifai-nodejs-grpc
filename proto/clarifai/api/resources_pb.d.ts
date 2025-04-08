@@ -8423,6 +8423,10 @@ export class Nodepool extends jspb.Message {
     setMinInstances(value: number): Nodepool;
     getMaxInstances(): number;
     setMaxInstances(value: number): Nodepool;
+    getEnforcedMinInstances(): number;
+    setEnforcedMinInstances(value: number): Nodepool;
+    getEnforcedMaxInstances(): number;
+    setEnforcedMaxInstances(value: number): Nodepool;
 
     hasVisibility(): boolean;
     clearVisibility(): void;
@@ -8455,6 +8459,8 @@ export namespace Nodepool {
         instanceTypesList: Array<InstanceType.AsObject>,
         minInstances: number,
         maxInstances: number,
+        enforcedMinInstances: number,
+        enforcedMaxInstances: number,
         visibility?: Visibility.AsObject,
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
     }
@@ -9364,6 +9370,8 @@ export class WorkflowVersionEvaluation extends jspb.Message {
     clearModifiedAt(): void;
     getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
     setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): WorkflowVersionEvaluation;
+    getTargetNodeId(): string;
+    setTargetNodeId(value: string): WorkflowVersionEvaluation;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): WorkflowVersionEvaluation.AsObject;
@@ -9389,6 +9397,7 @@ export namespace WorkflowVersionEvaluation {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        targetNodeId: string,
     }
 }
 
