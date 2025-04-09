@@ -3877,6 +3877,8 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
     option (clarifai.auth.util.cl_depending_scopes) = InstanceTypes_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipeline_Get;
   }
 
   rpc PostNodepools (PostNodepoolsRequest) returns (MultiNodepoolResponse) {
@@ -8231,6 +8233,9 @@ message ListNodepoolsRequest {
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
   // to 128.
   uint32 per_page = 4;
+  // Only return nodepools that are actively being used (having runners with
+  // replicas >= threshold and pipeline versions scheduled to run)
+  bool active_usage = 5;
 
 }
 
