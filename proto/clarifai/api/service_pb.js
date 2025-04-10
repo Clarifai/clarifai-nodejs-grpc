@@ -92397,7 +92397,8 @@ proto.clarifai.api.ListNodepoolsRequest.toObject = function(includeInstance, msg
     userAppId: (f = msg.getUserAppId()) && proto_clarifai_api_resources_pb.UserAppIDSet.toObject(includeInstance, f),
     computeClusterId: jspb.Message.getFieldWithDefault(msg, 2, ""),
     page: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    perPage: jspb.Message.getFieldWithDefault(msg, 4, 0)
+    perPage: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    activeUsage: jspb.Message.getBooleanFieldWithDefault(msg, 5, false)
   };
 
   if (includeInstance) {
@@ -92450,6 +92451,10 @@ proto.clarifai.api.ListNodepoolsRequest.deserializeBinaryFromReader = function(m
     case 4:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setPerPage(value);
+      break;
+    case 5:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setActiveUsage(value);
       break;
     default:
       reader.skipField();
@@ -92506,6 +92511,13 @@ proto.clarifai.api.ListNodepoolsRequest.serializeBinaryToWriter = function(messa
   if (f !== 0) {
     writer.writeUint32(
       4,
+      f
+    );
+  }
+  f = message.getActiveUsage();
+  if (f) {
+    writer.writeBool(
+      5,
       f
     );
   }
@@ -92600,6 +92612,24 @@ proto.clarifai.api.ListNodepoolsRequest.prototype.getPerPage = function() {
  */
 proto.clarifai.api.ListNodepoolsRequest.prototype.setPerPage = function(value) {
   return jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+/**
+ * optional bool active_usage = 5;
+ * @return {boolean}
+ */
+proto.clarifai.api.ListNodepoolsRequest.prototype.getActiveUsage = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 5, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.ListNodepoolsRequest} returns this
+ */
+proto.clarifai.api.ListNodepoolsRequest.prototype.setActiveUsage = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 
