@@ -25284,7 +25284,8 @@ proto.clarifai.api.Model.toObject = function(includeInstance, msg) {
     source: jspb.Message.getFieldWithDefault(msg, 36, 0),
     creator: jspb.Message.getFieldWithDefault(msg, 37, ""),
     versionCount: jspb.Message.getFieldWithDefault(msg, 38, 0),
-    billingType: jspb.Message.getFieldWithDefault(msg, 40, 0)
+    billingType: jspb.Message.getFieldWithDefault(msg, 40, 0),
+    featuredOrder: (f = msg.getFeaturedOrder()) && google_protobuf_wrappers_pb.Int32Value.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -25460,6 +25461,11 @@ proto.clarifai.api.Model.deserializeBinaryFromReader = function(msg, reader) {
     case 40:
       var value = /** @type {!proto.clarifai.api.Model.BillingType} */ (reader.readEnum());
       msg.setBillingType(value);
+      break;
+    case 41:
+      var value = new google_protobuf_wrappers_pb.Int32Value;
+      reader.readMessage(value,google_protobuf_wrappers_pb.Int32Value.deserializeBinaryFromReader);
+      msg.setFeaturedOrder(value);
       break;
     default:
       reader.skipField();
@@ -25724,6 +25730,14 @@ proto.clarifai.api.Model.serializeBinaryToWriter = function(message, writer) {
     writer.writeEnum(
       40,
       f
+    );
+  }
+  f = message.getFeaturedOrder();
+  if (f != null) {
+    writer.writeMessage(
+      41,
+      f,
+      google_protobuf_wrappers_pb.Int32Value.serializeBinaryToWriter
     );
   }
 };
@@ -26625,6 +26639,43 @@ proto.clarifai.api.Model.prototype.getBillingType = function() {
  */
 proto.clarifai.api.Model.prototype.setBillingType = function(value) {
   return jspb.Message.setProto3EnumField(this, 40, value);
+};
+
+
+/**
+ * optional google.protobuf.Int32Value featured_order = 41;
+ * @return {?proto.google.protobuf.Int32Value}
+ */
+proto.clarifai.api.Model.prototype.getFeaturedOrder = function() {
+  return /** @type{?proto.google.protobuf.Int32Value} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_wrappers_pb.Int32Value, 41));
+};
+
+
+/**
+ * @param {?proto.google.protobuf.Int32Value|undefined} value
+ * @return {!proto.clarifai.api.Model} returns this
+*/
+proto.clarifai.api.Model.prototype.setFeaturedOrder = function(value) {
+  return jspb.Message.setWrapperField(this, 41, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.Model} returns this
+ */
+proto.clarifai.api.Model.prototype.clearFeaturedOrder = function() {
+  return this.setFeaturedOrder(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.Model.prototype.hasFeaturedOrder = function() {
+  return jspb.Message.getField(this, 41) != null;
 };
 
 
