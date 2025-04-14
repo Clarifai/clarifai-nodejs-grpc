@@ -5088,6 +5088,20 @@ enum EventType {
 
   // Event types related to users: 800 - 899
   USER_UPDATE = 800 [(clarifai.api.utils.description) = "Users updated"];
+
+  // Event types related to compute clusters: 900-999
+  COMPUTE_CLUSTER_CREATE = 900 [(clarifai.api.utils.description) = "Compute clusters created"];
+  COMPUTE_CLUSTER_DELETE = 901 [(clarifai.api.utils.description) = "Compute clusters deleted"];
+
+  // Event types related to nodepools: 1000-1099
+  NODEPOOL_CREATE = 1000 [(clarifai.api.utils.description) = "Nodepools created"];
+  NODEPOOL_UPDATE = 1001 [(clarifai.api.utils.description) = "Nodepools updated"];
+  NODEPOOL_DELETE = 1002 [(clarifai.api.utils.description) = "Nodepools deleted"];
+
+  // Event types related to deployments: 1100-1199
+  DEPLOYMENT_CREATE = 1100 [(clarifai.api.utils.description) = "Deployments created"];
+  DEPLOYMENT_UPDATE = 1101 [(clarifai.api.utils.description) = "Deployments updated"];
+  DEPLOYMENT_DELETE = 1102 [(clarifai.api.utils.description) = "Deployments deleted"];
 }
 
 
@@ -5105,6 +5119,9 @@ message AuditLogTarget {
     WorkflowVersion workflow_version = 8;
     Model model = 9;
     ModelVersion model_version = 10;
+    ComputeCluster compute_cluster = 11;
+    Nodepool nodepool = 12;
+    Deployment deployment = 13;
   }
 }
 

@@ -73128,7 +73128,7 @@ proto.clarifai.api.ProcessingInfo.prototype.setProcessingId = function(value) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.clarifai.api.AuditLogTarget.oneofGroups_ = [[1,2,3,4,5,6,7,8,9,10]];
+proto.clarifai.api.AuditLogTarget.oneofGroups_ = [[1,2,3,4,5,6,7,8,9,10,11,12,13]];
 
 /**
  * @enum {number}
@@ -73144,7 +73144,10 @@ proto.clarifai.api.AuditLogTarget.TargetCase = {
   WORKFLOW: 7,
   WORKFLOW_VERSION: 8,
   MODEL: 9,
-  MODEL_VERSION: 10
+  MODEL_VERSION: 10,
+  COMPUTE_CLUSTER: 11,
+  NODEPOOL: 12,
+  DEPLOYMENT: 13
 };
 
 /**
@@ -73194,7 +73197,10 @@ proto.clarifai.api.AuditLogTarget.toObject = function(includeInstance, msg) {
     workflow: (f = msg.getWorkflow()) && proto.clarifai.api.Workflow.toObject(includeInstance, f),
     workflowVersion: (f = msg.getWorkflowVersion()) && proto.clarifai.api.WorkflowVersion.toObject(includeInstance, f),
     model: (f = msg.getModel()) && proto.clarifai.api.Model.toObject(includeInstance, f),
-    modelVersion: (f = msg.getModelVersion()) && proto.clarifai.api.ModelVersion.toObject(includeInstance, f)
+    modelVersion: (f = msg.getModelVersion()) && proto.clarifai.api.ModelVersion.toObject(includeInstance, f),
+    computeCluster: (f = msg.getComputeCluster()) && proto.clarifai.api.ComputeCluster.toObject(includeInstance, f),
+    nodepool: (f = msg.getNodepool()) && proto.clarifai.api.Nodepool.toObject(includeInstance, f),
+    deployment: (f = msg.getDeployment()) && proto.clarifai.api.Deployment.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -73280,6 +73286,21 @@ proto.clarifai.api.AuditLogTarget.deserializeBinaryFromReader = function(msg, re
       var value = new proto.clarifai.api.ModelVersion;
       reader.readMessage(value,proto.clarifai.api.ModelVersion.deserializeBinaryFromReader);
       msg.setModelVersion(value);
+      break;
+    case 11:
+      var value = new proto.clarifai.api.ComputeCluster;
+      reader.readMessage(value,proto.clarifai.api.ComputeCluster.deserializeBinaryFromReader);
+      msg.setComputeCluster(value);
+      break;
+    case 12:
+      var value = new proto.clarifai.api.Nodepool;
+      reader.readMessage(value,proto.clarifai.api.Nodepool.deserializeBinaryFromReader);
+      msg.setNodepool(value);
+      break;
+    case 13:
+      var value = new proto.clarifai.api.Deployment;
+      reader.readMessage(value,proto.clarifai.api.Deployment.deserializeBinaryFromReader);
+      msg.setDeployment(value);
       break;
     default:
       reader.skipField();
@@ -73388,6 +73409,30 @@ proto.clarifai.api.AuditLogTarget.serializeBinaryToWriter = function(message, wr
       10,
       f,
       proto.clarifai.api.ModelVersion.serializeBinaryToWriter
+    );
+  }
+  f = message.getComputeCluster();
+  if (f != null) {
+    writer.writeMessage(
+      11,
+      f,
+      proto.clarifai.api.ComputeCluster.serializeBinaryToWriter
+    );
+  }
+  f = message.getNodepool();
+  if (f != null) {
+    writer.writeMessage(
+      12,
+      f,
+      proto.clarifai.api.Nodepool.serializeBinaryToWriter
+    );
+  }
+  f = message.getDeployment();
+  if (f != null) {
+    writer.writeMessage(
+      13,
+      f,
+      proto.clarifai.api.Deployment.serializeBinaryToWriter
     );
   }
 };
@@ -73760,6 +73805,117 @@ proto.clarifai.api.AuditLogTarget.prototype.clearModelVersion = function() {
  */
 proto.clarifai.api.AuditLogTarget.prototype.hasModelVersion = function() {
   return jspb.Message.getField(this, 10) != null;
+};
+
+
+/**
+ * optional ComputeCluster compute_cluster = 11;
+ * @return {?proto.clarifai.api.ComputeCluster}
+ */
+proto.clarifai.api.AuditLogTarget.prototype.getComputeCluster = function() {
+  return /** @type{?proto.clarifai.api.ComputeCluster} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.ComputeCluster, 11));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.ComputeCluster|undefined} value
+ * @return {!proto.clarifai.api.AuditLogTarget} returns this
+*/
+proto.clarifai.api.AuditLogTarget.prototype.setComputeCluster = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 11, proto.clarifai.api.AuditLogTarget.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.AuditLogTarget} returns this
+ */
+proto.clarifai.api.AuditLogTarget.prototype.clearComputeCluster = function() {
+  return this.setComputeCluster(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.AuditLogTarget.prototype.hasComputeCluster = function() {
+  return jspb.Message.getField(this, 11) != null;
+};
+
+
+/**
+ * optional Nodepool nodepool = 12;
+ * @return {?proto.clarifai.api.Nodepool}
+ */
+proto.clarifai.api.AuditLogTarget.prototype.getNodepool = function() {
+  return /** @type{?proto.clarifai.api.Nodepool} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Nodepool, 12));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Nodepool|undefined} value
+ * @return {!proto.clarifai.api.AuditLogTarget} returns this
+*/
+proto.clarifai.api.AuditLogTarget.prototype.setNodepool = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 12, proto.clarifai.api.AuditLogTarget.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.AuditLogTarget} returns this
+ */
+proto.clarifai.api.AuditLogTarget.prototype.clearNodepool = function() {
+  return this.setNodepool(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.AuditLogTarget.prototype.hasNodepool = function() {
+  return jspb.Message.getField(this, 12) != null;
+};
+
+
+/**
+ * optional Deployment deployment = 13;
+ * @return {?proto.clarifai.api.Deployment}
+ */
+proto.clarifai.api.AuditLogTarget.prototype.getDeployment = function() {
+  return /** @type{?proto.clarifai.api.Deployment} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Deployment, 13));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Deployment|undefined} value
+ * @return {!proto.clarifai.api.AuditLogTarget} returns this
+*/
+proto.clarifai.api.AuditLogTarget.prototype.setDeployment = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 13, proto.clarifai.api.AuditLogTarget.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.AuditLogTarget} returns this
+ */
+proto.clarifai.api.AuditLogTarget.prototype.clearDeployment = function() {
+  return this.setDeployment(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.AuditLogTarget.prototype.hasDeployment = function() {
+  return jspb.Message.getField(this, 13) != null;
 };
 
 
@@ -80169,7 +80325,15 @@ proto.clarifai.api.EventType = {
   COLLABORATOR_ADD: 700,
   COLLABORATOR_UPDATE: 701,
   COLLABORATOR_REMOVE: 702,
-  USER_UPDATE: 800
+  USER_UPDATE: 800,
+  COMPUTE_CLUSTER_CREATE: 900,
+  COMPUTE_CLUSTER_DELETE: 901,
+  NODEPOOL_CREATE: 1000,
+  NODEPOOL_UPDATE: 1001,
+  NODEPOOL_DELETE: 1002,
+  DEPLOYMENT_CREATE: 1100,
+  DEPLOYMENT_UPDATE: 1101,
+  DEPLOYMENT_DELETE: 1102
 };
 
 goog.object.extend(exports, proto.clarifai.api);

@@ -8892,6 +8892,21 @@ export class AuditLogTarget extends jspb.Message {
     getModelVersion(): ModelVersion | undefined;
     setModelVersion(value?: ModelVersion): AuditLogTarget;
 
+    hasComputeCluster(): boolean;
+    clearComputeCluster(): void;
+    getComputeCluster(): ComputeCluster | undefined;
+    setComputeCluster(value?: ComputeCluster): AuditLogTarget;
+
+    hasNodepool(): boolean;
+    clearNodepool(): void;
+    getNodepool(): Nodepool | undefined;
+    setNodepool(value?: Nodepool): AuditLogTarget;
+
+    hasDeployment(): boolean;
+    clearDeployment(): void;
+    getDeployment(): Deployment | undefined;
+    setDeployment(value?: Deployment): AuditLogTarget;
+
     getTargetCase(): AuditLogTarget.TargetCase;
 
     serializeBinary(): Uint8Array;
@@ -8916,6 +8931,9 @@ export namespace AuditLogTarget {
         workflowVersion?: WorkflowVersion.AsObject,
         model?: Model.AsObject,
         modelVersion?: ModelVersion.AsObject,
+        computeCluster?: ComputeCluster.AsObject,
+        nodepool?: Nodepool.AsObject,
+        deployment?: Deployment.AsObject,
     }
 
     export enum TargetCase {
@@ -8930,6 +8948,9 @@ export namespace AuditLogTarget {
         WORKFLOW_VERSION = 8,
         MODEL = 9,
         MODEL_VERSION = 10,
+        COMPUTE_CLUSTER = 11,
+        NODEPOOL = 12,
+        DEPLOYMENT = 13,
     }
 
 }
@@ -9935,4 +9956,12 @@ export enum EventType {
     COLLABORATOR_UPDATE = 701,
     COLLABORATOR_REMOVE = 702,
     USER_UPDATE = 800,
+    COMPUTE_CLUSTER_CREATE = 900,
+    COMPUTE_CLUSTER_DELETE = 901,
+    NODEPOOL_CREATE = 1000,
+    NODEPOOL_UPDATE = 1001,
+    NODEPOOL_DELETE = 1002,
+    DEPLOYMENT_CREATE = 1100,
+    DEPLOYMENT_UPDATE = 1101,
+    DEPLOYMENT_DELETE = 1102,
 }
