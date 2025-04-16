@@ -5279,21 +5279,21 @@ message ComputeSourceMetadata {
 message WorkflowVersionEvaluation {
   // Customer-Facing / External ID of the workflow version evaluation.
   string id = 1;
-  // The ID of the workflow that is used for evaluation.
-  string workflow_id = 2;
-  // The version of the workflow that is used for evaluation.
-  string workflow_version_id = 3;
-  // The ID of the ground-truth dataset that is used for evaluation.
-  string ground_truth_dataset_id = 4;
-  // The version ID of the ground-truth dataset that is used for evaluation.
-  string ground_truth_dataset_version_id = 5;
-  // The ID of the prediction dataset that is used for evaluation.
-  string predictions_dataset_id = 6;
-  // The version ID of the prediction dataset that is used for evaluation.
-  string predictions_dataset_version_id = 7;
-  // Evaluation Template ID
-  string evaluation_template_id = 8;
-  // The evaluation results
+  // Workflow version that is being evaluated.
+  WorkflowVersion workflow_version = 2;
+  // The target node id that is being evaluated.
+  string target_node_id = 3;
+  // The dataset version that contains the ground-truth and is used for evaluation.
+  DatasetVersion ground_truth_dataset_version = 4;
+  // The dataset version that contains the predictions and is used for evaluation.
+  DatasetVersion predictions_dataset_version = 5;
+  // Evaluation template that is used for evaluation.
+  WorkflowVersionEvaluationTemplate workflow_version_evaluation_template = 6;
+  // The user the workflow version evaluation belongs to.
+  string user_id = 7;
+  // The app the workflow version evaluation belongs to.
+  string app_id = 8;
+  // Results of the evaluation.
   WorkflowEvaluationResult workflow_evaluation_result = 9;
   // Status of the evaluation
   clarifai.api.status.Status status = 10;
@@ -5301,8 +5301,6 @@ message WorkflowVersionEvaluation {
   google.protobuf.Timestamp created_at = 11;
   // When the workflow version evaluation was modified.
   google.protobuf.Timestamp modified_at = 12;
-  // The ID of the node that is being evaluated.
-  string target_node_id = 13;
 }
 
 message WorkflowEvaluationResult {

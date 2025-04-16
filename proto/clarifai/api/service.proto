@@ -8363,11 +8363,12 @@ message PostWorkflowVersionEvaluationsRequest {
   string workflow_version_id = 3;
 
   // ########## Supported fields ##########
-  // - evaluation_template_id
-  // - ground_truth_dataset_id
-  // - ground_truth_dataset_version_id
+  // - ground_truth_dataset_version.app_id
+  // - ground_truth_dataset_version.dataset_id
+  // - ground_truth_dataset_version.id
   // - id
   // - target_node_id
+  // - workflow_version_evaluation_template.id
   repeated clarifai.api.WorkflowVersionEvaluation workflow_version_evaluations = 4;
   repeated RunnerSelector runner_selectors = 5;
 }
@@ -8379,8 +8380,8 @@ message PatchWorkflowVersionEvaluationsRequest {
 
   // ########## Supported fields ##########
   // - id
-  // - predictions_dataset_id
-  // - predictions_dataset_version_id
+  // - predictions_dataset_version.dataset_id
+  // - predictions_dataset_version.id
   // - status.code
   // - status.details
   // - workflow_evaluation_result.summary.evaluation_metric_values[].evaluation_metric_id

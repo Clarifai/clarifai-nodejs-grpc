@@ -9363,20 +9363,32 @@ export namespace ComputeSourceMetadata {
 export class WorkflowVersionEvaluation extends jspb.Message { 
     getId(): string;
     setId(value: string): WorkflowVersionEvaluation;
-    getWorkflowId(): string;
-    setWorkflowId(value: string): WorkflowVersionEvaluation;
-    getWorkflowVersionId(): string;
-    setWorkflowVersionId(value: string): WorkflowVersionEvaluation;
-    getGroundTruthDatasetId(): string;
-    setGroundTruthDatasetId(value: string): WorkflowVersionEvaluation;
-    getGroundTruthDatasetVersionId(): string;
-    setGroundTruthDatasetVersionId(value: string): WorkflowVersionEvaluation;
-    getPredictionsDatasetId(): string;
-    setPredictionsDatasetId(value: string): WorkflowVersionEvaluation;
-    getPredictionsDatasetVersionId(): string;
-    setPredictionsDatasetVersionId(value: string): WorkflowVersionEvaluation;
-    getEvaluationTemplateId(): string;
-    setEvaluationTemplateId(value: string): WorkflowVersionEvaluation;
+
+    hasWorkflowVersion(): boolean;
+    clearWorkflowVersion(): void;
+    getWorkflowVersion(): WorkflowVersion | undefined;
+    setWorkflowVersion(value?: WorkflowVersion): WorkflowVersionEvaluation;
+    getTargetNodeId(): string;
+    setTargetNodeId(value: string): WorkflowVersionEvaluation;
+
+    hasGroundTruthDatasetVersion(): boolean;
+    clearGroundTruthDatasetVersion(): void;
+    getGroundTruthDatasetVersion(): DatasetVersion | undefined;
+    setGroundTruthDatasetVersion(value?: DatasetVersion): WorkflowVersionEvaluation;
+
+    hasPredictionsDatasetVersion(): boolean;
+    clearPredictionsDatasetVersion(): void;
+    getPredictionsDatasetVersion(): DatasetVersion | undefined;
+    setPredictionsDatasetVersion(value?: DatasetVersion): WorkflowVersionEvaluation;
+
+    hasWorkflowVersionEvaluationTemplate(): boolean;
+    clearWorkflowVersionEvaluationTemplate(): void;
+    getWorkflowVersionEvaluationTemplate(): WorkflowVersionEvaluationTemplate | undefined;
+    setWorkflowVersionEvaluationTemplate(value?: WorkflowVersionEvaluationTemplate): WorkflowVersionEvaluation;
+    getUserId(): string;
+    setUserId(value: string): WorkflowVersionEvaluation;
+    getAppId(): string;
+    setAppId(value: string): WorkflowVersionEvaluation;
 
     hasWorkflowEvaluationResult(): boolean;
     clearWorkflowEvaluationResult(): void;
@@ -9397,8 +9409,6 @@ export class WorkflowVersionEvaluation extends jspb.Message {
     clearModifiedAt(): void;
     getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
     setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): WorkflowVersionEvaluation;
-    getTargetNodeId(): string;
-    setTargetNodeId(value: string): WorkflowVersionEvaluation;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): WorkflowVersionEvaluation.AsObject;
@@ -9413,18 +9423,17 @@ export class WorkflowVersionEvaluation extends jspb.Message {
 export namespace WorkflowVersionEvaluation {
     export type AsObject = {
         id: string,
-        workflowId: string,
-        workflowVersionId: string,
-        groundTruthDatasetId: string,
-        groundTruthDatasetVersionId: string,
-        predictionsDatasetId: string,
-        predictionsDatasetVersionId: string,
-        evaluationTemplateId: string,
+        workflowVersion?: WorkflowVersion.AsObject,
+        targetNodeId: string,
+        groundTruthDatasetVersion?: DatasetVersion.AsObject,
+        predictionsDatasetVersion?: DatasetVersion.AsObject,
+        workflowVersionEvaluationTemplate?: WorkflowVersionEvaluationTemplate.AsObject,
+        userId: string,
+        appId: string,
         workflowEvaluationResult?: WorkflowEvaluationResult.AsObject,
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        targetNodeId: string,
     }
 }
 
