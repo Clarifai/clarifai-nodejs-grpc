@@ -13,9 +13,9 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.4.2",
     "@grpc/proto-loader": "^0.5.5",
-    "axios": "^0.21.1",
-    "protobufjs": "^6.10.2",
-    "google-protobuf": "^3.14.0"
+    "axios": "^1.8.4",
+    "google-protobuf": "^3.14.0",
+    "protobufjs": "^6.10.2"
   },
   "devDependencies": {
     "mocha": "^8.2.1"
