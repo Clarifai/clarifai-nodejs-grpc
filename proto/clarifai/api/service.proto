@@ -5673,6 +5673,8 @@ message ListModelsRequest {
   uint32 source = 30;
   // Filter by Creator
   string creator = 31;
+  // Filter by model versions runners with replicas >= min_replicas.
+  uint32 min_replicas = 33;
 }
 
 // ResourceCountRequest
@@ -5825,8 +5827,10 @@ message PostModelsSearchesRequest {
 
 // SingleModelResponse
 message SingleModelResponse {
+  reserved 3;
   clarifai.api.status.Status status = 1;
   Model model = 2;
+  int32 workflow_count = 4;
 }
 
 // MultiModelResponse
@@ -5883,6 +5887,9 @@ message ListModelVersionsRequest {
     // If neither sort option is set to true, will sort by created_at.
     bool sort_by_created_at = 11;
   }
+
+  // Filter by model versions runners with replicas >= min_replicas.
+  uint32 min_replicas = 12;
 }
 
 // DeleteModelVersionRequest

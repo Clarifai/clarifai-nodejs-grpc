@@ -3261,6 +3261,8 @@ export class ModelTypeField extends jspb.Message {
     setIterator(value: boolean): ModelTypeField;
     getDefault(): string;
     setDefault(value: string): ModelTypeField;
+    getIsParam(): boolean;
+    setIsParam(value: boolean): ModelTypeField;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ModelTypeField.AsObject;
@@ -3288,6 +3290,7 @@ export namespace ModelTypeField {
         typeArgsList: Array<ModelTypeField.AsObject>,
         iterator: boolean,
         pb_default: string,
+        isParam: boolean,
     }
 
     export enum ModelTypeFieldType {
@@ -3331,9 +3334,9 @@ export namespace ModelTypeField {
     FRAME = 12,
     AUDIO = 13,
     VIDEO = 14,
-    NAMED_FIELDS = 20,
-    TUPLE = 21,
-    LIST = 22,
+    NAMED_FIELDS = 15,
+    TUPLE = 16,
+    LIST = 17,
     }
 
 }
@@ -5473,6 +5476,8 @@ export class WorkflowVersion extends jspb.Message {
     setDescription(value: string): WorkflowVersion;
     getLicense(): string;
     setLicense(value: string): WorkflowVersion;
+    getIsDeprecated(): boolean;
+    setIsDeprecated(value: boolean): WorkflowVersion;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): WorkflowVersion.AsObject;
@@ -5497,6 +5502,7 @@ export namespace WorkflowVersion {
         userId: string,
         description: string,
         license: string,
+        isDeprecated: boolean,
     }
 }
 
@@ -8514,6 +8520,13 @@ export class InstanceType extends jspb.Message {
     getPrice(): string;
     setPrice(value: string): InstanceType;
 
+    hasCloudProvider(): boolean;
+    clearCloudProvider(): void;
+    getCloudProvider(): CloudProvider | undefined;
+    setCloudProvider(value?: CloudProvider): InstanceType;
+    getRegion(): string;
+    setRegion(value: string): InstanceType;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): InstanceType.AsObject;
     static toObject(includeInstance: boolean, msg: InstanceType): InstanceType.AsObject;
@@ -8530,6 +8543,8 @@ export namespace InstanceType {
         description: string,
         computeInfo?: ComputeInfo.AsObject,
         price: string,
+        cloudProvider?: CloudProvider.AsObject,
+        region: string,
     }
 }
 

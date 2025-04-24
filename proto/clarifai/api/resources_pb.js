@@ -30405,7 +30405,8 @@ proto.clarifai.api.ModelTypeField.toObject = function(includeInstance, msg) {
     typeArgsList: jspb.Message.toObjectList(msg.getTypeArgsList(),
     proto.clarifai.api.ModelTypeField.toObject, includeInstance),
     iterator: jspb.Message.getBooleanFieldWithDefault(msg, 13, false),
-    pb_default: jspb.Message.getFieldWithDefault(msg, 14, "")
+    pb_default: jspb.Message.getFieldWithDefault(msg, 14, ""),
+    isParam: jspb.Message.getBooleanFieldWithDefault(msg, 15, false)
   };
 
   if (includeInstance) {
@@ -30501,6 +30502,10 @@ proto.clarifai.api.ModelTypeField.deserializeBinaryFromReader = function(msg, re
     case 14:
       var value = /** @type {string} */ (reader.readString());
       msg.setDefault(value);
+      break;
+    case 15:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsParam(value);
       break;
     default:
       reader.skipField();
@@ -30633,6 +30638,13 @@ proto.clarifai.api.ModelTypeField.serializeBinaryToWriter = function(message, wr
       f
     );
   }
+  f = message.getIsParam();
+  if (f) {
+    writer.writeBool(
+      15,
+      f
+    );
+  }
 };
 
 
@@ -30683,9 +30695,9 @@ proto.clarifai.api.ModelTypeField.DataType = {
   FRAME: 12,
   AUDIO: 13,
   VIDEO: 14,
-  NAMED_FIELDS: 20,
-  TUPLE: 21,
-  LIST: 22
+  NAMED_FIELDS: 15,
+  TUPLE: 16,
+  LIST: 17
 };
 
 /**
@@ -31015,6 +31027,24 @@ proto.clarifai.api.ModelTypeField.prototype.getDefault = function() {
  */
 proto.clarifai.api.ModelTypeField.prototype.setDefault = function(value) {
   return jspb.Message.setProto3StringField(this, 14, value);
+};
+
+
+/**
+ * optional bool is_param = 15;
+ * @return {boolean}
+ */
+proto.clarifai.api.ModelTypeField.prototype.getIsParam = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 15, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.ModelTypeField} returns this
+ */
+proto.clarifai.api.ModelTypeField.prototype.setIsParam = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 15, value);
 };
 
 
@@ -47808,7 +47838,8 @@ proto.clarifai.api.WorkflowVersion.toObject = function(includeInstance, msg) {
     appId: jspb.Message.getFieldWithDefault(msg, 8, ""),
     userId: jspb.Message.getFieldWithDefault(msg, 9, ""),
     description: jspb.Message.getFieldWithDefault(msg, 10, ""),
-    license: jspb.Message.getFieldWithDefault(msg, 11, "")
+    license: jspb.Message.getFieldWithDefault(msg, 11, ""),
+    isDeprecated: jspb.Message.getBooleanFieldWithDefault(msg, 12, false)
   };
 
   if (includeInstance) {
@@ -47893,6 +47924,10 @@ proto.clarifai.api.WorkflowVersion.deserializeBinaryFromReader = function(msg, r
     case 11:
       var value = /** @type {string} */ (reader.readString());
       msg.setLicense(value);
+      break;
+    case 12:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsDeprecated(value);
       break;
     default:
       reader.skipField();
@@ -48002,6 +48037,13 @@ proto.clarifai.api.WorkflowVersion.serializeBinaryToWriter = function(message, w
   if (f.length > 0) {
     writer.writeString(
       11,
+      f
+    );
+  }
+  f = message.getIsDeprecated();
+  if (f) {
+    writer.writeBool(
+      12,
       f
     );
   }
@@ -48299,6 +48341,24 @@ proto.clarifai.api.WorkflowVersion.prototype.getLicense = function() {
  */
 proto.clarifai.api.WorkflowVersion.prototype.setLicense = function(value) {
   return jspb.Message.setProto3StringField(this, 11, value);
+};
+
+
+/**
+ * optional bool is_deprecated = 12;
+ * @return {boolean}
+ */
+proto.clarifai.api.WorkflowVersion.prototype.getIsDeprecated = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 12, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.WorkflowVersion} returns this
+ */
+proto.clarifai.api.WorkflowVersion.prototype.setIsDeprecated = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 12, value);
 };
 
 
@@ -70567,7 +70627,9 @@ proto.clarifai.api.InstanceType.toObject = function(includeInstance, msg) {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     description: jspb.Message.getFieldWithDefault(msg, 2, ""),
     computeInfo: (f = msg.getComputeInfo()) && proto.clarifai.api.ComputeInfo.toObject(includeInstance, f),
-    price: jspb.Message.getFieldWithDefault(msg, 4, "")
+    price: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    cloudProvider: (f = msg.getCloudProvider()) && proto.clarifai.api.CloudProvider.toObject(includeInstance, f),
+    region: jspb.Message.getFieldWithDefault(msg, 6, "")
   };
 
   if (includeInstance) {
@@ -70620,6 +70682,15 @@ proto.clarifai.api.InstanceType.deserializeBinaryFromReader = function(msg, read
     case 4:
       var value = /** @type {string} */ (reader.readString());
       msg.setPrice(value);
+      break;
+    case 5:
+      var value = new proto.clarifai.api.CloudProvider;
+      reader.readMessage(value,proto.clarifai.api.CloudProvider.deserializeBinaryFromReader);
+      msg.setCloudProvider(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setRegion(value);
       break;
     default:
       reader.skipField();
@@ -70676,6 +70747,21 @@ proto.clarifai.api.InstanceType.serializeBinaryToWriter = function(message, writ
   if (f.length > 0) {
     writer.writeString(
       4,
+      f
+    );
+  }
+  f = message.getCloudProvider();
+  if (f != null) {
+    writer.writeMessage(
+      5,
+      f,
+      proto.clarifai.api.CloudProvider.serializeBinaryToWriter
+    );
+  }
+  f = message.getRegion();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
       f
     );
   }
@@ -70770,6 +70856,61 @@ proto.clarifai.api.InstanceType.prototype.getPrice = function() {
  */
 proto.clarifai.api.InstanceType.prototype.setPrice = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional CloudProvider cloud_provider = 5;
+ * @return {?proto.clarifai.api.CloudProvider}
+ */
+proto.clarifai.api.InstanceType.prototype.getCloudProvider = function() {
+  return /** @type{?proto.clarifai.api.CloudProvider} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.CloudProvider, 5));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.CloudProvider|undefined} value
+ * @return {!proto.clarifai.api.InstanceType} returns this
+*/
+proto.clarifai.api.InstanceType.prototype.setCloudProvider = function(value) {
+  return jspb.Message.setWrapperField(this, 5, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.InstanceType} returns this
+ */
+proto.clarifai.api.InstanceType.prototype.clearCloudProvider = function() {
+  return this.setCloudProvider(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.InstanceType.prototype.hasCloudProvider = function() {
+  return jspb.Message.getField(this, 5) != null;
+};
+
+
+/**
+ * optional string region = 6;
+ * @return {string}
+ */
+proto.clarifai.api.InstanceType.prototype.getRegion = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.InstanceType} returns this
+ */
+proto.clarifai.api.InstanceType.prototype.setRegion = function(value) {
+  return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
