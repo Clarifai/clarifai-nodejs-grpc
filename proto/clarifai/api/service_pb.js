@@ -36129,7 +36129,8 @@ proto.clarifai.api.ListModelsRequest.toObject = function(includeInstance, msg) {
     modelVersionIdsList: (f = jspb.Message.getRepeatedField(msg, 28)) == null ? undefined : f,
     licenseType: jspb.Message.getFieldWithDefault(msg, 29, 0),
     source: jspb.Message.getFieldWithDefault(msg, 30, 0),
-    creator: jspb.Message.getFieldWithDefault(msg, 31, "")
+    creator: jspb.Message.getFieldWithDefault(msg, 31, ""),
+    minReplicas: jspb.Message.getFieldWithDefault(msg, 33, 0)
   };
 
   if (includeInstance) {
@@ -36286,6 +36287,10 @@ proto.clarifai.api.ListModelsRequest.deserializeBinaryFromReader = function(msg,
     case 31:
       var value = /** @type {string} */ (reader.readString());
       msg.setCreator(value);
+      break;
+    case 33:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setMinReplicas(value);
       break;
     default:
       reader.skipField();
@@ -36524,6 +36529,13 @@ proto.clarifai.api.ListModelsRequest.serializeBinaryToWriter = function(message,
   if (f.length > 0) {
     writer.writeString(
       31,
+      f
+    );
+  }
+  f = message.getMinReplicas();
+  if (f !== 0) {
+    writer.writeUint32(
+      33,
       f
     );
   }
@@ -37309,6 +37321,24 @@ proto.clarifai.api.ListModelsRequest.prototype.getCreator = function() {
  */
 proto.clarifai.api.ListModelsRequest.prototype.setCreator = function(value) {
   return jspb.Message.setProto3StringField(this, 31, value);
+};
+
+
+/**
+ * optional uint32 min_replicas = 33;
+ * @return {number}
+ */
+proto.clarifai.api.ListModelsRequest.prototype.getMinReplicas = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 33, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.ListModelsRequest} returns this
+ */
+proto.clarifai.api.ListModelsRequest.prototype.setMinReplicas = function(value) {
+  return jspb.Message.setProto3IntField(this, 33, value);
 };
 
 
@@ -41268,7 +41298,8 @@ proto.clarifai.api.SingleModelResponse.prototype.toObject = function(opt_include
 proto.clarifai.api.SingleModelResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f),
-    model: (f = msg.getModel()) && proto_clarifai_api_resources_pb.Model.toObject(includeInstance, f)
+    model: (f = msg.getModel()) && proto_clarifai_api_resources_pb.Model.toObject(includeInstance, f),
+    workflowCount: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -41315,6 +41346,10 @@ proto.clarifai.api.SingleModelResponse.deserializeBinaryFromReader = function(ms
       reader.readMessage(value,proto_clarifai_api_resources_pb.Model.deserializeBinaryFromReader);
       msg.setModel(value);
       break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setWorkflowCount(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -41358,6 +41393,13 @@ proto.clarifai.api.SingleModelResponse.serializeBinaryToWriter = function(messag
       2,
       f,
       proto_clarifai_api_resources_pb.Model.serializeBinaryToWriter
+    );
+  }
+  f = message.getWorkflowCount();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
+      f
     );
   }
 };
@@ -41434,6 +41476,24 @@ proto.clarifai.api.SingleModelResponse.prototype.clearModel = function() {
  */
 proto.clarifai.api.SingleModelResponse.prototype.hasModel = function() {
   return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional int32 workflow_count = 4;
+ * @return {number}
+ */
+proto.clarifai.api.SingleModelResponse.prototype.getWorkflowCount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.SingleModelResponse} returns this
+ */
+proto.clarifai.api.SingleModelResponse.prototype.setWorkflowCount = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -42207,7 +42267,8 @@ proto.clarifai.api.ListModelVersionsRequest.toObject = function(includeInstance,
     sortByStatusCode: jspb.Message.getBooleanFieldWithDefault(msg, 8, false),
     sortByNumInputs: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
     sortByDescription: jspb.Message.getBooleanFieldWithDefault(msg, 10, false),
-    sortByCreatedAt: jspb.Message.getBooleanFieldWithDefault(msg, 11, false)
+    sortByCreatedAt: jspb.Message.getBooleanFieldWithDefault(msg, 11, false),
+    minReplicas: jspb.Message.getFieldWithDefault(msg, 12, 0)
   };
 
   if (includeInstance) {
@@ -42288,6 +42349,10 @@ proto.clarifai.api.ListModelVersionsRequest.deserializeBinaryFromReader = functi
     case 11:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setSortByCreatedAt(value);
+      break;
+    case 12:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setMinReplicas(value);
       break;
     default:
       reader.skipField();
@@ -42393,6 +42458,13 @@ proto.clarifai.api.ListModelVersionsRequest.serializeBinaryToWriter = function(m
   if (f != null) {
     writer.writeBool(
       11,
+      f
+    );
+  }
+  f = message.getMinReplicas();
+  if (f !== 0) {
+    writer.writeUint32(
+      12,
       f
     );
   }
@@ -42704,6 +42776,24 @@ proto.clarifai.api.ListModelVersionsRequest.prototype.clearSortByCreatedAt = fun
  */
 proto.clarifai.api.ListModelVersionsRequest.prototype.hasSortByCreatedAt = function() {
   return jspb.Message.getField(this, 11) != null;
+};
+
+
+/**
+ * optional uint32 min_replicas = 12;
+ * @return {number}
+ */
+proto.clarifai.api.ListModelVersionsRequest.prototype.getMinReplicas = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.ListModelVersionsRequest} returns this
+ */
+proto.clarifai.api.ListModelVersionsRequest.prototype.setMinReplicas = function(value) {
+  return jspb.Message.setProto3IntField(this, 12, value);
 };
 
 

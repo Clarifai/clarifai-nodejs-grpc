@@ -3765,6 +3765,8 @@ export class ListModelsRequest extends jspb.Message {
     setSource(value: number): ListModelsRequest;
     getCreator(): string;
     setCreator(value: string): ListModelsRequest;
+    getMinReplicas(): number;
+    setMinReplicas(value: number): ListModelsRequest;
 
     getSortByCase(): ListModelsRequest.SortByCase;
 
@@ -3810,6 +3812,7 @@ export namespace ListModelsRequest {
         licenseType: proto_clarifai_api_resources_pb.LicenseType,
         source: number,
         creator: string,
+        minReplicas: number,
     }
 
     export enum SortByCase {
@@ -4354,6 +4357,8 @@ export class SingleModelResponse extends jspb.Message {
     clearModel(): void;
     getModel(): proto_clarifai_api_resources_pb.Model | undefined;
     setModel(value?: proto_clarifai_api_resources_pb.Model): SingleModelResponse;
+    getWorkflowCount(): number;
+    setWorkflowCount(value: number): SingleModelResponse;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): SingleModelResponse.AsObject;
@@ -4369,6 +4374,7 @@ export namespace SingleModelResponse {
     export type AsObject = {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         model?: proto_clarifai_api_resources_pb.Model.AsObject,
+        workflowCount: number,
     }
 }
 
@@ -4503,6 +4509,8 @@ export class ListModelVersionsRequest extends jspb.Message {
     clearSortByCreatedAt(): void;
     getSortByCreatedAt(): boolean;
     setSortByCreatedAt(value: boolean): ListModelVersionsRequest;
+    getMinReplicas(): number;
+    setMinReplicas(value: number): ListModelVersionsRequest;
 
     getSortByCase(): ListModelVersionsRequest.SortByCase;
 
@@ -4529,6 +4537,7 @@ export namespace ListModelVersionsRequest {
         sortByNumInputs: boolean,
         sortByDescription: boolean,
         sortByCreatedAt: boolean,
+        minReplicas: number,
     }
 
     export enum SortByCase {
