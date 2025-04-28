@@ -1871,11 +1871,11 @@ message ModelTypeField {
     // A video is a video proto for url or bytes.
     VIDEO = 14;
     // this can be used to store named fields with values similar to Dict
-    NAMED_FIELDS = 20;
+    NAMED_FIELDS = 15;
     // An arg that is a tuple.
-    TUPLE = 21;
+    TUPLE = 16;
     // An arg that is a list.
-    LIST = 22;
+    LIST = 17;
   }
   // The type of the argument.
   DataType type = 11;
@@ -1884,10 +1884,15 @@ message ModelTypeField {
   repeated ModelTypeField type_args = 12;
   // this will be use to define whether the method argument supports streaming as an iterator.
   bool iterator = 13;
-  // This specify the default value of the method argument. We define this as a string
+  // This specify the default value of the method argument 
+  // If this argument is not passed, the input is required. If it is explicitly set to None, the input is optional
+  // We define this as a string
   // because the default value can be a string, int, float, bool, or a complex object like a JSON
   // The default_value field above should not also be used.
   string default = 14;
+  // wheather it's a inference param or a modeltype field
+  bool is_param = 15;
+
   /////////////////////////////////////
 }
 
@@ -3065,6 +3070,10 @@ message WorkflowVersion {
 
   // License associated to this workflow version
   string license = 11;
+
+  // If a model version associated with the workflow version is deleted, the workflow version
+  // will be marked as deprecated.
+  bool is_deprecated = 12;
 }
 
 // WorkflowNode
@@ -4755,6 +4764,11 @@ message InstanceType {
   string description = 2;
   ComputeInfo compute_info = 3;
   string price = 4;
+
+  // The cloud provider where this instance type is available, if any.
+  CloudProvider cloud_provider = 5;
+  // The region where this instance type is available, if any.
+  string region = 6;
 }
 
 // CloudProvider represents the entity that provides the infrastructure where the Nodepools are deployed.
@@ -5088,6 +5102,20 @@ enum EventType {
 
   // Event types related to users: 800 - 899
   USER_UPDATE = 800 [(clarifai.api.utils.description) = "Users updated"];
+
+  // Event types related to compute clusters: 900-999
+  COMPUTE_CLUSTER_CREATE = 900 [(clarifai.api.utils.description) = "Compute clusters created"];
+  COMPUTE_CLUSTER_DELETE = 901 [(clarifai.api.utils.description) = "Compute clusters deleted"];
+
+  // Event types related to nodepools: 1000-1099
+  NODEPOOL_CREATE = 1000 [(clarifai.api.utils.description) = "Nodepools created"];
+  NODEPOOL_UPDATE = 1001 [(clarifai.api.utils.description) = "Nodepools updated"];
+  NODEPOOL_DELETE = 1002 [(clarifai.api.utils.description) = "Nodepools deleted"];
+
+  // Event types related to deployments: 1100-1199
+  DEPLOYMENT_CREATE = 1100 [(clarifai.api.utils.description) = "Deployments created"];
+  DEPLOYMENT_UPDATE = 1101 [(clarifai.api.utils.description) = "Deployments updated"];
+  DEPLOYMENT_DELETE = 1102 [(clarifai.api.utils.description) = "Deployments deleted"];
 }
 
 
@@ -5105,6 +5133,9 @@ message AuditLogTarget {
     WorkflowVersion workflow_version = 8;
     Model model = 9;
     ModelVersion model_version = 10;
+    ComputeCluster compute_cluster = 11;
+    Nodepool nodepool = 12;
+    Deployment deployment = 13;
   }
 }
 
@@ -5262,21 +5293,21 @@ message ComputeSourceMetadata {
 message WorkflowVersionEvaluation {
   // Customer-Facing / External ID of the workflow version evaluation.
   string id = 1;
-  // The ID of the workflow that is used for evaluation.
-  string workflow_id = 2;
-  // The version of the workflow that is used for evaluation.
-  string workflow_version_id = 3;
-  // The ID of the ground-truth dataset that is used for evaluation.
-  string ground_truth_dataset_id = 4;
-  // The version ID of the ground-truth dataset that is used for evaluation.
-  string ground_truth_dataset_version_id = 5;
-  // The ID of the prediction dataset that is used for evaluation.
-  string predictions_dataset_id = 6;
-  // The version ID of the prediction dataset that is used for evaluation.
-  string predictions_dataset_version_id = 7;
-  // Evaluation Template ID
-  string evaluation_template_id = 8;
-  // The evaluation results
+  // Workflow version that is being evaluated.
+  WorkflowVersion workflow_version = 2;
+  // The target node id that is being evaluated.
+  string target_node_id = 3;
+  // The dataset version that contains the ground-truth and is used for evaluation.
+  DatasetVersion ground_truth_dataset_version = 4;
+  // The dataset version that contains the predictions and is used for evaluation.
+  DatasetVersion predictions_dataset_version = 5;
+  // Evaluation template that is used for evaluation.
+  WorkflowVersionEvaluationTemplate workflow_version_evaluation_template = 6;
+  // The user the workflow version evaluation belongs to.
+  string user_id = 7;
+  // The app the workflow version evaluation belongs to.
+  string app_id = 8;
+  // Results of the evaluation.
   WorkflowEvaluationResult workflow_evaluation_result = 9;
   // Status of the evaluation
   clarifai.api.status.Status status = 10;
@@ -5284,8 +5315,6 @@ message WorkflowVersionEvaluation {
   google.protobuf.Timestamp created_at = 11;
   // When the workflow version evaluation was modified.
   google.protobuf.Timestamp modified_at = 12;
-  // The ID of the node that is being evaluated.
-  string target_node_id = 13;
 }
 
 message WorkflowEvaluationResult {

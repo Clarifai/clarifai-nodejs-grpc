@@ -3261,6 +3261,8 @@ export class ModelTypeField extends jspb.Message {
     setIterator(value: boolean): ModelTypeField;
     getDefault(): string;
     setDefault(value: string): ModelTypeField;
+    getIsParam(): boolean;
+    setIsParam(value: boolean): ModelTypeField;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ModelTypeField.AsObject;
@@ -3288,6 +3290,7 @@ export namespace ModelTypeField {
         typeArgsList: Array<ModelTypeField.AsObject>,
         iterator: boolean,
         pb_default: string,
+        isParam: boolean,
     }
 
     export enum ModelTypeFieldType {
@@ -3331,9 +3334,9 @@ export namespace ModelTypeField {
     FRAME = 12,
     AUDIO = 13,
     VIDEO = 14,
-    NAMED_FIELDS = 20,
-    TUPLE = 21,
-    LIST = 22,
+    NAMED_FIELDS = 15,
+    TUPLE = 16,
+    LIST = 17,
     }
 
 }
@@ -5473,6 +5476,8 @@ export class WorkflowVersion extends jspb.Message {
     setDescription(value: string): WorkflowVersion;
     getLicense(): string;
     setLicense(value: string): WorkflowVersion;
+    getIsDeprecated(): boolean;
+    setIsDeprecated(value: boolean): WorkflowVersion;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): WorkflowVersion.AsObject;
@@ -5497,6 +5502,7 @@ export namespace WorkflowVersion {
         userId: string,
         description: string,
         license: string,
+        isDeprecated: boolean,
     }
 }
 
@@ -8514,6 +8520,13 @@ export class InstanceType extends jspb.Message {
     getPrice(): string;
     setPrice(value: string): InstanceType;
 
+    hasCloudProvider(): boolean;
+    clearCloudProvider(): void;
+    getCloudProvider(): CloudProvider | undefined;
+    setCloudProvider(value?: CloudProvider): InstanceType;
+    getRegion(): string;
+    setRegion(value: string): InstanceType;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): InstanceType.AsObject;
     static toObject(includeInstance: boolean, msg: InstanceType): InstanceType.AsObject;
@@ -8530,6 +8543,8 @@ export namespace InstanceType {
         description: string,
         computeInfo?: ComputeInfo.AsObject,
         price: string,
+        cloudProvider?: CloudProvider.AsObject,
+        region: string,
     }
 }
 
@@ -8892,6 +8907,21 @@ export class AuditLogTarget extends jspb.Message {
     getModelVersion(): ModelVersion | undefined;
     setModelVersion(value?: ModelVersion): AuditLogTarget;
 
+    hasComputeCluster(): boolean;
+    clearComputeCluster(): void;
+    getComputeCluster(): ComputeCluster | undefined;
+    setComputeCluster(value?: ComputeCluster): AuditLogTarget;
+
+    hasNodepool(): boolean;
+    clearNodepool(): void;
+    getNodepool(): Nodepool | undefined;
+    setNodepool(value?: Nodepool): AuditLogTarget;
+
+    hasDeployment(): boolean;
+    clearDeployment(): void;
+    getDeployment(): Deployment | undefined;
+    setDeployment(value?: Deployment): AuditLogTarget;
+
     getTargetCase(): AuditLogTarget.TargetCase;
 
     serializeBinary(): Uint8Array;
@@ -8916,6 +8946,9 @@ export namespace AuditLogTarget {
         workflowVersion?: WorkflowVersion.AsObject,
         model?: Model.AsObject,
         modelVersion?: ModelVersion.AsObject,
+        computeCluster?: ComputeCluster.AsObject,
+        nodepool?: Nodepool.AsObject,
+        deployment?: Deployment.AsObject,
     }
 
     export enum TargetCase {
@@ -8930,6 +8963,9 @@ export namespace AuditLogTarget {
         WORKFLOW_VERSION = 8,
         MODEL = 9,
         MODEL_VERSION = 10,
+        COMPUTE_CLUSTER = 11,
+        NODEPOOL = 12,
+        DEPLOYMENT = 13,
     }
 
 }
@@ -9342,20 +9378,32 @@ export namespace ComputeSourceMetadata {
 export class WorkflowVersionEvaluation extends jspb.Message { 
     getId(): string;
     setId(value: string): WorkflowVersionEvaluation;
-    getWorkflowId(): string;
-    setWorkflowId(value: string): WorkflowVersionEvaluation;
-    getWorkflowVersionId(): string;
-    setWorkflowVersionId(value: string): WorkflowVersionEvaluation;
-    getGroundTruthDatasetId(): string;
-    setGroundTruthDatasetId(value: string): WorkflowVersionEvaluation;
-    getGroundTruthDatasetVersionId(): string;
-    setGroundTruthDatasetVersionId(value: string): WorkflowVersionEvaluation;
-    getPredictionsDatasetId(): string;
-    setPredictionsDatasetId(value: string): WorkflowVersionEvaluation;
-    getPredictionsDatasetVersionId(): string;
-    setPredictionsDatasetVersionId(value: string): WorkflowVersionEvaluation;
-    getEvaluationTemplateId(): string;
-    setEvaluationTemplateId(value: string): WorkflowVersionEvaluation;
+
+    hasWorkflowVersion(): boolean;
+    clearWorkflowVersion(): void;
+    getWorkflowVersion(): WorkflowVersion | undefined;
+    setWorkflowVersion(value?: WorkflowVersion): WorkflowVersionEvaluation;
+    getTargetNodeId(): string;
+    setTargetNodeId(value: string): WorkflowVersionEvaluation;
+
+    hasGroundTruthDatasetVersion(): boolean;
+    clearGroundTruthDatasetVersion(): void;
+    getGroundTruthDatasetVersion(): DatasetVersion | undefined;
+    setGroundTruthDatasetVersion(value?: DatasetVersion): WorkflowVersionEvaluation;
+
+    hasPredictionsDatasetVersion(): boolean;
+    clearPredictionsDatasetVersion(): void;
+    getPredictionsDatasetVersion(): DatasetVersion | undefined;
+    setPredictionsDatasetVersion(value?: DatasetVersion): WorkflowVersionEvaluation;
+
+    hasWorkflowVersionEvaluationTemplate(): boolean;
+    clearWorkflowVersionEvaluationTemplate(): void;
+    getWorkflowVersionEvaluationTemplate(): WorkflowVersionEvaluationTemplate | undefined;
+    setWorkflowVersionEvaluationTemplate(value?: WorkflowVersionEvaluationTemplate): WorkflowVersionEvaluation;
+    getUserId(): string;
+    setUserId(value: string): WorkflowVersionEvaluation;
+    getAppId(): string;
+    setAppId(value: string): WorkflowVersionEvaluation;
 
     hasWorkflowEvaluationResult(): boolean;
     clearWorkflowEvaluationResult(): void;
@@ -9376,8 +9424,6 @@ export class WorkflowVersionEvaluation extends jspb.Message {
     clearModifiedAt(): void;
     getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
     setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): WorkflowVersionEvaluation;
-    getTargetNodeId(): string;
-    setTargetNodeId(value: string): WorkflowVersionEvaluation;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): WorkflowVersionEvaluation.AsObject;
@@ -9392,18 +9438,17 @@ export class WorkflowVersionEvaluation extends jspb.Message {
 export namespace WorkflowVersionEvaluation {
     export type AsObject = {
         id: string,
-        workflowId: string,
-        workflowVersionId: string,
-        groundTruthDatasetId: string,
-        groundTruthDatasetVersionId: string,
-        predictionsDatasetId: string,
-        predictionsDatasetVersionId: string,
-        evaluationTemplateId: string,
+        workflowVersion?: WorkflowVersion.AsObject,
+        targetNodeId: string,
+        groundTruthDatasetVersion?: DatasetVersion.AsObject,
+        predictionsDatasetVersion?: DatasetVersion.AsObject,
+        workflowVersionEvaluationTemplate?: WorkflowVersionEvaluationTemplate.AsObject,
+        userId: string,
+        appId: string,
         workflowEvaluationResult?: WorkflowEvaluationResult.AsObject,
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        targetNodeId: string,
     }
 }
 
@@ -9935,4 +9980,12 @@ export enum EventType {
     COLLABORATOR_UPDATE = 701,
     COLLABORATOR_REMOVE = 702,
     USER_UPDATE = 800,
+    COMPUTE_CLUSTER_CREATE = 900,
+    COMPUTE_CLUSTER_DELETE = 901,
+    NODEPOOL_CREATE = 1000,
+    NODEPOOL_UPDATE = 1001,
+    NODEPOOL_DELETE = 1002,
+    DEPLOYMENT_CREATE = 1100,
+    DEPLOYMENT_UPDATE = 1101,
+    DEPLOYMENT_DELETE = 1102,
 }
