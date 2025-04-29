@@ -32011,7 +32011,8 @@ proto.clarifai.api.PostModelOutputsRequest.toObject = function(includeInstance, 
     proto_clarifai_api_resources_pb.Input.toObject, includeInstance),
     model: (f = msg.getModel()) && proto_clarifai_api_resources_pb.Model.toObject(includeInstance, f),
     runnerSelector: (f = msg.getRunnerSelector()) && proto_clarifai_api_resources_pb.RunnerSelector.toObject(includeInstance, f),
-    usePredictCache: jspb.Message.getBooleanFieldWithDefault(msg, 7, false)
+    usePredictCache: jspb.Message.getBooleanFieldWithDefault(msg, 7, false),
+    enableLogSummaryOnError: jspb.Message.getBooleanFieldWithDefault(msg, 8, false)
   };
 
   if (includeInstance) {
@@ -32079,6 +32080,10 @@ proto.clarifai.api.PostModelOutputsRequest.deserializeBinaryFromReader = functio
     case 7:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setUsePredictCache(value);
+      break;
+    case 8:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setEnableLogSummaryOnError(value);
       break;
     default:
       reader.skipField();
@@ -32159,6 +32164,13 @@ proto.clarifai.api.PostModelOutputsRequest.serializeBinaryToWriter = function(me
   if (f) {
     writer.writeBool(
       7,
+      f
+    );
+  }
+  f = message.getEnableLogSummaryOnError();
+  if (f) {
+    writer.writeBool(
+      8,
       f
     );
   }
@@ -32365,6 +32377,24 @@ proto.clarifai.api.PostModelOutputsRequest.prototype.getUsePredictCache = functi
  */
 proto.clarifai.api.PostModelOutputsRequest.prototype.setUsePredictCache = function(value) {
   return jspb.Message.setProto3BooleanField(this, 7, value);
+};
+
+
+/**
+ * optional bool enable_log_summary_on_error = 8;
+ * @return {boolean}
+ */
+proto.clarifai.api.PostModelOutputsRequest.prototype.getEnableLogSummaryOnError = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 8, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.PostModelOutputsRequest} returns this
+ */
+proto.clarifai.api.PostModelOutputsRequest.prototype.setEnableLogSummaryOnError = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 8, value);
 };
 
 

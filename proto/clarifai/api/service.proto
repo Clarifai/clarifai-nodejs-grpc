@@ -5409,6 +5409,9 @@ message PostModelOutputsRequest {
 
   // Configure the prediction cache to avoid expensive compute for predict requests
   bool use_predict_cache = 7;
+
+  // Configuration to provide logs summarization when request errors out
+  bool enable_log_summary_on_error = 8;
 }
 
 // Listing the inputs that went into training this model.
