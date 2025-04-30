@@ -53690,7 +53690,8 @@ proto.clarifai.api.TaskAIAssistant.prototype.toObject = function(opt_includeInst
  */
 proto.clarifai.api.TaskAIAssistant.toObject = function(includeInstance, msg) {
   var f, obj = {
-    workflowId: jspb.Message.getFieldWithDefault(msg, 1, "")
+    workflowId: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    workflow: (f = msg.getWorkflow()) && proto.clarifai.api.Workflow.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -53731,6 +53732,11 @@ proto.clarifai.api.TaskAIAssistant.deserializeBinaryFromReader = function(msg, r
       var value = /** @type {string} */ (reader.readString());
       msg.setWorkflowId(value);
       break;
+    case 2:
+      var value = new proto.clarifai.api.Workflow;
+      reader.readMessage(value,proto.clarifai.api.Workflow.deserializeBinaryFromReader);
+      msg.setWorkflow(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -53767,6 +53773,14 @@ proto.clarifai.api.TaskAIAssistant.serializeBinaryToWriter = function(message, w
       f
     );
   }
+  f = message.getWorkflow();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.clarifai.api.Workflow.serializeBinaryToWriter
+    );
+  }
 };
 
 
@@ -53785,6 +53799,43 @@ proto.clarifai.api.TaskAIAssistant.prototype.getWorkflowId = function() {
  */
 proto.clarifai.api.TaskAIAssistant.prototype.setWorkflowId = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional Workflow workflow = 2;
+ * @return {?proto.clarifai.api.Workflow}
+ */
+proto.clarifai.api.TaskAIAssistant.prototype.getWorkflow = function() {
+  return /** @type{?proto.clarifai.api.Workflow} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Workflow, 2));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Workflow|undefined} value
+ * @return {!proto.clarifai.api.TaskAIAssistant} returns this
+*/
+proto.clarifai.api.TaskAIAssistant.prototype.setWorkflow = function(value) {
+  return jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.TaskAIAssistant} returns this
+ */
+proto.clarifai.api.TaskAIAssistant.prototype.clearWorkflow = function() {
+  return this.setWorkflow(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.TaskAIAssistant.prototype.hasWorkflow = function() {
+  return jspb.Message.getField(this, 2) != null;
 };
 
 

@@ -5638,7 +5638,7 @@ message ListModelsRequest {
   repeated string languages = 21;
   // Old API behavior resulted in returning clarifai main models when calling ListModels while scoped to an app. While we transition
   // away from that, we can use this flag to not always fetch clarifai main models, unless that is the app we are explicitly listing for.
-  bool dont_fetch_from_main = 23;
+  bool dont_fetch_from_main = 23 [deprecated = true]; // @exclude TODO (EAGLE-4447): Remove this field
   // Filter models by bookmark. If set, only return bookmarked models. Otherwise none bookmarked models only.
   // Note: you can not filter `trained_only` and bookmark at the same time.
   // When filter by bookmark, we will return trained and untrained models.
@@ -6779,20 +6779,15 @@ enum OrganizationInvitationStatus {
 
 // GetWorkflowRequest
 message GetWorkflowRequest {
+  reserved 3,5;
   clarifai.api.UserAppIDSet user_app_id = 1;
 
   // Workflow ID to retrieve
   // If no ID is specified we return default workflow of the application
   // If an ID is specified by default we first looks into Clarifai workflows for a Workflow ID
   string workflow_id = 2;
-
-  // Use this flag to look into clarifai published workflows first for a Workflow ID
-  bool favor_clarifai_workflows = 3;
   // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars
   repeated string additional_fields = 4;
-
-  // if true will not expand search to clarifai workflows
-  bool exclude_clarifai_workflows = 5;
 }
 
 // ListWorkflowsRequest
@@ -6938,7 +6933,7 @@ message PostWorkflowResultsRequest {
   OutputConfig output_config = 4;
 
   // Use this flag to look into clarifai published workflows first for a Workflow ID
-  bool favor_clarifai_workflows = 5;
+  bool favor_clarifai_workflows = 5 [deprecated = true]; // @exclude TODO (EAGLE-4447): Remove unused fields
 
   // A workflow state to be maintained across PostWorkflowResults requests/responses.
   // If it is not sent in the initial request with workflow_state.id = "init" then no

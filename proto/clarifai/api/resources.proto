@@ -97,8 +97,8 @@ message App {
   string id = 1;
   string name = 2;
   string default_language = 3;
-  // Default workflow id deprecated in favor of default_workflow
-  string default_workflow_id = 4;
+  // Deprecated, use default_workflow instead.
+  string default_workflow_id = 4 [deprecated = true]; // @exclude TODO (EAGLE-4506): Remove this field and associated code
   Workflow default_workflow = 23;
   // why is user_id present here when this message type is used in PostApps but completely ignored there? PostApp already
   // specifies the userid in path but doesn't even actually use neither of userids, it instead used the id from auth context.
@@ -508,7 +508,7 @@ message ConceptQuery {
   string language = 2;
 
   // Deprecated: Use workflow.id instead.
-  string workflow_id = 3 [deprecated = true];
+  string workflow_id = 3 [deprecated = true]; // @exclude TODO (EAGLE-4506): Remove this field and associated code
 
   // The concepts must belong to models with specified use cases.
   // Multiple values are joined using an OR condition.
@@ -3573,7 +3573,8 @@ message TaskAIAssistant {
   // The worker is helped by an AI assistant.
   // This field is the workflow id which is used to assist the worker with predictions.
   // If empty, then AI assistant is disabled.
-  string workflow_id = 1;
+  string workflow_id = 1 [deprecated = true];
+  Workflow workflow = 2;
 }
 
 message TaskAssignment {

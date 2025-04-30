@@ -6230,6 +6230,11 @@ export class TaskAIAssistant extends jspb.Message {
     getWorkflowId(): string;
     setWorkflowId(value: string): TaskAIAssistant;
 
+    hasWorkflow(): boolean;
+    clearWorkflow(): void;
+    getWorkflow(): Workflow | undefined;
+    setWorkflow(value?: Workflow): TaskAIAssistant;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): TaskAIAssistant.AsObject;
     static toObject(includeInstance: boolean, msg: TaskAIAssistant): TaskAIAssistant.AsObject;
@@ -6243,6 +6248,7 @@ export class TaskAIAssistant extends jspb.Message {
 export namespace TaskAIAssistant {
     export type AsObject = {
         workflowId: string,
+        workflow?: Workflow.AsObject,
     }
 }
 
