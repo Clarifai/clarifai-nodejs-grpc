@@ -4770,6 +4770,9 @@ message InstanceType {
   CloudProvider cloud_provider = 5;
   // The region where this instance type is available, if any.
   string region = 6;
+
+  // The capacity types allowed for this instance type. If empty - all capacity types are allowed.
+  NodeCapacityType allowed_capacity_types = 7;
 }
 
 // CloudProvider represents the entity that provides the infrastructure where the Nodepools are deployed.

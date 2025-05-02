@@ -70680,7 +70680,8 @@ proto.clarifai.api.InstanceType.toObject = function(includeInstance, msg) {
     computeInfo: (f = msg.getComputeInfo()) && proto.clarifai.api.ComputeInfo.toObject(includeInstance, f),
     price: jspb.Message.getFieldWithDefault(msg, 4, ""),
     cloudProvider: (f = msg.getCloudProvider()) && proto.clarifai.api.CloudProvider.toObject(includeInstance, f),
-    region: jspb.Message.getFieldWithDefault(msg, 6, "")
+    region: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    allowedCapacityTypes: (f = msg.getAllowedCapacityTypes()) && proto.clarifai.api.NodeCapacityType.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -70742,6 +70743,11 @@ proto.clarifai.api.InstanceType.deserializeBinaryFromReader = function(msg, read
     case 6:
       var value = /** @type {string} */ (reader.readString());
       msg.setRegion(value);
+      break;
+    case 7:
+      var value = new proto.clarifai.api.NodeCapacityType;
+      reader.readMessage(value,proto.clarifai.api.NodeCapacityType.deserializeBinaryFromReader);
+      msg.setAllowedCapacityTypes(value);
       break;
     default:
       reader.skipField();
@@ -70814,6 +70820,14 @@ proto.clarifai.api.InstanceType.serializeBinaryToWriter = function(message, writ
     writer.writeString(
       6,
       f
+    );
+  }
+  f = message.getAllowedCapacityTypes();
+  if (f != null) {
+    writer.writeMessage(
+      7,
+      f,
+      proto.clarifai.api.NodeCapacityType.serializeBinaryToWriter
     );
   }
 };
@@ -70962,6 +70976,43 @@ proto.clarifai.api.InstanceType.prototype.getRegion = function() {
  */
 proto.clarifai.api.InstanceType.prototype.setRegion = function(value) {
   return jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * optional NodeCapacityType allowed_capacity_types = 7;
+ * @return {?proto.clarifai.api.NodeCapacityType}
+ */
+proto.clarifai.api.InstanceType.prototype.getAllowedCapacityTypes = function() {
+  return /** @type{?proto.clarifai.api.NodeCapacityType} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.NodeCapacityType, 7));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.NodeCapacityType|undefined} value
+ * @return {!proto.clarifai.api.InstanceType} returns this
+*/
+proto.clarifai.api.InstanceType.prototype.setAllowedCapacityTypes = function(value) {
+  return jspb.Message.setWrapperField(this, 7, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.InstanceType} returns this
+ */
+proto.clarifai.api.InstanceType.prototype.clearAllowedCapacityTypes = function() {
+  return this.setAllowedCapacityTypes(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.InstanceType.prototype.hasAllowedCapacityTypes = function() {
+  return jspb.Message.getField(this, 7) != null;
 };
 
 

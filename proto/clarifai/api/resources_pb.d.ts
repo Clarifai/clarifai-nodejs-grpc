@@ -8533,6 +8533,11 @@ export class InstanceType extends jspb.Message {
     getRegion(): string;
     setRegion(value: string): InstanceType;
 
+    hasAllowedCapacityTypes(): boolean;
+    clearAllowedCapacityTypes(): void;
+    getAllowedCapacityTypes(): NodeCapacityType | undefined;
+    setAllowedCapacityTypes(value?: NodeCapacityType): InstanceType;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): InstanceType.AsObject;
     static toObject(includeInstance: boolean, msg: InstanceType): InstanceType.AsObject;
@@ -8551,6 +8556,7 @@ export namespace InstanceType {
         price: string,
         cloudProvider?: CloudProvider.AsObject,
         region: string,
+        allowedCapacityTypes?: NodeCapacityType.AsObject,
     }
 }
 
