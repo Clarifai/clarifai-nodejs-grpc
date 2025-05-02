@@ -6230,11 +6230,6 @@ export class TaskAIAssistant extends jspb.Message {
     getWorkflowId(): string;
     setWorkflowId(value: string): TaskAIAssistant;
 
-    hasWorkflow(): boolean;
-    clearWorkflow(): void;
-    getWorkflow(): Workflow | undefined;
-    setWorkflow(value?: Workflow): TaskAIAssistant;
-
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): TaskAIAssistant.AsObject;
     static toObject(includeInstance: boolean, msg: TaskAIAssistant): TaskAIAssistant.AsObject;
@@ -6248,7 +6243,6 @@ export class TaskAIAssistant extends jspb.Message {
 export namespace TaskAIAssistant {
     export type AsObject = {
         workflowId: string,
-        workflow?: Workflow.AsObject,
     }
 }
 
@@ -8533,11 +8527,6 @@ export class InstanceType extends jspb.Message {
     getRegion(): string;
     setRegion(value: string): InstanceType;
 
-    hasAllowedCapacityTypes(): boolean;
-    clearAllowedCapacityTypes(): void;
-    getAllowedCapacityTypes(): NodeCapacityType | undefined;
-    setAllowedCapacityTypes(value?: NodeCapacityType): InstanceType;
-
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): InstanceType.AsObject;
     static toObject(includeInstance: boolean, msg: InstanceType): InstanceType.AsObject;
@@ -8556,7 +8545,6 @@ export namespace InstanceType {
         price: string,
         cloudProvider?: CloudProvider.AsObject,
         region: string,
-        allowedCapacityTypes?: NodeCapacityType.AsObject,
     }
 }
 

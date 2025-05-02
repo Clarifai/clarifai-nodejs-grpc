@@ -61140,7 +61140,9 @@ proto.clarifai.api.GetWorkflowRequest.toObject = function(includeInstance, msg) 
   var f, obj = {
     userAppId: (f = msg.getUserAppId()) && proto_clarifai_api_resources_pb.UserAppIDSet.toObject(includeInstance, f),
     workflowId: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    additionalFieldsList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f
+    favorClarifaiWorkflows: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
+    additionalFieldsList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f,
+    excludeClarifaiWorkflows: jspb.Message.getBooleanFieldWithDefault(msg, 5, false)
   };
 
   if (includeInstance) {
@@ -61186,9 +61188,17 @@ proto.clarifai.api.GetWorkflowRequest.deserializeBinaryFromReader = function(msg
       var value = /** @type {string} */ (reader.readString());
       msg.setWorkflowId(value);
       break;
+    case 3:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setFavorClarifaiWorkflows(value);
+      break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
       msg.addAdditionalFields(value);
+      break;
+    case 5:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setExcludeClarifaiWorkflows(value);
       break;
     default:
       reader.skipField();
@@ -61234,10 +61244,24 @@ proto.clarifai.api.GetWorkflowRequest.serializeBinaryToWriter = function(message
       f
     );
   }
+  f = message.getFavorClarifaiWorkflows();
+  if (f) {
+    writer.writeBool(
+      3,
+      f
+    );
+  }
   f = message.getAdditionalFieldsList();
   if (f.length > 0) {
     writer.writeRepeatedString(
       4,
+      f
+    );
+  }
+  f = message.getExcludeClarifaiWorkflows();
+  if (f) {
+    writer.writeBool(
+      5,
       f
     );
   }
@@ -61300,6 +61324,24 @@ proto.clarifai.api.GetWorkflowRequest.prototype.setWorkflowId = function(value) 
 
 
 /**
+ * optional bool favor_clarifai_workflows = 3;
+ * @return {boolean}
+ */
+proto.clarifai.api.GetWorkflowRequest.prototype.getFavorClarifaiWorkflows = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 3, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.GetWorkflowRequest} returns this
+ */
+proto.clarifai.api.GetWorkflowRequest.prototype.setFavorClarifaiWorkflows = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 3, value);
+};
+
+
+/**
  * repeated string additional_fields = 4;
  * @return {!Array<string>}
  */
@@ -61333,6 +61375,24 @@ proto.clarifai.api.GetWorkflowRequest.prototype.addAdditionalFields = function(v
  */
 proto.clarifai.api.GetWorkflowRequest.prototype.clearAdditionalFieldsList = function() {
   return this.setAdditionalFieldsList([]);
+};
+
+
+/**
+ * optional bool exclude_clarifai_workflows = 5;
+ * @return {boolean}
+ */
+proto.clarifai.api.GetWorkflowRequest.prototype.getExcludeClarifaiWorkflows = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 5, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.GetWorkflowRequest} returns this
+ */
+proto.clarifai.api.GetWorkflowRequest.prototype.setExcludeClarifaiWorkflows = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 
