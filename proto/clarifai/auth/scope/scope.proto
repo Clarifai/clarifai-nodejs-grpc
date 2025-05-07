@@ -468,11 +468,17 @@ enum S {
   WorkflowVersionEvaluations_Add = 153 [(clarfai_exposed) = true,
     (clarifai_depending_scopes) = WorkflowVersionEvaluations_Get];
 
-  // Pipelines feature is in development, this shouldn't be exposed yet.
-  // TODO: Expose this scope when the feature is ready.
   Pipeline_Get = 154 [(clarfai_exposed) = true];
   Pipeline_Add = 155 [(clarfai_exposed) = true,
     (clarifai_depending_scopes) = Pipeline_Get];
+
+  PipelineStep_Get = 157 [(clarfai_exposed) = true];
+  PipelineStep_Add = 158 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = PipelineStep_Get];
+  // To pull the pipeline step version's image
+  PipelineStep_Pull = 159 [(clarfai_exposed) = true,
+  (clarifai_depending_scopes) = PipelineStep_Get];
+
 }
 
 extend google.protobuf.EnumValueOptions {

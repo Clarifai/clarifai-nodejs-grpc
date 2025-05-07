@@ -5874,6 +5874,11 @@ export class MultiOutputResponse extends jspb.Message {
     setOutputsList(value: Array<proto_clarifai_api_resources_pb.Output>): MultiOutputResponse;
     addOutputs(value?: proto_clarifai_api_resources_pb.Output, index?: number): proto_clarifai_api_resources_pb.Output;
 
+    hasRunnerSelector(): boolean;
+    clearRunnerSelector(): void;
+    getRunnerSelector(): proto_clarifai_api_resources_pb.RunnerSelector | undefined;
+    setRunnerSelector(value?: proto_clarifai_api_resources_pb.RunnerSelector): MultiOutputResponse;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): MultiOutputResponse.AsObject;
     static toObject(includeInstance: boolean, msg: MultiOutputResponse): MultiOutputResponse.AsObject;
@@ -5888,6 +5893,7 @@ export namespace MultiOutputResponse {
     export type AsObject = {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         outputsList: Array<proto_clarifai_api_resources_pb.Output.AsObject>,
+        runnerSelector?: proto_clarifai_api_resources_pb.RunnerSelector.AsObject,
     }
 }
 
@@ -7026,14 +7032,10 @@ export class GetWorkflowRequest extends jspb.Message {
     setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): GetWorkflowRequest;
     getWorkflowId(): string;
     setWorkflowId(value: string): GetWorkflowRequest;
-    getFavorClarifaiWorkflows(): boolean;
-    setFavorClarifaiWorkflows(value: boolean): GetWorkflowRequest;
     clearAdditionalFieldsList(): void;
     getAdditionalFieldsList(): Array<string>;
     setAdditionalFieldsList(value: Array<string>): GetWorkflowRequest;
     addAdditionalFields(value: string, index?: number): string;
-    getExcludeClarifaiWorkflows(): boolean;
-    setExcludeClarifaiWorkflows(value: boolean): GetWorkflowRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetWorkflowRequest.AsObject;
@@ -7049,9 +7051,7 @@ export namespace GetWorkflowRequest {
     export type AsObject = {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         workflowId: string,
-        favorClarifaiWorkflows: boolean,
         additionalFieldsList: Array<string>,
-        excludeClarifaiWorkflows: boolean,
     }
 }
 

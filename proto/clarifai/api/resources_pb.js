@@ -53690,7 +53690,8 @@ proto.clarifai.api.TaskAIAssistant.prototype.toObject = function(opt_includeInst
  */
 proto.clarifai.api.TaskAIAssistant.toObject = function(includeInstance, msg) {
   var f, obj = {
-    workflowId: jspb.Message.getFieldWithDefault(msg, 1, "")
+    workflowId: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    workflow: (f = msg.getWorkflow()) && proto.clarifai.api.Workflow.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -53731,6 +53732,11 @@ proto.clarifai.api.TaskAIAssistant.deserializeBinaryFromReader = function(msg, r
       var value = /** @type {string} */ (reader.readString());
       msg.setWorkflowId(value);
       break;
+    case 2:
+      var value = new proto.clarifai.api.Workflow;
+      reader.readMessage(value,proto.clarifai.api.Workflow.deserializeBinaryFromReader);
+      msg.setWorkflow(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -53767,6 +53773,14 @@ proto.clarifai.api.TaskAIAssistant.serializeBinaryToWriter = function(message, w
       f
     );
   }
+  f = message.getWorkflow();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.clarifai.api.Workflow.serializeBinaryToWriter
+    );
+  }
 };
 
 
@@ -53785,6 +53799,43 @@ proto.clarifai.api.TaskAIAssistant.prototype.getWorkflowId = function() {
  */
 proto.clarifai.api.TaskAIAssistant.prototype.setWorkflowId = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional Workflow workflow = 2;
+ * @return {?proto.clarifai.api.Workflow}
+ */
+proto.clarifai.api.TaskAIAssistant.prototype.getWorkflow = function() {
+  return /** @type{?proto.clarifai.api.Workflow} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Workflow, 2));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Workflow|undefined} value
+ * @return {!proto.clarifai.api.TaskAIAssistant} returns this
+*/
+proto.clarifai.api.TaskAIAssistant.prototype.setWorkflow = function(value) {
+  return jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.TaskAIAssistant} returns this
+ */
+proto.clarifai.api.TaskAIAssistant.prototype.clearWorkflow = function() {
+  return this.setWorkflow(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.TaskAIAssistant.prototype.hasWorkflow = function() {
+  return jspb.Message.getField(this, 2) != null;
 };
 
 
@@ -70629,7 +70680,8 @@ proto.clarifai.api.InstanceType.toObject = function(includeInstance, msg) {
     computeInfo: (f = msg.getComputeInfo()) && proto.clarifai.api.ComputeInfo.toObject(includeInstance, f),
     price: jspb.Message.getFieldWithDefault(msg, 4, ""),
     cloudProvider: (f = msg.getCloudProvider()) && proto.clarifai.api.CloudProvider.toObject(includeInstance, f),
-    region: jspb.Message.getFieldWithDefault(msg, 6, "")
+    region: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    allowedCapacityTypes: (f = msg.getAllowedCapacityTypes()) && proto.clarifai.api.NodeCapacityType.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -70691,6 +70743,11 @@ proto.clarifai.api.InstanceType.deserializeBinaryFromReader = function(msg, read
     case 6:
       var value = /** @type {string} */ (reader.readString());
       msg.setRegion(value);
+      break;
+    case 7:
+      var value = new proto.clarifai.api.NodeCapacityType;
+      reader.readMessage(value,proto.clarifai.api.NodeCapacityType.deserializeBinaryFromReader);
+      msg.setAllowedCapacityTypes(value);
       break;
     default:
       reader.skipField();
@@ -70763,6 +70820,14 @@ proto.clarifai.api.InstanceType.serializeBinaryToWriter = function(message, writ
     writer.writeString(
       6,
       f
+    );
+  }
+  f = message.getAllowedCapacityTypes();
+  if (f != null) {
+    writer.writeMessage(
+      7,
+      f,
+      proto.clarifai.api.NodeCapacityType.serializeBinaryToWriter
     );
   }
 };
@@ -70911,6 +70976,43 @@ proto.clarifai.api.InstanceType.prototype.getRegion = function() {
  */
 proto.clarifai.api.InstanceType.prototype.setRegion = function(value) {
   return jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * optional NodeCapacityType allowed_capacity_types = 7;
+ * @return {?proto.clarifai.api.NodeCapacityType}
+ */
+proto.clarifai.api.InstanceType.prototype.getAllowedCapacityTypes = function() {
+  return /** @type{?proto.clarifai.api.NodeCapacityType} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.NodeCapacityType, 7));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.NodeCapacityType|undefined} value
+ * @return {!proto.clarifai.api.InstanceType} returns this
+*/
+proto.clarifai.api.InstanceType.prototype.setAllowedCapacityTypes = function(value) {
+  return jspb.Message.setWrapperField(this, 7, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.InstanceType} returns this
+ */
+proto.clarifai.api.InstanceType.prototype.clearAllowedCapacityTypes = function() {
+  return this.setAllowedCapacityTypes(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.InstanceType.prototype.hasAllowedCapacityTypes = function() {
+  return jspb.Message.getField(this, 7) != null;
 };
 
 
@@ -76888,7 +76990,9 @@ proto.clarifai.api.ComputeSourceMetadata.toObject = function(includeInstance, ms
     runnerId: jspb.Message.getFieldWithDefault(msg, 8, ""),
     pipelineId: jspb.Message.getFieldWithDefault(msg, 9, ""),
     pipelineVersionId: jspb.Message.getFieldWithDefault(msg, 10, ""),
-    pipelineVersionRunId: jspb.Message.getFieldWithDefault(msg, 11, "")
+    pipelineVersionRunId: jspb.Message.getFieldWithDefault(msg, 11, ""),
+    pipelineStepId: jspb.Message.getFieldWithDefault(msg, 12, ""),
+    pipelineStepVersionId: jspb.Message.getFieldWithDefault(msg, 13, "")
   };
 
   if (includeInstance) {
@@ -76965,6 +77069,14 @@ proto.clarifai.api.ComputeSourceMetadata.deserializeBinaryFromReader = function(
     case 11:
       var value = /** @type {string} */ (reader.readString());
       msg.setPipelineVersionRunId(value);
+      break;
+    case 12:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPipelineStepId(value);
+      break;
+    case 13:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPipelineStepVersionId(value);
       break;
     default:
       reader.skipField();
@@ -77063,6 +77175,20 @@ proto.clarifai.api.ComputeSourceMetadata.serializeBinaryToWriter = function(mess
   if (f.length > 0) {
     writer.writeString(
       11,
+      f
+    );
+  }
+  f = message.getPipelineStepId();
+  if (f.length > 0) {
+    writer.writeString(
+      12,
+      f
+    );
+  }
+  f = message.getPipelineStepVersionId();
+  if (f.length > 0) {
+    writer.writeString(
+      13,
       f
     );
   }
@@ -77265,6 +77391,42 @@ proto.clarifai.api.ComputeSourceMetadata.prototype.getPipelineVersionRunId = fun
  */
 proto.clarifai.api.ComputeSourceMetadata.prototype.setPipelineVersionRunId = function(value) {
   return jspb.Message.setProto3StringField(this, 11, value);
+};
+
+
+/**
+ * optional string pipeline_step_id = 12;
+ * @return {string}
+ */
+proto.clarifai.api.ComputeSourceMetadata.prototype.getPipelineStepId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 12, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.ComputeSourceMetadata} returns this
+ */
+proto.clarifai.api.ComputeSourceMetadata.prototype.setPipelineStepId = function(value) {
+  return jspb.Message.setProto3StringField(this, 12, value);
+};
+
+
+/**
+ * optional string pipeline_step_version_id = 13;
+ * @return {string}
+ */
+proto.clarifai.api.ComputeSourceMetadata.prototype.getPipelineStepVersionId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 13, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.ComputeSourceMetadata} returns this
+ */
+proto.clarifai.api.ComputeSourceMetadata.prototype.setPipelineStepVersionId = function(value) {
+  return jspb.Message.setProto3StringField(this, 13, value);
 };
 
 

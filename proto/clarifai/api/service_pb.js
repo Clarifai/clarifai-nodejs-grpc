@@ -52541,7 +52541,8 @@ proto.clarifai.api.MultiOutputResponse.toObject = function(includeInstance, msg)
   var f, obj = {
     status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f),
     outputsList: jspb.Message.toObjectList(msg.getOutputsList(),
-    proto_clarifai_api_resources_pb.Output.toObject, includeInstance)
+    proto_clarifai_api_resources_pb.Output.toObject, includeInstance),
+    runnerSelector: (f = msg.getRunnerSelector()) && proto_clarifai_api_resources_pb.RunnerSelector.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -52588,6 +52589,11 @@ proto.clarifai.api.MultiOutputResponse.deserializeBinaryFromReader = function(ms
       reader.readMessage(value,proto_clarifai_api_resources_pb.Output.deserializeBinaryFromReader);
       msg.addOutputs(value);
       break;
+    case 3:
+      var value = new proto_clarifai_api_resources_pb.RunnerSelector;
+      reader.readMessage(value,proto_clarifai_api_resources_pb.RunnerSelector.deserializeBinaryFromReader);
+      msg.setRunnerSelector(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -52631,6 +52637,14 @@ proto.clarifai.api.MultiOutputResponse.serializeBinaryToWriter = function(messag
       2,
       f,
       proto_clarifai_api_resources_pb.Output.serializeBinaryToWriter
+    );
+  }
+  f = message.getRunnerSelector();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      proto_clarifai_api_resources_pb.RunnerSelector.serializeBinaryToWriter
     );
   }
 };
@@ -52708,6 +52722,43 @@ proto.clarifai.api.MultiOutputResponse.prototype.addOutputs = function(opt_value
  */
 proto.clarifai.api.MultiOutputResponse.prototype.clearOutputsList = function() {
   return this.setOutputsList([]);
+};
+
+
+/**
+ * optional RunnerSelector runner_selector = 3;
+ * @return {?proto.clarifai.api.RunnerSelector}
+ */
+proto.clarifai.api.MultiOutputResponse.prototype.getRunnerSelector = function() {
+  return /** @type{?proto.clarifai.api.RunnerSelector} */ (
+    jspb.Message.getWrapperField(this, proto_clarifai_api_resources_pb.RunnerSelector, 3));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.RunnerSelector|undefined} value
+ * @return {!proto.clarifai.api.MultiOutputResponse} returns this
+*/
+proto.clarifai.api.MultiOutputResponse.prototype.setRunnerSelector = function(value) {
+  return jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.MultiOutputResponse} returns this
+ */
+proto.clarifai.api.MultiOutputResponse.prototype.clearRunnerSelector = function() {
+  return this.setRunnerSelector(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.MultiOutputResponse.prototype.hasRunnerSelector = function() {
+  return jspb.Message.getField(this, 3) != null;
 };
 
 
@@ -61140,9 +61191,7 @@ proto.clarifai.api.GetWorkflowRequest.toObject = function(includeInstance, msg) 
   var f, obj = {
     userAppId: (f = msg.getUserAppId()) && proto_clarifai_api_resources_pb.UserAppIDSet.toObject(includeInstance, f),
     workflowId: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    favorClarifaiWorkflows: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
-    additionalFieldsList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f,
-    excludeClarifaiWorkflows: jspb.Message.getBooleanFieldWithDefault(msg, 5, false)
+    additionalFieldsList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -61188,17 +61237,9 @@ proto.clarifai.api.GetWorkflowRequest.deserializeBinaryFromReader = function(msg
       var value = /** @type {string} */ (reader.readString());
       msg.setWorkflowId(value);
       break;
-    case 3:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setFavorClarifaiWorkflows(value);
-      break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
       msg.addAdditionalFields(value);
-      break;
-    case 5:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setExcludeClarifaiWorkflows(value);
       break;
     default:
       reader.skipField();
@@ -61244,24 +61285,10 @@ proto.clarifai.api.GetWorkflowRequest.serializeBinaryToWriter = function(message
       f
     );
   }
-  f = message.getFavorClarifaiWorkflows();
-  if (f) {
-    writer.writeBool(
-      3,
-      f
-    );
-  }
   f = message.getAdditionalFieldsList();
   if (f.length > 0) {
     writer.writeRepeatedString(
       4,
-      f
-    );
-  }
-  f = message.getExcludeClarifaiWorkflows();
-  if (f) {
-    writer.writeBool(
-      5,
       f
     );
   }
@@ -61324,24 +61351,6 @@ proto.clarifai.api.GetWorkflowRequest.prototype.setWorkflowId = function(value) 
 
 
 /**
- * optional bool favor_clarifai_workflows = 3;
- * @return {boolean}
- */
-proto.clarifai.api.GetWorkflowRequest.prototype.getFavorClarifaiWorkflows = function() {
-  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 3, false));
-};
-
-
-/**
- * @param {boolean} value
- * @return {!proto.clarifai.api.GetWorkflowRequest} returns this
- */
-proto.clarifai.api.GetWorkflowRequest.prototype.setFavorClarifaiWorkflows = function(value) {
-  return jspb.Message.setProto3BooleanField(this, 3, value);
-};
-
-
-/**
  * repeated string additional_fields = 4;
  * @return {!Array<string>}
  */
@@ -61375,24 +61384,6 @@ proto.clarifai.api.GetWorkflowRequest.prototype.addAdditionalFields = function(v
  */
 proto.clarifai.api.GetWorkflowRequest.prototype.clearAdditionalFieldsList = function() {
   return this.setAdditionalFieldsList([]);
-};
-
-
-/**
- * optional bool exclude_clarifai_workflows = 5;
- * @return {boolean}
- */
-proto.clarifai.api.GetWorkflowRequest.prototype.getExcludeClarifaiWorkflows = function() {
-  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 5, false));
-};
-
-
-/**
- * @param {boolean} value
- * @return {!proto.clarifai.api.GetWorkflowRequest} returns this
- */
-proto.clarifai.api.GetWorkflowRequest.prototype.setExcludeClarifaiWorkflows = function(value) {
-  return jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 
