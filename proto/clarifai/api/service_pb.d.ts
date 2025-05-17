@@ -3442,6 +3442,8 @@ export class ListKeysRequest extends jspb.Message {
     getEndpointsList(): Array<string>;
     setEndpointsList(value: Array<string>): ListKeysRequest;
     addEndpoints(value: string, index?: number): string;
+    getType(): string;
+    setType(value: string): ListKeysRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListKeysRequest.AsObject;
@@ -3461,6 +3463,7 @@ export namespace ListKeysRequest {
         notExpired: boolean,
         scopesList: Array<string>,
         endpointsList: Array<string>,
+        type: string,
     }
 }
 
@@ -11449,6 +11452,8 @@ export class ListDeploymentsRequest extends jspb.Message {
     getWorkflowVersionIdsList(): Array<string>;
     setWorkflowVersionIdsList(value: Array<string>): ListDeploymentsRequest;
     addWorkflowVersionIds(value: string, index?: number): string;
+    getComputeClusterId(): string;
+    setComputeClusterId(value: string): ListDeploymentsRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListDeploymentsRequest.AsObject;
@@ -11468,6 +11473,7 @@ export namespace ListDeploymentsRequest {
         perPage: number,
         modelVersionIdsList: Array<string>,
         workflowVersionIdsList: Array<string>,
+        computeClusterId: string,
     }
 }
 

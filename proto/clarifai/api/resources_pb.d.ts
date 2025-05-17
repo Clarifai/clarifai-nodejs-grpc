@@ -8653,6 +8653,10 @@ export class ComputeInfo extends jspb.Message {
     setCpuLimit(value: string): ComputeInfo;
     getCpuMemory(): string;
     setCpuMemory(value: string): ComputeInfo;
+    getCpuRequests(): string;
+    setCpuRequests(value: string): ComputeInfo;
+    getCpuMemoryRequests(): string;
+    setCpuMemoryRequests(value: string): ComputeInfo;
     getNumAccelerators(): number;
     setNumAccelerators(value: number): ComputeInfo;
     getAcceleratorMemory(): string;
@@ -8676,6 +8680,8 @@ export namespace ComputeInfo {
     export type AsObject = {
         cpuLimit: string,
         cpuMemory: string,
+        cpuRequests: string,
+        cpuMemoryRequests: string,
         numAccelerators: number,
         acceleratorMemory: string,
         acceleratorTypeList: Array<string>,
@@ -8763,6 +8769,8 @@ export class Deployment extends jspb.Message {
     clearModifiedAt(): void;
     getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
     setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): Deployment;
+    getDeployLatestVersion(): boolean;
+    setDeployLatestVersion(value: boolean): Deployment;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Deployment.AsObject;
@@ -8787,6 +8795,7 @@ export namespace Deployment {
         worker?: Worker.AsObject,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        deployLatestVersion: boolean,
     }
 
     export enum SchedulingChoice {

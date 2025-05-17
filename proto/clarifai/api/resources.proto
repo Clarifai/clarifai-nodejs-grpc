@@ -1333,7 +1333,7 @@ message FrameInterpolationInfo {
 message Key {
   // The id of this key, it is used for authorization.
   string id = 1;
-  // The type of key, it can be api_key or personal_access_token, the default value is api_key
+  // The type of key, it can be app_specific_key (default) or personal_access_token
   string type = 8;
   // The description
   string description = 2;
@@ -1491,7 +1491,7 @@ message Model {
     Ops = 2;
   }
   BillingType billing_type = 40;
-  
+
   // Whether the model should be featured, and if so, the order in which it should be featured.
   // The order is relative to other models that are also featured.
   // Models with a higher order will be featured first.
@@ -1599,8 +1599,10 @@ message EvalInfo {
   google.protobuf.Struct params = 1;
 }
 
+// DEPRECATED: no longer support importing models from third party toolkits
 message ImportInfo {
   // Used to configure model imports from third-party toolkits.
+  // DEPRECATED: no longer support importing models from third party toolkits
   google.protobuf.Struct params = 1;
 }
 
@@ -1884,7 +1886,7 @@ message ModelTypeField {
   repeated ModelTypeField type_args = 12;
   // this will be use to define whether the method argument supports streaming as an iterator.
   bool iterator = 13;
-  // This specify the default value of the method argument 
+  // This specify the default value of the method argument
   // If this argument is not passed, the input is required. If it is explicitly set to None, the input is optional
   // We define this as a string
   // because the default value can be a string, int, float, bool, or a complex object like a JSON
@@ -2034,7 +2036,8 @@ message ModelVersion {
   // Configuration for the training process of this model version.
   TrainInfo train_info = 21;
   // Configuration used to import model from third-party toolkits
-  ImportInfo import_info = 22;
+  // DEPRECATED: no longer support importing models from third party toolkits
+  ImportInfo import_info = 22 [deprecated = true];
   // Contains the training logs if available
   string train_log = 23;
 
@@ -4865,14 +4868,28 @@ message ComputeCluster {
 // future we can allow setting a limits ComputeInfo and a requests ComputeInfo.
 message ComputeInfo {
   reserved 1;
-  // Amount of CPUs to use. This follows kubernetes notation like: "1", "100m", "4.5", etc.
+  // Amount of CPUs to use as a limit. This follows kubernetes notation like: "1", "100m", "4.5", etc.
   // See https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/
+  // For instances, this is the instance's CPU count.
+  // For runners, this is the maximum amount of CPU that the runner pod can use.
   string cpu_limit = 6;
+
+  // Amount of CPU memory to use as a limit. This follows kubernetes notation like:
+  // 1Ki, 1500Mi, 3Gi, 4Ti, etc.
+  // See https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/
+  // For instances, this is the instance's CPU memory.
+  // For runners, this is the maximum amount of CPU memory that the runner pod can use.
+  string cpu_memory = 2;
+
+  // Amount of CPUs to use as a minimum. This follows kubernetes notation like: "1", "100m", "4.5", etc.
+  // See https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/
+  // For runners, this is the minimum amount of CPU requested for the runner pod.
+  string cpu_requests = 7;
 
   // Amount of CPU memory to use as a minimum. This follows kubernetes notation like:
   // 1Ki, 1500Mi, 3Gi, 4Ti, etc.
-  // See https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/
-  string cpu_memory = 2;
+  // For runners, this is the minimum amount of CPU memory requested for the runner pod.
+  string cpu_memory_requests = 8;
 
   // Amount of GPU/TPUs to use.
   uint32 num_accelerators = 3;
@@ -4999,6 +5016,8 @@ message Deployment {
   google.protobuf.Timestamp created_at = 12;
   // When the deployment was last modified.
   google.protobuf.Timestamp modified_at = 13;
+  // When to always deploy latest model version
+  bool deploy_latest_version = 14;
 }
 
 
@@ -5451,3 +5470,13 @@ message PipelineVersionRun {
   // The app the pipeline belongs to
   string app_id = 6;
 }
+
+
+
+
+
+
+
+
+
+

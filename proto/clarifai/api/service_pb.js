@@ -34176,7 +34176,8 @@ proto.clarifai.api.ListKeysRequest.toObject = function(includeInstance, msg) {
     perPage: jspb.Message.getFieldWithDefault(msg, 3, 0),
     notExpired: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
     scopesList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f,
-    endpointsList: (f = jspb.Message.getRepeatedField(msg, 6)) == null ? undefined : f
+    endpointsList: (f = jspb.Message.getRepeatedField(msg, 6)) == null ? undefined : f,
+    type: jspb.Message.getFieldWithDefault(msg, 7, "")
   };
 
   if (includeInstance) {
@@ -34237,6 +34238,10 @@ proto.clarifai.api.ListKeysRequest.deserializeBinaryFromReader = function(msg, r
     case 6:
       var value = /** @type {string} */ (reader.readString());
       msg.addEndpoints(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setType(value);
       break;
     default:
       reader.skipField();
@@ -34307,6 +34312,13 @@ proto.clarifai.api.ListKeysRequest.serializeBinaryToWriter = function(message, w
   if (f.length > 0) {
     writer.writeRepeatedString(
       6,
+      f
+    );
+  }
+  f = message.getType();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
       f
     );
   }
@@ -34475,6 +34487,24 @@ proto.clarifai.api.ListKeysRequest.prototype.addEndpoints = function(value, opt_
  */
 proto.clarifai.api.ListKeysRequest.prototype.clearEndpointsList = function() {
   return this.setEndpointsList([]);
+};
+
+
+/**
+ * optional string type = 7;
+ * @return {string}
+ */
+proto.clarifai.api.ListKeysRequest.prototype.getType = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.ListKeysRequest} returns this
+ */
+proto.clarifai.api.ListKeysRequest.prototype.setType = function(value) {
+  return jspb.Message.setProto3StringField(this, 7, value);
 };
 
 
@@ -94131,7 +94161,8 @@ proto.clarifai.api.ListDeploymentsRequest.toObject = function(includeInstance, m
     page: jspb.Message.getFieldWithDefault(msg, 3, 0),
     perPage: jspb.Message.getFieldWithDefault(msg, 4, 0),
     modelVersionIdsList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f,
-    workflowVersionIdsList: (f = jspb.Message.getRepeatedField(msg, 6)) == null ? undefined : f
+    workflowVersionIdsList: (f = jspb.Message.getRepeatedField(msg, 6)) == null ? undefined : f,
+    computeClusterId: jspb.Message.getFieldWithDefault(msg, 7, "")
   };
 
   if (includeInstance) {
@@ -94192,6 +94223,10 @@ proto.clarifai.api.ListDeploymentsRequest.deserializeBinaryFromReader = function
     case 6:
       var value = /** @type {string} */ (reader.readString());
       msg.addWorkflowVersionIds(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setComputeClusterId(value);
       break;
     default:
       reader.skipField();
@@ -94262,6 +94297,13 @@ proto.clarifai.api.ListDeploymentsRequest.serializeBinaryToWriter = function(mes
   if (f.length > 0) {
     writer.writeRepeatedString(
       6,
+      f
+    );
+  }
+  f = message.getComputeClusterId();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
       f
     );
   }
@@ -94430,6 +94472,24 @@ proto.clarifai.api.ListDeploymentsRequest.prototype.addWorkflowVersionIds = func
  */
 proto.clarifai.api.ListDeploymentsRequest.prototype.clearWorkflowVersionIdsList = function() {
   return this.setWorkflowVersionIdsList([]);
+};
+
+
+/**
+ * optional string compute_cluster_id = 7;
+ * @return {string}
+ */
+proto.clarifai.api.ListDeploymentsRequest.prototype.getComputeClusterId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.ListDeploymentsRequest} returns this
+ */
+proto.clarifai.api.ListDeploymentsRequest.prototype.setComputeClusterId = function(value) {
+  return jspb.Message.setProto3StringField(this, 7, value);
 };
 
 

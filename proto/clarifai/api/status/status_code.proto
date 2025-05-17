@@ -565,6 +565,7 @@ enum StatusCode {
 
   // Billing related issues: 69xxx
   BILLING_INVALID_INFO = 69000;
+  BILLING_MISSING_TOKENS = 69001;
 
   // Logs related issues: 70000;
   LOG_ENTRIES_INVALID_REQUEST = 70000;
