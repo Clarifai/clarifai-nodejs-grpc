@@ -4460,7 +4460,7 @@ postModelOutputs: {
     responseDeserialize: deserialize_clarifai_api_MultiOutputResponse,
   },
   // TODO(zeiler): will need to
-// Single request but streaming resopnses.
+// Single request but streaming responses.
 generateModelOutputs: {
     path: '/clarifai.api.V2/GenerateModelOutputs',
     requestStream: false,

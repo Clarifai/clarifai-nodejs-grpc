@@ -740,7 +740,7 @@ service V2 {
   }
 
   // TODO(zeiler): will need to
-  // Single request but streaming resopnses.
+  // Single request but streaming responses.
   rpc GenerateModelOutputs (PostModelOutputsRequest) returns (stream MultiOutputResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/outputs/generate"
@@ -769,6 +769,8 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Predict;
   }
+
+
 
   // List all the datasets.
   rpc ListDatasets (ListDatasetsRequest) returns (MultiDatasetResponse) {
@@ -2616,6 +2618,7 @@ service V2 {
 
 
 
+
   // owner list users who the app is shared with
   rpc ListCollaborators (ListCollaboratorsRequest) returns (MultiCollaboratorsResponse) {
     option (google.api.http) = {
@@ -4171,6 +4174,12 @@ service V2 {
 
 
 
+
+
+
+
+
+
 }
 
 
@@ -4599,6 +4608,8 @@ message MultiCollaborationsResponse {
   clarifai.api.status.Status status = 1;
   repeated Collaboration collaborations = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
+
+
 
 
 
@@ -5409,6 +5420,9 @@ message PostModelOutputsRequest {
 
   // Configure the prediction cache to avoid expensive compute for predict requests
   bool use_predict_cache = 7;
+
+  // Configuration to provide logs summarization when request errors out
+  bool enable_log_summary_on_error = 8;
 }
 
 // Listing the inputs that went into training this model.
@@ -5507,9 +5521,16 @@ message ListKeysRequest {
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
   // to 128.
   uint32 per_page = 3;
+
+  // Filtering options:
+  // If true, only return keys that have not expired.
   bool not_expired = 4;
+  // Only return keys that have the listed scopes.
   repeated string scopes = 5;
+  // Only return keys that have the listed endpoints.
   repeated string endpoints = 6;
+  // Only return keys with the listed type.
+  string type = 7;
 }
 
 // ListAppKeysRequest
@@ -6279,6 +6300,8 @@ message MultiOutputResponse {
   clarifai.api.status.Status status = 1;
   // For each input processed during model prediction we create one output.
   repeated Output outputs = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+  // Information on where the computation is executed down to specific Deployment, Nodepool and ComputeCluster
+  RunnerSelector runner_selector = 3;
 }// MultiLogEntryResponse
 message MultiLogEntryResponse {
   clarifai.api.status.Status status = 1;
@@ -8302,6 +8325,8 @@ message ListDeploymentsRequest {
   repeated string model_version_ids = 5;
   // (optional URL parameter) WorkflowVersion IDs. To list all deployments for the workflow version
   repeated string workflow_version_ids = 6;
+  // (optional URL parameter) ComputeCluster ID. To list all deployed workers in a ComputeCluster
+  string compute_cluster_id = 7;
 }
 
 message PostDeploymentsRequest {
@@ -8438,6 +8463,20 @@ message PostModelMigrationRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string model_id = 2;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
