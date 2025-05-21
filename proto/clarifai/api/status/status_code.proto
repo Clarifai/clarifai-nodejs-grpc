@@ -25,6 +25,7 @@ enum StatusCode {
   NOT_IMPLEMENTED = 10040;
   MOVED = 10050; // Resource moved. Respond with Http status 307 and add new Location header to response
   TEAPOT = 10060;
+  ACCEPTED = 10070; // Request has been accepted. Respond with Http status 202.
   //SUCCESS_WARNING_API_DEPRECATED = 10001;
   //SUCCESS_WARNING_CLIENT_DEPRECATED = 10002;
 
@@ -255,6 +256,7 @@ enum StatusCode {
   PIPELINE_STEP_BUILDING_FAILED = 26206;
   PIPELINE_STEP_BUILD_UNEXPECTED_ERROR = 26207;
   PIPELINE_STEP_READY = 26208;
+  PIPELINE_STEP_NOT_READY = 26209;
 
   // Input:Image related 30xxx
   INPUT_SUCCESS = 30000;

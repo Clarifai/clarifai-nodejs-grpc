@@ -265,6 +265,8 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     getWorkflowVersionEvaluation: IV2Service_IGetWorkflowVersionEvaluation;
     listWorkflowVersionEvaluations: IV2Service_IListWorkflowVersionEvaluations;
     patchWorkflowVersionEvaluations: IV2Service_IPatchWorkflowVersionEvaluations;
+    getMCP: IV2Service_IGetMCP;
+    postMCP: IV2Service_IPostMCP;
 }
 
 interface IV2Service_IListConceptRelations extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListConceptRelationsRequest, proto_clarifai_api_service_pb.MultiConceptRelationResponse> {
@@ -2499,6 +2501,24 @@ interface IV2Service_IPatchWorkflowVersionEvaluations extends grpc.MethodDefinit
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse>;
 }
+interface IV2Service_IGetMCP extends grpc.MethodDefinition<proto_clarifai_api_service_pb.MCPRequest, proto_clarifai_api_service_pb.SingleMCPResponse> {
+    path: "/clarifai.api.V2/GetMCP";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.MCPRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MCPRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleMCPResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleMCPResponse>;
+}
+interface IV2Service_IPostMCP extends grpc.MethodDefinition<proto_clarifai_api_service_pb.MCPRequest, proto_clarifai_api_service_pb.SingleMCPResponse> {
+    path: "/clarifai.api.V2/PostMCP";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.MCPRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MCPRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleMCPResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleMCPResponse>;
+}
 
 export const V2Service: IV2Service;
 
@@ -2751,6 +2771,8 @@ export interface IV2Server {
     getWorkflowVersionEvaluation: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetWorkflowVersionEvaluationRequest, proto_clarifai_api_service_pb.SingleWorkflowVersionEvaluationResponse>;
     listWorkflowVersionEvaluations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListWorkflowVersionEvaluationsRequest, proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse>;
     patchWorkflowVersionEvaluations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchWorkflowVersionEvaluationsRequest, proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse>;
+    getMCP: grpc.handleUnaryCall<proto_clarifai_api_service_pb.MCPRequest, proto_clarifai_api_service_pb.SingleMCPResponse>;
+    postMCP: grpc.handleUnaryCall<proto_clarifai_api_service_pb.MCPRequest, proto_clarifai_api_service_pb.SingleMCPResponse>;
 }
 
 export interface IV2Client {
@@ -3496,6 +3518,12 @@ export interface IV2Client {
     patchWorkflowVersionEvaluations(request: proto_clarifai_api_service_pb.PatchWorkflowVersionEvaluationsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse) => void): grpc.ClientUnaryCall;
     patchWorkflowVersionEvaluations(request: proto_clarifai_api_service_pb.PatchWorkflowVersionEvaluationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse) => void): grpc.ClientUnaryCall;
     patchWorkflowVersionEvaluations(request: proto_clarifai_api_service_pb.PatchWorkflowVersionEvaluationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse) => void): grpc.ClientUnaryCall;
+    getMCP(request: proto_clarifai_api_service_pb.MCPRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleMCPResponse) => void): grpc.ClientUnaryCall;
+    getMCP(request: proto_clarifai_api_service_pb.MCPRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleMCPResponse) => void): grpc.ClientUnaryCall;
+    getMCP(request: proto_clarifai_api_service_pb.MCPRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleMCPResponse) => void): grpc.ClientUnaryCall;
+    postMCP(request: proto_clarifai_api_service_pb.MCPRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleMCPResponse) => void): grpc.ClientUnaryCall;
+    postMCP(request: proto_clarifai_api_service_pb.MCPRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleMCPResponse) => void): grpc.ClientUnaryCall;
+    postMCP(request: proto_clarifai_api_service_pb.MCPRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleMCPResponse) => void): grpc.ClientUnaryCall;
 }
 
 export class V2Client extends grpc.Client implements IV2Client {
@@ -4239,4 +4267,10 @@ export class V2Client extends grpc.Client implements IV2Client {
     public patchWorkflowVersionEvaluations(request: proto_clarifai_api_service_pb.PatchWorkflowVersionEvaluationsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse) => void): grpc.ClientUnaryCall;
     public patchWorkflowVersionEvaluations(request: proto_clarifai_api_service_pb.PatchWorkflowVersionEvaluationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse) => void): grpc.ClientUnaryCall;
     public patchWorkflowVersionEvaluations(request: proto_clarifai_api_service_pb.PatchWorkflowVersionEvaluationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse) => void): grpc.ClientUnaryCall;
+    public getMCP(request: proto_clarifai_api_service_pb.MCPRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleMCPResponse) => void): grpc.ClientUnaryCall;
+    public getMCP(request: proto_clarifai_api_service_pb.MCPRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleMCPResponse) => void): grpc.ClientUnaryCall;
+    public getMCP(request: proto_clarifai_api_service_pb.MCPRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleMCPResponse) => void): grpc.ClientUnaryCall;
+    public postMCP(request: proto_clarifai_api_service_pb.MCPRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleMCPResponse) => void): grpc.ClientUnaryCall;
+    public postMCP(request: proto_clarifai_api_service_pb.MCPRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleMCPResponse) => void): grpc.ClientUnaryCall;
+    public postMCP(request: proto_clarifai_api_service_pb.MCPRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleMCPResponse) => void): grpc.ClientUnaryCall;
 }
