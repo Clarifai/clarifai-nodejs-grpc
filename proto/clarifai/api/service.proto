@@ -3875,6 +3875,9 @@ service V2 {
   rpc ListNodepools (ListNodepoolsRequest) returns (MultiNodepoolResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools"
+      additional_bindings {
+        get: "/v2/users/{user_app_id.user_id}/nodepools"
+      }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
