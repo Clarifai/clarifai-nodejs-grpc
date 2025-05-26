@@ -770,8 +770,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Predict;
   }
 
-
-
   // List all the datasets.
   rpc ListDatasets (ListDatasetsRequest) returns (MultiDatasetResponse) {
     option (google.api.http) = {
@@ -8500,7 +8498,6 @@ message PostModelMigrationRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string model_id = 2;
 }
-
 
 
 
