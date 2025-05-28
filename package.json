@@ -9,6 +9,10 @@
   "scripts": {
     "test": "mocha 'tests/**/*.js' --recursive --timeout 30000"
   },
+  "exports": {
+    ".": "./src/index.js",
+    "./proto/clarifai/api/*": "./proto/clarifai/api/*.js"
+  },
   "keywords": [],
   "dependencies": {
     "@grpc/grpc-js": "^1.4.2",
