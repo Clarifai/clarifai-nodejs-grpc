@@ -1565,17 +1565,6 @@ function deserialize_clarifai_api_ListWorkflowsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListWorkflowsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_MCPRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.MCPRequest)) {
-    throw new Error('Expected argument of type clarifai.api.MCPRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_MCPRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.MCPRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_clarifai_api_MultiAnnotationFilterResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.MultiAnnotationFilterResponse)) {
     throw new Error('Expected argument of type clarifai.api.MultiAnnotationFilterResponse');
@@ -3708,17 +3697,6 @@ function serialize_clarifai_api_SingleLabelOrderResponse(arg) {
 
 function deserialize_clarifai_api_SingleLabelOrderResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.SingleLabelOrderResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_SingleMCPResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.SingleMCPResponse)) {
-    throw new Error('Expected argument of type clarifai.api.SingleMCPResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_SingleMCPResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.SingleMCPResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_SingleModelResponse(arg) {
@@ -7095,32 +7073,6 @@ deleteDeployments: {
     requestDeserialize: deserialize_clarifai_api_PatchWorkflowVersionEvaluationsRequest,
     responseSerialize: serialize_clarifai_api_MultiWorkflowVersionEvaluationResponse,
     responseDeserialize: deserialize_clarifai_api_MultiWorkflowVersionEvaluationResponse,
-  },
-  // The GET request to start an MCP session.
-// Currently not supported in our API.
-getMCP: {
-    path: '/clarifai.api.V2/GetMCP',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.MCPRequest,
-    responseType: proto_clarifai_api_service_pb.SingleMCPResponse,
-    requestSerialize: serialize_clarifai_api_MCPRequest,
-    requestDeserialize: deserialize_clarifai_api_MCPRequest,
-    responseSerialize: serialize_clarifai_api_SingleMCPResponse,
-    responseDeserialize: deserialize_clarifai_api_SingleMCPResponse,
-  },
-  // The POST request for interacting with MCP tools.
-// This is the simplest form of MCP tool calls with stateless execution for now.
-postMCP: {
-    path: '/clarifai.api.V2/PostMCP',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.MCPRequest,
-    responseType: proto_clarifai_api_service_pb.SingleMCPResponse,
-    requestSerialize: serialize_clarifai_api_MCPRequest,
-    requestDeserialize: deserialize_clarifai_api_MCPRequest,
-    responseSerialize: serialize_clarifai_api_SingleMCPResponse,
-    responseDeserialize: deserialize_clarifai_api_SingleMCPResponse,
   },
 };
 

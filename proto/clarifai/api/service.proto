@@ -4181,45 +4181,6 @@ service V2 {
 
 
 
-
-
-  // The GET request to start an MCP session.
-  // Currently not supported in our API.
-  rpc GetMCP(MCPRequest) returns (SingleMCPResponse) {
-    option (google.api.http) = {
-      get: "/v2/mcp"
-      additional_bindings {
-        get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/mcp"
-      }
-      additional_bindings {
-        get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/mcp"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Predict;
-  }
-
-  // The POST request for interacting with MCP tools.
-  // This is the simplest form of MCP tool calls with stateless execution for now.
-  rpc PostMCP(MCPRequest) returns (SingleMCPResponse) {
-    option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/mcp"
-      body: "*"
-      additional_bindings {
-        post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/mcp"
-        body: "*"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Predict;
-  }
-
 }
 
 
@@ -8532,60 +8493,3 @@ message PostModelMigrationRequest {
 
 
 
-
-
-
-
-// MCP request is used to represent the MCP format described here:
-// https://modelcontextprotocol.io/docs/concepts/transports#requests
-message MCPRequest {
-  // This is always "2.0"
-  string jsonrpc = 1;
-  // The id as an int. Note: the protocol says string | number. int64 becomes a string.
-  // All clients tests so far are using numbers.
-  // protobuf and grpc-gateway have no simple way to handle this OR in a type
-  // if needed we can add another option to our jsonpb parser.
-  // We have to return even empty (id=0) id.
-  uint32 id = 2;
-  // The method name to call for MCP like initialize, tools/list, tools/call, etc.
-  string method = 3;
-  // The params for that method. Struct is used to represent a JSON object.
-  google.protobuf.Struct params = 4;
-
-
-  // In order to specify the url parameters of user/app/model/version we need these same 4 fields as PostModelOutputsRequest
-  clarifai.api.UserAppIDSet user_app_id = 5;
-  string model_id = 6;
-  string version_id = 7;
-}
-
-// An MCP error.
-message MCPError {
-  // Error code
-  int32 code = 1;
-  // Error message
-  string message = 2;
-  // The error information . Struct is used to represent a JSON object.
-  google.protobuf.Struct data = 3;
-}
-
-// MCP response format as defined here
-// https://modelcontextprotocol.io/docs/concepts/transports#responses
-message SingleMCPResponse {
-  // This is always "2.0"
-  string jsonrpc = 1;
-  // The id as an int. Note: the protocol says string | number. int64 becomes a string.
-  // All clients tests so far are using numbers.
-  // protobuf and grpc-gateway have no simple way to handle this OR in a type
-  // if needed we can add another option to our jsonpb parser.
-  // We have to return even empty (id=0) id.
-  uint32 id = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
-  // The result of the call. Struct is used to represent a JSON object.
-  google.protobuf.Struct result = 3;
-  // An error if returned from the MCP.
-  MCPError error = 4;
-  // Have to add this for our API validation but shouldn't be returned in most cases.
-  // It may be filled in for Accepted or Allowed responses that are part of the protocol
-  // but that didn't seem to be an issue.
-  clarifai.api.status.Status status = 5;
-}
