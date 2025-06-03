@@ -3882,7 +3882,8 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = InstanceTypes_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Pipeline_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
   }
 
   rpc PostNodepools (PostNodepoolsRequest) returns (MultiNodepoolResponse) {
@@ -4109,8 +4110,8 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Predict;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Pipeline_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Pipeline_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Add;
     option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Add;
     option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Get;
   }
@@ -4125,7 +4126,7 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Pipeline_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Get;
   }
@@ -4141,7 +4142,7 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Pipeline_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Get;
   }
@@ -4177,11 +4178,67 @@ service V2 {
 
 
 
+  rpc PostPipelineSteps(PostPipelineStepsRequest) returns (MultiPipelineStepResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipeline_steps"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Add;
+  }
 
+  rpc GetPipelineStep(GetPipelineStepRequest) returns (SinglePipelineStepResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipeline_steps/{pipeline_step_id}"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
+  }
 
+  rpc ListPipelineSteps(ListPipelineStepsRequest) returns (MultiPipelineStepResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipeline_steps"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
+  }
 
+  // This is a streaming endpoint, the request has a field, upload_data, which can either be the config for the upload or the actual data to upload.
+  // The config must be sent first before the pipeline_step_bytes can be uploaded.
+  // Once the config has been sent, the server will respond with a confirmation containing the pipeline_step_version_id.
+  // This is so that if your upload is interrupted, you can resume the upload by sending the config again with the pipeline_step_version_id specified for your pipeline_step_version.
+  // The actual upload will be done via a multipart upload, the latest successful part_id will be sent from the server in the response to the pipeline_step_bytes.
+  rpc PostPipelineStepVersionsUpload(stream PostPipelineStepVersionsUploadRequest) returns (stream PostPipelineStepVersionsUploadResponse) {
+    option (google.api.http) = {
+      post: "/v2/pipeline_step_versions/upload"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Add;
+  }
 
-}
+  rpc ListPipelineStepVersions(ListPipelineStepVersionsRequest) returns (MultiPipelineStepVersionResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipeline_steps/{pipeline_step_id}/versions"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
+  }
+
+  rpc GetPipelineStepVersion(GetPipelineStepVersionRequest) returns (SinglePipelineStepVersionResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipeline_steps/{pipeline_step_id}/versions/{pipeline_step_version_id}"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
+  }}
 
 
 // Split the results into pages.
@@ -8483,13 +8540,109 @@ message PostModelMigrationRequest {
 
 
 
+message PostPipelineStepsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated PipelineStep pipeline_steps = 3;
+}
 
+message MultiPipelineStepResponse {
+  clarifai.api.status.Status status = 1;
+  repeated PipelineStep pipeline_steps = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
 
+message ListPipelineStepsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
 
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
 
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 3;
+}
 
+message ListPipelineStepVersionsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
 
+  // List versions for the pipeline step identified by this id
+  string pipeline_step_id = 2;
 
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 3;
 
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 4;
 
+  // Filter based on status
+  repeated clarifai.api.status.StatusCode status_codes = 6;
+}
 
+message MultiPipelineStepVersionResponse {
+  // The status of the request
+  clarifai.api.status.Status status = 1;
+  // The pipeline step versions that were requested
+  repeated PipelineStepVersion pipeline_step_versions = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+message PostPipelineStepVersionsUploadRequest {
+  oneof upload_data {
+    // Upload a new pipeline step version.
+    PostPipelineStepVersionsUploadConfig upload_config = 2;
+
+    // Upload a part of a multipart upload.
+    UploadContentPart content_part = 3;
+ }
+}
+
+message PostPipelineStepVersionsUploadResponse {
+  // Status of the upload
+ clarifai.api.status.Status status = 1;
+ // Bytes remaining to be uploaded - This is total_size - bytes_uploaded
+ uint64 bytes_remaining = 2;
+ // ID of the pipeline step version being uploaded
+ string pipeline_step_version_id = 3;
+}
+
+message PostPipelineStepVersionsUploadConfig {
+ // User ID and App ID of the user uploading the pipeline step
+ clarifai.api.UserAppIDSet user_app_id = 1;
+ // Pipeline Step to create version for
+ string pipeline_step_id = 2;
+ // Specification for the pipeline step version to be uploaded
+ PipelineStepVersion pipeline_step_version = 3;
+ // Number of bytes in the pipeline step files to be uploaded
+ uint64 total_size = 4;
+ // Number of bytes requested for the build process.
+ uint64 storage_request_size = 5;
+}
+
+message GetPipelineStepRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The id of the pipeline step that has the requested version.
+  string pipeline_step_id = 2;
+}
+
+message SinglePipelineStepResponse {
+  // The status of the request
+  clarifai.api.status.Status status = 1;
+  // The pipeline step that was requested
+  PipelineStep pipeline_step = 2;
+}
+
+message GetPipelineStepVersionRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The id of the pipeline step that has the requested version.
+  string pipeline_step_id = 2;
+  // Get the identified by this id
+  string pipeline_step_version_id = 3;
+}
+
+message SinglePipelineStepVersionResponse {
+  // The status of the request
+  clarifai.api.status.Status status = 1;
+  // The pipeline step version that was requested
+  PipelineStepVersion pipeline_step_version = 2;
+}

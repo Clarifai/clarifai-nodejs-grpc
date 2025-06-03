@@ -265,6 +265,12 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     getWorkflowVersionEvaluation: IV2Service_IGetWorkflowVersionEvaluation;
     listWorkflowVersionEvaluations: IV2Service_IListWorkflowVersionEvaluations;
     patchWorkflowVersionEvaluations: IV2Service_IPatchWorkflowVersionEvaluations;
+    postPipelineSteps: IV2Service_IPostPipelineSteps;
+    getPipelineStep: IV2Service_IGetPipelineStep;
+    listPipelineSteps: IV2Service_IListPipelineSteps;
+    postPipelineStepVersionsUpload: IV2Service_IPostPipelineStepVersionsUpload;
+    listPipelineStepVersions: IV2Service_IListPipelineStepVersions;
+    getPipelineStepVersion: IV2Service_IGetPipelineStepVersion;
 }
 
 interface IV2Service_IListConceptRelations extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListConceptRelationsRequest, proto_clarifai_api_service_pb.MultiConceptRelationResponse> {
@@ -2499,6 +2505,60 @@ interface IV2Service_IPatchWorkflowVersionEvaluations extends grpc.MethodDefinit
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse>;
 }
+interface IV2Service_IPostPipelineSteps extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostPipelineStepsRequest, proto_clarifai_api_service_pb.MultiPipelineStepResponse> {
+    path: "/clarifai.api.V2/PostPipelineSteps";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostPipelineStepsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostPipelineStepsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiPipelineStepResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiPipelineStepResponse>;
+}
+interface IV2Service_IGetPipelineStep extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetPipelineStepRequest, proto_clarifai_api_service_pb.SinglePipelineStepResponse> {
+    path: "/clarifai.api.V2/GetPipelineStep";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.GetPipelineStepRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.GetPipelineStepRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SinglePipelineStepResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SinglePipelineStepResponse>;
+}
+interface IV2Service_IListPipelineSteps extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListPipelineStepsRequest, proto_clarifai_api_service_pb.MultiPipelineStepResponse> {
+    path: "/clarifai.api.V2/ListPipelineSteps";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListPipelineStepsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListPipelineStepsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiPipelineStepResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiPipelineStepResponse>;
+}
+interface IV2Service_IPostPipelineStepVersionsUpload extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadRequest, proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadResponse> {
+    path: "/clarifai.api.V2/PostPipelineStepVersionsUpload";
+    requestStream: true;
+    responseStream: true;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadResponse>;
+}
+interface IV2Service_IListPipelineStepVersions extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListPipelineStepVersionsRequest, proto_clarifai_api_service_pb.MultiPipelineStepVersionResponse> {
+    path: "/clarifai.api.V2/ListPipelineStepVersions";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListPipelineStepVersionsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListPipelineStepVersionsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiPipelineStepVersionResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiPipelineStepVersionResponse>;
+}
+interface IV2Service_IGetPipelineStepVersion extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetPipelineStepVersionRequest, proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse> {
+    path: "/clarifai.api.V2/GetPipelineStepVersion";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.GetPipelineStepVersionRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.GetPipelineStepVersionRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse>;
+}
 
 export const V2Service: IV2Service;
 
@@ -2751,6 +2811,12 @@ export interface IV2Server {
     getWorkflowVersionEvaluation: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetWorkflowVersionEvaluationRequest, proto_clarifai_api_service_pb.SingleWorkflowVersionEvaluationResponse>;
     listWorkflowVersionEvaluations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListWorkflowVersionEvaluationsRequest, proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse>;
     patchWorkflowVersionEvaluations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchWorkflowVersionEvaluationsRequest, proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse>;
+    postPipelineSteps: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostPipelineStepsRequest, proto_clarifai_api_service_pb.MultiPipelineStepResponse>;
+    getPipelineStep: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetPipelineStepRequest, proto_clarifai_api_service_pb.SinglePipelineStepResponse>;
+    listPipelineSteps: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListPipelineStepsRequest, proto_clarifai_api_service_pb.MultiPipelineStepResponse>;
+    postPipelineStepVersionsUpload: grpc.handleBidiStreamingCall<proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadRequest, proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadResponse>;
+    listPipelineStepVersions: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListPipelineStepVersionsRequest, proto_clarifai_api_service_pb.MultiPipelineStepVersionResponse>;
+    getPipelineStepVersion: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetPipelineStepVersionRequest, proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse>;
 }
 
 export interface IV2Client {
@@ -3496,6 +3562,24 @@ export interface IV2Client {
     patchWorkflowVersionEvaluations(request: proto_clarifai_api_service_pb.PatchWorkflowVersionEvaluationsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse) => void): grpc.ClientUnaryCall;
     patchWorkflowVersionEvaluations(request: proto_clarifai_api_service_pb.PatchWorkflowVersionEvaluationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse) => void): grpc.ClientUnaryCall;
     patchWorkflowVersionEvaluations(request: proto_clarifai_api_service_pb.PatchWorkflowVersionEvaluationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse) => void): grpc.ClientUnaryCall;
+    postPipelineSteps(request: proto_clarifai_api_service_pb.PostPipelineStepsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiPipelineStepResponse) => void): grpc.ClientUnaryCall;
+    postPipelineSteps(request: proto_clarifai_api_service_pb.PostPipelineStepsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiPipelineStepResponse) => void): grpc.ClientUnaryCall;
+    postPipelineSteps(request: proto_clarifai_api_service_pb.PostPipelineStepsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiPipelineStepResponse) => void): grpc.ClientUnaryCall;
+    getPipelineStep(request: proto_clarifai_api_service_pb.GetPipelineStepRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SinglePipelineStepResponse) => void): grpc.ClientUnaryCall;
+    getPipelineStep(request: proto_clarifai_api_service_pb.GetPipelineStepRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SinglePipelineStepResponse) => void): grpc.ClientUnaryCall;
+    getPipelineStep(request: proto_clarifai_api_service_pb.GetPipelineStepRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SinglePipelineStepResponse) => void): grpc.ClientUnaryCall;
+    listPipelineSteps(request: proto_clarifai_api_service_pb.ListPipelineStepsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiPipelineStepResponse) => void): grpc.ClientUnaryCall;
+    listPipelineSteps(request: proto_clarifai_api_service_pb.ListPipelineStepsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiPipelineStepResponse) => void): grpc.ClientUnaryCall;
+    listPipelineSteps(request: proto_clarifai_api_service_pb.ListPipelineStepsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiPipelineStepResponse) => void): grpc.ClientUnaryCall;
+    postPipelineStepVersionsUpload(): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadRequest, proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadResponse>;
+    postPipelineStepVersionsUpload(options: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadRequest, proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadResponse>;
+    postPipelineStepVersionsUpload(metadata: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadRequest, proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadResponse>;
+    listPipelineStepVersions(request: proto_clarifai_api_service_pb.ListPipelineStepVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiPipelineStepVersionResponse) => void): grpc.ClientUnaryCall;
+    listPipelineStepVersions(request: proto_clarifai_api_service_pb.ListPipelineStepVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiPipelineStepVersionResponse) => void): grpc.ClientUnaryCall;
+    listPipelineStepVersions(request: proto_clarifai_api_service_pb.ListPipelineStepVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiPipelineStepVersionResponse) => void): grpc.ClientUnaryCall;
+    getPipelineStepVersion(request: proto_clarifai_api_service_pb.GetPipelineStepVersionRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse) => void): grpc.ClientUnaryCall;
+    getPipelineStepVersion(request: proto_clarifai_api_service_pb.GetPipelineStepVersionRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse) => void): grpc.ClientUnaryCall;
+    getPipelineStepVersion(request: proto_clarifai_api_service_pb.GetPipelineStepVersionRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse) => void): grpc.ClientUnaryCall;
 }
 
 export class V2Client extends grpc.Client implements IV2Client {
@@ -4239,4 +4323,21 @@ export class V2Client extends grpc.Client implements IV2Client {
     public patchWorkflowVersionEvaluations(request: proto_clarifai_api_service_pb.PatchWorkflowVersionEvaluationsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse) => void): grpc.ClientUnaryCall;
     public patchWorkflowVersionEvaluations(request: proto_clarifai_api_service_pb.PatchWorkflowVersionEvaluationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse) => void): grpc.ClientUnaryCall;
     public patchWorkflowVersionEvaluations(request: proto_clarifai_api_service_pb.PatchWorkflowVersionEvaluationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiWorkflowVersionEvaluationResponse) => void): grpc.ClientUnaryCall;
+    public postPipelineSteps(request: proto_clarifai_api_service_pb.PostPipelineStepsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiPipelineStepResponse) => void): grpc.ClientUnaryCall;
+    public postPipelineSteps(request: proto_clarifai_api_service_pb.PostPipelineStepsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiPipelineStepResponse) => void): grpc.ClientUnaryCall;
+    public postPipelineSteps(request: proto_clarifai_api_service_pb.PostPipelineStepsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiPipelineStepResponse) => void): grpc.ClientUnaryCall;
+    public getPipelineStep(request: proto_clarifai_api_service_pb.GetPipelineStepRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SinglePipelineStepResponse) => void): grpc.ClientUnaryCall;
+    public getPipelineStep(request: proto_clarifai_api_service_pb.GetPipelineStepRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SinglePipelineStepResponse) => void): grpc.ClientUnaryCall;
+    public getPipelineStep(request: proto_clarifai_api_service_pb.GetPipelineStepRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SinglePipelineStepResponse) => void): grpc.ClientUnaryCall;
+    public listPipelineSteps(request: proto_clarifai_api_service_pb.ListPipelineStepsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiPipelineStepResponse) => void): grpc.ClientUnaryCall;
+    public listPipelineSteps(request: proto_clarifai_api_service_pb.ListPipelineStepsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiPipelineStepResponse) => void): grpc.ClientUnaryCall;
+    public listPipelineSteps(request: proto_clarifai_api_service_pb.ListPipelineStepsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiPipelineStepResponse) => void): grpc.ClientUnaryCall;
+    public postPipelineStepVersionsUpload(options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadRequest, proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadResponse>;
+    public postPipelineStepVersionsUpload(metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadRequest, proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadResponse>;
+    public listPipelineStepVersions(request: proto_clarifai_api_service_pb.ListPipelineStepVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiPipelineStepVersionResponse) => void): grpc.ClientUnaryCall;
+    public listPipelineStepVersions(request: proto_clarifai_api_service_pb.ListPipelineStepVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiPipelineStepVersionResponse) => void): grpc.ClientUnaryCall;
+    public listPipelineStepVersions(request: proto_clarifai_api_service_pb.ListPipelineStepVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiPipelineStepVersionResponse) => void): grpc.ClientUnaryCall;
+    public getPipelineStepVersion(request: proto_clarifai_api_service_pb.GetPipelineStepVersionRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse) => void): grpc.ClientUnaryCall;
+    public getPipelineStepVersion(request: proto_clarifai_api_service_pb.GetPipelineStepVersionRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse) => void): grpc.ClientUnaryCall;
+    public getPipelineStepVersion(request: proto_clarifai_api_service_pb.GetPipelineStepVersionRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse) => void): grpc.ClientUnaryCall;
 }
