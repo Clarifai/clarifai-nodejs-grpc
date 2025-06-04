@@ -2758,6 +2758,7 @@ message TextInfo {
   string encoding = 2;
 }
 
+
 enum APIEventType {
   API_EVENT_TYPE_NOT_SET = 0;
 
