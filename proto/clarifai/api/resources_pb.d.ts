@@ -9651,6 +9651,223 @@ export namespace OrchestrationSpec {
 
 }
 
+export class PipelineStepInputParam extends jspb.Message { 
+    getName(): string;
+    setName(value: string): PipelineStepInputParam;
+    getDefaultValue(): string;
+    setDefaultValue(value: string): PipelineStepInputParam;
+    getDescription(): string;
+    setDescription(value: string): PipelineStepInputParam;
+    clearAcceptedValuesList(): void;
+    getAcceptedValuesList(): Array<string>;
+    setAcceptedValuesList(value: Array<string>): PipelineStepInputParam;
+    addAcceptedValues(value: string, index?: number): string;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PipelineStepInputParam.AsObject;
+    static toObject(includeInstance: boolean, msg: PipelineStepInputParam): PipelineStepInputParam.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PipelineStepInputParam, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PipelineStepInputParam;
+    static deserializeBinaryFromReader(message: PipelineStepInputParam, reader: jspb.BinaryReader): PipelineStepInputParam;
+}
+
+export namespace PipelineStepInputParam {
+    export type AsObject = {
+        name: string,
+        defaultValue: string,
+        description: string,
+        acceptedValuesList: Array<string>,
+    }
+}
+
+export class PipelineStep extends jspb.Message { 
+    getId(): string;
+    setId(value: string): PipelineStep;
+    getUserId(): string;
+    setUserId(value: string): PipelineStep;
+    getDescription(): string;
+    setDescription(value: string): PipelineStep;
+
+    hasPipelineStepVersion(): boolean;
+    clearPipelineStepVersion(): void;
+    getPipelineStepVersion(): PipelineStepVersion | undefined;
+    setPipelineStepVersion(value?: PipelineStepVersion): PipelineStep;
+
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): Visibility | undefined;
+    setVisibility(value?: Visibility): PipelineStep;
+
+    hasCreatedAt(): boolean;
+    clearCreatedAt(): void;
+    getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): PipelineStep;
+
+    hasModifiedAt(): boolean;
+    clearModifiedAt(): void;
+    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): PipelineStep;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PipelineStep.AsObject;
+    static toObject(includeInstance: boolean, msg: PipelineStep): PipelineStep.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PipelineStep, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PipelineStep;
+    static deserializeBinaryFromReader(message: PipelineStep, reader: jspb.BinaryReader): PipelineStep;
+}
+
+export namespace PipelineStep {
+    export type AsObject = {
+        id: string,
+        userId: string,
+        description: string,
+        pipelineStepVersion?: PipelineStepVersion.AsObject,
+        visibility?: Visibility.AsObject,
+        createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    }
+}
+
+export class OrchestrationStepSpec extends jspb.Message { 
+
+    hasArgoOrchestrationStepSpec(): boolean;
+    clearArgoOrchestrationStepSpec(): void;
+    getArgoOrchestrationStepSpec(): ArgoOrchestrationStepSpec | undefined;
+    setArgoOrchestrationStepSpec(value?: ArgoOrchestrationStepSpec): OrchestrationStepSpec;
+
+    getOrchestrationCase(): OrchestrationStepSpec.OrchestrationCase;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): OrchestrationStepSpec.AsObject;
+    static toObject(includeInstance: boolean, msg: OrchestrationStepSpec): OrchestrationStepSpec.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: OrchestrationStepSpec, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): OrchestrationStepSpec;
+    static deserializeBinaryFromReader(message: OrchestrationStepSpec, reader: jspb.BinaryReader): OrchestrationStepSpec;
+}
+
+export namespace OrchestrationStepSpec {
+    export type AsObject = {
+        argoOrchestrationStepSpec?: ArgoOrchestrationStepSpec.AsObject,
+    }
+
+    export enum OrchestrationCase {
+        ORCHESTRATION_NOT_SET = 0,
+        ARGO_ORCHESTRATION_STEP_SPEC = 1,
+    }
+
+}
+
+export class ArgoOrchestrationStepSpec extends jspb.Message { 
+    getApiVersion(): string;
+    setApiVersion(value: string): ArgoOrchestrationStepSpec;
+    getSpecJson(): string;
+    setSpecJson(value: string): ArgoOrchestrationStepSpec;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ArgoOrchestrationStepSpec.AsObject;
+    static toObject(includeInstance: boolean, msg: ArgoOrchestrationStepSpec): ArgoOrchestrationStepSpec.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ArgoOrchestrationStepSpec, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ArgoOrchestrationStepSpec;
+    static deserializeBinaryFromReader(message: ArgoOrchestrationStepSpec, reader: jspb.BinaryReader): ArgoOrchestrationStepSpec;
+}
+
+export namespace ArgoOrchestrationStepSpec {
+    export type AsObject = {
+        apiVersion: string,
+        specJson: string,
+    }
+}
+
+export class PipelineStepVersion extends jspb.Message { 
+    getId(): string;
+    setId(value: string): PipelineStepVersion;
+    getUserId(): string;
+    setUserId(value: string): PipelineStepVersion;
+    getAppId(): string;
+    setAppId(value: string): PipelineStepVersion;
+    getDescription(): string;
+    setDescription(value: string): PipelineStepVersion;
+
+    hasPipelineStep(): boolean;
+    clearPipelineStep(): void;
+    getPipelineStep(): PipelineStep | undefined;
+    setPipelineStep(value?: PipelineStep): PipelineStepVersion;
+
+    hasOrchestrationStepSpec(): boolean;
+    clearOrchestrationStepSpec(): void;
+    getOrchestrationStepSpec(): OrchestrationStepSpec | undefined;
+    setOrchestrationStepSpec(value?: OrchestrationStepSpec): PipelineStepVersion;
+    clearPipelineStepInputParamsList(): void;
+    getPipelineStepInputParamsList(): Array<PipelineStepInputParam>;
+    setPipelineStepInputParamsList(value: Array<PipelineStepInputParam>): PipelineStepVersion;
+    addPipelineStepInputParams(value?: PipelineStepInputParam, index?: number): PipelineStepInputParam;
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): PipelineStepVersion;
+
+    hasPipelineStepComputeInfo(): boolean;
+    clearPipelineStepComputeInfo(): void;
+    getPipelineStepComputeInfo(): ComputeInfo | undefined;
+    setPipelineStepComputeInfo(value?: ComputeInfo): PipelineStepVersion;
+
+    hasBuildInfo(): boolean;
+    clearBuildInfo(): void;
+    getBuildInfo(): BuildInfo | undefined;
+    setBuildInfo(value?: BuildInfo): PipelineStepVersion;
+
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): Visibility | undefined;
+    setVisibility(value?: Visibility): PipelineStepVersion;
+
+    hasCreatedAt(): boolean;
+    clearCreatedAt(): void;
+    getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): PipelineStepVersion;
+
+    hasModifiedAt(): boolean;
+    clearModifiedAt(): void;
+    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): PipelineStepVersion;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PipelineStepVersion.AsObject;
+    static toObject(includeInstance: boolean, msg: PipelineStepVersion): PipelineStepVersion.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PipelineStepVersion, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PipelineStepVersion;
+    static deserializeBinaryFromReader(message: PipelineStepVersion, reader: jspb.BinaryReader): PipelineStepVersion;
+}
+
+export namespace PipelineStepVersion {
+    export type AsObject = {
+        id: string,
+        userId: string,
+        appId: string,
+        description: string,
+        pipelineStep?: PipelineStep.AsObject,
+        orchestrationStepSpec?: OrchestrationStepSpec.AsObject,
+        pipelineStepInputParamsList: Array<PipelineStepInputParam.AsObject>,
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        pipelineStepComputeInfo?: ComputeInfo.AsObject,
+        buildInfo?: BuildInfo.AsObject,
+        visibility?: Visibility.AsObject,
+        createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    }
+}
+
 export class PipelineVersion extends jspb.Message { 
     getId(): string;
     setId(value: string): PipelineVersion;

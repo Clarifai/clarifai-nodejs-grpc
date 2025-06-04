@@ -5395,10 +5395,100 @@ message OrchestrationSpec {
   }
 }
 
+message PipelineStepInputParam {
+  // The name of the input parameter.
+  string name = 1;
 
+  // The default value of the input parameter.
+  string default_value = 2;
 
+  // The description of the input parameter.
+  string description = 3;
 
+  // The accepted values for the input parameter.
+  repeated string accepted_values = 4;
+}
 
+message PipelineStep {
+  // The ID of the pipeline step.
+  string id = 1;
+
+  // The user the pipeline step belongs to
+  string user_id = 2;
+
+  // Description of the pipeline step
+  string description = 3;
+
+  // Latest Pipeline Step Version
+  PipelineStepVersion pipeline_step_version = 4;
+
+  // The visibility field represents whether this is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 5;
+
+  // When the pipeline step was created
+  google.protobuf.Timestamp created_at = 6;
+
+  // When the pipeline step was last modified
+  google.protobuf.Timestamp modified_at = 7;
+}
+
+message OrchestrationStepSpec {
+  oneof orchestration {
+    ArgoOrchestrationStepSpec argo_orchestration_step_spec = 1; // Argo orchestration step template
+  }
+}
+
+message ArgoOrchestrationStepSpec {
+  // The API version of the orchestration W.
+  // Example: "argoproj.io/v1alpha1", "argoproj.io/v1beta1"
+  string api_version = 1;
+
+  // The JSON representation of the Argo Workflow Template
+  string spec_json = 2;
+}
+
+message PipelineStepVersion {
+  // The ID of the pipeline step version.
+  string id = 1;
+
+  // The user the pipeline step version belongs to
+  string user_id = 2;
+  // The app the pipeline step version belongs to
+  string app_id = 3;
+  // Description of the pipeline step version
+  string description = 4;
+
+  // Pipeline Step
+  PipelineStep pipeline_step = 5;
+
+  // Orchestration Step Specification using oneof
+  OrchestrationStepSpec orchestration_step_spec = 6;
+
+  // The pipeline step version input parameters
+  repeated PipelineStepInputParam pipeline_step_input_params = 7;
+
+  // Pipeline step Status - Created, Building Artifacts, Completed, Failed
+  clarifai.api.status.Status status = 8;
+
+  // The minimum required compute resource to run the pipeline step as part of a Pipeline
+  ComputeInfo pipeline_step_compute_info = 9;
+
+  // Build information for the pipeline step
+  BuildInfo build_info = 10;
+
+  // The visibility field represents whether this is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 11;
+
+  // When the pipeline step was created
+  google.protobuf.Timestamp created_at = 12;
+
+  // When the pipeline step was last modified
+  google.protobuf.Timestamp modified_at = 13;
+}
 
 
 
