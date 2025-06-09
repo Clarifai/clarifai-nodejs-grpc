@@ -5315,6 +5315,7 @@ message ComputeSourceMetadata {
   string pipeline_version_id = 10;
   string pipeline_version_run_id = 11;
 
+  // Pipeline step related data for pipeline step builds.
   string pipeline_step_id = 12;
   string pipeline_step_version_id = 13;
 }
@@ -5367,6 +5368,16 @@ message EvaluationMetricValue {
   map<string, MetricValue> per_concept_values = 4;
 }
 
+message InputEvaluationMetricValue {
+  // The metric values
+  string evaluation_metric_id = 1;
+  // Aggregated metric value
+  MetricValue metric_value = 2;
+  // explanation for the value
+  string explanation = 3;
+  // Metric values for each region
+  map<string, MetricValue> per_region_values = 4;
+}
 
 message MetricValue {
   oneof metric_value {
@@ -5376,8 +5387,20 @@ message MetricValue {
   }
 }
 
+// The evaluation result at the input/sample level
+message WorkflowEvaluationInputResult {
+  repeated InputEvaluationMetricValue input_evaluation_metric_values = 1;
+}
 
 
+
+message WorkflowVersionEvaluationData {
+  string id = 1; // the data example id
+  Input input = 2;
+  repeated Data ground_truths = 3;
+  repeated Data predictions = 4;
+  WorkflowEvaluationInputResult workflow_evaluation_sample_result = 5;
+}
 
 message ArgoOrchestrationSpec {
   // The API version of the orchestration specification.
@@ -5493,6 +5516,39 @@ message PipelineStepVersion {
 
 
 
+message Pipeline {
+  string id = 1;
+
+  // The user the pipeline belongs to
+  string user_id = 2;
+
+  // The app the pipeline belongs to
+  string app_id = 3;
+
+  // Latest Pipeline Version
+  PipelineVersion pipeline_version = 5;
+  // Short description about this pipeline
+  string description = 6;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 7;
+
+  // Notes for the Pipeline. This field should be used for in-depth notes and supports up to 64Kbs.
+  string notes = 8;
+
+  // To handle arbitrary json metadata, use a struct field
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  google.protobuf.Struct metadata = 9;
+
+  // When the pipeline was created
+  google.protobuf.Timestamp created_at = 10;
+
+  // When the pipeline was last modified
+  google.protobuf.Timestamp modified_at = 11;
+}
+
 message PipelineVersion {
   string id = 1;
 
@@ -5562,4 +5618,11 @@ message PipelineVersionRun {
 
   // The app the pipeline belongs to
   string app_id = 6;
+
+  // When the pipeline was created
+  google.protobuf.Timestamp created_at = 7;
+
+  // When the pipeline was last modified
+  google.protobuf.Timestamp modified_at = 8;
+
 }
