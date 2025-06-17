@@ -128,6 +128,7 @@ goog.exportSymbol('proto.clarifai.api.DeleteConcepts', null, global);
 goog.exportSymbol('proto.clarifai.api.DeleteFromDataset', null, global);
 goog.exportSymbol('proto.clarifai.api.DeleteGeo', null, global);
 goog.exportSymbol('proto.clarifai.api.DeleteMetadata', null, global);
+goog.exportSymbol('proto.clarifai.api.DeployRestriction', null, global);
 goog.exportSymbol('proto.clarifai.api.Deployment', null, global);
 goog.exportSymbol('proto.clarifai.api.Deployment.SchedulingChoice', null, global);
 goog.exportSymbol('proto.clarifai.api.DetailConceptCount', null, global);
@@ -25484,7 +25485,8 @@ proto.clarifai.api.Model.toObject = function(includeInstance, msg) {
     creator: jspb.Message.getFieldWithDefault(msg, 37, ""),
     versionCount: jspb.Message.getFieldWithDefault(msg, 38, 0),
     billingType: jspb.Message.getFieldWithDefault(msg, 40, 0),
-    featuredOrder: (f = msg.getFeaturedOrder()) && google_protobuf_wrappers_pb.Int32Value.toObject(includeInstance, f)
+    featuredOrder: (f = msg.getFeaturedOrder()) && google_protobuf_wrappers_pb.Int32Value.toObject(includeInstance, f),
+    deployRestriction: jspb.Message.getFieldWithDefault(msg, 42, 0)
   };
 
   if (includeInstance) {
@@ -25665,6 +25667,10 @@ proto.clarifai.api.Model.deserializeBinaryFromReader = function(msg, reader) {
       var value = new google_protobuf_wrappers_pb.Int32Value;
       reader.readMessage(value,google_protobuf_wrappers_pb.Int32Value.deserializeBinaryFromReader);
       msg.setFeaturedOrder(value);
+      break;
+    case 42:
+      var value = /** @type {!proto.clarifai.api.DeployRestriction} */ (reader.readEnum());
+      msg.setDeployRestriction(value);
       break;
     default:
       reader.skipField();
@@ -25937,6 +25943,13 @@ proto.clarifai.api.Model.serializeBinaryToWriter = function(message, writer) {
       41,
       f,
       google_protobuf_wrappers_pb.Int32Value.serializeBinaryToWriter
+    );
+  }
+  f = message.getDeployRestriction();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      42,
+      f
     );
   }
 };
@@ -26875,6 +26888,24 @@ proto.clarifai.api.Model.prototype.clearFeaturedOrder = function() {
  */
 proto.clarifai.api.Model.prototype.hasFeaturedOrder = function() {
   return jspb.Message.getField(this, 41) != null;
+};
+
+
+/**
+ * optional DeployRestriction deploy_restriction = 42;
+ * @return {!proto.clarifai.api.DeployRestriction}
+ */
+proto.clarifai.api.Model.prototype.getDeployRestriction = function() {
+  return /** @type {!proto.clarifai.api.DeployRestriction} */ (jspb.Message.getFieldWithDefault(this, 42, 0));
+};
+
+
+/**
+ * @param {!proto.clarifai.api.DeployRestriction} value
+ * @return {!proto.clarifai.api.Model} returns this
+ */
+proto.clarifai.api.Model.prototype.setDeployRestriction = function(value) {
+  return jspb.Message.setProto3EnumField(this, 42, value);
 };
 
 
@@ -83818,6 +83849,16 @@ proto.clarifai.api.LicenseType = {
   FIRST_PARTY: 1,
   OPEN_SOURCE: 2,
   CLOSED_SOURCE: 3
+};
+
+/**
+ * @enum {number}
+ */
+proto.clarifai.api.DeployRestriction = {
+  USAGE_RESTRICTION_NOT_SET: 0,
+  NO_LIMITS: 1,
+  SHARED_COMPUTE_ONLY: 2,
+  DEDICATED_COMPUTE_ONLY: 3
 };
 
 /**

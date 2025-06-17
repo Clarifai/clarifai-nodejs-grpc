@@ -2700,6 +2700,8 @@ export class Model extends jspb.Message {
     clearFeaturedOrder(): void;
     getFeaturedOrder(): google_protobuf_wrappers_pb.Int32Value | undefined;
     setFeaturedOrder(value?: google_protobuf_wrappers_pb.Int32Value): Model;
+    getDeployRestriction(): DeployRestriction;
+    setDeployRestriction(value: DeployRestriction): Model;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Model.AsObject;
@@ -2746,6 +2748,7 @@ export namespace Model {
         versionCount: number,
         billingType: Model.BillingType,
         featuredOrder?: google_protobuf_wrappers_pb.Int32Value.AsObject,
+        deployRestriction: DeployRestriction,
     }
 
     export enum Source {
@@ -10260,6 +10263,13 @@ export enum LicenseType {
     FIRST_PARTY = 1,
     OPEN_SOURCE = 2,
     CLOSED_SOURCE = 3,
+}
+
+export enum DeployRestriction {
+    USAGE_RESTRICTION_NOT_SET = 0,
+    NO_LIMITS = 1,
+    SHARED_COMPUTE_ONLY = 2,
+    DEDICATED_COMPUTE_ONLY = 3,
 }
 
 export enum DataType {

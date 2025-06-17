@@ -1485,6 +1485,7 @@ message Model {
   // Creator of Model
   string creator = 37;
   int32 version_count = 38;
+
   enum BillingType {
     Unknown = 0;
     Tokens = 1;
@@ -1496,10 +1497,16 @@ message Model {
   // The order is relative to other models that are also featured.
   // Models with a higher order will be featured first.
   google.protobuf.Int32Value featured_order = 41;
+
+  // Deploy restriction for the model.
+  DeployRestriction deploy_restriction = 42;
 }
-
-
-
+enum DeployRestriction {
+  USAGE_RESTRICTION_NOT_SET = 0; // Default uninitialized state.
+  NO_LIMITS = 1; // No restrictions on usage.
+  SHARED_COMPUTE_ONLY = 2; // Model can only be used on shared compute resources.
+  DEDICATED_COMPUTE_ONLY = 3; // Model can only be used on dedicated compute resources.
+}
 
 
 // A link to a html/markdown/text file that stores reference material tied to a model.
