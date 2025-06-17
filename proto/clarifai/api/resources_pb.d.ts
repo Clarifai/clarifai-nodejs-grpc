@@ -10211,6 +10211,65 @@ export namespace PipelineVersionRun {
     }
 }
 
+export class Secret extends jspb.Message { 
+    getId(): string;
+    setId(value: string): Secret;
+    getAppId(): string;
+    setAppId(value: string): Secret;
+    getName(): string;
+    setName(value: string): Secret;
+    getValue(): string;
+    setValue(value: string): Secret;
+    getVersion(): number;
+    setVersion(value: number): Secret;
+    getDescription(): string;
+    setDescription(value: string): Secret;
+
+    hasCreatedAt(): boolean;
+    clearCreatedAt(): void;
+    getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): Secret;
+
+    hasModifiedAt(): boolean;
+    clearModifiedAt(): void;
+    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): Secret;
+
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): Visibility | undefined;
+    setVisibility(value?: Visibility): Secret;
+
+    hasExpiresAt(): boolean;
+    clearExpiresAt(): void;
+    getExpiresAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setExpiresAt(value?: google_protobuf_timestamp_pb.Timestamp): Secret;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): Secret.AsObject;
+    static toObject(includeInstance: boolean, msg: Secret): Secret.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: Secret, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): Secret;
+    static deserializeBinaryFromReader(message: Secret, reader: jspb.BinaryReader): Secret;
+}
+
+export namespace Secret {
+    export type AsObject = {
+        id: string,
+        appId: string,
+        name: string,
+        value: string,
+        version: number,
+        description: string,
+        createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        visibility?: Visibility.AsObject,
+        expiresAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    }
+}
+
 export enum WorkflowModelUseCase {
     WORKFLOW_MODEL_USE_CASE_NOT_SET = 0,
     CLASSIFICATION = 1,

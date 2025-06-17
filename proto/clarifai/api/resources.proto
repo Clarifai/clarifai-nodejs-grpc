@@ -5633,3 +5633,37 @@ message PipelineVersionRun {
   google.protobuf.Timestamp modified_at = 8;
 
 }
+
+message Secret {
+  // The ID of the secret.
+  string id = 1;
+
+  // The app the secret belongs to.
+  string app_id = 2;
+
+  // The name of the secret, corresponds to secret_name in model_version.output_info.params.secrets
+  string name = 3;
+
+  // The value of the secret.
+  string value = 4;
+
+  // The version of the secret.
+  uint32 version = 5;
+
+  // The description of the secret.
+  string description = 6;
+
+  // When the secret was created.
+  google.protobuf.Timestamp created_at = 7;
+
+  // When the secret was last modified.
+  google.protobuf.Timestamp modified_at = 8;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 9;
+
+  // When the secret will expire.
+  google.protobuf.Timestamp expires_at = 10;
+}
