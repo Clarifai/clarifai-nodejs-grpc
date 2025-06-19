@@ -97,8 +97,8 @@ message App {
   string id = 1;
   string name = 2;
   string default_language = 3;
-  // Default workflow id deprecated in favor of default_workflow
-  string default_workflow_id = 4;
+  // Deprecated, use default_workflow instead.
+  string default_workflow_id = 4 [deprecated = true]; // @exclude TODO (EAGLE-4506): Remove this field and associated code
   Workflow default_workflow = 23;
   // why is user_id present here when this message type is used in PostApps but completely ignored there? PostApp already
   // specifies the userid in path but doesn't even actually use neither of userids, it instead used the id from auth context.
@@ -508,7 +508,7 @@ message ConceptQuery {
   string language = 2;
 
   // Deprecated: Use workflow.id instead.
-  string workflow_id = 3 [deprecated = true];
+  string workflow_id = 3 [deprecated = true]; // @exclude TODO (EAGLE-4506): Remove this field and associated code
 
   // The concepts must belong to models with specified use cases.
   // Multiple values are joined using an OR condition.
@@ -1485,6 +1485,7 @@ message Model {
   // Creator of Model
   string creator = 37;
   int32 version_count = 38;
+
   enum BillingType {
     Unknown = 0;
     Tokens = 1;
@@ -1496,10 +1497,16 @@ message Model {
   // The order is relative to other models that are also featured.
   // Models with a higher order will be featured first.
   google.protobuf.Int32Value featured_order = 41;
+
+  // Deploy restriction for the model.
+  DeployRestriction deploy_restriction = 42;
 }
-
-
-
+enum DeployRestriction {
+  USAGE_RESTRICTION_NOT_SET = 0; // Default uninitialized state.
+  NO_LIMITS = 1; // No restrictions on usage.
+  SHARED_COMPUTE_ONLY = 2; // Model can only be used on shared compute resources.
+  DEDICATED_COMPUTE_ONLY = 3; // Model can only be used on dedicated compute resources.
+}
 
 
 // A link to a html/markdown/text file that stores reference material tied to a model.
@@ -3577,7 +3584,8 @@ message TaskAIAssistant {
   // The worker is helped by an AI assistant.
   // This field is the workflow id which is used to assist the worker with predictions.
   // If empty, then AI assistant is disabled.
-  string workflow_id = 1;
+  string workflow_id = 1 [deprecated = true];
+  Workflow workflow = 2;
 }
 
 message TaskAssignment {
@@ -5314,6 +5322,7 @@ message ComputeSourceMetadata {
   string pipeline_version_id = 10;
   string pipeline_version_run_id = 11;
 
+  // Pipeline step related data for pipeline step builds.
   string pipeline_step_id = 12;
   string pipeline_step_version_id = 13;
 }
@@ -5366,6 +5375,16 @@ message EvaluationMetricValue {
   map<string, MetricValue> per_concept_values = 4;
 }
 
+message InputEvaluationMetricValue {
+  // The metric values
+  string evaluation_metric_id = 1;
+  // Aggregated metric value
+  MetricValue metric_value = 2;
+  // explanation for the value
+  string explanation = 3;
+  // Metric values for each region
+  map<string, MetricValue> per_region_values = 4;
+}
 
 message MetricValue {
   oneof metric_value {
@@ -5375,8 +5394,20 @@ message MetricValue {
   }
 }
 
+// The evaluation result at the input/sample level
+message WorkflowEvaluationInputResult {
+  repeated InputEvaluationMetricValue input_evaluation_metric_values = 1;
+}
 
 
+
+message WorkflowVersionEvaluationData {
+  string id = 1; // the data example id
+  Input input = 2;
+  repeated Data ground_truths = 3;
+  repeated Data predictions = 4;
+  WorkflowEvaluationInputResult workflow_evaluation_sample_result = 5;
+}
 
 message ArgoOrchestrationSpec {
   // The API version of the orchestration specification.
@@ -5492,6 +5523,39 @@ message PipelineStepVersion {
 
 
 
+message Pipeline {
+  string id = 1;
+
+  // The user the pipeline belongs to
+  string user_id = 2;
+
+  // The app the pipeline belongs to
+  string app_id = 3;
+
+  // Latest Pipeline Version
+  PipelineVersion pipeline_version = 5;
+  // Short description about this pipeline
+  string description = 6;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 7;
+
+  // Notes for the Pipeline. This field should be used for in-depth notes and supports up to 64Kbs.
+  string notes = 8;
+
+  // To handle arbitrary json metadata, use a struct field
+  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
+  google.protobuf.Struct metadata = 9;
+
+  // When the pipeline was created
+  google.protobuf.Timestamp created_at = 10;
+
+  // When the pipeline was last modified
+  google.protobuf.Timestamp modified_at = 11;
+}
+
 message PipelineVersion {
   string id = 1;
 
@@ -5561,4 +5625,45 @@ message PipelineVersionRun {
 
   // The app the pipeline belongs to
   string app_id = 6;
+
+  // When the pipeline was created
+  google.protobuf.Timestamp created_at = 7;
+
+  // When the pipeline was last modified
+  google.protobuf.Timestamp modified_at = 8;
+
+}
+
+message Secret {
+  // The ID of the secret.
+  string id = 1;
+
+  // The app the secret belongs to.
+  string app_id = 2;
+
+  // The name of the secret, corresponds to secret_name in model_version.output_info.params.secrets
+  string name = 3;
+
+  // The value of the secret.
+  string value = 4;
+
+  // The version of the secret.
+  uint32 version = 5;
+
+  // The description of the secret.
+  string description = 6;
+
+  // When the secret was created.
+  google.protobuf.Timestamp created_at = 7;
+
+  // When the secret was last modified.
+  google.protobuf.Timestamp modified_at = 8;
+
+  // The visibility field represents whether this message is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 9;
+
+  // When the secret will expire.
+  google.protobuf.Timestamp expires_at = 10;
 }

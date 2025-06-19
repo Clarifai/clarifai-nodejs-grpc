@@ -3314,6 +3314,10 @@ export class ListLogEntriesRequest extends jspb.Message {
     setPipelineVersionId(value: string): ListLogEntriesRequest;
     getPipelineVersionRunId(): string;
     setPipelineVersionRunId(value: string): ListLogEntriesRequest;
+    getPipelineStepId(): string;
+    setPipelineStepId(value: string): ListLogEntriesRequest;
+    getPipelineStepVersionId(): string;
+    setPipelineStepVersionId(value: string): ListLogEntriesRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListLogEntriesRequest.AsObject;
@@ -3340,6 +3344,8 @@ export namespace ListLogEntriesRequest {
         pipelineId: string,
         pipelineVersionId: string,
         pipelineVersionRunId: string,
+        pipelineStepId: string,
+        pipelineStepVersionId: string,
     }
 }
 
@@ -3369,6 +3375,10 @@ export class StreamLogEntriesRequest extends jspb.Message {
     setPipelineVersionId(value: string): StreamLogEntriesRequest;
     getPipelineVersionRunId(): string;
     setPipelineVersionRunId(value: string): StreamLogEntriesRequest;
+    getPipelineStepId(): string;
+    setPipelineStepId(value: string): StreamLogEntriesRequest;
+    getPipelineStepVersionId(): string;
+    setPipelineStepVersionId(value: string): StreamLogEntriesRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): StreamLogEntriesRequest.AsObject;
@@ -3393,6 +3403,8 @@ export namespace StreamLogEntriesRequest {
         pipelineId: string,
         pipelineVersionId: string,
         pipelineVersionRunId: string,
+        pipelineStepId: string,
+        pipelineStepVersionId: string,
     }
 }
 
@@ -7035,14 +7047,10 @@ export class GetWorkflowRequest extends jspb.Message {
     setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): GetWorkflowRequest;
     getWorkflowId(): string;
     setWorkflowId(value: string): GetWorkflowRequest;
-    getFavorClarifaiWorkflows(): boolean;
-    setFavorClarifaiWorkflows(value: boolean): GetWorkflowRequest;
     clearAdditionalFieldsList(): void;
     getAdditionalFieldsList(): Array<string>;
     setAdditionalFieldsList(value: Array<string>): GetWorkflowRequest;
     addAdditionalFields(value: string, index?: number): string;
-    getExcludeClarifaiWorkflows(): boolean;
-    setExcludeClarifaiWorkflows(value: boolean): GetWorkflowRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetWorkflowRequest.AsObject;
@@ -7058,9 +7066,7 @@ export namespace GetWorkflowRequest {
     export type AsObject = {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         workflowId: string,
-        favorClarifaiWorkflows: boolean,
         additionalFieldsList: Array<string>,
-        excludeClarifaiWorkflows: boolean,
     }
 }
 
@@ -11964,6 +11970,666 @@ export namespace PostModelMigrationRequest {
     }
 }
 
+export class ListWorkflowVersionEvaluationDataRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): ListWorkflowVersionEvaluationDataRequest;
+    getWorkflowId(): string;
+    setWorkflowId(value: string): ListWorkflowVersionEvaluationDataRequest;
+    getWorkflowVersionId(): string;
+    setWorkflowVersionId(value: string): ListWorkflowVersionEvaluationDataRequest;
+    getWorkflowVersionEvaluationId(): string;
+    setWorkflowVersionEvaluationId(value: string): ListWorkflowVersionEvaluationDataRequest;
+    getPage(): number;
+    setPage(value: number): ListWorkflowVersionEvaluationDataRequest;
+    getPerPage(): number;
+    setPerPage(value: number): ListWorkflowVersionEvaluationDataRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListWorkflowVersionEvaluationDataRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListWorkflowVersionEvaluationDataRequest): ListWorkflowVersionEvaluationDataRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListWorkflowVersionEvaluationDataRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListWorkflowVersionEvaluationDataRequest;
+    static deserializeBinaryFromReader(message: ListWorkflowVersionEvaluationDataRequest, reader: jspb.BinaryReader): ListWorkflowVersionEvaluationDataRequest;
+}
+
+export namespace ListWorkflowVersionEvaluationDataRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        workflowId: string,
+        workflowVersionId: string,
+        workflowVersionEvaluationId: string,
+        page: number,
+        perPage: number,
+    }
+}
+
+export class MultiListWorkflowVersionEvaluationDataResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiListWorkflowVersionEvaluationDataResponse;
+    clearWorkflowVersionEvaluationDataList(): void;
+    getWorkflowVersionEvaluationDataList(): Array<proto_clarifai_api_resources_pb.WorkflowVersionEvaluationData>;
+    setWorkflowVersionEvaluationDataList(value: Array<proto_clarifai_api_resources_pb.WorkflowVersionEvaluationData>): MultiListWorkflowVersionEvaluationDataResponse;
+    addWorkflowVersionEvaluationData(value?: proto_clarifai_api_resources_pb.WorkflowVersionEvaluationData, index?: number): proto_clarifai_api_resources_pb.WorkflowVersionEvaluationData;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiListWorkflowVersionEvaluationDataResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiListWorkflowVersionEvaluationDataResponse): MultiListWorkflowVersionEvaluationDataResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiListWorkflowVersionEvaluationDataResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiListWorkflowVersionEvaluationDataResponse;
+    static deserializeBinaryFromReader(message: MultiListWorkflowVersionEvaluationDataResponse, reader: jspb.BinaryReader): MultiListWorkflowVersionEvaluationDataResponse;
+}
+
+export namespace MultiListWorkflowVersionEvaluationDataResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        workflowVersionEvaluationDataList: Array<proto_clarifai_api_resources_pb.WorkflowVersionEvaluationData.AsObject>,
+    }
+}
+
+export class GetPipelineRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): GetPipelineRequest;
+    getPipelineId(): string;
+    setPipelineId(value: string): GetPipelineRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetPipelineRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: GetPipelineRequest): GetPipelineRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetPipelineRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetPipelineRequest;
+    static deserializeBinaryFromReader(message: GetPipelineRequest, reader: jspb.BinaryReader): GetPipelineRequest;
+}
+
+export namespace GetPipelineRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        pipelineId: string,
+    }
+}
+
+export class ListPipelinesRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): ListPipelinesRequest;
+    getPage(): number;
+    setPage(value: number): ListPipelinesRequest;
+    getPerPage(): number;
+    setPerPage(value: number): ListPipelinesRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListPipelinesRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListPipelinesRequest): ListPipelinesRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListPipelinesRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListPipelinesRequest;
+    static deserializeBinaryFromReader(message: ListPipelinesRequest, reader: jspb.BinaryReader): ListPipelinesRequest;
+}
+
+export namespace ListPipelinesRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        page: number,
+        perPage: number,
+    }
+}
+
+export class PostPipelinesRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PostPipelinesRequest;
+    clearPipelinesList(): void;
+    getPipelinesList(): Array<proto_clarifai_api_resources_pb.Pipeline>;
+    setPipelinesList(value: Array<proto_clarifai_api_resources_pb.Pipeline>): PostPipelinesRequest;
+    addPipelines(value?: proto_clarifai_api_resources_pb.Pipeline, index?: number): proto_clarifai_api_resources_pb.Pipeline;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PostPipelinesRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PostPipelinesRequest): PostPipelinesRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PostPipelinesRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PostPipelinesRequest;
+    static deserializeBinaryFromReader(message: PostPipelinesRequest, reader: jspb.BinaryReader): PostPipelinesRequest;
+}
+
+export namespace PostPipelinesRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        pipelinesList: Array<proto_clarifai_api_resources_pb.Pipeline.AsObject>,
+    }
+}
+
+export class PatchPipelinesRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PatchPipelinesRequest;
+    clearPipelinesList(): void;
+    getPipelinesList(): Array<proto_clarifai_api_resources_pb.Pipeline>;
+    setPipelinesList(value: Array<proto_clarifai_api_resources_pb.Pipeline>): PatchPipelinesRequest;
+    addPipelines(value?: proto_clarifai_api_resources_pb.Pipeline, index?: number): proto_clarifai_api_resources_pb.Pipeline;
+    getAction(): string;
+    setAction(value: string): PatchPipelinesRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PatchPipelinesRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PatchPipelinesRequest): PatchPipelinesRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PatchPipelinesRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PatchPipelinesRequest;
+    static deserializeBinaryFromReader(message: PatchPipelinesRequest, reader: jspb.BinaryReader): PatchPipelinesRequest;
+}
+
+export namespace PatchPipelinesRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        pipelinesList: Array<proto_clarifai_api_resources_pb.Pipeline.AsObject>,
+        action: string,
+    }
+}
+
+export class DeletePipelinesRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): DeletePipelinesRequest;
+    clearPipelineIdsList(): void;
+    getPipelineIdsList(): Array<string>;
+    setPipelineIdsList(value: Array<string>): DeletePipelinesRequest;
+    addPipelineIds(value: string, index?: number): string;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DeletePipelinesRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: DeletePipelinesRequest): DeletePipelinesRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DeletePipelinesRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DeletePipelinesRequest;
+    static deserializeBinaryFromReader(message: DeletePipelinesRequest, reader: jspb.BinaryReader): DeletePipelinesRequest;
+}
+
+export namespace DeletePipelinesRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        pipelineIdsList: Array<string>,
+    }
+}
+
+export class SinglePipelineResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): SinglePipelineResponse;
+
+    hasPipeline(): boolean;
+    clearPipeline(): void;
+    getPipeline(): proto_clarifai_api_resources_pb.Pipeline | undefined;
+    setPipeline(value?: proto_clarifai_api_resources_pb.Pipeline): SinglePipelineResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): SinglePipelineResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: SinglePipelineResponse): SinglePipelineResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: SinglePipelineResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): SinglePipelineResponse;
+    static deserializeBinaryFromReader(message: SinglePipelineResponse, reader: jspb.BinaryReader): SinglePipelineResponse;
+}
+
+export namespace SinglePipelineResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        pipeline?: proto_clarifai_api_resources_pb.Pipeline.AsObject,
+    }
+}
+
+export class MultiPipelineResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiPipelineResponse;
+    clearPipelinesList(): void;
+    getPipelinesList(): Array<proto_clarifai_api_resources_pb.Pipeline>;
+    setPipelinesList(value: Array<proto_clarifai_api_resources_pb.Pipeline>): MultiPipelineResponse;
+    addPipelines(value?: proto_clarifai_api_resources_pb.Pipeline, index?: number): proto_clarifai_api_resources_pb.Pipeline;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiPipelineResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiPipelineResponse): MultiPipelineResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiPipelineResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiPipelineResponse;
+    static deserializeBinaryFromReader(message: MultiPipelineResponse, reader: jspb.BinaryReader): MultiPipelineResponse;
+}
+
+export namespace MultiPipelineResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        pipelinesList: Array<proto_clarifai_api_resources_pb.Pipeline.AsObject>,
+    }
+}
+
+export class GetPipelineVersionRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): GetPipelineVersionRequest;
+    getPipelineId(): string;
+    setPipelineId(value: string): GetPipelineVersionRequest;
+    getPipelineVersionId(): string;
+    setPipelineVersionId(value: string): GetPipelineVersionRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetPipelineVersionRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: GetPipelineVersionRequest): GetPipelineVersionRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetPipelineVersionRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetPipelineVersionRequest;
+    static deserializeBinaryFromReader(message: GetPipelineVersionRequest, reader: jspb.BinaryReader): GetPipelineVersionRequest;
+}
+
+export namespace GetPipelineVersionRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        pipelineId: string,
+        pipelineVersionId: string,
+    }
+}
+
+export class ListPipelineVersionsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): ListPipelineVersionsRequest;
+    getPipelineId(): string;
+    setPipelineId(value: string): ListPipelineVersionsRequest;
+    getPage(): number;
+    setPage(value: number): ListPipelineVersionsRequest;
+    getPerPage(): number;
+    setPerPage(value: number): ListPipelineVersionsRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListPipelineVersionsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListPipelineVersionsRequest): ListPipelineVersionsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListPipelineVersionsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListPipelineVersionsRequest;
+    static deserializeBinaryFromReader(message: ListPipelineVersionsRequest, reader: jspb.BinaryReader): ListPipelineVersionsRequest;
+}
+
+export namespace ListPipelineVersionsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        pipelineId: string,
+        page: number,
+        perPage: number,
+    }
+}
+
+export class PatchPipelineVersionsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PatchPipelineVersionsRequest;
+    getPipelineId(): string;
+    setPipelineId(value: string): PatchPipelineVersionsRequest;
+    clearPipelineVersionsList(): void;
+    getPipelineVersionsList(): Array<proto_clarifai_api_resources_pb.PipelineVersion>;
+    setPipelineVersionsList(value: Array<proto_clarifai_api_resources_pb.PipelineVersion>): PatchPipelineVersionsRequest;
+    addPipelineVersions(value?: proto_clarifai_api_resources_pb.PipelineVersion, index?: number): proto_clarifai_api_resources_pb.PipelineVersion;
+    getAction(): string;
+    setAction(value: string): PatchPipelineVersionsRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PatchPipelineVersionsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PatchPipelineVersionsRequest): PatchPipelineVersionsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PatchPipelineVersionsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PatchPipelineVersionsRequest;
+    static deserializeBinaryFromReader(message: PatchPipelineVersionsRequest, reader: jspb.BinaryReader): PatchPipelineVersionsRequest;
+}
+
+export namespace PatchPipelineVersionsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        pipelineId: string,
+        pipelineVersionsList: Array<proto_clarifai_api_resources_pb.PipelineVersion.AsObject>,
+        action: string,
+    }
+}
+
+export class DeletePipelineVersionsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): DeletePipelineVersionsRequest;
+    getPipelineId(): string;
+    setPipelineId(value: string): DeletePipelineVersionsRequest;
+    clearPipelineVersionIdsList(): void;
+    getPipelineVersionIdsList(): Array<string>;
+    setPipelineVersionIdsList(value: Array<string>): DeletePipelineVersionsRequest;
+    addPipelineVersionIds(value: string, index?: number): string;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DeletePipelineVersionsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: DeletePipelineVersionsRequest): DeletePipelineVersionsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DeletePipelineVersionsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DeletePipelineVersionsRequest;
+    static deserializeBinaryFromReader(message: DeletePipelineVersionsRequest, reader: jspb.BinaryReader): DeletePipelineVersionsRequest;
+}
+
+export namespace DeletePipelineVersionsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        pipelineId: string,
+        pipelineVersionIdsList: Array<string>,
+    }
+}
+
+export class SinglePipelineVersionResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): SinglePipelineVersionResponse;
+
+    hasPipelineVersion(): boolean;
+    clearPipelineVersion(): void;
+    getPipelineVersion(): proto_clarifai_api_resources_pb.PipelineVersion | undefined;
+    setPipelineVersion(value?: proto_clarifai_api_resources_pb.PipelineVersion): SinglePipelineVersionResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): SinglePipelineVersionResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: SinglePipelineVersionResponse): SinglePipelineVersionResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: SinglePipelineVersionResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): SinglePipelineVersionResponse;
+    static deserializeBinaryFromReader(message: SinglePipelineVersionResponse, reader: jspb.BinaryReader): SinglePipelineVersionResponse;
+}
+
+export namespace SinglePipelineVersionResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        pipelineVersion?: proto_clarifai_api_resources_pb.PipelineVersion.AsObject,
+    }
+}
+
+export class MultiPipelineVersionResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiPipelineVersionResponse;
+    clearPipelineVersionsList(): void;
+    getPipelineVersionsList(): Array<proto_clarifai_api_resources_pb.PipelineVersion>;
+    setPipelineVersionsList(value: Array<proto_clarifai_api_resources_pb.PipelineVersion>): MultiPipelineVersionResponse;
+    addPipelineVersions(value?: proto_clarifai_api_resources_pb.PipelineVersion, index?: number): proto_clarifai_api_resources_pb.PipelineVersion;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiPipelineVersionResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiPipelineVersionResponse): MultiPipelineVersionResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiPipelineVersionResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiPipelineVersionResponse;
+    static deserializeBinaryFromReader(message: MultiPipelineVersionResponse, reader: jspb.BinaryReader): MultiPipelineVersionResponse;
+}
+
+export namespace MultiPipelineVersionResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        pipelineVersionsList: Array<proto_clarifai_api_resources_pb.PipelineVersion.AsObject>,
+    }
+}
+
+export class GetPipelineVersionRunRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): GetPipelineVersionRunRequest;
+    getPipelineId(): string;
+    setPipelineId(value: string): GetPipelineVersionRunRequest;
+    getPipelineVersionId(): string;
+    setPipelineVersionId(value: string): GetPipelineVersionRunRequest;
+    getPipelineVersionRunId(): string;
+    setPipelineVersionRunId(value: string): GetPipelineVersionRunRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetPipelineVersionRunRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: GetPipelineVersionRunRequest): GetPipelineVersionRunRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetPipelineVersionRunRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetPipelineVersionRunRequest;
+    static deserializeBinaryFromReader(message: GetPipelineVersionRunRequest, reader: jspb.BinaryReader): GetPipelineVersionRunRequest;
+}
+
+export namespace GetPipelineVersionRunRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        pipelineId: string,
+        pipelineVersionId: string,
+        pipelineVersionRunId: string,
+    }
+}
+
+export class ListPipelineVersionRunsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): ListPipelineVersionRunsRequest;
+    getPipelineId(): string;
+    setPipelineId(value: string): ListPipelineVersionRunsRequest;
+    getPipelineVersionId(): string;
+    setPipelineVersionId(value: string): ListPipelineVersionRunsRequest;
+    getPage(): number;
+    setPage(value: number): ListPipelineVersionRunsRequest;
+    getPerPage(): number;
+    setPerPage(value: number): ListPipelineVersionRunsRequest;
+    clearStatusCodesList(): void;
+    getStatusCodesList(): Array<proto_clarifai_api_status_status_code_pb.StatusCode>;
+    setStatusCodesList(value: Array<proto_clarifai_api_status_status_code_pb.StatusCode>): ListPipelineVersionRunsRequest;
+    addStatusCodes(value: proto_clarifai_api_status_status_code_pb.StatusCode, index?: number): proto_clarifai_api_status_status_code_pb.StatusCode;
+    getComputeClusterId(): string;
+    setComputeClusterId(value: string): ListPipelineVersionRunsRequest;
+    getNodepoolId(): string;
+    setNodepoolId(value: string): ListPipelineVersionRunsRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListPipelineVersionRunsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListPipelineVersionRunsRequest): ListPipelineVersionRunsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListPipelineVersionRunsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListPipelineVersionRunsRequest;
+    static deserializeBinaryFromReader(message: ListPipelineVersionRunsRequest, reader: jspb.BinaryReader): ListPipelineVersionRunsRequest;
+}
+
+export namespace ListPipelineVersionRunsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        pipelineId: string,
+        pipelineVersionId: string,
+        page: number,
+        perPage: number,
+        statusCodesList: Array<proto_clarifai_api_status_status_code_pb.StatusCode>,
+        computeClusterId: string,
+        nodepoolId: string,
+    }
+}
+
+export class PostPipelineVersionRunsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PostPipelineVersionRunsRequest;
+    getPipelineId(): string;
+    setPipelineId(value: string): PostPipelineVersionRunsRequest;
+    getPipelineVersionId(): string;
+    setPipelineVersionId(value: string): PostPipelineVersionRunsRequest;
+    clearPipelineVersionRunsList(): void;
+    getPipelineVersionRunsList(): Array<proto_clarifai_api_resources_pb.PipelineVersionRun>;
+    setPipelineVersionRunsList(value: Array<proto_clarifai_api_resources_pb.PipelineVersionRun>): PostPipelineVersionRunsRequest;
+    addPipelineVersionRuns(value?: proto_clarifai_api_resources_pb.PipelineVersionRun, index?: number): proto_clarifai_api_resources_pb.PipelineVersionRun;
+
+    hasRunnerSelector(): boolean;
+    clearRunnerSelector(): void;
+    getRunnerSelector(): proto_clarifai_api_resources_pb.RunnerSelector | undefined;
+    setRunnerSelector(value?: proto_clarifai_api_resources_pb.RunnerSelector): PostPipelineVersionRunsRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PostPipelineVersionRunsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PostPipelineVersionRunsRequest): PostPipelineVersionRunsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PostPipelineVersionRunsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PostPipelineVersionRunsRequest;
+    static deserializeBinaryFromReader(message: PostPipelineVersionRunsRequest, reader: jspb.BinaryReader): PostPipelineVersionRunsRequest;
+}
+
+export namespace PostPipelineVersionRunsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        pipelineId: string,
+        pipelineVersionId: string,
+        pipelineVersionRunsList: Array<proto_clarifai_api_resources_pb.PipelineVersionRun.AsObject>,
+        runnerSelector?: proto_clarifai_api_resources_pb.RunnerSelector.AsObject,
+    }
+}
+
+export class PatchPipelineVersionRunsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PatchPipelineVersionRunsRequest;
+    getPipelineId(): string;
+    setPipelineId(value: string): PatchPipelineVersionRunsRequest;
+    getPipelineVersionId(): string;
+    setPipelineVersionId(value: string): PatchPipelineVersionRunsRequest;
+    clearPipelineVersionRunsList(): void;
+    getPipelineVersionRunsList(): Array<proto_clarifai_api_resources_pb.PipelineVersionRun>;
+    setPipelineVersionRunsList(value: Array<proto_clarifai_api_resources_pb.PipelineVersionRun>): PatchPipelineVersionRunsRequest;
+    addPipelineVersionRuns(value?: proto_clarifai_api_resources_pb.PipelineVersionRun, index?: number): proto_clarifai_api_resources_pb.PipelineVersionRun;
+    getAction(): string;
+    setAction(value: string): PatchPipelineVersionRunsRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PatchPipelineVersionRunsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PatchPipelineVersionRunsRequest): PatchPipelineVersionRunsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PatchPipelineVersionRunsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PatchPipelineVersionRunsRequest;
+    static deserializeBinaryFromReader(message: PatchPipelineVersionRunsRequest, reader: jspb.BinaryReader): PatchPipelineVersionRunsRequest;
+}
+
+export namespace PatchPipelineVersionRunsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        pipelineId: string,
+        pipelineVersionId: string,
+        pipelineVersionRunsList: Array<proto_clarifai_api_resources_pb.PipelineVersionRun.AsObject>,
+        action: string,
+    }
+}
+
+export class SinglePipelineVersionRunResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): SinglePipelineVersionRunResponse;
+
+    hasPipelineVersionRun(): boolean;
+    clearPipelineVersionRun(): void;
+    getPipelineVersionRun(): proto_clarifai_api_resources_pb.PipelineVersionRun | undefined;
+    setPipelineVersionRun(value?: proto_clarifai_api_resources_pb.PipelineVersionRun): SinglePipelineVersionRunResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): SinglePipelineVersionRunResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: SinglePipelineVersionRunResponse): SinglePipelineVersionRunResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: SinglePipelineVersionRunResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): SinglePipelineVersionRunResponse;
+    static deserializeBinaryFromReader(message: SinglePipelineVersionRunResponse, reader: jspb.BinaryReader): SinglePipelineVersionRunResponse;
+}
+
+export namespace SinglePipelineVersionRunResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        pipelineVersionRun?: proto_clarifai_api_resources_pb.PipelineVersionRun.AsObject,
+    }
+}
+
+export class MultiPipelineVersionRunResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiPipelineVersionRunResponse;
+    clearPipelineVersionRunsList(): void;
+    getPipelineVersionRunsList(): Array<proto_clarifai_api_resources_pb.PipelineVersionRun>;
+    setPipelineVersionRunsList(value: Array<proto_clarifai_api_resources_pb.PipelineVersionRun>): MultiPipelineVersionRunResponse;
+    addPipelineVersionRuns(value?: proto_clarifai_api_resources_pb.PipelineVersionRun, index?: number): proto_clarifai_api_resources_pb.PipelineVersionRun;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiPipelineVersionRunResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiPipelineVersionRunResponse): MultiPipelineVersionRunResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiPipelineVersionRunResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiPipelineVersionRunResponse;
+    static deserializeBinaryFromReader(message: MultiPipelineVersionRunResponse, reader: jspb.BinaryReader): MultiPipelineVersionRunResponse;
+}
+
+export namespace MultiPipelineVersionRunResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        pipelineVersionRunsList: Array<proto_clarifai_api_resources_pb.PipelineVersionRun.AsObject>,
+    }
+}
+
 export class PostPipelineStepsRequest extends jspb.Message { 
 
     hasUserAppId(): boolean;
@@ -12329,6 +12995,205 @@ export namespace SinglePipelineStepVersionResponse {
     export type AsObject = {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         pipelineStepVersion?: proto_clarifai_api_resources_pb.PipelineStepVersion.AsObject,
+    }
+}
+
+export class GetSecretRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): GetSecretRequest;
+    getSecretId(): string;
+    setSecretId(value: string): GetSecretRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetSecretRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: GetSecretRequest): GetSecretRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetSecretRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetSecretRequest;
+    static deserializeBinaryFromReader(message: GetSecretRequest, reader: jspb.BinaryReader): GetSecretRequest;
+}
+
+export namespace GetSecretRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        secretId: string,
+    }
+}
+
+export class ListSecretsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): ListSecretsRequest;
+    getPage(): number;
+    setPage(value: number): ListSecretsRequest;
+    getPerPage(): number;
+    setPerPage(value: number): ListSecretsRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListSecretsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListSecretsRequest): ListSecretsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListSecretsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListSecretsRequest;
+    static deserializeBinaryFromReader(message: ListSecretsRequest, reader: jspb.BinaryReader): ListSecretsRequest;
+}
+
+export namespace ListSecretsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        page: number,
+        perPage: number,
+    }
+}
+
+export class PostSecretsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PostSecretsRequest;
+    clearSecretsList(): void;
+    getSecretsList(): Array<proto_clarifai_api_resources_pb.Secret>;
+    setSecretsList(value: Array<proto_clarifai_api_resources_pb.Secret>): PostSecretsRequest;
+    addSecrets(value?: proto_clarifai_api_resources_pb.Secret, index?: number): proto_clarifai_api_resources_pb.Secret;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PostSecretsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PostSecretsRequest): PostSecretsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PostSecretsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PostSecretsRequest;
+    static deserializeBinaryFromReader(message: PostSecretsRequest, reader: jspb.BinaryReader): PostSecretsRequest;
+}
+
+export namespace PostSecretsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        secretsList: Array<proto_clarifai_api_resources_pb.Secret.AsObject>,
+    }
+}
+
+export class PatchSecretsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PatchSecretsRequest;
+    clearSecretsList(): void;
+    getSecretsList(): Array<proto_clarifai_api_resources_pb.Secret>;
+    setSecretsList(value: Array<proto_clarifai_api_resources_pb.Secret>): PatchSecretsRequest;
+    addSecrets(value?: proto_clarifai_api_resources_pb.Secret, index?: number): proto_clarifai_api_resources_pb.Secret;
+    getAction(): string;
+    setAction(value: string): PatchSecretsRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PatchSecretsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PatchSecretsRequest): PatchSecretsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PatchSecretsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PatchSecretsRequest;
+    static deserializeBinaryFromReader(message: PatchSecretsRequest, reader: jspb.BinaryReader): PatchSecretsRequest;
+}
+
+export namespace PatchSecretsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        secretsList: Array<proto_clarifai_api_resources_pb.Secret.AsObject>,
+        action: string,
+    }
+}
+
+export class DeleteSecretsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): DeleteSecretsRequest;
+    clearIdsList(): void;
+    getIdsList(): Array<string>;
+    setIdsList(value: Array<string>): DeleteSecretsRequest;
+    addIds(value: string, index?: number): string;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DeleteSecretsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: DeleteSecretsRequest): DeleteSecretsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DeleteSecretsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DeleteSecretsRequest;
+    static deserializeBinaryFromReader(message: DeleteSecretsRequest, reader: jspb.BinaryReader): DeleteSecretsRequest;
+}
+
+export namespace DeleteSecretsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        idsList: Array<string>,
+    }
+}
+
+export class SingleSecretResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): SingleSecretResponse;
+
+    hasSecret(): boolean;
+    clearSecret(): void;
+    getSecret(): proto_clarifai_api_resources_pb.Secret | undefined;
+    setSecret(value?: proto_clarifai_api_resources_pb.Secret): SingleSecretResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): SingleSecretResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: SingleSecretResponse): SingleSecretResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: SingleSecretResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): SingleSecretResponse;
+    static deserializeBinaryFromReader(message: SingleSecretResponse, reader: jspb.BinaryReader): SingleSecretResponse;
+}
+
+export namespace SingleSecretResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        secret?: proto_clarifai_api_resources_pb.Secret.AsObject,
+    }
+}
+
+export class MultiSecretResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiSecretResponse;
+    clearSecretsList(): void;
+    getSecretsList(): Array<proto_clarifai_api_resources_pb.Secret>;
+    setSecretsList(value: Array<proto_clarifai_api_resources_pb.Secret>): MultiSecretResponse;
+    addSecrets(value?: proto_clarifai_api_resources_pb.Secret, index?: number): proto_clarifai_api_resources_pb.Secret;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiSecretResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiSecretResponse): MultiSecretResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiSecretResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiSecretResponse;
+    static deserializeBinaryFromReader(message: MultiSecretResponse, reader: jspb.BinaryReader): MultiSecretResponse;
+}
+
+export namespace MultiSecretResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        secretsList: Array<proto_clarifai_api_resources_pb.Secret.AsObject>,
     }
 }
 

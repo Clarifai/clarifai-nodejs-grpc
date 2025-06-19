@@ -471,6 +471,10 @@ enum S {
   Pipelines_Get = 154 [(clarfai_exposed) = true];
   Pipelines_Add = 155 [(clarfai_exposed) = true,
     (clarifai_depending_scopes) = Pipelines_Get];
+  Pipelines_Delete = 156 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = Pipelines_Get,
+    (clarifai_depending_scopes) = Pipelines_Add
+  ];
 
   PipelineSteps_Get = 157 [(clarfai_exposed) = true];
   PipelineSteps_Add = 158 [(clarfai_exposed) = true,
@@ -479,6 +483,12 @@ enum S {
   PipelineSteps_Pull = 159 [(clarfai_exposed) = true,
   (clarifai_depending_scopes) = PipelineSteps_Get];
 
+  Secrets_Get = 160 [(clarfai_exposed) = true];
+  Secrets_Add = 161 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = Secrets_Get];
+  Secrets_Delete = 162 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = Secrets_Get,
+    (clarifai_depending_scopes) = Secrets_Add];
 }
 
 extend google.protobuf.EnumValueOptions {

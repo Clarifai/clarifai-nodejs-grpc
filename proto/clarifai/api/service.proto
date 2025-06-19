@@ -3638,6 +3638,20 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Uploads_Get;
   }
 
+  // putting above the Get Nodepool endpoint to make it appear above the other one
+  rpc ListPipelineVersionRuns(ListPipelineVersionRunsRequest) returns (MultiPipelineVersionRunResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs"
+      additional_bindings {
+        get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/pipeline_version_runs"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+  }
 
   // Get a specific runner.
   // TODO(zeiler): runner_id is a UUID so can list globally as well.
@@ -4103,7 +4117,7 @@ service V2 {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations"
       body: "*"
     };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
@@ -4112,6 +4126,8 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
     option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Add;
     option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Get;
   }
@@ -4123,7 +4139,7 @@ service V2 {
         get: "/v2/workflow-version-evaluations/{workflow_version_evaluation_id}"
       }
     };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
@@ -4139,7 +4155,7 @@ service V2 {
       }
     };
 
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
@@ -4153,7 +4169,7 @@ service V2 {
       body: "*"
     };
 
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
@@ -4164,18 +4180,168 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Get;
   }
 
+  rpc ListWorkflowVersionEvaluationData (ListWorkflowVersionEvaluationDataRequest) returns (MultiListWorkflowVersionEvaluationDataResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations/{workflow_version_evaluation_id}/data"
+      additional_bindings {
+        get: "/v2/workflow-version-evaluations/{workflow_version_evaluation_id}/data"
+      }
+    };
+
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Get;
+  }
+
+  rpc PostPipelines(PostPipelinesRequest) returns (MultiPipelineResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines"
+      body: "*"
+      additional_bindings {
+        get: "/v2/pipelines"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Add;
+  }
+
+  rpc GetPipeline(GetPipelineRequest) returns (SinglePipelineResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}"
+      additional_bindings {
+        get: "/v2/pipelines/{pipeline_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
+  }
+
+  rpc ListPipelines(ListPipelinesRequest) returns (MultiPipelineResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines"
+      additional_bindings {
+        get: "/v2/pipelines"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
+  }
+
+  rpc PatchPipelines(PatchPipelinesRequest) returns (MultiPipelineResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Add;
+  }
+
+  rpc DeletePipelines(DeletePipelinesRequest) returns (MultiPipelineResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Delete;
+  }
+
+  rpc GetPipelineVersion(GetPipelineVersionRequest) returns (SinglePipelineVersionResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}"
+      additional_bindings {
+        get: "/v2/pipelines/{pipeline_id}/versions/{pipeline_version_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
+  }
+
+  rpc ListPipelineVersions(ListPipelineVersionsRequest) returns (MultiPipelineVersionResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions"
+      additional_bindings {
+        get: "/v2/pipelines/{pipeline_id}/versions"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
+  }
+
+  rpc PatchPipelineVersions(PatchPipelineVersionsRequest) returns (MultiPipelineVersionResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Add;
+  }
+
+  rpc DeletePipelineVersions(DeletePipelineVersionsRequest) returns (MultiPipelineVersionResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Delete;
+  }
+
+  rpc GetPipelineVersionRun(GetPipelineVersionRunRequest) returns (SinglePipelineVersionRunResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs/{pipeline_version_run_id}"
+      additional_bindings {
+        get: "/v2/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs/{pipeline_version_run_id}"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+  }
 
 
+  // TODO ListPipelineVersionRuns for listing all the runs of a given pipeline version.
 
+  rpc PostPipelineVersionRuns(PostPipelineVersionRunsRequest) returns (MultiPipelineVersionRunResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+  }
 
-
-
-
-
-
-
-
-
+  rpc PatchPipelineVersionRuns(PatchPipelineVersionRunsRequest) returns (MultiPipelineVersionRunResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Add;
+  }
 
 
   rpc PostPipelineSteps(PostPipelineStepsRequest) returns (MultiPipelineStepResponse) {
@@ -4238,6 +4404,54 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
+  }
+
+  rpc GetSecret(GetSecretRequest) returns (SingleSecretResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/secrets/{secret_id}"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Secrets_Get;
+  }
+
+  rpc ListSecrets(ListSecretsRequest) returns (MultiSecretResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/secrets"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Secrets_Get;
+  }
+
+  rpc PostSecrets(PostSecretsRequest) returns (MultiSecretResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/secrets"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Secrets_Add;
+  }
+
+  rpc PatchSecrets(PatchSecretsRequest) returns (MultiSecretResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/secrets"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Secrets_Add;
+  }
+
+  rpc DeleteSecrets(DeleteSecretsRequest) returns (MultiSecretResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/secrets"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Secrets_Delete;
   }}
 
 
@@ -5533,10 +5747,15 @@ message ListLogEntriesRequest {
   string nodepool_id = 10;
   string runner_id = 11;
 
-  // Pipelines that produced the logs.
+  // Pipelines that produced the logs for a given pipeline run with log_type: pipeline.version.run
+  // Must include user_app_id with user_id and app_id as well.
   string pipeline_id = 12;
   string pipeline_version_id = 13;
   string pipeline_version_run_id = 14;
+
+  // During pipeline step build provide these IDs.
+  string pipeline_step_id = 15;
+  string pipeline_step_version_id = 16;
 }
 
 message StreamLogEntriesRequest {
@@ -5546,6 +5765,7 @@ message StreamLogEntriesRequest {
   // Who the logs are for.
   // The user app id, if a user produced the logs.
   clarifai.api.UserAppIDSet user_app_id = 2;
+  // For models if you set log_type to "builder" then you get the model build logs.
   // The Model ID, if a model produced the logs.
   string model_id = 3;
   // The Version ID, if a model version produced the logs.
@@ -5558,10 +5778,16 @@ message StreamLogEntriesRequest {
   string nodepool_id = 7;
   string runner_id = 8;
 
-  // Pipelines that produced the logs.
+  // Pipelines that produced the logs with log_type: pipeline.version.run
+  // Must include user_app_id with user_id and app_id as well.
   string pipeline_id = 12;
   string pipeline_version_id = 13;
   string pipeline_version_run_id = 14;
+
+  // During pipeline step build provide these IDs with log_type: builder
+  // Must include user_app_id with user_id and app_id as well.
+  string pipeline_step_id = 15;
+  string pipeline_step_version_id = 16;
 }
 
 // GetKeyRequest
@@ -5714,7 +5940,7 @@ message ListModelsRequest {
   repeated string languages = 21;
   // Old API behavior resulted in returning clarifai main models when calling ListModels while scoped to an app. While we transition
   // away from that, we can use this flag to not always fetch clarifai main models, unless that is the app we are explicitly listing for.
-  bool dont_fetch_from_main = 23;
+  bool dont_fetch_from_main = 23 [deprecated = true]; // @exclude TODO (EAGLE-4447): Remove this field
   // Filter models by bookmark. If set, only return bookmarked models. Otherwise none bookmarked models only.
   // Note: you can not filter `trained_only` and bookmark at the same time.
   // When filter by bookmark, we will return trained and untrained models.
@@ -6857,20 +7083,15 @@ enum OrganizationInvitationStatus {
 
 // GetWorkflowRequest
 message GetWorkflowRequest {
+  reserved 3,5;
   clarifai.api.UserAppIDSet user_app_id = 1;
 
   // Workflow ID to retrieve
   // If no ID is specified we return default workflow of the application
   // If an ID is specified by default we first looks into Clarifai workflows for a Workflow ID
   string workflow_id = 2;
-
-  // Use this flag to look into clarifai published workflows first for a Workflow ID
-  bool favor_clarifai_workflows = 3;
   // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars
   repeated string additional_fields = 4;
-
-  // if true will not expand search to clarifai workflows
-  bool exclude_clarifai_workflows = 5;
 }
 
 // ListWorkflowsRequest
@@ -7016,7 +7237,7 @@ message PostWorkflowResultsRequest {
   OutputConfig output_config = 4;
 
   // Use this flag to look into clarifai published workflows first for a Workflow ID
-  bool favor_clarifai_workflows = 5;
+  bool favor_clarifai_workflows = 5 [deprecated = true]; // @exclude TODO (EAGLE-4447): Remove unused fields
 
   // A workflow state to be maintained across PostWorkflowResults requests/responses.
   // If it is not sent in the initial request with workflow_state.id = "init" then no
@@ -8522,26 +8743,208 @@ message PostModelMigrationRequest {
   string model_id = 2;
 }
 
+message ListWorkflowVersionEvaluationDataRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string workflow_id = 2;
+  string workflow_version_id = 3;
+  string workflow_version_evaluation_id = 4;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 5;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 6;
+}
 
+message MultiListWorkflowVersionEvaluationDataResponse {
+  clarifai.api.status.Status status = 1;
+  repeated WorkflowVersionEvaluationData workflow_version_evaluation_data = 2;
+}
 
+message GetPipelineRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string pipeline_id = 2;
+}
 
+message ListPipelinesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
 
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
 
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 3;
+}
 
+message PostPipelinesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated Pipeline pipelines = 2;
+}
 
+message PatchPipelinesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated Pipeline pipelines = 2;
 
+  // The action to perform on the patched objects
+  // For now actions 'overwrite' are supported
+  string action = 3;
+}
 
+message DeletePipelinesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated string pipeline_ids = 2;
+}
 
+message SinglePipelineResponse {
+  clarifai.api.status.Status status = 1;
+  Pipeline pipeline = 2;
+}
 
+message MultiPipelineResponse {
+  clarifai.api.status.Status status = 1;
+  repeated Pipeline pipelines = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
 
+message GetPipelineVersionRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
 
+  // The id of the pipeline that has the requested version.
+  string pipeline_id = 2;
 
+  // Get the identified by this id
+  string pipeline_version_id = 3;
+}
 
+message ListPipelineVersionsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
 
+  // List versions for the pipeline identified by this id
+  string pipeline_id = 2;
 
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 3;
 
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 4;
+}
 
+message PatchPipelineVersionsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The id of the Pipeline that has the requested versions to patch.
+  string pipeline_id = 2;
+  // Patch these versions
+  repeated PipelineVersion pipeline_versions = 3;
+  // The action to perform on the patched objects
+  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  string action = 4;
+}
 
+message DeletePipelineVersionsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // The id of the Pipeline for which versions are being deleted
+  string pipeline_id = 2;
+
+  repeated string pipeline_version_ids = 3;
+}
+
+message SinglePipelineVersionResponse {
+  clarifai.api.status.Status status = 1;
+  PipelineVersion pipeline_version = 2;
+}
+
+message MultiPipelineVersionResponse {
+  clarifai.api.status.Status status = 1;
+  repeated PipelineVersion pipeline_versions = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+message GetPipelineVersionRunRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // the ID of the pipeline
+  string pipeline_id = 2;
+
+  // The ID of the pipeline version
+  string pipeline_version_id = 3;
+
+  // the ID of the pipeline version run
+  string pipeline_version_run_id = 4;
+}
+
+message ListPipelineVersionRunsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // The ID of the pipeline
+  string pipeline_id = 2;
+
+  // The ID of the pipeline version
+  string pipeline_version_id = 3;
+
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 4;
+
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 5;
+
+  // Filter based on status
+  repeated clarifai.api.status.StatusCode status_codes = 6;
+
+  // compute cluster id
+  string compute_cluster_id = 7;
+
+  // nodepool id
+  string nodepool_id = 8;
+}
+
+message PostPipelineVersionRunsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // The ID of the pipeline
+  string pipeline_id = 2;
+
+  // The ID of the pipeline-version
+  string pipeline_version_id = 3;
+
+  repeated PipelineVersionRun pipeline_version_runs = 4;
+  RunnerSelector runner_selector = 5; // Allows using specific Nodepools for pipeline version runs
+}
+
+message PatchPipelineVersionRunsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // The ID of the pipeline
+  string pipeline_id = 2;
+
+  // The ID of the pipeline-version
+  string pipeline_version_id = 3;
+
+  // ########## Supported fields ##########
+  // - app_id
+  // - id
+  // - orchestration_status
+  // - pipeline_version.id
+  // - pipeline_version.pipeline_id
+  // - user_id
+  repeated PipelineVersionRun pipeline_version_runs = 4;
+  // Supported action: 'overwrite' -> allows to overwrite WorkflowStatus of PipelineVersionRun
+  string action = 5;
+}
+
+message SinglePipelineVersionRunResponse {
+  clarifai.api.status.Status status = 1;
+  PipelineVersionRun pipeline_version_run = 2;
+}
+
+message MultiPipelineVersionRunResponse {
+  clarifai.api.status.Status status = 1;
+  repeated PipelineVersionRun pipeline_version_runs = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
 
 
 
@@ -8650,4 +9053,51 @@ message SinglePipelineStepVersionResponse {
   clarifai.api.status.Status status = 1;
   // The pipeline step version that was requested
   PipelineStepVersion pipeline_step_version = 2;
+}
+
+
+
+message GetSecretRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The id of the secret to get
+  string secret_id = 2;
+}
+
+message ListSecretsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 3;
+}
+
+message PostSecretsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The secrets to create
+  repeated Secret secrets = 2;
+}
+
+message PatchSecretsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The secrets to patch
+  repeated Secret secrets = 2;
+
+  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  string action = 3; // The action to perform on the patched objects
+}
+
+message DeleteSecretsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // List of secret ids to be deleted
+  repeated string ids = 2;
+}
+
+message SingleSecretResponse {
+  clarifai.api.status.Status status = 1;
+  Secret secret = 2;
+}message MultiSecretResponse {
+  clarifai.api.status.Status status = 1;
+  repeated Secret secrets = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
