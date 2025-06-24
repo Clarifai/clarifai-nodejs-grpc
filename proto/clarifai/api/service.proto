@@ -4195,6 +4195,23 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Get;
   }
 
+  rpc PostWorkflowVersionEvaluationData (PostWorkflowVersionEvaluationDataRequest) returns (MultiListWorkflowVersionEvaluationDataResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations/{workflow_version_evaluation_id}/data"
+      body: "*"
+      additional_bindings {
+        post: "/v2/workflow-version-evaluations/{workflow_version_evaluation_id}/data"
+        body: "*"
+      }
+    };
+
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = WorkflowVersionEvaluations_Add;
+  }
+
   rpc PostPipelines(PostPipelinesRequest) returns (MultiPipelineResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines"
@@ -8754,6 +8771,18 @@ message ListWorkflowVersionEvaluationDataRequest {
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
   // to 128.
   uint32 per_page = 6;
+}
+
+message PostWorkflowVersionEvaluationDataRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string workflow_id = 2;
+  string workflow_version_id = 3;
+  string workflow_version_evaluation_id = 4;
+  
+  // ########## Supported fields ##########
+  // - id
+  // - workflow_evaluation_sample_result
+  repeated WorkflowVersionEvaluationData workflow_version_evaluation_data = 5;
 }
 
 message MultiListWorkflowVersionEvaluationDataResponse {
