@@ -7221,7 +7221,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.clarifai.api.ListRunnersRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.clarifai.api.ListRunnersRequest.repeatedFields_, null);
 };
 goog.inherits(proto.clarifai.api.ListRunnersRequest, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -87027,6 +87027,13 @@ proto.clarifai.api.GetRunnerRequest.prototype.setComputeClusterId = function(val
 
 
 
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.clarifai.api.ListRunnersRequest.repeatedFields_ = [7];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -87063,7 +87070,8 @@ proto.clarifai.api.ListRunnersRequest.toObject = function(includeInstance, msg) 
     page: jspb.Message.getFieldWithDefault(msg, 3, 0),
     perPage: jspb.Message.getFieldWithDefault(msg, 4, 0),
     computeClusterId: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    minReplicas: jspb.Message.getFieldWithDefault(msg, 6, 0)
+    minReplicas: jspb.Message.getFieldWithDefault(msg, 6, 0),
+    modelVersionIdsList: (f = jspb.Message.getRepeatedField(msg, 7)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -87124,6 +87132,10 @@ proto.clarifai.api.ListRunnersRequest.deserializeBinaryFromReader = function(msg
     case 6:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setMinReplicas(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addModelVersionIds(value);
       break;
     default:
       reader.skipField();
@@ -87194,6 +87206,13 @@ proto.clarifai.api.ListRunnersRequest.serializeBinaryToWriter = function(message
   if (f !== 0) {
     writer.writeUint32(
       6,
+      f
+    );
+  }
+  f = message.getModelVersionIdsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      7,
       f
     );
   }
@@ -87324,6 +87343,43 @@ proto.clarifai.api.ListRunnersRequest.prototype.getMinReplicas = function() {
  */
 proto.clarifai.api.ListRunnersRequest.prototype.setMinReplicas = function(value) {
   return jspb.Message.setProto3IntField(this, 6, value);
+};
+
+
+/**
+ * repeated string model_version_ids = 7;
+ * @return {!Array<string>}
+ */
+proto.clarifai.api.ListRunnersRequest.prototype.getModelVersionIdsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 7));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.clarifai.api.ListRunnersRequest} returns this
+ */
+proto.clarifai.api.ListRunnersRequest.prototype.setModelVersionIdsList = function(value) {
+  return jspb.Message.setField(this, 7, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.ListRunnersRequest} returns this
+ */
+proto.clarifai.api.ListRunnersRequest.prototype.addModelVersionIds = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 7, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.ListRunnersRequest} returns this
+ */
+proto.clarifai.api.ListRunnersRequest.prototype.clearModelVersionIdsList = function() {
+  return this.setModelVersionIdsList([]);
 };
 
 

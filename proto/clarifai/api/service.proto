@@ -8308,6 +8308,8 @@ message ListRunnersRequest {
   string compute_cluster_id = 5;
   // Only return runners whose replicas are >= min_replicas.
   uint32 min_replicas = 6;
+  // (optional URL parameter) ModelVersion IDs. To list all runners for the model version
+  repeated string model_version_ids = 7;
 }
 
 

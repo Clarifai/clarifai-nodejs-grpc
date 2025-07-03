@@ -10376,6 +10376,10 @@ export class ListRunnersRequest extends jspb.Message {
     setComputeClusterId(value: string): ListRunnersRequest;
     getMinReplicas(): number;
     setMinReplicas(value: number): ListRunnersRequest;
+    clearModelVersionIdsList(): void;
+    getModelVersionIdsList(): Array<string>;
+    setModelVersionIdsList(value: Array<string>): ListRunnersRequest;
+    addModelVersionIds(value: string, index?: number): string;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListRunnersRequest.AsObject;
@@ -10395,6 +10399,7 @@ export namespace ListRunnersRequest {
         perPage: number,
         computeClusterId: string,
         minReplicas: number,
+        modelVersionIdsList: Array<string>,
     }
 }
 
