@@ -3676,6 +3676,9 @@ service V2 {
   rpc ListRunners (ListRunnersRequest) returns (MultiRunnerResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners"
+      additional_bindings {
+        get: "/v2/users/{user_app_id.user_id}/runners"
+      }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
@@ -5997,6 +6000,8 @@ message ListModelsRequest {
   string creator = 31;
   // Filter by model versions runners with replicas >= min_replicas.
   uint32 min_replicas = 33;
+  // If true, show replica counts for models.
+  bool show_replicas = 34;
 }
 
 // ResourceCountRequest
@@ -8778,7 +8783,7 @@ message PostWorkflowVersionEvaluationDataRequest {
   string workflow_id = 2;
   string workflow_version_id = 3;
   string workflow_version_evaluation_id = 4;
-  
+
   // ########## Supported fields ##########
   // - id
   // - workflow_evaluation_sample_result

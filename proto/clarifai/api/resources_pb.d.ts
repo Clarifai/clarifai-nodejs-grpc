@@ -2702,6 +2702,8 @@ export class Model extends jspb.Message {
     setFeaturedOrder(value?: google_protobuf_wrappers_pb.Int32Value): Model;
     getDeployRestriction(): DeployRestriction;
     setDeployRestriction(value: DeployRestriction): Model;
+    getReplicaCount(): number;
+    setReplicaCount(value: number): Model;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Model.AsObject;
@@ -2749,6 +2751,7 @@ export namespace Model {
         billingType: Model.BillingType,
         featuredOrder?: google_protobuf_wrappers_pb.Int32Value.AsObject,
         deployRestriction: DeployRestriction,
+        replicaCount: number,
     }
 
     export enum Source {

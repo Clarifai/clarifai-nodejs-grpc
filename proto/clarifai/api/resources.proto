@@ -1500,6 +1500,9 @@ message Model {
 
   // Deploy restriction for the model.
   DeployRestriction deploy_restriction = 42;
+  // replica_count indicates the number of deployed model replicas.
+  // This field is populated when `show_replicas` is true in ListModelsRequest.
+  uint32 replica_count = 43;
 }
 enum DeployRestriction {
   USAGE_RESTRICTION_NOT_SET = 0; // Default uninitialized state.

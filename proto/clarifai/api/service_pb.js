@@ -37213,7 +37213,8 @@ proto.clarifai.api.ListModelsRequest.toObject = function(includeInstance, msg) {
     licenseType: jspb.Message.getFieldWithDefault(msg, 29, 0),
     source: jspb.Message.getFieldWithDefault(msg, 30, 0),
     creator: jspb.Message.getFieldWithDefault(msg, 31, ""),
-    minReplicas: jspb.Message.getFieldWithDefault(msg, 33, 0)
+    minReplicas: jspb.Message.getFieldWithDefault(msg, 33, 0),
+    showReplicas: jspb.Message.getBooleanFieldWithDefault(msg, 34, false)
   };
 
   if (includeInstance) {
@@ -37374,6 +37375,10 @@ proto.clarifai.api.ListModelsRequest.deserializeBinaryFromReader = function(msg,
     case 33:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setMinReplicas(value);
+      break;
+    case 34:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setShowReplicas(value);
       break;
     default:
       reader.skipField();
@@ -37619,6 +37624,13 @@ proto.clarifai.api.ListModelsRequest.serializeBinaryToWriter = function(message,
   if (f !== 0) {
     writer.writeUint32(
       33,
+      f
+    );
+  }
+  f = message.getShowReplicas();
+  if (f) {
+    writer.writeBool(
+      34,
       f
     );
   }
@@ -38422,6 +38434,24 @@ proto.clarifai.api.ListModelsRequest.prototype.getMinReplicas = function() {
  */
 proto.clarifai.api.ListModelsRequest.prototype.setMinReplicas = function(value) {
   return jspb.Message.setProto3IntField(this, 33, value);
+};
+
+
+/**
+ * optional bool show_replicas = 34;
+ * @return {boolean}
+ */
+proto.clarifai.api.ListModelsRequest.prototype.getShowReplicas = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 34, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.ListModelsRequest} returns this
+ */
+proto.clarifai.api.ListModelsRequest.prototype.setShowReplicas = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 34, value);
 };
 
 
