@@ -3743,6 +3743,17 @@ function deserialize_clarifai_api_PostWorkflowResultsResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.PostWorkflowResultsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PostWorkflowVersionEvaluationDataRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostWorkflowVersionEvaluationDataRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostWorkflowVersionEvaluationDataRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostWorkflowVersionEvaluationDataRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostWorkflowVersionEvaluationDataRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PostWorkflowVersionEvaluationsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PostWorkflowVersionEvaluationsRequest)) {
     throw new Error('Expected argument of type clarifai.api.PostWorkflowVersionEvaluationsRequest');
@@ -7523,6 +7534,17 @@ deleteDeployments: {
     responseType: proto_clarifai_api_service_pb.MultiListWorkflowVersionEvaluationDataResponse,
     requestSerialize: serialize_clarifai_api_ListWorkflowVersionEvaluationDataRequest,
     requestDeserialize: deserialize_clarifai_api_ListWorkflowVersionEvaluationDataRequest,
+    responseSerialize: serialize_clarifai_api_MultiListWorkflowVersionEvaluationDataResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiListWorkflowVersionEvaluationDataResponse,
+  },
+  postWorkflowVersionEvaluationData: {
+    path: '/clarifai.api.V2/PostWorkflowVersionEvaluationData',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostWorkflowVersionEvaluationDataRequest,
+    responseType: proto_clarifai_api_service_pb.MultiListWorkflowVersionEvaluationDataResponse,
+    requestSerialize: serialize_clarifai_api_PostWorkflowVersionEvaluationDataRequest,
+    requestDeserialize: deserialize_clarifai_api_PostWorkflowVersionEvaluationDataRequest,
     responseSerialize: serialize_clarifai_api_MultiListWorkflowVersionEvaluationDataResponse,
     responseDeserialize: deserialize_clarifai_api_MultiListWorkflowVersionEvaluationDataResponse,
   },

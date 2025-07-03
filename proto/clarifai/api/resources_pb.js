@@ -25508,7 +25508,8 @@ proto.clarifai.api.Model.toObject = function(includeInstance, msg) {
     versionCount: jspb.Message.getFieldWithDefault(msg, 38, 0),
     billingType: jspb.Message.getFieldWithDefault(msg, 40, 0),
     featuredOrder: (f = msg.getFeaturedOrder()) && google_protobuf_wrappers_pb.Int32Value.toObject(includeInstance, f),
-    deployRestriction: jspb.Message.getFieldWithDefault(msg, 42, 0)
+    deployRestriction: jspb.Message.getFieldWithDefault(msg, 42, 0),
+    replicaCount: jspb.Message.getFieldWithDefault(msg, 43, 0)
   };
 
   if (includeInstance) {
@@ -25693,6 +25694,10 @@ proto.clarifai.api.Model.deserializeBinaryFromReader = function(msg, reader) {
     case 42:
       var value = /** @type {!proto.clarifai.api.DeployRestriction} */ (reader.readEnum());
       msg.setDeployRestriction(value);
+      break;
+    case 43:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setReplicaCount(value);
       break;
     default:
       reader.skipField();
@@ -25971,6 +25976,13 @@ proto.clarifai.api.Model.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0.0) {
     writer.writeEnum(
       42,
+      f
+    );
+  }
+  f = message.getReplicaCount();
+  if (f !== 0) {
+    writer.writeUint32(
+      43,
       f
     );
   }
@@ -26928,6 +26940,24 @@ proto.clarifai.api.Model.prototype.getDeployRestriction = function() {
  */
 proto.clarifai.api.Model.prototype.setDeployRestriction = function(value) {
   return jspb.Message.setProto3EnumField(this, 42, value);
+};
+
+
+/**
+ * optional uint32 replica_count = 43;
+ * @return {number}
+ */
+proto.clarifai.api.Model.prototype.getReplicaCount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 43, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.Model} returns this
+ */
+proto.clarifai.api.Model.prototype.setReplicaCount = function(value) {
+  return jspb.Message.setProto3IntField(this, 43, value);
 };
 
 
