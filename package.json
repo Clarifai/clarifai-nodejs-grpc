@@ -17,13 +17,12 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.4.2",
     "@grpc/proto-loader": "^0.5.5",
-    "axios": "^1.10.0",
+    "axios": "^1.8.4",
     "google-protobuf": "^3.14.0",
     "protobufjs": "^6.10.2"
   },
   "overrides": {
-    "form-data": ">=4.0.4",
-    "minimatch": ">=3.0.5"
+    "form-data": ">=4.0.4"
   },
   "devDependencies": {
     "mocha": "^8.2.1"
