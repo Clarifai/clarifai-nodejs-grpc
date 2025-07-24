@@ -21,9 +21,6 @@
     "google-protobuf": "^3.14.0",
     "protobufjs": "^6.10.2"
   },
-  "overrides": {
-    "form-data": ">=4.0.4"
-  },
   "devDependencies": {
     "mocha": "^8.2.1"
   }
