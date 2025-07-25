@@ -529,6 +529,11 @@ export class ListAppsRequest extends jspb.Message {
     setStarredOnly(value: boolean): ListAppsRequest;
     getTemplateOnly(): boolean;
     setTemplateOnly(value: boolean): ListAppsRequest;
+
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): proto_clarifai_api_resources_pb.Visibility | undefined;
+    setVisibility(value?: proto_clarifai_api_resources_pb.Visibility): ListAppsRequest;
     getSearch(): string;
     setSearch(value: string): ListAppsRequest;
     getQuery(): string;
@@ -565,6 +570,7 @@ export namespace ListAppsRequest {
         featuredOnly: boolean,
         starredOnly: boolean,
         templateOnly: boolean,
+        visibility?: proto_clarifai_api_resources_pb.Visibility.AsObject,
         search: string,
         query: string,
         name: string,
@@ -3788,6 +3794,11 @@ export class ListModelsRequest extends jspb.Message {
     getShowReplicas(): boolean;
     setShowReplicas(value: boolean): ListModelsRequest;
 
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): proto_clarifai_api_resources_pb.Visibility | undefined;
+    setVisibility(value?: proto_clarifai_api_resources_pb.Visibility): ListModelsRequest;
+
     getSortByCase(): ListModelsRequest.SortByCase;
 
     serializeBinary(): Uint8Array;
@@ -3834,6 +3845,7 @@ export namespace ListModelsRequest {
         creator: string,
         minReplicas: number,
         showReplicas: boolean,
+        visibility?: proto_clarifai_api_resources_pb.Visibility.AsObject,
     }
 
     export enum SortByCase {
@@ -7115,6 +7127,11 @@ export class ListWorkflowsRequest extends jspb.Message {
     setStarredOnly(value: boolean): ListWorkflowsRequest;
     getBookmark(): boolean;
     setBookmark(value: boolean): ListWorkflowsRequest;
+
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): proto_clarifai_api_resources_pb.Visibility | undefined;
+    setVisibility(value?: proto_clarifai_api_resources_pb.Visibility): ListWorkflowsRequest;
     getSearch(): string;
     setSearch(value: string): ListWorkflowsRequest;
     getQuery(): string;
@@ -7150,6 +7167,7 @@ export namespace ListWorkflowsRequest {
         featuredOnly: boolean,
         starredOnly: boolean,
         bookmark: boolean,
+        visibility?: proto_clarifai_api_resources_pb.Visibility.AsObject,
         search: string,
         query: string,
         id: string,
@@ -8693,6 +8711,11 @@ export class ListModulesRequest extends jspb.Message {
     getFilterByUserId(): boolean;
     setFilterByUserId(value: boolean): ListModulesRequest;
 
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): proto_clarifai_api_resources_pb.Visibility | undefined;
+    setVisibility(value?: proto_clarifai_api_resources_pb.Visibility): ListModulesRequest;
+
     getSortByCase(): ListModulesRequest.SortByCase;
 
     serializeBinary(): Uint8Array;
@@ -8721,6 +8744,7 @@ export namespace ListModulesRequest {
         search: string,
         name: string,
         filterByUserId: boolean,
+        visibility?: proto_clarifai_api_resources_pb.Visibility.AsObject,
     }
 
     export enum SortByCase {

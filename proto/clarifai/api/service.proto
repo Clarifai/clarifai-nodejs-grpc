@@ -4704,6 +4704,8 @@ message ListAppsRequest {
   bool starred_only = 11;
   // If true, we only return apps that are marked as a template by the app owner.
   bool template_only = 16;
+  // Filter by visibility of the app. If set, only return apps with the specified visibility.
+  Visibility visibility = 18;
 
   // Searching options:
   // Specify a search parameter in order to perform keyword search on the
@@ -6002,6 +6004,8 @@ message ListModelsRequest {
   uint32 min_replicas = 33;
   // If true, show replica counts for models.
   bool show_replicas = 34;
+  // Filter by visibility of the model. If set, only return models with the specified visibility.
+  Visibility visibility = 35;
 }
 
 // ResourceCountRequest
@@ -7152,6 +7156,8 @@ message ListWorkflowsRequest {
   bool starred_only = 11;
   // Filter workflows by bookmark. If set, only return bookmarked workflows. Otherwise none bookmarked workflows only.
   bool bookmark = 15;
+  // Filter by visibility of the workflow. If set, only return workflows with the specified visibility.
+  Visibility visibility = 17;
 
   // Searching options:
   // Specify a search parameter in order to perform keyword search on the
@@ -7787,6 +7793,8 @@ message ListModulesRequest {
   // Filter by the application owner whose this module belongs to
   // Deprecated: use search instead of name.
   bool filter_by_user_id = 13 [deprecated = true];
+  // Filter by visibility of the modules. If set, only return modules with the specified visibility.
+  Visibility visibility = 15;
 }
 
 // PostModulesRequest

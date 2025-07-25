@@ -12883,6 +12883,7 @@ proto.clarifai.api.ListAppsRequest.toObject = function(includeInstance, msg) {
     featuredOnly: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
     starredOnly: jspb.Message.getBooleanFieldWithDefault(msg, 11, false),
     templateOnly: jspb.Message.getBooleanFieldWithDefault(msg, 16, false),
+    visibility: (f = msg.getVisibility()) && proto_clarifai_api_resources_pb.Visibility.toObject(includeInstance, f),
     search: jspb.Message.getFieldWithDefault(msg, 15, ""),
     query: jspb.Message.getFieldWithDefault(msg, 8, ""),
     name: jspb.Message.getFieldWithDefault(msg, 4, ""),
@@ -12975,6 +12976,11 @@ proto.clarifai.api.ListAppsRequest.deserializeBinaryFromReader = function(msg, r
     case 16:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setTemplateOnly(value);
+      break;
+    case 18:
+      var value = new proto_clarifai_api_resources_pb.Visibility;
+      reader.readMessage(value,proto_clarifai_api_resources_pb.Visibility.deserializeBinaryFromReader);
+      msg.setVisibility(value);
       break;
     case 15:
       var value = /** @type {string} */ (reader.readString());
@@ -13111,6 +13117,14 @@ proto.clarifai.api.ListAppsRequest.serializeBinaryToWriter = function(message, w
     writer.writeBool(
       16,
       f
+    );
+  }
+  f = message.getVisibility();
+  if (f != null) {
+    writer.writeMessage(
+      18,
+      f,
+      proto_clarifai_api_resources_pb.Visibility.serializeBinaryToWriter
     );
   }
   f = message.getSearch();
@@ -13503,6 +13517,43 @@ proto.clarifai.api.ListAppsRequest.prototype.getTemplateOnly = function() {
  */
 proto.clarifai.api.ListAppsRequest.prototype.setTemplateOnly = function(value) {
   return jspb.Message.setProto3BooleanField(this, 16, value);
+};
+
+
+/**
+ * optional Visibility visibility = 18;
+ * @return {?proto.clarifai.api.Visibility}
+ */
+proto.clarifai.api.ListAppsRequest.prototype.getVisibility = function() {
+  return /** @type{?proto.clarifai.api.Visibility} */ (
+    jspb.Message.getWrapperField(this, proto_clarifai_api_resources_pb.Visibility, 18));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Visibility|undefined} value
+ * @return {!proto.clarifai.api.ListAppsRequest} returns this
+*/
+proto.clarifai.api.ListAppsRequest.prototype.setVisibility = function(value) {
+  return jspb.Message.setWrapperField(this, 18, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.ListAppsRequest} returns this
+ */
+proto.clarifai.api.ListAppsRequest.prototype.clearVisibility = function() {
+  return this.setVisibility(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.ListAppsRequest.prototype.hasVisibility = function() {
+  return jspb.Message.getField(this, 18) != null;
 };
 
 
@@ -37214,7 +37265,8 @@ proto.clarifai.api.ListModelsRequest.toObject = function(includeInstance, msg) {
     source: jspb.Message.getFieldWithDefault(msg, 30, 0),
     creator: jspb.Message.getFieldWithDefault(msg, 31, ""),
     minReplicas: jspb.Message.getFieldWithDefault(msg, 33, 0),
-    showReplicas: jspb.Message.getBooleanFieldWithDefault(msg, 34, false)
+    showReplicas: jspb.Message.getBooleanFieldWithDefault(msg, 34, false),
+    visibility: (f = msg.getVisibility()) && proto_clarifai_api_resources_pb.Visibility.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -37379,6 +37431,11 @@ proto.clarifai.api.ListModelsRequest.deserializeBinaryFromReader = function(msg,
     case 34:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setShowReplicas(value);
+      break;
+    case 35:
+      var value = new proto_clarifai_api_resources_pb.Visibility;
+      reader.readMessage(value,proto_clarifai_api_resources_pb.Visibility.deserializeBinaryFromReader);
+      msg.setVisibility(value);
       break;
     default:
       reader.skipField();
@@ -37632,6 +37689,14 @@ proto.clarifai.api.ListModelsRequest.serializeBinaryToWriter = function(message,
     writer.writeBool(
       34,
       f
+    );
+  }
+  f = message.getVisibility();
+  if (f != null) {
+    writer.writeMessage(
+      35,
+      f,
+      proto_clarifai_api_resources_pb.Visibility.serializeBinaryToWriter
     );
   }
 };
@@ -38452,6 +38517,43 @@ proto.clarifai.api.ListModelsRequest.prototype.getShowReplicas = function() {
  */
 proto.clarifai.api.ListModelsRequest.prototype.setShowReplicas = function(value) {
   return jspb.Message.setProto3BooleanField(this, 34, value);
+};
+
+
+/**
+ * optional Visibility visibility = 35;
+ * @return {?proto.clarifai.api.Visibility}
+ */
+proto.clarifai.api.ListModelsRequest.prototype.getVisibility = function() {
+  return /** @type{?proto.clarifai.api.Visibility} */ (
+    jspb.Message.getWrapperField(this, proto_clarifai_api_resources_pb.Visibility, 35));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Visibility|undefined} value
+ * @return {!proto.clarifai.api.ListModelsRequest} returns this
+*/
+proto.clarifai.api.ListModelsRequest.prototype.setVisibility = function(value) {
+  return jspb.Message.setWrapperField(this, 35, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.ListModelsRequest} returns this
+ */
+proto.clarifai.api.ListModelsRequest.prototype.clearVisibility = function() {
+  return this.setVisibility(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.ListModelsRequest.prototype.hasVisibility = function() {
+  return jspb.Message.getField(this, 35) != null;
 };
 
 
@@ -62549,6 +62651,7 @@ proto.clarifai.api.ListWorkflowsRequest.toObject = function(includeInstance, msg
     featuredOnly: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
     starredOnly: jspb.Message.getBooleanFieldWithDefault(msg, 11, false),
     bookmark: jspb.Message.getBooleanFieldWithDefault(msg, 15, false),
+    visibility: (f = msg.getVisibility()) && proto_clarifai_api_resources_pb.Visibility.toObject(includeInstance, f),
     search: jspb.Message.getFieldWithDefault(msg, 16, ""),
     query: jspb.Message.getFieldWithDefault(msg, 8, ""),
     id: jspb.Message.getFieldWithDefault(msg, 4, ""),
@@ -62637,6 +62740,11 @@ proto.clarifai.api.ListWorkflowsRequest.deserializeBinaryFromReader = function(m
     case 15:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setBookmark(value);
+      break;
+    case 17:
+      var value = new proto_clarifai_api_resources_pb.Visibility;
+      reader.readMessage(value,proto_clarifai_api_resources_pb.Visibility.deserializeBinaryFromReader);
+      msg.setVisibility(value);
       break;
     case 16:
       var value = /** @type {string} */ (reader.readString());
@@ -62766,6 +62874,14 @@ proto.clarifai.api.ListWorkflowsRequest.serializeBinaryToWriter = function(messa
     writer.writeBool(
       15,
       f
+    );
+  }
+  f = message.getVisibility();
+  if (f != null) {
+    writer.writeMessage(
+      17,
+      f,
+      proto_clarifai_api_resources_pb.Visibility.serializeBinaryToWriter
     );
   }
   f = message.getSearch();
@@ -63122,6 +63238,43 @@ proto.clarifai.api.ListWorkflowsRequest.prototype.getBookmark = function() {
  */
 proto.clarifai.api.ListWorkflowsRequest.prototype.setBookmark = function(value) {
   return jspb.Message.setProto3BooleanField(this, 15, value);
+};
+
+
+/**
+ * optional Visibility visibility = 17;
+ * @return {?proto.clarifai.api.Visibility}
+ */
+proto.clarifai.api.ListWorkflowsRequest.prototype.getVisibility = function() {
+  return /** @type{?proto.clarifai.api.Visibility} */ (
+    jspb.Message.getWrapperField(this, proto_clarifai_api_resources_pb.Visibility, 17));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Visibility|undefined} value
+ * @return {!proto.clarifai.api.ListWorkflowsRequest} returns this
+*/
+proto.clarifai.api.ListWorkflowsRequest.prototype.setVisibility = function(value) {
+  return jspb.Message.setWrapperField(this, 17, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.ListWorkflowsRequest} returns this
+ */
+proto.clarifai.api.ListWorkflowsRequest.prototype.clearVisibility = function() {
+  return this.setVisibility(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.ListWorkflowsRequest.prototype.hasVisibility = function() {
+  return jspb.Message.getField(this, 17) != null;
 };
 
 
@@ -74466,7 +74619,8 @@ proto.clarifai.api.ListModulesRequest.toObject = function(includeInstance, msg) 
     bookmark: jspb.Message.getBooleanFieldWithDefault(msg, 10, false),
     search: jspb.Message.getFieldWithDefault(msg, 14, ""),
     name: jspb.Message.getFieldWithDefault(msg, 12, ""),
-    filterByUserId: jspb.Message.getBooleanFieldWithDefault(msg, 13, false)
+    filterByUserId: jspb.Message.getBooleanFieldWithDefault(msg, 13, false),
+    visibility: (f = msg.getVisibility()) && proto_clarifai_api_resources_pb.Visibility.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -74559,6 +74713,11 @@ proto.clarifai.api.ListModulesRequest.deserializeBinaryFromReader = function(msg
     case 13:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setFilterByUserId(value);
+      break;
+    case 15:
+      var value = new proto_clarifai_api_resources_pb.Visibility;
+      reader.readMessage(value,proto_clarifai_api_resources_pb.Visibility.deserializeBinaryFromReader);
+      msg.setVisibility(value);
       break;
     default:
       reader.skipField();
@@ -74686,6 +74845,14 @@ proto.clarifai.api.ListModulesRequest.serializeBinaryToWriter = function(message
     writer.writeBool(
       13,
       f
+    );
+  }
+  f = message.getVisibility();
+  if (f != null) {
+    writer.writeMessage(
+      15,
+      f,
+      proto_clarifai_api_resources_pb.Visibility.serializeBinaryToWriter
     );
   }
 };
@@ -75050,6 +75217,43 @@ proto.clarifai.api.ListModulesRequest.prototype.getFilterByUserId = function() {
  */
 proto.clarifai.api.ListModulesRequest.prototype.setFilterByUserId = function(value) {
   return jspb.Message.setProto3BooleanField(this, 13, value);
+};
+
+
+/**
+ * optional Visibility visibility = 15;
+ * @return {?proto.clarifai.api.Visibility}
+ */
+proto.clarifai.api.ListModulesRequest.prototype.getVisibility = function() {
+  return /** @type{?proto.clarifai.api.Visibility} */ (
+    jspb.Message.getWrapperField(this, proto_clarifai_api_resources_pb.Visibility, 15));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Visibility|undefined} value
+ * @return {!proto.clarifai.api.ListModulesRequest} returns this
+*/
+proto.clarifai.api.ListModulesRequest.prototype.setVisibility = function(value) {
+  return jspb.Message.setWrapperField(this, 15, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.ListModulesRequest} returns this
+ */
+proto.clarifai.api.ListModulesRequest.prototype.clearVisibility = function() {
+  return this.setVisibility(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.ListModulesRequest.prototype.hasVisibility = function() {
+  return jspb.Message.getField(this, 15) != null;
 };
 
 
