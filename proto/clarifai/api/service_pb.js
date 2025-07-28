@@ -33982,6 +33982,7 @@ proto.clarifai.api.ListLogEntriesRequest.toObject = function(includeInstance, ms
     modelId: jspb.Message.getFieldWithDefault(msg, 5, ""),
     modelVersionId: jspb.Message.getFieldWithDefault(msg, 6, ""),
     workflowId: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    computeClusterUserId: jspb.Message.getFieldWithDefault(msg, 17, ""),
     computeClusterId: jspb.Message.getFieldWithDefault(msg, 9, ""),
     nodepoolId: jspb.Message.getFieldWithDefault(msg, 10, ""),
     runnerId: jspb.Message.getFieldWithDefault(msg, 11, ""),
@@ -34054,6 +34055,10 @@ proto.clarifai.api.ListLogEntriesRequest.deserializeBinaryFromReader = function(
     case 7:
       var value = /** @type {string} */ (reader.readString());
       msg.setWorkflowId(value);
+      break;
+    case 17:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setComputeClusterUserId(value);
       break;
     case 9:
       var value = /** @type {string} */ (reader.readString());
@@ -34163,6 +34168,13 @@ proto.clarifai.api.ListLogEntriesRequest.serializeBinaryToWriter = function(mess
   if (f.length > 0) {
     writer.writeString(
       7,
+      f
+    );
+  }
+  f = message.getComputeClusterUserId();
+  if (f.length > 0) {
+    writer.writeString(
+      17,
       f
     );
   }
@@ -34371,6 +34383,24 @@ proto.clarifai.api.ListLogEntriesRequest.prototype.setWorkflowId = function(valu
 
 
 /**
+ * optional string compute_cluster_user_id = 17;
+ * @return {string}
+ */
+proto.clarifai.api.ListLogEntriesRequest.prototype.getComputeClusterUserId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 17, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.ListLogEntriesRequest} returns this
+ */
+proto.clarifai.api.ListLogEntriesRequest.prototype.setComputeClusterUserId = function(value) {
+  return jspb.Message.setProto3StringField(this, 17, value);
+};
+
+
+/**
  * optional string compute_cluster_id = 9;
  * @return {string}
  */
@@ -34551,6 +34581,7 @@ proto.clarifai.api.StreamLogEntriesRequest.toObject = function(includeInstance, 
     modelId: jspb.Message.getFieldWithDefault(msg, 3, ""),
     modelVersionId: jspb.Message.getFieldWithDefault(msg, 4, ""),
     workflowId: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    computeClusterUserId: jspb.Message.getFieldWithDefault(msg, 17, ""),
     computeClusterId: jspb.Message.getFieldWithDefault(msg, 6, ""),
     nodepoolId: jspb.Message.getFieldWithDefault(msg, 7, ""),
     runnerId: jspb.Message.getFieldWithDefault(msg, 8, ""),
@@ -34615,6 +34646,10 @@ proto.clarifai.api.StreamLogEntriesRequest.deserializeBinaryFromReader = functio
     case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.setWorkflowId(value);
+      break;
+    case 17:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setComputeClusterUserId(value);
       break;
     case 6:
       var value = /** @type {string} */ (reader.readString());
@@ -34710,6 +34745,13 @@ proto.clarifai.api.StreamLogEntriesRequest.serializeBinaryToWriter = function(me
   if (f.length > 0) {
     writer.writeString(
       5,
+      f
+    );
+  }
+  f = message.getComputeClusterUserId();
+  if (f.length > 0) {
+    writer.writeString(
+      17,
       f
     );
   }
@@ -34878,6 +34920,24 @@ proto.clarifai.api.StreamLogEntriesRequest.prototype.getWorkflowId = function() 
  */
 proto.clarifai.api.StreamLogEntriesRequest.prototype.setWorkflowId = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional string compute_cluster_user_id = 17;
+ * @return {string}
+ */
+proto.clarifai.api.StreamLogEntriesRequest.prototype.getComputeClusterUserId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 17, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.StreamLogEntriesRequest} returns this
+ */
+proto.clarifai.api.StreamLogEntriesRequest.prototype.setComputeClusterUserId = function(value) {
+  return jspb.Message.setProto3StringField(this, 17, value);
 };
 
 

@@ -4065,7 +4065,7 @@ service V2 {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners/{runner_id}/{log_type}/logs"
       // Endpoint to list runner logs by model, model version id.
       additional_bindings {
-        get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/{log_type}/logs"
+        get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_user_id}/{compute_cluster_id}/nodepools/{nodepool_id}/versions/{model_version_id}/{log_type}/logs"
       }
       // TODO: add convenience endpoint for /users/{user_id}/runners/{runner_id}.
       // TODO: add endpoint for runner replicas.
@@ -4093,7 +4093,7 @@ service V2 {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners/{runner_id}/{log_type}/logs"
       additional_bindings {
-        get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/{log_type}/logs"
+        get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_user_id}/{compute_cluster_id}/nodepools/{nodepool_id}/versions/{model_version_id}/{log_type}/logs"
       }
       // Endpoint to stream pipeline version run logs
       additional_bindings {
@@ -5766,6 +5766,7 @@ message ListLogEntriesRequest {
   string workflow_id = 7;
 
   // Where the logs came from.
+  string compute_cluster_user_id = 17;
   string compute_cluster_id = 9;
   string nodepool_id = 10;
   string runner_id = 11;
@@ -5797,6 +5798,7 @@ message StreamLogEntriesRequest {
   string workflow_id = 5;
 
   // Where the logs came from.
+  string compute_cluster_user_id = 17;
   string compute_cluster_id = 6;
   string nodepool_id = 7;
   string runner_id = 8;

@@ -5316,6 +5316,7 @@ message ComputeSourceMetadata {
   string workflow_id = 4;
 
   // Compute Cluster, Nodepool, Runner.
+  string compute_cluster_user_id = 14;
   string compute_cluster_id = 6;
   string nodepool_id = 7;
   string runner_id = 8;

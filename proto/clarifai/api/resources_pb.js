@@ -77357,6 +77357,7 @@ proto.clarifai.api.ComputeSourceMetadata.toObject = function(includeInstance, ms
     modelId: jspb.Message.getFieldWithDefault(msg, 2, ""),
     modelVersionId: jspb.Message.getFieldWithDefault(msg, 3, ""),
     workflowId: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    computeClusterUserId: jspb.Message.getFieldWithDefault(msg, 14, ""),
     computeClusterId: jspb.Message.getFieldWithDefault(msg, 6, ""),
     nodepoolId: jspb.Message.getFieldWithDefault(msg, 7, ""),
     runnerId: jspb.Message.getFieldWithDefault(msg, 8, ""),
@@ -77417,6 +77418,10 @@ proto.clarifai.api.ComputeSourceMetadata.deserializeBinaryFromReader = function(
     case 4:
       var value = /** @type {string} */ (reader.readString());
       msg.setWorkflowId(value);
+      break;
+    case 14:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setComputeClusterUserId(value);
       break;
     case 6:
       var value = /** @type {string} */ (reader.readString());
@@ -77505,6 +77510,13 @@ proto.clarifai.api.ComputeSourceMetadata.serializeBinaryToWriter = function(mess
   if (f.length > 0) {
     writer.writeString(
       4,
+      f
+    );
+  }
+  f = message.getComputeClusterUserId();
+  if (f.length > 0) {
+    writer.writeString(
+      14,
       f
     );
   }
@@ -77655,6 +77667,24 @@ proto.clarifai.api.ComputeSourceMetadata.prototype.getWorkflowId = function() {
  */
 proto.clarifai.api.ComputeSourceMetadata.prototype.setWorkflowId = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string compute_cluster_user_id = 14;
+ * @return {string}
+ */
+proto.clarifai.api.ComputeSourceMetadata.prototype.getComputeClusterUserId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 14, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.ComputeSourceMetadata} returns this
+ */
+proto.clarifai.api.ComputeSourceMetadata.prototype.setComputeClusterUserId = function(value) {
+  return jspb.Message.setProto3StringField(this, 14, value);
 };
 
 

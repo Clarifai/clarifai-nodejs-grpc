@@ -9364,6 +9364,8 @@ export class ComputeSourceMetadata extends jspb.Message {
     setModelVersionId(value: string): ComputeSourceMetadata;
     getWorkflowId(): string;
     setWorkflowId(value: string): ComputeSourceMetadata;
+    getComputeClusterUserId(): string;
+    setComputeClusterUserId(value: string): ComputeSourceMetadata;
     getComputeClusterId(): string;
     setComputeClusterId(value: string): ComputeSourceMetadata;
     getNodepoolId(): string;
@@ -9397,6 +9399,7 @@ export namespace ComputeSourceMetadata {
         modelId: string,
         modelVersionId: string,
         workflowId: string,
+        computeClusterUserId: string,
         computeClusterId: string,
         nodepoolId: string,
         runnerId: string,
