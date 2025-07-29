@@ -437,6 +437,68 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
 
+  // List all the annotation tracks.
+  rpc ListAnnotationTracks (ListAnnotationTracksRequest) returns (MultiAnnotationTrackResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}/annotation_tracks"
+      additional_bindings {
+        get: "/v2/inputs/{input_id}/annotation_tracks"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+  }
+
+  // Post annotation tracks.
+  rpc PostAnnotationTracks (PostAnnotationTracksRequest) returns (MultiAnnotationTrackResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}/annotation_tracks"
+      body: "*"
+      additional_bindings {
+        post: "/v2/inputs/{input_id}/annotation_tracks"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
+  }
+
+  // Patch one or more annotation tracks.
+  rpc PatchAnnotationTracks (PatchAnnotationTracksRequest) returns (MultiAnnotationTrackResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}/annotation_tracks"
+      body: "*"
+      additional_bindings {
+        patch: "/v2/inputs/{input_id}/annotation_tracks"
+          body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
+  }
+
+  // Delete multiple annotation tracks in one request.
+  rpc DeleteAnnotationTracks (DeleteAnnotationTracksRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotation_tracks"
+      body: "*"
+      additional_bindings {
+        delete: "/v2/inputs/{input_id}/annotation_tracks"
+          body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Delete;
+  }
+
   // Patch saved annotations searches by ids.
   rpc PatchAnnotationsSearches (PatchAnnotationsSearchesRequest) returns (MultiSearchResponse) {
     option (google.api.http) = {
@@ -4473,7 +4535,8 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Secrets_Delete;
-  }}
+  }
+}
 
 
 // Split the results into pages.
@@ -4620,6 +4683,45 @@ message DeleteAnnotationsRequest {
   // However you need to specify at least one value for 'input_ids'
   // i.e. this API does not support deleting all annotations
   repeated string input_ids = 3;
+}
+
+// ListAnnotationTracksRequest
+message ListAnnotationTracksRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated string ids = 2;
+  string input_id = 3;
+  uint32 page = 4;
+  uint32 per_page = 5;
+}
+
+// PostAnnotationTracksRequest
+message PostAnnotationTracksRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated AnnotationTrack annotation_tracks = 2;
+  string input_id = 3;
+}
+
+// PatchAnnotationTracksRequest
+message PatchAnnotationTracksRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated AnnotationTrack annotation_tracks = 2;
+  string input_id = 3;
+
+  // Use always 'overwrite'
+  string action = 4;
+}
+
+// DeleteAnnotationTracksRequest
+message DeleteAnnotationTracksRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated string ids = 2;
+  string input_id = 3;
+}
+
+// MultiAnnotationTrackResponse
+message MultiAnnotationTrackResponse {
+  clarifai.api.status.Status status = 1;
+  repeated AnnotationTrack annotation_tracks = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
 // SingleAnnotationResponse

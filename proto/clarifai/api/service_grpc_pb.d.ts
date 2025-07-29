@@ -40,6 +40,10 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     patchAnnotationsStatus: IV2Service_IPatchAnnotationsStatus;
     deleteAnnotation: IV2Service_IDeleteAnnotation;
     deleteAnnotations: IV2Service_IDeleteAnnotations;
+    listAnnotationTracks: IV2Service_IListAnnotationTracks;
+    postAnnotationTracks: IV2Service_IPostAnnotationTracks;
+    patchAnnotationTracks: IV2Service_IPatchAnnotationTracks;
+    deleteAnnotationTracks: IV2Service_IDeleteAnnotationTracks;
     patchAnnotationsSearches: IV2Service_IPatchAnnotationsSearches;
     postAnnotationsSearches: IV2Service_IPostAnnotationsSearches;
     listAnnotationWorkers: IV2Service_IListAnnotationWorkers;
@@ -497,6 +501,42 @@ interface IV2Service_IDeleteAnnotations extends grpc.MethodDefinition<proto_clar
     responseStream: false;
     requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.DeleteAnnotationsRequest>;
     requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.DeleteAnnotationsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
+}
+interface IV2Service_IListAnnotationTracks extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListAnnotationTracksRequest, proto_clarifai_api_service_pb.MultiAnnotationTrackResponse> {
+    path: "/clarifai.api.V2/ListAnnotationTracks";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListAnnotationTracksRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListAnnotationTracksRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiAnnotationTrackResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiAnnotationTrackResponse>;
+}
+interface IV2Service_IPostAnnotationTracks extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostAnnotationTracksRequest, proto_clarifai_api_service_pb.MultiAnnotationTrackResponse> {
+    path: "/clarifai.api.V2/PostAnnotationTracks";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostAnnotationTracksRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostAnnotationTracksRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiAnnotationTrackResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiAnnotationTrackResponse>;
+}
+interface IV2Service_IPatchAnnotationTracks extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PatchAnnotationTracksRequest, proto_clarifai_api_service_pb.MultiAnnotationTrackResponse> {
+    path: "/clarifai.api.V2/PatchAnnotationTracks";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PatchAnnotationTracksRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PatchAnnotationTracksRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiAnnotationTrackResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiAnnotationTrackResponse>;
+}
+interface IV2Service_IDeleteAnnotationTracks extends grpc.MethodDefinition<proto_clarifai_api_service_pb.DeleteAnnotationTracksRequest, proto_clarifai_api_status_status_pb.BaseResponse> {
+    path: "/clarifai.api.V2/DeleteAnnotationTracks";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.DeleteAnnotationTracksRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.DeleteAnnotationTracksRequest>;
     responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
 }
@@ -2786,6 +2826,10 @@ export interface IV2Server {
     patchAnnotationsStatus: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchAnnotationsStatusRequest, proto_clarifai_api_service_pb.PatchAnnotationsStatusResponse>;
     deleteAnnotation: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteAnnotationRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     deleteAnnotations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteAnnotationsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
+    listAnnotationTracks: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListAnnotationTracksRequest, proto_clarifai_api_service_pb.MultiAnnotationTrackResponse>;
+    postAnnotationTracks: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostAnnotationTracksRequest, proto_clarifai_api_service_pb.MultiAnnotationTrackResponse>;
+    patchAnnotationTracks: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchAnnotationTracksRequest, proto_clarifai_api_service_pb.MultiAnnotationTrackResponse>;
+    deleteAnnotationTracks: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteAnnotationTracksRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     patchAnnotationsSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse>;
     postAnnotationsSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostAnnotationsSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse>;
     listAnnotationWorkers: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListAnnotationWorkersRequest, proto_clarifai_api_service_pb.MultiWorkerResponse>;
@@ -3109,6 +3153,18 @@ export interface IV2Client {
     deleteAnnotations(request: proto_clarifai_api_service_pb.DeleteAnnotationsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteAnnotations(request: proto_clarifai_api_service_pb.DeleteAnnotationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteAnnotations(request: proto_clarifai_api_service_pb.DeleteAnnotationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    listAnnotationTracks(request: proto_clarifai_api_service_pb.ListAnnotationTracksRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse) => void): grpc.ClientUnaryCall;
+    listAnnotationTracks(request: proto_clarifai_api_service_pb.ListAnnotationTracksRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse) => void): grpc.ClientUnaryCall;
+    listAnnotationTracks(request: proto_clarifai_api_service_pb.ListAnnotationTracksRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse) => void): grpc.ClientUnaryCall;
+    postAnnotationTracks(request: proto_clarifai_api_service_pb.PostAnnotationTracksRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse) => void): grpc.ClientUnaryCall;
+    postAnnotationTracks(request: proto_clarifai_api_service_pb.PostAnnotationTracksRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse) => void): grpc.ClientUnaryCall;
+    postAnnotationTracks(request: proto_clarifai_api_service_pb.PostAnnotationTracksRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse) => void): grpc.ClientUnaryCall;
+    patchAnnotationTracks(request: proto_clarifai_api_service_pb.PatchAnnotationTracksRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse) => void): grpc.ClientUnaryCall;
+    patchAnnotationTracks(request: proto_clarifai_api_service_pb.PatchAnnotationTracksRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse) => void): grpc.ClientUnaryCall;
+    patchAnnotationTracks(request: proto_clarifai_api_service_pb.PatchAnnotationTracksRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse) => void): grpc.ClientUnaryCall;
+    deleteAnnotationTracks(request: proto_clarifai_api_service_pb.DeleteAnnotationTracksRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    deleteAnnotationTracks(request: proto_clarifai_api_service_pb.DeleteAnnotationTracksRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    deleteAnnotationTracks(request: proto_clarifai_api_service_pb.DeleteAnnotationTracksRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     patchAnnotationsSearches(request: proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     patchAnnotationsSearches(request: proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     patchAnnotationsSearches(request: proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
@@ -3933,6 +3989,18 @@ export class V2Client extends grpc.Client implements IV2Client {
     public deleteAnnotations(request: proto_clarifai_api_service_pb.DeleteAnnotationsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteAnnotations(request: proto_clarifai_api_service_pb.DeleteAnnotationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteAnnotations(request: proto_clarifai_api_service_pb.DeleteAnnotationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public listAnnotationTracks(request: proto_clarifai_api_service_pb.ListAnnotationTracksRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse) => void): grpc.ClientUnaryCall;
+    public listAnnotationTracks(request: proto_clarifai_api_service_pb.ListAnnotationTracksRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse) => void): grpc.ClientUnaryCall;
+    public listAnnotationTracks(request: proto_clarifai_api_service_pb.ListAnnotationTracksRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse) => void): grpc.ClientUnaryCall;
+    public postAnnotationTracks(request: proto_clarifai_api_service_pb.PostAnnotationTracksRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse) => void): grpc.ClientUnaryCall;
+    public postAnnotationTracks(request: proto_clarifai_api_service_pb.PostAnnotationTracksRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse) => void): grpc.ClientUnaryCall;
+    public postAnnotationTracks(request: proto_clarifai_api_service_pb.PostAnnotationTracksRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse) => void): grpc.ClientUnaryCall;
+    public patchAnnotationTracks(request: proto_clarifai_api_service_pb.PatchAnnotationTracksRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse) => void): grpc.ClientUnaryCall;
+    public patchAnnotationTracks(request: proto_clarifai_api_service_pb.PatchAnnotationTracksRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse) => void): grpc.ClientUnaryCall;
+    public patchAnnotationTracks(request: proto_clarifai_api_service_pb.PatchAnnotationTracksRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse) => void): grpc.ClientUnaryCall;
+    public deleteAnnotationTracks(request: proto_clarifai_api_service_pb.DeleteAnnotationTracksRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public deleteAnnotationTracks(request: proto_clarifai_api_service_pb.DeleteAnnotationTracksRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public deleteAnnotationTracks(request: proto_clarifai_api_service_pb.DeleteAnnotationTracksRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public patchAnnotationsSearches(request: proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     public patchAnnotationsSearches(request: proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     public patchAnnotationsSearches(request: proto_clarifai_api_service_pb.PatchAnnotationsSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;

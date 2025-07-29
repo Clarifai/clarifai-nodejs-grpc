@@ -74,6 +74,39 @@ message Annotation {
   Worker worker = 21;
 }
 
+// AnnotationTrack of an asset with metadata
+message AnnotationTrack {
+  // The ID for the annotation track
+  string id = 1;
+  // ID of the application this annotation track is tied to
+  string app_id = 2;
+  // ID of the asset this annotation track is tied to
+  string input_id = 3;
+  // Concept this annotation track
+  Concept concept = 4;
+  // The user the track belongs to (app owner)
+  string user_id = 5;
+
+  // AnnotationTrack Status
+  clarifai.api.status.Status status = 6;
+
+  // Start frame of the annotation track
+  uint32 start_frame = 7;
+  // End frame of the annotation track
+  uint32 end_frame = 8;
+
+  // When the annotation track was created.
+  google.protobuf.Timestamp created_at = 9;
+  // When the annotation track was modified.
+  google.protobuf.Timestamp modified_at = 10;
+
+  // Frame rate of the video track.
+  // 1 means it matches the original video FPS.
+  // 2 means every second frame, etc.
+  // So if you have 30fps original video and frame_rate=3, your annotations in a track are stored at 30fps/3frame_rate=10 frames per second
+  uint32 frame_rate = 11;
+}
+
 // Worker is the author of an annotation.
 message Worker {
   oneof worker {
@@ -5670,4 +5703,80 @@ message Secret {
 
   // When the secret will expire.
   google.protobuf.Timestamp expires_at = 10;
+}
+
+message MetricData {
+  message Label {
+    MetricLabel name = 1;
+    string value = 2;
+  }
+  message MetricSample {
+    // The format is https://www.ietf.org/rfc/rfc3339.txt.
+    // Example: "2006-01-02T15:04:05.999999Z".
+    google.protobuf.Timestamp timestamp = 1;
+    double value = 2;
+  }
+  message MatrixData {
+    message TimeSeries {
+      repeated Label labels = 1;
+      repeated MetricSample value = 2;
+    }
+    repeated TimeSeries series = 1;
+  }
+  oneof data {
+    MatrixData matrix_data = 1;
+  }
+}
+enum MetricType {
+  METRIC_TYPE_NOT_SET = 0;
+  MODEL_REQUEST_COUNT = 1;
+  MODEL_LATENCY = 2;
+}
+
+enum MetricLabel {
+  METRIC_LABEL_NOT_SET = 0;
+  APP_ID = 1;
+  MODEL_ID = 2;
+  MODEL_VERSION_ID = 3;
+  CALLER_USER_ID = 4;
+  WORKFLOW_ID = 5;
+}
+message MetricAggregate {
+  enum Operator {
+    OPERATOR_NOT_SET = 0;
+    AVG = 1;
+    SUM = 2;
+    MAX = 3;
+    MIN = 4;
+    P95 = 5;
+    P99 = 6;
+    P50 = 7;
+    COUNT = 8;
+  }
+  Operator operator = 1;
+  repeated MetricLabel labels = 2;
+}
+
+message MetricFilter {
+  message MultiValues {
+    repeated string in = 1;
+  }
+
+  MetricLabel label = 1;
+  oneof value {
+    string equals = 2;
+    MultiValues in = 3;
+  }
+}
+
+message MetricSearchQuery {
+  MetricType metric_type = 1;
+  // start time of the search window
+  google.protobuf.Timestamp start_time = 2;
+  // end time of the search window
+  google.protobuf.Timestamp end_time = 3;
+  // duration string https://pkg.go.dev/time#ParseDuration
+  string resolution = 4;
+  repeated MetricFilter filters = 5; // ANDed
+  MetricAggregate aggregate = 6;
 }
