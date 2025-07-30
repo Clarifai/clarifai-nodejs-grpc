@@ -90985,7 +90985,7 @@ proto.clarifai.api.PostRunnerItemOutputsRequest.prototype.setRegion = function(v
  * @private {!Array<number>}
  * @const
  */
-proto.clarifai.api.SyncStateRequest.repeatedFields_ = [2,3,4,5];
+proto.clarifai.api.SyncStateRequest.repeatedFields_ = [2,3,4,5,6];
 
 
 
@@ -91026,7 +91026,9 @@ proto.clarifai.api.SyncStateRequest.toObject = function(includeInstance, msg) {
     runnersList: jspb.Message.toObjectList(msg.getRunnersList(),
     proto_clarifai_api_resources_pb.Runner.toObject, includeInstance),
     pipelineVersionRunsList: jspb.Message.toObjectList(msg.getPipelineVersionRunsList(),
-    proto_clarifai_api_resources_pb.PipelineVersionRun.toObject, includeInstance)
+    proto_clarifai_api_resources_pb.PipelineVersionRun.toObject, includeInstance),
+    secretsList: jspb.Message.toObjectList(msg.getSecretsList(),
+    proto_clarifai_api_resources_pb.Secret.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -91086,6 +91088,11 @@ proto.clarifai.api.SyncStateRequest.deserializeBinaryFromReader = function(msg, 
       var value = new proto_clarifai_api_resources_pb.PipelineVersionRun;
       reader.readMessage(value,proto_clarifai_api_resources_pb.PipelineVersionRun.deserializeBinaryFromReader);
       msg.addPipelineVersionRuns(value);
+      break;
+    case 6:
+      var value = new proto_clarifai_api_resources_pb.Secret;
+      reader.readMessage(value,proto_clarifai_api_resources_pb.Secret.deserializeBinaryFromReader);
+      msg.addSecrets(value);
       break;
     default:
       reader.skipField();
@@ -91153,6 +91160,14 @@ proto.clarifai.api.SyncStateRequest.serializeBinaryToWriter = function(message, 
       5,
       f,
       proto_clarifai_api_resources_pb.PipelineVersionRun.serializeBinaryToWriter
+    );
+  }
+  f = message.getSecretsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      6,
+      f,
+      proto_clarifai_api_resources_pb.Secret.serializeBinaryToWriter
     );
   }
 };
@@ -91325,6 +91340,44 @@ proto.clarifai.api.SyncStateRequest.prototype.addPipelineVersionRuns = function(
  */
 proto.clarifai.api.SyncStateRequest.prototype.clearPipelineVersionRunsList = function() {
   return this.setPipelineVersionRunsList([]);
+};
+
+
+/**
+ * repeated Secret secrets = 6;
+ * @return {!Array<!proto.clarifai.api.Secret>}
+ */
+proto.clarifai.api.SyncStateRequest.prototype.getSecretsList = function() {
+  return /** @type{!Array<!proto.clarifai.api.Secret>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto_clarifai_api_resources_pb.Secret, 6));
+};
+
+
+/**
+ * @param {!Array<!proto.clarifai.api.Secret>} value
+ * @return {!proto.clarifai.api.SyncStateRequest} returns this
+*/
+proto.clarifai.api.SyncStateRequest.prototype.setSecretsList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 6, value);
+};
+
+
+/**
+ * @param {!proto.clarifai.api.Secret=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.Secret}
+ */
+proto.clarifai.api.SyncStateRequest.prototype.addSecrets = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 6, opt_value, proto.clarifai.api.Secret, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.SyncStateRequest} returns this
+ */
+proto.clarifai.api.SyncStateRequest.prototype.clearSecretsList = function() {
+  return this.setSecretsList([]);
 };
 
 
@@ -108861,7 +108914,7 @@ proto.clarifai.api.GetSecretRequest.prototype.toObject = function(opt_includeIns
 proto.clarifai.api.GetSecretRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     userAppId: (f = msg.getUserAppId()) && proto_clarifai_api_resources_pb.UserAppIDSet.toObject(includeInstance, f),
-    secretId: jspb.Message.getFieldWithDefault(msg, 2, "")
+    id: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -108905,7 +108958,7 @@ proto.clarifai.api.GetSecretRequest.deserializeBinaryFromReader = function(msg, 
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setSecretId(value);
+      msg.setId(value);
       break;
     default:
       reader.skipField();
@@ -108944,7 +108997,7 @@ proto.clarifai.api.GetSecretRequest.serializeBinaryToWriter = function(message, 
       proto_clarifai_api_resources_pb.UserAppIDSet.serializeBinaryToWriter
     );
   }
-  f = message.getSecretId();
+  f = message.getId();
   if (f.length > 0) {
     writer.writeString(
       2,
@@ -108992,10 +109045,10 @@ proto.clarifai.api.GetSecretRequest.prototype.hasUserAppId = function() {
 
 
 /**
- * optional string secret_id = 2;
+ * optional string id = 2;
  * @return {string}
  */
-proto.clarifai.api.GetSecretRequest.prototype.getSecretId = function() {
+proto.clarifai.api.GetSecretRequest.prototype.getId = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -109004,7 +109057,7 @@ proto.clarifai.api.GetSecretRequest.prototype.getSecretId = function() {
  * @param {string} value
  * @return {!proto.clarifai.api.GetSecretRequest} returns this
  */
-proto.clarifai.api.GetSecretRequest.prototype.setSecretId = function(value) {
+proto.clarifai.api.GetSecretRequest.prototype.setId = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -109437,7 +109490,7 @@ proto.clarifai.api.PostSecretsRequest.prototype.clearSecretsList = function() {
  * @private {!Array<number>}
  * @const
  */
-proto.clarifai.api.PatchSecretsRequest.repeatedFields_ = [2];
+proto.clarifai.api.PatchSecretsRequest.repeatedFields_ = [5];
 
 
 
@@ -109471,9 +109524,9 @@ proto.clarifai.api.PatchSecretsRequest.prototype.toObject = function(opt_include
 proto.clarifai.api.PatchSecretsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     userAppId: (f = msg.getUserAppId()) && proto_clarifai_api_resources_pb.UserAppIDSet.toObject(includeInstance, f),
-    secretsList: jspb.Message.toObjectList(msg.getSecretsList(),
+    secretList: jspb.Message.toObjectList(msg.getSecretList(),
     proto_clarifai_api_resources_pb.Secret.toObject, includeInstance),
-    action: jspb.Message.getFieldWithDefault(msg, 3, "")
+    action: jspb.Message.getFieldWithDefault(msg, 8, "")
   };
 
   if (includeInstance) {
@@ -109515,12 +109568,12 @@ proto.clarifai.api.PatchSecretsRequest.deserializeBinaryFromReader = function(ms
       reader.readMessage(value,proto_clarifai_api_resources_pb.UserAppIDSet.deserializeBinaryFromReader);
       msg.setUserAppId(value);
       break;
-    case 2:
+    case 5:
       var value = new proto_clarifai_api_resources_pb.Secret;
       reader.readMessage(value,proto_clarifai_api_resources_pb.Secret.deserializeBinaryFromReader);
-      msg.addSecrets(value);
+      msg.addSecret(value);
       break;
-    case 3:
+    case 8:
       var value = /** @type {string} */ (reader.readString());
       msg.setAction(value);
       break;
@@ -109561,10 +109614,10 @@ proto.clarifai.api.PatchSecretsRequest.serializeBinaryToWriter = function(messag
       proto_clarifai_api_resources_pb.UserAppIDSet.serializeBinaryToWriter
     );
   }
-  f = message.getSecretsList();
+  f = message.getSecretList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
-      2,
+      5,
       f,
       proto_clarifai_api_resources_pb.Secret.serializeBinaryToWriter
     );
@@ -109572,7 +109625,7 @@ proto.clarifai.api.PatchSecretsRequest.serializeBinaryToWriter = function(messag
   f = message.getAction();
   if (f.length > 0) {
     writer.writeString(
-      3,
+      8,
       f
     );
   }
@@ -109617,12 +109670,12 @@ proto.clarifai.api.PatchSecretsRequest.prototype.hasUserAppId = function() {
 
 
 /**
- * repeated Secret secrets = 2;
+ * repeated Secret secret = 5;
  * @return {!Array<!proto.clarifai.api.Secret>}
  */
-proto.clarifai.api.PatchSecretsRequest.prototype.getSecretsList = function() {
+proto.clarifai.api.PatchSecretsRequest.prototype.getSecretList = function() {
   return /** @type{!Array<!proto.clarifai.api.Secret>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto_clarifai_api_resources_pb.Secret, 2));
+    jspb.Message.getRepeatedWrapperField(this, proto_clarifai_api_resources_pb.Secret, 5));
 };
 
 
@@ -109630,8 +109683,8 @@ proto.clarifai.api.PatchSecretsRequest.prototype.getSecretsList = function() {
  * @param {!Array<!proto.clarifai.api.Secret>} value
  * @return {!proto.clarifai.api.PatchSecretsRequest} returns this
 */
-proto.clarifai.api.PatchSecretsRequest.prototype.setSecretsList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 2, value);
+proto.clarifai.api.PatchSecretsRequest.prototype.setSecretList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 5, value);
 };
 
 
@@ -109640,8 +109693,8 @@ proto.clarifai.api.PatchSecretsRequest.prototype.setSecretsList = function(value
  * @param {number=} opt_index
  * @return {!proto.clarifai.api.Secret}
  */
-proto.clarifai.api.PatchSecretsRequest.prototype.addSecrets = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 2, opt_value, proto.clarifai.api.Secret, opt_index);
+proto.clarifai.api.PatchSecretsRequest.prototype.addSecret = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 5, opt_value, proto.clarifai.api.Secret, opt_index);
 };
 
 
@@ -109649,17 +109702,17 @@ proto.clarifai.api.PatchSecretsRequest.prototype.addSecrets = function(opt_value
  * Clears the list making it empty but non-null.
  * @return {!proto.clarifai.api.PatchSecretsRequest} returns this
  */
-proto.clarifai.api.PatchSecretsRequest.prototype.clearSecretsList = function() {
-  return this.setSecretsList([]);
+proto.clarifai.api.PatchSecretsRequest.prototype.clearSecretList = function() {
+  return this.setSecretList([]);
 };
 
 
 /**
- * optional string action = 3;
+ * optional string action = 8;
  * @return {string}
  */
 proto.clarifai.api.PatchSecretsRequest.prototype.getAction = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
 };
 
 
@@ -109668,7 +109721,7 @@ proto.clarifai.api.PatchSecretsRequest.prototype.getAction = function() {
  * @return {!proto.clarifai.api.PatchSecretsRequest} returns this
  */
 proto.clarifai.api.PatchSecretsRequest.prototype.setAction = function(value) {
-  return jspb.Message.setProto3StringField(this, 3, value);
+  return jspb.Message.setProto3StringField(this, 8, value);
 };
 
 

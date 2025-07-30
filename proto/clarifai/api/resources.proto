@@ -1846,6 +1846,9 @@ message ModelTypeField {
     ENCRYPTED_STRING = 21;
     // For selecting a model version of the same model type to resume training from.
     CHECKPOINT_MODEL = 22;
+
+    // For model secrets
+    ARRAY_OF_SECRETS = 23;
   }
   // The field for this field. This is often used for displaying the field in the UI whereas
   // the DataType enum below defines the specific type of datain the Python function.
@@ -5672,14 +5675,12 @@ message PipelineVersionRun {
 }
 
 message Secret {
-  // The ID of the secret.
+  reserved 2, 3, 9;
+  // The name of the secret, corresponds to id in model_version.output_info.params.secrets
   string id = 1;
 
-  // The app the secret belongs to.
-  string app_id = 2;
-
-  // The name of the secret, corresponds to secret_name in model_version.output_info.params.secrets
-  string name = 3;
+  // The user the secret belongs to.
+  string user_id = 11;
 
   // The value of the secret.
   string value = 4;
@@ -5695,11 +5696,6 @@ message Secret {
 
   // When the secret was last modified.
   google.protobuf.Timestamp modified_at = 8;
-
-  // The visibility field represents whether this message is privately/publicly visible.
-  // To be visible to the public the App that contains it AND the User that contains the App must
-  // also be publicly visible.
-  Visibility visibility = 9;
 
   // When the secret will expire.
   google.protobuf.Timestamp expires_at = 10;

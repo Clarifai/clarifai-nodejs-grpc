@@ -4491,49 +4491,44 @@ service V2 {
 
   rpc GetSecret(GetSecretRequest) returns (SingleSecretResponse) {
     option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/secrets/{secret_id}"
+      get: "/v2/users/{user_app_id.user_id}/secrets/{id}"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Secrets_Get;
   }
 
   rpc ListSecrets(ListSecretsRequest) returns (MultiSecretResponse) {
     option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/secrets"
+      get: "/v2/users/{user_app_id.user_id}/secrets"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Secrets_Get;
   }
 
   rpc PostSecrets(PostSecretsRequest) returns (MultiSecretResponse) {
     option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/secrets"
+      post: "/v2/users/{user_app_id.user_id}/secrets"
       body: "*"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Secrets_Add;
   }
 
   rpc PatchSecrets(PatchSecretsRequest) returns (MultiSecretResponse) {
     option (google.api.http) = {
-      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/secrets"
+      patch: "/v2/users/{user_app_id.user_id}/secrets"
       body: "*"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Secrets_Add;
   }
 
   rpc DeleteSecrets(DeleteSecretsRequest) returns (MultiSecretResponse) {
     option (google.api.http) = {
-      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/secrets"
+      delete: "/v2/users/{user_app_id.user_id}/secrets"
       body: "*"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Secrets_Delete;
   }
 }
@@ -8524,6 +8519,7 @@ message SyncStateRequest{
   repeated Nodepool nodepools = 3;
   repeated Runner runners = 4;
   repeated PipelineVersionRun pipeline_version_runs = 5;
+  repeated Secret secrets = 6;
 }
 
 // MultiRunnerItemResponse
@@ -9209,7 +9205,7 @@ message SinglePipelineStepVersionResponse {
 message GetSecretRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // The id of the secret to get
-  string secret_id = 2;
+  string id = 2;
 }
 
 message ListSecretsRequest {
@@ -9229,12 +9225,10 @@ message PostSecretsRequest {
 }
 
 message PatchSecretsRequest {
+  reserved 2, 3, 4;
   clarifai.api.UserAppIDSet user_app_id = 1;
-  // The secrets to patch
-  repeated Secret secrets = 2;
-
-  // For now actions 'merge', 'overwrite', and 'remove' are supported
-  string action = 3; // The action to perform on the patched objects
+  repeated Secret secret = 5;
+  string action = 8;
 }
 
 message DeleteSecretsRequest {

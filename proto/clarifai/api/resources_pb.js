@@ -31694,7 +31694,8 @@ proto.clarifai.api.ModelTypeField.ModelTypeFieldType = {
   DATASET: 19,
   DATASET_VERSION: 20,
   ENCRYPTED_STRING: 21,
-  CHECKPOINT_MODEL: 22
+  CHECKPOINT_MODEL: 22,
+  ARRAY_OF_SECRETS: 23
 };
 
 /**
@@ -84630,14 +84631,12 @@ proto.clarifai.api.Secret.prototype.toObject = function(opt_includeInstance) {
 proto.clarifai.api.Secret.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    appId: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    name: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    userId: jspb.Message.getFieldWithDefault(msg, 11, ""),
     value: jspb.Message.getFieldWithDefault(msg, 4, ""),
     version: jspb.Message.getFieldWithDefault(msg, 5, 0),
     description: jspb.Message.getFieldWithDefault(msg, 6, ""),
     createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    visibility: (f = msg.getVisibility()) && proto.clarifai.api.Visibility.toObject(includeInstance, f),
     expiresAt: (f = msg.getExpiresAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f)
   };
 
@@ -84679,13 +84678,9 @@ proto.clarifai.api.Secret.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {string} */ (reader.readString());
       msg.setId(value);
       break;
-    case 2:
+    case 11:
       var value = /** @type {string} */ (reader.readString());
-      msg.setAppId(value);
-      break;
-    case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setName(value);
+      msg.setUserId(value);
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
@@ -84708,11 +84703,6 @@ proto.clarifai.api.Secret.deserializeBinaryFromReader = function(msg, reader) {
       var value = new google_protobuf_timestamp_pb.Timestamp;
       reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
       msg.setModifiedAt(value);
-      break;
-    case 9:
-      var value = new proto.clarifai.api.Visibility;
-      reader.readMessage(value,proto.clarifai.api.Visibility.deserializeBinaryFromReader);
-      msg.setVisibility(value);
       break;
     case 10:
       var value = new google_protobuf_timestamp_pb.Timestamp;
@@ -84755,17 +84745,10 @@ proto.clarifai.api.Secret.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getAppId();
+  f = message.getUserId();
   if (f.length > 0) {
     writer.writeString(
-      2,
-      f
-    );
-  }
-  f = message.getName();
-  if (f.length > 0) {
-    writer.writeString(
-      3,
+      11,
       f
     );
   }
@@ -84806,14 +84789,6 @@ proto.clarifai.api.Secret.serializeBinaryToWriter = function(message, writer) {
       google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
     );
   }
-  f = message.getVisibility();
-  if (f != null) {
-    writer.writeMessage(
-      9,
-      f,
-      proto.clarifai.api.Visibility.serializeBinaryToWriter
-    );
-  }
   f = message.getExpiresAt();
   if (f != null) {
     writer.writeMessage(
@@ -84844,11 +84819,11 @@ proto.clarifai.api.Secret.prototype.setId = function(value) {
 
 
 /**
- * optional string app_id = 2;
+ * optional string user_id = 11;
  * @return {string}
  */
-proto.clarifai.api.Secret.prototype.getAppId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+proto.clarifai.api.Secret.prototype.getUserId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
 };
 
 
@@ -84856,26 +84831,8 @@ proto.clarifai.api.Secret.prototype.getAppId = function() {
  * @param {string} value
  * @return {!proto.clarifai.api.Secret} returns this
  */
-proto.clarifai.api.Secret.prototype.setAppId = function(value) {
-  return jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-/**
- * optional string name = 3;
- * @return {string}
- */
-proto.clarifai.api.Secret.prototype.getName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.clarifai.api.Secret} returns this
- */
-proto.clarifai.api.Secret.prototype.setName = function(value) {
-  return jspb.Message.setProto3StringField(this, 3, value);
+proto.clarifai.api.Secret.prototype.setUserId = function(value) {
+  return jspb.Message.setProto3StringField(this, 11, value);
 };
 
 
@@ -85004,43 +84961,6 @@ proto.clarifai.api.Secret.prototype.clearModifiedAt = function() {
  */
 proto.clarifai.api.Secret.prototype.hasModifiedAt = function() {
   return jspb.Message.getField(this, 8) != null;
-};
-
-
-/**
- * optional Visibility visibility = 9;
- * @return {?proto.clarifai.api.Visibility}
- */
-proto.clarifai.api.Secret.prototype.getVisibility = function() {
-  return /** @type{?proto.clarifai.api.Visibility} */ (
-    jspb.Message.getWrapperField(this, proto.clarifai.api.Visibility, 9));
-};
-
-
-/**
- * @param {?proto.clarifai.api.Visibility|undefined} value
- * @return {!proto.clarifai.api.Secret} returns this
-*/
-proto.clarifai.api.Secret.prototype.setVisibility = function(value) {
-  return jspb.Message.setWrapperField(this, 9, value);
-};
-
-
-/**
- * Clears the message field making it undefined.
- * @return {!proto.clarifai.api.Secret} returns this
- */
-proto.clarifai.api.Secret.prototype.clearVisibility = function() {
-  return this.setVisibility(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.clarifai.api.Secret.prototype.hasVisibility = function() {
-  return jspb.Message.getField(this, 9) != null;
 };
 
 
