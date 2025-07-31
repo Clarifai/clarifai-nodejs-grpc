@@ -2678,7 +2678,6 @@ service V2 {
 
 
 
-
   // owner list users who the app is shared with
   rpc ListCollaborators (ListCollaboratorsRequest) returns (MultiCollaboratorsResponse) {
     option (google.api.http) = {
@@ -5000,8 +4999,6 @@ message MultiCollaborationsResponse {
   clarifai.api.status.Status status = 1;
   repeated Collaboration collaborations = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
-
-
 
 
 
