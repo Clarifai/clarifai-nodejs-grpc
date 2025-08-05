@@ -270,6 +270,11 @@ enum StatusCode {
   PIPELINE_STEP_READY = 26208;
   PIPELINE_STEP_NOT_READY = 26209;
 
+  // Pipeline related codes 263xx
+  PIPELINE_DOES_NOT_EXIST = 26300;
+  PIPELINE_INVALID_ARGUMENT = 26301;
+  PIPELINE_INVALID_REQUEST = 26302;
+
   // Input:Image related 30xxx
   INPUT_SUCCESS = 30000;
   INPUT_PENDING = 30001; // when things are async, this is the default status.
