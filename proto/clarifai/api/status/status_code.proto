@@ -416,6 +416,7 @@ enum StatusCode {
 
   // Stripe 44xxx
   STRIPE_EVENT_ERROR = 44001;
+  STRIPE_UNEXPECTED_ERROR = 44002;
 
   // Redis/Cache 45xxx
   CACHE_MISS = 45001;
