@@ -80,6 +80,17 @@ function deserialize_clarifai_api_DeleteAnnotationSearchMetricsRequest(buffer_ar
   return proto_clarifai_api_service_pb.DeleteAnnotationSearchMetricsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_DeleteAnnotationTracksRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.DeleteAnnotationTracksRequest)) {
+    throw new Error('Expected argument of type clarifai.api.DeleteAnnotationTracksRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_DeleteAnnotationTracksRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.DeleteAnnotationTracksRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_DeleteAnnotationsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.DeleteAnnotationsRequest)) {
     throw new Error('Expected argument of type clarifai.api.DeleteAnnotationsRequest');
@@ -1059,6 +1070,17 @@ function deserialize_clarifai_api_ListAnnotationSearchMetricsRequest(buffer_arg)
   return proto_clarifai_api_service_pb.ListAnnotationSearchMetricsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_ListAnnotationTracksRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListAnnotationTracksRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListAnnotationTracksRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListAnnotationTracksRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListAnnotationTracksRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_ListAnnotationWorkersRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.ListAnnotationWorkersRequest)) {
     throw new Error('Expected argument of type clarifai.api.ListAnnotationWorkersRequest');
@@ -1772,6 +1794,17 @@ function serialize_clarifai_api_MultiAnnotationSearchMetricsResponse(arg) {
 
 function deserialize_clarifai_api_MultiAnnotationSearchMetricsResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MultiAnnotationTrackResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiAnnotationTrackResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiAnnotationTrackResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiAnnotationTrackResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiAnnotationTrackResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiAppDuplicationsResponse(arg) {
@@ -2599,6 +2632,17 @@ function deserialize_clarifai_api_PatchAnnotationFiltersRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PatchAnnotationFiltersRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PatchAnnotationTracksRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PatchAnnotationTracksRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PatchAnnotationTracksRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PatchAnnotationTracksRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PatchAnnotationTracksRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PatchAnnotationsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PatchAnnotationsRequest)) {
     throw new Error('Expected argument of type clarifai.api.PatchAnnotationsRequest');
@@ -3059,6 +3103,17 @@ function serialize_clarifai_api_PostAnnotationSearchMetricsRequest(arg) {
 
 function deserialize_clarifai_api_PostAnnotationSearchMetricsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostAnnotationSearchMetricsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PostAnnotationTracksRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostAnnotationTracksRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostAnnotationTracksRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostAnnotationTracksRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostAnnotationTracksRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PostAnnotationsRequest(arg) {
@@ -4693,6 +4748,54 @@ deleteAnnotations: {
     responseType: proto_clarifai_api_status_status_pb.BaseResponse,
     requestSerialize: serialize_clarifai_api_DeleteAnnotationsRequest,
     requestDeserialize: deserialize_clarifai_api_DeleteAnnotationsRequest,
+    responseSerialize: serialize_clarifai_api_status_BaseResponse,
+    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
+  // List all the annotation tracks.
+listAnnotationTracks: {
+    path: '/clarifai.api.V2/ListAnnotationTracks',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListAnnotationTracksRequest,
+    responseType: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse,
+    requestSerialize: serialize_clarifai_api_ListAnnotationTracksRequest,
+    requestDeserialize: deserialize_clarifai_api_ListAnnotationTracksRequest,
+    responseSerialize: serialize_clarifai_api_MultiAnnotationTrackResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiAnnotationTrackResponse,
+  },
+  // Post annotation tracks.
+postAnnotationTracks: {
+    path: '/clarifai.api.V2/PostAnnotationTracks',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostAnnotationTracksRequest,
+    responseType: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse,
+    requestSerialize: serialize_clarifai_api_PostAnnotationTracksRequest,
+    requestDeserialize: deserialize_clarifai_api_PostAnnotationTracksRequest,
+    responseSerialize: serialize_clarifai_api_MultiAnnotationTrackResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiAnnotationTrackResponse,
+  },
+  // Patch one or more annotation tracks.
+patchAnnotationTracks: {
+    path: '/clarifai.api.V2/PatchAnnotationTracks',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PatchAnnotationTracksRequest,
+    responseType: proto_clarifai_api_service_pb.MultiAnnotationTrackResponse,
+    requestSerialize: serialize_clarifai_api_PatchAnnotationTracksRequest,
+    requestDeserialize: deserialize_clarifai_api_PatchAnnotationTracksRequest,
+    responseSerialize: serialize_clarifai_api_MultiAnnotationTrackResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiAnnotationTrackResponse,
+  },
+  // Delete multiple annotation tracks in one request.
+deleteAnnotationTracks: {
+    path: '/clarifai.api.V2/DeleteAnnotationTracks',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.DeleteAnnotationTracksRequest,
+    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
+    requestSerialize: serialize_clarifai_api_DeleteAnnotationTracksRequest,
+    requestDeserialize: deserialize_clarifai_api_DeleteAnnotationTracksRequest,
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },

@@ -97,6 +97,68 @@ export namespace Annotation {
     }
 }
 
+export class AnnotationTrack extends jspb.Message { 
+    getId(): string;
+    setId(value: string): AnnotationTrack;
+    getAppId(): string;
+    setAppId(value: string): AnnotationTrack;
+    getInputId(): string;
+    setInputId(value: string): AnnotationTrack;
+
+    hasConcept(): boolean;
+    clearConcept(): void;
+    getConcept(): Concept | undefined;
+    setConcept(value?: Concept): AnnotationTrack;
+    getUserId(): string;
+    setUserId(value: string): AnnotationTrack;
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): AnnotationTrack;
+    getStartFrame(): number;
+    setStartFrame(value: number): AnnotationTrack;
+    getEndFrame(): number;
+    setEndFrame(value: number): AnnotationTrack;
+
+    hasCreatedAt(): boolean;
+    clearCreatedAt(): void;
+    getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): AnnotationTrack;
+
+    hasModifiedAt(): boolean;
+    clearModifiedAt(): void;
+    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): AnnotationTrack;
+    getFrameRate(): number;
+    setFrameRate(value: number): AnnotationTrack;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): AnnotationTrack.AsObject;
+    static toObject(includeInstance: boolean, msg: AnnotationTrack): AnnotationTrack.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: AnnotationTrack, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): AnnotationTrack;
+    static deserializeBinaryFromReader(message: AnnotationTrack, reader: jspb.BinaryReader): AnnotationTrack;
+}
+
+export namespace AnnotationTrack {
+    export type AsObject = {
+        id: string,
+        appId: string,
+        inputId: string,
+        concept?: Concept.AsObject,
+        userId: string,
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        startFrame: number,
+        endFrame: number,
+        createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        frameRate: number,
+    }
+}
+
 export class Worker extends jspb.Message { 
 
     hasUser(): boolean;
@@ -3322,6 +3384,7 @@ export namespace ModelTypeField {
     DATASET_VERSION = 20,
     ENCRYPTED_STRING = 21,
     CHECKPOINT_MODEL = 22,
+    ARRAY_OF_SECRETS = 23,
     }
 
     export enum DataType {
@@ -9364,6 +9427,8 @@ export class ComputeSourceMetadata extends jspb.Message {
     setModelVersionId(value: string): ComputeSourceMetadata;
     getWorkflowId(): string;
     setWorkflowId(value: string): ComputeSourceMetadata;
+    getComputeClusterUserId(): string;
+    setComputeClusterUserId(value: string): ComputeSourceMetadata;
     getComputeClusterId(): string;
     setComputeClusterId(value: string): ComputeSourceMetadata;
     getNodepoolId(): string;
@@ -9397,6 +9462,7 @@ export namespace ComputeSourceMetadata {
         modelId: string,
         modelVersionId: string,
         workflowId: string,
+        computeClusterUserId: string,
         computeClusterId: string,
         nodepoolId: string,
         runnerId: string,
@@ -10217,10 +10283,8 @@ export namespace PipelineVersionRun {
 export class Secret extends jspb.Message { 
     getId(): string;
     setId(value: string): Secret;
-    getAppId(): string;
-    setAppId(value: string): Secret;
-    getName(): string;
-    setName(value: string): Secret;
+    getUserId(): string;
+    setUserId(value: string): Secret;
     getValue(): string;
     setValue(value: string): Secret;
     getVersion(): number;
@@ -10237,11 +10301,6 @@ export class Secret extends jspb.Message {
     clearModifiedAt(): void;
     getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
     setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): Secret;
-
-    hasVisibility(): boolean;
-    clearVisibility(): void;
-    getVisibility(): Visibility | undefined;
-    setVisibility(value?: Visibility): Secret;
 
     hasExpiresAt(): boolean;
     clearExpiresAt(): void;
@@ -10261,15 +10320,295 @@ export class Secret extends jspb.Message {
 export namespace Secret {
     export type AsObject = {
         id: string,
-        appId: string,
-        name: string,
+        userId: string,
         value: string,
         version: number,
         description: string,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        visibility?: Visibility.AsObject,
         expiresAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    }
+}
+
+export class MetricData extends jspb.Message { 
+
+    hasMatrixData(): boolean;
+    clearMatrixData(): void;
+    getMatrixData(): MetricData.MatrixData | undefined;
+    setMatrixData(value?: MetricData.MatrixData): MetricData;
+
+    getDataCase(): MetricData.DataCase;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MetricData.AsObject;
+    static toObject(includeInstance: boolean, msg: MetricData): MetricData.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MetricData, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MetricData;
+    static deserializeBinaryFromReader(message: MetricData, reader: jspb.BinaryReader): MetricData;
+}
+
+export namespace MetricData {
+    export type AsObject = {
+        matrixData?: MetricData.MatrixData.AsObject,
+    }
+
+
+    export class Label extends jspb.Message { 
+        getName(): MetricLabel;
+        setName(value: MetricLabel): Label;
+        getValue(): string;
+        setValue(value: string): Label;
+
+        serializeBinary(): Uint8Array;
+        toObject(includeInstance?: boolean): Label.AsObject;
+        static toObject(includeInstance: boolean, msg: Label): Label.AsObject;
+        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+        static serializeBinaryToWriter(message: Label, writer: jspb.BinaryWriter): void;
+        static deserializeBinary(bytes: Uint8Array): Label;
+        static deserializeBinaryFromReader(message: Label, reader: jspb.BinaryReader): Label;
+    }
+
+    export namespace Label {
+        export type AsObject = {
+            name: MetricLabel,
+            value: string,
+        }
+    }
+
+    export class MetricSample extends jspb.Message { 
+
+        hasTimestamp(): boolean;
+        clearTimestamp(): void;
+        getTimestamp(): google_protobuf_timestamp_pb.Timestamp | undefined;
+        setTimestamp(value?: google_protobuf_timestamp_pb.Timestamp): MetricSample;
+        getValue(): number;
+        setValue(value: number): MetricSample;
+
+        serializeBinary(): Uint8Array;
+        toObject(includeInstance?: boolean): MetricSample.AsObject;
+        static toObject(includeInstance: boolean, msg: MetricSample): MetricSample.AsObject;
+        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+        static serializeBinaryToWriter(message: MetricSample, writer: jspb.BinaryWriter): void;
+        static deserializeBinary(bytes: Uint8Array): MetricSample;
+        static deserializeBinaryFromReader(message: MetricSample, reader: jspb.BinaryReader): MetricSample;
+    }
+
+    export namespace MetricSample {
+        export type AsObject = {
+            timestamp?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+            value: number,
+        }
+    }
+
+    export class MatrixData extends jspb.Message { 
+        clearSeriesList(): void;
+        getSeriesList(): Array<MetricData.MatrixData.TimeSeries>;
+        setSeriesList(value: Array<MetricData.MatrixData.TimeSeries>): MatrixData;
+        addSeries(value?: MetricData.MatrixData.TimeSeries, index?: number): MetricData.MatrixData.TimeSeries;
+
+        serializeBinary(): Uint8Array;
+        toObject(includeInstance?: boolean): MatrixData.AsObject;
+        static toObject(includeInstance: boolean, msg: MatrixData): MatrixData.AsObject;
+        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+        static serializeBinaryToWriter(message: MatrixData, writer: jspb.BinaryWriter): void;
+        static deserializeBinary(bytes: Uint8Array): MatrixData;
+        static deserializeBinaryFromReader(message: MatrixData, reader: jspb.BinaryReader): MatrixData;
+    }
+
+    export namespace MatrixData {
+        export type AsObject = {
+            seriesList: Array<MetricData.MatrixData.TimeSeries.AsObject>,
+        }
+
+
+        export class TimeSeries extends jspb.Message { 
+            clearLabelsList(): void;
+            getLabelsList(): Array<MetricData.Label>;
+            setLabelsList(value: Array<MetricData.Label>): TimeSeries;
+            addLabels(value?: MetricData.Label, index?: number): MetricData.Label;
+            clearValueList(): void;
+            getValueList(): Array<MetricData.MetricSample>;
+            setValueList(value: Array<MetricData.MetricSample>): TimeSeries;
+            addValue(value?: MetricData.MetricSample, index?: number): MetricData.MetricSample;
+
+            serializeBinary(): Uint8Array;
+            toObject(includeInstance?: boolean): TimeSeries.AsObject;
+            static toObject(includeInstance: boolean, msg: TimeSeries): TimeSeries.AsObject;
+            static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+            static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+            static serializeBinaryToWriter(message: TimeSeries, writer: jspb.BinaryWriter): void;
+            static deserializeBinary(bytes: Uint8Array): TimeSeries;
+            static deserializeBinaryFromReader(message: TimeSeries, reader: jspb.BinaryReader): TimeSeries;
+        }
+
+        export namespace TimeSeries {
+            export type AsObject = {
+                labelsList: Array<MetricData.Label.AsObject>,
+                valueList: Array<MetricData.MetricSample.AsObject>,
+            }
+        }
+
+    }
+
+
+    export enum DataCase {
+        DATA_NOT_SET = 0,
+        MATRIX_DATA = 1,
+    }
+
+}
+
+export class MetricAggregate extends jspb.Message { 
+    getOperator(): MetricAggregate.Operator;
+    setOperator(value: MetricAggregate.Operator): MetricAggregate;
+    clearLabelsList(): void;
+    getLabelsList(): Array<MetricLabel>;
+    setLabelsList(value: Array<MetricLabel>): MetricAggregate;
+    addLabels(value: MetricLabel, index?: number): MetricLabel;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MetricAggregate.AsObject;
+    static toObject(includeInstance: boolean, msg: MetricAggregate): MetricAggregate.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MetricAggregate, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MetricAggregate;
+    static deserializeBinaryFromReader(message: MetricAggregate, reader: jspb.BinaryReader): MetricAggregate;
+}
+
+export namespace MetricAggregate {
+    export type AsObject = {
+        operator: MetricAggregate.Operator,
+        labelsList: Array<MetricLabel>,
+    }
+
+    export enum Operator {
+    OPERATOR_NOT_SET = 0,
+    AVG = 1,
+    SUM = 2,
+    MAX = 3,
+    MIN = 4,
+    P95 = 5,
+    P99 = 6,
+    P50 = 7,
+    COUNT = 8,
+    }
+
+}
+
+export class MetricFilter extends jspb.Message { 
+    getLabel(): MetricLabel;
+    setLabel(value: MetricLabel): MetricFilter;
+
+    hasEquals(): boolean;
+    clearEquals(): void;
+    getEquals(): string;
+    setEquals(value: string): MetricFilter;
+
+    hasIn(): boolean;
+    clearIn(): void;
+    getIn(): MetricFilter.MultiValues | undefined;
+    setIn(value?: MetricFilter.MultiValues): MetricFilter;
+
+    getValueCase(): MetricFilter.ValueCase;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MetricFilter.AsObject;
+    static toObject(includeInstance: boolean, msg: MetricFilter): MetricFilter.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MetricFilter, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MetricFilter;
+    static deserializeBinaryFromReader(message: MetricFilter, reader: jspb.BinaryReader): MetricFilter;
+}
+
+export namespace MetricFilter {
+    export type AsObject = {
+        label: MetricLabel,
+        equals: string,
+        pb_in?: MetricFilter.MultiValues.AsObject,
+    }
+
+
+    export class MultiValues extends jspb.Message { 
+        clearInList(): void;
+        getInList(): Array<string>;
+        setInList(value: Array<string>): MultiValues;
+        addIn(value: string, index?: number): string;
+
+        serializeBinary(): Uint8Array;
+        toObject(includeInstance?: boolean): MultiValues.AsObject;
+        static toObject(includeInstance: boolean, msg: MultiValues): MultiValues.AsObject;
+        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+        static serializeBinaryToWriter(message: MultiValues, writer: jspb.BinaryWriter): void;
+        static deserializeBinary(bytes: Uint8Array): MultiValues;
+        static deserializeBinaryFromReader(message: MultiValues, reader: jspb.BinaryReader): MultiValues;
+    }
+
+    export namespace MultiValues {
+        export type AsObject = {
+            pb_inList: Array<string>,
+        }
+    }
+
+
+    export enum ValueCase {
+        VALUE_NOT_SET = 0,
+        EQUALS = 2,
+        IN = 3,
+    }
+
+}
+
+export class MetricSearchQuery extends jspb.Message { 
+    getMetricType(): MetricType;
+    setMetricType(value: MetricType): MetricSearchQuery;
+
+    hasStartTime(): boolean;
+    clearStartTime(): void;
+    getStartTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setStartTime(value?: google_protobuf_timestamp_pb.Timestamp): MetricSearchQuery;
+
+    hasEndTime(): boolean;
+    clearEndTime(): void;
+    getEndTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setEndTime(value?: google_protobuf_timestamp_pb.Timestamp): MetricSearchQuery;
+    getResolution(): string;
+    setResolution(value: string): MetricSearchQuery;
+    clearFiltersList(): void;
+    getFiltersList(): Array<MetricFilter>;
+    setFiltersList(value: Array<MetricFilter>): MetricSearchQuery;
+    addFilters(value?: MetricFilter, index?: number): MetricFilter;
+
+    hasAggregate(): boolean;
+    clearAggregate(): void;
+    getAggregate(): MetricAggregate | undefined;
+    setAggregate(value?: MetricAggregate): MetricSearchQuery;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MetricSearchQuery.AsObject;
+    static toObject(includeInstance: boolean, msg: MetricSearchQuery): MetricSearchQuery.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MetricSearchQuery, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MetricSearchQuery;
+    static deserializeBinaryFromReader(message: MetricSearchQuery, reader: jspb.BinaryReader): MetricSearchQuery;
+}
+
+export namespace MetricSearchQuery {
+    export type AsObject = {
+        metricType: MetricType,
+        startTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        endTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        resolution: string,
+        filtersList: Array<MetricFilter.AsObject>,
+        aggregate?: MetricAggregate.AsObject,
     }
 }
 
@@ -10476,4 +10815,19 @@ export enum EventType {
     DEPLOYMENT_CREATE = 1100,
     DEPLOYMENT_UPDATE = 1101,
     DEPLOYMENT_DELETE = 1102,
+}
+
+export enum MetricType {
+    METRIC_TYPE_NOT_SET = 0,
+    MODEL_REQUEST_COUNT = 1,
+    MODEL_LATENCY = 2,
+}
+
+export enum MetricLabel {
+    METRIC_LABEL_NOT_SET = 0,
+    APP_ID = 1,
+    MODEL_ID = 2,
+    MODEL_VERSION_ID = 3,
+    CALLER_USER_ID = 4,
+    WORKFLOW_ID = 5,
 }

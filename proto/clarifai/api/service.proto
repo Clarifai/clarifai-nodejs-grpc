@@ -437,6 +437,68 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
 
+  // List all the annotation tracks.
+  rpc ListAnnotationTracks (ListAnnotationTracksRequest) returns (MultiAnnotationTrackResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}/annotation_tracks"
+      additional_bindings {
+        get: "/v2/inputs/{input_id}/annotation_tracks"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+  }
+
+  // Post annotation tracks.
+  rpc PostAnnotationTracks (PostAnnotationTracksRequest) returns (MultiAnnotationTrackResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}/annotation_tracks"
+      body: "*"
+      additional_bindings {
+        post: "/v2/inputs/{input_id}/annotation_tracks"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
+  }
+
+  // Patch one or more annotation tracks.
+  rpc PatchAnnotationTracks (PatchAnnotationTracksRequest) returns (MultiAnnotationTrackResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}/annotation_tracks"
+      body: "*"
+      additional_bindings {
+        patch: "/v2/inputs/{input_id}/annotation_tracks"
+          body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
+  }
+
+  // Delete multiple annotation tracks in one request.
+  rpc DeleteAnnotationTracks (DeleteAnnotationTracksRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotation_tracks"
+      body: "*"
+      additional_bindings {
+        delete: "/v2/inputs/{input_id}/annotation_tracks"
+          body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Delete;
+  }
+
   // Patch saved annotations searches by ids.
   rpc PatchAnnotationsSearches (PatchAnnotationsSearchesRequest) returns (MultiSearchResponse) {
     option (google.api.http) = {
@@ -2616,7 +2678,6 @@ service V2 {
 
 
 
-
   // owner list users who the app is shared with
   rpc ListCollaborators (ListCollaboratorsRequest) returns (MultiCollaboratorsResponse) {
     option (google.api.http) = {
@@ -4065,7 +4126,7 @@ service V2 {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners/{runner_id}/{log_type}/logs"
       // Endpoint to list runner logs by model, model version id.
       additional_bindings {
-        get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/{log_type}/logs"
+        get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_user_id}/{compute_cluster_id}/nodepools/{nodepool_id}/versions/{model_version_id}/{log_type}/logs"
       }
       // TODO: add convenience endpoint for /users/{user_id}/runners/{runner_id}.
       // TODO: add endpoint for runner replicas.
@@ -4093,7 +4154,7 @@ service V2 {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners/{runner_id}/{log_type}/logs"
       additional_bindings {
-        get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/{log_type}/logs"
+        get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_user_id}/{compute_cluster_id}/nodepools/{nodepool_id}/versions/{model_version_id}/{log_type}/logs"
       }
       // Endpoint to stream pipeline version run logs
       additional_bindings {
@@ -4429,51 +4490,47 @@ service V2 {
 
   rpc GetSecret(GetSecretRequest) returns (SingleSecretResponse) {
     option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/secrets/{secret_id}"
+      get: "/v2/users/{user_app_id.user_id}/secrets/{id}"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Secrets_Get;
   }
 
   rpc ListSecrets(ListSecretsRequest) returns (MultiSecretResponse) {
     option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/secrets"
+      get: "/v2/users/{user_app_id.user_id}/secrets"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Secrets_Get;
   }
 
   rpc PostSecrets(PostSecretsRequest) returns (MultiSecretResponse) {
     option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/secrets"
+      post: "/v2/users/{user_app_id.user_id}/secrets"
       body: "*"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Secrets_Add;
   }
 
   rpc PatchSecrets(PatchSecretsRequest) returns (MultiSecretResponse) {
     option (google.api.http) = {
-      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/secrets"
+      patch: "/v2/users/{user_app_id.user_id}/secrets"
       body: "*"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Secrets_Add;
   }
 
   rpc DeleteSecrets(DeleteSecretsRequest) returns (MultiSecretResponse) {
     option (google.api.http) = {
-      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/secrets"
+      delete: "/v2/users/{user_app_id.user_id}/secrets"
       body: "*"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Secrets_Delete;
-  }}
+  }
+}
 
 
 // Split the results into pages.
@@ -4620,6 +4677,45 @@ message DeleteAnnotationsRequest {
   // However you need to specify at least one value for 'input_ids'
   // i.e. this API does not support deleting all annotations
   repeated string input_ids = 3;
+}
+
+// ListAnnotationTracksRequest
+message ListAnnotationTracksRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated string ids = 2;
+  string input_id = 3;
+  uint32 page = 4;
+  uint32 per_page = 5;
+}
+
+// PostAnnotationTracksRequest
+message PostAnnotationTracksRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated AnnotationTrack annotation_tracks = 2;
+  string input_id = 3;
+}
+
+// PatchAnnotationTracksRequest
+message PatchAnnotationTracksRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated AnnotationTrack annotation_tracks = 2;
+  string input_id = 3;
+
+  // Use always 'overwrite'
+  string action = 4;
+}
+
+// DeleteAnnotationTracksRequest
+message DeleteAnnotationTracksRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated string ids = 2;
+  string input_id = 3;
+}
+
+// MultiAnnotationTrackResponse
+message MultiAnnotationTrackResponse {
+  clarifai.api.status.Status status = 1;
+  repeated AnnotationTrack annotation_tracks = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
 // SingleAnnotationResponse
@@ -4903,8 +4999,6 @@ message MultiCollaborationsResponse {
   clarifai.api.status.Status status = 1;
   repeated Collaboration collaborations = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
-
-
 
 
 
@@ -5766,6 +5860,7 @@ message ListLogEntriesRequest {
   string workflow_id = 7;
 
   // Where the logs came from.
+  string compute_cluster_user_id = 17;
   string compute_cluster_id = 9;
   string nodepool_id = 10;
   string runner_id = 11;
@@ -5797,6 +5892,7 @@ message StreamLogEntriesRequest {
   string workflow_id = 5;
 
   // Where the logs came from.
+  string compute_cluster_user_id = 17;
   string compute_cluster_id = 6;
   string nodepool_id = 7;
   string runner_id = 8;
@@ -8420,6 +8516,7 @@ message SyncStateRequest{
   repeated Nodepool nodepools = 3;
   repeated Runner runners = 4;
   repeated PipelineVersionRun pipeline_version_runs = 5;
+  repeated Secret secrets = 6;
 }
 
 // MultiRunnerItemResponse
@@ -9105,7 +9202,7 @@ message SinglePipelineStepVersionResponse {
 message GetSecretRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // The id of the secret to get
-  string secret_id = 2;
+  string id = 2;
 }
 
 message ListSecretsRequest {
@@ -9125,12 +9222,10 @@ message PostSecretsRequest {
 }
 
 message PatchSecretsRequest {
+  reserved 2, 3, 4;
   clarifai.api.UserAppIDSet user_app_id = 1;
-  // The secrets to patch
-  repeated Secret secrets = 2;
-
-  // For now actions 'merge', 'overwrite', and 'remove' are supported
-  string action = 3; // The action to perform on the patched objects
+  repeated Secret secret = 5;
+  string action = 8;
 }
 
 message DeleteSecretsRequest {
