@@ -1536,6 +1536,13 @@ message Model {
   // replica_count indicates the number of deployed model replicas.
   // This field is populated when `show_replicas` is true in ListModelsRequest.
   uint32 replica_count = 43;
+
+  // OpenRouter Info for the model
+  OpenRouterInfo open_router_info = 44;
+}
+
+message OpenRouterInfo {
+  google.protobuf.Struct params = 1;
 }
 enum DeployRestriction {
   USAGE_RESTRICTION_NOT_SET = 0; // Default uninitialized state.

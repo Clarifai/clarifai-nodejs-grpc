@@ -2767,6 +2767,11 @@ export class Model extends jspb.Message {
     getReplicaCount(): number;
     setReplicaCount(value: number): Model;
 
+    hasOpenRouterInfo(): boolean;
+    clearOpenRouterInfo(): void;
+    getOpenRouterInfo(): OpenRouterInfo | undefined;
+    setOpenRouterInfo(value?: OpenRouterInfo): Model;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Model.AsObject;
     static toObject(includeInstance: boolean, msg: Model): Model.AsObject;
@@ -2814,6 +2819,7 @@ export namespace Model {
         featuredOrder?: google_protobuf_wrappers_pb.Int32Value.AsObject,
         deployRestriction: DeployRestriction,
         replicaCount: number,
+        openRouterInfo?: OpenRouterInfo.AsObject,
     }
 
     export enum Source {
@@ -2828,6 +2834,29 @@ export namespace Model {
     OPS = 2,
     }
 
+}
+
+export class OpenRouterInfo extends jspb.Message { 
+
+    hasParams(): boolean;
+    clearParams(): void;
+    getParams(): google_protobuf_struct_pb.Struct | undefined;
+    setParams(value?: google_protobuf_struct_pb.Struct): OpenRouterInfo;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): OpenRouterInfo.AsObject;
+    static toObject(includeInstance: boolean, msg: OpenRouterInfo): OpenRouterInfo.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: OpenRouterInfo, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): OpenRouterInfo;
+    static deserializeBinaryFromReader(message: OpenRouterInfo, reader: jspb.BinaryReader): OpenRouterInfo;
+}
+
+export namespace OpenRouterInfo {
+    export type AsObject = {
+        params?: google_protobuf_struct_pb.Struct.AsObject,
+    }
 }
 
 export class ModelReference extends jspb.Message { 
