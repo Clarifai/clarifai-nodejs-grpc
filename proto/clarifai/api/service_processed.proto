@@ -4326,7 +4326,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Add;
   }
 
-  rpc DeletePipelines(DeletePipelinesRequest) returns (MultiPipelineResponse) {
+  rpc DeletePipelines(DeletePipelinesRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines"
       body: "*"
@@ -4373,7 +4373,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Add;
   }
 
-  rpc DeletePipelineVersions(DeletePipelineVersionsRequest) returns (MultiPipelineVersionResponse) {
+  rpc DeletePipelineVersions(DeletePipelineVersionsRequest) returns (clarifai.api.status.BaseResponse) {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions"
       body: "*"
@@ -8936,7 +8936,7 @@ message PatchPipelinesRequest {
 
 message DeletePipelinesRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
-  repeated string pipeline_ids = 2;
+  repeated string ids = 2;
 }
 
 message SinglePipelineResponse {

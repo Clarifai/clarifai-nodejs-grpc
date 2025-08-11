@@ -102592,7 +102592,7 @@ proto.clarifai.api.DeletePipelinesRequest.prototype.toObject = function(opt_incl
 proto.clarifai.api.DeletePipelinesRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     userAppId: (f = msg.getUserAppId()) && proto_clarifai_api_resources_pb.UserAppIDSet.toObject(includeInstance, f),
-    pipelineIdsList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f
+    idsList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -102636,7 +102636,7 @@ proto.clarifai.api.DeletePipelinesRequest.deserializeBinaryFromReader = function
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.addPipelineIds(value);
+      msg.addIds(value);
       break;
     default:
       reader.skipField();
@@ -102675,7 +102675,7 @@ proto.clarifai.api.DeletePipelinesRequest.serializeBinaryToWriter = function(mes
       proto_clarifai_api_resources_pb.UserAppIDSet.serializeBinaryToWriter
     );
   }
-  f = message.getPipelineIdsList();
+  f = message.getIdsList();
   if (f.length > 0) {
     writer.writeRepeatedString(
       2,
@@ -102723,10 +102723,10 @@ proto.clarifai.api.DeletePipelinesRequest.prototype.hasUserAppId = function() {
 
 
 /**
- * repeated string pipeline_ids = 2;
+ * repeated string ids = 2;
  * @return {!Array<string>}
  */
-proto.clarifai.api.DeletePipelinesRequest.prototype.getPipelineIdsList = function() {
+proto.clarifai.api.DeletePipelinesRequest.prototype.getIdsList = function() {
   return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 2));
 };
 
@@ -102735,7 +102735,7 @@ proto.clarifai.api.DeletePipelinesRequest.prototype.getPipelineIdsList = functio
  * @param {!Array<string>} value
  * @return {!proto.clarifai.api.DeletePipelinesRequest} returns this
  */
-proto.clarifai.api.DeletePipelinesRequest.prototype.setPipelineIdsList = function(value) {
+proto.clarifai.api.DeletePipelinesRequest.prototype.setIdsList = function(value) {
   return jspb.Message.setField(this, 2, value || []);
 };
 
@@ -102745,7 +102745,7 @@ proto.clarifai.api.DeletePipelinesRequest.prototype.setPipelineIdsList = functio
  * @param {number=} opt_index
  * @return {!proto.clarifai.api.DeletePipelinesRequest} returns this
  */
-proto.clarifai.api.DeletePipelinesRequest.prototype.addPipelineIds = function(value, opt_index) {
+proto.clarifai.api.DeletePipelinesRequest.prototype.addIds = function(value, opt_index) {
   return jspb.Message.addToRepeatedField(this, 2, value, opt_index);
 };
 
@@ -102754,8 +102754,8 @@ proto.clarifai.api.DeletePipelinesRequest.prototype.addPipelineIds = function(va
  * Clears the list making it empty but non-null.
  * @return {!proto.clarifai.api.DeletePipelinesRequest} returns this
  */
-proto.clarifai.api.DeletePipelinesRequest.prototype.clearPipelineIdsList = function() {
-  return this.setPipelineIdsList([]);
+proto.clarifai.api.DeletePipelinesRequest.prototype.clearIdsList = function() {
+  return this.setIdsList([]);
 };
 
 
