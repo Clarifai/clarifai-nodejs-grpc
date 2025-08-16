@@ -76,35 +76,50 @@ message Annotation {
 
 // AnnotationTrack of an asset with metadata
 message AnnotationTrack {
+  reserved 2,5,7,8,11;
+
   // The ID for the annotation track
   string id = 1;
-  // ID of the application this annotation track is tied to
-  string app_id = 2;
   // ID of the asset this annotation track is tied to
   string input_id = 3;
+
   // Concept this annotation track
   Concept concept = 4;
-  // The user the track belongs to (app owner)
-  string user_id = 5;
 
   // AnnotationTrack Status
   clarifai.api.status.Status status = 6;
 
-  // Start frame of the annotation track
-  uint32 start_frame = 7;
-  // End frame of the annotation track
-  uint32 end_frame = 8;
+  // Start frame number (in original video) of the annotation track, inclusive.
+  uint32 start_frame_nr = 16;
+
+  // End frame number (in original video) of the annotation track, inclusive.
+  uint32 end_frame_nr = 17;
+
+  // Start time (in milliseconds of original video) of the annotation track, inclusive.
+  uint32 start_frame_ms = 14;
+
+  // End time (in milliseconds of original video) of the annotation track, inclusive.
+  uint32 end_frame_ms = 15;
+
 
   // When the annotation track was created.
   google.protobuf.Timestamp created_at = 9;
+
   // When the annotation track was modified.
   google.protobuf.Timestamp modified_at = 10;
 
-  // Frame rate of the video track.
-  // 1 means it matches the original video FPS.
-  // 2 means every second frame, etc.
+
+  // Sampling rate of the annotation track in milliseconds.
+  uint32 sample_rate_ms = 12;
+
+
+  // Sampling frame rate of the video track in frame number increments
+  // increment of 1 means it matches the original video FPS
+  // increment of 2 means every second frame is sampled, etc.
   // So if you have 30fps original video and frame_rate=3, your annotations in a track are stored at 30fps/3frame_rate=10 frames per second
-  uint32 frame_rate = 11;
+  // Useful if client relies on simple frame access.
+  // Useful if video has variable frame rate (VFR), then annotations are also sampled with VFR in mind
+  uint32 sample_rate_frame = 13;
 }
 
 // Worker is the author of an annotation.

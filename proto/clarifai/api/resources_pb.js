@@ -6508,16 +6508,17 @@ proto.clarifai.api.AnnotationTrack.prototype.toObject = function(opt_includeInst
 proto.clarifai.api.AnnotationTrack.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    appId: jspb.Message.getFieldWithDefault(msg, 2, ""),
     inputId: jspb.Message.getFieldWithDefault(msg, 3, ""),
     concept: (f = msg.getConcept()) && proto.clarifai.api.Concept.toObject(includeInstance, f),
-    userId: jspb.Message.getFieldWithDefault(msg, 5, ""),
     status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f),
-    startFrame: jspb.Message.getFieldWithDefault(msg, 7, 0),
-    endFrame: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    startFrameNr: jspb.Message.getFieldWithDefault(msg, 16, 0),
+    endFrameNr: jspb.Message.getFieldWithDefault(msg, 17, 0),
+    startFrameMs: jspb.Message.getFieldWithDefault(msg, 14, 0),
+    endFrameMs: jspb.Message.getFieldWithDefault(msg, 15, 0),
     createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    frameRate: jspb.Message.getFieldWithDefault(msg, 11, 0)
+    sampleRateMs: jspb.Message.getFieldWithDefault(msg, 12, 0),
+    sampleRateFrame: jspb.Message.getFieldWithDefault(msg, 13, 0)
   };
 
   if (includeInstance) {
@@ -6558,10 +6559,6 @@ proto.clarifai.api.AnnotationTrack.deserializeBinaryFromReader = function(msg, r
       var value = /** @type {string} */ (reader.readString());
       msg.setId(value);
       break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setAppId(value);
-      break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setInputId(value);
@@ -6571,22 +6568,26 @@ proto.clarifai.api.AnnotationTrack.deserializeBinaryFromReader = function(msg, r
       reader.readMessage(value,proto.clarifai.api.Concept.deserializeBinaryFromReader);
       msg.setConcept(value);
       break;
-    case 5:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setUserId(value);
-      break;
     case 6:
       var value = new proto_clarifai_api_status_status_pb.Status;
       reader.readMessage(value,proto_clarifai_api_status_status_pb.Status.deserializeBinaryFromReader);
       msg.setStatus(value);
       break;
-    case 7:
+    case 16:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setStartFrame(value);
+      msg.setStartFrameNr(value);
       break;
-    case 8:
+    case 17:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setEndFrame(value);
+      msg.setEndFrameNr(value);
+      break;
+    case 14:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setStartFrameMs(value);
+      break;
+    case 15:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setEndFrameMs(value);
       break;
     case 9:
       var value = new google_protobuf_timestamp_pb.Timestamp;
@@ -6598,9 +6599,13 @@ proto.clarifai.api.AnnotationTrack.deserializeBinaryFromReader = function(msg, r
       reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
       msg.setModifiedAt(value);
       break;
-    case 11:
+    case 12:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setFrameRate(value);
+      msg.setSampleRateMs(value);
+      break;
+    case 13:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setSampleRateFrame(value);
       break;
     default:
       reader.skipField();
@@ -6638,13 +6643,6 @@ proto.clarifai.api.AnnotationTrack.serializeBinaryToWriter = function(message, w
       f
     );
   }
-  f = message.getAppId();
-  if (f.length > 0) {
-    writer.writeString(
-      2,
-      f
-    );
-  }
   f = message.getInputId();
   if (f.length > 0) {
     writer.writeString(
@@ -6660,13 +6658,6 @@ proto.clarifai.api.AnnotationTrack.serializeBinaryToWriter = function(message, w
       proto.clarifai.api.Concept.serializeBinaryToWriter
     );
   }
-  f = message.getUserId();
-  if (f.length > 0) {
-    writer.writeString(
-      5,
-      f
-    );
-  }
   f = message.getStatus();
   if (f != null) {
     writer.writeMessage(
@@ -6675,17 +6666,31 @@ proto.clarifai.api.AnnotationTrack.serializeBinaryToWriter = function(message, w
       proto_clarifai_api_status_status_pb.Status.serializeBinaryToWriter
     );
   }
-  f = message.getStartFrame();
+  f = message.getStartFrameNr();
   if (f !== 0) {
     writer.writeUint32(
-      7,
+      16,
       f
     );
   }
-  f = message.getEndFrame();
+  f = message.getEndFrameNr();
   if (f !== 0) {
     writer.writeUint32(
-      8,
+      17,
+      f
+    );
+  }
+  f = message.getStartFrameMs();
+  if (f !== 0) {
+    writer.writeUint32(
+      14,
+      f
+    );
+  }
+  f = message.getEndFrameMs();
+  if (f !== 0) {
+    writer.writeUint32(
+      15,
       f
     );
   }
@@ -6705,10 +6710,17 @@ proto.clarifai.api.AnnotationTrack.serializeBinaryToWriter = function(message, w
       google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
     );
   }
-  f = message.getFrameRate();
+  f = message.getSampleRateMs();
   if (f !== 0) {
     writer.writeUint32(
-      11,
+      12,
+      f
+    );
+  }
+  f = message.getSampleRateFrame();
+  if (f !== 0) {
+    writer.writeUint32(
+      13,
       f
     );
   }
@@ -6730,24 +6742,6 @@ proto.clarifai.api.AnnotationTrack.prototype.getId = function() {
  */
 proto.clarifai.api.AnnotationTrack.prototype.setId = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional string app_id = 2;
- * @return {string}
- */
-proto.clarifai.api.AnnotationTrack.prototype.getAppId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.clarifai.api.AnnotationTrack} returns this
- */
-proto.clarifai.api.AnnotationTrack.prototype.setAppId = function(value) {
-  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -6807,24 +6801,6 @@ proto.clarifai.api.AnnotationTrack.prototype.hasConcept = function() {
 
 
 /**
- * optional string user_id = 5;
- * @return {string}
- */
-proto.clarifai.api.AnnotationTrack.prototype.getUserId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.clarifai.api.AnnotationTrack} returns this
- */
-proto.clarifai.api.AnnotationTrack.prototype.setUserId = function(value) {
-  return jspb.Message.setProto3StringField(this, 5, value);
-};
-
-
-/**
  * optional status.Status status = 6;
  * @return {?proto.clarifai.api.status.Status}
  */
@@ -6862,11 +6838,11 @@ proto.clarifai.api.AnnotationTrack.prototype.hasStatus = function() {
 
 
 /**
- * optional uint32 start_frame = 7;
+ * optional uint32 start_frame_nr = 16;
  * @return {number}
  */
-proto.clarifai.api.AnnotationTrack.prototype.getStartFrame = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
+proto.clarifai.api.AnnotationTrack.prototype.getStartFrameNr = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 16, 0));
 };
 
 
@@ -6874,17 +6850,17 @@ proto.clarifai.api.AnnotationTrack.prototype.getStartFrame = function() {
  * @param {number} value
  * @return {!proto.clarifai.api.AnnotationTrack} returns this
  */
-proto.clarifai.api.AnnotationTrack.prototype.setStartFrame = function(value) {
-  return jspb.Message.setProto3IntField(this, 7, value);
+proto.clarifai.api.AnnotationTrack.prototype.setStartFrameNr = function(value) {
+  return jspb.Message.setProto3IntField(this, 16, value);
 };
 
 
 /**
- * optional uint32 end_frame = 8;
+ * optional uint32 end_frame_nr = 17;
  * @return {number}
  */
-proto.clarifai.api.AnnotationTrack.prototype.getEndFrame = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
+proto.clarifai.api.AnnotationTrack.prototype.getEndFrameNr = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 17, 0));
 };
 
 
@@ -6892,8 +6868,44 @@ proto.clarifai.api.AnnotationTrack.prototype.getEndFrame = function() {
  * @param {number} value
  * @return {!proto.clarifai.api.AnnotationTrack} returns this
  */
-proto.clarifai.api.AnnotationTrack.prototype.setEndFrame = function(value) {
-  return jspb.Message.setProto3IntField(this, 8, value);
+proto.clarifai.api.AnnotationTrack.prototype.setEndFrameNr = function(value) {
+  return jspb.Message.setProto3IntField(this, 17, value);
+};
+
+
+/**
+ * optional uint32 start_frame_ms = 14;
+ * @return {number}
+ */
+proto.clarifai.api.AnnotationTrack.prototype.getStartFrameMs = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 14, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.AnnotationTrack} returns this
+ */
+proto.clarifai.api.AnnotationTrack.prototype.setStartFrameMs = function(value) {
+  return jspb.Message.setProto3IntField(this, 14, value);
+};
+
+
+/**
+ * optional uint32 end_frame_ms = 15;
+ * @return {number}
+ */
+proto.clarifai.api.AnnotationTrack.prototype.getEndFrameMs = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 15, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.AnnotationTrack} returns this
+ */
+proto.clarifai.api.AnnotationTrack.prototype.setEndFrameMs = function(value) {
+  return jspb.Message.setProto3IntField(this, 15, value);
 };
 
 
@@ -6972,11 +6984,11 @@ proto.clarifai.api.AnnotationTrack.prototype.hasModifiedAt = function() {
 
 
 /**
- * optional uint32 frame_rate = 11;
+ * optional uint32 sample_rate_ms = 12;
  * @return {number}
  */
-proto.clarifai.api.AnnotationTrack.prototype.getFrameRate = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
+proto.clarifai.api.AnnotationTrack.prototype.getSampleRateMs = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
 };
 
 
@@ -6984,8 +6996,26 @@ proto.clarifai.api.AnnotationTrack.prototype.getFrameRate = function() {
  * @param {number} value
  * @return {!proto.clarifai.api.AnnotationTrack} returns this
  */
-proto.clarifai.api.AnnotationTrack.prototype.setFrameRate = function(value) {
-  return jspb.Message.setProto3IntField(this, 11, value);
+proto.clarifai.api.AnnotationTrack.prototype.setSampleRateMs = function(value) {
+  return jspb.Message.setProto3IntField(this, 12, value);
+};
+
+
+/**
+ * optional uint32 sample_rate_frame = 13;
+ * @return {number}
+ */
+proto.clarifai.api.AnnotationTrack.prototype.getSampleRateFrame = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 13, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.AnnotationTrack} returns this
+ */
+proto.clarifai.api.AnnotationTrack.prototype.setSampleRateFrame = function(value) {
+  return jspb.Message.setProto3IntField(this, 13, value);
 };
 
 

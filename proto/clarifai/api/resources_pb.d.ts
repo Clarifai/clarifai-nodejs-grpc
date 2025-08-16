@@ -100,8 +100,6 @@ export namespace Annotation {
 export class AnnotationTrack extends jspb.Message { 
     getId(): string;
     setId(value: string): AnnotationTrack;
-    getAppId(): string;
-    setAppId(value: string): AnnotationTrack;
     getInputId(): string;
     setInputId(value: string): AnnotationTrack;
 
@@ -109,17 +107,19 @@ export class AnnotationTrack extends jspb.Message {
     clearConcept(): void;
     getConcept(): Concept | undefined;
     setConcept(value?: Concept): AnnotationTrack;
-    getUserId(): string;
-    setUserId(value: string): AnnotationTrack;
 
     hasStatus(): boolean;
     clearStatus(): void;
     getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
     setStatus(value?: proto_clarifai_api_status_status_pb.Status): AnnotationTrack;
-    getStartFrame(): number;
-    setStartFrame(value: number): AnnotationTrack;
-    getEndFrame(): number;
-    setEndFrame(value: number): AnnotationTrack;
+    getStartFrameNr(): number;
+    setStartFrameNr(value: number): AnnotationTrack;
+    getEndFrameNr(): number;
+    setEndFrameNr(value: number): AnnotationTrack;
+    getStartFrameMs(): number;
+    setStartFrameMs(value: number): AnnotationTrack;
+    getEndFrameMs(): number;
+    setEndFrameMs(value: number): AnnotationTrack;
 
     hasCreatedAt(): boolean;
     clearCreatedAt(): void;
@@ -130,8 +130,10 @@ export class AnnotationTrack extends jspb.Message {
     clearModifiedAt(): void;
     getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
     setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): AnnotationTrack;
-    getFrameRate(): number;
-    setFrameRate(value: number): AnnotationTrack;
+    getSampleRateMs(): number;
+    setSampleRateMs(value: number): AnnotationTrack;
+    getSampleRateFrame(): number;
+    setSampleRateFrame(value: number): AnnotationTrack;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): AnnotationTrack.AsObject;
@@ -146,16 +148,17 @@ export class AnnotationTrack extends jspb.Message {
 export namespace AnnotationTrack {
     export type AsObject = {
         id: string,
-        appId: string,
         inputId: string,
         concept?: Concept.AsObject,
-        userId: string,
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
-        startFrame: number,
-        endFrame: number,
+        startFrameNr: number,
+        endFrameNr: number,
+        startFrameMs: number,
+        endFrameMs: number,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        frameRate: number,
+        sampleRateMs: number,
+        sampleRateFrame: number,
     }
 }
 
