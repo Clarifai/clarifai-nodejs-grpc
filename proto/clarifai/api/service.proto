@@ -5846,7 +5846,7 @@ message ListLogEntriesRequest {
   // to 32.
   uint32 per_page = 2;
 
-  // The type of log entry. Examples: model, agent, build, training.
+  // The type of log entry. Choose from [agent, builder, builder.events, runner, runner.events, pipeline.version.run]
   string log_type = 3;
 
   // Who the logs are for.
