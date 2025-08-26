@@ -72993,7 +72993,7 @@ proto.clarifai.api.ComputeCluster.prototype.hasKey = function() {
  * @private {!Array<number>}
  * @const
  */
-proto.clarifai.api.ComputeInfo.repeatedFields_ = [5];
+proto.clarifai.api.ComputeInfo.repeatedFields_ = [5,10];
 
 
 
@@ -73032,7 +73032,8 @@ proto.clarifai.api.ComputeInfo.toObject = function(includeInstance, msg) {
     cpuMemoryRequests: jspb.Message.getFieldWithDefault(msg, 8, ""),
     numAccelerators: jspb.Message.getFieldWithDefault(msg, 3, 0),
     acceleratorMemory: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    acceleratorTypeList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f
+    acceleratorTypeList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f,
+    acceleratorTopologyList: (f = jspb.Message.getRepeatedField(msg, 10)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -73096,6 +73097,10 @@ proto.clarifai.api.ComputeInfo.deserializeBinaryFromReader = function(msg, reade
     case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.addAcceleratorType(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addAcceleratorTopology(value);
       break;
     default:
       reader.skipField();
@@ -73172,6 +73177,13 @@ proto.clarifai.api.ComputeInfo.serializeBinaryToWriter = function(message, write
   if (f.length > 0) {
     writer.writeRepeatedString(
       5,
+      f
+    );
+  }
+  f = message.getAcceleratorTopologyList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      10,
       f
     );
   }
@@ -73320,6 +73332,43 @@ proto.clarifai.api.ComputeInfo.prototype.addAcceleratorType = function(value, op
  */
 proto.clarifai.api.ComputeInfo.prototype.clearAcceleratorTypeList = function() {
   return this.setAcceleratorTypeList([]);
+};
+
+
+/**
+ * repeated string accelerator_topology = 10;
+ * @return {!Array<string>}
+ */
+proto.clarifai.api.ComputeInfo.prototype.getAcceleratorTopologyList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 10));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.clarifai.api.ComputeInfo} returns this
+ */
+proto.clarifai.api.ComputeInfo.prototype.setAcceleratorTopologyList = function(value) {
+  return jspb.Message.setField(this, 10, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.ComputeInfo} returns this
+ */
+proto.clarifai.api.ComputeInfo.prototype.addAcceleratorTopology = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 10, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.ComputeInfo} returns this
+ */
+proto.clarifai.api.ComputeInfo.prototype.clearAcceleratorTopologyList = function() {
+  return this.setAcceleratorTopologyList([]);
 };
 
 

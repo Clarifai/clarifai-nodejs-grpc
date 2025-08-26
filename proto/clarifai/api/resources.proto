@@ -4989,6 +4989,12 @@ message ComputeInfo {
   // The number of nodes of this type needed to serve this resource.
   // Since 0 is not valid, this will default to 1 if 0 is provided.
   // uint32 num_nodes = 6; // FUTURE
+
+  // For multi-host accelerators (i.e., TPU Slices), this defines the slice topology.
+  // Corresponds to the tpu.googleapis.com/topology annotation.
+  // Example: "2x2x1" for a 16-chip slice using v4 TPUs.
+  // Leave empty for single-host accelerators like GPUs or non-slice TPUs.
+  repeated string accelerator_topology = 10;
 }
 
 
