@@ -13,6 +13,7 @@ try {
 }
 
 const PROTO_PATH = __dirname + "/../proto";
+const MAX_MESSAGE_LENGTH = 1024 * 1024 * 1024 // 1GB
 
 const packageDefinition = protoLoader.loadSync(
     [
@@ -39,16 +40,18 @@ class ClarifaiStub {
             base = "api.clarifai.com"
         const grpcProtoDescriptor = grpc.loadPackageDefinition(packageDefinition);
         const options = {
-            'grpc.max_receive_message_length': 128 *1024 * 1024, // 128 MB
-          };
+            'grpc.max_receive_message_length': MAX_MESSAGE_LENGTH,
+            'grpc.max_send_message_length': MAX_MESSAGE_LENGTH,
+        };
         return new grpcProtoDescriptor.clarifai.api.V2(base, grpc.ChannelCredentials.createSsl(), options);
     }
 
     static insecureGrpc() {
         const grpcProtoDescriptor = grpc.loadPackageDefinition(packageDefinition);
         const options = {
-            'grpc.max_receive_message_length': 128 *1024 * 1024, // 128 MB
-          };
+            'grpc.max_receive_message_length': MAX_MESSAGE_LENGTH,
+            'grpc.max_send_message_length': MAX_MESSAGE_LENGTH,
+        };
         return new grpcProtoDescriptor.clarifai.api.V2('api-grpc.clarifai.com:18080', grpc.credentials.createInsecure(), options);
     }
 
