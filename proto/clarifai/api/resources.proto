@@ -4144,7 +4144,6 @@ message ModuleStar {
 }
 
 
-
 // An app module that a user created in our app module marketplace.
 message Module {
   reserved 2;

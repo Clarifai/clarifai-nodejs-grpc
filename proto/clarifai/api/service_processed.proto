@@ -3136,8 +3136,6 @@ service V2 {
 
 
 
-
-
   // Get a specific module from an app.
   rpc GetModule (GetModuleRequest) returns (SingleModuleResponse) {
     option (google.api.http) = {
@@ -7788,24 +7786,6 @@ message MultiStatValueAggregateResponse {
   // The aggregate results for each query passedin.
   repeated StatValueAggregateResult stat_value_aggregate_results = 2;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
