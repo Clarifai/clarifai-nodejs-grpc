@@ -71957,7 +71957,8 @@ proto.clarifai.api.InstanceType.toObject = function(includeInstance, msg) {
     price: jspb.Message.getFieldWithDefault(msg, 4, ""),
     cloudProvider: (f = msg.getCloudProvider()) && proto.clarifai.api.CloudProvider.toObject(includeInstance, f),
     region: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    allowedCapacityTypes: (f = msg.getAllowedCapacityTypes()) && proto.clarifai.api.NodeCapacityType.toObject(includeInstance, f)
+    allowedCapacityTypes: (f = msg.getAllowedCapacityTypes()) && proto.clarifai.api.NodeCapacityType.toObject(includeInstance, f),
+    featureFlagGroup: jspb.Message.getFieldWithDefault(msg, 8, "")
   };
 
   if (includeInstance) {
@@ -72024,6 +72025,10 @@ proto.clarifai.api.InstanceType.deserializeBinaryFromReader = function(msg, read
       var value = new proto.clarifai.api.NodeCapacityType;
       reader.readMessage(value,proto.clarifai.api.NodeCapacityType.deserializeBinaryFromReader);
       msg.setAllowedCapacityTypes(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setFeatureFlagGroup(value);
       break;
     default:
       reader.skipField();
@@ -72104,6 +72109,13 @@ proto.clarifai.api.InstanceType.serializeBinaryToWriter = function(message, writ
       7,
       f,
       proto.clarifai.api.NodeCapacityType.serializeBinaryToWriter
+    );
+  }
+  f = message.getFeatureFlagGroup();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
+      f
     );
   }
 };
@@ -72289,6 +72301,24 @@ proto.clarifai.api.InstanceType.prototype.clearAllowedCapacityTypes = function()
  */
 proto.clarifai.api.InstanceType.prototype.hasAllowedCapacityTypes = function() {
   return jspb.Message.getField(this, 7) != null;
+};
+
+
+/**
+ * optional string feature_flag_group = 8;
+ * @return {string}
+ */
+proto.clarifai.api.InstanceType.prototype.getFeatureFlagGroup = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.InstanceType} returns this
+ */
+proto.clarifai.api.InstanceType.prototype.setFeatureFlagGroup = function(value) {
+  return jspb.Message.setProto3StringField(this, 8, value);
 };
 
 

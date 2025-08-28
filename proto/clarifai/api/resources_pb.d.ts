@@ -8638,6 +8638,8 @@ export class InstanceType extends jspb.Message {
     clearAllowedCapacityTypes(): void;
     getAllowedCapacityTypes(): NodeCapacityType | undefined;
     setAllowedCapacityTypes(value?: NodeCapacityType): InstanceType;
+    getFeatureFlagGroup(): string;
+    setFeatureFlagGroup(value: string): InstanceType;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): InstanceType.AsObject;
@@ -8658,6 +8660,7 @@ export namespace InstanceType {
         cloudProvider?: CloudProvider.AsObject,
         region: string,
         allowedCapacityTypes?: NodeCapacityType.AsObject,
+        featureFlagGroup: string,
     }
 }
 

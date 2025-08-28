@@ -4844,6 +4844,9 @@ message InstanceType {
 
   // The capacity types allowed for this instance type. If empty - all capacity types are allowed.
   NodeCapacityType allowed_capacity_types = 7;
+
+  // The feature flag group associated with this instance type.
+  string feature_flag_group = 8;
 }
 
 // CloudProvider represents the entity that provides the infrastructure where the Nodepools are deployed.
