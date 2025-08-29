@@ -5806,3 +5806,12 @@ message MetricSearchQuery {
   repeated MetricFilter filters = 5; // ANDed
   MetricAggregate aggregate = 6;
 }
+
+message MetricTypeLabels {
+  message LabelWithValues {
+    MetricLabel label = 1;
+    repeated string values = 2 [(clarifai.api.utils.cl_show_if_empty) = true];  // sample values for this label
+  }
+  MetricType metric_type = 1;
+  repeated LabelWithValues labels = 2;
+}

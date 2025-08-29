@@ -489,6 +489,8 @@ enum S {
   Secrets_Delete = 162 [(clarfai_exposed) = true,
     (clarifai_depending_scopes) = Secrets_Get,
     (clarifai_depending_scopes) = Secrets_Add];
+
+  UserMetrics_Get = 163 [(clarfai_exposed) = true];
 }
 
 extend google.protobuf.EnumValueOptions {

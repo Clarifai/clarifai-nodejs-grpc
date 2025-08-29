@@ -13438,6 +13438,123 @@ export namespace MultiSecretResponse {
     }
 }
 
+export class PostMetricsQueryRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PostMetricsQueryRequest;
+
+    hasQuery(): boolean;
+    clearQuery(): void;
+    getQuery(): proto_clarifai_api_resources_pb.MetricSearchQuery | undefined;
+    setQuery(value?: proto_clarifai_api_resources_pb.MetricSearchQuery): PostMetricsQueryRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PostMetricsQueryRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PostMetricsQueryRequest): PostMetricsQueryRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PostMetricsQueryRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PostMetricsQueryRequest;
+    static deserializeBinaryFromReader(message: PostMetricsQueryRequest, reader: jspb.BinaryReader): PostMetricsQueryRequest;
+}
+
+export namespace PostMetricsQueryRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        query?: proto_clarifai_api_resources_pb.MetricSearchQuery.AsObject,
+    }
+}
+
+export class MetricsQueryResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MetricsQueryResponse;
+
+    hasData(): boolean;
+    clearData(): void;
+    getData(): proto_clarifai_api_resources_pb.MetricData | undefined;
+    setData(value?: proto_clarifai_api_resources_pb.MetricData): MetricsQueryResponse;
+    getResolution(): string;
+    setResolution(value: string): MetricsQueryResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MetricsQueryResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MetricsQueryResponse): MetricsQueryResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MetricsQueryResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MetricsQueryResponse;
+    static deserializeBinaryFromReader(message: MetricsQueryResponse, reader: jspb.BinaryReader): MetricsQueryResponse;
+}
+
+export namespace MetricsQueryResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        data?: proto_clarifai_api_resources_pb.MetricData.AsObject,
+        resolution: string,
+    }
+}
+
+export class ListMetricLabelsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): ListMetricLabelsRequest;
+    clearMetricTypesList(): void;
+    getMetricTypesList(): Array<proto_clarifai_api_resources_pb.MetricType>;
+    setMetricTypesList(value: Array<proto_clarifai_api_resources_pb.MetricType>): ListMetricLabelsRequest;
+    addMetricTypes(value: proto_clarifai_api_resources_pb.MetricType, index?: number): proto_clarifai_api_resources_pb.MetricType;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListMetricLabelsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListMetricLabelsRequest): ListMetricLabelsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListMetricLabelsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListMetricLabelsRequest;
+    static deserializeBinaryFromReader(message: ListMetricLabelsRequest, reader: jspb.BinaryReader): ListMetricLabelsRequest;
+}
+
+export namespace ListMetricLabelsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        metricTypesList: Array<proto_clarifai_api_resources_pb.MetricType>,
+    }
+}
+
+export class MultiMetricLabelsResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiMetricLabelsResponse;
+    clearMetricTypeLabelsList(): void;
+    getMetricTypeLabelsList(): Array<proto_clarifai_api_resources_pb.MetricTypeLabels>;
+    setMetricTypeLabelsList(value: Array<proto_clarifai_api_resources_pb.MetricTypeLabels>): MultiMetricLabelsResponse;
+    addMetricTypeLabels(value?: proto_clarifai_api_resources_pb.MetricTypeLabels, index?: number): proto_clarifai_api_resources_pb.MetricTypeLabels;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiMetricLabelsResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiMetricLabelsResponse): MultiMetricLabelsResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiMetricLabelsResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiMetricLabelsResponse;
+    static deserializeBinaryFromReader(message: MultiMetricLabelsResponse, reader: jspb.BinaryReader): MultiMetricLabelsResponse;
+}
+
+export namespace MultiMetricLabelsResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        metricTypeLabelsList: Array<proto_clarifai_api_resources_pb.MetricTypeLabels.AsObject>,
+    }
+}
+
 export enum OrganizationInvitationStatus {
     NOT_SET = 0,
     PENDING = 1,

@@ -152,4 +152,5 @@ export enum S {
     SECRETS_GET = 160,
     SECRETS_ADD = 161,
     SECRETS_DELETE = 162,
+    USERMETRICS_GET = 163,
 }
