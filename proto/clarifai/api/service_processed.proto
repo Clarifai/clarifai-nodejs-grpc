@@ -4534,6 +4534,7 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Secrets_Delete;
   }
+
 }
 
 
@@ -9227,3 +9228,4 @@ message SingleSecretResponse {
   clarifai.api.status.Status status = 1;
   repeated Secret secrets = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
+
