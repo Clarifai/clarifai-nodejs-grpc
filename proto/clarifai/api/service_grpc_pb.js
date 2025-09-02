@@ -1411,6 +1411,17 @@ function deserialize_clarifai_api_ListLogEntriesRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListLogEntriesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_ListMetricLabelsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListMetricLabelsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListMetricLabelsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListMetricLabelsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListMetricLabelsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_ListModelConceptsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.ListModelConceptsRequest)) {
     throw new Error('Expected argument of type clarifai.api.ListModelConceptsRequest');
@@ -1761,6 +1772,17 @@ function serialize_clarifai_api_ListWorkflowsRequest(arg) {
 
 function deserialize_clarifai_api_ListWorkflowsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListWorkflowsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MetricsQueryResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MetricsQueryResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MetricsQueryResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MetricsQueryResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MetricsQueryResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiAnnotationFilterResponse(arg) {
@@ -2157,6 +2179,17 @@ function serialize_clarifai_api_MultiLogEntryResponse(arg) {
 
 function deserialize_clarifai_api_MultiLogEntryResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiLogEntryResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MultiMetricLabelsResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiMetricLabelsResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiMetricLabelsResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiMetricLabelsResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiMetricLabelsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiModelCheckConsentResponse(arg) {
@@ -3444,6 +3477,17 @@ function serialize_clarifai_api_PostLogEntriesRequest(arg) {
 
 function deserialize_clarifai_api_PostLogEntriesRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostLogEntriesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PostMetricsQueryRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostMetricsQueryRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostMetricsQueryRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostMetricsQueryRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostMetricsQueryRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PostModelMigrationRequest(arg) {
@@ -7910,6 +7954,28 @@ postPipelineStepVersionsUpload: {
     requestDeserialize: deserialize_clarifai_api_DeleteSecretsRequest,
     responseSerialize: serialize_clarifai_api_MultiSecretResponse,
     responseDeserialize: deserialize_clarifai_api_MultiSecretResponse,
+  },
+  postMetricsQuery: {
+    path: '/clarifai.api.V2/PostMetricsQuery',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostMetricsQueryRequest,
+    responseType: proto_clarifai_api_service_pb.MetricsQueryResponse,
+    requestSerialize: serialize_clarifai_api_PostMetricsQueryRequest,
+    requestDeserialize: deserialize_clarifai_api_PostMetricsQueryRequest,
+    responseSerialize: serialize_clarifai_api_MetricsQueryResponse,
+    responseDeserialize: deserialize_clarifai_api_MetricsQueryResponse,
+  },
+  listMetricLabels: {
+    path: '/clarifai.api.V2/ListMetricLabels',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListMetricLabelsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiMetricLabelsResponse,
+    requestSerialize: serialize_clarifai_api_ListMetricLabelsRequest,
+    requestDeserialize: deserialize_clarifai_api_ListMetricLabelsRequest,
+    responseSerialize: serialize_clarifai_api_MultiMetricLabelsResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiMetricLabelsResponse,
   },
 };
 

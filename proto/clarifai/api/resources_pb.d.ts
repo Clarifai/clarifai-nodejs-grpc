@@ -8638,6 +8638,8 @@ export class InstanceType extends jspb.Message {
     clearAllowedCapacityTypes(): void;
     getAllowedCapacityTypes(): NodeCapacityType | undefined;
     setAllowedCapacityTypes(value?: NodeCapacityType): InstanceType;
+    getFeatureFlagGroup(): string;
+    setFeatureFlagGroup(value: string): InstanceType;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): InstanceType.AsObject;
@@ -8658,6 +8660,7 @@ export namespace InstanceType {
         cloudProvider?: CloudProvider.AsObject,
         region: string,
         allowedCapacityTypes?: NodeCapacityType.AsObject,
+        featureFlagGroup: string,
     }
 }
 
@@ -8766,6 +8769,10 @@ export class ComputeInfo extends jspb.Message {
     getAcceleratorTypeList(): Array<string>;
     setAcceleratorTypeList(value: Array<string>): ComputeInfo;
     addAcceleratorType(value: string, index?: number): string;
+    clearAcceleratorTopologyList(): void;
+    getAcceleratorTopologyList(): Array<string>;
+    setAcceleratorTopologyList(value: Array<string>): ComputeInfo;
+    addAcceleratorTopology(value: string, index?: number): string;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ComputeInfo.AsObject;
@@ -8786,6 +8793,7 @@ export namespace ComputeInfo {
         numAccelerators: number,
         acceleratorMemory: string,
         acceleratorTypeList: Array<string>,
+        acceleratorTopologyList: Array<string>,
     }
 }
 
@@ -10642,6 +10650,58 @@ export namespace MetricSearchQuery {
         filtersList: Array<MetricFilter.AsObject>,
         aggregate?: MetricAggregate.AsObject,
     }
+}
+
+export class MetricTypeLabels extends jspb.Message { 
+    getMetricType(): MetricType;
+    setMetricType(value: MetricType): MetricTypeLabels;
+    clearLabelsList(): void;
+    getLabelsList(): Array<MetricTypeLabels.LabelWithValues>;
+    setLabelsList(value: Array<MetricTypeLabels.LabelWithValues>): MetricTypeLabels;
+    addLabels(value?: MetricTypeLabels.LabelWithValues, index?: number): MetricTypeLabels.LabelWithValues;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MetricTypeLabels.AsObject;
+    static toObject(includeInstance: boolean, msg: MetricTypeLabels): MetricTypeLabels.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MetricTypeLabels, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MetricTypeLabels;
+    static deserializeBinaryFromReader(message: MetricTypeLabels, reader: jspb.BinaryReader): MetricTypeLabels;
+}
+
+export namespace MetricTypeLabels {
+    export type AsObject = {
+        metricType: MetricType,
+        labelsList: Array<MetricTypeLabels.LabelWithValues.AsObject>,
+    }
+
+
+    export class LabelWithValues extends jspb.Message { 
+        getLabel(): MetricLabel;
+        setLabel(value: MetricLabel): LabelWithValues;
+        clearValuesList(): void;
+        getValuesList(): Array<string>;
+        setValuesList(value: Array<string>): LabelWithValues;
+        addValues(value: string, index?: number): string;
+
+        serializeBinary(): Uint8Array;
+        toObject(includeInstance?: boolean): LabelWithValues.AsObject;
+        static toObject(includeInstance: boolean, msg: LabelWithValues): LabelWithValues.AsObject;
+        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+        static serializeBinaryToWriter(message: LabelWithValues, writer: jspb.BinaryWriter): void;
+        static deserializeBinary(bytes: Uint8Array): LabelWithValues;
+        static deserializeBinaryFromReader(message: LabelWithValues, reader: jspb.BinaryReader): LabelWithValues;
+    }
+
+    export namespace LabelWithValues {
+        export type AsObject = {
+            label: MetricLabel,
+            valuesList: Array<string>,
+        }
+    }
+
 }
 
 export enum WorkflowModelUseCase {

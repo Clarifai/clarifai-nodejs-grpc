@@ -295,6 +295,8 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     postSecrets: IV2Service_IPostSecrets;
     patchSecrets: IV2Service_IPatchSecrets;
     deleteSecrets: IV2Service_IDeleteSecrets;
+    postMetricsQuery: IV2Service_IPostMetricsQuery;
+    listMetricLabels: IV2Service_IListMetricLabels;
 }
 
 interface IV2Service_IListConceptRelations extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListConceptRelationsRequest, proto_clarifai_api_service_pb.MultiConceptRelationResponse> {
@@ -2799,6 +2801,24 @@ interface IV2Service_IDeleteSecrets extends grpc.MethodDefinition<proto_clarifai
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiSecretResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiSecretResponse>;
 }
+interface IV2Service_IPostMetricsQuery extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostMetricsQueryRequest, proto_clarifai_api_service_pb.MetricsQueryResponse> {
+    path: "/clarifai.api.V2/PostMetricsQuery";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostMetricsQueryRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostMetricsQueryRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MetricsQueryResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MetricsQueryResponse>;
+}
+interface IV2Service_IListMetricLabels extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListMetricLabelsRequest, proto_clarifai_api_service_pb.MultiMetricLabelsResponse> {
+    path: "/clarifai.api.V2/ListMetricLabels";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListMetricLabelsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListMetricLabelsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiMetricLabelsResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiMetricLabelsResponse>;
+}
 
 export const V2Service: IV2Service;
 
@@ -3081,6 +3101,8 @@ export interface IV2Server {
     postSecrets: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostSecretsRequest, proto_clarifai_api_service_pb.MultiSecretResponse>;
     patchSecrets: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchSecretsRequest, proto_clarifai_api_service_pb.MultiSecretResponse>;
     deleteSecrets: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteSecretsRequest, proto_clarifai_api_service_pb.MultiSecretResponse>;
+    postMetricsQuery: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostMetricsQueryRequest, proto_clarifai_api_service_pb.MetricsQueryResponse>;
+    listMetricLabels: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListMetricLabelsRequest, proto_clarifai_api_service_pb.MultiMetricLabelsResponse>;
 }
 
 export interface IV2Client {
@@ -3916,6 +3938,12 @@ export interface IV2Client {
     deleteSecrets(request: proto_clarifai_api_service_pb.DeleteSecretsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSecretResponse) => void): grpc.ClientUnaryCall;
     deleteSecrets(request: proto_clarifai_api_service_pb.DeleteSecretsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSecretResponse) => void): grpc.ClientUnaryCall;
     deleteSecrets(request: proto_clarifai_api_service_pb.DeleteSecretsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSecretResponse) => void): grpc.ClientUnaryCall;
+    postMetricsQuery(request: proto_clarifai_api_service_pb.PostMetricsQueryRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MetricsQueryResponse) => void): grpc.ClientUnaryCall;
+    postMetricsQuery(request: proto_clarifai_api_service_pb.PostMetricsQueryRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MetricsQueryResponse) => void): grpc.ClientUnaryCall;
+    postMetricsQuery(request: proto_clarifai_api_service_pb.PostMetricsQueryRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MetricsQueryResponse) => void): grpc.ClientUnaryCall;
+    listMetricLabels(request: proto_clarifai_api_service_pb.ListMetricLabelsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiMetricLabelsResponse) => void): grpc.ClientUnaryCall;
+    listMetricLabels(request: proto_clarifai_api_service_pb.ListMetricLabelsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiMetricLabelsResponse) => void): grpc.ClientUnaryCall;
+    listMetricLabels(request: proto_clarifai_api_service_pb.ListMetricLabelsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiMetricLabelsResponse) => void): grpc.ClientUnaryCall;
 }
 
 export class V2Client extends grpc.Client implements IV2Client {
@@ -4748,4 +4776,10 @@ export class V2Client extends grpc.Client implements IV2Client {
     public deleteSecrets(request: proto_clarifai_api_service_pb.DeleteSecretsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSecretResponse) => void): grpc.ClientUnaryCall;
     public deleteSecrets(request: proto_clarifai_api_service_pb.DeleteSecretsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSecretResponse) => void): grpc.ClientUnaryCall;
     public deleteSecrets(request: proto_clarifai_api_service_pb.DeleteSecretsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSecretResponse) => void): grpc.ClientUnaryCall;
+    public postMetricsQuery(request: proto_clarifai_api_service_pb.PostMetricsQueryRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MetricsQueryResponse) => void): grpc.ClientUnaryCall;
+    public postMetricsQuery(request: proto_clarifai_api_service_pb.PostMetricsQueryRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MetricsQueryResponse) => void): grpc.ClientUnaryCall;
+    public postMetricsQuery(request: proto_clarifai_api_service_pb.PostMetricsQueryRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MetricsQueryResponse) => void): grpc.ClientUnaryCall;
+    public listMetricLabels(request: proto_clarifai_api_service_pb.ListMetricLabelsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiMetricLabelsResponse) => void): grpc.ClientUnaryCall;
+    public listMetricLabels(request: proto_clarifai_api_service_pb.ListMetricLabelsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiMetricLabelsResponse) => void): grpc.ClientUnaryCall;
+    public listMetricLabels(request: proto_clarifai_api_service_pb.ListMetricLabelsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiMetricLabelsResponse) => void): grpc.ClientUnaryCall;
 }

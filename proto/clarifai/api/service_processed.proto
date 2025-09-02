@@ -3136,8 +3136,6 @@ service V2 {
 
 
 
-
-
   // Get a specific module from an app.
   rpc GetModule (GetModuleRequest) returns (SingleModuleResponse) {
     option (google.api.http) = {
@@ -4536,6 +4534,24 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Secrets_Delete;
   }
+
+  rpc PostMetricsQuery(PostMetricsQueryRequest) returns (MetricsQueryResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/metrics"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = UserMetrics_Get;
+  }
+
+  rpc ListMetricLabels(ListMetricLabelsRequest) returns (MultiMetricLabelsResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/metrics/labels"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = UserMetrics_Get;
+  }
+
 }
 
 
@@ -7821,24 +7837,6 @@ message MultiStatValueAggregateResponse {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // GetModuleRequest
 message GetModuleRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -9247,3 +9245,25 @@ message SingleSecretResponse {
   clarifai.api.status.Status status = 1;
   repeated Secret secrets = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
+
+message PostMetricsQueryRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  MetricSearchQuery query = 2;
+}
+
+message MetricsQueryResponse {
+  clarifai.api.status.Status status = 1;
+  MetricData data = 2;
+  string resolution = 3;
+}
+
+message ListMetricLabelsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated MetricType metric_types = 2;
+}
+
+message MultiMetricLabelsResponse {
+  clarifai.api.status.Status status = 1;
+  repeated MetricTypeLabels metric_type_labels = 2;
+}
+
