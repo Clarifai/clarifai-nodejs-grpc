@@ -25819,7 +25819,8 @@ proto.clarifai.api.Key.toObject = function(includeInstance, msg) {
     proto.clarifai.api.App.toObject, includeInstance),
     createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     expiresAt: (f = msg.getExpiresAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    authorizedIdpIdsList: (f = jspb.Message.getRepeatedField(msg, 9)) == null ? undefined : f
+    authorizedIdpIdsList: (f = jspb.Message.getRepeatedField(msg, 9)) == null ? undefined : f,
+    organizationId: jspb.Message.getFieldWithDefault(msg, 10, "")
   };
 
   if (includeInstance) {
@@ -25894,6 +25895,10 @@ proto.clarifai.api.Key.deserializeBinaryFromReader = function(msg, reader) {
     case 9:
       var value = /** @type {string} */ (reader.readString());
       msg.addAuthorizedIdpIds(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOrganizationId(value);
       break;
     default:
       reader.skipField();
@@ -25987,6 +25992,13 @@ proto.clarifai.api.Key.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeRepeatedString(
       9,
+      f
+    );
+  }
+  f = message.getOrganizationId();
+  if (f.length > 0) {
+    writer.writeString(
+      10,
       f
     );
   }
@@ -26267,6 +26279,24 @@ proto.clarifai.api.Key.prototype.addAuthorizedIdpIds = function(value, opt_index
  */
 proto.clarifai.api.Key.prototype.clearAuthorizedIdpIdsList = function() {
   return this.setAuthorizedIdpIdsList([]);
+};
+
+
+/**
+ * optional string organization_id = 10;
+ * @return {string}
+ */
+proto.clarifai.api.Key.prototype.getOrganizationId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.Key} returns this
+ */
+proto.clarifai.api.Key.prototype.setOrganizationId = function(value) {
+  return jspb.Message.setProto3StringField(this, 10, value);
 };
 
 
