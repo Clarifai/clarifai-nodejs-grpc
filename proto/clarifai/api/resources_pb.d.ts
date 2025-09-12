@@ -2842,6 +2842,38 @@ export namespace Model {
 
 }
 
+export class SpecialHandling extends jspb.Message { 
+    getId(): string;
+    setId(value: string): SpecialHandling;
+    getReason(): SpecialHandling.Reason;
+    setReason(value: SpecialHandling.Reason): SpecialHandling;
+    getDone(): boolean;
+    setDone(value: boolean): SpecialHandling;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): SpecialHandling.AsObject;
+    static toObject(includeInstance: boolean, msg: SpecialHandling): SpecialHandling.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: SpecialHandling, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): SpecialHandling;
+    static deserializeBinaryFromReader(message: SpecialHandling, reader: jspb.BinaryReader): SpecialHandling;
+}
+
+export namespace SpecialHandling {
+    export type AsObject = {
+        id: string,
+        reason: SpecialHandling.Reason,
+        done: boolean,
+    }
+
+    export enum Reason {
+    REASON_NOT_SET = 0,
+    CONTACT_SALES = 1,
+    }
+
+}
+
 export class OpenRouterInfo extends jspb.Message { 
 
     hasParams(): boolean;
@@ -3647,6 +3679,10 @@ export class ModelVersion extends jspb.Message {
     getMethodSignaturesList(): Array<MethodSignature>;
     setMethodSignaturesList(value: Array<MethodSignature>): ModelVersion;
     addMethodSignatures(value?: MethodSignature, index?: number): MethodSignature;
+    clearSpecialHandlingList(): void;
+    getSpecialHandlingList(): Array<SpecialHandling>;
+    setSpecialHandlingList(value: Array<SpecialHandling>): ModelVersion;
+    addSpecialHandling(value?: SpecialHandling, index?: number): SpecialHandling;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ModelVersion.AsObject;
@@ -3683,6 +3719,7 @@ export namespace ModelVersion {
         inferenceComputeInfo?: ComputeInfo.AsObject,
         buildInfo?: BuildInfo.AsObject,
         methodSignaturesList: Array<MethodSignature.AsObject>,
+        specialHandlingList: Array<SpecialHandling.AsObject>,
     }
 }
 
@@ -8486,6 +8523,10 @@ export class Runner extends jspb.Message {
     setComputeInfo(value?: ComputeInfo): Runner;
     getNumReplicas(): number;
     setNumReplicas(value: number): Runner;
+    clearSpecialHandlingList(): void;
+    getSpecialHandlingList(): Array<SpecialHandling>;
+    setSpecialHandlingList(value: Array<SpecialHandling>): Runner;
+    addSpecialHandling(value?: SpecialHandling, index?: number): SpecialHandling;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Runner.AsObject;
@@ -8509,6 +8550,7 @@ export namespace Runner {
         nodepool?: Nodepool.AsObject,
         computeInfo?: ComputeInfo.AsObject,
         numReplicas: number,
+        specialHandlingList: Array<SpecialHandling.AsObject>,
     }
 }
 
@@ -8559,6 +8601,10 @@ export class Nodepool extends jspb.Message {
     clearMetadata(): void;
     getMetadata(): google_protobuf_struct_pb.Struct | undefined;
     setMetadata(value?: google_protobuf_struct_pb.Struct): Nodepool;
+    clearSpecialHandlingList(): void;
+    getSpecialHandlingList(): Array<SpecialHandling>;
+    setSpecialHandlingList(value: Array<SpecialHandling>): Nodepool;
+    addSpecialHandling(value?: SpecialHandling, index?: number): SpecialHandling;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Nodepool.AsObject;
@@ -8585,6 +8631,7 @@ export namespace Nodepool {
         enforcedMaxInstances: number,
         visibility?: Visibility.AsObject,
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
+        specialHandlingList: Array<SpecialHandling.AsObject>,
     }
 }
 
@@ -8643,6 +8690,10 @@ export class InstanceType extends jspb.Message {
     setAllowedCapacityTypes(value?: NodeCapacityType): InstanceType;
     getFeatureFlagGroup(): string;
     setFeatureFlagGroup(value: string): InstanceType;
+    clearSpecialHandlingList(): void;
+    getSpecialHandlingList(): Array<SpecialHandling>;
+    setSpecialHandlingList(value: Array<SpecialHandling>): InstanceType;
+    addSpecialHandling(value?: SpecialHandling, index?: number): SpecialHandling;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): InstanceType.AsObject;
@@ -8664,6 +8715,7 @@ export namespace InstanceType {
         region: string,
         allowedCapacityTypes?: NodeCapacityType.AsObject,
         featureFlagGroup: string,
+        specialHandlingList: Array<SpecialHandling.AsObject>,
     }
 }
 
@@ -8883,6 +8935,10 @@ export class Deployment extends jspb.Message {
     setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): Deployment;
     getDeployLatestVersion(): boolean;
     setDeployLatestVersion(value: boolean): Deployment;
+    clearSpecialHandlingList(): void;
+    getSpecialHandlingList(): Array<SpecialHandling>;
+    setSpecialHandlingList(value: Array<SpecialHandling>): Deployment;
+    addSpecialHandling(value?: SpecialHandling, index?: number): SpecialHandling;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Deployment.AsObject;
@@ -8908,6 +8964,7 @@ export namespace Deployment {
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         deployLatestVersion: boolean,
+        specialHandlingList: Array<SpecialHandling.AsObject>,
     }
 
     export enum SchedulingChoice {

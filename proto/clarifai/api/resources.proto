@@ -1558,6 +1558,20 @@ message Model {
   OpenRouterInfo open_router_info = 44;
 }
 
+// Tracks special handling reason and whether it's been done.
+message SpecialHandling {
+  string id = 1;
+
+  enum Reason {
+    REASON_NOT_SET = 0;
+    CONTACT_SALES = 1;
+  }
+  Reason reason = 2;
+
+  // Whether special handling is done.
+  bool done = 3;
+}
+
 message OpenRouterInfo {
   google.protobuf.Struct params = 1;
 }
@@ -2119,6 +2133,8 @@ message ModelVersion {
 
   // Model signature information for the model version
   repeated MethodSignature method_signatures = 26;
+  // List of special handling instructions for this model version.
+  repeated SpecialHandling special_handling = 27;
 }
 
 // MethodSignature is a definition of a method that a model can have.
@@ -4761,6 +4777,8 @@ message Runner {
   // Number of replicas that this runner should have up.
   // We keep it separate from ComputeInfo which defines how many resources each replica needs.
   uint32 num_replicas = 11;
+  // List of special handling instructions for this runner.
+  repeated SpecialHandling special_handling = 12;
 }
 
 
@@ -4811,6 +4829,9 @@ message Nodepool {
   // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
   google.protobuf.Struct metadata = 12;
 
+  // List of special handling instructions for this nodepool.
+  repeated SpecialHandling special_handling = 15;
+
   // Other future configuration we can add:
   // - disk information
   // - architecture type (ARM/x86)
@@ -4849,6 +4870,9 @@ message InstanceType {
 
   // The feature flag group associated with this instance type.
   string feature_flag_group = 8;
+
+  // List of special handling instructions for this instance type.
+  repeated SpecialHandling special_handling = 9;
 }
 
 // CloudProvider represents the entity that provides the infrastructure where the Nodepools are deployed.
@@ -5099,6 +5123,8 @@ message Deployment {
   google.protobuf.Timestamp modified_at = 13;
   // When to always deploy latest model version
   bool deploy_latest_version = 14;
+  // List of special handling instructions for this deployment.
+  repeated SpecialHandling special_handling = 15;
 }
 
 
