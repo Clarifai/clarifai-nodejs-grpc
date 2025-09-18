@@ -329,6 +329,7 @@ message Track {
 
 
 
+
 // Cluster data
 message Cluster {
   string id = 1;
@@ -2819,6 +2820,7 @@ message AnnotationSearchMetrics {
   // also be publicly visible.
   Visibility visibility = 6;
 }
+
 
 
 

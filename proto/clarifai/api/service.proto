@@ -2655,6 +2655,7 @@ service V2 {
 
 
 
+
   // List all status codes.
   rpc ListStatusCodes (ListStatusCodesRequest) returns (MultiStatusCodeResponse) {
     option (google.api.http) = {
@@ -2670,6 +2671,7 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = NoAuth;
   }
+
 
 
 
@@ -7068,6 +7070,10 @@ message SingleAnnotationFilterResponse {
 
   AnnotationFilter annotation_filter = 2;
 }
+
+
+
+
 
 
 
