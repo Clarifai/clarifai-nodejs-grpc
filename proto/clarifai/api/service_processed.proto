@@ -4554,6 +4554,9 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = UserMetrics_Get;
   }
 
+
+
+
 }
 
 
@@ -9272,4 +9275,8 @@ message MultiMetricLabelsResponse {
   clarifai.api.status.Status status = 1;
   repeated MetricTypeLabels metric_type_labels = 2;
 }
+
+
+
+
 
