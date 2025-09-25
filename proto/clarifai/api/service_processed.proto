@@ -4819,6 +4819,8 @@ message ListAppsRequest {
     bool sort_by_star_count = 13;
     // Whether to order by the id
     bool sort_by_id = 17;
+    // Whether to order by search query relevance. Can only be used if search is not empty.
+    bool sort_by_relevance = 19;
   }
 
   // Filtering options:
@@ -5550,6 +5552,8 @@ message ListDatasetsRequest {
     bool sort_by_modified_at = 9;
     // Whether to order by the external id
     bool sort_by_id = 11;
+    // Whether to order by search query relevance. Can only be used if search is not empty.
+    bool sort_by_relevance = 14;
   }
 
   // Filtering options:
@@ -6042,6 +6046,8 @@ message ListModelsRequest {
 
   // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars, outputs, presets, counts
   repeated string additional_fields = 19;
+  // If true, show replica counts for models.
+  bool show_replicas = 34;
 
   // Sorting options:
   // Whether to sort in ascending order. If false, will order in descending order.
@@ -6058,6 +6064,8 @@ message ListModelsRequest {
     bool sort_by_created_at = 24;
     // Whether to order by count of stars
     bool sort_by_star_count = 25;
+    // Whether to order by search query relevance. Can only be used if search is not empty.
+    bool sort_by_relevance = 36;
   }
 
   // Filtering options:
@@ -6091,6 +6099,18 @@ message ListModelsRequest {
   // Note: you can not filter `trained_only` and bookmark at the same time.
   // When filter by bookmark, we will return trained and untrained models.
   bool bookmark = 26;
+  // Filter by the model version ids. If set, only return the model of these versions.
+  repeated string model_version_ids = 28;
+  // Filter by LicenseType
+  LicenseType license_type = 29;
+  // Filter by Source
+  uint32 source = 30;
+  // Filter by Creator
+  string creator = 31;
+  // Filter by model versions runners with replicas >= min_replicas.
+  uint32 min_replicas = 33;
+  // Filter by visibility of the model. If set, only return models with the specified visibility.
+  Visibility visibility = 35;
 
   // Searching options:
   // Specify a search parameter in order to perform keyword search on the
@@ -6116,20 +6136,6 @@ message ListModelsRequest {
   // Extends the name filter to include the user_id of the application owner that the model belongs to.
   // Deprecated: use search instead of name.
   bool filter_by_user_id = 22 [deprecated = true];
-  // Filter by the model version ids. If set, only return the model of these versions.
-  repeated string model_version_ids = 28;
-  // Filter by LicenseType
-  LicenseType license_type = 29;
-  // Filter by Source
-  uint32 source = 30;
-  // Filter by Creator
-  string creator = 31;
-  // Filter by model versions runners with replicas >= min_replicas.
-  uint32 min_replicas = 33;
-  // If true, show replica counts for models.
-  bool show_replicas = 34;
-  // Filter by visibility of the model. If set, only return models with the specified visibility.
-  Visibility visibility = 35;
 }
 
 // ResourceCountRequest
@@ -6327,6 +6333,8 @@ message ListModelVersionsRequest {
   repeated string concept_ids = 5;
   // To list only the model versions that have been trained.
   bool trained_only = 6;
+  // Filter by model versions runners with replicas >= min_replicas.
+  uint32 min_replicas = 12;
 
   // Sorting options:
   // Whether to sort in ascending order. If false, will order in descending order.
@@ -6342,9 +6350,6 @@ message ListModelVersionsRequest {
     // If neither sort option is set to true, will sort by created_at.
     bool sort_by_created_at = 11;
   }
-
-  // Filter by model versions runners with replicas >= min_replicas.
-  uint32 min_replicas = 12;
 }
 
 // DeleteModelVersionRequest
@@ -7270,11 +7275,12 @@ message ListWorkflowsRequest {
     // Whether to order by the modified_at time.
     // If none of the sort options is set to true, will sort by modified_at.
     bool sort_by_modified_at = 7;
-
     // Whether to order by the created_at time.
     bool sort_by_created_at = 13;
     // Whether to order by the number of users stared the workflow
     bool sort_by_star_count = 14;
+    // Whether to order by search query relevance. Can only be used if search is not empty.
+    bool sort_by_relevance = 18;
   }
 
   // Filtering options:
@@ -7877,6 +7883,8 @@ message ListModulesRequest {
     bool sort_by_modified_at = 9;
     // Whether to order by the external id
     bool sort_by_id = 11;
+    // Whether to order by search query relevance. Can only be used if search is not empty.
+    bool sort_by_relevance = 16;
   }
 
   // Filtering options:

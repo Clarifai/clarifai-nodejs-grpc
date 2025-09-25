@@ -14273,7 +14273,7 @@ proto.clarifai.api.ListAppsRequest.repeatedFields_ = [10];
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.clarifai.api.ListAppsRequest.oneofGroups_ = [[6,7,12,13,17]];
+proto.clarifai.api.ListAppsRequest.oneofGroups_ = [[6,7,12,13,17,19]];
 
 /**
  * @enum {number}
@@ -14284,7 +14284,8 @@ proto.clarifai.api.ListAppsRequest.SortByCase = {
   SORT_BY_MODIFIED_AT: 7,
   SORT_BY_CREATED_AT: 12,
   SORT_BY_STAR_COUNT: 13,
-  SORT_BY_ID: 17
+  SORT_BY_ID: 17,
+  SORT_BY_RELEVANCE: 19
 };
 
 /**
@@ -14335,6 +14336,7 @@ proto.clarifai.api.ListAppsRequest.toObject = function(includeInstance, msg) {
     sortByCreatedAt: jspb.Message.getBooleanFieldWithDefault(msg, 12, false),
     sortByStarCount: jspb.Message.getBooleanFieldWithDefault(msg, 13, false),
     sortById: jspb.Message.getBooleanFieldWithDefault(msg, 17, false),
+    sortByRelevance: jspb.Message.getBooleanFieldWithDefault(msg, 19, false),
     featuredOnly: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
     starredOnly: jspb.Message.getBooleanFieldWithDefault(msg, 11, false),
     templateOnly: jspb.Message.getBooleanFieldWithDefault(msg, 16, false),
@@ -14419,6 +14421,10 @@ proto.clarifai.api.ListAppsRequest.deserializeBinaryFromReader = function(msg, r
     case 17:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setSortById(value);
+      break;
+    case 19:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSortByRelevance(value);
       break;
     case 9:
       var value = /** @type {boolean} */ (reader.readBool());
@@ -14550,6 +14556,13 @@ proto.clarifai.api.ListAppsRequest.serializeBinaryToWriter = function(message, w
   if (f != null) {
     writer.writeBool(
       17,
+      f
+    );
+  }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 19));
+  if (f != null) {
+    writer.writeBool(
+      19,
       f
     );
   }
@@ -14918,6 +14931,42 @@ proto.clarifai.api.ListAppsRequest.prototype.clearSortById = function() {
  */
 proto.clarifai.api.ListAppsRequest.prototype.hasSortById = function() {
   return jspb.Message.getField(this, 17) != null;
+};
+
+
+/**
+ * optional bool sort_by_relevance = 19;
+ * @return {boolean}
+ */
+proto.clarifai.api.ListAppsRequest.prototype.getSortByRelevance = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 19, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.ListAppsRequest} returns this
+ */
+proto.clarifai.api.ListAppsRequest.prototype.setSortByRelevance = function(value) {
+  return jspb.Message.setOneofField(this, 19, proto.clarifai.api.ListAppsRequest.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.clarifai.api.ListAppsRequest} returns this
+ */
+proto.clarifai.api.ListAppsRequest.prototype.clearSortByRelevance = function() {
+  return jspb.Message.setOneofField(this, 19, proto.clarifai.api.ListAppsRequest.oneofGroups_[0], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.ListAppsRequest.prototype.hasSortByRelevance = function() {
+  return jspb.Message.getField(this, 19) != null;
 };
 
 
@@ -28203,7 +28252,7 @@ proto.clarifai.api.ListDatasetsRequest.repeatedFields_ = [5];
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.clarifai.api.ListDatasetsRequest.oneofGroups_ = [[7,8,9,11]];
+proto.clarifai.api.ListDatasetsRequest.oneofGroups_ = [[7,8,9,11,14]];
 
 /**
  * @enum {number}
@@ -28213,7 +28262,8 @@ proto.clarifai.api.ListDatasetsRequest.SortByCase = {
   SORT_BY_CREATED_AT: 7,
   SORT_BY_STAR_COUNT: 8,
   SORT_BY_MODIFIED_AT: 9,
-  SORT_BY_ID: 11
+  SORT_BY_ID: 11,
+  SORT_BY_RELEVANCE: 14
 };
 
 /**
@@ -28263,6 +28313,7 @@ proto.clarifai.api.ListDatasetsRequest.toObject = function(includeInstance, msg)
     sortByStarCount: jspb.Message.getBooleanFieldWithDefault(msg, 8, false),
     sortByModifiedAt: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
     sortById: jspb.Message.getBooleanFieldWithDefault(msg, 11, false),
+    sortByRelevance: jspb.Message.getBooleanFieldWithDefault(msg, 14, false),
     starredOnly: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
     bookmark: jspb.Message.getBooleanFieldWithDefault(msg, 10, false),
     search: jspb.Message.getFieldWithDefault(msg, 13, ""),
@@ -28339,6 +28390,10 @@ proto.clarifai.api.ListDatasetsRequest.deserializeBinaryFromReader = function(ms
     case 11:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setSortById(value);
+      break;
+    case 14:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSortByRelevance(value);
       break;
     case 4:
       var value = /** @type {boolean} */ (reader.readBool());
@@ -28446,6 +28501,13 @@ proto.clarifai.api.ListDatasetsRequest.serializeBinaryToWriter = function(messag
   if (f != null) {
     writer.writeBool(
       11,
+      f
+    );
+  }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 14));
+  if (f != null) {
+    writer.writeBool(
+      14,
       f
     );
   }
@@ -28749,6 +28811,42 @@ proto.clarifai.api.ListDatasetsRequest.prototype.clearSortById = function() {
  */
 proto.clarifai.api.ListDatasetsRequest.prototype.hasSortById = function() {
   return jspb.Message.getField(this, 11) != null;
+};
+
+
+/**
+ * optional bool sort_by_relevance = 14;
+ * @return {boolean}
+ */
+proto.clarifai.api.ListDatasetsRequest.prototype.getSortByRelevance = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 14, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.ListDatasetsRequest} returns this
+ */
+proto.clarifai.api.ListDatasetsRequest.prototype.setSortByRelevance = function(value) {
+  return jspb.Message.setOneofField(this, 14, proto.clarifai.api.ListDatasetsRequest.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.clarifai.api.ListDatasetsRequest} returns this
+ */
+proto.clarifai.api.ListDatasetsRequest.prototype.clearSortByRelevance = function() {
+  return jspb.Message.setOneofField(this, 14, proto.clarifai.api.ListDatasetsRequest.oneofGroups_[0], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.ListDatasetsRequest.prototype.hasSortByRelevance = function() {
+  return jspb.Message.getField(this, 14) != null;
 };
 
 
@@ -38697,7 +38795,7 @@ proto.clarifai.api.ListModelsRequest.repeatedFields_ = [19,8,9,17,18,21,28];
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.clarifai.api.ListModelsRequest.oneofGroups_ = [[11,12,13,24,25]];
+proto.clarifai.api.ListModelsRequest.oneofGroups_ = [[11,12,13,24,25,36]];
 
 /**
  * @enum {number}
@@ -38708,7 +38806,8 @@ proto.clarifai.api.ListModelsRequest.SortByCase = {
   SORT_BY_NUM_INPUTS: 12,
   SORT_BY_MODIFIED_AT: 13,
   SORT_BY_CREATED_AT: 24,
-  SORT_BY_STAR_COUNT: 25
+  SORT_BY_STAR_COUNT: 25,
+  SORT_BY_RELEVANCE: 36
 };
 
 /**
@@ -38753,12 +38852,14 @@ proto.clarifai.api.ListModelsRequest.toObject = function(includeInstance, msg) {
     page: jspb.Message.getFieldWithDefault(msg, 2, 0),
     perPage: jspb.Message.getFieldWithDefault(msg, 3, 0),
     additionalFieldsList: (f = jspb.Message.getRepeatedField(msg, 19)) == null ? undefined : f,
+    showReplicas: jspb.Message.getBooleanFieldWithDefault(msg, 34, false),
     sortAscending: jspb.Message.getBooleanFieldWithDefault(msg, 10, false),
     sortByName: jspb.Message.getBooleanFieldWithDefault(msg, 11, false),
     sortByNumInputs: jspb.Message.getBooleanFieldWithDefault(msg, 12, false),
     sortByModifiedAt: jspb.Message.getBooleanFieldWithDefault(msg, 13, false),
     sortByCreatedAt: jspb.Message.getBooleanFieldWithDefault(msg, 24, false),
     sortByStarCount: jspb.Message.getBooleanFieldWithDefault(msg, 25, false),
+    sortByRelevance: jspb.Message.getBooleanFieldWithDefault(msg, 36, false),
     modelTypeId: jspb.Message.getFieldWithDefault(msg, 6, ""),
     trainedOnly: jspb.Message.getBooleanFieldWithDefault(msg, 7, false),
     inputFieldsList: (f = jspb.Message.getRepeatedField(msg, 8)) == null ? undefined : f,
@@ -38771,17 +38872,16 @@ proto.clarifai.api.ListModelsRequest.toObject = function(includeInstance, msg) {
     languagesList: (f = jspb.Message.getRepeatedField(msg, 21)) == null ? undefined : f,
     dontFetchFromMain: jspb.Message.getBooleanFieldWithDefault(msg, 23, false),
     bookmark: jspb.Message.getBooleanFieldWithDefault(msg, 26, false),
-    search: jspb.Message.getFieldWithDefault(msg, 27, ""),
-    query: jspb.Message.getFieldWithDefault(msg, 14, ""),
-    name: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    filterByUserId: jspb.Message.getBooleanFieldWithDefault(msg, 22, false),
     modelVersionIdsList: (f = jspb.Message.getRepeatedField(msg, 28)) == null ? undefined : f,
     licenseType: jspb.Message.getFieldWithDefault(msg, 29, 0),
     source: jspb.Message.getFieldWithDefault(msg, 30, 0),
     creator: jspb.Message.getFieldWithDefault(msg, 31, ""),
     minReplicas: jspb.Message.getFieldWithDefault(msg, 33, 0),
-    showReplicas: jspb.Message.getBooleanFieldWithDefault(msg, 34, false),
-    visibility: (f = msg.getVisibility()) && proto_clarifai_api_resources_pb.Visibility.toObject(includeInstance, f)
+    visibility: (f = msg.getVisibility()) && proto_clarifai_api_resources_pb.Visibility.toObject(includeInstance, f),
+    search: jspb.Message.getFieldWithDefault(msg, 27, ""),
+    query: jspb.Message.getFieldWithDefault(msg, 14, ""),
+    name: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    filterByUserId: jspb.Message.getBooleanFieldWithDefault(msg, 22, false)
   };
 
   if (includeInstance) {
@@ -38835,6 +38935,10 @@ proto.clarifai.api.ListModelsRequest.deserializeBinaryFromReader = function(msg,
       var value = /** @type {string} */ (reader.readString());
       msg.addAdditionalFields(value);
       break;
+    case 34:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setShowReplicas(value);
+      break;
     case 10:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setSortAscending(value);
@@ -38858,6 +38962,10 @@ proto.clarifai.api.ListModelsRequest.deserializeBinaryFromReader = function(msg,
     case 25:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setSortByStarCount(value);
+      break;
+    case 36:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSortByRelevance(value);
       break;
     case 6:
       var value = /** @type {string} */ (reader.readString());
@@ -38907,22 +39015,6 @@ proto.clarifai.api.ListModelsRequest.deserializeBinaryFromReader = function(msg,
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setBookmark(value);
       break;
-    case 27:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setSearch(value);
-      break;
-    case 14:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setQuery(value);
-      break;
-    case 5:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setName(value);
-      break;
-    case 22:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setFilterByUserId(value);
-      break;
     case 28:
       var value = /** @type {string} */ (reader.readString());
       msg.addModelVersionIds(value);
@@ -38943,14 +39035,26 @@ proto.clarifai.api.ListModelsRequest.deserializeBinaryFromReader = function(msg,
       var value = /** @type {number} */ (reader.readUint32());
       msg.setMinReplicas(value);
       break;
-    case 34:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setShowReplicas(value);
-      break;
     case 35:
       var value = new proto_clarifai_api_resources_pb.Visibility;
       reader.readMessage(value,proto_clarifai_api_resources_pb.Visibility.deserializeBinaryFromReader);
       msg.setVisibility(value);
+      break;
+    case 27:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSearch(value);
+      break;
+    case 14:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setQuery(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
+    case 22:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setFilterByUserId(value);
       break;
     default:
       reader.skipField();
@@ -39010,6 +39114,13 @@ proto.clarifai.api.ListModelsRequest.serializeBinaryToWriter = function(message,
       f
     );
   }
+  f = message.getShowReplicas();
+  if (f) {
+    writer.writeBool(
+      34,
+      f
+    );
+  }
   f = message.getSortAscending();
   if (f) {
     writer.writeBool(
@@ -39049,6 +39160,13 @@ proto.clarifai.api.ListModelsRequest.serializeBinaryToWriter = function(message,
   if (f != null) {
     writer.writeBool(
       25,
+      f
+    );
+  }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 36));
+  if (f != null) {
+    writer.writeBool(
+      36,
       f
     );
   }
@@ -39136,34 +39254,6 @@ proto.clarifai.api.ListModelsRequest.serializeBinaryToWriter = function(message,
       f
     );
   }
-  f = message.getSearch();
-  if (f.length > 0) {
-    writer.writeString(
-      27,
-      f
-    );
-  }
-  f = message.getQuery();
-  if (f.length > 0) {
-    writer.writeString(
-      14,
-      f
-    );
-  }
-  f = message.getName();
-  if (f.length > 0) {
-    writer.writeString(
-      5,
-      f
-    );
-  }
-  f = message.getFilterByUserId();
-  if (f) {
-    writer.writeBool(
-      22,
-      f
-    );
-  }
   f = message.getModelVersionIdsList();
   if (f.length > 0) {
     writer.writeRepeatedString(
@@ -39199,19 +39289,40 @@ proto.clarifai.api.ListModelsRequest.serializeBinaryToWriter = function(message,
       f
     );
   }
-  f = message.getShowReplicas();
-  if (f) {
-    writer.writeBool(
-      34,
-      f
-    );
-  }
   f = message.getVisibility();
   if (f != null) {
     writer.writeMessage(
       35,
       f,
       proto_clarifai_api_resources_pb.Visibility.serializeBinaryToWriter
+    );
+  }
+  f = message.getSearch();
+  if (f.length > 0) {
+    writer.writeString(
+      27,
+      f
+    );
+  }
+  f = message.getQuery();
+  if (f.length > 0) {
+    writer.writeString(
+      14,
+      f
+    );
+  }
+  f = message.getName();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = message.getFilterByUserId();
+  if (f) {
+    writer.writeBool(
+      22,
+      f
     );
   }
 };
@@ -39324,6 +39435,24 @@ proto.clarifai.api.ListModelsRequest.prototype.addAdditionalFields = function(va
  */
 proto.clarifai.api.ListModelsRequest.prototype.clearAdditionalFieldsList = function() {
   return this.setAdditionalFieldsList([]);
+};
+
+
+/**
+ * optional bool show_replicas = 34;
+ * @return {boolean}
+ */
+proto.clarifai.api.ListModelsRequest.prototype.getShowReplicas = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 34, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.ListModelsRequest} returns this
+ */
+proto.clarifai.api.ListModelsRequest.prototype.setShowReplicas = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 34, value);
 };
 
 
@@ -39522,6 +39651,42 @@ proto.clarifai.api.ListModelsRequest.prototype.clearSortByStarCount = function()
  */
 proto.clarifai.api.ListModelsRequest.prototype.hasSortByStarCount = function() {
   return jspb.Message.getField(this, 25) != null;
+};
+
+
+/**
+ * optional bool sort_by_relevance = 36;
+ * @return {boolean}
+ */
+proto.clarifai.api.ListModelsRequest.prototype.getSortByRelevance = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 36, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.ListModelsRequest} returns this
+ */
+proto.clarifai.api.ListModelsRequest.prototype.setSortByRelevance = function(value) {
+  return jspb.Message.setOneofField(this, 36, proto.clarifai.api.ListModelsRequest.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.clarifai.api.ListModelsRequest} returns this
+ */
+proto.clarifai.api.ListModelsRequest.prototype.clearSortByRelevance = function() {
+  return jspb.Message.setOneofField(this, 36, proto.clarifai.api.ListModelsRequest.oneofGroups_[0], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.ListModelsRequest.prototype.hasSortByRelevance = function() {
+  return jspb.Message.getField(this, 36) != null;
 };
 
 
@@ -39837,78 +40002,6 @@ proto.clarifai.api.ListModelsRequest.prototype.setBookmark = function(value) {
 
 
 /**
- * optional string search = 27;
- * @return {string}
- */
-proto.clarifai.api.ListModelsRequest.prototype.getSearch = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 27, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.clarifai.api.ListModelsRequest} returns this
- */
-proto.clarifai.api.ListModelsRequest.prototype.setSearch = function(value) {
-  return jspb.Message.setProto3StringField(this, 27, value);
-};
-
-
-/**
- * optional string query = 14;
- * @return {string}
- */
-proto.clarifai.api.ListModelsRequest.prototype.getQuery = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 14, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.clarifai.api.ListModelsRequest} returns this
- */
-proto.clarifai.api.ListModelsRequest.prototype.setQuery = function(value) {
-  return jspb.Message.setProto3StringField(this, 14, value);
-};
-
-
-/**
- * optional string name = 5;
- * @return {string}
- */
-proto.clarifai.api.ListModelsRequest.prototype.getName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.clarifai.api.ListModelsRequest} returns this
- */
-proto.clarifai.api.ListModelsRequest.prototype.setName = function(value) {
-  return jspb.Message.setProto3StringField(this, 5, value);
-};
-
-
-/**
- * optional bool filter_by_user_id = 22;
- * @return {boolean}
- */
-proto.clarifai.api.ListModelsRequest.prototype.getFilterByUserId = function() {
-  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 22, false));
-};
-
-
-/**
- * @param {boolean} value
- * @return {!proto.clarifai.api.ListModelsRequest} returns this
- */
-proto.clarifai.api.ListModelsRequest.prototype.setFilterByUserId = function(value) {
-  return jspb.Message.setProto3BooleanField(this, 22, value);
-};
-
-
-/**
  * repeated string model_version_ids = 28;
  * @return {!Array<string>}
  */
@@ -40018,24 +40111,6 @@ proto.clarifai.api.ListModelsRequest.prototype.setMinReplicas = function(value) 
 
 
 /**
- * optional bool show_replicas = 34;
- * @return {boolean}
- */
-proto.clarifai.api.ListModelsRequest.prototype.getShowReplicas = function() {
-  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 34, false));
-};
-
-
-/**
- * @param {boolean} value
- * @return {!proto.clarifai.api.ListModelsRequest} returns this
- */
-proto.clarifai.api.ListModelsRequest.prototype.setShowReplicas = function(value) {
-  return jspb.Message.setProto3BooleanField(this, 34, value);
-};
-
-
-/**
  * optional Visibility visibility = 35;
  * @return {?proto.clarifai.api.Visibility}
  */
@@ -40069,6 +40144,78 @@ proto.clarifai.api.ListModelsRequest.prototype.clearVisibility = function() {
  */
 proto.clarifai.api.ListModelsRequest.prototype.hasVisibility = function() {
   return jspb.Message.getField(this, 35) != null;
+};
+
+
+/**
+ * optional string search = 27;
+ * @return {string}
+ */
+proto.clarifai.api.ListModelsRequest.prototype.getSearch = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 27, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.ListModelsRequest} returns this
+ */
+proto.clarifai.api.ListModelsRequest.prototype.setSearch = function(value) {
+  return jspb.Message.setProto3StringField(this, 27, value);
+};
+
+
+/**
+ * optional string query = 14;
+ * @return {string}
+ */
+proto.clarifai.api.ListModelsRequest.prototype.getQuery = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 14, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.ListModelsRequest} returns this
+ */
+proto.clarifai.api.ListModelsRequest.prototype.setQuery = function(value) {
+  return jspb.Message.setProto3StringField(this, 14, value);
+};
+
+
+/**
+ * optional string name = 5;
+ * @return {string}
+ */
+proto.clarifai.api.ListModelsRequest.prototype.getName = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.ListModelsRequest} returns this
+ */
+proto.clarifai.api.ListModelsRequest.prototype.setName = function(value) {
+  return jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional bool filter_by_user_id = 22;
+ * @return {boolean}
+ */
+proto.clarifai.api.ListModelsRequest.prototype.getFilterByUserId = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 22, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.ListModelsRequest} returns this
+ */
+proto.clarifai.api.ListModelsRequest.prototype.setFilterByUserId = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 22, value);
 };
 
 
@@ -44993,12 +45140,12 @@ proto.clarifai.api.ListModelVersionsRequest.toObject = function(includeInstance,
     perPage: jspb.Message.getFieldWithDefault(msg, 4, 0),
     conceptIdsList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f,
     trainedOnly: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
+    minReplicas: jspb.Message.getFieldWithDefault(msg, 12, 0),
     sortAscending: jspb.Message.getBooleanFieldWithDefault(msg, 7, false),
     sortByStatusCode: jspb.Message.getBooleanFieldWithDefault(msg, 8, false),
     sortByNumInputs: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
     sortByDescription: jspb.Message.getBooleanFieldWithDefault(msg, 10, false),
-    sortByCreatedAt: jspb.Message.getBooleanFieldWithDefault(msg, 11, false),
-    minReplicas: jspb.Message.getFieldWithDefault(msg, 12, 0)
+    sortByCreatedAt: jspb.Message.getBooleanFieldWithDefault(msg, 11, false)
   };
 
   if (includeInstance) {
@@ -45060,6 +45207,10 @@ proto.clarifai.api.ListModelVersionsRequest.deserializeBinaryFromReader = functi
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setTrainedOnly(value);
       break;
+    case 12:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setMinReplicas(value);
+      break;
     case 7:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setSortAscending(value);
@@ -45079,10 +45230,6 @@ proto.clarifai.api.ListModelVersionsRequest.deserializeBinaryFromReader = functi
     case 11:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setSortByCreatedAt(value);
-      break;
-    case 12:
-      var value = /** @type {number} */ (reader.readUint32());
-      msg.setMinReplicas(value);
       break;
     default:
       reader.skipField();
@@ -45156,6 +45303,13 @@ proto.clarifai.api.ListModelVersionsRequest.serializeBinaryToWriter = function(m
       f
     );
   }
+  f = message.getMinReplicas();
+  if (f !== 0) {
+    writer.writeUint32(
+      12,
+      f
+    );
+  }
   f = message.getSortAscending();
   if (f) {
     writer.writeBool(
@@ -45188,13 +45342,6 @@ proto.clarifai.api.ListModelVersionsRequest.serializeBinaryToWriter = function(m
   if (f != null) {
     writer.writeBool(
       11,
-      f
-    );
-  }
-  f = message.getMinReplicas();
-  if (f !== 0) {
-    writer.writeUint32(
-      12,
       f
     );
   }
@@ -45344,6 +45491,24 @@ proto.clarifai.api.ListModelVersionsRequest.prototype.getTrainedOnly = function(
  */
 proto.clarifai.api.ListModelVersionsRequest.prototype.setTrainedOnly = function(value) {
   return jspb.Message.setProto3BooleanField(this, 6, value);
+};
+
+
+/**
+ * optional uint32 min_replicas = 12;
+ * @return {number}
+ */
+proto.clarifai.api.ListModelVersionsRequest.prototype.getMinReplicas = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.ListModelVersionsRequest} returns this
+ */
+proto.clarifai.api.ListModelVersionsRequest.prototype.setMinReplicas = function(value) {
+  return jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
@@ -45506,24 +45671,6 @@ proto.clarifai.api.ListModelVersionsRequest.prototype.clearSortByCreatedAt = fun
  */
 proto.clarifai.api.ListModelVersionsRequest.prototype.hasSortByCreatedAt = function() {
   return jspb.Message.getField(this, 11) != null;
-};
-
-
-/**
- * optional uint32 min_replicas = 12;
- * @return {number}
- */
-proto.clarifai.api.ListModelVersionsRequest.prototype.getMinReplicas = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.clarifai.api.ListModelVersionsRequest} returns this
- */
-proto.clarifai.api.ListModelVersionsRequest.prototype.setMinReplicas = function(value) {
-  return jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
@@ -64103,7 +64250,7 @@ proto.clarifai.api.ListWorkflowsRequest.repeatedFields_ = [10];
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.clarifai.api.ListWorkflowsRequest.oneofGroups_ = [[6,7,13,14]];
+proto.clarifai.api.ListWorkflowsRequest.oneofGroups_ = [[6,7,13,14,18]];
 
 /**
  * @enum {number}
@@ -64113,7 +64260,8 @@ proto.clarifai.api.ListWorkflowsRequest.SortByCase = {
   SORT_BY_ID: 6,
   SORT_BY_MODIFIED_AT: 7,
   SORT_BY_CREATED_AT: 13,
-  SORT_BY_STAR_COUNT: 14
+  SORT_BY_STAR_COUNT: 14,
+  SORT_BY_RELEVANCE: 18
 };
 
 /**
@@ -64163,6 +64311,7 @@ proto.clarifai.api.ListWorkflowsRequest.toObject = function(includeInstance, msg
     sortByModifiedAt: jspb.Message.getBooleanFieldWithDefault(msg, 7, false),
     sortByCreatedAt: jspb.Message.getBooleanFieldWithDefault(msg, 13, false),
     sortByStarCount: jspb.Message.getBooleanFieldWithDefault(msg, 14, false),
+    sortByRelevance: jspb.Message.getBooleanFieldWithDefault(msg, 18, false),
     featuredOnly: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
     starredOnly: jspb.Message.getBooleanFieldWithDefault(msg, 11, false),
     bookmark: jspb.Message.getBooleanFieldWithDefault(msg, 15, false),
@@ -64243,6 +64392,10 @@ proto.clarifai.api.ListWorkflowsRequest.deserializeBinaryFromReader = function(m
     case 14:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setSortByStarCount(value);
+      break;
+    case 18:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSortByRelevance(value);
       break;
     case 9:
       var value = /** @type {boolean} */ (reader.readBool());
@@ -64367,6 +64520,13 @@ proto.clarifai.api.ListWorkflowsRequest.serializeBinaryToWriter = function(messa
   if (f != null) {
     writer.writeBool(
       14,
+      f
+    );
+  }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 18));
+  if (f != null) {
+    writer.writeBool(
+      18,
       f
     );
   }
@@ -64699,6 +64859,42 @@ proto.clarifai.api.ListWorkflowsRequest.prototype.clearSortByStarCount = functio
  */
 proto.clarifai.api.ListWorkflowsRequest.prototype.hasSortByStarCount = function() {
   return jspb.Message.getField(this, 14) != null;
+};
+
+
+/**
+ * optional bool sort_by_relevance = 18;
+ * @return {boolean}
+ */
+proto.clarifai.api.ListWorkflowsRequest.prototype.getSortByRelevance = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 18, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.ListWorkflowsRequest} returns this
+ */
+proto.clarifai.api.ListWorkflowsRequest.prototype.setSortByRelevance = function(value) {
+  return jspb.Message.setOneofField(this, 18, proto.clarifai.api.ListWorkflowsRequest.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.clarifai.api.ListWorkflowsRequest} returns this
+ */
+proto.clarifai.api.ListWorkflowsRequest.prototype.clearSortByRelevance = function() {
+  return jspb.Message.setOneofField(this, 18, proto.clarifai.api.ListWorkflowsRequest.oneofGroups_[0], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.ListWorkflowsRequest.prototype.hasSortByRelevance = function() {
+  return jspb.Message.getField(this, 18) != null;
 };
 
 
@@ -76070,7 +76266,7 @@ proto.clarifai.api.ListModulesRequest.repeatedFields_ = [5];
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.clarifai.api.ListModulesRequest.oneofGroups_ = [[7,8,9,11]];
+proto.clarifai.api.ListModulesRequest.oneofGroups_ = [[7,8,9,11,16]];
 
 /**
  * @enum {number}
@@ -76080,7 +76276,8 @@ proto.clarifai.api.ListModulesRequest.SortByCase = {
   SORT_BY_CREATED_AT: 7,
   SORT_BY_STAR_COUNT: 8,
   SORT_BY_MODIFIED_AT: 9,
-  SORT_BY_ID: 11
+  SORT_BY_ID: 11,
+  SORT_BY_RELEVANCE: 16
 };
 
 /**
@@ -76130,6 +76327,7 @@ proto.clarifai.api.ListModulesRequest.toObject = function(includeInstance, msg) 
     sortByStarCount: jspb.Message.getBooleanFieldWithDefault(msg, 8, false),
     sortByModifiedAt: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
     sortById: jspb.Message.getBooleanFieldWithDefault(msg, 11, false),
+    sortByRelevance: jspb.Message.getBooleanFieldWithDefault(msg, 16, false),
     starredOnly: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
     bookmark: jspb.Message.getBooleanFieldWithDefault(msg, 10, false),
     search: jspb.Message.getFieldWithDefault(msg, 14, ""),
@@ -76208,6 +76406,10 @@ proto.clarifai.api.ListModulesRequest.deserializeBinaryFromReader = function(msg
     case 11:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setSortById(value);
+      break;
+    case 16:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSortByRelevance(value);
       break;
     case 4:
       var value = /** @type {boolean} */ (reader.readBool());
@@ -76324,6 +76526,13 @@ proto.clarifai.api.ListModulesRequest.serializeBinaryToWriter = function(message
   if (f != null) {
     writer.writeBool(
       11,
+      f
+    );
+  }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 16));
+  if (f != null) {
+    writer.writeBool(
+      16,
       f
     );
   }
@@ -76642,6 +76851,42 @@ proto.clarifai.api.ListModulesRequest.prototype.clearSortById = function() {
  */
 proto.clarifai.api.ListModulesRequest.prototype.hasSortById = function() {
   return jspb.Message.getField(this, 11) != null;
+};
+
+
+/**
+ * optional bool sort_by_relevance = 16;
+ * @return {boolean}
+ */
+proto.clarifai.api.ListModulesRequest.prototype.getSortByRelevance = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 16, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.ListModulesRequest} returns this
+ */
+proto.clarifai.api.ListModulesRequest.prototype.setSortByRelevance = function(value) {
+  return jspb.Message.setOneofField(this, 16, proto.clarifai.api.ListModulesRequest.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.clarifai.api.ListModulesRequest} returns this
+ */
+proto.clarifai.api.ListModulesRequest.prototype.clearSortByRelevance = function() {
+  return jspb.Message.setOneofField(this, 16, proto.clarifai.api.ListModulesRequest.oneofGroups_[0], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.ListModulesRequest.prototype.hasSortByRelevance = function() {
+  return jspb.Message.getField(this, 16) != null;
 };
 
 
