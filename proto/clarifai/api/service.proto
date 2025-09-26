@@ -2655,6 +2655,7 @@ service V2 {
 
 
 
+
   // List all status codes.
   rpc ListStatusCodes (ListStatusCodesRequest) returns (MultiStatusCodeResponse) {
     option (google.api.http) = {
@@ -2670,6 +2671,7 @@ service V2 {
     };
     option (clarifai.auth.util.cl_auth_type) = NoAuth;
   }
+
 
 
 
@@ -4551,6 +4553,9 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = UserMetrics_Get;
   }
+
+
+
 
 }
 
@@ -7093,6 +7098,10 @@ message SingleAnnotationFilterResponse {
 
 
 
+
+
+
+
 // GetUserRequest
 message GetUserRequest {
   // we used to have user_id but moved to the standard convention. Since this endpoint
@@ -9266,4 +9275,8 @@ message MultiMetricLabelsResponse {
   clarifai.api.status.Status status = 1;
   repeated MetricTypeLabels metric_type_labels = 2;
 }
+
+
+
+
 
