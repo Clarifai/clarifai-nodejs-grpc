@@ -2654,8 +2654,6 @@ service V2 {
 
 
 
-
-
   // List all status codes.
   rpc ListStatusCodes (ListStatusCodesRequest) returns (MultiStatusCodeResponse) {
     option (google.api.http) = {
@@ -7078,9 +7076,6 @@ message SingleAnnotationFilterResponse {
 
   AnnotationFilter annotation_filter = 2;
 }
-
-
-
 
 
 

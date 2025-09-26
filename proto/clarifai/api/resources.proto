@@ -2824,7 +2824,6 @@ message AnnotationSearchMetrics {
 
 
 
-
 // Text
 message Text {
   // This is a raw text string.
