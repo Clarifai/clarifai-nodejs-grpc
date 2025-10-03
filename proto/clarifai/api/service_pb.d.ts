@@ -135,6 +135,56 @@ export namespace ListAnnotationsRequest {
     }
 }
 
+export class PostTrackAnnotationsSearchesRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PostTrackAnnotationsSearchesRequest;
+    getInputId(): string;
+    setInputId(value: string): PostTrackAnnotationsSearchesRequest;
+    getTrackId(): string;
+    setTrackId(value: string): PostTrackAnnotationsSearchesRequest;
+    getFrameNumberStart(): number;
+    setFrameNumberStart(value: number): PostTrackAnnotationsSearchesRequest;
+    getFrameTimeStart(): number;
+    setFrameTimeStart(value: number): PostTrackAnnotationsSearchesRequest;
+    getAnnotationType(): proto_clarifai_api_resources_pb.AnnotationDataType;
+    setAnnotationType(value: proto_clarifai_api_resources_pb.AnnotationDataType): PostTrackAnnotationsSearchesRequest;
+    getMaxFrames(): number;
+    setMaxFrames(value: number): PostTrackAnnotationsSearchesRequest;
+    getMaxDuration(): number;
+    setMaxDuration(value: number): PostTrackAnnotationsSearchesRequest;
+
+    hasWorker(): boolean;
+    clearWorker(): void;
+    getWorker(): proto_clarifai_api_resources_pb.Worker | undefined;
+    setWorker(value?: proto_clarifai_api_resources_pb.Worker): PostTrackAnnotationsSearchesRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PostTrackAnnotationsSearchesRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PostTrackAnnotationsSearchesRequest): PostTrackAnnotationsSearchesRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PostTrackAnnotationsSearchesRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PostTrackAnnotationsSearchesRequest;
+    static deserializeBinaryFromReader(message: PostTrackAnnotationsSearchesRequest, reader: jspb.BinaryReader): PostTrackAnnotationsSearchesRequest;
+}
+
+export namespace PostTrackAnnotationsSearchesRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        inputId: string,
+        trackId: string,
+        frameNumberStart: number,
+        frameTimeStart: number,
+        annotationType: proto_clarifai_api_resources_pb.AnnotationDataType,
+        maxFrames: number,
+        maxDuration: number,
+        worker?: proto_clarifai_api_resources_pb.Worker.AsObject,
+    }
+}
+
 export class PostAnnotationsRequest extends jspb.Message { 
 
     hasUserAppId(): boolean;

@@ -3798,6 +3798,17 @@ function deserialize_clarifai_api_PostTasksRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostTasksRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PostTrackAnnotationsSearchesRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostTrackAnnotationsSearchesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostTrackAnnotationsSearchesRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PostUploadsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PostUploadsRequest)) {
     throw new Error('Expected argument of type clarifai.api.PostUploadsRequest');
@@ -4729,6 +4740,18 @@ listAnnotations: {
     responseType: proto_clarifai_api_service_pb.MultiAnnotationResponse,
     requestSerialize: serialize_clarifai_api_ListAnnotationsRequest,
     requestDeserialize: deserialize_clarifai_api_ListAnnotationsRequest,
+    responseSerialize: serialize_clarifai_api_MultiAnnotationResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiAnnotationResponse,
+  },
+  // List video track annotations for a specific input.
+postTrackAnnotationsSearches: {
+    path: '/clarifai.api.V2/PostTrackAnnotationsSearches',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest,
+    responseType: proto_clarifai_api_service_pb.MultiAnnotationResponse,
+    requestSerialize: serialize_clarifai_api_PostTrackAnnotationsSearchesRequest,
+    requestDeserialize: deserialize_clarifai_api_PostTrackAnnotationsSearchesRequest,
     responseSerialize: serialize_clarifai_api_MultiAnnotationResponse,
     responseDeserialize: deserialize_clarifai_api_MultiAnnotationResponse,
   },

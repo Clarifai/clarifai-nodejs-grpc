@@ -800,6 +800,9 @@ message FrameInfo {
   // time in the video in milliseconds. This is independent of the sampling rates used during
   // processing.
   uint32 time = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+  // The absolute number of the frame in the (original) video
+  // Different from index. Index is just the order in which frames were processed for search (and can be 0 for manual annotations)
+  uint32 number = 3 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
 // A Frame of time-series Data such as a Video.
@@ -4733,6 +4736,13 @@ message BookmarkOrigin {
 //   repeated string labels = 1;
 // }
 
+// RunnerMetrics captures metrics and status for a Runner's underlying k8s deployment.
+// This allows tracking of deployment health, replica counts, and other relevant metrics.
+message RunnerMetrics {
+  uint32 pods_total = 1;
+  uint32 pods_running = 2;
+}
+
 // A worker for compute within a nodepool of instances.
 // This asks the API for work
 message Runner {
@@ -4780,6 +4790,10 @@ message Runner {
   uint32 num_replicas = 11;
   // List of special handling instructions for this runner.
   repeated SpecialHandling special_handling = 12;
+
+  // Metrics and status for the underlying k8s deployment.
+  // Each Runner is 1:1 with a k8s deployment, so this field tracks deployment health and metrics.
+  RunnerMetrics runner_metrics = 13;
 }
 
 

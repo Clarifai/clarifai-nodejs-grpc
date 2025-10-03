@@ -333,6 +333,24 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // to get the model for the worker.
   }
 
+  // List video track annotations for a specific input.
+  rpc PostTrackAnnotationsSearches (PostTrackAnnotationsSearchesRequest) returns (MultiAnnotationResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}/track_annotations/searches"
+      body: "*"
+      additional_bindings {
+        post: "/v2/inputs/{input_id}/track_annotations/searches",
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // to get the model for the worker.
+  }
+
   // Post annotations.
   rpc PostAnnotations (PostAnnotationsRequest) returns (MultiAnnotationResponse) {
     option (google.api.http) = {
@@ -4629,6 +4647,37 @@ message ListAnnotationsRequest {
   uint32 per_page = 8;
   // Flag to filter annotations by task_id
   string task_id = 11;
+}
+
+// ListVideoTrackAnnotationsRequest
+message PostTrackAnnotationsSearchesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  
+  // The input ID containing the video track annotations to list
+  string input_id = 2;
+  
+  // Filter annotations by track_id
+  string track_id = 3;
+  
+  // Filter annotations starting from this frame number (inclusive)
+  uint32 frame_number_start = 4;
+  
+  // Filter annotations starting from this time in milliseconds (inclusive)
+  uint32 frame_time_start = 5;
+  
+  // Filter by annotation type (e.g., "bounding_box", "point", "mask")
+  AnnotationDataType annotation_type = 6;
+  
+  // Maximum number of frames to return (default and max: 60)
+  uint32 max_frames = 7;
+  
+  // Maximum duration in milliseconds to return (default and max: 3000)
+  uint32 max_duration = 8;
+
+  // Filtering by model version ID within a worker (optional).
+  // Point annotations don't need filtering by worker.
+  // For non-point types, a model version ID must be provided.
+  Worker worker = 9;
 }
 
 // PostAnnotationsRequest
