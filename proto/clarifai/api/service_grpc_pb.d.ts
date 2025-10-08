@@ -35,6 +35,7 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     postKnowledgeGraphs: IV2Service_IPostKnowledgeGraphs;
     getAnnotation: IV2Service_IGetAnnotation;
     listAnnotations: IV2Service_IListAnnotations;
+    postTrackAnnotationsSearches: IV2Service_IPostTrackAnnotationsSearches;
     postAnnotations: IV2Service_IPostAnnotations;
     patchAnnotations: IV2Service_IPatchAnnotations;
     patchAnnotationsStatus: IV2Service_IPatchAnnotationsStatus;
@@ -458,6 +459,15 @@ interface IV2Service_IListAnnotations extends grpc.MethodDefinition<proto_clarif
     responseStream: false;
     requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListAnnotationsRequest>;
     requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListAnnotationsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiAnnotationResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiAnnotationResponse>;
+}
+interface IV2Service_IPostTrackAnnotationsSearches extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest, proto_clarifai_api_service_pb.MultiAnnotationResponse> {
+    path: "/clarifai.api.V2/PostTrackAnnotationsSearches";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest>;
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiAnnotationResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiAnnotationResponse>;
 }
@@ -2841,6 +2851,7 @@ export interface IV2Server {
     postKnowledgeGraphs: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostKnowledgeGraphsRequest, proto_clarifai_api_service_pb.MultiKnowledgeGraphResponse>;
     getAnnotation: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetAnnotationRequest, proto_clarifai_api_service_pb.SingleAnnotationResponse>;
     listAnnotations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListAnnotationsRequest, proto_clarifai_api_service_pb.MultiAnnotationResponse>;
+    postTrackAnnotationsSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest, proto_clarifai_api_service_pb.MultiAnnotationResponse>;
     postAnnotations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostAnnotationsRequest, proto_clarifai_api_service_pb.MultiAnnotationResponse>;
     patchAnnotations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchAnnotationsRequest, proto_clarifai_api_service_pb.MultiAnnotationResponse>;
     patchAnnotationsStatus: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchAnnotationsStatusRequest, proto_clarifai_api_service_pb.PatchAnnotationsStatusResponse>;
@@ -3160,6 +3171,9 @@ export interface IV2Client {
     listAnnotations(request: proto_clarifai_api_service_pb.ListAnnotationsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
     listAnnotations(request: proto_clarifai_api_service_pb.ListAnnotationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
     listAnnotations(request: proto_clarifai_api_service_pb.ListAnnotationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
+    postTrackAnnotationsSearches(request: proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
+    postTrackAnnotationsSearches(request: proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
+    postTrackAnnotationsSearches(request: proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
     postAnnotations(request: proto_clarifai_api_service_pb.PostAnnotationsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
     postAnnotations(request: proto_clarifai_api_service_pb.PostAnnotationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
     postAnnotations(request: proto_clarifai_api_service_pb.PostAnnotationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
@@ -4002,6 +4016,9 @@ export class V2Client extends grpc.Client implements IV2Client {
     public listAnnotations(request: proto_clarifai_api_service_pb.ListAnnotationsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
     public listAnnotations(request: proto_clarifai_api_service_pb.ListAnnotationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
     public listAnnotations(request: proto_clarifai_api_service_pb.ListAnnotationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
+    public postTrackAnnotationsSearches(request: proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
+    public postTrackAnnotationsSearches(request: proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
+    public postTrackAnnotationsSearches(request: proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
     public postAnnotations(request: proto_clarifai_api_service_pb.PostAnnotationsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
     public postAnnotations(request: proto_clarifai_api_service_pb.PostAnnotationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
     public postAnnotations(request: proto_clarifai_api_service_pb.PostAnnotationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;

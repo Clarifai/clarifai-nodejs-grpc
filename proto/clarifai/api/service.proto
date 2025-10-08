@@ -333,6 +333,24 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // to get the model for the worker.
   }
 
+  // List video track annotations for a specific input.
+  rpc PostTrackAnnotationsSearches (PostTrackAnnotationsSearchesRequest) returns (MultiAnnotationResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}/track_annotations/searches"
+      body: "*"
+      additional_bindings {
+        post: "/v2/inputs/{input_id}/track_annotations/searches",
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // to get the model for the worker.
+  }
+
   // Post annotations.
   rpc PostAnnotations (PostAnnotationsRequest) returns (MultiAnnotationResponse) {
     option (google.api.http) = {
@@ -2654,8 +2672,6 @@ service V2 {
 
 
 
-
-
   // List all status codes.
   rpc ListStatusCodes (ListStatusCodesRequest) returns (MultiStatusCodeResponse) {
     option (google.api.http) = {
@@ -4557,6 +4573,7 @@ service V2 {
 
 
 
+
 }
 
 
@@ -4631,6 +4648,37 @@ message ListAnnotationsRequest {
   uint32 per_page = 8;
   // Flag to filter annotations by task_id
   string task_id = 11;
+}
+
+// ListVideoTrackAnnotationsRequest
+message PostTrackAnnotationsSearchesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  
+  // The input ID containing the video track annotations to list
+  string input_id = 2;
+  
+  // Filter annotations by track_id
+  string track_id = 3;
+  
+  // Filter annotations starting from this frame number (inclusive)
+  uint32 frame_number_start = 4;
+  
+  // Filter annotations starting from this time in milliseconds (inclusive)
+  uint32 frame_time_start = 5;
+  
+  // Filter by annotation type (e.g., "bounding_box", "point", "mask")
+  AnnotationDataType annotation_type = 6;
+  
+  // Maximum number of frames to return (default and max: 60)
+  uint32 max_frames = 7;
+  
+  // Maximum duration in milliseconds to return (default and max: 3000)
+  uint32 max_duration = 8;
+
+  // Filtering by model version ID within a worker (optional).
+  // Point annotations don't need filtering by worker.
+  // For non-point types, a model version ID must be provided.
+  Worker worker = 9;
 }
 
 // PostAnnotationsRequest
@@ -4819,6 +4867,8 @@ message ListAppsRequest {
     bool sort_by_star_count = 13;
     // Whether to order by the id
     bool sort_by_id = 17;
+    // Whether to order by search query relevance. Can only be used if search is not empty.
+    bool sort_by_relevance = 19;
   }
 
   // Filtering options:
@@ -5550,6 +5600,8 @@ message ListDatasetsRequest {
     bool sort_by_modified_at = 9;
     // Whether to order by the external id
     bool sort_by_id = 11;
+    // Whether to order by search query relevance. Can only be used if search is not empty.
+    bool sort_by_relevance = 14;
   }
 
   // Filtering options:
@@ -6042,6 +6094,8 @@ message ListModelsRequest {
 
   // (optional URL parameter) List of additional fields to be included in the response. Currently supported: all, stars, outputs, presets, counts
   repeated string additional_fields = 19;
+  // If true, show replica counts for models.
+  bool show_replicas = 34;
 
   // Sorting options:
   // Whether to sort in ascending order. If false, will order in descending order.
@@ -6058,6 +6112,8 @@ message ListModelsRequest {
     bool sort_by_created_at = 24;
     // Whether to order by count of stars
     bool sort_by_star_count = 25;
+    // Whether to order by search query relevance. Can only be used if search is not empty.
+    bool sort_by_relevance = 36;
   }
 
   // Filtering options:
@@ -6091,6 +6147,18 @@ message ListModelsRequest {
   // Note: you can not filter `trained_only` and bookmark at the same time.
   // When filter by bookmark, we will return trained and untrained models.
   bool bookmark = 26;
+  // Filter by the model version ids. If set, only return the model of these versions.
+  repeated string model_version_ids = 28;
+  // Filter by LicenseType
+  LicenseType license_type = 29;
+  // Filter by Source
+  uint32 source = 30;
+  // Filter by Creator
+  string creator = 31;
+  // Filter by model versions runners with replicas >= min_replicas.
+  uint32 min_replicas = 33;
+  // Filter by visibility of the model. If set, only return models with the specified visibility.
+  Visibility visibility = 35;
 
   // Searching options:
   // Specify a search parameter in order to perform keyword search on the
@@ -6116,20 +6184,6 @@ message ListModelsRequest {
   // Extends the name filter to include the user_id of the application owner that the model belongs to.
   // Deprecated: use search instead of name.
   bool filter_by_user_id = 22 [deprecated = true];
-  // Filter by the model version ids. If set, only return the model of these versions.
-  repeated string model_version_ids = 28;
-  // Filter by LicenseType
-  LicenseType license_type = 29;
-  // Filter by Source
-  uint32 source = 30;
-  // Filter by Creator
-  string creator = 31;
-  // Filter by model versions runners with replicas >= min_replicas.
-  uint32 min_replicas = 33;
-  // If true, show replica counts for models.
-  bool show_replicas = 34;
-  // Filter by visibility of the model. If set, only return models with the specified visibility.
-  Visibility visibility = 35;
 }
 
 // ResourceCountRequest
@@ -6327,6 +6381,8 @@ message ListModelVersionsRequest {
   repeated string concept_ids = 5;
   // To list only the model versions that have been trained.
   bool trained_only = 6;
+  // Filter by model versions runners with replicas >= min_replicas.
+  uint32 min_replicas = 12;
 
   // Sorting options:
   // Whether to sort in ascending order. If false, will order in descending order.
@@ -6342,9 +6398,6 @@ message ListModelVersionsRequest {
     // If neither sort option is set to true, will sort by created_at.
     bool sort_by_created_at = 11;
   }
-
-  // Filter by model versions runners with replicas >= min_replicas.
-  uint32 min_replicas = 12;
 }
 
 // DeleteModelVersionRequest
@@ -7099,9 +7152,6 @@ message SingleAnnotationFilterResponse {
 
 
 
-
-
-
 // GetUserRequest
 message GetUserRequest {
   // we used to have user_id but moved to the standard convention. Since this endpoint
@@ -7270,11 +7320,12 @@ message ListWorkflowsRequest {
     // Whether to order by the modified_at time.
     // If none of the sort options is set to true, will sort by modified_at.
     bool sort_by_modified_at = 7;
-
     // Whether to order by the created_at time.
     bool sort_by_created_at = 13;
     // Whether to order by the number of users stared the workflow
     bool sort_by_star_count = 14;
+    // Whether to order by search query relevance. Can only be used if search is not empty.
+    bool sort_by_relevance = 18;
   }
 
   // Filtering options:
@@ -7877,6 +7928,8 @@ message ListModulesRequest {
     bool sort_by_modified_at = 9;
     // Whether to order by the external id
     bool sort_by_id = 11;
+    // Whether to order by search query relevance. Can only be used if search is not empty.
+    bool sort_by_relevance = 16;
   }
 
   // Filtering options:
@@ -9275,6 +9328,8 @@ message MultiMetricLabelsResponse {
   clarifai.api.status.Status status = 1;
   repeated MetricTypeLabels metric_type_labels = 2;
 }
+
+
 
 
 
