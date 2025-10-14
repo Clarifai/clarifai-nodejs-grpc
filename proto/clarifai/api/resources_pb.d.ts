@@ -1918,6 +1918,11 @@ export class Input extends jspb.Message {
     setDatasetIdsList(value: Array<string>): Input;
     addDatasetIds(value: string, index?: number): string;
 
+    hasSettings(): boolean;
+    clearSettings(): void;
+    getSettings(): InputSettings | undefined;
+    setSettings(value?: InputSettings): Input;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Input.AsObject;
     static toObject(includeInstance: boolean, msg: Input): Input.AsObject;
@@ -1936,6 +1941,41 @@ export namespace Input {
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         datasetIdsList: Array<string>,
+        settings?: InputSettings.AsObject,
+    }
+}
+
+export class InputSettings extends jspb.Message { 
+
+    hasWorker(): boolean;
+    clearWorker(): void;
+    getWorker(): Worker | undefined;
+    setWorker(value?: Worker): InputSettings;
+    getSampleRateMs(): number;
+    setSampleRateMs(value: number): InputSettings;
+    getSampleRateFrame(): number;
+    setSampleRateFrame(value: number): InputSettings;
+    clearPinnedConceptIdsList(): void;
+    getPinnedConceptIdsList(): Array<string>;
+    setPinnedConceptIdsList(value: Array<string>): InputSettings;
+    addPinnedConceptIds(value: string, index?: number): string;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): InputSettings.AsObject;
+    static toObject(includeInstance: boolean, msg: InputSettings): InputSettings.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: InputSettings, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): InputSettings;
+    static deserializeBinaryFromReader(message: InputSettings, reader: jspb.BinaryReader): InputSettings;
+}
+
+export namespace InputSettings {
+    export type AsObject = {
+        worker?: Worker.AsObject,
+        sampleRateMs: number,
+        sampleRateFrame: number,
+        pinnedConceptIdsList: Array<string>,
     }
 }
 

@@ -999,6 +999,23 @@ message Input {
   // * to add inputs to dataset(s) in `PostInputs` endpoint.
   // Note that this field is ignored for other endpoints, e.g. `GetInput`, `ListInputs` and `PatchInputs`.
   repeated string dataset_ids = 7;
+
+  // Global settings for annotation tracks.
+  InputSettings settings = 8;
+}
+
+message InputSettings {
+  // Default model used for annotation generation (SAM2, etc.)
+  // Make sure to set correct model version id, app id and user id etc.
+  // Workflow is not supported here yet
+  Worker worker = 1;
+
+  // Sampling settings used
+  uint32 sample_rate_ms = 2;
+  uint32 sample_rate_frame = 3;
+
+  // Pinned concept ids
+  repeated string pinned_concept_ids = 4;
 }
 
 // InputBatch is a batch of Input resources. Large amounts of inputs are usually
@@ -1502,15 +1519,15 @@ message Model {
   string notes = 18;
 
   // Tags from toolkits category
-  repeated string toolkits = 20 [(clarifai.api.utils.cl_show_if_empty) = true];
+  repeated string toolkits = 20;
   // Tags from use_cases category
-  repeated string use_cases = 21 [(clarifai.api.utils.cl_show_if_empty) = true];
+  repeated string use_cases = 21;
   // Tags from languages category.
-  repeated string languages = 25 [(clarifai.api.utils.cl_show_if_empty) = true];
+  repeated string languages = 25;
   // Tags from languages category with names, only used in responses.
-  repeated FullTag languages_full = 31 [(clarifai.api.utils.cl_show_if_empty) = true];
+  repeated FullTag languages_full = 31;
 
-  repeated string check_consents = 32 [(clarifai.api.utils.cl_show_if_empty) = true];
+  repeated string check_consents = 32;
 
   // Is starred by the requesting user (only showed on get/list requests)
   // Please use PostModelStars/DeleteModelStars endpoints to star/unstar a model
