@@ -330,6 +330,7 @@ message Track {
 
 
 
+
 // Cluster data
 message Cluster {
   string id = 1;
@@ -1015,7 +1016,7 @@ message InputSettings {
   uint32 sample_rate_frame = 3;
 
   // Pinned concept ids
-  repeated string pinned_concept_ids = 4;
+  repeated Concept pinned_concepts = 4;
 }
 
 // InputBatch is a batch of Input resources. Large amounts of inputs are usually

@@ -467,6 +467,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = AnnotationTracks_Get;
   }
 
   // Post annotation tracks.
@@ -483,6 +484,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = AnnotationTracks_Add;
   }
 
   // Patch one or more annotation tracks.
@@ -499,6 +501,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = AnnotationTracks_Add;
   }
 
   // Delete multiple annotation tracks in one request.
@@ -515,6 +518,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Annotations_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = AnnotationTracks_Delete;
   }
 
   // Patch saved annotations searches by ids.
@@ -4574,6 +4578,7 @@ service V2 {
 
 
 
+
 }
 
 
@@ -4653,25 +4658,25 @@ message ListAnnotationsRequest {
 // ListVideoTrackAnnotationsRequest
 message PostTrackAnnotationsSearchesRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
-  
+
   // The input ID containing the video track annotations to list
   string input_id = 2;
-  
+
   // Filter annotations by track_id
   string track_id = 3;
-  
+
   // Filter annotations starting from this frame number (inclusive)
   uint32 frame_number_start = 4;
-  
+
   // Filter annotations starting from this time in milliseconds (inclusive)
   uint32 frame_time_start = 5;
-  
+
   // Filter by annotation type (e.g., "bounding_box", "point", "mask")
   AnnotationDataType annotation_type = 6;
-  
+
   // Maximum number of frames to return (default and max: 60)
   uint32 max_frames = 7;
-  
+
   // Maximum duration in milliseconds to return (default and max: 3000)
   uint32 max_duration = 8;
 
@@ -9328,6 +9333,8 @@ message MultiMetricLabelsResponse {
   clarifai.api.status.Status status = 1;
   repeated MetricTypeLabels metric_type_labels = 2;
 }
+
+
 
 
 

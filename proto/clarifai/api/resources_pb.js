@@ -20875,7 +20875,8 @@ proto.clarifai.api.InputSettings.toObject = function(includeInstance, msg) {
     worker: (f = msg.getWorker()) && proto.clarifai.api.Worker.toObject(includeInstance, f),
     sampleRateMs: jspb.Message.getFieldWithDefault(msg, 2, 0),
     sampleRateFrame: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    pinnedConceptIdsList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f
+    pinnedConceptsList: jspb.Message.toObjectList(msg.getPinnedConceptsList(),
+    proto.clarifai.api.Concept.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -20926,8 +20927,9 @@ proto.clarifai.api.InputSettings.deserializeBinaryFromReader = function(msg, rea
       msg.setSampleRateFrame(value);
       break;
     case 4:
-      var value = /** @type {string} */ (reader.readString());
-      msg.addPinnedConceptIds(value);
+      var value = new proto.clarifai.api.Concept;
+      reader.readMessage(value,proto.clarifai.api.Concept.deserializeBinaryFromReader);
+      msg.addPinnedConcepts(value);
       break;
     default:
       reader.skipField();
@@ -20980,11 +20982,12 @@ proto.clarifai.api.InputSettings.serializeBinaryToWriter = function(message, wri
       f
     );
   }
-  f = message.getPinnedConceptIdsList();
+  f = message.getPinnedConceptsList();
   if (f.length > 0) {
-    writer.writeRepeatedString(
+    writer.writeRepeatedMessage(
       4,
-      f
+      f,
+      proto.clarifai.api.Concept.serializeBinaryToWriter
     );
   }
 };
@@ -21064,30 +21067,31 @@ proto.clarifai.api.InputSettings.prototype.setSampleRateFrame = function(value) 
 
 
 /**
- * repeated string pinned_concept_ids = 4;
- * @return {!Array<string>}
+ * repeated Concept pinned_concepts = 4;
+ * @return {!Array<!proto.clarifai.api.Concept>}
  */
-proto.clarifai.api.InputSettings.prototype.getPinnedConceptIdsList = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 4));
+proto.clarifai.api.InputSettings.prototype.getPinnedConceptsList = function() {
+  return /** @type{!Array<!proto.clarifai.api.Concept>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.clarifai.api.Concept, 4));
 };
 
 
 /**
- * @param {!Array<string>} value
+ * @param {!Array<!proto.clarifai.api.Concept>} value
  * @return {!proto.clarifai.api.InputSettings} returns this
- */
-proto.clarifai.api.InputSettings.prototype.setPinnedConceptIdsList = function(value) {
-  return jspb.Message.setField(this, 4, value || []);
+*/
+proto.clarifai.api.InputSettings.prototype.setPinnedConceptsList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 4, value);
 };
 
 
 /**
- * @param {string} value
+ * @param {!proto.clarifai.api.Concept=} opt_value
  * @param {number=} opt_index
- * @return {!proto.clarifai.api.InputSettings} returns this
+ * @return {!proto.clarifai.api.Concept}
  */
-proto.clarifai.api.InputSettings.prototype.addPinnedConceptIds = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 4, value, opt_index);
+proto.clarifai.api.InputSettings.prototype.addPinnedConcepts = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 4, opt_value, proto.clarifai.api.Concept, opt_index);
 };
 
 
@@ -21095,8 +21099,8 @@ proto.clarifai.api.InputSettings.prototype.addPinnedConceptIds = function(value,
  * Clears the list making it empty but non-null.
  * @return {!proto.clarifai.api.InputSettings} returns this
  */
-proto.clarifai.api.InputSettings.prototype.clearPinnedConceptIdsList = function() {
-  return this.setPinnedConceptIdsList([]);
+proto.clarifai.api.InputSettings.prototype.clearPinnedConceptsList = function() {
+  return this.setPinnedConceptsList([]);
 };
 
 
