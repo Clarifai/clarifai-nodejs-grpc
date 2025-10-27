@@ -10278,6 +10278,50 @@ export namespace Pipeline {
     }
 }
 
+export class PipelineVersionConfig extends jspb.Message { 
+
+    getStepVersionSecretsMap(): jspb.Map<string, StepSecretConfig>;
+    clearStepVersionSecretsMap(): void;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PipelineVersionConfig.AsObject;
+    static toObject(includeInstance: boolean, msg: PipelineVersionConfig): PipelineVersionConfig.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PipelineVersionConfig, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PipelineVersionConfig;
+    static deserializeBinaryFromReader(message: PipelineVersionConfig, reader: jspb.BinaryReader): PipelineVersionConfig;
+}
+
+export namespace PipelineVersionConfig {
+    export type AsObject = {
+
+        stepVersionSecretsMap: Array<[string, StepSecretConfig.AsObject]>,
+    }
+}
+
+export class StepSecretConfig extends jspb.Message { 
+
+    getSecretsMap(): jspb.Map<string, string>;
+    clearSecretsMap(): void;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): StepSecretConfig.AsObject;
+    static toObject(includeInstance: boolean, msg: StepSecretConfig): StepSecretConfig.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: StepSecretConfig, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): StepSecretConfig;
+    static deserializeBinaryFromReader(message: StepSecretConfig, reader: jspb.BinaryReader): StepSecretConfig;
+}
+
+export namespace StepSecretConfig {
+    export type AsObject = {
+
+        secretsMap: Array<[string, string]>,
+    }
+}
+
 export class PipelineVersion extends jspb.Message { 
     getId(): string;
     setId(value: string): PipelineVersion;
@@ -10315,6 +10359,11 @@ export class PipelineVersion extends jspb.Message {
     getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
     setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): PipelineVersion;
 
+    hasConfig(): boolean;
+    clearConfig(): void;
+    getConfig(): PipelineVersionConfig | undefined;
+    setConfig(value?: PipelineVersionConfig): PipelineVersion;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PipelineVersion.AsObject;
     static toObject(includeInstance: boolean, msg: PipelineVersion): PipelineVersion.AsObject;
@@ -10337,6 +10386,7 @@ export namespace PipelineVersion {
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        config?: PipelineVersionConfig.AsObject,
     }
 }
 

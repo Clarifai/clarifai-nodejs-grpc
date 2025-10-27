@@ -1702,7 +1702,7 @@ message EvalInfo {
   google.protobuf.Struct params = 1;
 }
 
-// DEPRECATED: no longer support importing models from third party toolkits
+// DEPRECATED: no longer support importing models from third-party toolkits
 message ImportInfo {
   // Used to configure model imports from third-party toolkits.
   // DEPRECATED: no longer support importing models from third party toolkits
@@ -4300,8 +4300,7 @@ message ModuleVersion {
   // This is an optional arg.
   google.protobuf.Struct metadata = 14;
 }
-
-message InstalledModuleVersion {
+  message InstalledModuleVersion {
   // A unique id for this install. This will be used in the browser url.
   string id = 1;
   // The installed module version provided here so that we users don't need to do an additional
@@ -4352,6 +4351,7 @@ message InstalledModuleVersion {
   // and have necessary abilities beyond what app-specific keys offer.
   string key_id = 9;
 }
+
 
 message BulkOperation {
   // id of the Bulk Operation task
@@ -5687,6 +5687,20 @@ message Pipeline {
   google.protobuf.Timestamp modified_at = 11;
 }
 
+message PipelineVersionConfig {
+  // StepVersionSecrets maps step version references to their secret configurations
+  // The outer map key is the step version reference (e.g. "step1" or the step version ID)
+  // The inner map key is the secret name (e.g. "EMAIL_PROVIDER_API_KEY")
+  // The inner map value is the secret reference (e.g. "users/1/secrets/secret-1")
+  map<string, StepSecretConfig> step_version_secrets = 1;
+}
+
+// StepSecretConfig defines secrets for a specific step version
+message StepSecretConfig {
+  // Map of secret name to secret reference
+  map<string, string> secrets = 1;
+}
+
 message PipelineVersion {
   string id = 1;
 
@@ -5719,6 +5733,9 @@ message PipelineVersion {
 
   // When the pipeline was last modified
   google.protobuf.Timestamp modified_at = 10;
+
+  // Pipeline version configuration including step secrets
+  PipelineVersionConfig config = 11;
 }
 
 message OrchestrationStatus {
