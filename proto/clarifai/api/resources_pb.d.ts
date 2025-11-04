@@ -9945,6 +9945,82 @@ export namespace WorkflowVersionEvaluationData {
     }
 }
 
+export class ArgoParameterOverride extends jspb.Message { 
+    getName(): string;
+    setName(value: string): ArgoParameterOverride;
+    getValue(): string;
+    setValue(value: string): ArgoParameterOverride;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ArgoParameterOverride.AsObject;
+    static toObject(includeInstance: boolean, msg: ArgoParameterOverride): ArgoParameterOverride.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ArgoParameterOverride, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ArgoParameterOverride;
+    static deserializeBinaryFromReader(message: ArgoParameterOverride, reader: jspb.BinaryReader): ArgoParameterOverride;
+}
+
+export namespace ArgoParameterOverride {
+    export type AsObject = {
+        name: string,
+        value: string,
+    }
+}
+
+export class ArgoArgsOverride extends jspb.Message { 
+    clearParametersList(): void;
+    getParametersList(): Array<ArgoParameterOverride>;
+    setParametersList(value: Array<ArgoParameterOverride>): ArgoArgsOverride;
+    addParameters(value?: ArgoParameterOverride, index?: number): ArgoParameterOverride;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ArgoArgsOverride.AsObject;
+    static toObject(includeInstance: boolean, msg: ArgoArgsOverride): ArgoArgsOverride.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ArgoArgsOverride, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ArgoArgsOverride;
+    static deserializeBinaryFromReader(message: ArgoArgsOverride, reader: jspb.BinaryReader): ArgoArgsOverride;
+}
+
+export namespace ArgoArgsOverride {
+    export type AsObject = {
+        parametersList: Array<ArgoParameterOverride.AsObject>,
+    }
+}
+
+export class OrchestrationArgsOverride extends jspb.Message { 
+
+    hasArgoArgsOverride(): boolean;
+    clearArgoArgsOverride(): void;
+    getArgoArgsOverride(): ArgoArgsOverride | undefined;
+    setArgoArgsOverride(value?: ArgoArgsOverride): OrchestrationArgsOverride;
+
+    getOverrideCase(): OrchestrationArgsOverride.OverrideCase;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): OrchestrationArgsOverride.AsObject;
+    static toObject(includeInstance: boolean, msg: OrchestrationArgsOverride): OrchestrationArgsOverride.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: OrchestrationArgsOverride, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): OrchestrationArgsOverride;
+    static deserializeBinaryFromReader(message: OrchestrationArgsOverride, reader: jspb.BinaryReader): OrchestrationArgsOverride;
+}
+
+export namespace OrchestrationArgsOverride {
+    export type AsObject = {
+        argoArgsOverride?: ArgoArgsOverride.AsObject,
+    }
+
+    export enum OverrideCase {
+        OVERRIDE_NOT_SET = 0,
+        ARGO_ARGS_OVERRIDE = 1,
+    }
+
+}
+
 export class ArgoOrchestrationSpec extends jspb.Message { 
     getApiVersion(): string;
     setApiVersion(value: string): ArgoOrchestrationSpec;
@@ -10479,6 +10555,16 @@ export class PipelineVersionRun extends jspb.Message {
     getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
     setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): PipelineVersionRun;
 
+    hasInputArgsOverride(): boolean;
+    clearInputArgsOverride(): void;
+    getInputArgsOverride(): OrchestrationArgsOverride | undefined;
+    setInputArgsOverride(value?: OrchestrationArgsOverride): PipelineVersionRun;
+
+    hasOrchestrationSpec(): boolean;
+    clearOrchestrationSpec(): void;
+    getOrchestrationSpec(): OrchestrationSpec | undefined;
+    setOrchestrationSpec(value?: OrchestrationSpec): PipelineVersionRun;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PipelineVersionRun.AsObject;
     static toObject(includeInstance: boolean, msg: PipelineVersionRun): PipelineVersionRun.AsObject;
@@ -10499,6 +10585,8 @@ export namespace PipelineVersionRun {
         appId: string,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        inputArgsOverride?: OrchestrationArgsOverride.AsObject,
+        orchestrationSpec?: OrchestrationSpec.AsObject,
     }
 }
 

@@ -5540,6 +5540,22 @@ message WorkflowVersionEvaluationData {
   WorkflowEvaluationInputResult workflow_evaluation_sample_result = 5;
 }
 
+message ArgoParameterOverride {
+  string name = 1;
+  string value = 2; // Argo parameters are always strings
+}
+
+message ArgoArgsOverride {
+  repeated ArgoParameterOverride parameters = 1;
+}
+
+message OrchestrationArgsOverride {
+  oneof override {
+    ArgoArgsOverride argo_args_override = 1;
+    // Future: KubeFlowArgsOverride, AirflowArgsOverride, etc.
+  }
+}
+
 message ArgoOrchestrationSpec {
   // The API version of the orchestration specification.
   // Example: "argoproj.io/v1alpha1", "argoproj.io/v1beta1"
@@ -5779,6 +5795,12 @@ message PipelineVersionRun {
 
   // When the pipeline was last modified
   google.protobuf.Timestamp modified_at = 8;
+
+  // Optional: Overrides to input arguments for the orchestration system.
+  OrchestrationArgsOverride input_args_override = 9;
+
+  // Final merged orchestration spec snapshot submitted to backend.
+  OrchestrationSpec orchestration_spec = 10;
 
 }
 
