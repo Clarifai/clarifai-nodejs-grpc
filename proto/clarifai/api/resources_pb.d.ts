@@ -10356,7 +10356,7 @@ export namespace Pipeline {
 
 export class PipelineVersionConfig extends jspb.Message { 
 
-    getStepVersionSecretsMap(): jspb.Map<string, google_protobuf_struct_pb.Struct>;
+    getStepVersionSecretsMap(): jspb.Map<string, StepSecretConfig>;
     clearStepVersionSecretsMap(): void;
 
     serializeBinary(): Uint8Array;
@@ -10372,7 +10372,29 @@ export class PipelineVersionConfig extends jspb.Message {
 export namespace PipelineVersionConfig {
     export type AsObject = {
 
-        stepVersionSecretsMap: Array<[string, google_protobuf_struct_pb.Struct.AsObject]>,
+        stepVersionSecretsMap: Array<[string, StepSecretConfig.AsObject]>,
+    }
+}
+
+export class StepSecretConfig extends jspb.Message { 
+
+    getSecretsMap(): jspb.Map<string, string>;
+    clearSecretsMap(): void;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): StepSecretConfig.AsObject;
+    static toObject(includeInstance: boolean, msg: StepSecretConfig): StepSecretConfig.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: StepSecretConfig, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): StepSecretConfig;
+    static deserializeBinaryFromReader(message: StepSecretConfig, reader: jspb.BinaryReader): StepSecretConfig;
+}
+
+export namespace StepSecretConfig {
+    export type AsObject = {
+
+        secretsMap: Array<[string, string]>,
     }
 }
 

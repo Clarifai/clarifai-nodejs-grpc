@@ -251,7 +251,6 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     listComputeClusters: IV2Service_IListComputeClusters;
     postComputeClusters: IV2Service_IPostComputeClusters;
     deleteComputeClusters: IV2Service_IDeleteComputeClusters;
-    patchComputeClusters: IV2Service_IPatchComputeClusters;
     getNodepool: IV2Service_IGetNodepool;
     listNodepools: IV2Service_IListNodepools;
     postNodepools: IV2Service_IPostNodepools;
@@ -2407,15 +2406,6 @@ interface IV2Service_IDeleteComputeClusters extends grpc.MethodDefinition<proto_
     responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
 }
-interface IV2Service_IPatchComputeClusters extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PatchComputeClustersRequest, proto_clarifai_api_service_pb.MultiComputeClusterResponse> {
-    path: "/clarifai.api.V2/PatchComputeClusters";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PatchComputeClustersRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PatchComputeClustersRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiComputeClusterResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiComputeClusterResponse>;
-}
 interface IV2Service_IGetNodepool extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetNodepoolRequest, proto_clarifai_api_service_pb.SingleNodepoolResponse> {
     path: "/clarifai.api.V2/GetNodepool";
     requestStream: false;
@@ -3077,7 +3067,6 @@ export interface IV2Server {
     listComputeClusters: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListComputeClustersRequest, proto_clarifai_api_service_pb.MultiComputeClusterResponse>;
     postComputeClusters: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostComputeClustersRequest, proto_clarifai_api_service_pb.MultiComputeClusterResponse>;
     deleteComputeClusters: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteComputeClustersRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
-    patchComputeClusters: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchComputeClustersRequest, proto_clarifai_api_service_pb.MultiComputeClusterResponse>;
     getNodepool: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetNodepoolRequest, proto_clarifai_api_service_pb.SingleNodepoolResponse>;
     listNodepools: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListNodepoolsRequest, proto_clarifai_api_service_pb.MultiNodepoolResponse>;
     postNodepools: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostNodepoolsRequest, proto_clarifai_api_service_pb.MultiNodepoolResponse>;
@@ -3829,9 +3818,6 @@ export interface IV2Client {
     deleteComputeClusters(request: proto_clarifai_api_service_pb.DeleteComputeClustersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteComputeClusters(request: proto_clarifai_api_service_pb.DeleteComputeClustersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteComputeClusters(request: proto_clarifai_api_service_pb.DeleteComputeClustersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    patchComputeClusters(request: proto_clarifai_api_service_pb.PatchComputeClustersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiComputeClusterResponse) => void): grpc.ClientUnaryCall;
-    patchComputeClusters(request: proto_clarifai_api_service_pb.PatchComputeClustersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiComputeClusterResponse) => void): grpc.ClientUnaryCall;
-    patchComputeClusters(request: proto_clarifai_api_service_pb.PatchComputeClustersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiComputeClusterResponse) => void): grpc.ClientUnaryCall;
     getNodepool(request: proto_clarifai_api_service_pb.GetNodepoolRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleNodepoolResponse) => void): grpc.ClientUnaryCall;
     getNodepool(request: proto_clarifai_api_service_pb.GetNodepoolRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleNodepoolResponse) => void): grpc.ClientUnaryCall;
     getNodepool(request: proto_clarifai_api_service_pb.GetNodepoolRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleNodepoolResponse) => void): grpc.ClientUnaryCall;
@@ -4674,9 +4660,6 @@ export class V2Client extends grpc.Client implements IV2Client {
     public deleteComputeClusters(request: proto_clarifai_api_service_pb.DeleteComputeClustersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteComputeClusters(request: proto_clarifai_api_service_pb.DeleteComputeClustersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteComputeClusters(request: proto_clarifai_api_service_pb.DeleteComputeClustersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public patchComputeClusters(request: proto_clarifai_api_service_pb.PatchComputeClustersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiComputeClusterResponse) => void): grpc.ClientUnaryCall;
-    public patchComputeClusters(request: proto_clarifai_api_service_pb.PatchComputeClustersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiComputeClusterResponse) => void): grpc.ClientUnaryCall;
-    public patchComputeClusters(request: proto_clarifai_api_service_pb.PatchComputeClustersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiComputeClusterResponse) => void): grpc.ClientUnaryCall;
     public getNodepool(request: proto_clarifai_api_service_pb.GetNodepoolRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleNodepoolResponse) => void): grpc.ClientUnaryCall;
     public getNodepool(request: proto_clarifai_api_service_pb.GetNodepoolRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleNodepoolResponse) => void): grpc.ClientUnaryCall;
     public getNodepool(request: proto_clarifai_api_service_pb.GetNodepoolRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleNodepoolResponse) => void): grpc.ClientUnaryCall;
