@@ -2786,6 +2786,17 @@ function deserialize_clarifai_api_PatchCollectorsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PatchCollectorsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PatchComputeClustersRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PatchComputeClustersRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PatchComputeClustersRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PatchComputeClustersRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PatchComputeClustersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PatchConceptLanguagesRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PatchConceptLanguagesRequest)) {
     throw new Error('Expected argument of type clarifai.api.PatchConceptLanguagesRequest');
@@ -7471,6 +7482,17 @@ deleteComputeClusters: {
     requestDeserialize: deserialize_clarifai_api_DeleteComputeClustersRequest,
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
+  patchComputeClusters: {
+    path: '/clarifai.api.V2/PatchComputeClusters',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PatchComputeClustersRequest,
+    responseType: proto_clarifai_api_service_pb.MultiComputeClusterResponse,
+    requestSerialize: serialize_clarifai_api_PatchComputeClustersRequest,
+    requestDeserialize: deserialize_clarifai_api_PatchComputeClustersRequest,
+    responseSerialize: serialize_clarifai_api_MultiComputeClusterResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiComputeClusterResponse,
   },
   // Nodepools CRUD
 getNodepool: {

@@ -3957,6 +3957,27 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Delete;
   }
 
+  rpc PatchComputeClusters (PatchComputeClustersRequest) returns (MultiComputeClusterResponse) {
+    option (google.api.http) = {
+      patch: "/v2/users/{user_app_id.user_id}/compute_clusters"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Deployments_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Deployments_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+  }
+
   // Nodepools CRUD
   rpc GetNodepool (GetNodepoolRequest) returns (SingleNodepoolResponse) {
     option (google.api.http) = {
@@ -8707,6 +8728,16 @@ message PostComputeClustersRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   // This allows you to create one or more compute_clusters by posting it to the API.
   repeated ComputeCluster compute_clusters = 2;
+}
+
+message PatchComputeClustersRequest {
+  // Only the user_id is used from this.
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // This allows you to patch one or more compute_clusters
+  repeated ComputeCluster compute_clusters = 2;
+  // The action to perform on the patched objects
+  // For now 'overwrite' is supported
+  string action = 3;
 }
 
 message DeleteComputeClustersRequest {
