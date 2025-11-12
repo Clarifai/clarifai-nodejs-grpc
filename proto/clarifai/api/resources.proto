@@ -1431,22 +1431,6 @@ message Key {
   string organization_id = 10; // The organization associated with the key, if any. This is applicable only for PAT keys.
 }
 
-
-enum ExpirationAction {
-  EXPIRATION_ACTION_NOT_SET = 0;
-
-  DELAY = 1;  // Progressively delay the execution of operations
-  EXPIRY = 2; // Cease functioning
-}
-
-enum LicenseScope {
-  LICENSE_SCOPE_NOT_SET = 0;
-
-  PREDICT = 1;
-  TRAIN = 2;
-  SEARCH = 3;
-}
-
 enum LicenseType {
   UNKNOWN_LICENSE_TYPE = 0;
   FIRST_PARTY = 1;
@@ -5704,8 +5688,8 @@ message Pipeline {
 message PipelineVersionConfig {
   // StepVersionSecrets maps step names to their secret configurations
   // Using google.protobuf.Struct to create the desired flat JSON structure
-  // This produces: {stepName: {secretName: "users/user-name/secrets/key"}} 
-  // example: {"step-0": {"API_KEY": "users/user-name/secrets/key"}} 
+  // This produces: {stepName: {secretName: "users/user-name/secrets/key"}}
+  // example: {"step-0": {"API_KEY": "users/user-name/secrets/key"}}
   map<string, google.protobuf.Struct> step_version_secrets = 1;
 }
 

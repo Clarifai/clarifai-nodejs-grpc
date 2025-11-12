@@ -10986,19 +10986,6 @@ export enum DatasetVersionExportFormat {
     COCO = 2,
 }
 
-export enum ExpirationAction {
-    EXPIRATION_ACTION_NOT_SET = 0,
-    DELAY = 1,
-    EXPIRY = 2,
-}
-
-export enum LicenseScope {
-    LICENSE_SCOPE_NOT_SET = 0,
-    PREDICT = 1,
-    TRAIN = 2,
-    SEARCH = 3,
-}
-
 export enum LicenseType {
     UNKNOWN_LICENSE_TYPE = 0,
     FIRST_PARTY = 1,

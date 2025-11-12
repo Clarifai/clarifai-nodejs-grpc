@@ -145,7 +145,6 @@ goog.exportSymbol('proto.clarifai.api.EvalTestSetEntry', null, global);
 goog.exportSymbol('proto.clarifai.api.EvaluationMetricValue', null, global);
 goog.exportSymbol('proto.clarifai.api.EvaluationType', null, global);
 goog.exportSymbol('proto.clarifai.api.EventType', null, global);
-goog.exportSymbol('proto.clarifai.api.ExpirationAction', null, global);
 goog.exportSymbol('proto.clarifai.api.ExtendedMetrics', null, global);
 goog.exportSymbol('proto.clarifai.api.FieldsValue', null, global);
 goog.exportSymbol('proto.clarifai.api.Filter', null, global);
@@ -189,7 +188,6 @@ goog.exportSymbol('proto.clarifai.api.LabelCount', null, global);
 goog.exportSymbol('proto.clarifai.api.LabelDistribution', null, global);
 goog.exportSymbol('proto.clarifai.api.LabelOrder', null, global);
 goog.exportSymbol('proto.clarifai.api.LayerShape', null, global);
-goog.exportSymbol('proto.clarifai.api.LicenseScope', null, global);
 goog.exportSymbol('proto.clarifai.api.LicenseType', null, global);
 goog.exportSymbol('proto.clarifai.api.LogEntry', null, global);
 goog.exportSymbol('proto.clarifai.api.LossCurveEntry', null, global);
@@ -89677,25 +89675,6 @@ proto.clarifai.api.DatasetVersionExportFormat = {
   CLARIFAI_DATA_PROTOBUF: 1,
   CLARIFAI_DATA_JSON: 3,
   COCO: 2
-};
-
-/**
- * @enum {number}
- */
-proto.clarifai.api.ExpirationAction = {
-  EXPIRATION_ACTION_NOT_SET: 0,
-  DELAY: 1,
-  EXPIRY: 2
-};
-
-/**
- * @enum {number}
- */
-proto.clarifai.api.LicenseScope = {
-  LICENSE_SCOPE_NOT_SET: 0,
-  PREDICT: 1,
-  TRAIN: 2,
-  SEARCH: 3
 };
 
 /**

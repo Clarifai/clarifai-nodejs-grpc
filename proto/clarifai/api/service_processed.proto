@@ -2758,10 +2758,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Collaborators_Get;
   }
 
-
-
-
-
   // PostAppDuplications starts async app duplication jobs which copy resources
   // (inputs, annotations, models etc) from one application to another. It can
   // also create the destination application if it does not exist, with fields
@@ -6085,12 +6081,6 @@ message MultiKeyResponse {
   clarifai.api.status.Status status = 1;
   repeated Key keys = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
-
-
-
-
-
-
 
 
 
