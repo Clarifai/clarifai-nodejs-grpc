@@ -5792,8 +5792,8 @@ message PipelineVersionRun {
   OrchestrationArgsOverride input_args_override = 9;
 
   // Final merged orchestration spec snapshot submitted to backend.
+  // This field is read-only and cannot be set during creation.
   OrchestrationSpec orchestration_spec = 10;
-
 }
 
 message Secret {
