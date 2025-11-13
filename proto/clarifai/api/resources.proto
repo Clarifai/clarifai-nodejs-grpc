@@ -4990,8 +4990,6 @@ message ComputeCluster {
   // InstanceType instance_types = 15; // FUTURE
 }
 
-
-
 // These are the resource needs of a given API object such as a model.
 // This is what they require as a minimum to run and will be used upon scheduling
 // as the request and limit for the k8s pod. If we want to separate limits and requests in the
@@ -5704,17 +5702,11 @@ message Pipeline {
 }
 
 message PipelineVersionConfig {
-  // StepVersionSecrets maps step version references to their secret configurations
-  // The outer map key is the step version reference (e.g. "step1" or the step version ID)
-  // The inner map key is the secret name (e.g. "EMAIL_PROVIDER_API_KEY")
-  // The inner map value is the secret reference (e.g. "users/1/secrets/secret-1")
-  map<string, StepSecretConfig> step_version_secrets = 1;
-}
-
-// StepSecretConfig defines secrets for a specific step version
-message StepSecretConfig {
-  // Map of secret name to secret reference
-  map<string, string> secrets = 1;
+  // StepVersionSecrets maps step names to their secret configurations
+  // Using google.protobuf.Struct to create the desired flat JSON structure
+  // This produces: {stepName: {secretName: "users/user-name/secrets/key"}} 
+  // example: {"step-0": {"API_KEY": "users/user-name/secrets/key"}} 
+  map<string, google.protobuf.Struct> step_version_secrets = 1;
 }
 
 message PipelineVersion {
@@ -5800,8 +5792,8 @@ message PipelineVersionRun {
   OrchestrationArgsOverride input_args_override = 9;
 
   // Final merged orchestration spec snapshot submitted to backend.
+  // This field is read-only and cannot be set during creation.
   OrchestrationSpec orchestration_spec = 10;
-
 }
 
 message Secret {
