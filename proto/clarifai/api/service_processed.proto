@@ -3914,6 +3914,9 @@ service V2 {
   rpc ListComputeClusters (ListComputeClustersRequest) returns (MultiComputeClusterResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters"
+      additional_bindings185 {
+        get: "/v2/compute_clusters"
+      }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
@@ -3988,8 +3991,11 @@ service V2 {
   rpc ListNodepools (ListNodepoolsRequest) returns (MultiNodepoolResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools"
-      additional_bindings185 {
+      additional_bindings186 {
         get: "/v2/users/{user_app_id.user_id}/nodepools"
+      }
+      additional_bindings187 {
+        get: "/v2/nodepools"
       }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
@@ -4071,6 +4077,9 @@ service V2 {
   rpc ListDeployments (ListDeploymentsRequest) returns (MultiDeploymentResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/deployments"
+      additional_bindings188 {
+        get: "/v2/deployments"
+      }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;
@@ -4168,22 +4177,22 @@ service V2 {
       // Endpoint to list runner logs.
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners/{runner_id}/{log_type}/logs"
       // Endpoint to list runner logs by model, model version id.
-      additional_bindings186 {
+      additional_bindings189 {
         get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_user_id}/{compute_cluster_id}/nodepools/{nodepool_id}/versions/{model_version_id}/{log_type}/logs"
       }
       // TODO: add convenience endpoint for /users/{user_id}/runners/{runner_id}.
       // TODO: add endpoint for runner replicas.
       // Endpoint to list compute cluster's agent logs.
-      additional_bindings187 {
+      additional_bindings190 {
         get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/{log_type}/logs"
       }
       // Endpoint to list builder logs.
-      additional_bindings188 {
+      additional_bindings191 {
         get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/{log_type}/logs"
       }
 
       // Endpoint to list pipeline version run logs
-      additional_bindings189 {
+      additional_bindings192 {
         get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs/{pipeline_version_run_id}/{log_type}/logs"
       }
       // TODO: add endpoint for workflow.
@@ -4196,11 +4205,11 @@ service V2 {
   rpc StreamLogEntries (StreamLogEntriesRequest) returns (stream MultiLogEntryResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners/{runner_id}/{log_type}/logs"
-      additional_bindings190 {
+      additional_bindings193 {
         get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_user_id}/{compute_cluster_id}/nodepools/{nodepool_id}/versions/{model_version_id}/{log_type}/logs"
       }
       // Endpoint to stream pipeline version run logs
-      additional_bindings191 {
+      additional_bindings194 {
         get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs/{pipeline_version_run_id}/{log_type}/stream/logs"
       }
     };
@@ -4243,7 +4252,7 @@ service V2 {
   rpc GetWorkflowVersionEvaluation (GetWorkflowVersionEvaluationRequest) returns (SingleWorkflowVersionEvaluationResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations/{workflow_version_evaluation_id}"
-      additional_bindings192 {
+      additional_bindings195 {
         get: "/v2/workflow-version-evaluations/{workflow_version_evaluation_id}"
       }
     };
@@ -4258,7 +4267,7 @@ service V2 {
   rpc ListWorkflowVersionEvaluations (ListWorkflowVersionEvaluationsRequest) returns (MultiWorkflowVersionEvaluationResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations"
-      additional_bindings193 {
+      additional_bindings196 {
         get: "/v2/workflow-version-evaluations"
       }
     };
@@ -4291,7 +4300,7 @@ service V2 {
   rpc ListWorkflowVersionEvaluationData (ListWorkflowVersionEvaluationDataRequest) returns (MultiListWorkflowVersionEvaluationDataResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations/{workflow_version_evaluation_id}/data"
-      additional_bindings194 {
+      additional_bindings197 {
         get: "/v2/workflow-version-evaluations/{workflow_version_evaluation_id}/data"
       }
     };
@@ -4307,7 +4316,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations/{workflow_version_evaluation_id}/data"
       body: "*"
-      additional_bindings195 {
+      additional_bindings198 {
         post: "/v2/workflow-version-evaluations/{workflow_version_evaluation_id}/data"
         body: "*"
       }
@@ -4324,7 +4333,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines"
       body: "*"
-      additional_bindings196 {
+      additional_bindings199 {
         get: "/v2/pipelines"
       }
     };
@@ -4337,7 +4346,7 @@ service V2 {
   rpc GetPipeline(GetPipelineRequest) returns (SinglePipelineResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}"
-      additional_bindings197 {
+      additional_bindings200 {
         get: "/v2/pipelines/{pipeline_id}"
       }
     };
@@ -4349,7 +4358,7 @@ service V2 {
   rpc ListPipelines(ListPipelinesRequest) returns (MultiPipelineResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines"
-      additional_bindings198 {
+      additional_bindings201 {
         get: "/v2/pipelines"
       }
     };
@@ -4384,7 +4393,7 @@ service V2 {
   rpc GetPipelineVersion(GetPipelineVersionRequest) returns (SinglePipelineVersionResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}"
-      additional_bindings199 {
+      additional_bindings202 {
         get: "/v2/pipelines/{pipeline_id}/versions/{pipeline_version_id}"
       }
     };
@@ -4396,7 +4405,7 @@ service V2 {
   rpc ListPipelineVersions(ListPipelineVersionsRequest) returns (MultiPipelineVersionResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions"
-      additional_bindings200 {
+      additional_bindings203 {
         get: "/v2/pipelines/{pipeline_id}/versions"
       }
     };
@@ -4431,7 +4440,7 @@ service V2 {
   rpc GetPipelineVersionRun(GetPipelineVersionRunRequest) returns (SinglePipelineVersionRunResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs/{pipeline_version_run_id}"
-      additional_bindings201 {
+      additional_bindings204 {
         get: "/v2/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs/{pipeline_version_run_id}"
       }
     };

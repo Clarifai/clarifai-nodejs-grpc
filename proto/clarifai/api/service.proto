@@ -3914,6 +3914,9 @@ service V2 {
   rpc ListComputeClusters (ListComputeClustersRequest) returns (MultiComputeClusterResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters"
+      additional_bindings {
+        get: "/v2/compute_clusters"
+      }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
@@ -3990,6 +3993,9 @@ service V2 {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools"
       additional_bindings {
         get: "/v2/users/{user_app_id.user_id}/nodepools"
+      }
+      additional_bindings {
+        get: "/v2/nodepools"
       }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
@@ -4071,6 +4077,9 @@ service V2 {
   rpc ListDeployments (ListDeploymentsRequest) returns (MultiDeploymentResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/deployments"
+      additional_bindings {
+        get: "/v2/deployments"
+      }
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Deployments_Get;

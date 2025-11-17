@@ -733,6 +733,8 @@ message Data {
   bool bool_value = 24;
   // Input and output string data
   string string_value = 25;
+  // To handle Input and output json
+  google.protobuf.Struct struct_value = 26;
 }
 
 // A part of data used for multi-modal processing.
