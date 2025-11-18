@@ -507,6 +507,7 @@ enum StatusCode {
   LABEL_ORDER_CANCELED = 55004;
 
   // License Related Status Code 600xx
+  // DEPRECATED: License feature is fully deprecated now.
   LICENSE_ACTIVE = 60000;
   LICENSE_DOES_NOT_EXIST = 60001;
   LICENSE_NEED_UPDATE = 60002;

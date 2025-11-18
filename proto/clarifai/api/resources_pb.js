@@ -145,7 +145,6 @@ goog.exportSymbol('proto.clarifai.api.EvalTestSetEntry', null, global);
 goog.exportSymbol('proto.clarifai.api.EvaluationMetricValue', null, global);
 goog.exportSymbol('proto.clarifai.api.EvaluationType', null, global);
 goog.exportSymbol('proto.clarifai.api.EventType', null, global);
-goog.exportSymbol('proto.clarifai.api.ExpirationAction', null, global);
 goog.exportSymbol('proto.clarifai.api.ExtendedMetrics', null, global);
 goog.exportSymbol('proto.clarifai.api.FieldsValue', null, global);
 goog.exportSymbol('proto.clarifai.api.Filter', null, global);
@@ -189,7 +188,6 @@ goog.exportSymbol('proto.clarifai.api.LabelCount', null, global);
 goog.exportSymbol('proto.clarifai.api.LabelDistribution', null, global);
 goog.exportSymbol('proto.clarifai.api.LabelOrder', null, global);
 goog.exportSymbol('proto.clarifai.api.LayerShape', null, global);
-goog.exportSymbol('proto.clarifai.api.LicenseScope', null, global);
 goog.exportSymbol('proto.clarifai.api.LicenseType', null, global);
 goog.exportSymbol('proto.clarifai.api.LogEntry', null, global);
 goog.exportSymbol('proto.clarifai.api.LossCurveEntry', null, global);
@@ -14767,7 +14765,8 @@ proto.clarifai.api.Data.toObject = function(includeInstance, msg) {
     floatValue: jspb.Message.getFloatingPointFieldWithDefault(msg, 22, 0.0),
     bytesValue: msg.getBytesValue_asB64(),
     boolValue: jspb.Message.getBooleanFieldWithDefault(msg, 24, false),
-    stringValue: jspb.Message.getFieldWithDefault(msg, 25, "")
+    stringValue: jspb.Message.getFieldWithDefault(msg, 25, ""),
+    structValue: (f = msg.getStructValue()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -14913,6 +14912,11 @@ proto.clarifai.api.Data.deserializeBinaryFromReader = function(msg, reader) {
     case 25:
       var value = /** @type {string} */ (reader.readString());
       msg.setStringValue(value);
+      break;
+    case 26:
+      var value = new google_protobuf_struct_pb.Struct;
+      reader.readMessage(value,google_protobuf_struct_pb.Struct.deserializeBinaryFromReader);
+      msg.setStructValue(value);
       break;
     default:
       reader.skipField();
@@ -15120,6 +15124,14 @@ proto.clarifai.api.Data.serializeBinaryToWriter = function(message, writer) {
     writer.writeString(
       25,
       f
+    );
+  }
+  f = message.getStructValue();
+  if (f != null) {
+    writer.writeMessage(
+      26,
+      f,
+      google_protobuf_struct_pb.Struct.serializeBinaryToWriter
     );
   }
 };
@@ -15913,6 +15925,43 @@ proto.clarifai.api.Data.prototype.getStringValue = function() {
  */
 proto.clarifai.api.Data.prototype.setStringValue = function(value) {
   return jspb.Message.setProto3StringField(this, 25, value);
+};
+
+
+/**
+ * optional google.protobuf.Struct struct_value = 26;
+ * @return {?proto.google.protobuf.Struct}
+ */
+proto.clarifai.api.Data.prototype.getStructValue = function() {
+  return /** @type{?proto.google.protobuf.Struct} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_struct_pb.Struct, 26));
+};
+
+
+/**
+ * @param {?proto.google.protobuf.Struct|undefined} value
+ * @return {!proto.clarifai.api.Data} returns this
+*/
+proto.clarifai.api.Data.prototype.setStructValue = function(value) {
+  return jspb.Message.setWrapperField(this, 26, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.Data} returns this
+ */
+proto.clarifai.api.Data.prototype.clearStructValue = function() {
+  return this.setStructValue(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.Data.prototype.hasStructValue = function() {
+  return jspb.Message.getField(this, 26) != null;
 };
 
 
@@ -89677,25 +89726,6 @@ proto.clarifai.api.DatasetVersionExportFormat = {
   CLARIFAI_DATA_PROTOBUF: 1,
   CLARIFAI_DATA_JSON: 3,
   COCO: 2
-};
-
-/**
- * @enum {number}
- */
-proto.clarifai.api.ExpirationAction = {
-  EXPIRATION_ACTION_NOT_SET: 0,
-  DELAY: 1,
-  EXPIRY: 2
-};
-
-/**
- * @enum {number}
- */
-proto.clarifai.api.LicenseScope = {
-  LICENSE_SCOPE_NOT_SET: 0,
-  PREDICT: 1,
-  TRAIN: 2,
-  SEARCH: 3
 };
 
 /**
