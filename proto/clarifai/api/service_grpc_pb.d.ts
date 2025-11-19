@@ -159,10 +159,6 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     patchSearches: IV2Service_IPatchSearches;
     postSearches: IV2Service_IPostSearches;
     postSearchesByID: IV2Service_IPostSearchesByID;
-    postAnnotationSearchMetrics: IV2Service_IPostAnnotationSearchMetrics;
-    getAnnotationSearchMetrics: IV2Service_IGetAnnotationSearchMetrics;
-    listAnnotationSearchMetrics: IV2Service_IListAnnotationSearchMetrics;
-    deleteAnnotationSearchMetrics: IV2Service_IDeleteAnnotationSearchMetrics;
     deleteSearch: IV2Service_IDeleteSearch;
     listAnnotationFilters: IV2Service_IListAnnotationFilters;
     getAnnotationFilter: IV2Service_IGetAnnotationFilter;
@@ -1579,42 +1575,6 @@ interface IV2Service_IPostSearchesByID extends grpc.MethodDefinition<proto_clari
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiSearchResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiSearchResponse>;
 }
-interface IV2Service_IPostAnnotationSearchMetrics extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostAnnotationSearchMetricsRequest, proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse> {
-    path: "/clarifai.api.V2/PostAnnotationSearchMetrics";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostAnnotationSearchMetricsRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostAnnotationSearchMetricsRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse>;
-}
-interface IV2Service_IGetAnnotationSearchMetrics extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetAnnotationSearchMetricsRequest, proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse> {
-    path: "/clarifai.api.V2/GetAnnotationSearchMetrics";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.GetAnnotationSearchMetricsRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.GetAnnotationSearchMetricsRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse>;
-}
-interface IV2Service_IListAnnotationSearchMetrics extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListAnnotationSearchMetricsRequest, proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse> {
-    path: "/clarifai.api.V2/ListAnnotationSearchMetrics";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListAnnotationSearchMetricsRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListAnnotationSearchMetricsRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse>;
-}
-interface IV2Service_IDeleteAnnotationSearchMetrics extends grpc.MethodDefinition<proto_clarifai_api_service_pb.DeleteAnnotationSearchMetricsRequest, proto_clarifai_api_status_status_pb.BaseResponse> {
-    path: "/clarifai.api.V2/DeleteAnnotationSearchMetrics";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.DeleteAnnotationSearchMetricsRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.DeleteAnnotationSearchMetricsRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
-}
 interface IV2Service_IDeleteSearch extends grpc.MethodDefinition<proto_clarifai_api_service_pb.DeleteSearchRequest, proto_clarifai_api_status_status_pb.BaseResponse> {
     path: "/clarifai.api.V2/DeleteSearch";
     requestStream: false;
@@ -2985,10 +2945,6 @@ export interface IV2Server {
     patchSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse>;
     postSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostSearchesRequest, proto_clarifai_api_service_pb.MultiSearchResponse>;
     postSearchesByID: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostSearchesByIDRequest, proto_clarifai_api_service_pb.MultiSearchResponse>;
-    postAnnotationSearchMetrics: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostAnnotationSearchMetricsRequest, proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse>;
-    getAnnotationSearchMetrics: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetAnnotationSearchMetricsRequest, proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse>;
-    listAnnotationSearchMetrics: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListAnnotationSearchMetricsRequest, proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse>;
-    deleteAnnotationSearchMetrics: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteAnnotationSearchMetricsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     deleteSearch: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteSearchRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     listAnnotationFilters: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListAnnotationFiltersRequest, proto_clarifai_api_service_pb.MultiAnnotationFilterResponse>;
     getAnnotationFilter: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetAnnotationFilterRequest, proto_clarifai_api_service_pb.SingleAnnotationFilterResponse>;
@@ -3553,18 +3509,6 @@ export interface IV2Client {
     postSearchesByID(request: proto_clarifai_api_service_pb.PostSearchesByIDRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     postSearchesByID(request: proto_clarifai_api_service_pb.PostSearchesByIDRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     postSearchesByID(request: proto_clarifai_api_service_pb.PostSearchesByIDRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
-    postAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.PostAnnotationSearchMetricsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse) => void): grpc.ClientUnaryCall;
-    postAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.PostAnnotationSearchMetricsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse) => void): grpc.ClientUnaryCall;
-    postAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.PostAnnotationSearchMetricsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse) => void): grpc.ClientUnaryCall;
-    getAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.GetAnnotationSearchMetricsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse) => void): grpc.ClientUnaryCall;
-    getAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.GetAnnotationSearchMetricsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse) => void): grpc.ClientUnaryCall;
-    getAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.GetAnnotationSearchMetricsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse) => void): grpc.ClientUnaryCall;
-    listAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.ListAnnotationSearchMetricsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse) => void): grpc.ClientUnaryCall;
-    listAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.ListAnnotationSearchMetricsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse) => void): grpc.ClientUnaryCall;
-    listAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.ListAnnotationSearchMetricsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse) => void): grpc.ClientUnaryCall;
-    deleteAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.DeleteAnnotationSearchMetricsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    deleteAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.DeleteAnnotationSearchMetricsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    deleteAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.DeleteAnnotationSearchMetricsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteSearch(request: proto_clarifai_api_service_pb.DeleteSearchRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteSearch(request: proto_clarifai_api_service_pb.DeleteSearchRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteSearch(request: proto_clarifai_api_service_pb.DeleteSearchRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
@@ -4399,18 +4343,6 @@ export class V2Client extends grpc.Client implements IV2Client {
     public postSearchesByID(request: proto_clarifai_api_service_pb.PostSearchesByIDRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     public postSearchesByID(request: proto_clarifai_api_service_pb.PostSearchesByIDRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
     public postSearchesByID(request: proto_clarifai_api_service_pb.PostSearchesByIDRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiSearchResponse) => void): grpc.ClientUnaryCall;
-    public postAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.PostAnnotationSearchMetricsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse) => void): grpc.ClientUnaryCall;
-    public postAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.PostAnnotationSearchMetricsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse) => void): grpc.ClientUnaryCall;
-    public postAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.PostAnnotationSearchMetricsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse) => void): grpc.ClientUnaryCall;
-    public getAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.GetAnnotationSearchMetricsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse) => void): grpc.ClientUnaryCall;
-    public getAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.GetAnnotationSearchMetricsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse) => void): grpc.ClientUnaryCall;
-    public getAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.GetAnnotationSearchMetricsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse) => void): grpc.ClientUnaryCall;
-    public listAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.ListAnnotationSearchMetricsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse) => void): grpc.ClientUnaryCall;
-    public listAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.ListAnnotationSearchMetricsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse) => void): grpc.ClientUnaryCall;
-    public listAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.ListAnnotationSearchMetricsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationSearchMetricsResponse) => void): grpc.ClientUnaryCall;
-    public deleteAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.DeleteAnnotationSearchMetricsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public deleteAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.DeleteAnnotationSearchMetricsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public deleteAnnotationSearchMetrics(request: proto_clarifai_api_service_pb.DeleteAnnotationSearchMetricsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteSearch(request: proto_clarifai_api_service_pb.DeleteSearchRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteSearch(request: proto_clarifai_api_service_pb.DeleteSearchRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteSearch(request: proto_clarifai_api_service_pb.DeleteSearchRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
