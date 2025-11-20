@@ -4340,41 +4340,6 @@ export namespace EvalTestSetEntry {
     }
 }
 
-export class LOPQEvalResult extends jspb.Message { 
-    getK(): number;
-    setK(value: number): LOPQEvalResult;
-    getRecallVsBruteForce(): number;
-    setRecallVsBruteForce(value: number): LOPQEvalResult;
-    getKendallTauVsBruteForce(): number;
-    setKendallTauVsBruteForce(value: number): LOPQEvalResult;
-    getMostFrequentCodePercent(): number;
-    setMostFrequentCodePercent(value: number): LOPQEvalResult;
-    getLopqNdcg(): number;
-    setLopqNdcg(value: number): LOPQEvalResult;
-    getBruteForceNdcg(): number;
-    setBruteForceNdcg(value: number): LOPQEvalResult;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): LOPQEvalResult.AsObject;
-    static toObject(includeInstance: boolean, msg: LOPQEvalResult): LOPQEvalResult.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: LOPQEvalResult, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): LOPQEvalResult;
-    static deserializeBinaryFromReader(message: LOPQEvalResult, reader: jspb.BinaryReader): LOPQEvalResult;
-}
-
-export namespace LOPQEvalResult {
-    export type AsObject = {
-        k: number,
-        recallVsBruteForce: number,
-        kendallTauVsBruteForce: number,
-        mostFrequentCodePercent: number,
-        lopqNdcg: number,
-        bruteForceNdcg: number,
-    }
-}
-
 export class MetricsSummary extends jspb.Message { 
     getTop1Accuracy(): number;
     setTop1Accuracy(value: number): MetricsSummary;
@@ -4396,10 +4361,6 @@ export class MetricsSummary extends jspb.Message {
     setMeanAvgPrecisionIou50(value: number): MetricsSummary;
     getMeanAvgPrecisionIouRange(): number;
     setMeanAvgPrecisionIouRange(value: number): MetricsSummary;
-    clearLopqMetricsList(): void;
-    getLopqMetricsList(): Array<LOPQEvalResult>;
-    setLopqMetricsList(value: Array<LOPQEvalResult>): MetricsSummary;
-    addLopqMetrics(value?: LOPQEvalResult, index?: number): LOPQEvalResult;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): MetricsSummary.AsObject;
@@ -4423,7 +4384,6 @@ export namespace MetricsSummary {
         macroAvgRecall: number,
         meanAvgPrecisionIou50: number,
         meanAvgPrecisionIouRange: number,
-        lopqMetricsList: Array<LOPQEvalResult.AsObject>,
     }
 }
 
@@ -5004,56 +4964,6 @@ export namespace Rank {
     export type AsObject = {
         negate: boolean,
         annotation?: Annotation.AsObject,
-    }
-}
-
-export class AnnotationSearchMetrics extends jspb.Message { 
-
-    hasGroundTruth(): boolean;
-    clearGroundTruth(): void;
-    getGroundTruth(): Search | undefined;
-    setGroundTruth(value?: Search): AnnotationSearchMetrics;
-
-    hasSearchToEval(): boolean;
-    clearSearchToEval(): void;
-    getSearchToEval(): Search | undefined;
-    setSearchToEval(value?: Search): AnnotationSearchMetrics;
-
-    hasMetrics(): boolean;
-    clearMetrics(): void;
-    getMetrics(): EvalMetrics | undefined;
-    setMetrics(value?: EvalMetrics): AnnotationSearchMetrics;
-
-    hasData(): boolean;
-    clearData(): void;
-    getData(): Data | undefined;
-    setData(value?: Data): AnnotationSearchMetrics;
-    getActiveConceptCount(): number;
-    setActiveConceptCount(value: number): AnnotationSearchMetrics;
-
-    hasVisibility(): boolean;
-    clearVisibility(): void;
-    getVisibility(): Visibility | undefined;
-    setVisibility(value?: Visibility): AnnotationSearchMetrics;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): AnnotationSearchMetrics.AsObject;
-    static toObject(includeInstance: boolean, msg: AnnotationSearchMetrics): AnnotationSearchMetrics.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: AnnotationSearchMetrics, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): AnnotationSearchMetrics;
-    static deserializeBinaryFromReader(message: AnnotationSearchMetrics, reader: jspb.BinaryReader): AnnotationSearchMetrics;
-}
-
-export namespace AnnotationSearchMetrics {
-    export type AsObject = {
-        groundTruth?: Search.AsObject,
-        searchToEval?: Search.AsObject,
-        metrics?: EvalMetrics.AsObject,
-        data?: Data.AsObject,
-        activeConceptCount: number,
-        visibility?: Visibility.AsObject,
     }
 }
 

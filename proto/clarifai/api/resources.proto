@@ -2322,42 +2322,7 @@ message EvalTestSetEntry {
   Annotation ground_truth_annotation = 8;
 }
 
-// LOPQEvalResult
-message LOPQEvalResult {
-  // Rank k for which all metrics are reported.
-  int32 k = 1;
 
-  // Recall @ k assuming the brute force search is the ground truth.
-  float recall_vs_brute_force = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
-  // Kendall's tau correlation @ k assuming the brute force search is the ground truth.
-  float kendall_tau_vs_brute_force = 3 [(clarifai.api.utils.cl_show_if_empty) = true];
-  // The percentage of the most frequent code in the indexed part of evaluation data.
-  float most_frequent_code_percent = 4 [(clarifai.api.utils.cl_show_if_empty) = true];
-
-  // Normalized Discounted Cumulative Gain (NDCG) @ k with a ground truth inferred from annotations
-  // and/or prediction for this evaluation LOPQ model.
-  // NDCG uses individual relevance scores of each returned image to evaluate the usefulness, or
-  // gain, of a document based on its position in the result list. The premise of DCG is that
-  // highly relevant documents appearing lower in a search result list should be penalized as the
-  // graded relevance value is reduced logarithmically proportional to the position of the result.
-  // See: https://en.wikipedia.org/wiki/Information_retrieval#Discounted_cumulative_gain
-  //
-  // To compute the relevance score between two images we consider two cases:
-  // 1) Only one label for each image
-  // An image is relevant to an image query iff they are labeled the same (score 1), and
-  // not relevant otherwise (score 0)
-  // 2) Multiple labels for each image
-  // Here an image relevancy with respect to a single image query is measured by f-beta score
-  // assuming the query image list of labels as ground truth and comparing them with that of
-  // the search result. These labels can come from image annotations or if substitute_annotation_misses
-  // is set, predictions of base classifier where any prediction with prob < prob_threshold are
-  // discarded. To quantify the relevancy score of a single search result we opt to compute precision
-  // and recall @ k for simplicity, and combine them with f-beta score to obtain a single number.
-  float lopq_ndcg = 5 [(clarifai.api.utils.cl_show_if_empty) = true];
-  // Brute force NDCG which gives a baseline to compare to and is a measure of how good
-  // the embeddings are.
-  float brute_force_ndcg = 6 [(clarifai.api.utils.cl_show_if_empty) = true];
-}
 
 // MetricsSummary
 message MetricsSummary {
@@ -2371,8 +2336,6 @@ message MetricsSummary {
   float macro_avg_recall = 8 [(clarifai.api.utils.cl_show_if_empty) = true];
   float mean_avg_precision_iou_50 = 10;
   float mean_avg_precision_iou_range = 11;
-
-  repeated LOPQEvalResult lopq_metrics = 9;
 }
 
 // EvalMetrics
@@ -2805,29 +2768,6 @@ message Rank {
   Annotation annotation = 4;
 }
 
-// AnnotationSearchMetrics
-message AnnotationSearchMetrics {
-  // The ground truth we are evaluating against
-  clarifai.api.Search ground_truth = 1;
-
-  // The set we are evaluating
-  clarifai.api.Search search_to_eval = 2;
-
-  // The metric result
-  EvalMetrics metrics = 3;
-
-  // data is filled out with the concepts used for this evaluation
-  Data data = 4;
-
-  // active_concept_count is the number of concepts for this evaluation
-  uint32 active_concept_count = 5;
-
-  // The visibility field represents whether this message is privately/publicly visible.
-  // To be visible to the public the App that contains it AND the User that contains the App must
-  // also be publicly visible.
-  Visibility visibility = 6;
-}
-
 
 
 
@@ -3220,6 +3160,7 @@ message WorkflowResult {
   // Indicate if the output of this model is suppressed.
   bool suppress_output = 7;
 }
+
 
 
 // WorkflowState
@@ -4073,7 +4014,6 @@ enum StatTimeAggType {
   HOUR = 5;
   MINUTE = 6;
 }
-
 
 
 
