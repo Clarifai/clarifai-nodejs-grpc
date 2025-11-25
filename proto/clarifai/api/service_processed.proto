@@ -4460,6 +4460,30 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
   }
 
+  rpc DeletePipelineSteps(DeletePipelineStepsRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipeline_steps"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Delete;
+  }
+
+  rpc DeletePipelineStepVersions(DeletePipelineStepVersionsRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipeline_steps/{pipeline_step_id}/versions"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Delete;
+  }
+
   rpc GetSecret(GetSecretRequest) returns (SingleSecretResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/secrets/{id}"
@@ -9158,7 +9182,19 @@ message SinglePipelineStepVersionResponse {
   PipelineStepVersion pipeline_step_version = 2;
 }
 
+message DeletePipelineStepsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The ids of the pipeline steps to delete
+  repeated string ids = 2;
+}
 
+message DeletePipelineStepVersionsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The id of the pipeline step for which versions are being deleted
+  string pipeline_step_id = 2;
+  // The ids of the pipeline step versions to delete
+  repeated string pipeline_step_version_ids = 3;
+}
 
 message GetSecretRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;

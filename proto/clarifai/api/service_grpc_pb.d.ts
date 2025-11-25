@@ -288,6 +288,8 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     postPipelineStepVersionsUpload: IV2Service_IPostPipelineStepVersionsUpload;
     listPipelineStepVersions: IV2Service_IListPipelineStepVersions;
     getPipelineStepVersion: IV2Service_IGetPipelineStepVersion;
+    deletePipelineSteps: IV2Service_IDeletePipelineSteps;
+    deletePipelineStepVersions: IV2Service_IDeletePipelineStepVersions;
     getSecret: IV2Service_IGetSecret;
     listSecrets: IV2Service_IListSecrets;
     postSecrets: IV2Service_IPostSecrets;
@@ -2736,6 +2738,24 @@ interface IV2Service_IGetPipelineStepVersion extends grpc.MethodDefinition<proto
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse>;
 }
+interface IV2Service_IDeletePipelineSteps extends grpc.MethodDefinition<proto_clarifai_api_service_pb.DeletePipelineStepsRequest, proto_clarifai_api_status_status_pb.BaseResponse> {
+    path: "/clarifai.api.V2/DeletePipelineSteps";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.DeletePipelineStepsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.DeletePipelineStepsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
+}
+interface IV2Service_IDeletePipelineStepVersions extends grpc.MethodDefinition<proto_clarifai_api_service_pb.DeletePipelineStepVersionsRequest, proto_clarifai_api_status_status_pb.BaseResponse> {
+    path: "/clarifai.api.V2/DeletePipelineStepVersions";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.DeletePipelineStepVersionsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.DeletePipelineStepVersionsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
+}
 interface IV2Service_IGetSecret extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetSecretRequest, proto_clarifai_api_service_pb.SingleSecretResponse> {
     path: "/clarifai.api.V2/GetSecret";
     requestStream: false;
@@ -3074,6 +3094,8 @@ export interface IV2Server {
     postPipelineStepVersionsUpload: grpc.handleBidiStreamingCall<proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadRequest, proto_clarifai_api_service_pb.PostPipelineStepVersionsUploadResponse>;
     listPipelineStepVersions: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListPipelineStepVersionsRequest, proto_clarifai_api_service_pb.MultiPipelineStepVersionResponse>;
     getPipelineStepVersion: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetPipelineStepVersionRequest, proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse>;
+    deletePipelineSteps: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeletePipelineStepsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
+    deletePipelineStepVersions: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeletePipelineStepVersionsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     getSecret: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetSecretRequest, proto_clarifai_api_service_pb.SingleSecretResponse>;
     listSecrets: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListSecretsRequest, proto_clarifai_api_service_pb.MultiSecretResponse>;
     postSecrets: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostSecretsRequest, proto_clarifai_api_service_pb.MultiSecretResponse>;
@@ -3895,6 +3917,12 @@ export interface IV2Client {
     getPipelineStepVersion(request: proto_clarifai_api_service_pb.GetPipelineStepVersionRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse) => void): grpc.ClientUnaryCall;
     getPipelineStepVersion(request: proto_clarifai_api_service_pb.GetPipelineStepVersionRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse) => void): grpc.ClientUnaryCall;
     getPipelineStepVersion(request: proto_clarifai_api_service_pb.GetPipelineStepVersionRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse) => void): grpc.ClientUnaryCall;
+    deletePipelineSteps(request: proto_clarifai_api_service_pb.DeletePipelineStepsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    deletePipelineSteps(request: proto_clarifai_api_service_pb.DeletePipelineStepsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    deletePipelineSteps(request: proto_clarifai_api_service_pb.DeletePipelineStepsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    deletePipelineStepVersions(request: proto_clarifai_api_service_pb.DeletePipelineStepVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    deletePipelineStepVersions(request: proto_clarifai_api_service_pb.DeletePipelineStepVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    deletePipelineStepVersions(request: proto_clarifai_api_service_pb.DeletePipelineStepVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     getSecret(request: proto_clarifai_api_service_pb.GetSecretRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleSecretResponse) => void): grpc.ClientUnaryCall;
     getSecret(request: proto_clarifai_api_service_pb.GetSecretRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleSecretResponse) => void): grpc.ClientUnaryCall;
     getSecret(request: proto_clarifai_api_service_pb.GetSecretRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleSecretResponse) => void): grpc.ClientUnaryCall;
@@ -4727,6 +4755,12 @@ export class V2Client extends grpc.Client implements IV2Client {
     public getPipelineStepVersion(request: proto_clarifai_api_service_pb.GetPipelineStepVersionRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse) => void): grpc.ClientUnaryCall;
     public getPipelineStepVersion(request: proto_clarifai_api_service_pb.GetPipelineStepVersionRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse) => void): grpc.ClientUnaryCall;
     public getPipelineStepVersion(request: proto_clarifai_api_service_pb.GetPipelineStepVersionRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SinglePipelineStepVersionResponse) => void): grpc.ClientUnaryCall;
+    public deletePipelineSteps(request: proto_clarifai_api_service_pb.DeletePipelineStepsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public deletePipelineSteps(request: proto_clarifai_api_service_pb.DeletePipelineStepsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public deletePipelineSteps(request: proto_clarifai_api_service_pb.DeletePipelineStepsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public deletePipelineStepVersions(request: proto_clarifai_api_service_pb.DeletePipelineStepVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public deletePipelineStepVersions(request: proto_clarifai_api_service_pb.DeletePipelineStepVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public deletePipelineStepVersions(request: proto_clarifai_api_service_pb.DeletePipelineStepVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public getSecret(request: proto_clarifai_api_service_pb.GetSecretRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleSecretResponse) => void): grpc.ClientUnaryCall;
     public getSecret(request: proto_clarifai_api_service_pb.GetSecretRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleSecretResponse) => void): grpc.ClientUnaryCall;
     public getSecret(request: proto_clarifai_api_service_pb.GetSecretRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleSecretResponse) => void): grpc.ClientUnaryCall;

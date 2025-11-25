@@ -35456,7 +35456,8 @@ proto.clarifai.api.BuildInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
     dockerImageName: jspb.Message.getFieldWithDefault(msg, 1, ""),
     dockerImageTag: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    dockerImageDigest: jspb.Message.getFieldWithDefault(msg, 3, "")
+    dockerImageDigest: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    platform: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -35505,6 +35506,10 @@ proto.clarifai.api.BuildInfo.deserializeBinaryFromReader = function(msg, reader)
       var value = /** @type {string} */ (reader.readString());
       msg.setDockerImageDigest(value);
       break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPlatform(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -35552,6 +35557,13 @@ proto.clarifai.api.BuildInfo.serializeBinaryToWriter = function(message, writer)
   if (f.length > 0) {
     writer.writeString(
       3,
+      f
+    );
+  }
+  f = message.getPlatform();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
       f
     );
   }
@@ -35609,6 +35621,24 @@ proto.clarifai.api.BuildInfo.prototype.getDockerImageDigest = function() {
  */
 proto.clarifai.api.BuildInfo.prototype.setDockerImageDigest = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string platform = 4;
+ * @return {string}
+ */
+proto.clarifai.api.BuildInfo.prototype.getPlatform = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.BuildInfo} returns this
+ */
+proto.clarifai.api.BuildInfo.prototype.setPlatform = function(value) {
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -72397,7 +72427,8 @@ proto.clarifai.api.InstanceType.toObject = function(includeInstance, msg) {
     allowedCapacityTypes: (f = msg.getAllowedCapacityTypes()) && proto.clarifai.api.NodeCapacityType.toObject(includeInstance, f),
     featureFlagGroup: jspb.Message.getFieldWithDefault(msg, 8, ""),
     specialHandlingList: jspb.Message.toObjectList(msg.getSpecialHandlingList(),
-    proto.clarifai.api.SpecialHandling.toObject, includeInstance)
+    proto.clarifai.api.SpecialHandling.toObject, includeInstance),
+    architecture: jspb.Message.getFieldWithDefault(msg, 10, "")
   };
 
   if (includeInstance) {
@@ -72473,6 +72504,10 @@ proto.clarifai.api.InstanceType.deserializeBinaryFromReader = function(msg, read
       var value = new proto.clarifai.api.SpecialHandling;
       reader.readMessage(value,proto.clarifai.api.SpecialHandling.deserializeBinaryFromReader);
       msg.addSpecialHandling(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setArchitecture(value);
       break;
     default:
       reader.skipField();
@@ -72568,6 +72603,13 @@ proto.clarifai.api.InstanceType.serializeBinaryToWriter = function(message, writ
       9,
       f,
       proto.clarifai.api.SpecialHandling.serializeBinaryToWriter
+    );
+  }
+  f = message.getArchitecture();
+  if (f.length > 0) {
+    writer.writeString(
+      10,
+      f
     );
   }
 };
@@ -72809,6 +72851,24 @@ proto.clarifai.api.InstanceType.prototype.addSpecialHandling = function(opt_valu
  */
 proto.clarifai.api.InstanceType.prototype.clearSpecialHandlingList = function() {
   return this.setSpecialHandlingList([]);
+};
+
+
+/**
+ * optional string architecture = 10;
+ * @return {string}
+ */
+proto.clarifai.api.InstanceType.prototype.getArchitecture = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.InstanceType} returns this
+ */
+proto.clarifai.api.InstanceType.prototype.setArchitecture = function(value) {
+  return jspb.Message.setProto3StringField(this, 10, value);
 };
 
 

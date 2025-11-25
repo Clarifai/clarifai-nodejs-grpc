@@ -322,6 +322,28 @@ function deserialize_clarifai_api_DeleteNodepoolsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.DeleteNodepoolsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_DeletePipelineStepVersionsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.DeletePipelineStepVersionsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.DeletePipelineStepVersionsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_DeletePipelineStepVersionsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.DeletePipelineStepVersionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_DeletePipelineStepsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.DeletePipelineStepsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.DeletePipelineStepsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_DeletePipelineStepsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.DeletePipelineStepsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_DeletePipelineVersionsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.DeletePipelineVersionsRequest)) {
     throw new Error('Expected argument of type clarifai.api.DeletePipelineVersionsRequest');
@@ -7841,6 +7863,28 @@ postPipelineStepVersionsUpload: {
     requestDeserialize: deserialize_clarifai_api_GetPipelineStepVersionRequest,
     responseSerialize: serialize_clarifai_api_SinglePipelineStepVersionResponse,
     responseDeserialize: deserialize_clarifai_api_SinglePipelineStepVersionResponse,
+  },
+  deletePipelineSteps: {
+    path: '/clarifai.api.V2/DeletePipelineSteps',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.DeletePipelineStepsRequest,
+    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
+    requestSerialize: serialize_clarifai_api_DeletePipelineStepsRequest,
+    requestDeserialize: deserialize_clarifai_api_DeletePipelineStepsRequest,
+    responseSerialize: serialize_clarifai_api_status_BaseResponse,
+    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
+  deletePipelineStepVersions: {
+    path: '/clarifai.api.V2/DeletePipelineStepVersions',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.DeletePipelineStepVersionsRequest,
+    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
+    requestSerialize: serialize_clarifai_api_DeletePipelineStepVersionsRequest,
+    requestDeserialize: deserialize_clarifai_api_DeletePipelineStepVersionsRequest,
+    responseSerialize: serialize_clarifai_api_status_BaseResponse,
+    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },
   getSecret: {
     path: '/clarifai.api.V2/GetSecret',
