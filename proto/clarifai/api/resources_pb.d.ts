@@ -3815,6 +3815,8 @@ export class BuildInfo extends jspb.Message {
     setDockerImageTag(value: string): BuildInfo;
     getDockerImageDigest(): string;
     setDockerImageDigest(value: string): BuildInfo;
+    getPlatform(): string;
+    setPlatform(value: string): BuildInfo;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): BuildInfo.AsObject;
@@ -3831,6 +3833,7 @@ export namespace BuildInfo {
         dockerImageName: string,
         dockerImageTag: string,
         dockerImageDigest: string,
+        platform: string,
     }
 }
 
@@ -8682,6 +8685,8 @@ export class InstanceType extends jspb.Message {
     getSpecialHandlingList(): Array<SpecialHandling>;
     setSpecialHandlingList(value: Array<SpecialHandling>): InstanceType;
     addSpecialHandling(value?: SpecialHandling, index?: number): SpecialHandling;
+    getArchitecture(): string;
+    setArchitecture(value: string): InstanceType;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): InstanceType.AsObject;
@@ -8704,6 +8709,7 @@ export namespace InstanceType {
         allowedCapacityTypes?: NodeCapacityType.AsObject,
         featureFlagGroup: string,
         specialHandlingList: Array<SpecialHandling.AsObject>,
+        architecture: string,
     }
 }
 
@@ -10866,6 +10872,121 @@ export namespace MetricTypeLabels {
         }
     }
 
+}
+
+export class Artifact extends jspb.Message { 
+    getId(): string;
+    setId(value: string): Artifact;
+    getUserId(): string;
+    setUserId(value: string): Artifact;
+    getAppId(): string;
+    setAppId(value: string): Artifact;
+
+    hasArtifactVersion(): boolean;
+    clearArtifactVersion(): void;
+    getArtifactVersion(): ArtifactVersion | undefined;
+    setArtifactVersion(value?: ArtifactVersion): Artifact;
+
+    hasCreatedAt(): boolean;
+    clearCreatedAt(): void;
+    getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): Artifact;
+
+    hasModifiedAt(): boolean;
+    clearModifiedAt(): void;
+    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): Artifact;
+
+    hasDeletedAt(): boolean;
+    clearDeletedAt(): void;
+    getDeletedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setDeletedAt(value?: google_protobuf_timestamp_pb.Timestamp): Artifact;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): Artifact.AsObject;
+    static toObject(includeInstance: boolean, msg: Artifact): Artifact.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: Artifact, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): Artifact;
+    static deserializeBinaryFromReader(message: Artifact, reader: jspb.BinaryReader): Artifact;
+}
+
+export namespace Artifact {
+    export type AsObject = {
+        id: string,
+        userId: string,
+        appId: string,
+        artifactVersion?: ArtifactVersion.AsObject,
+        createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        deletedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    }
+}
+
+export class ArtifactVersion extends jspb.Message { 
+    getId(): string;
+    setId(value: string): ArtifactVersion;
+    getDescription(): string;
+    setDescription(value: string): ArtifactVersion;
+
+    hasArtifact(): boolean;
+    clearArtifact(): void;
+    getArtifact(): Artifact | undefined;
+    setArtifact(value?: Artifact): ArtifactVersion;
+
+    hasUpload(): boolean;
+    clearUpload(): void;
+    getUpload(): Upload | undefined;
+    setUpload(value?: Upload): ArtifactVersion;
+
+    hasVisibility(): boolean;
+    clearVisibility(): void;
+    getVisibility(): Visibility | undefined;
+    setVisibility(value?: Visibility): ArtifactVersion;
+
+    hasExpiresAt(): boolean;
+    clearExpiresAt(): void;
+    getExpiresAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setExpiresAt(value?: google_protobuf_timestamp_pb.Timestamp): ArtifactVersion;
+
+    hasCreatedAt(): boolean;
+    clearCreatedAt(): void;
+    getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): ArtifactVersion;
+
+    hasModifiedAt(): boolean;
+    clearModifiedAt(): void;
+    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): ArtifactVersion;
+
+    hasDeletedAt(): boolean;
+    clearDeletedAt(): void;
+    getDeletedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setDeletedAt(value?: google_protobuf_timestamp_pb.Timestamp): ArtifactVersion;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ArtifactVersion.AsObject;
+    static toObject(includeInstance: boolean, msg: ArtifactVersion): ArtifactVersion.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ArtifactVersion, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ArtifactVersion;
+    static deserializeBinaryFromReader(message: ArtifactVersion, reader: jspb.BinaryReader): ArtifactVersion;
+}
+
+export namespace ArtifactVersion {
+    export type AsObject = {
+        id: string,
+        description: string,
+        artifact?: Artifact.AsObject,
+        upload?: Upload.AsObject,
+        visibility?: Visibility.AsObject,
+        expiresAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        deletedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    }
 }
 
 export enum WorkflowModelUseCase {

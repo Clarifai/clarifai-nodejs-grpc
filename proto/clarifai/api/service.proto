@@ -351,6 +351,25 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // to get the model for the worker.
   }
 
+  // Stream video track annotations for a specific input one-by-one.
+  rpc StreamTrackAnnotationsSearches (StreamTrackAnnotationsSearchesRequest) returns (stream SingleAnnotationResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}/track_annotations/searches/stream"
+      body: "*"
+      additional_bindings {
+        post: "/v2/inputs/{input_id}/track_annotations/searches/stream",
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = AnnotationTracks_Get;
+  }
+
   // Post annotations.
   rpc PostAnnotations (PostAnnotationsRequest) returns (MultiAnnotationResponse) {
     option (google.api.http) = {
@@ -4460,6 +4479,117 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
   }
 
+  rpc DeletePipelineSteps(DeletePipelineStepsRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipeline_steps"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Delete;
+  }
+
+  rpc DeletePipelineStepVersions(DeletePipelineStepVersionsRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipeline_steps/{pipeline_step_id}/versions"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Delete;
+  }
+
+  rpc PostArtifacts(PostArtifactsRequest) returns (MultiArtifactResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/artifacts"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Artifacts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Artifacts_Add;
+  }
+
+  rpc GetArtifact(GetArtifactRequest) returns (SingleArtifactResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/artifacts/{artifact_id}"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Artifacts_Get;
+  }
+
+  rpc ListArtifacts(ListArtifactsRequest) returns (MultiArtifactResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/artifacts"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Artifacts_Get;
+  }
+
+  rpc DeleteArtifact(DeleteArtifactRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/artifacts"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Artifacts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Artifacts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Artifacts_Delete;
+  }
+
+  // This is a streaming endpoint, the request has a field, upload_data, which can either be the config for the upload or the actual data to upload.
+  // The config must be sent first before the artifact_bytes can be uploaded.
+  // Once the config has been sent, the server will respond with a confirmation containing the artifact_version_id.
+  // This is so that if your upload is interrupted, you can resume the upload by sending the config again with the artifact_version_id specified for your artifact_version.
+  // The actual upload will be done via a multipart upload, the latest successful part_id will be sent from the server in the response to the artifact_bytes.
+  rpc PostArtifactVersionsUpload(stream PostArtifactVersionsUploadRequest) returns (stream PostArtifactVersionsUploadResponse) {
+    option (google.api.http) = {
+      post: "/v2/artifact_versions/upload"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Artifacts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Artifacts_Add;
+  }
+
+  rpc ListArtifactVersions(ListArtifactVersionsRequest) returns (MultiArtifactVersionResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/artifacts/{artifact_id}/versions"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Artifacts_Get;
+  }
+
+  rpc GetArtifactVersion(GetArtifactVersionRequest) returns (SingleArtifactVersionResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/artifacts/{artifact_id}/versions/{artifact_version_id}"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Artifacts_Get;
+  }
+
+  rpc DeleteArtifactVersion(DeleteArtifactVersionRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/artifacts/{artifact_id}/versions"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Artifacts_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Artifacts_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Artifacts_Delete;
+  }
+
   rpc GetSecret(GetSecretRequest) returns (SingleSecretResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/secrets/{id}"
@@ -4624,6 +4754,34 @@ message PostTrackAnnotationsSearchesRequest {
   uint32 max_frames = 7;
 
   // Maximum duration in milliseconds to return (default and max: 3000)
+  uint32 max_duration = 8;
+
+  // Filtering by model version ID within a worker (optional).
+  // Point annotations don't need filtering by worker.
+  // For non-point types, a model version ID must be provided.
+  Worker worker = 9;
+}
+
+// StreamTrackAnnotationsSearchesRequest
+message StreamTrackAnnotationsSearchesRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // The input ID containing the video track annotations to stream
+  string input_id = 2;
+
+  // Filter annotations by track_id
+  string track_id = 3;
+
+  // Filter annotations starting from this frame number (inclusive)
+  uint32 frame_number_start = 4;
+
+  // Filter annotations starting from this time in milliseconds (inclusive)
+  uint32 frame_time_start = 5;
+
+  // Filter by annotation type (e.g., "bounding_box", "point", "mask")
+  AnnotationDataType annotation_type = 6;
+
+  uint32 max_frames = 7;
   uint32 max_duration = 8;
 
   // Filtering by model version ID within a worker (optional).
@@ -9158,7 +9316,19 @@ message SinglePipelineStepVersionResponse {
   PipelineStepVersion pipeline_step_version = 2;
 }
 
+message DeletePipelineStepsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The ids of the pipeline steps to delete
+  repeated string ids = 2;
+}
 
+message DeletePipelineStepVersionsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The id of the pipeline step for which versions are being deleted
+  string pipeline_step_id = 2;
+  // The ids of the pipeline step versions to delete
+  repeated string pipeline_step_version_ids = 3;
+}
 
 message GetSecretRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -9232,3 +9402,123 @@ message MultiMetricLabelsResponse {
 
 
 
+
+
+
+// Artifact requests and responses
+
+message PostArtifactsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  repeated Artifact artifacts = 2;
+}
+
+message MultiArtifactResponse {
+  clarifai.api.status.Status status = 1;
+  repeated Artifact artifacts = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+message ListArtifactsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 2;
+
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 3;
+}
+
+message GetArtifactRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The id of the artifact to get
+  string artifact_id = 2;
+}
+
+message SingleArtifactResponse {
+  clarifai.api.status.Status status = 1;
+  Artifact artifact = 2;
+}
+
+message DeleteArtifactRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The id of the artifact to be deleted
+  string artifact_id = 2;
+}
+
+message PostArtifactVersionsUploadRequest {
+  oneof upload_data {
+    // Upload a new artifact version.
+    PostArtifactVersionsUploadConfig upload_config = 2;
+ 
+    // Upload a part of a multipart upload.
+    UploadContentPart content_part = 3;
+  }
+} 
+ 
+message PostArtifactVersionsUploadResponse {
+  // Status of the upload
+  clarifai.api.status.Status status = 1;
+  // Bytes remaining to be uploaded - This is total_size - bytes_uploaded
+  uint64 bytes_remaining = 2;
+  // ID of the artifact version being uploaded
+  string artifact_version_id = 3;
+} 
+ 
+message PostArtifactVersionsUploadConfig {
+  // User ID and App ID of the user uploading the artifact
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // Artifact to create version for
+  string artifact_id = 2;
+  // Specification for the artifact version to be uploaded
+  ArtifactVersion artifact_version = 3;
+  // Number of bytes in the artifact files to be uploaded
+  uint64 total_size = 4;
+  // Number of bytes requested for the build process.
+  uint64 storage_request_size = 5;
+} 
+ 
+message ListArtifactVersionsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  
+  // List versions for the artifact identified by this id
+  string artifact_id = 2;
+  
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
+  // Defaults to 1.
+  uint32 page = 3;
+  
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults
+  // to 128.
+  uint32 per_page = 4;
+} 
+ 
+message MultiArtifactVersionResponse {
+  // The status of the request
+  clarifai.api.status.Status status = 1;
+  // The artifact versions that were requested
+  repeated ArtifactVersion artifact_versions = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+message GetArtifactVersionRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The id of the artifact that has the requested version.
+  string artifact_id = 2;
+  // Get the artifact version identified by this id
+  string artifact_version_id = 3;
+}
+
+message SingleArtifactVersionResponse {
+  // The status of the request
+  clarifai.api.status.Status status = 1;
+  // The artifact version that was requested
+  ArtifactVersion artifact_version = 2;
+}
+
+message DeleteArtifactVersionRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The id of the artifact for which versions are being deleted
+  string artifact_id = 2;
+  // The id of the artifact versions to be deleted
+  string artifact_version_id = 3;
+}

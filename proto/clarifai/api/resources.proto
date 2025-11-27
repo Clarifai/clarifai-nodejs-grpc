@@ -2168,6 +2168,8 @@ message BuildInfo {
   string docker_image_tag = 2;
   // Docker image digest
   string docker_image_digest = 3;
+  // Platform(s) the model was built for (e.g., "linux/amd64,linux/arm64")
+  string platform = 4;
 }
 
 // ModelVersionExport contains metadata for a single Model version export.
@@ -4832,6 +4834,9 @@ message InstanceType {
 
   // List of special handling instructions for this instance type.
   repeated SpecialHandling special_handling = 9;
+
+  // Hardware architecture of the instance type (e.g., "linux/amd64", "linux/arm64").
+  string architecture = 10;
 }
 
 // CloudProvider represents the entity that provides the infrastructure where the Nodepools are deployed.
@@ -5832,4 +5837,66 @@ message MetricTypeLabels {
   }
   MetricType metric_type = 1;
   repeated LabelWithValues labels = 2;
+}
+
+
+// Artifact is a resource that represents a file stored in Clarifai's storage system.
+// It should have a reference to upload resource which contains the actual file location and metadata.
+message Artifact {
+  // ID of artifact
+  string id = 1;
+
+  // User ID that this Artifact belongs to
+  string user_id = 2;
+
+  // Application ID that this Artifact belongs to
+  string app_id = 3;
+
+  // Reference to the artifact version resource that represents a specific version of the artifact
+  ArtifactVersion artifact_version = 5;
+
+  // When the artifact was created.
+  google.protobuf.Timestamp created_at = 6;
+
+  // Most recent time when the artifact was updated.
+  google.protobuf.Timestamp modified_at = 7;
+
+  // When the artifact was deleted.
+  google.protobuf.Timestamp deleted_at = 8;
+}
+
+// ArtifactVersion represents a specific version of the artifact.
+message ArtifactVersion {
+  // ID of artifact version
+  string id = 1;
+
+  // Description of the artifact version
+  string description = 2;
+
+  // Reference to the artifact resource
+  Artifact artifact = 3;
+
+  // Reference to the upload resource which contains the actual file location and metadata
+  Upload upload = 4;
+
+  // The visibility field represents whether this is privately/publicly visible.
+  // To be visible to the public the App that contains it AND the User that contains the App must
+  // also be publicly visible.
+  Visibility visibility = 5;
+
+  // When the artifact version will expire and be deleted.
+  // The format is https://www.ietf.org/rfc/rfc3339.txt.
+  // Example: "2006-01-02T15:04:05.999999Z".
+  // If not set, the artifact version will be retained indefinitely
+  // and will not be automatically deleted by lifecycle policies.
+  google.protobuf.Timestamp expires_at = 6;
+
+  // When the artifact version was created.
+  google.protobuf.Timestamp created_at = 7;
+
+  // Most recent time when the artifact version was updated.
+  google.protobuf.Timestamp modified_at = 8;
+
+  // When the artifact version was deleted.
+  google.protobuf.Timestamp deleted_at = 9;
 }

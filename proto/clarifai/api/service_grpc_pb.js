@@ -102,6 +102,28 @@ function deserialize_clarifai_api_DeleteAppRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.DeleteAppRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_DeleteArtifactRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.DeleteArtifactRequest)) {
+    throw new Error('Expected argument of type clarifai.api.DeleteArtifactRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_DeleteArtifactRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.DeleteArtifactRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_DeleteArtifactVersionRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.DeleteArtifactVersionRequest)) {
+    throw new Error('Expected argument of type clarifai.api.DeleteArtifactVersionRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_DeleteArtifactVersionRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.DeleteArtifactVersionRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_DeleteBulkOperationRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.DeleteBulkOperationRequest)) {
     throw new Error('Expected argument of type clarifai.api.DeleteBulkOperationRequest');
@@ -322,6 +344,28 @@ function deserialize_clarifai_api_DeleteNodepoolsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.DeleteNodepoolsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_DeletePipelineStepVersionsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.DeletePipelineStepVersionsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.DeletePipelineStepVersionsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_DeletePipelineStepVersionsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.DeletePipelineStepVersionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_DeletePipelineStepsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.DeletePipelineStepsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.DeletePipelineStepsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_DeletePipelineStepsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.DeletePipelineStepsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_DeletePipelineVersionsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.DeletePipelineVersionsRequest)) {
     throw new Error('Expected argument of type clarifai.api.DeletePipelineVersionsRequest');
@@ -474,6 +518,28 @@ function serialize_clarifai_api_GetAppRequest(arg) {
 
 function deserialize_clarifai_api_GetAppRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.GetAppRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_GetArtifactRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.GetArtifactRequest)) {
+    throw new Error('Expected argument of type clarifai.api.GetArtifactRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_GetArtifactRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.GetArtifactRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_GetArtifactVersionRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.GetArtifactVersionRequest)) {
+    throw new Error('Expected argument of type clarifai.api.GetArtifactVersionRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_GetArtifactVersionRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.GetArtifactVersionRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_GetBulkOperationRequest(arg) {
@@ -1101,6 +1167,28 @@ function serialize_clarifai_api_ListAppsRequest(arg) {
 
 function deserialize_clarifai_api_ListAppsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListAppsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_ListArtifactVersionsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListArtifactVersionsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListArtifactVersionsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListArtifactVersionsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListArtifactVersionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_ListArtifactsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListArtifactsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListArtifactsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListArtifactsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListArtifactsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_ListBulkOperationsRequest(arg) {
@@ -1805,6 +1893,28 @@ function serialize_clarifai_api_MultiAppResponse(arg) {
 
 function deserialize_clarifai_api_MultiAppResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiAppResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MultiArtifactResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiArtifactResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiArtifactResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiArtifactResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiArtifactResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MultiArtifactVersionResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiArtifactVersionResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiArtifactVersionResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiArtifactVersionResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiArtifactVersionResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiAuditLogEntryResponse(arg) {
@@ -3160,6 +3270,39 @@ function deserialize_clarifai_api_PostAppsSearchesRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostAppsSearchesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PostArtifactVersionsUploadRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostArtifactVersionsUploadRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostArtifactVersionsUploadRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostArtifactVersionsUploadRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostArtifactVersionsUploadRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PostArtifactVersionsUploadResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostArtifactVersionsUploadResponse)) {
+    throw new Error('Expected argument of type clarifai.api.PostArtifactVersionsUploadResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostArtifactVersionsUploadResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostArtifactVersionsUploadResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PostArtifactsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostArtifactsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostArtifactsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostArtifactsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostArtifactsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PostAuditLogSearchesRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PostAuditLogSearchesRequest)) {
     throw new Error('Expected argument of type clarifai.api.PostAuditLogSearchesRequest');
@@ -3952,6 +4095,28 @@ function deserialize_clarifai_api_SingleAppResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.SingleAppResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_SingleArtifactResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.SingleArtifactResponse)) {
+    throw new Error('Expected argument of type clarifai.api.SingleArtifactResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_SingleArtifactResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.SingleArtifactResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_SingleArtifactVersionResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.SingleArtifactVersionResponse)) {
+    throw new Error('Expected argument of type clarifai.api.SingleArtifactVersionResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_SingleArtifactVersionResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.SingleArtifactVersionResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_SingleBulkOperationsResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.SingleBulkOperationsResponse)) {
     throw new Error('Expected argument of type clarifai.api.SingleBulkOperationsResponse');
@@ -4447,6 +4612,17 @@ function deserialize_clarifai_api_StreamLogEntriesRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.StreamLogEntriesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_StreamTrackAnnotationsSearchesRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.StreamTrackAnnotationsSearchesRequest)) {
+    throw new Error('Expected argument of type clarifai.api.StreamTrackAnnotationsSearchesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_StreamTrackAnnotationsSearchesRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.StreamTrackAnnotationsSearchesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_status_BaseResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_status_status_pb.BaseResponse)) {
     throw new Error('Expected argument of type clarifai.api.status.BaseResponse');
@@ -4710,6 +4886,18 @@ postTrackAnnotationsSearches: {
     requestDeserialize: deserialize_clarifai_api_PostTrackAnnotationsSearchesRequest,
     responseSerialize: serialize_clarifai_api_MultiAnnotationResponse,
     responseDeserialize: deserialize_clarifai_api_MultiAnnotationResponse,
+  },
+  // Stream video track annotations for a specific input one-by-one.
+streamTrackAnnotationsSearches: {
+    path: '/clarifai.api.V2/StreamTrackAnnotationsSearches',
+    requestStream: false,
+    responseStream: true,
+    requestType: proto_clarifai_api_service_pb.StreamTrackAnnotationsSearchesRequest,
+    responseType: proto_clarifai_api_service_pb.SingleAnnotationResponse,
+    requestSerialize: serialize_clarifai_api_StreamTrackAnnotationsSearchesRequest,
+    requestDeserialize: deserialize_clarifai_api_StreamTrackAnnotationsSearchesRequest,
+    responseSerialize: serialize_clarifai_api_SingleAnnotationResponse,
+    responseDeserialize: deserialize_clarifai_api_SingleAnnotationResponse,
   },
   // Post annotations.
 postAnnotations: {
@@ -7841,6 +8029,121 @@ postPipelineStepVersionsUpload: {
     requestDeserialize: deserialize_clarifai_api_GetPipelineStepVersionRequest,
     responseSerialize: serialize_clarifai_api_SinglePipelineStepVersionResponse,
     responseDeserialize: deserialize_clarifai_api_SinglePipelineStepVersionResponse,
+  },
+  deletePipelineSteps: {
+    path: '/clarifai.api.V2/DeletePipelineSteps',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.DeletePipelineStepsRequest,
+    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
+    requestSerialize: serialize_clarifai_api_DeletePipelineStepsRequest,
+    requestDeserialize: deserialize_clarifai_api_DeletePipelineStepsRequest,
+    responseSerialize: serialize_clarifai_api_status_BaseResponse,
+    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
+  deletePipelineStepVersions: {
+    path: '/clarifai.api.V2/DeletePipelineStepVersions',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.DeletePipelineStepVersionsRequest,
+    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
+    requestSerialize: serialize_clarifai_api_DeletePipelineStepVersionsRequest,
+    requestDeserialize: deserialize_clarifai_api_DeletePipelineStepVersionsRequest,
+    responseSerialize: serialize_clarifai_api_status_BaseResponse,
+    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
+  postArtifacts: {
+    path: '/clarifai.api.V2/PostArtifacts',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostArtifactsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiArtifactResponse,
+    requestSerialize: serialize_clarifai_api_PostArtifactsRequest,
+    requestDeserialize: deserialize_clarifai_api_PostArtifactsRequest,
+    responseSerialize: serialize_clarifai_api_MultiArtifactResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiArtifactResponse,
+  },
+  getArtifact: {
+    path: '/clarifai.api.V2/GetArtifact',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.GetArtifactRequest,
+    responseType: proto_clarifai_api_service_pb.SingleArtifactResponse,
+    requestSerialize: serialize_clarifai_api_GetArtifactRequest,
+    requestDeserialize: deserialize_clarifai_api_GetArtifactRequest,
+    responseSerialize: serialize_clarifai_api_SingleArtifactResponse,
+    responseDeserialize: deserialize_clarifai_api_SingleArtifactResponse,
+  },
+  listArtifacts: {
+    path: '/clarifai.api.V2/ListArtifacts',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListArtifactsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiArtifactResponse,
+    requestSerialize: serialize_clarifai_api_ListArtifactsRequest,
+    requestDeserialize: deserialize_clarifai_api_ListArtifactsRequest,
+    responseSerialize: serialize_clarifai_api_MultiArtifactResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiArtifactResponse,
+  },
+  deleteArtifact: {
+    path: '/clarifai.api.V2/DeleteArtifact',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.DeleteArtifactRequest,
+    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
+    requestSerialize: serialize_clarifai_api_DeleteArtifactRequest,
+    requestDeserialize: deserialize_clarifai_api_DeleteArtifactRequest,
+    responseSerialize: serialize_clarifai_api_status_BaseResponse,
+    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
+  // This is a streaming endpoint, the request has a field, upload_data, which can either be the config for the upload or the actual data to upload.
+// The config must be sent first before the artifact_bytes can be uploaded.
+// Once the config has been sent, the server will respond with a confirmation containing the artifact_version_id.
+// This is so that if your upload is interrupted, you can resume the upload by sending the config again with the artifact_version_id specified for your artifact_version.
+// The actual upload will be done via a multipart upload, the latest successful part_id will be sent from the server in the response to the artifact_bytes.
+postArtifactVersionsUpload: {
+    path: '/clarifai.api.V2/PostArtifactVersionsUpload',
+    requestStream: true,
+    responseStream: true,
+    requestType: proto_clarifai_api_service_pb.PostArtifactVersionsUploadRequest,
+    responseType: proto_clarifai_api_service_pb.PostArtifactVersionsUploadResponse,
+    requestSerialize: serialize_clarifai_api_PostArtifactVersionsUploadRequest,
+    requestDeserialize: deserialize_clarifai_api_PostArtifactVersionsUploadRequest,
+    responseSerialize: serialize_clarifai_api_PostArtifactVersionsUploadResponse,
+    responseDeserialize: deserialize_clarifai_api_PostArtifactVersionsUploadResponse,
+  },
+  listArtifactVersions: {
+    path: '/clarifai.api.V2/ListArtifactVersions',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListArtifactVersionsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiArtifactVersionResponse,
+    requestSerialize: serialize_clarifai_api_ListArtifactVersionsRequest,
+    requestDeserialize: deserialize_clarifai_api_ListArtifactVersionsRequest,
+    responseSerialize: serialize_clarifai_api_MultiArtifactVersionResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiArtifactVersionResponse,
+  },
+  getArtifactVersion: {
+    path: '/clarifai.api.V2/GetArtifactVersion',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.GetArtifactVersionRequest,
+    responseType: proto_clarifai_api_service_pb.SingleArtifactVersionResponse,
+    requestSerialize: serialize_clarifai_api_GetArtifactVersionRequest,
+    requestDeserialize: deserialize_clarifai_api_GetArtifactVersionRequest,
+    responseSerialize: serialize_clarifai_api_SingleArtifactVersionResponse,
+    responseDeserialize: deserialize_clarifai_api_SingleArtifactVersionResponse,
+  },
+  deleteArtifactVersion: {
+    path: '/clarifai.api.V2/DeleteArtifactVersion',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.DeleteArtifactVersionRequest,
+    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
+    requestSerialize: serialize_clarifai_api_DeleteArtifactVersionRequest,
+    requestDeserialize: deserialize_clarifai_api_DeleteArtifactVersionRequest,
+    responseSerialize: serialize_clarifai_api_status_BaseResponse,
+    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },
   getSecret: {
     path: '/clarifai.api.V2/GetSecret',

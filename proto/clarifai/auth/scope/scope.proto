@@ -497,6 +497,17 @@ enum S {
   AnnotationTracks_Get = 166 [(clarfai_exposed) = true];
   AnnotationTracks_Add = 167 [(clarfai_exposed) = true];
   AnnotationTracks_Delete = 168 [(clarfai_exposed) = true];
+
+  PipelineSteps_Delete = 169 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = PipelineSteps_Get,
+    (clarifai_depending_scopes) = PipelineSteps_Add];
+
+  Artifacts_Get = 170 [(clarfai_exposed) = true];
+  Artifacts_Add = 171 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = Artifacts_Get];
+  Artifacts_Delete = 172 [(clarfai_exposed) = true,
+    (clarifai_depending_scopes) = Artifacts_Get,
+    (clarifai_depending_scopes) = Artifacts_Add];
 }
 
 extend google.protobuf.EnumValueOptions {
