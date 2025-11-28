@@ -185,6 +185,56 @@ export namespace PostTrackAnnotationsSearchesRequest {
     }
 }
 
+export class StreamTrackAnnotationsSearchesRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): StreamTrackAnnotationsSearchesRequest;
+    getInputId(): string;
+    setInputId(value: string): StreamTrackAnnotationsSearchesRequest;
+    getTrackId(): string;
+    setTrackId(value: string): StreamTrackAnnotationsSearchesRequest;
+    getFrameNumberStart(): number;
+    setFrameNumberStart(value: number): StreamTrackAnnotationsSearchesRequest;
+    getFrameTimeStart(): number;
+    setFrameTimeStart(value: number): StreamTrackAnnotationsSearchesRequest;
+    getAnnotationType(): proto_clarifai_api_resources_pb.AnnotationDataType;
+    setAnnotationType(value: proto_clarifai_api_resources_pb.AnnotationDataType): StreamTrackAnnotationsSearchesRequest;
+    getMaxFrames(): number;
+    setMaxFrames(value: number): StreamTrackAnnotationsSearchesRequest;
+    getMaxDuration(): number;
+    setMaxDuration(value: number): StreamTrackAnnotationsSearchesRequest;
+
+    hasWorker(): boolean;
+    clearWorker(): void;
+    getWorker(): proto_clarifai_api_resources_pb.Worker | undefined;
+    setWorker(value?: proto_clarifai_api_resources_pb.Worker): StreamTrackAnnotationsSearchesRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): StreamTrackAnnotationsSearchesRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: StreamTrackAnnotationsSearchesRequest): StreamTrackAnnotationsSearchesRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: StreamTrackAnnotationsSearchesRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): StreamTrackAnnotationsSearchesRequest;
+    static deserializeBinaryFromReader(message: StreamTrackAnnotationsSearchesRequest, reader: jspb.BinaryReader): StreamTrackAnnotationsSearchesRequest;
+}
+
+export namespace StreamTrackAnnotationsSearchesRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        inputId: string,
+        trackId: string,
+        frameNumberStart: number,
+        frameTimeStart: number,
+        annotationType: proto_clarifai_api_resources_pb.AnnotationDataType,
+        maxFrames: number,
+        maxDuration: number,
+        worker?: proto_clarifai_api_resources_pb.Worker.AsObject,
+    }
+}
+
 export class PostAnnotationsRequest extends jspb.Message { 
 
     hasUserAppId(): boolean;
@@ -13577,6 +13627,424 @@ export namespace MultiMetricLabelsResponse {
     export type AsObject = {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         metricTypeLabelsList: Array<proto_clarifai_api_resources_pb.MetricTypeLabels.AsObject>,
+    }
+}
+
+export class PostArtifactsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PostArtifactsRequest;
+    clearArtifactsList(): void;
+    getArtifactsList(): Array<proto_clarifai_api_resources_pb.Artifact>;
+    setArtifactsList(value: Array<proto_clarifai_api_resources_pb.Artifact>): PostArtifactsRequest;
+    addArtifacts(value?: proto_clarifai_api_resources_pb.Artifact, index?: number): proto_clarifai_api_resources_pb.Artifact;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PostArtifactsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PostArtifactsRequest): PostArtifactsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PostArtifactsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PostArtifactsRequest;
+    static deserializeBinaryFromReader(message: PostArtifactsRequest, reader: jspb.BinaryReader): PostArtifactsRequest;
+}
+
+export namespace PostArtifactsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        artifactsList: Array<proto_clarifai_api_resources_pb.Artifact.AsObject>,
+    }
+}
+
+export class MultiArtifactResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiArtifactResponse;
+    clearArtifactsList(): void;
+    getArtifactsList(): Array<proto_clarifai_api_resources_pb.Artifact>;
+    setArtifactsList(value: Array<proto_clarifai_api_resources_pb.Artifact>): MultiArtifactResponse;
+    addArtifacts(value?: proto_clarifai_api_resources_pb.Artifact, index?: number): proto_clarifai_api_resources_pb.Artifact;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiArtifactResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiArtifactResponse): MultiArtifactResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiArtifactResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiArtifactResponse;
+    static deserializeBinaryFromReader(message: MultiArtifactResponse, reader: jspb.BinaryReader): MultiArtifactResponse;
+}
+
+export namespace MultiArtifactResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        artifactsList: Array<proto_clarifai_api_resources_pb.Artifact.AsObject>,
+    }
+}
+
+export class ListArtifactsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): ListArtifactsRequest;
+    getPage(): number;
+    setPage(value: number): ListArtifactsRequest;
+    getPerPage(): number;
+    setPerPage(value: number): ListArtifactsRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListArtifactsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListArtifactsRequest): ListArtifactsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListArtifactsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListArtifactsRequest;
+    static deserializeBinaryFromReader(message: ListArtifactsRequest, reader: jspb.BinaryReader): ListArtifactsRequest;
+}
+
+export namespace ListArtifactsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        page: number,
+        perPage: number,
+    }
+}
+
+export class GetArtifactRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): GetArtifactRequest;
+    getArtifactId(): string;
+    setArtifactId(value: string): GetArtifactRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetArtifactRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: GetArtifactRequest): GetArtifactRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetArtifactRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetArtifactRequest;
+    static deserializeBinaryFromReader(message: GetArtifactRequest, reader: jspb.BinaryReader): GetArtifactRequest;
+}
+
+export namespace GetArtifactRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        artifactId: string,
+    }
+}
+
+export class SingleArtifactResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): SingleArtifactResponse;
+
+    hasArtifact(): boolean;
+    clearArtifact(): void;
+    getArtifact(): proto_clarifai_api_resources_pb.Artifact | undefined;
+    setArtifact(value?: proto_clarifai_api_resources_pb.Artifact): SingleArtifactResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): SingleArtifactResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: SingleArtifactResponse): SingleArtifactResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: SingleArtifactResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): SingleArtifactResponse;
+    static deserializeBinaryFromReader(message: SingleArtifactResponse, reader: jspb.BinaryReader): SingleArtifactResponse;
+}
+
+export namespace SingleArtifactResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        artifact?: proto_clarifai_api_resources_pb.Artifact.AsObject,
+    }
+}
+
+export class DeleteArtifactRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): DeleteArtifactRequest;
+    getArtifactId(): string;
+    setArtifactId(value: string): DeleteArtifactRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DeleteArtifactRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: DeleteArtifactRequest): DeleteArtifactRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DeleteArtifactRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DeleteArtifactRequest;
+    static deserializeBinaryFromReader(message: DeleteArtifactRequest, reader: jspb.BinaryReader): DeleteArtifactRequest;
+}
+
+export namespace DeleteArtifactRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        artifactId: string,
+    }
+}
+
+export class PostArtifactVersionsUploadRequest extends jspb.Message { 
+
+    hasUploadConfig(): boolean;
+    clearUploadConfig(): void;
+    getUploadConfig(): PostArtifactVersionsUploadConfig | undefined;
+    setUploadConfig(value?: PostArtifactVersionsUploadConfig): PostArtifactVersionsUploadRequest;
+
+    hasContentPart(): boolean;
+    clearContentPart(): void;
+    getContentPart(): proto_clarifai_api_resources_pb.UploadContentPart | undefined;
+    setContentPart(value?: proto_clarifai_api_resources_pb.UploadContentPart): PostArtifactVersionsUploadRequest;
+
+    getUploadDataCase(): PostArtifactVersionsUploadRequest.UploadDataCase;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PostArtifactVersionsUploadRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PostArtifactVersionsUploadRequest): PostArtifactVersionsUploadRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PostArtifactVersionsUploadRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PostArtifactVersionsUploadRequest;
+    static deserializeBinaryFromReader(message: PostArtifactVersionsUploadRequest, reader: jspb.BinaryReader): PostArtifactVersionsUploadRequest;
+}
+
+export namespace PostArtifactVersionsUploadRequest {
+    export type AsObject = {
+        uploadConfig?: PostArtifactVersionsUploadConfig.AsObject,
+        contentPart?: proto_clarifai_api_resources_pb.UploadContentPart.AsObject,
+    }
+
+    export enum UploadDataCase {
+        UPLOAD_DATA_NOT_SET = 0,
+        UPLOAD_CONFIG = 2,
+        CONTENT_PART = 3,
+    }
+
+}
+
+export class PostArtifactVersionsUploadResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): PostArtifactVersionsUploadResponse;
+    getBytesRemaining(): number;
+    setBytesRemaining(value: number): PostArtifactVersionsUploadResponse;
+    getArtifactVersionId(): string;
+    setArtifactVersionId(value: string): PostArtifactVersionsUploadResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PostArtifactVersionsUploadResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: PostArtifactVersionsUploadResponse): PostArtifactVersionsUploadResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PostArtifactVersionsUploadResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PostArtifactVersionsUploadResponse;
+    static deserializeBinaryFromReader(message: PostArtifactVersionsUploadResponse, reader: jspb.BinaryReader): PostArtifactVersionsUploadResponse;
+}
+
+export namespace PostArtifactVersionsUploadResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        bytesRemaining: number,
+        artifactVersionId: string,
+    }
+}
+
+export class PostArtifactVersionsUploadConfig extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PostArtifactVersionsUploadConfig;
+    getArtifactId(): string;
+    setArtifactId(value: string): PostArtifactVersionsUploadConfig;
+
+    hasArtifactVersion(): boolean;
+    clearArtifactVersion(): void;
+    getArtifactVersion(): proto_clarifai_api_resources_pb.ArtifactVersion | undefined;
+    setArtifactVersion(value?: proto_clarifai_api_resources_pb.ArtifactVersion): PostArtifactVersionsUploadConfig;
+    getTotalSize(): number;
+    setTotalSize(value: number): PostArtifactVersionsUploadConfig;
+    getStorageRequestSize(): number;
+    setStorageRequestSize(value: number): PostArtifactVersionsUploadConfig;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PostArtifactVersionsUploadConfig.AsObject;
+    static toObject(includeInstance: boolean, msg: PostArtifactVersionsUploadConfig): PostArtifactVersionsUploadConfig.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PostArtifactVersionsUploadConfig, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PostArtifactVersionsUploadConfig;
+    static deserializeBinaryFromReader(message: PostArtifactVersionsUploadConfig, reader: jspb.BinaryReader): PostArtifactVersionsUploadConfig;
+}
+
+export namespace PostArtifactVersionsUploadConfig {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        artifactId: string,
+        artifactVersion?: proto_clarifai_api_resources_pb.ArtifactVersion.AsObject,
+        totalSize: number,
+        storageRequestSize: number,
+    }
+}
+
+export class ListArtifactVersionsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): ListArtifactVersionsRequest;
+    getArtifactId(): string;
+    setArtifactId(value: string): ListArtifactVersionsRequest;
+    getPage(): number;
+    setPage(value: number): ListArtifactVersionsRequest;
+    getPerPage(): number;
+    setPerPage(value: number): ListArtifactVersionsRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListArtifactVersionsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListArtifactVersionsRequest): ListArtifactVersionsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListArtifactVersionsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListArtifactVersionsRequest;
+    static deserializeBinaryFromReader(message: ListArtifactVersionsRequest, reader: jspb.BinaryReader): ListArtifactVersionsRequest;
+}
+
+export namespace ListArtifactVersionsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        artifactId: string,
+        page: number,
+        perPage: number,
+    }
+}
+
+export class MultiArtifactVersionResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiArtifactVersionResponse;
+    clearArtifactVersionsList(): void;
+    getArtifactVersionsList(): Array<proto_clarifai_api_resources_pb.ArtifactVersion>;
+    setArtifactVersionsList(value: Array<proto_clarifai_api_resources_pb.ArtifactVersion>): MultiArtifactVersionResponse;
+    addArtifactVersions(value?: proto_clarifai_api_resources_pb.ArtifactVersion, index?: number): proto_clarifai_api_resources_pb.ArtifactVersion;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiArtifactVersionResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiArtifactVersionResponse): MultiArtifactVersionResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiArtifactVersionResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiArtifactVersionResponse;
+    static deserializeBinaryFromReader(message: MultiArtifactVersionResponse, reader: jspb.BinaryReader): MultiArtifactVersionResponse;
+}
+
+export namespace MultiArtifactVersionResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        artifactVersionsList: Array<proto_clarifai_api_resources_pb.ArtifactVersion.AsObject>,
+    }
+}
+
+export class GetArtifactVersionRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): GetArtifactVersionRequest;
+    getArtifactId(): string;
+    setArtifactId(value: string): GetArtifactVersionRequest;
+    getArtifactVersionId(): string;
+    setArtifactVersionId(value: string): GetArtifactVersionRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetArtifactVersionRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: GetArtifactVersionRequest): GetArtifactVersionRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetArtifactVersionRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetArtifactVersionRequest;
+    static deserializeBinaryFromReader(message: GetArtifactVersionRequest, reader: jspb.BinaryReader): GetArtifactVersionRequest;
+}
+
+export namespace GetArtifactVersionRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        artifactId: string,
+        artifactVersionId: string,
+    }
+}
+
+export class SingleArtifactVersionResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): SingleArtifactVersionResponse;
+
+    hasArtifactVersion(): boolean;
+    clearArtifactVersion(): void;
+    getArtifactVersion(): proto_clarifai_api_resources_pb.ArtifactVersion | undefined;
+    setArtifactVersion(value?: proto_clarifai_api_resources_pb.ArtifactVersion): SingleArtifactVersionResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): SingleArtifactVersionResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: SingleArtifactVersionResponse): SingleArtifactVersionResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: SingleArtifactVersionResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): SingleArtifactVersionResponse;
+    static deserializeBinaryFromReader(message: SingleArtifactVersionResponse, reader: jspb.BinaryReader): SingleArtifactVersionResponse;
+}
+
+export namespace SingleArtifactVersionResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        artifactVersion?: proto_clarifai_api_resources_pb.ArtifactVersion.AsObject,
+    }
+}
+
+export class DeleteArtifactVersionRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): DeleteArtifactVersionRequest;
+    getArtifactId(): string;
+    setArtifactId(value: string): DeleteArtifactVersionRequest;
+    getArtifactVersionId(): string;
+    setArtifactVersionId(value: string): DeleteArtifactVersionRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DeleteArtifactVersionRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: DeleteArtifactVersionRequest): DeleteArtifactVersionRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DeleteArtifactVersionRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DeleteArtifactVersionRequest;
+    static deserializeBinaryFromReader(message: DeleteArtifactVersionRequest, reader: jspb.BinaryReader): DeleteArtifactVersionRequest;
+}
+
+export namespace DeleteArtifactVersionRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        artifactId: string,
+        artifactVersionId: string,
     }
 }
 
