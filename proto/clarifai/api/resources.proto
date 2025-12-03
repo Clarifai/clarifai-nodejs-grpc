@@ -1588,6 +1588,7 @@ enum DeployRestriction {
   NO_LIMITS = 1; // No restrictions on usage.
   SHARED_COMPUTE_ONLY = 2; // Model can only be used on shared compute resources.
   DEDICATED_COMPUTE_ONLY = 3; // Model can only be used on dedicated compute resources.
+  MODEL_OWNER_DEDICATED_COMPUTE_ONLY = 4; // Model can only be used on dedicated compute resources owned by the model owner.
 }
 
 
