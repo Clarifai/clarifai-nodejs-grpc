@@ -11035,6 +11035,7 @@ export enum DeployRestriction {
     NO_LIMITS = 1,
     SHARED_COMPUTE_ONLY = 2,
     DEDICATED_COMPUTE_ONLY = 3,
+    MODEL_OWNER_DEDICATED_COMPUTE_ONLY = 4,
 }
 
 export enum DataType {

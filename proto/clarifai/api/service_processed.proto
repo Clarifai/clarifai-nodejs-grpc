@@ -4655,14 +4655,14 @@ service V2 {
 
 
 
-}
+
+
+  }
 
 
 // Split the results into pages.
 message Pagination {
-  // (optional URL parameter) The page number. Pagination is used to split the results into chunks. Defaults to 1.
   uint32 page = 1;
-  // (optional URL parameter) The number of results that will be contained in each page. Defaults to 128.
   uint32 per_page = 2;
 }
 
@@ -9450,12 +9450,12 @@ message PostArtifactVersionsUploadRequest {
   oneof upload_data {
     // Upload a new artifact version.
     PostArtifactVersionsUploadConfig upload_config = 2;
- 
+
     // Upload a part of a multipart upload.
     UploadContentPart content_part = 3;
   }
-} 
- 
+}
+
 message PostArtifactVersionsUploadResponse {
   // Status of the upload
   clarifai.api.status.Status status = 1;
@@ -9463,8 +9463,8 @@ message PostArtifactVersionsUploadResponse {
   uint64 bytes_remaining = 2;
   // ID of the artifact version being uploaded
   string artifact_version_id = 3;
-} 
- 
+}
+
 message PostArtifactVersionsUploadConfig {
   // User ID and App ID of the user uploading the artifact
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -9476,23 +9476,23 @@ message PostArtifactVersionsUploadConfig {
   uint64 total_size = 4;
   // Number of bytes requested for the build process.
   uint64 storage_request_size = 5;
-} 
- 
+}
+
 message ListArtifactVersionsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
-  
+
   // List versions for the artifact identified by this id
   string artifact_id = 2;
-  
+
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
   // Defaults to 1.
   uint32 page = 3;
-  
+
   // (optional URL parameter) The number of results that will be contained in each page. Defaults
   // to 128.
   uint32 per_page = 4;
-} 
- 
+}
+
 message MultiArtifactVersionResponse {
   // The status of the request
   clarifai.api.status.Status status = 1;
@@ -9522,3 +9522,4 @@ message DeleteArtifactVersionRequest {
   // The id of the artifact versions to be deleted
   string artifact_version_id = 3;
 }
+
