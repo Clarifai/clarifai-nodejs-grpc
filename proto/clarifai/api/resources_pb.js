@@ -46116,7 +46116,8 @@ proto.clarifai.api.UserDetail.toObject = function(includeInstance, msg) {
     teamsCount: jspb.Message.getFieldWithDefault(msg, 10, 0),
     country: jspb.Message.getFieldWithDefault(msg, 11, ""),
     state: jspb.Message.getFieldWithDefault(msg, 12, ""),
-    commitmentValue: (f = msg.getCommitmentValue()) && proto.clarifai.api.CommitmentValue.toObject(includeInstance, f)
+    commitmentValue: (f = msg.getCommitmentValue()) && proto.clarifai.api.CommitmentValue.toObject(includeInstance, f),
+    phoneVerified: jspb.Message.getBooleanFieldWithDefault(msg, 15, false)
   };
 
   if (includeInstance) {
@@ -46211,6 +46212,10 @@ proto.clarifai.api.UserDetail.deserializeBinaryFromReader = function(msg, reader
       var value = new proto.clarifai.api.CommitmentValue;
       reader.readMessage(value,proto.clarifai.api.CommitmentValue.deserializeBinaryFromReader);
       msg.setCommitmentValue(value);
+      break;
+    case 15:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setPhoneVerified(value);
       break;
     default:
       reader.skipField();
@@ -46337,6 +46342,13 @@ proto.clarifai.api.UserDetail.serializeBinaryToWriter = function(message, writer
       14,
       f,
       proto.clarifai.api.CommitmentValue.serializeBinaryToWriter
+    );
+  }
+  f = message.getPhoneVerified();
+  if (f) {
+    writer.writeBool(
+      15,
+      f
     );
   }
 };
@@ -46707,6 +46719,24 @@ proto.clarifai.api.UserDetail.prototype.clearCommitmentValue = function() {
  */
 proto.clarifai.api.UserDetail.prototype.hasCommitmentValue = function() {
   return jspb.Message.getField(this, 14) != null;
+};
+
+
+/**
+ * optional bool phone_verified = 15;
+ * @return {boolean}
+ */
+proto.clarifai.api.UserDetail.prototype.getPhoneVerified = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 15, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.UserDetail} returns this
+ */
+proto.clarifai.api.UserDetail.prototype.setPhoneVerified = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 15, value);
 };
 
 

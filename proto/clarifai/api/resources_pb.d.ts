@@ -5196,6 +5196,8 @@ export class UserDetail extends jspb.Message {
     clearCommitmentValue(): void;
     getCommitmentValue(): CommitmentValue | undefined;
     setCommitmentValue(value?: CommitmentValue): UserDetail;
+    getPhoneVerified(): boolean;
+    setPhoneVerified(value: boolean): UserDetail;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): UserDetail.AsObject;
@@ -5222,6 +5224,7 @@ export namespace UserDetail {
         country: string,
         state: string,
         commitmentValue?: CommitmentValue.AsObject,
+        phoneVerified: boolean,
     }
 }
 

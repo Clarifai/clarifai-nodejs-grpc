@@ -2895,6 +2895,9 @@ message UserDetail {
   string country = 11;
   string state = 12;
   CommitmentValue commitment_value = 14;
+
+  // For phone number verification, true if the phone number has been verified
+  bool phone_verified = 15;
 }
 
 // EmailAddress
