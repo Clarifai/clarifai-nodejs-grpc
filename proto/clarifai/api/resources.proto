@@ -4841,6 +4841,10 @@ message InstanceType {
 
   // Hardware architecture of the instance type (e.g., "linux/amd64", "linux/arm64").
   string architecture = 10;
+
+  // Available compute info after accounting for system overhead (daemonsets, kubelet, etc.).
+  // This represents the actual resources available for user workloads.
+  ComputeInfo available_compute_info = 11;
 }
 
 // CloudProvider represents the entity that provides the infrastructure where the Nodepools are deployed.

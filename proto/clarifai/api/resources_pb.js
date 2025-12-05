@@ -72502,7 +72502,8 @@ proto.clarifai.api.InstanceType.toObject = function(includeInstance, msg) {
     featureFlagGroup: jspb.Message.getFieldWithDefault(msg, 8, ""),
     specialHandlingList: jspb.Message.toObjectList(msg.getSpecialHandlingList(),
     proto.clarifai.api.SpecialHandling.toObject, includeInstance),
-    architecture: jspb.Message.getFieldWithDefault(msg, 10, "")
+    architecture: jspb.Message.getFieldWithDefault(msg, 10, ""),
+    availableComputeInfo: (f = msg.getAvailableComputeInfo()) && proto.clarifai.api.ComputeInfo.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -72582,6 +72583,11 @@ proto.clarifai.api.InstanceType.deserializeBinaryFromReader = function(msg, read
     case 10:
       var value = /** @type {string} */ (reader.readString());
       msg.setArchitecture(value);
+      break;
+    case 11:
+      var value = new proto.clarifai.api.ComputeInfo;
+      reader.readMessage(value,proto.clarifai.api.ComputeInfo.deserializeBinaryFromReader);
+      msg.setAvailableComputeInfo(value);
       break;
     default:
       reader.skipField();
@@ -72684,6 +72690,14 @@ proto.clarifai.api.InstanceType.serializeBinaryToWriter = function(message, writ
     writer.writeString(
       10,
       f
+    );
+  }
+  f = message.getAvailableComputeInfo();
+  if (f != null) {
+    writer.writeMessage(
+      11,
+      f,
+      proto.clarifai.api.ComputeInfo.serializeBinaryToWriter
     );
   }
 };
@@ -72943,6 +72957,43 @@ proto.clarifai.api.InstanceType.prototype.getArchitecture = function() {
  */
 proto.clarifai.api.InstanceType.prototype.setArchitecture = function(value) {
   return jspb.Message.setProto3StringField(this, 10, value);
+};
+
+
+/**
+ * optional ComputeInfo available_compute_info = 11;
+ * @return {?proto.clarifai.api.ComputeInfo}
+ */
+proto.clarifai.api.InstanceType.prototype.getAvailableComputeInfo = function() {
+  return /** @type{?proto.clarifai.api.ComputeInfo} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.ComputeInfo, 11));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.ComputeInfo|undefined} value
+ * @return {!proto.clarifai.api.InstanceType} returns this
+*/
+proto.clarifai.api.InstanceType.prototype.setAvailableComputeInfo = function(value) {
+  return jspb.Message.setWrapperField(this, 11, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.InstanceType} returns this
+ */
+proto.clarifai.api.InstanceType.prototype.clearAvailableComputeInfo = function() {
+  return this.setAvailableComputeInfo(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.InstanceType.prototype.hasAvailableComputeInfo = function() {
+  return jspb.Message.getField(this, 11) != null;
 };
 
 
