@@ -8927,6 +8927,11 @@ export class Deployment extends jspb.Message {
     getWorker(): Worker | undefined;
     setWorker(value?: Worker): Deployment;
 
+    hasDesiredWorker(): boolean;
+    clearDesiredWorker(): void;
+    getDesiredWorker(): Worker | undefined;
+    setDesiredWorker(value?: Worker): Deployment;
+
     hasCreatedAt(): boolean;
     clearCreatedAt(): void;
     getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
@@ -8964,6 +8969,7 @@ export namespace Deployment {
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
         description: string,
         worker?: Worker.AsObject,
+        desiredWorker?: Worker.AsObject,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         deployLatestVersion: boolean,

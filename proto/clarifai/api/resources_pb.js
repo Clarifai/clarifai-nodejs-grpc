@@ -74436,6 +74436,7 @@ proto.clarifai.api.Deployment.toObject = function(includeInstance, msg) {
     metadata: (f = msg.getMetadata()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
     description: jspb.Message.getFieldWithDefault(msg, 10, ""),
     worker: (f = msg.getWorker()) && proto.clarifai.api.Worker.toObject(includeInstance, f),
+    desiredWorker: (f = msg.getDesiredWorker()) && proto.clarifai.api.Worker.toObject(includeInstance, f),
     createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     deployLatestVersion: jspb.Message.getBooleanFieldWithDefault(msg, 14, false),
@@ -74517,6 +74518,11 @@ proto.clarifai.api.Deployment.deserializeBinaryFromReader = function(msg, reader
       var value = new proto.clarifai.api.Worker;
       reader.readMessage(value,proto.clarifai.api.Worker.deserializeBinaryFromReader);
       msg.setWorker(value);
+      break;
+    case 16:
+      var value = new proto.clarifai.api.Worker;
+      reader.readMessage(value,proto.clarifai.api.Worker.deserializeBinaryFromReader);
+      msg.setDesiredWorker(value);
       break;
     case 12:
       var value = new google_protobuf_timestamp_pb.Timestamp;
@@ -74630,6 +74636,14 @@ proto.clarifai.api.Deployment.serializeBinaryToWriter = function(message, writer
   if (f != null) {
     writer.writeMessage(
       11,
+      f,
+      proto.clarifai.api.Worker.serializeBinaryToWriter
+    );
+  }
+  f = message.getDesiredWorker();
+  if (f != null) {
+    writer.writeMessage(
+      16,
       f,
       proto.clarifai.api.Worker.serializeBinaryToWriter
     );
@@ -74938,6 +74952,43 @@ proto.clarifai.api.Deployment.prototype.clearWorker = function() {
  */
 proto.clarifai.api.Deployment.prototype.hasWorker = function() {
   return jspb.Message.getField(this, 11) != null;
+};
+
+
+/**
+ * optional Worker desired_worker = 16;
+ * @return {?proto.clarifai.api.Worker}
+ */
+proto.clarifai.api.Deployment.prototype.getDesiredWorker = function() {
+  return /** @type{?proto.clarifai.api.Worker} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Worker, 16));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Worker|undefined} value
+ * @return {!proto.clarifai.api.Deployment} returns this
+*/
+proto.clarifai.api.Deployment.prototype.setDesiredWorker = function(value) {
+  return jspb.Message.setWrapperField(this, 16, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.Deployment} returns this
+ */
+proto.clarifai.api.Deployment.prototype.clearDesiredWorker = function() {
+  return this.setDesiredWorker(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.Deployment.prototype.hasDesiredWorker = function() {
+  return jspb.Message.getField(this, 16) != null;
 };
 
 

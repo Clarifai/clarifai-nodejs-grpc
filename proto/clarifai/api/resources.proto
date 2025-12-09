@@ -5087,6 +5087,8 @@ message Deployment {
   // For a given user_id, nodepool_id, and object ID we can only have one deployment as it defines
   Worker worker = 11;
 
+  Worker desired_worker = 16;
+
   // When the deployment was created.
   google.protobuf.Timestamp created_at = 12;
   // When the deployment was last modified.
