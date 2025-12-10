@@ -8701,7 +8701,8 @@ message ListCloudRegionsRequest {
 
 message MultiCloudRegionResponse {
   clarifai.api.status.Status status = 1;
-  repeated string regions = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+  repeated string regions = 2 [deprecated = true, (clarifai.api.utils.cl_show_if_empty) = true];
+  repeated CloudRegion cloud_regions = 3 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
 // List InstanceTypes

@@ -93647,7 +93647,7 @@ proto.clarifai.api.ListCloudRegionsRequest.prototype.hasCloudProvider = function
  * @private {!Array<number>}
  * @const
  */
-proto.clarifai.api.MultiCloudRegionResponse.repeatedFields_ = [2];
+proto.clarifai.api.MultiCloudRegionResponse.repeatedFields_ = [2,3];
 
 
 
@@ -93681,7 +93681,9 @@ proto.clarifai.api.MultiCloudRegionResponse.prototype.toObject = function(opt_in
 proto.clarifai.api.MultiCloudRegionResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     status: (f = msg.getStatus()) && proto_clarifai_api_status_status_pb.Status.toObject(includeInstance, f),
-    regionsList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f
+    regionsList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f,
+    cloudRegionsList: jspb.Message.toObjectList(msg.getCloudRegionsList(),
+    proto_clarifai_api_resources_pb.CloudRegion.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -93727,6 +93729,11 @@ proto.clarifai.api.MultiCloudRegionResponse.deserializeBinaryFromReader = functi
       var value = /** @type {string} */ (reader.readString());
       msg.addRegions(value);
       break;
+    case 3:
+      var value = new proto_clarifai_api_resources_pb.CloudRegion;
+      reader.readMessage(value,proto_clarifai_api_resources_pb.CloudRegion.deserializeBinaryFromReader);
+      msg.addCloudRegions(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -93769,6 +93776,14 @@ proto.clarifai.api.MultiCloudRegionResponse.serializeBinaryToWriter = function(m
     writer.writeRepeatedString(
       2,
       f
+    );
+  }
+  f = message.getCloudRegionsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      3,
+      f,
+      proto_clarifai_api_resources_pb.CloudRegion.serializeBinaryToWriter
     );
   }
 };
@@ -93845,6 +93860,44 @@ proto.clarifai.api.MultiCloudRegionResponse.prototype.addRegions = function(valu
  */
 proto.clarifai.api.MultiCloudRegionResponse.prototype.clearRegionsList = function() {
   return this.setRegionsList([]);
+};
+
+
+/**
+ * repeated CloudRegion cloud_regions = 3;
+ * @return {!Array<!proto.clarifai.api.CloudRegion>}
+ */
+proto.clarifai.api.MultiCloudRegionResponse.prototype.getCloudRegionsList = function() {
+  return /** @type{!Array<!proto.clarifai.api.CloudRegion>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto_clarifai_api_resources_pb.CloudRegion, 3));
+};
+
+
+/**
+ * @param {!Array<!proto.clarifai.api.CloudRegion>} value
+ * @return {!proto.clarifai.api.MultiCloudRegionResponse} returns this
+*/
+proto.clarifai.api.MultiCloudRegionResponse.prototype.setCloudRegionsList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 3, value);
+};
+
+
+/**
+ * @param {!proto.clarifai.api.CloudRegion=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.CloudRegion}
+ */
+proto.clarifai.api.MultiCloudRegionResponse.prototype.addCloudRegions = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 3, opt_value, proto.clarifai.api.CloudRegion, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.MultiCloudRegionResponse} returns this
+ */
+proto.clarifai.api.MultiCloudRegionResponse.prototype.clearCloudRegionsList = function() {
+  return this.setCloudRegionsList([]);
 };
 
 

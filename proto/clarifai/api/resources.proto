@@ -1573,6 +1573,7 @@ message SpecialHandling {
   enum Reason {
     REASON_NOT_SET = 0;
     CONTACT_SALES = 1;
+    INTERNAL_ONLY = 2;
   }
   Reason reason = 2;
 
@@ -4854,6 +4855,16 @@ message CloudProvider {
   string id = 1;
   // Name of the cloud provider.
   string name = 2;
+   // List of special handling instructions for this cloud provider.
+  repeated SpecialHandling special_handling = 3;
+}
+
+// CloudRegion represents a region where compute resources can be deployed.
+message CloudRegion {
+  // Unique identifier of the region.
+  string id = 1;
+  // List of special handling instructions for this region.
+  repeated SpecialHandling special_handling = 2;
 }
 
 // We define a cluster here to be used in Nodepools and by the cloud provider.
