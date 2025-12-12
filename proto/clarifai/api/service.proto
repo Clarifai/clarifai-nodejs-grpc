@@ -4658,12 +4658,15 @@ service V2 {
 
 
 
-  }
+
+}
 
 
 // Split the results into pages.
 message Pagination {
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks. Defaults to 1.
   uint32 page = 1;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults to 128.
   uint32 per_page = 2;
 }
 
@@ -9522,4 +9525,7 @@ message DeleteArtifactVersionRequest {
   // The id of the artifact versions to be deleted
   string artifact_version_id = 3;
 }
+
+
+
 
