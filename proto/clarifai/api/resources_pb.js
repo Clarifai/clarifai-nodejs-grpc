@@ -54408,7 +54408,8 @@ proto.clarifai.api.TaskInputSource.TaskInputSourceType = {
   INPUT_SOURCE_TYPE_NOT_SET: 0,
   ALL_INPUTS: 1,
   SAVED_SEARCH: 2,
-  DATASET: 3
+  DATASET: 3,
+  INPUT: 4
 };
 
 /**
