@@ -2919,6 +2919,7 @@ export namespace SpecialHandling {
     export enum Reason {
     REASON_NOT_SET = 0,
     CONTACT_SALES = 1,
+    INTERNAL_ONLY = 2,
     }
 
 }
@@ -5196,6 +5197,8 @@ export class UserDetail extends jspb.Message {
     clearCommitmentValue(): void;
     getCommitmentValue(): CommitmentValue | undefined;
     setCommitmentValue(value?: CommitmentValue): UserDetail;
+    getPhoneVerified(): boolean;
+    setPhoneVerified(value: boolean): UserDetail;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): UserDetail.AsObject;
@@ -5222,6 +5225,7 @@ export namespace UserDetail {
         country: string,
         state: string,
         commitmentValue?: CommitmentValue.AsObject,
+        phoneVerified: boolean,
     }
 }
 
@@ -8688,6 +8692,11 @@ export class InstanceType extends jspb.Message {
     getArchitecture(): string;
     setArchitecture(value: string): InstanceType;
 
+    hasAvailableComputeInfo(): boolean;
+    clearAvailableComputeInfo(): void;
+    getAvailableComputeInfo(): ComputeInfo | undefined;
+    setAvailableComputeInfo(value?: ComputeInfo): InstanceType;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): InstanceType.AsObject;
     static toObject(includeInstance: boolean, msg: InstanceType): InstanceType.AsObject;
@@ -8710,6 +8719,7 @@ export namespace InstanceType {
         featureFlagGroup: string,
         specialHandlingList: Array<SpecialHandling.AsObject>,
         architecture: string,
+        availableComputeInfo?: ComputeInfo.AsObject,
     }
 }
 
@@ -8718,6 +8728,10 @@ export class CloudProvider extends jspb.Message {
     setId(value: string): CloudProvider;
     getName(): string;
     setName(value: string): CloudProvider;
+    clearSpecialHandlingList(): void;
+    getSpecialHandlingList(): Array<SpecialHandling>;
+    setSpecialHandlingList(value: Array<SpecialHandling>): CloudProvider;
+    addSpecialHandling(value?: SpecialHandling, index?: number): SpecialHandling;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): CloudProvider.AsObject;
@@ -8733,6 +8747,32 @@ export namespace CloudProvider {
     export type AsObject = {
         id: string,
         name: string,
+        specialHandlingList: Array<SpecialHandling.AsObject>,
+    }
+}
+
+export class CloudRegion extends jspb.Message { 
+    getId(): string;
+    setId(value: string): CloudRegion;
+    clearSpecialHandlingList(): void;
+    getSpecialHandlingList(): Array<SpecialHandling>;
+    setSpecialHandlingList(value: Array<SpecialHandling>): CloudRegion;
+    addSpecialHandling(value?: SpecialHandling, index?: number): SpecialHandling;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): CloudRegion.AsObject;
+    static toObject(includeInstance: boolean, msg: CloudRegion): CloudRegion.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: CloudRegion, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): CloudRegion;
+    static deserializeBinaryFromReader(message: CloudRegion, reader: jspb.BinaryReader): CloudRegion;
+}
+
+export namespace CloudRegion {
+    export type AsObject = {
+        id: string,
+        specialHandlingList: Array<SpecialHandling.AsObject>,
     }
 }
 
@@ -8918,6 +8958,11 @@ export class Deployment extends jspb.Message {
     getWorker(): Worker | undefined;
     setWorker(value?: Worker): Deployment;
 
+    hasDesiredWorker(): boolean;
+    clearDesiredWorker(): void;
+    getDesiredWorker(): Worker | undefined;
+    setDesiredWorker(value?: Worker): Deployment;
+
     hasCreatedAt(): boolean;
     clearCreatedAt(): void;
     getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
@@ -8955,6 +9000,7 @@ export namespace Deployment {
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
         description: string,
         worker?: Worker.AsObject,
+        desiredWorker?: Worker.AsObject,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         deployLatestVersion: boolean,

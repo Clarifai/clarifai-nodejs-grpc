@@ -2619,7 +2619,6 @@ service V2 {
 
 
 
-
   // List all status codes.
   rpc ListStatusCodes (ListStatusCodesRequest) returns (MultiStatusCodeResponse) {
     option (google.api.http) = {
@@ -4401,6 +4400,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Pull;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
   }
@@ -4426,6 +4426,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Pull;
   }
 
   rpc GetPipelineStep(GetPipelineStepRequest) returns (SinglePipelineStepResponse) {
@@ -4459,6 +4460,7 @@ service V2 {
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Pull;
   }
 
   rpc ListPipelineStepVersions(ListPipelineStepVersionsRequest) returns (MultiPipelineStepVersionResponse) {
@@ -4554,8 +4556,7 @@ service V2 {
       post: "/v2/artifact_versions/upload"
       body: "*"
     };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Artifacts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Artifacts_Add;
   }
@@ -4657,12 +4658,15 @@ service V2 {
 
 
 
-  }
+
+}
 
 
 // Split the results into pages.
 message Pagination {
+  // (optional URL parameter) The page number. Pagination is used to split the results into chunks. Defaults to 1.
   uint32 page = 1;
+  // (optional URL parameter) The number of results that will be contained in each page. Defaults to 128.
   uint32 per_page = 2;
 }
 
@@ -7206,8 +7210,6 @@ message SingleAnnotationFilterResponse {
 
 
 
-
-
 // GetUserRequest
 message GetUserRequest {
   // we used to have user_id but moved to the standard convention. Since this endpoint
@@ -8704,7 +8706,8 @@ message ListCloudRegionsRequest {
 
 message MultiCloudRegionResponse {
   clarifai.api.status.Status status = 1;
-  repeated string regions = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+  repeated string regions = 2 [deprecated = true, (clarifai.api.utils.cl_show_if_empty) = true];
+  repeated CloudRegion cloud_regions = 3 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
 // List InstanceTypes
@@ -9522,4 +9525,7 @@ message DeleteArtifactVersionRequest {
   // The id of the artifact versions to be deleted
   string artifact_version_id = 3;
 }
+
+
+
 

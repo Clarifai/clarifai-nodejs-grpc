@@ -11150,6 +11150,10 @@ export class MultiCloudRegionResponse extends jspb.Message {
     getRegionsList(): Array<string>;
     setRegionsList(value: Array<string>): MultiCloudRegionResponse;
     addRegions(value: string, index?: number): string;
+    clearCloudRegionsList(): void;
+    getCloudRegionsList(): Array<proto_clarifai_api_resources_pb.CloudRegion>;
+    setCloudRegionsList(value: Array<proto_clarifai_api_resources_pb.CloudRegion>): MultiCloudRegionResponse;
+    addCloudRegions(value?: proto_clarifai_api_resources_pb.CloudRegion, index?: number): proto_clarifai_api_resources_pb.CloudRegion;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): MultiCloudRegionResponse.AsObject;
@@ -11165,6 +11169,7 @@ export namespace MultiCloudRegionResponse {
     export type AsObject = {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         regionsList: Array<string>,
+        cloudRegionsList: Array<proto_clarifai_api_resources_pb.CloudRegion.AsObject>,
     }
 }
 

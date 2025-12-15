@@ -1573,6 +1573,7 @@ message SpecialHandling {
   enum Reason {
     REASON_NOT_SET = 0;
     CONTACT_SALES = 1;
+    INTERNAL_ONLY = 2;
   }
   Reason reason = 2;
 
@@ -2895,6 +2896,9 @@ message UserDetail {
   string country = 11;
   string state = 12;
   CommitmentValue commitment_value = 14;
+
+  // For phone number verification, true if the phone number has been verified
+  bool phone_verified = 15;
 }
 
 // EmailAddress
@@ -4838,6 +4842,10 @@ message InstanceType {
 
   // Hardware architecture of the instance type (e.g., "linux/amd64", "linux/arm64").
   string architecture = 10;
+
+  // Available compute info after accounting for system overhead (daemonsets, kubelet, etc.).
+  // This represents the actual resources available for user workloads.
+  ComputeInfo available_compute_info = 11;
 }
 
 // CloudProvider represents the entity that provides the infrastructure where the Nodepools are deployed.
@@ -4847,6 +4855,16 @@ message CloudProvider {
   string id = 1;
   // Name of the cloud provider.
   string name = 2;
+   // List of special handling instructions for this cloud provider.
+  repeated SpecialHandling special_handling = 3;
+}
+
+// CloudRegion represents a region where compute resources can be deployed.
+message CloudRegion {
+  // Unique identifier of the region.
+  string id = 1;
+  // List of special handling instructions for this region.
+  repeated SpecialHandling special_handling = 2;
 }
 
 // We define a cluster here to be used in Nodepools and by the cloud provider.
@@ -5079,6 +5097,8 @@ message Deployment {
   // The thing that the autoscaling config applies to for this nodepool.
   // For a given user_id, nodepool_id, and object ID we can only have one deployment as it defines
   Worker worker = 11;
+
+  Worker desired_worker = 16;
 
   // When the deployment was created.
   google.protobuf.Timestamp created_at = 12;
