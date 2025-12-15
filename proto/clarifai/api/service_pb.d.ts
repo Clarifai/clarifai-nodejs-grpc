@@ -193,8 +193,10 @@ export class StreamTrackAnnotationsSearchesRequest extends jspb.Message {
     setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): StreamTrackAnnotationsSearchesRequest;
     getInputId(): string;
     setInputId(value: string): StreamTrackAnnotationsSearchesRequest;
-    getTrackId(): string;
-    setTrackId(value: string): StreamTrackAnnotationsSearchesRequest;
+    clearTrackIdsList(): void;
+    getTrackIdsList(): Array<string>;
+    setTrackIdsList(value: Array<string>): StreamTrackAnnotationsSearchesRequest;
+    addTrackIds(value: string, index?: number): string;
     getFrameNumberStart(): number;
     setFrameNumberStart(value: number): StreamTrackAnnotationsSearchesRequest;
     getFrameTimeStart(): number;
@@ -225,7 +227,7 @@ export namespace StreamTrackAnnotationsSearchesRequest {
     export type AsObject = {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         inputId: string,
-        trackId: string,
+        trackIdsList: Array<string>,
         frameNumberStart: number,
         frameTimeStart: number,
         annotationType: proto_clarifai_api_resources_pb.AnnotationDataType,
@@ -619,6 +621,38 @@ export namespace SingleAnnotationResponse {
     export type AsObject = {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         annotation?: proto_clarifai_api_resources_pb.Annotation.AsObject,
+    }
+}
+
+export class SingleStreamTrackAnnotationResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): SingleStreamTrackAnnotationResponse;
+
+    hasAnnotation(): boolean;
+    clearAnnotation(): void;
+    getAnnotation(): proto_clarifai_api_resources_pb.Annotation | undefined;
+    setAnnotation(value?: proto_clarifai_api_resources_pb.Annotation): SingleStreamTrackAnnotationResponse;
+    getFrameFullyProcessed(): boolean;
+    setFrameFullyProcessed(value: boolean): SingleStreamTrackAnnotationResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): SingleStreamTrackAnnotationResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: SingleStreamTrackAnnotationResponse): SingleStreamTrackAnnotationResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: SingleStreamTrackAnnotationResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): SingleStreamTrackAnnotationResponse;
+    static deserializeBinaryFromReader(message: SingleStreamTrackAnnotationResponse, reader: jspb.BinaryReader): SingleStreamTrackAnnotationResponse;
+}
+
+export namespace SingleStreamTrackAnnotationResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        annotation?: proto_clarifai_api_resources_pb.Annotation.AsObject,
+        frameFullyProcessed: boolean,
     }
 }
 

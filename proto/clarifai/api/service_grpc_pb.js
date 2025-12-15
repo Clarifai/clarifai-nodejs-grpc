@@ -4513,6 +4513,17 @@ function deserialize_clarifai_api_SingleStatusCodeResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.SingleStatusCodeResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_SingleStreamTrackAnnotationResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.SingleStreamTrackAnnotationResponse)) {
+    throw new Error('Expected argument of type clarifai.api.SingleStreamTrackAnnotationResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_SingleStreamTrackAnnotationResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.SingleStreamTrackAnnotationResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_SingleTaskCountResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.SingleTaskCountResponse)) {
     throw new Error('Expected argument of type clarifai.api.SingleTaskCountResponse');
@@ -4893,11 +4904,11 @@ streamTrackAnnotationsSearches: {
     requestStream: false,
     responseStream: true,
     requestType: proto_clarifai_api_service_pb.StreamTrackAnnotationsSearchesRequest,
-    responseType: proto_clarifai_api_service_pb.SingleAnnotationResponse,
+    responseType: proto_clarifai_api_service_pb.SingleStreamTrackAnnotationResponse,
     requestSerialize: serialize_clarifai_api_StreamTrackAnnotationsSearchesRequest,
     requestDeserialize: deserialize_clarifai_api_StreamTrackAnnotationsSearchesRequest,
-    responseSerialize: serialize_clarifai_api_SingleAnnotationResponse,
-    responseDeserialize: deserialize_clarifai_api_SingleAnnotationResponse,
+    responseSerialize: serialize_clarifai_api_SingleStreamTrackAnnotationResponse,
+    responseDeserialize: deserialize_clarifai_api_SingleStreamTrackAnnotationResponse,
   },
   // Post annotations.
 postAnnotations: {
