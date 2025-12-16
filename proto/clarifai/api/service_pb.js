@@ -41820,7 +41820,8 @@ proto.clarifai.api.GetResourceCountsResponse.toObject = function(includeInstance
     models: jspb.Message.getFieldWithDefault(msg, 3, 0),
     workflows: jspb.Message.getFieldWithDefault(msg, 4, 0),
     modules: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    inputs: jspb.Message.getFieldWithDefault(msg, 6, 0)
+    inputs: jspb.Message.getFieldWithDefault(msg, 6, 0),
+    pipelines: jspb.Message.getFieldWithDefault(msg, 7, 0)
   };
 
   if (includeInstance) {
@@ -41881,6 +41882,10 @@ proto.clarifai.api.GetResourceCountsResponse.deserializeBinaryFromReader = funct
     case 6:
       var value = /** @type {number} */ (reader.readInt64());
       msg.setInputs(value);
+      break;
+    case 7:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setPipelines(value);
       break;
     default:
       reader.skipField();
@@ -41951,6 +41956,13 @@ proto.clarifai.api.GetResourceCountsResponse.serializeBinaryToWriter = function(
   if (f !== 0) {
     writer.writeInt64(
       6,
+      f
+    );
+  }
+  f = message.getPipelines();
+  if (f !== 0) {
+    writer.writeInt64(
+      7,
       f
     );
   }
@@ -42081,6 +42093,24 @@ proto.clarifai.api.GetResourceCountsResponse.prototype.getInputs = function() {
  */
 proto.clarifai.api.GetResourceCountsResponse.prototype.setInputs = function(value) {
   return jspb.Message.setProto3IntField(this, 6, value);
+};
+
+
+/**
+ * optional int64 pipelines = 7;
+ * @return {number}
+ */
+proto.clarifai.api.GetResourceCountsResponse.prototype.getPipelines = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.GetResourceCountsResponse} returns this
+ */
+proto.clarifai.api.GetResourceCountsResponse.prototype.setPipelines = function(value) {
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 

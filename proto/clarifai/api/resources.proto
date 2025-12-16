@@ -236,6 +236,7 @@ message AppResourceCounts {
   int64 workflows = 3;
   int64 modules = 4;
   int64 inputs = 5;
+  int64 pipelines = 6;
 }
 
 // Collaborator - invited user, who shares an access to an application

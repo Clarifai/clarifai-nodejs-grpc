@@ -1253,6 +1253,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
   }
 
   // Search over the models to find one or more you're looking for.
@@ -6322,6 +6323,7 @@ message GetResourceCountsResponse {
   int64 workflows = 4;
   int64 modules = 5;
   int64 inputs = 6;
+  int64 pipelines = 7;
 }
 
 message PatchModelToolkitsRequest {
