@@ -236,6 +236,7 @@ message AppResourceCounts {
   int64 workflows = 3;
   int64 modules = 4;
   int64 inputs = 5;
+  int64 pipelines = 6;
 }
 
 // Collaborator - invited user, who shares an access to an application
@@ -3544,6 +3545,8 @@ message TaskInputSource {
     SAVED_SEARCH = 2;
     // Inputs from a dataset.
     DATASET = 3;
+    // Single input (e.g. video livestream input)
+    INPUT = 4;
   }
 }
 
@@ -3586,10 +3589,11 @@ message TaskReview {
 // TaskReviewManualStrategyInfo
 message TaskReviewManualStrategyInfo {
   // This field represents the percentage of inputs that will be reviewed by reviewers. It is a value between 0 and 1.
-  float sample_percentage = 1;
+  // Deprecated: Not used.
+  float sample_percentage = 1 [deprecated = true];
 
   // Deprecated: Use consensus_strategy_info.approval_threshold_reviewers.
-  int32 approval_threshold = 2;
+  int32 approval_threshold = 2 [deprecated = true];
 }
 
 // TaskReviewConsensusStrategyInfo

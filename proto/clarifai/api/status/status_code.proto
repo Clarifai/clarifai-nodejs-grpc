@@ -485,7 +485,10 @@ enum StatusCode {
   TASK_WONT_DO = 54003;
   // An error occurred during add-task-annotations or add-auto-annotations pipeline.
   TASK_FAILED = 54005;
-  // When an Auto Annotation task job has finished processing its last batch and is waiting for more dataset assets.
+  // Task is waiting for user action.
+  // Examples:
+  // - When an Auto Annotation task job has finished processing its last batch and is waiting for more dataset assets.
+  // - When an Auto Annotation task job for a video livestream input is waiting for user to create a task deployment.
   TASK_IDLE = 54006;
   // The task operation is in conflict with the current state of the server.
   TASK_CONFLICT = 54100;
@@ -578,6 +581,7 @@ enum StatusCode {
   JOB_CANCELLED = 64004;
   JOB_UNEXPECTED_ERROR = 64006;
   JOB_CONFLICT = 64007;
+  JOB_PAUSED = 64008;
 
   //auth issues
   AUTH_MISSING_IDP_ASSOC = 65000;

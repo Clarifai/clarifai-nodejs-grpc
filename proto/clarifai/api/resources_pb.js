@@ -8773,7 +8773,8 @@ proto.clarifai.api.AppResourceCounts.toObject = function(includeInstance, msg) {
     models: jspb.Message.getFieldWithDefault(msg, 2, 0),
     workflows: jspb.Message.getFieldWithDefault(msg, 3, 0),
     modules: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    inputs: jspb.Message.getFieldWithDefault(msg, 5, 0)
+    inputs: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    pipelines: jspb.Message.getFieldWithDefault(msg, 6, 0)
   };
 
   if (includeInstance) {
@@ -8829,6 +8830,10 @@ proto.clarifai.api.AppResourceCounts.deserializeBinaryFromReader = function(msg,
     case 5:
       var value = /** @type {number} */ (reader.readInt64());
       msg.setInputs(value);
+      break;
+    case 6:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setPipelines(value);
       break;
     default:
       reader.skipField();
@@ -8891,6 +8896,13 @@ proto.clarifai.api.AppResourceCounts.serializeBinaryToWriter = function(message,
   if (f !== 0) {
     writer.writeInt64(
       5,
+      f
+    );
+  }
+  f = message.getPipelines();
+  if (f !== 0) {
+    writer.writeInt64(
+      6,
       f
     );
   }
@@ -8984,6 +8996,24 @@ proto.clarifai.api.AppResourceCounts.prototype.getInputs = function() {
  */
 proto.clarifai.api.AppResourceCounts.prototype.setInputs = function(value) {
   return jspb.Message.setProto3IntField(this, 5, value);
+};
+
+
+/**
+ * optional int64 pipelines = 6;
+ * @return {number}
+ */
+proto.clarifai.api.AppResourceCounts.prototype.getPipelines = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.AppResourceCounts} returns this
+ */
+proto.clarifai.api.AppResourceCounts.prototype.setPipelines = function(value) {
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -54408,7 +54438,8 @@ proto.clarifai.api.TaskInputSource.TaskInputSourceType = {
   INPUT_SOURCE_TYPE_NOT_SET: 0,
   ALL_INPUTS: 1,
   SAVED_SEARCH: 2,
-  DATASET: 3
+  DATASET: 3,
+  INPUT: 4
 };
 
 /**
