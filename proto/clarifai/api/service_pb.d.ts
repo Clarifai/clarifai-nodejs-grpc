@@ -12929,6 +12929,77 @@ export namespace MultiPipelineVersionRunResponse {
     }
 }
 
+export class ListPipelineVersionRunStatusLogsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): ListPipelineVersionRunStatusLogsRequest;
+    getPipelineId(): string;
+    setPipelineId(value: string): ListPipelineVersionRunStatusLogsRequest;
+    getPipelineVersionId(): string;
+    setPipelineVersionId(value: string): ListPipelineVersionRunStatusLogsRequest;
+    getPipelineVersionRunId(): string;
+    setPipelineVersionRunId(value: string): ListPipelineVersionRunStatusLogsRequest;
+    clearStatusCodesList(): void;
+    getStatusCodesList(): Array<proto_clarifai_api_status_status_code_pb.StatusCode>;
+    setStatusCodesList(value: Array<proto_clarifai_api_status_status_code_pb.StatusCode>): ListPipelineVersionRunStatusLogsRequest;
+    addStatusCodes(value: proto_clarifai_api_status_status_code_pb.StatusCode, index?: number): proto_clarifai_api_status_status_code_pb.StatusCode;
+    getPage(): number;
+    setPage(value: number): ListPipelineVersionRunStatusLogsRequest;
+    getPerPage(): number;
+    setPerPage(value: number): ListPipelineVersionRunStatusLogsRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListPipelineVersionRunStatusLogsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListPipelineVersionRunStatusLogsRequest): ListPipelineVersionRunStatusLogsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListPipelineVersionRunStatusLogsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListPipelineVersionRunStatusLogsRequest;
+    static deserializeBinaryFromReader(message: ListPipelineVersionRunStatusLogsRequest, reader: jspb.BinaryReader): ListPipelineVersionRunStatusLogsRequest;
+}
+
+export namespace ListPipelineVersionRunStatusLogsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        pipelineId: string,
+        pipelineVersionId: string,
+        pipelineVersionRunId: string,
+        statusCodesList: Array<proto_clarifai_api_status_status_code_pb.StatusCode>,
+        page: number,
+        perPage: number,
+    }
+}
+
+export class MultiPipelineVersionRunStatusLogResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiPipelineVersionRunStatusLogResponse;
+    clearPipelineVersionRunStatusLogsList(): void;
+    getPipelineVersionRunStatusLogsList(): Array<proto_clarifai_api_resources_pb.PipelineVersionRunStatusLog>;
+    setPipelineVersionRunStatusLogsList(value: Array<proto_clarifai_api_resources_pb.PipelineVersionRunStatusLog>): MultiPipelineVersionRunStatusLogResponse;
+    addPipelineVersionRunStatusLogs(value?: proto_clarifai_api_resources_pb.PipelineVersionRunStatusLog, index?: number): proto_clarifai_api_resources_pb.PipelineVersionRunStatusLog;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiPipelineVersionRunStatusLogResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiPipelineVersionRunStatusLogResponse): MultiPipelineVersionRunStatusLogResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiPipelineVersionRunStatusLogResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiPipelineVersionRunStatusLogResponse;
+    static deserializeBinaryFromReader(message: MultiPipelineVersionRunStatusLogResponse, reader: jspb.BinaryReader): MultiPipelineVersionRunStatusLogResponse;
+}
+
+export namespace MultiPipelineVersionRunStatusLogResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        pipelineVersionRunStatusLogsList: Array<proto_clarifai_api_resources_pb.PipelineVersionRunStatusLog.AsObject>,
+    }
+}
+
 export class PostPipelineStepsRequest extends jspb.Message { 
 
     hasUserAppId(): boolean;

@@ -1653,6 +1653,17 @@ function deserialize_clarifai_api_ListPipelineStepsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListPipelineStepsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_ListPipelineVersionRunStatusLogsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListPipelineVersionRunStatusLogsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListPipelineVersionRunStatusLogsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListPipelineVersionRunStatusLogsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListPipelineVersionRunStatusLogsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_ListPipelineVersionRunsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.ListPipelineVersionRunsRequest)) {
     throw new Error('Expected argument of type clarifai.api.ListPipelineVersionRunsRequest');
@@ -2454,6 +2465,17 @@ function serialize_clarifai_api_MultiPipelineVersionRunResponse(arg) {
 
 function deserialize_clarifai_api_MultiPipelineVersionRunResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiPipelineVersionRunResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MultiPipelineVersionRunStatusLogResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiPipelineVersionRunStatusLogResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiPipelineVersionRunStatusLogResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiPipelineVersionRunStatusLogResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiPipelineVersionRunStatusLogResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiRunnerItemOutputResponse(arg) {
@@ -7969,6 +7991,17 @@ postPipelineVersionRuns: {
     requestDeserialize: deserialize_clarifai_api_PatchPipelineVersionRunsRequest,
     responseSerialize: serialize_clarifai_api_MultiPipelineVersionRunResponse,
     responseDeserialize: deserialize_clarifai_api_MultiPipelineVersionRunResponse,
+  },
+  listPipelineVersionRunStatusLogs: {
+    path: '/clarifai.api.V2/ListPipelineVersionRunStatusLogs',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListPipelineVersionRunStatusLogsRequest,
+    responseType: proto_clarifai_api_service_pb.MultiPipelineVersionRunStatusLogResponse,
+    requestSerialize: serialize_clarifai_api_ListPipelineVersionRunStatusLogsRequest,
+    requestDeserialize: deserialize_clarifai_api_ListPipelineVersionRunStatusLogsRequest,
+    responseSerialize: serialize_clarifai_api_MultiPipelineVersionRunStatusLogResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiPipelineVersionRunStatusLogResponse,
   },
   postPipelineSteps: {
     path: '/clarifai.api.V2/PostPipelineSteps',

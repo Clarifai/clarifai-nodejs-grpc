@@ -4402,6 +4402,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Pull;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
@@ -4416,6 +4417,17 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Add;
+  }
+
+  rpc ListPipelineVersionRunStatusLogs(ListPipelineVersionRunStatusLogsRequest) returns (MultiPipelineVersionRunStatusLogResponse) {
+    option (google.api.http) = {
+      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs/{pipeline_version_run_id}/status_logs"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineVersionRunStatusLogs_Get;
   }
 
 
@@ -9227,6 +9239,32 @@ message SinglePipelineVersionRunResponse {
 message MultiPipelineVersionRunResponse {
   clarifai.api.status.Status status = 1;
   repeated PipelineVersionRun pipeline_version_runs = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+message ListPipelineVersionRunStatusLogsRequest {
+  // User App ID
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // Pipeline ID
+  string pipeline_id = 2;
+
+  // Pipeline Version ID
+  string pipeline_version_id = 3;
+
+  // Pipeline Version Run ID
+  string pipeline_version_run_id = 4;
+
+  // Status codes to filter by (optional)
+  repeated clarifai.api.status.StatusCode status_codes = 5;
+
+  // Pagination
+  uint32 page = 6;
+  uint32 per_page = 7;
+}
+
+message MultiPipelineVersionRunStatusLogResponse {
+  clarifai.api.status.Status status = 1;
+  repeated PipelineVersionRunStatusLog pipeline_version_run_status_logs = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
 

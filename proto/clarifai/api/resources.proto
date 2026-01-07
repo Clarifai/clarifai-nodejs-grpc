@@ -5752,6 +5752,26 @@ message PipelineVersionRun {
   OrchestrationSpec orchestration_spec = 10;
 }
 
+message PipelineVersionRunStatusLog {
+  // Unique ID for this status record
+  string id = 1;
+
+  // The PipelineVersionRun this log entry belongs to
+  string pipeline_version_run_id = 2;
+
+  // Clarifai status object representing the current status
+  clarifai.api.status.Status status = 3;
+
+  // Optional human-readable reason or message (e.g. "Paused due to resource limit")
+  string message = 4;
+
+  // Who triggered this status change
+  string triggered_by_user_id = 5;
+
+  // When this status was recorded
+  google.protobuf.Timestamp created_at = 6;
+}
+
 message Secret {
   reserved 2, 3, 9;
   // The name of the secret, corresponds to id in model_version.output_info.params.secrets
