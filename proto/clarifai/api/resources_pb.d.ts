@@ -6117,6 +6117,10 @@ export class TaskWorker extends jspb.Message {
     addWorkers(value?: Worker, index?: number): Worker;
     getType(): TaskWorker.WorkerType;
     setType(value: TaskWorker.WorkerType): TaskWorker;
+    clearRunnerSelectorsList(): void;
+    getRunnerSelectorsList(): Array<RunnerSelector>;
+    setRunnerSelectorsList(value: Array<RunnerSelector>): TaskWorker;
+    addRunnerSelectors(value?: RunnerSelector, index?: number): RunnerSelector;
 
     getStrategyInfoCase(): TaskWorker.StrategyInfoCase;
 
@@ -6138,6 +6142,7 @@ export namespace TaskWorker {
         partitionedStrategyInfo?: TaskWorkerPartitionedStrategyInfo.AsObject,
         workersList: Array<Worker.AsObject>,
         type: TaskWorker.WorkerType,
+        runnerSelectorsList: Array<RunnerSelector.AsObject>,
     }
 
     export enum TaskWorkerStrategy {

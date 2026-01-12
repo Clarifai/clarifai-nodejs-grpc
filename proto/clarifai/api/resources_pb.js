@@ -53698,7 +53698,7 @@ proto.clarifai.api.AiAssistParameters.prototype.clearConceptRelationIdsList = fu
  * @private {!Array<number>}
  * @const
  */
-proto.clarifai.api.TaskWorker.repeatedFields_ = [2,4,7];
+proto.clarifai.api.TaskWorker.repeatedFields_ = [2,4,7,9];
 
 /**
  * Oneof group definitions for this message. Each group defines the field
@@ -53763,7 +53763,9 @@ proto.clarifai.api.TaskWorker.toObject = function(includeInstance, msg) {
     partitionedStrategyInfo: (f = msg.getPartitionedStrategyInfo()) && proto.clarifai.api.TaskWorkerPartitionedStrategyInfo.toObject(includeInstance, f),
     workersList: jspb.Message.toObjectList(msg.getWorkersList(),
     proto.clarifai.api.Worker.toObject, includeInstance),
-    type: jspb.Message.getFieldWithDefault(msg, 8, 0)
+    type: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    runnerSelectorsList: jspb.Message.toObjectList(msg.getRunnerSelectorsList(),
+    proto.clarifai.api.RunnerSelector.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -53826,6 +53828,11 @@ proto.clarifai.api.TaskWorker.deserializeBinaryFromReader = function(msg, reader
     case 8:
       var value = /** @type {!proto.clarifai.api.TaskWorker.WorkerType} */ (reader.readEnum());
       msg.setType(value);
+      break;
+    case 9:
+      var value = new proto.clarifai.api.RunnerSelector;
+      reader.readMessage(value,proto.clarifai.api.RunnerSelector.deserializeBinaryFromReader);
+      msg.addRunnerSelectors(value);
       break;
     default:
       reader.skipField();
@@ -53899,6 +53906,14 @@ proto.clarifai.api.TaskWorker.serializeBinaryToWriter = function(message, writer
     writer.writeEnum(
       8,
       f
+    );
+  }
+  f = message.getRunnerSelectorsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      9,
+      f,
+      proto.clarifai.api.RunnerSelector.serializeBinaryToWriter
     );
   }
 };
@@ -54106,6 +54121,44 @@ proto.clarifai.api.TaskWorker.prototype.getType = function() {
  */
 proto.clarifai.api.TaskWorker.prototype.setType = function(value) {
   return jspb.Message.setProto3EnumField(this, 8, value);
+};
+
+
+/**
+ * repeated RunnerSelector runner_selectors = 9;
+ * @return {!Array<!proto.clarifai.api.RunnerSelector>}
+ */
+proto.clarifai.api.TaskWorker.prototype.getRunnerSelectorsList = function() {
+  return /** @type{!Array<!proto.clarifai.api.RunnerSelector>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.clarifai.api.RunnerSelector, 9));
+};
+
+
+/**
+ * @param {!Array<!proto.clarifai.api.RunnerSelector>} value
+ * @return {!proto.clarifai.api.TaskWorker} returns this
+*/
+proto.clarifai.api.TaskWorker.prototype.setRunnerSelectorsList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 9, value);
+};
+
+
+/**
+ * @param {!proto.clarifai.api.RunnerSelector=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.RunnerSelector}
+ */
+proto.clarifai.api.TaskWorker.prototype.addRunnerSelectors = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 9, opt_value, proto.clarifai.api.RunnerSelector, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.TaskWorker} returns this
+ */
+proto.clarifai.api.TaskWorker.prototype.clearRunnerSelectorsList = function() {
+  return this.setRunnerSelectorsList([]);
 };
 
 

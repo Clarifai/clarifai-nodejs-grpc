@@ -3482,6 +3482,11 @@ message TaskWorker {
     // auto-annotation tasks. Task must set worker as model or workflow
     WORKER_AUTO = 2;
   }
+
+  // Runner selectors is used to select specific runners for the workers of this task.
+  // The index of runner_selectors corresponds to the index of workers.
+  // In other words: runner_selectors[i] is the runner selector for workers[i].
+  repeated RunnerSelector runner_selectors = 9;
 }
 
 // TaskWorkerPartitionedStrategyInfo
@@ -5129,9 +5134,9 @@ message RunnerSelector {
   // resource to be run. There should not be more than one deployment in this nodepool for the
   // particular resource to run. If no deployments then default autoscaling will be used.
   Nodepool nodepool = 1;
-  // Optionally a partcular runner within the nodepool.
+  // Optionally a particular runner within the nodepool.
   Runner runner = 2;
-  // Optionally a partcular deployment within the nodepool.
+  // Optionally a particular deployment within the nodepool.
   Deployment deployment = 3;
   // In future as we support matching runners based on just labels:
   // RunnerLabels runner_labels = 3; // FUTURE
