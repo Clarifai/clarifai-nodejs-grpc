@@ -370,6 +370,23 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = AnnotationTracks_Get;
   }
 
+  // Stream live video annotations as they are being created by the runner.
+  // This endpoint reads from Redis instead of the database for real-time streaming.
+  rpc StreamLivestreamAnnotations (StreamLivestreamAnnotationsRequest) returns (stream SingleStreamTrackAnnotationResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}/annotations/stream/live"
+      body: "*"
+      additional_bindings {
+        post: "/v2/inputs/{input_id}/annotations/stream/live"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
+  }
+
   // Post annotations.
   rpc PostAnnotations (PostAnnotationsRequest) returns (MultiAnnotationResponse) {
     option (google.api.http) = {
@@ -4812,6 +4829,24 @@ message StreamTrackAnnotationsSearchesRequest {
   // Point annotations don't need filtering by worker.
   // For non-point types, a model version ID must be provided.
   Worker worker = 9;
+}
+
+// StreamLivestreamAnnotationsRequest
+// Streams live annotations from Redis as they are being created by the runner
+message StreamLivestreamAnnotationsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // The input ID containing the video being processed
+  string input_id = 2;
+
+  // (Optional) Filter by specific task ID if known
+  string task_id = 3;
+
+  // (Optional) Filter annotations by track_ids
+  repeated string track_ids = 4;
+
+  // (Optional) Filter by annotation type (e.g., "bounding_box", "point", "mask")
+  AnnotationDataType annotation_type = 5;
 }
 
 // PostAnnotationsRequest

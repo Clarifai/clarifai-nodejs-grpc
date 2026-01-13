@@ -237,6 +237,43 @@ export namespace StreamTrackAnnotationsSearchesRequest {
     }
 }
 
+export class StreamLivestreamAnnotationsRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): StreamLivestreamAnnotationsRequest;
+    getInputId(): string;
+    setInputId(value: string): StreamLivestreamAnnotationsRequest;
+    getTaskId(): string;
+    setTaskId(value: string): StreamLivestreamAnnotationsRequest;
+    clearTrackIdsList(): void;
+    getTrackIdsList(): Array<string>;
+    setTrackIdsList(value: Array<string>): StreamLivestreamAnnotationsRequest;
+    addTrackIds(value: string, index?: number): string;
+    getAnnotationType(): proto_clarifai_api_resources_pb.AnnotationDataType;
+    setAnnotationType(value: proto_clarifai_api_resources_pb.AnnotationDataType): StreamLivestreamAnnotationsRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): StreamLivestreamAnnotationsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: StreamLivestreamAnnotationsRequest): StreamLivestreamAnnotationsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: StreamLivestreamAnnotationsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): StreamLivestreamAnnotationsRequest;
+    static deserializeBinaryFromReader(message: StreamLivestreamAnnotationsRequest, reader: jspb.BinaryReader): StreamLivestreamAnnotationsRequest;
+}
+
+export namespace StreamLivestreamAnnotationsRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        inputId: string,
+        taskId: string,
+        trackIdsList: Array<string>,
+        annotationType: proto_clarifai_api_resources_pb.AnnotationDataType,
+    }
+}
+
 export class PostAnnotationsRequest extends jspb.Message { 
 
     hasUserAppId(): boolean;
