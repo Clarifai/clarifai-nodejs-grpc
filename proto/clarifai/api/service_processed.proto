@@ -8685,8 +8685,27 @@ message RunnerItem {
     PostModelOutputsRequest post_model_outputs_request = 4;
     // Agent sync request from control plane.
     SyncStateRequest sync_state_request = 5;
+    // Auto annotation request from a user.
+    AutoAnnotationRequest auto_annotation_request = 6;
     // Workflow request from a user.  // FUTURE
     // training request next, etc.
+  }
+}
+
+message AutoAnnotationRequest {
+  // Perform prediction request and call PostAnnotations endpoint using post_annotations_info and prediction results.
+  PostModelOutputsRequest post_model_outputs_request = 1;
+
+  PostAnnotationsInfo post_annotations_info = 2;
+
+  message PostAnnotationsInfo {
+    UserAppIDSet user_app_id = 1;
+
+    // Authorization value to be used when calling PostAnnotations endpoint.
+    string authorization_value = 2;
+
+    // Task ID linked to the annotations being created.
+    string task_id = 3;
   }
 }
 
