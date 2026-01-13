@@ -6,6 +6,7 @@ import "proto/clarifai/api/utils/extensions.proto";
 import "proto/clarifai/api/utils/matrix.proto";
 import "proto/clarifai/auth/util/extension.proto";
 
+import "google/protobuf/duration.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
@@ -3482,6 +3483,11 @@ message TaskWorker {
     // auto-annotation tasks. Task must set worker as model or workflow
     WORKER_AUTO = 2;
   }
+
+  // Runner selectors is used to select specific runners for the workers of this task.
+  // The index of runner_selectors corresponds to the index of workers.
+  // In other words: runner_selectors[i] is the runner selector for workers[i].
+  repeated RunnerSelector runner_selectors = 9;
 }
 
 // TaskWorkerPartitionedStrategyInfo
@@ -5129,9 +5135,9 @@ message RunnerSelector {
   // resource to be run. There should not be more than one deployment in this nodepool for the
   // particular resource to run. If no deployments then default autoscaling will be used.
   Nodepool nodepool = 1;
-  // Optionally a partcular runner within the nodepool.
+  // Optionally a particular runner within the nodepool.
   Runner runner = 2;
-  // Optionally a partcular deployment within the nodepool.
+  // Optionally a particular deployment within the nodepool.
   Deployment deployment = 3;
   // In future as we support matching runners based on just labels:
   // RunnerLabels runner_labels = 3; // FUTURE
@@ -5750,6 +5756,35 @@ message PipelineVersionRun {
   // Final merged orchestration spec snapshot submitted to backend.
   // This field is read-only and cannot be set during creation.
   OrchestrationSpec orchestration_spec = 10;
+
+  // When the pipeline run started executing (first JOB_RUNNING status)
+  google.protobuf.Timestamp started_at = 11;
+
+  // When the pipeline run finished executing (terminal status)  
+  google.protobuf.Timestamp ended_at = 12;
+
+  // Total cumulative run duration excluding pause time
+  google.protobuf.Duration total_run_duration = 13;
+}
+
+message PipelineVersionRunStatusLog {
+  // Unique ID for this status record
+  string id = 1;
+
+  // The PipelineVersionRun this log entry belongs to
+  string pipeline_version_run_id = 2;
+
+  // Clarifai status object representing the current status
+  clarifai.api.status.Status status = 3;
+
+  // Optional human-readable reason or message (e.g. "Paused due to resource limit")
+  string message = 4;
+
+  // Who triggered this status change
+  string triggered_by_user_id = 5;
+
+  // When this status was recorded
+  google.protobuf.Timestamp created_at = 6;
 }
 
 message Secret {

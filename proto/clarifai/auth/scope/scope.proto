@@ -508,6 +508,9 @@ enum S {
   Artifacts_Delete = 172 [(clarfai_exposed) = true,
     (clarifai_depending_scopes) = Artifacts_Get,
     (clarifai_depending_scopes) = Artifacts_Add];
+
+  // Pipeline version run status logs (audit trail)
+  PipelineVersionRunStatusLogs_Get = 173 [(clarfai_exposed) = true];
 }
 
 extend google.protobuf.EnumValueOptions {
