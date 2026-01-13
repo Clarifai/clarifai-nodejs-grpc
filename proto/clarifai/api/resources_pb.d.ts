@@ -10,6 +10,7 @@ import * as proto_clarifai_api_status_status_code_pb from "../../../proto/clarif
 import * as proto_clarifai_api_utils_extensions_pb from "../../../proto/clarifai/api/utils/extensions_pb";
 import * as proto_clarifai_api_utils_matrix_pb from "../../../proto/clarifai/api/utils/matrix_pb";
 import * as proto_clarifai_auth_util_extension_pb from "../../../proto/clarifai/auth/util/extension_pb";
+import * as google_protobuf_duration_pb from "google-protobuf/google/protobuf/duration_pb";
 import * as google_protobuf_struct_pb from "google-protobuf/google/protobuf/struct_pb";
 import * as google_protobuf_timestamp_pb from "google-protobuf/google/protobuf/timestamp_pb";
 import * as google_protobuf_wrappers_pb from "google-protobuf/google/protobuf/wrappers_pb";
@@ -10520,6 +10521,21 @@ export class PipelineVersionRun extends jspb.Message {
     getOrchestrationSpec(): OrchestrationSpec | undefined;
     setOrchestrationSpec(value?: OrchestrationSpec): PipelineVersionRun;
 
+    hasStartedAt(): boolean;
+    clearStartedAt(): void;
+    getStartedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setStartedAt(value?: google_protobuf_timestamp_pb.Timestamp): PipelineVersionRun;
+
+    hasEndedAt(): boolean;
+    clearEndedAt(): void;
+    getEndedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setEndedAt(value?: google_protobuf_timestamp_pb.Timestamp): PipelineVersionRun;
+
+    hasTotalRunDuration(): boolean;
+    clearTotalRunDuration(): void;
+    getTotalRunDuration(): google_protobuf_duration_pb.Duration | undefined;
+    setTotalRunDuration(value?: google_protobuf_duration_pb.Duration): PipelineVersionRun;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PipelineVersionRun.AsObject;
     static toObject(includeInstance: boolean, msg: PipelineVersionRun): PipelineVersionRun.AsObject;
@@ -10542,6 +10558,9 @@ export namespace PipelineVersionRun {
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         inputArgsOverride?: OrchestrationArgsOverride.AsObject,
         orchestrationSpec?: OrchestrationSpec.AsObject,
+        startedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        endedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        totalRunDuration?: google_protobuf_duration_pb.Duration.AsObject,
     }
 }
 

@@ -31,6 +31,8 @@ var proto_clarifai_api_utils_matrix_pb = require('../../../proto/clarifai/api/ut
 goog.object.extend(proto, proto_clarifai_api_utils_matrix_pb);
 var proto_clarifai_auth_util_extension_pb = require('../../../proto/clarifai/auth/util/extension_pb.js');
 goog.object.extend(proto, proto_clarifai_auth_util_extension_pb);
+var google_protobuf_duration_pb = require('google-protobuf/google/protobuf/duration_pb.js');
+goog.object.extend(proto, google_protobuf_duration_pb);
 var google_protobuf_struct_pb = require('google-protobuf/google/protobuf/struct_pb.js');
 goog.object.extend(proto, google_protobuf_struct_pb);
 var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
@@ -86365,7 +86367,10 @@ proto.clarifai.api.PipelineVersionRun.toObject = function(includeInstance, msg) 
     createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     inputArgsOverride: (f = msg.getInputArgsOverride()) && proto.clarifai.api.OrchestrationArgsOverride.toObject(includeInstance, f),
-    orchestrationSpec: (f = msg.getOrchestrationSpec()) && proto.clarifai.api.OrchestrationSpec.toObject(includeInstance, f)
+    orchestrationSpec: (f = msg.getOrchestrationSpec()) && proto.clarifai.api.OrchestrationSpec.toObject(includeInstance, f),
+    startedAt: (f = msg.getStartedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+    endedAt: (f = msg.getEndedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+    totalRunDuration: (f = msg.getTotalRunDuration()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -86448,6 +86453,21 @@ proto.clarifai.api.PipelineVersionRun.deserializeBinaryFromReader = function(msg
       var value = new proto.clarifai.api.OrchestrationSpec;
       reader.readMessage(value,proto.clarifai.api.OrchestrationSpec.deserializeBinaryFromReader);
       msg.setOrchestrationSpec(value);
+      break;
+    case 11:
+      var value = new google_protobuf_timestamp_pb.Timestamp;
+      reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
+      msg.setStartedAt(value);
+      break;
+    case 12:
+      var value = new google_protobuf_timestamp_pb.Timestamp;
+      reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
+      msg.setEndedAt(value);
+      break;
+    case 13:
+      var value = new google_protobuf_duration_pb.Duration;
+      reader.readMessage(value,google_protobuf_duration_pb.Duration.deserializeBinaryFromReader);
+      msg.setTotalRunDuration(value);
       break;
     default:
       reader.skipField();
@@ -86553,6 +86573,30 @@ proto.clarifai.api.PipelineVersionRun.serializeBinaryToWriter = function(message
       10,
       f,
       proto.clarifai.api.OrchestrationSpec.serializeBinaryToWriter
+    );
+  }
+  f = message.getStartedAt();
+  if (f != null) {
+    writer.writeMessage(
+      11,
+      f,
+      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
+    );
+  }
+  f = message.getEndedAt();
+  if (f != null) {
+    writer.writeMessage(
+      12,
+      f,
+      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
+    );
+  }
+  f = message.getTotalRunDuration();
+  if (f != null) {
+    writer.writeMessage(
+      13,
+      f,
+      google_protobuf_duration_pb.Duration.serializeBinaryToWriter
     );
   }
 };
@@ -86869,6 +86913,117 @@ proto.clarifai.api.PipelineVersionRun.prototype.clearOrchestrationSpec = functio
  */
 proto.clarifai.api.PipelineVersionRun.prototype.hasOrchestrationSpec = function() {
   return jspb.Message.getField(this, 10) != null;
+};
+
+
+/**
+ * optional google.protobuf.Timestamp started_at = 11;
+ * @return {?proto.google.protobuf.Timestamp}
+ */
+proto.clarifai.api.PipelineVersionRun.prototype.getStartedAt = function() {
+  return /** @type{?proto.google.protobuf.Timestamp} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 11));
+};
+
+
+/**
+ * @param {?proto.google.protobuf.Timestamp|undefined} value
+ * @return {!proto.clarifai.api.PipelineVersionRun} returns this
+*/
+proto.clarifai.api.PipelineVersionRun.prototype.setStartedAt = function(value) {
+  return jspb.Message.setWrapperField(this, 11, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.PipelineVersionRun} returns this
+ */
+proto.clarifai.api.PipelineVersionRun.prototype.clearStartedAt = function() {
+  return this.setStartedAt(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.PipelineVersionRun.prototype.hasStartedAt = function() {
+  return jspb.Message.getField(this, 11) != null;
+};
+
+
+/**
+ * optional google.protobuf.Timestamp ended_at = 12;
+ * @return {?proto.google.protobuf.Timestamp}
+ */
+proto.clarifai.api.PipelineVersionRun.prototype.getEndedAt = function() {
+  return /** @type{?proto.google.protobuf.Timestamp} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 12));
+};
+
+
+/**
+ * @param {?proto.google.protobuf.Timestamp|undefined} value
+ * @return {!proto.clarifai.api.PipelineVersionRun} returns this
+*/
+proto.clarifai.api.PipelineVersionRun.prototype.setEndedAt = function(value) {
+  return jspb.Message.setWrapperField(this, 12, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.PipelineVersionRun} returns this
+ */
+proto.clarifai.api.PipelineVersionRun.prototype.clearEndedAt = function() {
+  return this.setEndedAt(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.PipelineVersionRun.prototype.hasEndedAt = function() {
+  return jspb.Message.getField(this, 12) != null;
+};
+
+
+/**
+ * optional google.protobuf.Duration total_run_duration = 13;
+ * @return {?proto.google.protobuf.Duration}
+ */
+proto.clarifai.api.PipelineVersionRun.prototype.getTotalRunDuration = function() {
+  return /** @type{?proto.google.protobuf.Duration} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_duration_pb.Duration, 13));
+};
+
+
+/**
+ * @param {?proto.google.protobuf.Duration|undefined} value
+ * @return {!proto.clarifai.api.PipelineVersionRun} returns this
+*/
+proto.clarifai.api.PipelineVersionRun.prototype.setTotalRunDuration = function(value) {
+  return jspb.Message.setWrapperField(this, 13, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.PipelineVersionRun} returns this
+ */
+proto.clarifai.api.PipelineVersionRun.prototype.clearTotalRunDuration = function() {
+  return this.setTotalRunDuration(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.PipelineVersionRun.prototype.hasTotalRunDuration = function() {
+  return jspb.Message.getField(this, 13) != null;
 };
 
 
