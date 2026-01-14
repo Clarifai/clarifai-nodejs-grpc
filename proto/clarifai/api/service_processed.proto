@@ -7775,9 +7775,14 @@ message ListTasksRequest {
 // Request to patch a list of tasks.
 message PatchTasksRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
+
   repeated Task tasks = 2;
-  // The action to perform on the patched objects
-  // For now, only 'overwrite' action is supported
+
+  // The action to perform on the patched tasks
+  // Supported operations:
+  // * 'overwrite' - overwrite the task with the fields provided in the request
+  // * 'merge' - update only the fields provided in the request, leave other fields unchanged
+  // For now, the 'merge' operation only supports updating task status.
   string action = 3;
 }
 
@@ -7873,7 +7878,7 @@ message PatchLabelOrdersRequest {
   repeated LabelOrder label_orders = 2;
 
   // The action to perform on the patched objects
-  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  // For now, only 'overwrite' option is supported
   string action = 3;
 }
 
@@ -8729,20 +8734,14 @@ message RunnerItem {
 }
 
 message AutoAnnotationRequest {
-  // Perform prediction request and call PostAnnotations endpoint using post_annotations_info and prediction results.
+  // Perform prediction request and call PostAnnotations endpoint using prediction results.
   PostModelOutputsRequest post_model_outputs_request = 1;
 
-  PostAnnotationsInfo post_annotations_info = 2;
+  // Task used to create annotations .
+  Task task = 2;
 
-  message PostAnnotationsInfo {
-    UserAppIDSet user_app_id = 1;
-
-    // Authorization value to be used when calling PostAnnotations endpoint.
-    string authorization_value = 2;
-
-    // Task ID linked to the annotations being created.
-    string task_id = 3;
-  }
+  // Authorization value to be used when calling PostAnnotations endpoint.
+  string authorization_value = 3;
 }
 
 // This contains the response of the user's request once processing is done.

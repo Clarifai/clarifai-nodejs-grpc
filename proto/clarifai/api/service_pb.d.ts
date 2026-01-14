@@ -11039,10 +11039,12 @@ export class AutoAnnotationRequest extends jspb.Message {
     getPostModelOutputsRequest(): PostModelOutputsRequest | undefined;
     setPostModelOutputsRequest(value?: PostModelOutputsRequest): AutoAnnotationRequest;
 
-    hasPostAnnotationsInfo(): boolean;
-    clearPostAnnotationsInfo(): void;
-    getPostAnnotationsInfo(): AutoAnnotationRequest.PostAnnotationsInfo | undefined;
-    setPostAnnotationsInfo(value?: AutoAnnotationRequest.PostAnnotationsInfo): AutoAnnotationRequest;
+    hasTask(): boolean;
+    clearTask(): void;
+    getTask(): proto_clarifai_api_resources_pb.Task | undefined;
+    setTask(value?: proto_clarifai_api_resources_pb.Task): AutoAnnotationRequest;
+    getAuthorizationValue(): string;
+    setAuthorizationValue(value: string): AutoAnnotationRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): AutoAnnotationRequest.AsObject;
@@ -11057,39 +11059,9 @@ export class AutoAnnotationRequest extends jspb.Message {
 export namespace AutoAnnotationRequest {
     export type AsObject = {
         postModelOutputsRequest?: PostModelOutputsRequest.AsObject,
-        postAnnotationsInfo?: AutoAnnotationRequest.PostAnnotationsInfo.AsObject,
+        task?: proto_clarifai_api_resources_pb.Task.AsObject,
+        authorizationValue: string,
     }
-
-
-    export class PostAnnotationsInfo extends jspb.Message { 
-
-        hasUserAppId(): boolean;
-        clearUserAppId(): void;
-        getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
-        setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PostAnnotationsInfo;
-        getAuthorizationValue(): string;
-        setAuthorizationValue(value: string): PostAnnotationsInfo;
-        getTaskId(): string;
-        setTaskId(value: string): PostAnnotationsInfo;
-
-        serializeBinary(): Uint8Array;
-        toObject(includeInstance?: boolean): PostAnnotationsInfo.AsObject;
-        static toObject(includeInstance: boolean, msg: PostAnnotationsInfo): PostAnnotationsInfo.AsObject;
-        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-        static serializeBinaryToWriter(message: PostAnnotationsInfo, writer: jspb.BinaryWriter): void;
-        static deserializeBinary(bytes: Uint8Array): PostAnnotationsInfo;
-        static deserializeBinaryFromReader(message: PostAnnotationsInfo, reader: jspb.BinaryReader): PostAnnotationsInfo;
-    }
-
-    export namespace PostAnnotationsInfo {
-        export type AsObject = {
-            userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
-            authorizationValue: string,
-            taskId: string,
-        }
-    }
-
 }
 
 export class RunnerItemOutput extends jspb.Message { 
