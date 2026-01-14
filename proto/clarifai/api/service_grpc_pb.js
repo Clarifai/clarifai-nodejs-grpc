@@ -4535,15 +4535,15 @@ function deserialize_clarifai_api_SingleStatusCodeResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.SingleStatusCodeResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_SingleStreamTrackAnnotationResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.SingleStreamTrackAnnotationResponse)) {
-    throw new Error('Expected argument of type clarifai.api.SingleStreamTrackAnnotationResponse');
+function serialize_clarifai_api_SingleStreamAnnotationResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.SingleStreamAnnotationResponse)) {
+    throw new Error('Expected argument of type clarifai.api.SingleStreamAnnotationResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_clarifai_api_SingleStreamTrackAnnotationResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.SingleStreamTrackAnnotationResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_clarifai_api_SingleStreamAnnotationResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.SingleStreamAnnotationResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_SingleTaskCountResponse(arg) {
@@ -4623,6 +4623,17 @@ function deserialize_clarifai_api_SingleWorkflowVersionResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.SingleWorkflowVersionResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_StreamAnnotationsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.StreamAnnotationsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.StreamAnnotationsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_StreamAnnotationsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.StreamAnnotationsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_StreamInputsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.StreamInputsRequest)) {
     throw new Error('Expected argument of type clarifai.api.StreamInputsRequest');
@@ -4634,6 +4645,17 @@ function deserialize_clarifai_api_StreamInputsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.StreamInputsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_StreamLivestreamAnnotationsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.StreamLivestreamAnnotationsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.StreamLivestreamAnnotationsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_StreamLivestreamAnnotationsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.StreamLivestreamAnnotationsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_StreamLogEntriesRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.StreamLogEntriesRequest)) {
     throw new Error('Expected argument of type clarifai.api.StreamLogEntriesRequest');
@@ -4643,17 +4665,6 @@ function serialize_clarifai_api_StreamLogEntriesRequest(arg) {
 
 function deserialize_clarifai_api_StreamLogEntriesRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.StreamLogEntriesRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_StreamTrackAnnotationsSearchesRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.StreamTrackAnnotationsSearchesRequest)) {
-    throw new Error('Expected argument of type clarifai.api.StreamTrackAnnotationsSearchesRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_StreamTrackAnnotationsSearchesRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.StreamTrackAnnotationsSearchesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_status_BaseResponse(arg) {
@@ -4920,17 +4931,30 @@ postTrackAnnotationsSearches: {
     responseSerialize: serialize_clarifai_api_MultiAnnotationResponse,
     responseDeserialize: deserialize_clarifai_api_MultiAnnotationResponse,
   },
-  // Stream video track annotations for a specific input one-by-one.
-streamTrackAnnotationsSearches: {
-    path: '/clarifai.api.V2/StreamTrackAnnotationsSearches',
+  // Stream annotations for a specific input one-by-one.
+streamAnnotations: {
+    path: '/clarifai.api.V2/StreamAnnotations',
     requestStream: false,
     responseStream: true,
-    requestType: proto_clarifai_api_service_pb.StreamTrackAnnotationsSearchesRequest,
-    responseType: proto_clarifai_api_service_pb.SingleStreamTrackAnnotationResponse,
-    requestSerialize: serialize_clarifai_api_StreamTrackAnnotationsSearchesRequest,
-    requestDeserialize: deserialize_clarifai_api_StreamTrackAnnotationsSearchesRequest,
-    responseSerialize: serialize_clarifai_api_SingleStreamTrackAnnotationResponse,
-    responseDeserialize: deserialize_clarifai_api_SingleStreamTrackAnnotationResponse,
+    requestType: proto_clarifai_api_service_pb.StreamAnnotationsRequest,
+    responseType: proto_clarifai_api_service_pb.SingleStreamAnnotationResponse,
+    requestSerialize: serialize_clarifai_api_StreamAnnotationsRequest,
+    requestDeserialize: deserialize_clarifai_api_StreamAnnotationsRequest,
+    responseSerialize: serialize_clarifai_api_SingleStreamAnnotationResponse,
+    responseDeserialize: deserialize_clarifai_api_SingleStreamAnnotationResponse,
+  },
+  // Stream live video annotations as they are being created by the runner.
+// This endpoint reads from Redis instead of the database for real-time streaming.
+streamLivestreamAnnotations: {
+    path: '/clarifai.api.V2/StreamLivestreamAnnotations',
+    requestStream: false,
+    responseStream: true,
+    requestType: proto_clarifai_api_service_pb.StreamLivestreamAnnotationsRequest,
+    responseType: proto_clarifai_api_service_pb.SingleStreamAnnotationResponse,
+    requestSerialize: serialize_clarifai_api_StreamLivestreamAnnotationsRequest,
+    requestDeserialize: deserialize_clarifai_api_StreamLivestreamAnnotationsRequest,
+    responseSerialize: serialize_clarifai_api_SingleStreamAnnotationResponse,
+    responseDeserialize: deserialize_clarifai_api_SingleStreamAnnotationResponse,
   },
   // Post annotations.
 postAnnotations: {

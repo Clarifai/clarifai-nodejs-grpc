@@ -351,8 +351,8 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get; // to get the model for the worker.
   }
 
-  // Stream video track annotations for a specific input one-by-one.
-  rpc StreamTrackAnnotationsSearches (StreamTrackAnnotationsSearchesRequest) returns (stream SingleStreamTrackAnnotationResponse) {
+  // Stream annotations for a specific input one-by-one.
+  rpc StreamAnnotations (StreamAnnotationsRequest) returns (stream SingleStreamAnnotationResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}/track_annotations/searches/stream"
       body: "*"
@@ -368,6 +368,23 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = AnnotationTracks_Get;
+  }
+
+  // Stream live video annotations as they are being created by the runner.
+  // This endpoint reads from Redis instead of the database for real-time streaming.
+  rpc StreamLivestreamAnnotations (StreamLivestreamAnnotationsRequest) returns (stream SingleStreamAnnotationResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}/annotations/stream/live"
+      body: "*"
+      additional_bindings {
+        post: "/v2/inputs/{input_id}/annotations/stream/live"
+        body: "*"
+      }
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
   }
 
   // Post annotations.
@@ -4780,14 +4797,15 @@ message PostTrackAnnotationsSearchesRequest {
   Worker worker = 9;
 }
 
-// StreamTrackAnnotationsSearchesRequest
-message StreamTrackAnnotationsSearchesRequest {
+// StreamAnnotationsRequest
+message StreamAnnotationsRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
 
-  // The input ID containing the video track annotations to stream
+  // The input ID containing the annotations to stream
   string input_id = 2;
 
-  // Filter annotations by track_ids
+  // Filter annotations by track_ids (optional - omit to stream all tracks for the input).
+  // This is useful for historical playback where you want to stream all annotations in a time range.
   repeated string track_ids = 3;
 
   // Filter annotations starting from this frame number (inclusive)
@@ -4801,17 +4819,35 @@ message StreamTrackAnnotationsSearchesRequest {
 
   // Maximum number of frames to return. Returns annotations from frames in range [frame_number_start, frame_number_start + max_frames - 1] (inclusive on both ends).
   // For example: frame_number_start=5, max_frames=3 returns frames 5, 6, and 7.
-  // Default and max: 10800 frames (3 minutes at 60 FPS)
+  // Default and max: 216000 frames (60 minutes at 60 FPS)
   uint32 max_frames = 7;
 
   // Maximum duration in milliseconds to return. Returns annotations from time range [frame_time_start, frame_time_start + max_duration - 1] (inclusive on both ends).
-  // Default and max: 180000 ms (3 minutes)
+  // Default and max: 3600000 ms (60 minutes)
   uint32 max_duration = 8;
 
   // Filtering by model version ID within a worker (optional).
   // Point annotations don't need filtering by worker.
   // For non-point types, a model version ID must be provided.
   Worker worker = 9;
+}
+
+// StreamLivestreamAnnotationsRequest
+// Streams live annotations from Redis as they are being created by the runner
+message StreamLivestreamAnnotationsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+
+  // The input ID containing the video being processed
+  string input_id = 2;
+
+  // (Optional) Filter by specific task ID if known
+  string task_id = 3;
+
+  // (Optional) Filter annotations by track_ids
+  repeated string track_ids = 4;
+
+  // (Optional) Filter by annotation type (e.g., "bounding_box", "point", "mask")
+  AnnotationDataType annotation_type = 5;
 }
 
 // PostAnnotationsRequest
@@ -4932,8 +4968,8 @@ message SingleAnnotationResponse {
   Annotation annotation = 2;
 }
 
-// SingleStreamTrackAnnotationResponse similar to SingleAnnotationResponse but with an extra field
-message SingleStreamTrackAnnotationResponse {
+// SingleStreamAnnotationResponse similar to SingleAnnotationResponse but with an extra field
+message SingleStreamAnnotationResponse {
   clarifai.api.status.Status status = 1;
   Annotation annotation = 2;
 
@@ -8685,8 +8721,27 @@ message RunnerItem {
     PostModelOutputsRequest post_model_outputs_request = 4;
     // Agent sync request from control plane.
     SyncStateRequest sync_state_request = 5;
+    // Auto annotation request from a user.
+    AutoAnnotationRequest auto_annotation_request = 6;
     // Workflow request from a user.  // FUTURE
     // training request next, etc.
+  }
+}
+
+message AutoAnnotationRequest {
+  // Perform prediction request and call PostAnnotations endpoint using post_annotations_info and prediction results.
+  PostModelOutputsRequest post_model_outputs_request = 1;
+
+  PostAnnotationsInfo post_annotations_info = 2;
+
+  message PostAnnotationsInfo {
+    UserAppIDSet user_app_id = 1;
+
+    // Authorization value to be used when calling PostAnnotations endpoint.
+    string authorization_value = 2;
+
+    // Task ID linked to the annotations being created.
+    string task_id = 3;
   }
 }
 

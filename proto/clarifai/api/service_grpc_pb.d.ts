@@ -36,7 +36,8 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     getAnnotation: IV2Service_IGetAnnotation;
     listAnnotations: IV2Service_IListAnnotations;
     postTrackAnnotationsSearches: IV2Service_IPostTrackAnnotationsSearches;
-    streamTrackAnnotationsSearches: IV2Service_IStreamTrackAnnotationsSearches;
+    streamAnnotations: IV2Service_IStreamAnnotations;
+    streamLivestreamAnnotations: IV2Service_IStreamLivestreamAnnotations;
     postAnnotations: IV2Service_IPostAnnotations;
     patchAnnotations: IV2Service_IPatchAnnotations;
     patchAnnotationsStatus: IV2Service_IPatchAnnotationsStatus;
@@ -480,14 +481,23 @@ interface IV2Service_IPostTrackAnnotationsSearches extends grpc.MethodDefinition
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiAnnotationResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiAnnotationResponse>;
 }
-interface IV2Service_IStreamTrackAnnotationsSearches extends grpc.MethodDefinition<proto_clarifai_api_service_pb.StreamTrackAnnotationsSearchesRequest, proto_clarifai_api_service_pb.SingleStreamTrackAnnotationResponse> {
-    path: "/clarifai.api.V2/StreamTrackAnnotationsSearches";
+interface IV2Service_IStreamAnnotations extends grpc.MethodDefinition<proto_clarifai_api_service_pb.StreamAnnotationsRequest, proto_clarifai_api_service_pb.SingleStreamAnnotationResponse> {
+    path: "/clarifai.api.V2/StreamAnnotations";
     requestStream: false;
     responseStream: true;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.StreamTrackAnnotationsSearchesRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.StreamTrackAnnotationsSearchesRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleStreamTrackAnnotationResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleStreamTrackAnnotationResponse>;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.StreamAnnotationsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.StreamAnnotationsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleStreamAnnotationResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleStreamAnnotationResponse>;
+}
+interface IV2Service_IStreamLivestreamAnnotations extends grpc.MethodDefinition<proto_clarifai_api_service_pb.StreamLivestreamAnnotationsRequest, proto_clarifai_api_service_pb.SingleStreamAnnotationResponse> {
+    path: "/clarifai.api.V2/StreamLivestreamAnnotations";
+    requestStream: false;
+    responseStream: true;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.StreamLivestreamAnnotationsRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.StreamLivestreamAnnotationsRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleStreamAnnotationResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleStreamAnnotationResponse>;
 }
 interface IV2Service_IPostAnnotations extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostAnnotationsRequest, proto_clarifai_api_service_pb.MultiAnnotationResponse> {
     path: "/clarifai.api.V2/PostAnnotations";
@@ -2942,7 +2952,8 @@ export interface IV2Server {
     getAnnotation: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetAnnotationRequest, proto_clarifai_api_service_pb.SingleAnnotationResponse>;
     listAnnotations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListAnnotationsRequest, proto_clarifai_api_service_pb.MultiAnnotationResponse>;
     postTrackAnnotationsSearches: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest, proto_clarifai_api_service_pb.MultiAnnotationResponse>;
-    streamTrackAnnotationsSearches: grpc.handleServerStreamingCall<proto_clarifai_api_service_pb.StreamTrackAnnotationsSearchesRequest, proto_clarifai_api_service_pb.SingleStreamTrackAnnotationResponse>;
+    streamAnnotations: grpc.handleServerStreamingCall<proto_clarifai_api_service_pb.StreamAnnotationsRequest, proto_clarifai_api_service_pb.SingleStreamAnnotationResponse>;
+    streamLivestreamAnnotations: grpc.handleServerStreamingCall<proto_clarifai_api_service_pb.StreamLivestreamAnnotationsRequest, proto_clarifai_api_service_pb.SingleStreamAnnotationResponse>;
     postAnnotations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostAnnotationsRequest, proto_clarifai_api_service_pb.MultiAnnotationResponse>;
     patchAnnotations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchAnnotationsRequest, proto_clarifai_api_service_pb.MultiAnnotationResponse>;
     patchAnnotationsStatus: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchAnnotationsStatusRequest, proto_clarifai_api_service_pb.PatchAnnotationsStatusResponse>;
@@ -3273,8 +3284,10 @@ export interface IV2Client {
     postTrackAnnotationsSearches(request: proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
     postTrackAnnotationsSearches(request: proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
     postTrackAnnotationsSearches(request: proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
-    streamTrackAnnotationsSearches(request: proto_clarifai_api_service_pb.StreamTrackAnnotationsSearchesRequest, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.SingleStreamTrackAnnotationResponse>;
-    streamTrackAnnotationsSearches(request: proto_clarifai_api_service_pb.StreamTrackAnnotationsSearchesRequest, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.SingleStreamTrackAnnotationResponse>;
+    streamAnnotations(request: proto_clarifai_api_service_pb.StreamAnnotationsRequest, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.SingleStreamAnnotationResponse>;
+    streamAnnotations(request: proto_clarifai_api_service_pb.StreamAnnotationsRequest, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.SingleStreamAnnotationResponse>;
+    streamLivestreamAnnotations(request: proto_clarifai_api_service_pb.StreamLivestreamAnnotationsRequest, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.SingleStreamAnnotationResponse>;
+    streamLivestreamAnnotations(request: proto_clarifai_api_service_pb.StreamLivestreamAnnotationsRequest, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.SingleStreamAnnotationResponse>;
     postAnnotations(request: proto_clarifai_api_service_pb.PostAnnotationsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
     postAnnotations(request: proto_clarifai_api_service_pb.PostAnnotationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
     postAnnotations(request: proto_clarifai_api_service_pb.PostAnnotationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
@@ -4144,8 +4157,10 @@ export class V2Client extends grpc.Client implements IV2Client {
     public postTrackAnnotationsSearches(request: proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
     public postTrackAnnotationsSearches(request: proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
     public postTrackAnnotationsSearches(request: proto_clarifai_api_service_pb.PostTrackAnnotationsSearchesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
-    public streamTrackAnnotationsSearches(request: proto_clarifai_api_service_pb.StreamTrackAnnotationsSearchesRequest, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.SingleStreamTrackAnnotationResponse>;
-    public streamTrackAnnotationsSearches(request: proto_clarifai_api_service_pb.StreamTrackAnnotationsSearchesRequest, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.SingleStreamTrackAnnotationResponse>;
+    public streamAnnotations(request: proto_clarifai_api_service_pb.StreamAnnotationsRequest, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.SingleStreamAnnotationResponse>;
+    public streamAnnotations(request: proto_clarifai_api_service_pb.StreamAnnotationsRequest, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.SingleStreamAnnotationResponse>;
+    public streamLivestreamAnnotations(request: proto_clarifai_api_service_pb.StreamLivestreamAnnotationsRequest, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.SingleStreamAnnotationResponse>;
+    public streamLivestreamAnnotations(request: proto_clarifai_api_service_pb.StreamLivestreamAnnotationsRequest, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<proto_clarifai_api_service_pb.SingleStreamAnnotationResponse>;
     public postAnnotations(request: proto_clarifai_api_service_pb.PostAnnotationsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
     public postAnnotations(request: proto_clarifai_api_service_pb.PostAnnotationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
     public postAnnotations(request: proto_clarifai_api_service_pb.PostAnnotationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiAnnotationResponse) => void): grpc.ClientUnaryCall;
