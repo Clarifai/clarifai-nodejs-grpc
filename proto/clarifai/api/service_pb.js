@@ -614,7 +614,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.clarifai.api.StreamLivestreamAnnotationsRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.clarifai.api.StreamLivestreamAnnotationsRequest.repeatedFields_, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.clarifai.api.StreamLivestreamAnnotationsRequest, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -11608,13 +11608,6 @@ proto.clarifai.api.StreamAnnotationsRequest.prototype.hasWorker = function() {
 
 
 
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.clarifai.api.StreamLivestreamAnnotationsRequest.repeatedFields_ = [4];
-
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -11647,10 +11640,7 @@ proto.clarifai.api.StreamLivestreamAnnotationsRequest.prototype.toObject = funct
 proto.clarifai.api.StreamLivestreamAnnotationsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     userAppId: (f = msg.getUserAppId()) && proto_clarifai_api_resources_pb.UserAppIDSet.toObject(includeInstance, f),
-    inputId: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    taskId: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    trackIdsList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f,
-    annotationType: jspb.Message.getFieldWithDefault(msg, 5, 0)
+    inputId: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -11696,18 +11686,6 @@ proto.clarifai.api.StreamLivestreamAnnotationsRequest.deserializeBinaryFromReade
       var value = /** @type {string} */ (reader.readString());
       msg.setInputId(value);
       break;
-    case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setTaskId(value);
-      break;
-    case 4:
-      var value = /** @type {string} */ (reader.readString());
-      msg.addTrackIds(value);
-      break;
-    case 5:
-      var value = /** @type {!proto.clarifai.api.AnnotationDataType} */ (reader.readEnum());
-      msg.setAnnotationType(value);
-      break;
     default:
       reader.skipField();
       break;
@@ -11749,27 +11727,6 @@ proto.clarifai.api.StreamLivestreamAnnotationsRequest.serializeBinaryToWriter = 
   if (f.length > 0) {
     writer.writeString(
       2,
-      f
-    );
-  }
-  f = message.getTaskId();
-  if (f.length > 0) {
-    writer.writeString(
-      3,
-      f
-    );
-  }
-  f = message.getTrackIdsList();
-  if (f.length > 0) {
-    writer.writeRepeatedString(
-      4,
-      f
-    );
-  }
-  f = message.getAnnotationType();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      5,
       f
     );
   }
@@ -11828,79 +11785,6 @@ proto.clarifai.api.StreamLivestreamAnnotationsRequest.prototype.getInputId = fun
  */
 proto.clarifai.api.StreamLivestreamAnnotationsRequest.prototype.setInputId = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-/**
- * optional string task_id = 3;
- * @return {string}
- */
-proto.clarifai.api.StreamLivestreamAnnotationsRequest.prototype.getTaskId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.clarifai.api.StreamLivestreamAnnotationsRequest} returns this
- */
-proto.clarifai.api.StreamLivestreamAnnotationsRequest.prototype.setTaskId = function(value) {
-  return jspb.Message.setProto3StringField(this, 3, value);
-};
-
-
-/**
- * repeated string track_ids = 4;
- * @return {!Array<string>}
- */
-proto.clarifai.api.StreamLivestreamAnnotationsRequest.prototype.getTrackIdsList = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 4));
-};
-
-
-/**
- * @param {!Array<string>} value
- * @return {!proto.clarifai.api.StreamLivestreamAnnotationsRequest} returns this
- */
-proto.clarifai.api.StreamLivestreamAnnotationsRequest.prototype.setTrackIdsList = function(value) {
-  return jspb.Message.setField(this, 4, value || []);
-};
-
-
-/**
- * @param {string} value
- * @param {number=} opt_index
- * @return {!proto.clarifai.api.StreamLivestreamAnnotationsRequest} returns this
- */
-proto.clarifai.api.StreamLivestreamAnnotationsRequest.prototype.addTrackIds = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 4, value, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
- * @return {!proto.clarifai.api.StreamLivestreamAnnotationsRequest} returns this
- */
-proto.clarifai.api.StreamLivestreamAnnotationsRequest.prototype.clearTrackIdsList = function() {
-  return this.setTrackIdsList([]);
-};
-
-
-/**
- * optional AnnotationDataType annotation_type = 5;
- * @return {!proto.clarifai.api.AnnotationDataType}
- */
-proto.clarifai.api.StreamLivestreamAnnotationsRequest.prototype.getAnnotationType = function() {
-  return /** @type {!proto.clarifai.api.AnnotationDataType} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
-};
-
-
-/**
- * @param {!proto.clarifai.api.AnnotationDataType} value
- * @return {!proto.clarifai.api.StreamLivestreamAnnotationsRequest} returns this
- */
-proto.clarifai.api.StreamLivestreamAnnotationsRequest.prototype.setAnnotationType = function(value) {
-  return jspb.Message.setProto3EnumField(this, 5, value);
 };
 
 

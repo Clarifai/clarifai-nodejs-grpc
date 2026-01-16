@@ -245,14 +245,6 @@ export class StreamLivestreamAnnotationsRequest extends jspb.Message {
     setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): StreamLivestreamAnnotationsRequest;
     getInputId(): string;
     setInputId(value: string): StreamLivestreamAnnotationsRequest;
-    getTaskId(): string;
-    setTaskId(value: string): StreamLivestreamAnnotationsRequest;
-    clearTrackIdsList(): void;
-    getTrackIdsList(): Array<string>;
-    setTrackIdsList(value: Array<string>): StreamLivestreamAnnotationsRequest;
-    addTrackIds(value: string, index?: number): string;
-    getAnnotationType(): proto_clarifai_api_resources_pb.AnnotationDataType;
-    setAnnotationType(value: proto_clarifai_api_resources_pb.AnnotationDataType): StreamLivestreamAnnotationsRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): StreamLivestreamAnnotationsRequest.AsObject;
@@ -268,9 +260,6 @@ export namespace StreamLivestreamAnnotationsRequest {
     export type AsObject = {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         inputId: string,
-        taskId: string,
-        trackIdsList: Array<string>,
-        annotationType: proto_clarifai_api_resources_pb.AnnotationDataType,
     }
 }
 
