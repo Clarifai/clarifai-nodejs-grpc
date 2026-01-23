@@ -720,6 +720,41 @@ export namespace UserAppIDSet {
     }
 }
 
+export class WorkerIDSet extends jspb.Message { 
+    getUserId(): string;
+    setUserId(value: string): WorkerIDSet;
+    getAppId(): string;
+    setAppId(value: string): WorkerIDSet;
+    getModelId(): string;
+    setModelId(value: string): WorkerIDSet;
+    getModelVersionId(): string;
+    setModelVersionId(value: string): WorkerIDSet;
+    getWorkflowId(): string;
+    setWorkflowId(value: string): WorkerIDSet;
+    getWorkflowVersionId(): string;
+    setWorkflowVersionId(value: string): WorkerIDSet;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): WorkerIDSet.AsObject;
+    static toObject(includeInstance: boolean, msg: WorkerIDSet): WorkerIDSet.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: WorkerIDSet, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): WorkerIDSet;
+    static deserializeBinaryFromReader(message: WorkerIDSet, reader: jspb.BinaryReader): WorkerIDSet;
+}
+
+export namespace WorkerIDSet {
+    export type AsObject = {
+        userId: string,
+        appId: string,
+        modelId: string,
+        modelVersionId: string,
+        workflowId: string,
+        workflowVersionId: string,
+    }
+}
+
 export class PatchAction extends jspb.Message { 
     getOp(): string;
     setOp(value: string): PatchAction;

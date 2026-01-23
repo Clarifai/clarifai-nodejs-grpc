@@ -7728,7 +7728,8 @@ message ListTasksRequest {
   // to 128.
   uint32 per_page = 3;
   // Get tasks that have ANY user from this list assigned as worker.
-  repeated string worker_user_ids = 4;
+  // Deprecated: Use worker_ids.
+  repeated string worker_user_ids = 4 [deprecated = true];
   // Get tasks that have ANY user from this list assigned as reviewer.
   repeated string review_user_ids = 5;
   // Get tasks that are associated to ANY label order from this list.
@@ -7761,6 +7762,8 @@ message ListTasksRequest {
 
   // (optional) ids of input source to be filtered
   repeated string input_source_ids = 11;
+
+  repeated WorkerIDSet worker_ids = 12;
 }
 
 // Request to patch a list of tasks.

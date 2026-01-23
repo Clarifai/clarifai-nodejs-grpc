@@ -70802,7 +70802,7 @@ proto.clarifai.api.GetTaskRequest.prototype.clearAdditionalFieldsList = function
  * @private {!Array<number>}
  * @const
  */
-proto.clarifai.api.ListTasksRequest.repeatedFields_ = [4,5,8,7,9,11];
+proto.clarifai.api.ListTasksRequest.repeatedFields_ = [4,5,8,7,9,11,12];
 
 
 
@@ -70845,7 +70845,9 @@ proto.clarifai.api.ListTasksRequest.toObject = function(includeInstance, msg) {
     additionalFieldsList: (f = jspb.Message.getRepeatedField(msg, 7)) == null ? undefined : f,
     idsList: (f = jspb.Message.getRepeatedField(msg, 9)) == null ? undefined : f,
     inputSourceType: jspb.Message.getFieldWithDefault(msg, 10, 0),
-    inputSourceIdsList: (f = jspb.Message.getRepeatedField(msg, 11)) == null ? undefined : f
+    inputSourceIdsList: (f = jspb.Message.getRepeatedField(msg, 11)) == null ? undefined : f,
+    workerIdsList: jspb.Message.toObjectList(msg.getWorkerIdsList(),
+    proto_clarifai_api_resources_pb.WorkerIDSet.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -70926,6 +70928,11 @@ proto.clarifai.api.ListTasksRequest.deserializeBinaryFromReader = function(msg, 
     case 11:
       var value = /** @type {string} */ (reader.readString());
       msg.addInputSourceIds(value);
+      break;
+    case 12:
+      var value = new proto_clarifai_api_resources_pb.WorkerIDSet;
+      reader.readMessage(value,proto_clarifai_api_resources_pb.WorkerIDSet.deserializeBinaryFromReader);
+      msg.addWorkerIds(value);
       break;
     default:
       reader.skipField();
@@ -71032,6 +71039,14 @@ proto.clarifai.api.ListTasksRequest.serializeBinaryToWriter = function(message, 
     writer.writeRepeatedString(
       11,
       f
+    );
+  }
+  f = message.getWorkerIdsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      12,
+      f,
+      proto_clarifai_api_resources_pb.WorkerIDSet.serializeBinaryToWriter
     );
   }
 };
@@ -71365,6 +71380,44 @@ proto.clarifai.api.ListTasksRequest.prototype.addInputSourceIds = function(value
  */
 proto.clarifai.api.ListTasksRequest.prototype.clearInputSourceIdsList = function() {
   return this.setInputSourceIdsList([]);
+};
+
+
+/**
+ * repeated WorkerIDSet worker_ids = 12;
+ * @return {!Array<!proto.clarifai.api.WorkerIDSet>}
+ */
+proto.clarifai.api.ListTasksRequest.prototype.getWorkerIdsList = function() {
+  return /** @type{!Array<!proto.clarifai.api.WorkerIDSet>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto_clarifai_api_resources_pb.WorkerIDSet, 12));
+};
+
+
+/**
+ * @param {!Array<!proto.clarifai.api.WorkerIDSet>} value
+ * @return {!proto.clarifai.api.ListTasksRequest} returns this
+*/
+proto.clarifai.api.ListTasksRequest.prototype.setWorkerIdsList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 12, value);
+};
+
+
+/**
+ * @param {!proto.clarifai.api.WorkerIDSet=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.WorkerIDSet}
+ */
+proto.clarifai.api.ListTasksRequest.prototype.addWorkerIds = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 12, opt_value, proto.clarifai.api.WorkerIDSet, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.ListTasksRequest} returns this
+ */
+proto.clarifai.api.ListTasksRequest.prototype.clearWorkerIdsList = function() {
+  return this.setWorkerIdsList([]);
 };
 
 

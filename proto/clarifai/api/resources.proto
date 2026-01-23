@@ -369,6 +369,21 @@ message UserAppIDSet {
   string app_id = 2;
 }
 
+// WorkerIDSet helps to identify different types of workers.
+// To identify a user, set user_id field.
+// To identify a model from current application, set model_id and model_version_id fields.
+// To identify a model from another application, set user_id, app_id, model_id and model_version_id fields.
+// To identify a workflow from current application, set workflow_id and workflow_version_id fields.
+// To identify a workflow from another application, set user_id, app_id, workflow_id and workflow_version_id fields.
+message WorkerIDSet {
+  string user_id = 1;
+  string app_id = 2;
+  string model_id = 3;
+  string model_version_id = 4;
+  string workflow_id = 5;
+  string workflow_version_id = 6;
+}
+
 // PatchAction
 message PatchAction {
   // The operation to perform on the patched metadata given a path
@@ -5760,7 +5775,7 @@ message PipelineVersionRun {
   // When the pipeline run started executing (first JOB_RUNNING status)
   google.protobuf.Timestamp started_at = 11;
 
-  // When the pipeline run finished executing (terminal status)  
+  // When the pipeline run finished executing (terminal status)
   google.protobuf.Timestamp ended_at = 12;
 
   // Total cumulative run duration excluding pause time
