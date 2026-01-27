@@ -34439,7 +34439,8 @@ proto.clarifai.api.ModelVersion.toObject = function(includeInstance, msg) {
     methodSignaturesList: jspb.Message.toObjectList(msg.getMethodSignaturesList(),
     proto.clarifai.api.MethodSignature.toObject, includeInstance),
     specialHandlingList: jspb.Message.toObjectList(msg.getSpecialHandlingList(),
-    proto.clarifai.api.SpecialHandling.toObject, includeInstance)
+    proto.clarifai.api.SpecialHandling.toObject, includeInstance),
+    numThreads: jspb.Message.getFieldWithDefault(msg, 28, 0)
   };
 
   if (includeInstance) {
@@ -34587,6 +34588,10 @@ proto.clarifai.api.ModelVersion.deserializeBinaryFromReader = function(msg, read
       var value = new proto.clarifai.api.SpecialHandling;
       reader.readMessage(value,proto.clarifai.api.SpecialHandling.deserializeBinaryFromReader);
       msg.addSpecialHandling(value);
+      break;
+    case 28:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setNumThreads(value);
       break;
     default:
       reader.skipField();
@@ -34799,6 +34804,13 @@ proto.clarifai.api.ModelVersion.serializeBinaryToWriter = function(message, writ
       27,
       f,
       proto.clarifai.api.SpecialHandling.serializeBinaryToWriter
+    );
+  }
+  f = message.getNumThreads();
+  if (f !== 0) {
+    writer.writeInt32(
+      28,
+      f
     );
   }
 };
@@ -35539,6 +35551,24 @@ proto.clarifai.api.ModelVersion.prototype.addSpecialHandling = function(opt_valu
  */
 proto.clarifai.api.ModelVersion.prototype.clearSpecialHandlingList = function() {
   return this.setSpecialHandlingList([]);
+};
+
+
+/**
+ * optional int32 num_threads = 28;
+ * @return {number}
+ */
+proto.clarifai.api.ModelVersion.prototype.getNumThreads = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 28, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.ModelVersion} returns this
+ */
+proto.clarifai.api.ModelVersion.prototype.setNumThreads = function(value) {
+  return jspb.Message.setProto3IntField(this, 28, value);
 };
 
 

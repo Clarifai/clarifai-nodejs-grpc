@@ -2162,6 +2162,8 @@ message ModelVersion {
   repeated MethodSignature method_signatures = 26;
   // List of special handling instructions for this model version.
   repeated SpecialHandling special_handling = 27;
+  // The number of threads to use for this model version.
+  int32 num_threads = 28;
 }
 
 // MethodSignature is a definition of a method that a model can have.
