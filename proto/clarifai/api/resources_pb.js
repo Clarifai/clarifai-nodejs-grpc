@@ -17578,7 +17578,7 @@ proto.clarifai.api.FrameInfo.deserializeBinaryFromReader = function(msg, reader)
       msg.setIndex(value);
       break;
     case 2:
-      var value = /** @type {number} */ (reader.readUint32());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setTime(value);
       break;
     case 3:
@@ -17623,7 +17623,7 @@ proto.clarifai.api.FrameInfo.serializeBinaryToWriter = function(message, writer)
   }
   f = message.getTime();
   if (f !== 0) {
-    writer.writeUint32(
+    writer.writeUint64(
       2,
       f
     );
@@ -17657,7 +17657,7 @@ proto.clarifai.api.FrameInfo.prototype.setIndex = function(value) {
 
 
 /**
- * optional uint32 time = 2;
+ * optional uint64 time = 2;
  * @return {number}
  */
 proto.clarifai.api.FrameInfo.prototype.getTime = function() {

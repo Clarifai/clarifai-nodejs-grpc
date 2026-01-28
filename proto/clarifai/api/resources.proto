@@ -818,8 +818,8 @@ message FrameInfo {
   // May be 0 for interpolated frames that are generated for brief time (training) or if new frame is manually added
   uint32 index = 1 [(clarifai.api.utils.cl_show_if_empty) = true, deprecated = true];
   // time in the video in milliseconds. This is independent of the sampling rates used during
-  // processing.
-  uint32 time = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+  // processing. Changed from uint32 to uint64 to support video livestreams longer than 49.7 days.
+  uint64 time = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
   // The absolute number of the frame in the (original) video
   // Different from index. Index is just the order in which frames were processed for search (and can be 0 for manual annotations)
   uint32 number = 3 [(clarifai.api.utils.cl_show_if_empty) = true];
