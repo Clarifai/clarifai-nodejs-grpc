@@ -278,6 +278,17 @@ function deserialize_clarifai_api_DeleteLabelOrdersRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.DeleteLabelOrdersRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_DeleteModelMigrationRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.DeleteModelMigrationRequest)) {
+    throw new Error('Expected argument of type clarifai.api.DeleteModelMigrationRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_DeleteModelMigrationRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.DeleteModelMigrationRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_DeleteModelRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.DeleteModelRequest)) {
     throw new Error('Expected argument of type clarifai.api.DeleteModelRequest');
@@ -5874,6 +5885,18 @@ postModelMigration: {
     responseType: proto_clarifai_api_service_pb.SingleModelResponse,
     requestSerialize: serialize_clarifai_api_PostModelMigrationRequest,
     requestDeserialize: deserialize_clarifai_api_PostModelMigrationRequest,
+    responseSerialize: serialize_clarifai_api_SingleModelResponse,
+    responseDeserialize: deserialize_clarifai_api_SingleModelResponse,
+  },
+  // Reverts a model migration from Docker format back to Triton format.
+deleteModelMigration: {
+    path: '/clarifai.api.V2/DeleteModelMigration',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.DeleteModelMigrationRequest,
+    responseType: proto_clarifai_api_service_pb.SingleModelResponse,
+    requestSerialize: serialize_clarifai_api_DeleteModelMigrationRequest,
+    requestDeserialize: deserialize_clarifai_api_DeleteModelMigrationRequest,
     responseSerialize: serialize_clarifai_api_SingleModelResponse,
     responseDeserialize: deserialize_clarifai_api_SingleModelResponse,
   },
