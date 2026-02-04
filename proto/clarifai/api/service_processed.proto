@@ -4196,6 +4196,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Add;
   }
 
   rpc PostWorkflowVersionEvaluations (PostWorkflowVersionEvaluationsRequest) returns (MultiWorkflowVersionEvaluationResponse) {

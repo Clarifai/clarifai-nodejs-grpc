@@ -72104,7 +72104,8 @@ proto.clarifai.api.Nodepool.toObject = function(includeInstance, msg) {
     visibility: (f = msg.getVisibility()) && proto.clarifai.api.Visibility.toObject(includeInstance, f),
     metadata: (f = msg.getMetadata()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
     specialHandlingList: jspb.Message.toObjectList(msg.getSpecialHandlingList(),
-    proto.clarifai.api.SpecialHandling.toObject, includeInstance)
+    proto.clarifai.api.SpecialHandling.toObject, includeInstance),
+    nodeCount: jspb.Message.getFieldWithDefault(msg, 16, 0)
   };
 
   if (includeInstance) {
@@ -72204,6 +72205,10 @@ proto.clarifai.api.Nodepool.deserializeBinaryFromReader = function(msg, reader) 
       var value = new proto.clarifai.api.SpecialHandling;
       reader.readMessage(value,proto.clarifai.api.SpecialHandling.deserializeBinaryFromReader);
       msg.addSpecialHandling(value);
+      break;
+    case 16:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setNodeCount(value);
       break;
     default:
       reader.skipField();
@@ -72338,6 +72343,13 @@ proto.clarifai.api.Nodepool.serializeBinaryToWriter = function(message, writer) 
       15,
       f,
       proto.clarifai.api.SpecialHandling.serializeBinaryToWriter
+    );
+  }
+  f = message.getNodeCount();
+  if (f !== 0) {
+    writer.writeUint32(
+      16,
+      f
     );
   }
 };
@@ -72746,6 +72758,24 @@ proto.clarifai.api.Nodepool.prototype.addSpecialHandling = function(opt_value, o
  */
 proto.clarifai.api.Nodepool.prototype.clearSpecialHandlingList = function() {
   return this.setSpecialHandlingList([]);
+};
+
+
+/**
+ * optional uint32 node_count = 16;
+ * @return {number}
+ */
+proto.clarifai.api.Nodepool.prototype.getNodeCount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 16, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.Nodepool} returns this
+ */
+proto.clarifai.api.Nodepool.prototype.setNodeCount = function(value) {
+  return jspb.Message.setProto3IntField(this, 16, value);
 };
 
 
