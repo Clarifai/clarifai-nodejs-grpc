@@ -1688,6 +1688,18 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Train;
   }
 
+  // Reverts a model migration from Docker format back to Triton format.
+  rpc DeleteModelMigration (DeleteModelMigrationRequest) returns (SingleModelResponse) {
+    option (google.api.http) = {
+      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/migration"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Delete;
+    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
+  }
+
    // Export a model
 
 
@@ -9070,6 +9082,11 @@ message ListWorkflowVersionEvaluationsRequest {
 }
 
 message PostModelMigrationRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string model_id = 2;
+}
+
+message DeleteModelMigrationRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string model_id = 2;
 }

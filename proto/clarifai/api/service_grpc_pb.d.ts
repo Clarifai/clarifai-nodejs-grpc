@@ -110,6 +110,7 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     deleteModelVersion: IV2Service_IDeleteModelVersion;
     postModelVersionsUpload: IV2Service_IPostModelVersionsUpload;
     postModelMigration: IV2Service_IPostModelMigration;
+    deleteModelMigration: IV2Service_IDeleteModelMigration;
     putModelVersionExports: IV2Service_IPutModelVersionExports;
     getModelVersionExport: IV2Service_IGetModelVersionExport;
     getModelVersionMetrics: IV2Service_IGetModelVersionMetrics;
@@ -1144,6 +1145,15 @@ interface IV2Service_IPostModelMigration extends grpc.MethodDefinition<proto_cla
     responseStream: false;
     requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostModelMigrationRequest>;
     requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostModelMigrationRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleModelResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleModelResponse>;
+}
+interface IV2Service_IDeleteModelMigration extends grpc.MethodDefinition<proto_clarifai_api_service_pb.DeleteModelMigrationRequest, proto_clarifai_api_service_pb.SingleModelResponse> {
+    path: "/clarifai.api.V2/DeleteModelMigration";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.DeleteModelMigrationRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.DeleteModelMigrationRequest>;
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleModelResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleModelResponse>;
 }
@@ -3026,6 +3036,7 @@ export interface IV2Server {
     deleteModelVersion: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteModelVersionRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     postModelVersionsUpload: grpc.handleBidiStreamingCall<proto_clarifai_api_service_pb.PostModelVersionsUploadRequest, proto_clarifai_api_service_pb.PostModelVersionsUploadResponse>;
     postModelMigration: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostModelMigrationRequest, proto_clarifai_api_service_pb.SingleModelResponse>;
+    deleteModelMigration: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteModelMigrationRequest, proto_clarifai_api_service_pb.SingleModelResponse>;
     putModelVersionExports: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PutModelVersionExportsRequest, proto_clarifai_api_service_pb.SingleModelVersionExportResponse>;
     getModelVersionExport: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetModelVersionExportRequest, proto_clarifai_api_service_pb.SingleModelVersionExportResponse>;
     getModelVersionMetrics: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetModelVersionMetricsRequest, proto_clarifai_api_service_pb.SingleModelVersionResponse>;
@@ -3503,6 +3514,9 @@ export interface IV2Client {
     postModelMigration(request: proto_clarifai_api_service_pb.PostModelMigrationRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelResponse) => void): grpc.ClientUnaryCall;
     postModelMigration(request: proto_clarifai_api_service_pb.PostModelMigrationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelResponse) => void): grpc.ClientUnaryCall;
     postModelMigration(request: proto_clarifai_api_service_pb.PostModelMigrationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelResponse) => void): grpc.ClientUnaryCall;
+    deleteModelMigration(request: proto_clarifai_api_service_pb.DeleteModelMigrationRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelResponse) => void): grpc.ClientUnaryCall;
+    deleteModelMigration(request: proto_clarifai_api_service_pb.DeleteModelMigrationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelResponse) => void): grpc.ClientUnaryCall;
+    deleteModelMigration(request: proto_clarifai_api_service_pb.DeleteModelMigrationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelResponse) => void): grpc.ClientUnaryCall;
     putModelVersionExports(request: proto_clarifai_api_service_pb.PutModelVersionExportsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionExportResponse) => void): grpc.ClientUnaryCall;
     putModelVersionExports(request: proto_clarifai_api_service_pb.PutModelVersionExportsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionExportResponse) => void): grpc.ClientUnaryCall;
     putModelVersionExports(request: proto_clarifai_api_service_pb.PutModelVersionExportsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionExportResponse) => void): grpc.ClientUnaryCall;
@@ -4374,6 +4388,9 @@ export class V2Client extends grpc.Client implements IV2Client {
     public postModelMigration(request: proto_clarifai_api_service_pb.PostModelMigrationRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelResponse) => void): grpc.ClientUnaryCall;
     public postModelMigration(request: proto_clarifai_api_service_pb.PostModelMigrationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelResponse) => void): grpc.ClientUnaryCall;
     public postModelMigration(request: proto_clarifai_api_service_pb.PostModelMigrationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelResponse) => void): grpc.ClientUnaryCall;
+    public deleteModelMigration(request: proto_clarifai_api_service_pb.DeleteModelMigrationRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelResponse) => void): grpc.ClientUnaryCall;
+    public deleteModelMigration(request: proto_clarifai_api_service_pb.DeleteModelMigrationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelResponse) => void): grpc.ClientUnaryCall;
+    public deleteModelMigration(request: proto_clarifai_api_service_pb.DeleteModelMigrationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelResponse) => void): grpc.ClientUnaryCall;
     public putModelVersionExports(request: proto_clarifai_api_service_pb.PutModelVersionExportsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionExportResponse) => void): grpc.ClientUnaryCall;
     public putModelVersionExports(request: proto_clarifai_api_service_pb.PutModelVersionExportsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionExportResponse) => void): grpc.ClientUnaryCall;
     public putModelVersionExports(request: proto_clarifai_api_service_pb.PutModelVersionExportsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModelVersionExportResponse) => void): grpc.ClientUnaryCall;

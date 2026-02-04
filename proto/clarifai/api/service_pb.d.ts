@@ -12302,6 +12302,32 @@ export namespace PostModelMigrationRequest {
     }
 }
 
+export class DeleteModelMigrationRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): DeleteModelMigrationRequest;
+    getModelId(): string;
+    setModelId(value: string): DeleteModelMigrationRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DeleteModelMigrationRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: DeleteModelMigrationRequest): DeleteModelMigrationRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DeleteModelMigrationRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DeleteModelMigrationRequest;
+    static deserializeBinaryFromReader(message: DeleteModelMigrationRequest, reader: jspb.BinaryReader): DeleteModelMigrationRequest;
+}
+
+export namespace DeleteModelMigrationRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        modelId: string,
+    }
+}
+
 export class ListWorkflowVersionEvaluationDataRequest extends jspb.Message { 
 
     hasUserAppId(): boolean;
