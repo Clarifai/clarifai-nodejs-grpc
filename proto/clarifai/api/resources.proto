@@ -4825,9 +4825,6 @@ message Nodepool {
   // List of special handling instructions for this nodepool.
   repeated SpecialHandling special_handling = 15;
 
-  // Active Node Count
-  uint32 node_count = 16;
-
   // Other future configuration we can add:
   // - disk information
   // - architecture type (ARM/x86)
