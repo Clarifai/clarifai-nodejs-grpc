@@ -102357,7 +102357,8 @@ proto.clarifai.api.PostModelMigrationRequest.prototype.toObject = function(opt_i
 proto.clarifai.api.PostModelMigrationRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     userAppId: (f = msg.getUserAppId()) && proto_clarifai_api_resources_pb.UserAppIDSet.toObject(includeInstance, f),
-    modelId: jspb.Message.getFieldWithDefault(msg, 2, "")
+    modelId: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    versionId: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -102403,6 +102404,10 @@ proto.clarifai.api.PostModelMigrationRequest.deserializeBinaryFromReader = funct
       var value = /** @type {string} */ (reader.readString());
       msg.setModelId(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setVersionId(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -102444,6 +102449,13 @@ proto.clarifai.api.PostModelMigrationRequest.serializeBinaryToWriter = function(
   if (f.length > 0) {
     writer.writeString(
       2,
+      f
+    );
+  }
+  f = message.getVersionId();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
       f
     );
   }
@@ -102502,6 +102514,24 @@ proto.clarifai.api.PostModelMigrationRequest.prototype.getModelId = function() {
  */
 proto.clarifai.api.PostModelMigrationRequest.prototype.setModelId = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string version_id = 3;
+ * @return {string}
+ */
+proto.clarifai.api.PostModelMigrationRequest.prototype.getVersionId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.PostModelMigrationRequest} returns this
+ */
+proto.clarifai.api.PostModelMigrationRequest.prototype.setVersionId = function(value) {
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
