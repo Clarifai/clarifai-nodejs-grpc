@@ -161,8 +161,7 @@ enum S {
                          (clarifai_depending_scopes) = Workflows_Add,
                          (clarifai_depending_scopes) = Workflows_Get];
 
-  // DEPRECATED
-  WorkflowMetrics_Get = 96 [(clarfai_exposed) = true];
+  WorkflowMetrics_Get = 96 [(clarfai_exposed) = true, deprecated = true];
 
   WorkflowMetrics_Add = 97 [(clarfai_exposed) = true,
                            (clarifai_depending_scopes) = WorkflowMetrics_Get];
@@ -325,9 +324,9 @@ enum S {
 
 
   // CRUD on FindDuplicateAnnotationsJobs table
-  // DEPRECATED
   FindDuplicateAnnotationsJobs_Add = 102 [(clarfai_exposed) = true,
-  (clarifai_depending_scopes) = FindDuplicateAnnotationsJobs_Get];
+    (clarifai_depending_scopes) = FindDuplicateAnnotationsJobs_Get,
+    deprecated = true];
   FindDuplicateAnnotationsJobs_Get = 103 [(clarfai_exposed) = true];
   FindDuplicateAnnotationsJobs_Delete = 104 [(clarfai_exposed) = true,
         (clarifai_depending_scopes) = FindDuplicateAnnotationsJobs_Add,
