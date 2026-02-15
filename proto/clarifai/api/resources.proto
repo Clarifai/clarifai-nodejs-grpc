@@ -4825,6 +4825,10 @@ message Nodepool {
   // List of special handling instructions for this nodepool.
   repeated SpecialHandling special_handling = 15;
 
+  // The current number of nodes in this nodepool. This value is queried from Prometheus metrics
+  // and represents the most recent node count reported by the compute plane.
+  uint32 node_count = 16;
+
   // Other future configuration we can add:
   // - disk information
   // - architecture type (ARM/x86)
