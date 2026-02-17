@@ -197,22 +197,6 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     deleteCollectors: IV2Service_IDeleteCollectors;
     postStatValues: IV2Service_IPostStatValues;
     postStatValuesAggregate: IV2Service_IPostStatValuesAggregate;
-    getModule: IV2Service_IGetModule;
-    listModules: IV2Service_IListModules;
-    postModules: IV2Service_IPostModules;
-    patchModules: IV2Service_IPatchModules;
-    deleteModules: IV2Service_IDeleteModules;
-    getModuleVersion: IV2Service_IGetModuleVersion;
-    listModuleVersions: IV2Service_IListModuleVersions;
-    postModuleVersions: IV2Service_IPostModuleVersions;
-    patchModuleVersions: IV2Service_IPatchModuleVersions;
-    deleteModuleVersions: IV2Service_IDeleteModuleVersions;
-    getModuleVersionUsageCount: IV2Service_IGetModuleVersionUsageCount;
-    getInstalledModuleVersion: IV2Service_IGetInstalledModuleVersion;
-    listInstalledModuleVersions: IV2Service_IListInstalledModuleVersions;
-    postInstalledModuleVersions: IV2Service_IPostInstalledModuleVersions;
-    deleteInstalledModuleVersions: IV2Service_IDeleteInstalledModuleVersions;
-    postInstalledModuleVersionsKey: IV2Service_IPostInstalledModuleVersionsKey;
     postBulkOperations: IV2Service_IPostBulkOperations;
     listBulkOperations: IV2Service_IListBulkOperations;
     getBulkOperation: IV2Service_IGetBulkOperation;
@@ -1931,150 +1915,6 @@ interface IV2Service_IPostStatValuesAggregate extends grpc.MethodDefinition<prot
     responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiStatValueAggregateResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiStatValueAggregateResponse>;
 }
-interface IV2Service_IGetModule extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetModuleRequest, proto_clarifai_api_service_pb.SingleModuleResponse> {
-    path: "/clarifai.api.V2/GetModule";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.GetModuleRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.GetModuleRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleModuleResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleModuleResponse>;
-}
-interface IV2Service_IListModules extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListModulesRequest, proto_clarifai_api_service_pb.MultiModuleResponse> {
-    path: "/clarifai.api.V2/ListModules";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListModulesRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListModulesRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiModuleResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiModuleResponse>;
-}
-interface IV2Service_IPostModules extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostModulesRequest, proto_clarifai_api_service_pb.MultiModuleResponse> {
-    path: "/clarifai.api.V2/PostModules";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostModulesRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostModulesRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiModuleResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiModuleResponse>;
-}
-interface IV2Service_IPatchModules extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PatchModulesRequest, proto_clarifai_api_service_pb.MultiModuleResponse> {
-    path: "/clarifai.api.V2/PatchModules";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PatchModulesRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PatchModulesRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiModuleResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiModuleResponse>;
-}
-interface IV2Service_IDeleteModules extends grpc.MethodDefinition<proto_clarifai_api_service_pb.DeleteModulesRequest, proto_clarifai_api_status_status_pb.BaseResponse> {
-    path: "/clarifai.api.V2/DeleteModules";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.DeleteModulesRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.DeleteModulesRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
-}
-interface IV2Service_IGetModuleVersion extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetModuleVersionRequest, proto_clarifai_api_service_pb.SingleModuleVersionResponse> {
-    path: "/clarifai.api.V2/GetModuleVersion";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.GetModuleVersionRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.GetModuleVersionRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleModuleVersionResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleModuleVersionResponse>;
-}
-interface IV2Service_IListModuleVersions extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListModuleVersionsRequest, proto_clarifai_api_service_pb.MultiModuleVersionResponse> {
-    path: "/clarifai.api.V2/ListModuleVersions";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListModuleVersionsRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListModuleVersionsRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiModuleVersionResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiModuleVersionResponse>;
-}
-interface IV2Service_IPostModuleVersions extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostModuleVersionsRequest, proto_clarifai_api_service_pb.MultiModuleVersionResponse> {
-    path: "/clarifai.api.V2/PostModuleVersions";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostModuleVersionsRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostModuleVersionsRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiModuleVersionResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiModuleVersionResponse>;
-}
-interface IV2Service_IPatchModuleVersions extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PatchModuleVersionsRequest, proto_clarifai_api_service_pb.MultiModuleVersionResponse> {
-    path: "/clarifai.api.V2/PatchModuleVersions";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PatchModuleVersionsRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PatchModuleVersionsRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiModuleVersionResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiModuleVersionResponse>;
-}
-interface IV2Service_IDeleteModuleVersions extends grpc.MethodDefinition<proto_clarifai_api_service_pb.DeleteModuleVersionsRequest, proto_clarifai_api_status_status_pb.BaseResponse> {
-    path: "/clarifai.api.V2/DeleteModuleVersions";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.DeleteModuleVersionsRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.DeleteModuleVersionsRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
-}
-interface IV2Service_IGetModuleVersionUsageCount extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetModuleVersionUsageCountRequest, proto_clarifai_api_service_pb.SingleModuleVersionUsageCountResponse> {
-    path: "/clarifai.api.V2/GetModuleVersionUsageCount";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.GetModuleVersionUsageCountRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.GetModuleVersionUsageCountRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleModuleVersionUsageCountResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleModuleVersionUsageCountResponse>;
-}
-interface IV2Service_IGetInstalledModuleVersion extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetInstalledModuleVersionRequest, proto_clarifai_api_service_pb.SingleInstalledModuleVersionResponse> {
-    path: "/clarifai.api.V2/GetInstalledModuleVersion";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.GetInstalledModuleVersionRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.GetInstalledModuleVersionRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleInstalledModuleVersionResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleInstalledModuleVersionResponse>;
-}
-interface IV2Service_IListInstalledModuleVersions extends grpc.MethodDefinition<proto_clarifai_api_service_pb.ListInstalledModuleVersionsRequest, proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse> {
-    path: "/clarifai.api.V2/ListInstalledModuleVersions";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.ListInstalledModuleVersionsRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.ListInstalledModuleVersionsRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse>;
-}
-interface IV2Service_IPostInstalledModuleVersions extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostInstalledModuleVersionsRequest, proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse> {
-    path: "/clarifai.api.V2/PostInstalledModuleVersions";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostInstalledModuleVersionsRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostInstalledModuleVersionsRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse>;
-}
-interface IV2Service_IDeleteInstalledModuleVersions extends grpc.MethodDefinition<proto_clarifai_api_service_pb.DeleteInstalledModuleVersionsRequest, proto_clarifai_api_status_status_pb.BaseResponse> {
-    path: "/clarifai.api.V2/DeleteInstalledModuleVersions";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.DeleteInstalledModuleVersionsRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.DeleteInstalledModuleVersionsRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
-}
-interface IV2Service_IPostInstalledModuleVersionsKey extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostInstalledModuleVersionsKeyRequest, proto_clarifai_api_service_pb.SingleKeyResponse> {
-    path: "/clarifai.api.V2/PostInstalledModuleVersionsKey";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostInstalledModuleVersionsKeyRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostInstalledModuleVersionsKeyRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.SingleKeyResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.SingleKeyResponse>;
-}
 interface IV2Service_IPostBulkOperations extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostBulkOperationsRequest, proto_clarifai_api_service_pb.MultiBulkOperationsResponse> {
     path: "/clarifai.api.V2/PostBulkOperations";
     requestStream: false;
@@ -3123,22 +2963,6 @@ export interface IV2Server {
     deleteCollectors: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteCollectorsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     postStatValues: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostStatValuesRequest, proto_clarifai_api_service_pb.MultiStatValueResponse>;
     postStatValuesAggregate: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, proto_clarifai_api_service_pb.MultiStatValueAggregateResponse>;
-    getModule: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetModuleRequest, proto_clarifai_api_service_pb.SingleModuleResponse>;
-    listModules: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListModulesRequest, proto_clarifai_api_service_pb.MultiModuleResponse>;
-    postModules: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostModulesRequest, proto_clarifai_api_service_pb.MultiModuleResponse>;
-    patchModules: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchModulesRequest, proto_clarifai_api_service_pb.MultiModuleResponse>;
-    deleteModules: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteModulesRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
-    getModuleVersion: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetModuleVersionRequest, proto_clarifai_api_service_pb.SingleModuleVersionResponse>;
-    listModuleVersions: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListModuleVersionsRequest, proto_clarifai_api_service_pb.MultiModuleVersionResponse>;
-    postModuleVersions: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostModuleVersionsRequest, proto_clarifai_api_service_pb.MultiModuleVersionResponse>;
-    patchModuleVersions: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchModuleVersionsRequest, proto_clarifai_api_service_pb.MultiModuleVersionResponse>;
-    deleteModuleVersions: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteModuleVersionsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
-    getModuleVersionUsageCount: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetModuleVersionUsageCountRequest, proto_clarifai_api_service_pb.SingleModuleVersionUsageCountResponse>;
-    getInstalledModuleVersion: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetInstalledModuleVersionRequest, proto_clarifai_api_service_pb.SingleInstalledModuleVersionResponse>;
-    listInstalledModuleVersions: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListInstalledModuleVersionsRequest, proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse>;
-    postInstalledModuleVersions: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostInstalledModuleVersionsRequest, proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse>;
-    deleteInstalledModuleVersions: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteInstalledModuleVersionsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
-    postInstalledModuleVersionsKey: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostInstalledModuleVersionsKeyRequest, proto_clarifai_api_service_pb.SingleKeyResponse>;
     postBulkOperations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostBulkOperationsRequest, proto_clarifai_api_service_pb.MultiBulkOperationsResponse>;
     listBulkOperations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListBulkOperationsRequest, proto_clarifai_api_service_pb.MultiBulkOperationsResponse>;
     getBulkOperation: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetBulkOperationRequest, proto_clarifai_api_service_pb.SingleBulkOperationsResponse>;
@@ -3775,54 +3599,6 @@ export interface IV2Client {
     postStatValuesAggregate(request: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse) => void): grpc.ClientUnaryCall;
     postStatValuesAggregate(request: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse) => void): grpc.ClientUnaryCall;
     postStatValuesAggregate(request: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse) => void): grpc.ClientUnaryCall;
-    getModule(request: proto_clarifai_api_service_pb.GetModuleRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleResponse) => void): grpc.ClientUnaryCall;
-    getModule(request: proto_clarifai_api_service_pb.GetModuleRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleResponse) => void): grpc.ClientUnaryCall;
-    getModule(request: proto_clarifai_api_service_pb.GetModuleRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleResponse) => void): grpc.ClientUnaryCall;
-    listModules(request: proto_clarifai_api_service_pb.ListModulesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleResponse) => void): grpc.ClientUnaryCall;
-    listModules(request: proto_clarifai_api_service_pb.ListModulesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleResponse) => void): grpc.ClientUnaryCall;
-    listModules(request: proto_clarifai_api_service_pb.ListModulesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleResponse) => void): grpc.ClientUnaryCall;
-    postModules(request: proto_clarifai_api_service_pb.PostModulesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleResponse) => void): grpc.ClientUnaryCall;
-    postModules(request: proto_clarifai_api_service_pb.PostModulesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleResponse) => void): grpc.ClientUnaryCall;
-    postModules(request: proto_clarifai_api_service_pb.PostModulesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleResponse) => void): grpc.ClientUnaryCall;
-    patchModules(request: proto_clarifai_api_service_pb.PatchModulesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleResponse) => void): grpc.ClientUnaryCall;
-    patchModules(request: proto_clarifai_api_service_pb.PatchModulesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleResponse) => void): grpc.ClientUnaryCall;
-    patchModules(request: proto_clarifai_api_service_pb.PatchModulesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleResponse) => void): grpc.ClientUnaryCall;
-    deleteModules(request: proto_clarifai_api_service_pb.DeleteModulesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    deleteModules(request: proto_clarifai_api_service_pb.DeleteModulesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    deleteModules(request: proto_clarifai_api_service_pb.DeleteModulesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    getModuleVersion(request: proto_clarifai_api_service_pb.GetModuleVersionRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    getModuleVersion(request: proto_clarifai_api_service_pb.GetModuleVersionRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    getModuleVersion(request: proto_clarifai_api_service_pb.GetModuleVersionRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    listModuleVersions(request: proto_clarifai_api_service_pb.ListModuleVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    listModuleVersions(request: proto_clarifai_api_service_pb.ListModuleVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    listModuleVersions(request: proto_clarifai_api_service_pb.ListModuleVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    postModuleVersions(request: proto_clarifai_api_service_pb.PostModuleVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    postModuleVersions(request: proto_clarifai_api_service_pb.PostModuleVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    postModuleVersions(request: proto_clarifai_api_service_pb.PostModuleVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    patchModuleVersions(request: proto_clarifai_api_service_pb.PatchModuleVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    patchModuleVersions(request: proto_clarifai_api_service_pb.PatchModuleVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    patchModuleVersions(request: proto_clarifai_api_service_pb.PatchModuleVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    deleteModuleVersions(request: proto_clarifai_api_service_pb.DeleteModuleVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    deleteModuleVersions(request: proto_clarifai_api_service_pb.DeleteModuleVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    deleteModuleVersions(request: proto_clarifai_api_service_pb.DeleteModuleVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    getModuleVersionUsageCount(request: proto_clarifai_api_service_pb.GetModuleVersionUsageCountRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleVersionUsageCountResponse) => void): grpc.ClientUnaryCall;
-    getModuleVersionUsageCount(request: proto_clarifai_api_service_pb.GetModuleVersionUsageCountRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleVersionUsageCountResponse) => void): grpc.ClientUnaryCall;
-    getModuleVersionUsageCount(request: proto_clarifai_api_service_pb.GetModuleVersionUsageCountRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleVersionUsageCountResponse) => void): grpc.ClientUnaryCall;
-    getInstalledModuleVersion(request: proto_clarifai_api_service_pb.GetInstalledModuleVersionRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleInstalledModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    getInstalledModuleVersion(request: proto_clarifai_api_service_pb.GetInstalledModuleVersionRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleInstalledModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    getInstalledModuleVersion(request: proto_clarifai_api_service_pb.GetInstalledModuleVersionRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleInstalledModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    listInstalledModuleVersions(request: proto_clarifai_api_service_pb.ListInstalledModuleVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    listInstalledModuleVersions(request: proto_clarifai_api_service_pb.ListInstalledModuleVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    listInstalledModuleVersions(request: proto_clarifai_api_service_pb.ListInstalledModuleVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    postInstalledModuleVersions(request: proto_clarifai_api_service_pb.PostInstalledModuleVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    postInstalledModuleVersions(request: proto_clarifai_api_service_pb.PostInstalledModuleVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    postInstalledModuleVersions(request: proto_clarifai_api_service_pb.PostInstalledModuleVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    deleteInstalledModuleVersions(request: proto_clarifai_api_service_pb.DeleteInstalledModuleVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    deleteInstalledModuleVersions(request: proto_clarifai_api_service_pb.DeleteInstalledModuleVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    deleteInstalledModuleVersions(request: proto_clarifai_api_service_pb.DeleteInstalledModuleVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    postInstalledModuleVersionsKey(request: proto_clarifai_api_service_pb.PostInstalledModuleVersionsKeyRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleKeyResponse) => void): grpc.ClientUnaryCall;
-    postInstalledModuleVersionsKey(request: proto_clarifai_api_service_pb.PostInstalledModuleVersionsKeyRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleKeyResponse) => void): grpc.ClientUnaryCall;
-    postInstalledModuleVersionsKey(request: proto_clarifai_api_service_pb.PostInstalledModuleVersionsKeyRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleKeyResponse) => void): grpc.ClientUnaryCall;
     postBulkOperations(request: proto_clarifai_api_service_pb.PostBulkOperationsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiBulkOperationsResponse) => void): grpc.ClientUnaryCall;
     postBulkOperations(request: proto_clarifai_api_service_pb.PostBulkOperationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiBulkOperationsResponse) => void): grpc.ClientUnaryCall;
     postBulkOperations(request: proto_clarifai_api_service_pb.PostBulkOperationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiBulkOperationsResponse) => void): grpc.ClientUnaryCall;
@@ -4649,54 +4425,6 @@ export class V2Client extends grpc.Client implements IV2Client {
     public postStatValuesAggregate(request: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse) => void): grpc.ClientUnaryCall;
     public postStatValuesAggregate(request: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse) => void): grpc.ClientUnaryCall;
     public postStatValuesAggregate(request: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse) => void): grpc.ClientUnaryCall;
-    public getModule(request: proto_clarifai_api_service_pb.GetModuleRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleResponse) => void): grpc.ClientUnaryCall;
-    public getModule(request: proto_clarifai_api_service_pb.GetModuleRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleResponse) => void): grpc.ClientUnaryCall;
-    public getModule(request: proto_clarifai_api_service_pb.GetModuleRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleResponse) => void): grpc.ClientUnaryCall;
-    public listModules(request: proto_clarifai_api_service_pb.ListModulesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleResponse) => void): grpc.ClientUnaryCall;
-    public listModules(request: proto_clarifai_api_service_pb.ListModulesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleResponse) => void): grpc.ClientUnaryCall;
-    public listModules(request: proto_clarifai_api_service_pb.ListModulesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleResponse) => void): grpc.ClientUnaryCall;
-    public postModules(request: proto_clarifai_api_service_pb.PostModulesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleResponse) => void): grpc.ClientUnaryCall;
-    public postModules(request: proto_clarifai_api_service_pb.PostModulesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleResponse) => void): grpc.ClientUnaryCall;
-    public postModules(request: proto_clarifai_api_service_pb.PostModulesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleResponse) => void): grpc.ClientUnaryCall;
-    public patchModules(request: proto_clarifai_api_service_pb.PatchModulesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleResponse) => void): grpc.ClientUnaryCall;
-    public patchModules(request: proto_clarifai_api_service_pb.PatchModulesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleResponse) => void): grpc.ClientUnaryCall;
-    public patchModules(request: proto_clarifai_api_service_pb.PatchModulesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleResponse) => void): grpc.ClientUnaryCall;
-    public deleteModules(request: proto_clarifai_api_service_pb.DeleteModulesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public deleteModules(request: proto_clarifai_api_service_pb.DeleteModulesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public deleteModules(request: proto_clarifai_api_service_pb.DeleteModulesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public getModuleVersion(request: proto_clarifai_api_service_pb.GetModuleVersionRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public getModuleVersion(request: proto_clarifai_api_service_pb.GetModuleVersionRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public getModuleVersion(request: proto_clarifai_api_service_pb.GetModuleVersionRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public listModuleVersions(request: proto_clarifai_api_service_pb.ListModuleVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public listModuleVersions(request: proto_clarifai_api_service_pb.ListModuleVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public listModuleVersions(request: proto_clarifai_api_service_pb.ListModuleVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public postModuleVersions(request: proto_clarifai_api_service_pb.PostModuleVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public postModuleVersions(request: proto_clarifai_api_service_pb.PostModuleVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public postModuleVersions(request: proto_clarifai_api_service_pb.PostModuleVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public patchModuleVersions(request: proto_clarifai_api_service_pb.PatchModuleVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public patchModuleVersions(request: proto_clarifai_api_service_pb.PatchModuleVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public patchModuleVersions(request: proto_clarifai_api_service_pb.PatchModuleVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public deleteModuleVersions(request: proto_clarifai_api_service_pb.DeleteModuleVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public deleteModuleVersions(request: proto_clarifai_api_service_pb.DeleteModuleVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public deleteModuleVersions(request: proto_clarifai_api_service_pb.DeleteModuleVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public getModuleVersionUsageCount(request: proto_clarifai_api_service_pb.GetModuleVersionUsageCountRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleVersionUsageCountResponse) => void): grpc.ClientUnaryCall;
-    public getModuleVersionUsageCount(request: proto_clarifai_api_service_pb.GetModuleVersionUsageCountRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleVersionUsageCountResponse) => void): grpc.ClientUnaryCall;
-    public getModuleVersionUsageCount(request: proto_clarifai_api_service_pb.GetModuleVersionUsageCountRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleModuleVersionUsageCountResponse) => void): grpc.ClientUnaryCall;
-    public getInstalledModuleVersion(request: proto_clarifai_api_service_pb.GetInstalledModuleVersionRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleInstalledModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public getInstalledModuleVersion(request: proto_clarifai_api_service_pb.GetInstalledModuleVersionRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleInstalledModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public getInstalledModuleVersion(request: proto_clarifai_api_service_pb.GetInstalledModuleVersionRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleInstalledModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public listInstalledModuleVersions(request: proto_clarifai_api_service_pb.ListInstalledModuleVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public listInstalledModuleVersions(request: proto_clarifai_api_service_pb.ListInstalledModuleVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public listInstalledModuleVersions(request: proto_clarifai_api_service_pb.ListInstalledModuleVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public postInstalledModuleVersions(request: proto_clarifai_api_service_pb.PostInstalledModuleVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public postInstalledModuleVersions(request: proto_clarifai_api_service_pb.PostInstalledModuleVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public postInstalledModuleVersions(request: proto_clarifai_api_service_pb.PostInstalledModuleVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse) => void): grpc.ClientUnaryCall;
-    public deleteInstalledModuleVersions(request: proto_clarifai_api_service_pb.DeleteInstalledModuleVersionsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public deleteInstalledModuleVersions(request: proto_clarifai_api_service_pb.DeleteInstalledModuleVersionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public deleteInstalledModuleVersions(request: proto_clarifai_api_service_pb.DeleteInstalledModuleVersionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public postInstalledModuleVersionsKey(request: proto_clarifai_api_service_pb.PostInstalledModuleVersionsKeyRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleKeyResponse) => void): grpc.ClientUnaryCall;
-    public postInstalledModuleVersionsKey(request: proto_clarifai_api_service_pb.PostInstalledModuleVersionsKeyRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleKeyResponse) => void): grpc.ClientUnaryCall;
-    public postInstalledModuleVersionsKey(request: proto_clarifai_api_service_pb.PostInstalledModuleVersionsKeyRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleKeyResponse) => void): grpc.ClientUnaryCall;
     public postBulkOperations(request: proto_clarifai_api_service_pb.PostBulkOperationsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiBulkOperationsResponse) => void): grpc.ClientUnaryCall;
     public postBulkOperations(request: proto_clarifai_api_service_pb.PostBulkOperationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiBulkOperationsResponse) => void): grpc.ClientUnaryCall;
     public postBulkOperations(request: proto_clarifai_api_service_pb.PostBulkOperationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiBulkOperationsResponse) => void): grpc.ClientUnaryCall;

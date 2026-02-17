@@ -245,17 +245,6 @@ function deserialize_clarifai_api_DeleteInputsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.DeleteInputsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_DeleteInstalledModuleVersionsRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.DeleteInstalledModuleVersionsRequest)) {
-    throw new Error('Expected argument of type clarifai.api.DeleteInstalledModuleVersionsRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_DeleteInstalledModuleVersionsRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.DeleteInstalledModuleVersionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_clarifai_api_DeleteKeyRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.DeleteKeyRequest)) {
     throw new Error('Expected argument of type clarifai.api.DeleteKeyRequest');
@@ -320,28 +309,6 @@ function serialize_clarifai_api_DeleteModelsRequest(arg) {
 
 function deserialize_clarifai_api_DeleteModelsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.DeleteModelsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_DeleteModuleVersionsRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.DeleteModuleVersionsRequest)) {
-    throw new Error('Expected argument of type clarifai.api.DeleteModuleVersionsRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_DeleteModuleVersionsRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.DeleteModuleVersionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_DeleteModulesRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.DeleteModulesRequest)) {
-    throw new Error('Expected argument of type clarifai.api.DeleteModulesRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_DeleteModulesRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.DeleteModulesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_DeleteNodepoolsRequest(arg) {
@@ -729,17 +696,6 @@ function deserialize_clarifai_api_GetInputsExtractionJobRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.GetInputsExtractionJobRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_GetInstalledModuleVersionRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.GetInstalledModuleVersionRequest)) {
-    throw new Error('Expected argument of type clarifai.api.GetInstalledModuleVersionRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_GetInstalledModuleVersionRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.GetInstalledModuleVersionRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_clarifai_api_GetKeyRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.GetKeyRequest)) {
     throw new Error('Expected argument of type clarifai.api.GetKeyRequest');
@@ -837,39 +793,6 @@ function serialize_clarifai_api_GetModelVersionRequest(arg) {
 
 function deserialize_clarifai_api_GetModelVersionRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.GetModelVersionRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_GetModuleRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.GetModuleRequest)) {
-    throw new Error('Expected argument of type clarifai.api.GetModuleRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_GetModuleRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.GetModuleRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_GetModuleVersionRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.GetModuleVersionRequest)) {
-    throw new Error('Expected argument of type clarifai.api.GetModuleVersionRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_GetModuleVersionRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.GetModuleVersionRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_GetModuleVersionUsageCountRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.GetModuleVersionUsageCountRequest)) {
-    throw new Error('Expected argument of type clarifai.api.GetModuleVersionUsageCountRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_GetModuleVersionUsageCountRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.GetModuleVersionUsageCountRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_GetNodepoolRequest(arg) {
@@ -1411,17 +1334,6 @@ function deserialize_clarifai_api_ListInputsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListInputsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_ListInstalledModuleVersionsRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.ListInstalledModuleVersionsRequest)) {
-    throw new Error('Expected argument of type clarifai.api.ListInstalledModuleVersionsRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_ListInstalledModuleVersionsRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.ListInstalledModuleVersionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_clarifai_api_ListInstanceTypesRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.ListInstanceTypesRequest)) {
     throw new Error('Expected argument of type clarifai.api.ListInstanceTypesRequest');
@@ -1574,28 +1486,6 @@ function serialize_clarifai_api_ListModelsRequest(arg) {
 
 function deserialize_clarifai_api_ListModelsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListModelsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_ListModuleVersionsRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.ListModuleVersionsRequest)) {
-    throw new Error('Expected argument of type clarifai.api.ListModuleVersionsRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_ListModuleVersionsRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.ListModuleVersionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_ListModulesRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.ListModulesRequest)) {
-    throw new Error('Expected argument of type clarifai.api.ListModulesRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_ListModulesRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.ListModulesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_ListNextTaskAssignmentsRequest(arg) {
@@ -2192,17 +2082,6 @@ function deserialize_clarifai_api_MultiInputsExtractionJobResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiInputsExtractionJobResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_MultiInstalledModuleVersionResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse)) {
-    throw new Error('Expected argument of type clarifai.api.MultiInstalledModuleVersionResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_MultiInstalledModuleVersionResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_clarifai_api_MultiInstanceTypeResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.MultiInstanceTypeResponse)) {
     throw new Error('Expected argument of type clarifai.api.MultiInstanceTypeResponse');
@@ -2377,28 +2256,6 @@ function serialize_clarifai_api_MultiModelVersionResponse(arg) {
 
 function deserialize_clarifai_api_MultiModelVersionResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiModelVersionResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_MultiModuleResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.MultiModuleResponse)) {
-    throw new Error('Expected argument of type clarifai.api.MultiModuleResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_MultiModuleResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.MultiModuleResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_MultiModuleVersionResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.MultiModuleVersionResponse)) {
-    throw new Error('Expected argument of type clarifai.api.MultiModuleVersionResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_MultiModuleVersionResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.MultiModuleVersionResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiNodepoolResponse(arg) {
@@ -3072,28 +2929,6 @@ function deserialize_clarifai_api_PatchModelsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PatchModelsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_PatchModuleVersionsRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.PatchModuleVersionsRequest)) {
-    throw new Error('Expected argument of type clarifai.api.PatchModuleVersionsRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_PatchModuleVersionsRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.PatchModuleVersionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_PatchModulesRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.PatchModulesRequest)) {
-    throw new Error('Expected argument of type clarifai.api.PatchModulesRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_PatchModulesRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.PatchModulesRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_clarifai_api_PatchNodepoolsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PatchNodepoolsRequest)) {
     throw new Error('Expected argument of type clarifai.api.PatchNodepoolsRequest');
@@ -3545,28 +3380,6 @@ function deserialize_clarifai_api_PostInputsUploadsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostInputsUploadsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_PostInstalledModuleVersionsKeyRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.PostInstalledModuleVersionsKeyRequest)) {
-    throw new Error('Expected argument of type clarifai.api.PostInstalledModuleVersionsKeyRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_PostInstalledModuleVersionsKeyRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.PostInstalledModuleVersionsKeyRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_PostInstalledModuleVersionsRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.PostInstalledModuleVersionsRequest)) {
-    throw new Error('Expected argument of type clarifai.api.PostInstalledModuleVersionsRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_PostInstalledModuleVersionsRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.PostInstalledModuleVersionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_clarifai_api_PostKeysRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PostKeysRequest)) {
     throw new Error('Expected argument of type clarifai.api.PostKeysRequest');
@@ -3752,28 +3565,6 @@ function serialize_clarifai_api_PostModelsSearchesRequest(arg) {
 
 function deserialize_clarifai_api_PostModelsSearchesRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostModelsSearchesRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_PostModuleVersionsRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.PostModuleVersionsRequest)) {
-    throw new Error('Expected argument of type clarifai.api.PostModuleVersionsRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_PostModuleVersionsRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.PostModuleVersionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_PostModulesRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.PostModulesRequest)) {
-    throw new Error('Expected argument of type clarifai.api.PostModulesRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_PostModulesRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.PostModulesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PostNodepoolsRequest(arg) {
@@ -4304,17 +4095,6 @@ function deserialize_clarifai_api_SingleInputsExtractionJobResponse(buffer_arg) 
   return proto_clarifai_api_service_pb.SingleInputsExtractionJobResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_SingleInstalledModuleVersionResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.SingleInstalledModuleVersionResponse)) {
-    throw new Error('Expected argument of type clarifai.api.SingleInstalledModuleVersionResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_SingleInstalledModuleVersionResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.SingleInstalledModuleVersionResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_clarifai_api_SingleKeyResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.SingleKeyResponse)) {
     throw new Error('Expected argument of type clarifai.api.SingleKeyResponse');
@@ -4390,39 +4170,6 @@ function serialize_clarifai_api_SingleModelVersionResponse(arg) {
 
 function deserialize_clarifai_api_SingleModelVersionResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.SingleModelVersionResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_SingleModuleResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.SingleModuleResponse)) {
-    throw new Error('Expected argument of type clarifai.api.SingleModuleResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_SingleModuleResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.SingleModuleResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_SingleModuleVersionResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.SingleModuleVersionResponse)) {
-    throw new Error('Expected argument of type clarifai.api.SingleModuleVersionResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_SingleModuleVersionResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.SingleModuleVersionResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_SingleModuleVersionUsageCountResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.SingleModuleVersionUsageCountResponse)) {
-    throw new Error('Expected argument of type clarifai.api.SingleModuleVersionUsageCountResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_SingleModuleVersionUsageCountResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.SingleModuleVersionUsageCountResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_SingleNodepoolResponse(arg) {
@@ -5901,8 +5648,6 @@ deleteModelMigration: {
     responseDeserialize: deserialize_clarifai_api_SingleModelResponse,
   },
   // Export a model
-//
-// Export a model
 putModelVersionExports: {
     path: '/clarifai.api.V2/PutModelVersionExports',
     requestStream: false,
@@ -6977,201 +6722,6 @@ postStatValuesAggregate: {
     requestDeserialize: deserialize_clarifai_api_PostStatValuesAggregateRequest,
     responseSerialize: serialize_clarifai_api_MultiStatValueAggregateResponse,
     responseDeserialize: deserialize_clarifai_api_MultiStatValueAggregateResponse,
-  },
-  // Get a specific module from an app.
-getModule: {
-    path: '/clarifai.api.V2/GetModule',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.GetModuleRequest,
-    responseType: proto_clarifai_api_service_pb.SingleModuleResponse,
-    requestSerialize: serialize_clarifai_api_GetModuleRequest,
-    requestDeserialize: deserialize_clarifai_api_GetModuleRequest,
-    responseSerialize: serialize_clarifai_api_SingleModuleResponse,
-    responseDeserialize: deserialize_clarifai_api_SingleModuleResponse,
-  },
-  // List all the modules in community, by user or by app.
-listModules: {
-    path: '/clarifai.api.V2/ListModules',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.ListModulesRequest,
-    responseType: proto_clarifai_api_service_pb.MultiModuleResponse,
-    requestSerialize: serialize_clarifai_api_ListModulesRequest,
-    requestDeserialize: deserialize_clarifai_api_ListModulesRequest,
-    responseSerialize: serialize_clarifai_api_MultiModuleResponse,
-    responseDeserialize: deserialize_clarifai_api_MultiModuleResponse,
-  },
-  // Add a modules to an app.
-postModules: {
-    path: '/clarifai.api.V2/PostModules',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.PostModulesRequest,
-    responseType: proto_clarifai_api_service_pb.MultiModuleResponse,
-    requestSerialize: serialize_clarifai_api_PostModulesRequest,
-    requestDeserialize: deserialize_clarifai_api_PostModulesRequest,
-    responseSerialize: serialize_clarifai_api_MultiModuleResponse,
-    responseDeserialize: deserialize_clarifai_api_MultiModuleResponse,
-  },
-  // Patch one or more modules.
-patchModules: {
-    path: '/clarifai.api.V2/PatchModules',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.PatchModulesRequest,
-    responseType: proto_clarifai_api_service_pb.MultiModuleResponse,
-    requestSerialize: serialize_clarifai_api_PatchModulesRequest,
-    requestDeserialize: deserialize_clarifai_api_PatchModulesRequest,
-    responseSerialize: serialize_clarifai_api_MultiModuleResponse,
-    responseDeserialize: deserialize_clarifai_api_MultiModuleResponse,
-  },
-  // Delete multiple modules in one request.
-deleteModules: {
-    path: '/clarifai.api.V2/DeleteModules',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.DeleteModulesRequest,
-    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
-    requestSerialize: serialize_clarifai_api_DeleteModulesRequest,
-    requestDeserialize: deserialize_clarifai_api_DeleteModulesRequest,
-    responseSerialize: serialize_clarifai_api_status_BaseResponse,
-    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
-  },
-  // Get a specific module version for a module.
-getModuleVersion: {
-    path: '/clarifai.api.V2/GetModuleVersion',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.GetModuleVersionRequest,
-    responseType: proto_clarifai_api_service_pb.SingleModuleVersionResponse,
-    requestSerialize: serialize_clarifai_api_GetModuleVersionRequest,
-    requestDeserialize: deserialize_clarifai_api_GetModuleVersionRequest,
-    responseSerialize: serialize_clarifai_api_SingleModuleVersionResponse,
-    responseDeserialize: deserialize_clarifai_api_SingleModuleVersionResponse,
-  },
-  // List all the modules versions for a given module.
-listModuleVersions: {
-    path: '/clarifai.api.V2/ListModuleVersions',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.ListModuleVersionsRequest,
-    responseType: proto_clarifai_api_service_pb.MultiModuleVersionResponse,
-    requestSerialize: serialize_clarifai_api_ListModuleVersionsRequest,
-    requestDeserialize: deserialize_clarifai_api_ListModuleVersionsRequest,
-    responseSerialize: serialize_clarifai_api_MultiModuleVersionResponse,
-    responseDeserialize: deserialize_clarifai_api_MultiModuleVersionResponse,
-  },
-  // Create a new module version to trigger training of the module.
-postModuleVersions: {
-    path: '/clarifai.api.V2/PostModuleVersions',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.PostModuleVersionsRequest,
-    responseType: proto_clarifai_api_service_pb.MultiModuleVersionResponse,
-    requestSerialize: serialize_clarifai_api_PostModuleVersionsRequest,
-    requestDeserialize: deserialize_clarifai_api_PostModuleVersionsRequest,
-    responseSerialize: serialize_clarifai_api_MultiModuleVersionResponse,
-    responseDeserialize: deserialize_clarifai_api_MultiModuleVersionResponse,
-  },
-  // Modify details of an existing module version.
-patchModuleVersions: {
-    path: '/clarifai.api.V2/PatchModuleVersions',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.PatchModuleVersionsRequest,
-    responseType: proto_clarifai_api_service_pb.MultiModuleVersionResponse,
-    requestSerialize: serialize_clarifai_api_PatchModuleVersionsRequest,
-    requestDeserialize: deserialize_clarifai_api_PatchModuleVersionsRequest,
-    responseSerialize: serialize_clarifai_api_MultiModuleVersionResponse,
-    responseDeserialize: deserialize_clarifai_api_MultiModuleVersionResponse,
-  },
-  // Delete a multiple module version.
-deleteModuleVersions: {
-    path: '/clarifai.api.V2/DeleteModuleVersions',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.DeleteModuleVersionsRequest,
-    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
-    requestSerialize: serialize_clarifai_api_DeleteModuleVersionsRequest,
-    requestDeserialize: deserialize_clarifai_api_DeleteModuleVersionsRequest,
-    responseSerialize: serialize_clarifai_api_status_BaseResponse,
-    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
-  },
-  // Get usage count for specific module version.
-getModuleVersionUsageCount: {
-    path: '/clarifai.api.V2/GetModuleVersionUsageCount',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.GetModuleVersionUsageCountRequest,
-    responseType: proto_clarifai_api_service_pb.SingleModuleVersionUsageCountResponse,
-    requestSerialize: serialize_clarifai_api_GetModuleVersionUsageCountRequest,
-    requestDeserialize: deserialize_clarifai_api_GetModuleVersionUsageCountRequest,
-    responseSerialize: serialize_clarifai_api_SingleModuleVersionUsageCountResponse,
-    responseDeserialize: deserialize_clarifai_api_SingleModuleVersionUsageCountResponse,
-  },
-  // Get installed modules vesrions for an app.
-getInstalledModuleVersion: {
-    path: '/clarifai.api.V2/GetInstalledModuleVersion',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.GetInstalledModuleVersionRequest,
-    responseType: proto_clarifai_api_service_pb.SingleInstalledModuleVersionResponse,
-    requestSerialize: serialize_clarifai_api_GetInstalledModuleVersionRequest,
-    requestDeserialize: deserialize_clarifai_api_GetInstalledModuleVersionRequest,
-    responseSerialize: serialize_clarifai_api_SingleInstalledModuleVersionResponse,
-    responseDeserialize: deserialize_clarifai_api_SingleInstalledModuleVersionResponse,
-  },
-  // List installed modules vesrions for an app.
-listInstalledModuleVersions: {
-    path: '/clarifai.api.V2/ListInstalledModuleVersions',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.ListInstalledModuleVersionsRequest,
-    responseType: proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse,
-    requestSerialize: serialize_clarifai_api_ListInstalledModuleVersionsRequest,
-    requestDeserialize: deserialize_clarifai_api_ListInstalledModuleVersionsRequest,
-    responseSerialize: serialize_clarifai_api_MultiInstalledModuleVersionResponse,
-    responseDeserialize: deserialize_clarifai_api_MultiInstalledModuleVersionResponse,
-  },
-  // Install a new module version which will deploy the specific ModuleVersion to the app in the url.
-postInstalledModuleVersions: {
-    path: '/clarifai.api.V2/PostInstalledModuleVersions',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.PostInstalledModuleVersionsRequest,
-    responseType: proto_clarifai_api_service_pb.MultiInstalledModuleVersionResponse,
-    requestSerialize: serialize_clarifai_api_PostInstalledModuleVersionsRequest,
-    requestDeserialize: deserialize_clarifai_api_PostInstalledModuleVersionsRequest,
-    responseSerialize: serialize_clarifai_api_MultiInstalledModuleVersionResponse,
-    responseDeserialize: deserialize_clarifai_api_MultiInstalledModuleVersionResponse,
-  },
-  // Uninstall an installed module version which will deploy the specific ModuleVersion to the app
-// in the url.
-// This cleaned up any associated caller keys so needs the Keys_Delete scope.
-deleteInstalledModuleVersions: {
-    path: '/clarifai.api.V2/DeleteInstalledModuleVersions',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.DeleteInstalledModuleVersionsRequest,
-    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
-    requestSerialize: serialize_clarifai_api_DeleteInstalledModuleVersionsRequest,
-    requestDeserialize: deserialize_clarifai_api_DeleteInstalledModuleVersionsRequest,
-    responseSerialize: serialize_clarifai_api_status_BaseResponse,
-    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
-  },
-  // Assign a key that the caller owns to be used when accessing this installed module version
-// If this endpoint is called with a different key then it overwrites what is there.
-postInstalledModuleVersionsKey: {
-    path: '/clarifai.api.V2/PostInstalledModuleVersionsKey',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.PostInstalledModuleVersionsKeyRequest,
-    responseType: proto_clarifai_api_service_pb.SingleKeyResponse,
-    requestSerialize: serialize_clarifai_api_PostInstalledModuleVersionsKeyRequest,
-    requestDeserialize: deserialize_clarifai_api_PostInstalledModuleVersionsKeyRequest,
-    responseSerialize: serialize_clarifai_api_SingleKeyResponse,
-    responseDeserialize: deserialize_clarifai_api_SingleKeyResponse,
   },
   // Perform bulk operations on a list of inputs based on input source.
 // Operation include add, update, delete of concepts, metadata and geo data.

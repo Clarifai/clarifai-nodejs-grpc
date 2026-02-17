@@ -414,7 +414,7 @@ service V2 {
       body: "*"
       additional_bindings21 {
         patch: "/v2/annotations"
-          body: "*"
+        body: "*"
       }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
@@ -470,15 +470,15 @@ service V2 {
       body: "*"
       additional_bindings23 {
         delete: "/v2/inputs/annotations"
-          body: "*"
+        body: "*"
       }
       additional_bindings24 {
         delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/annotations"
-          body: "*"
+        body: "*"
       }
       additional_bindings25 {
         delete: "/v2/annotations"
-          body: "*"
+        body: "*"
       }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
@@ -530,7 +530,7 @@ service V2 {
       body: "*"
       additional_bindings28 {
         patch: "/v2/inputs/{input_id}/annotation_tracks"
-          body: "*"
+        body: "*"
       }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
@@ -547,7 +547,7 @@ service V2 {
       body: "*"
       additional_bindings29 {
         delete: "/v2/inputs/{input_id}/annotation_tracks"
-          body: "*"
+        body: "*"
       }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
@@ -847,7 +847,7 @@ service V2 {
         post: "/v2/models/{model_id}/outputs"
         body: "*"
       }
-      additional_bindings48 { // call a deployment directly as an endpoint.
+      additional_bindings48 {// call a deployment directly as an endpoint.
         post: "/v2/users/{runner_selector.deployment.user_id}/deployments/{runner_selector.deployment.id}/outputs"
         body: "*"
       }
@@ -1268,7 +1268,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Datasets_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
+
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
   }
@@ -1704,10 +1704,9 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
 
-   // Export a model
 
 
-   // Export a model
+  // Export a model
   rpc PutModelVersionExports (PutModelVersionExportsRequest) returns (SingleModelVersionExportResponse) {
     option (google.api.http) = {
       put: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/exports"
@@ -1938,6 +1937,8 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
   }
+
+
 
 
 
@@ -3126,220 +3127,9 @@ service V2 {
 
 
 
-  // Get a specific module from an app.
-  rpc GetModule (GetModuleRequest) returns (SingleModuleResponse) {
-    option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/modules/{module_id}"
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
-  }
 
-  // List all the modules in community, by user or by app.
-  rpc ListModules (ListModulesRequest) returns (MultiModuleResponse) {
-    option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/modules"
-      additional_bindings159 {
-        get: "/v2/users/{user_app_id.user_id}/modules"
-      }
-      additional_bindings160 {
-        get: "/v2/modules"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
-  }
 
-  // Add a modules to an app.
-  rpc PostModules (PostModulesRequest) returns (MultiModuleResponse) {
-    option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/modules"
-      body: "*"
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
-  }
 
-  // Patch one or more modules.
-  rpc PatchModules (PatchModulesRequest) returns (MultiModuleResponse) {
-    option (google.api.http) = {
-      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/modules"
-      body: "*"
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
-  }
-
-  // Delete multiple modules in one request.
-  rpc DeleteModules (DeleteModulesRequest) returns (clarifai.api.status.BaseResponse) {
-    option (google.api.http) = {
-      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/modules"
-      body: "*"
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Delete;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Get; // Needed to cascade delete to IMV
-    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Delete;
-    option (clarifai.auth.util.cl_depending_scopes) = Keys_Delete;
-    option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Keys_Add;
-  }
-
-  // Get a specific module version for a module.
-  rpc GetModuleVersion (GetModuleVersionRequest) returns (SingleModuleVersionResponse) {
-    option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/modules/{module_id}/versions/{module_version_id}"
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
-  }
-
-  // List all the modules versions for a given module.
-  rpc ListModuleVersions (ListModuleVersionsRequest) returns (MultiModuleVersionResponse) {
-    option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/modules/{module_id}/versions"
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
-  }
-
-  // Create a new module version to trigger training of the module.
-  rpc PostModuleVersions (PostModuleVersionsRequest) returns (MultiModuleVersionResponse) {
-    option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/modules/{module_id}/versions"
-      body: "*"
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
-  }
-
-  // Modify details of an existing module version.
-  rpc PatchModuleVersions (PatchModuleVersionsRequest) returns (MultiModuleVersionResponse) {
-    option (google.api.http) = {
-      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/modules/{module_id}/versions"
-      body: "*"
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
-  }
-
-  // Delete a multiple module version.
-  rpc DeleteModuleVersions (DeleteModuleVersionsRequest) returns (clarifai.api.status.BaseResponse) {
-    option (google.api.http) = {
-      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/modules/{module_id}/versions"
-      body: "*"
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Delete;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Get; // Needed to cascade delete to IMV
-    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Delete;
-    option (clarifai.auth.util.cl_depending_scopes) = Keys_Delete;
-    option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Keys_Add;
-  }
-
-  // Get usage count for specific module version.
-  rpc GetModuleVersionUsageCount (GetModuleVersionUsageCountRequest) returns (SingleModuleVersionUsageCountResponse) {
-    option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/modules/{module_id}/versions/{module_version_id}/usage_count"
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Get;
-  }
-
-  // Get installed modules vesrions for an app.
-  rpc GetInstalledModuleVersion (GetInstalledModuleVersionRequest) returns (SingleInstalledModuleVersionResponse) {
-    option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/installed_module_versions/{installed_module_version_id}"
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
-  }
-
-  // List installed modules vesrions for an app.
-  rpc ListInstalledModuleVersions (ListInstalledModuleVersionsRequest) returns (MultiInstalledModuleVersionResponse) {
-    option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/installed_module_versions"
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
-  }
-
-  // Install a new module version which will deploy the specific ModuleVersion to the app in the url.
-  rpc PostInstalledModuleVersions (PostInstalledModuleVersionsRequest) returns (MultiInstalledModuleVersionResponse) {
-    option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/installed_module_versions"
-      body: "*"
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get; // since adding Keys needs that.
-  }
-
-  // Uninstall an installed module version which will deploy the specific ModuleVersion to the app
-  // in the url.
-  // This cleaned up any associated caller keys so needs the Keys_Delete scope.
-  rpc DeleteInstalledModuleVersions (DeleteInstalledModuleVersionsRequest) returns (clarifai.api.status.BaseResponse) {
-    option (google.api.http) = {
-      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/installed_module_versions"
-      body: "*"
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Delete;
-    option (clarifai.auth.util.cl_depending_scopes) = Keys_Delete;
-    option (clarifai.auth.util.cl_depending_scopes) = Keys_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
-  }
-
-  // Assign a key that the caller owns to be used when accessing this installed module version
-  // If this endpoint is called with a different key then it overwrites what is there.
-  rpc PostInstalledModuleVersionsKey (PostInstalledModuleVersionsKeyRequest) returns (SingleKeyResponse) {
-    option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/installed_module_versions/{installed_module_version_id}/key"
-      body: "*"
-    };
-    option (clarifai.auth.util.cl_auth_type) = PATAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = InstalledModuleVersions_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Modules_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get; // since adding Keys needs that.
-    option (clarifai.auth.util.cl_depending_scopes) = Keys_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Keys_Get;
-  }
 
   // Perform bulk operations on a list of inputs based on input source.
   // Operation include add, update, delete of concepts, metadata and geo data.
@@ -3348,7 +3138,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/bulk_operations"
       body: "*"
-      additional_bindings161 {
+      additional_bindings159 {
         post: "/v2/bulk_operations"
         body: "*"
       }
@@ -3366,7 +3156,7 @@ service V2 {
   rpc ListBulkOperations (ListBulkOperationsRequest) returns (MultiBulkOperationsResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/bulk_operations"
-      additional_bindings162 {
+      additional_bindings160 {
         get: "/v2/bulk_operations"
       }
     };
@@ -3379,7 +3169,7 @@ service V2 {
   rpc GetBulkOperation (GetBulkOperationRequest) returns (SingleBulkOperationsResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/bulk_operations/{id}"
-      additional_bindings163 {
+      additional_bindings161 {
         get: "/v2/bulk_operations/{id}"
       }
     };
@@ -3393,7 +3183,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/bulk_operations"
       body: "*"
-      additional_bindings164 {
+      additional_bindings162 {
         patch: "/v2/bulk_operations"
         body: "*"
       }
@@ -3409,7 +3199,7 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/bulk_operations"
       body: "*"
-      additional_bindings165 {
+      additional_bindings163 {
         delete: "/v2/bulk_operations"
         body: "*"
       }
@@ -3432,7 +3222,7 @@ service V2 {
   rpc ListNextTaskAssignments (ListNextTaskAssignmentsRequest) returns (MultiInputResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/assignments"
-      additional_bindings166 {
+      additional_bindings164 {
         get: "/v2/tasks/{task_id}/assignments"
       }
     };
@@ -3467,7 +3257,7 @@ service V2 {
   rpc ListInputsAddJobs (ListInputsAddJobsRequest) returns (MultiInputsAddJobResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/add"
-      additional_bindings167 {
+      additional_bindings165 {
         get: "/v2/inputs/jobs/add"
       }
     };
@@ -3480,7 +3270,7 @@ service V2 {
   rpc GetInputsAddJob (GetInputsAddJobRequest) returns (SingleInputsAddJobResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/add/{id}"
-      additional_bindings168 {
+      additional_bindings166 {
         get: "/v2/inputs/jobs/add/{id}"
       }
     };
@@ -3494,7 +3284,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/add/{id}"
       body: "*"
-      additional_bindings169 {
+      additional_bindings167 {
         patch: "/v2/inputs/jobs/add/{id}"
         body: "*"
       }
@@ -3514,7 +3304,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads"
       body: "*"
-      additional_bindings170 {
+      additional_bindings168 {
         post: "/v2/uploads"
         body: "*"
       }
@@ -3530,7 +3320,7 @@ service V2 {
   rpc PutUploadContentParts (PutUploadContentPartsRequest) returns (SingleUploadResponse) {
     option (google.api.http) = {
       put: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads/{upload_id}/content_parts"
-      additional_bindings171 {
+      additional_bindings169 {
         put: "/v2/uploads/{upload_id}/content_parts"
       }
       body: "*"
@@ -3544,7 +3334,7 @@ service V2 {
   rpc GetUpload (GetUploadRequest) returns (SingleUploadResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads/{upload_id}"
-      additional_bindings172 {
+      additional_bindings170 {
         get: "/v2/uploads/{upload_id}"
       }
     };
@@ -3556,7 +3346,7 @@ service V2 {
   rpc ListUploads (ListUploadsRequest) returns (MultiUploadResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads"
-      additional_bindings173 {
+      additional_bindings171 {
         get: "/v2/uploads"
       }
     };
@@ -3569,7 +3359,7 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads"
       body: "*"
-      additional_bindings174 {
+      additional_bindings172 {
         delete: "/v2/uploads"
         body: "*"
       }
@@ -3598,7 +3388,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/data_sources"
       body: "*"
-      additional_bindings175 {
+      additional_bindings173 {
         post: "/v2/inputs/data_sources"
         body: "*"
       }
@@ -3621,7 +3411,7 @@ service V2 {
   rpc GetInputsExtractionJob (GetInputsExtractionJobRequest) returns (SingleInputsExtractionJobResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/extraction/{inputs_extraction_job_id}"
-      additional_bindings176 {
+      additional_bindings174 {
         get: "/v2/inputs/jobs/extraction/{inputs_extraction_job_id}"
       }
     };
@@ -3634,7 +3424,7 @@ service V2 {
   rpc ListInputsExtractionJobs (ListInputsExtractionJobsRequest) returns (MultiInputsExtractionJobResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/extraction"
-      additional_bindings177 {
+      additional_bindings175 {
         get: "/v2/inputs/jobs/extraction"
       }
     };
@@ -3647,7 +3437,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/extraction"
       body: "*"
-      additional_bindings178 {
+      additional_bindings176 {
         patch: "/v2/inputs/jobs/extraction"
         body: "*"
       }
@@ -3668,7 +3458,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/uploads"
       body: "*"
-      additional_bindings179 {
+      additional_bindings177 {
         post: "/v2/inputs/uploads"
         body: "*"
       }
@@ -3691,7 +3481,7 @@ service V2 {
   rpc ListPipelineVersionRuns(ListPipelineVersionRunsRequest) returns (MultiPipelineVersionRunResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs"
-      additional_bindings180 {
+      additional_bindings178 {
         get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/pipeline_version_runs"
       }
     };
@@ -3707,7 +3497,7 @@ service V2 {
   rpc GetRunner (GetRunnerRequest) returns (SingleRunnerResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners/{runner_id}"
-      additional_bindings181 {
+      additional_bindings179 {
         get: "/v2/users/{user_app_id.user_id}/runners/{runner_id}"
       }
     };
@@ -3725,7 +3515,7 @@ service V2 {
   rpc ListRunners (ListRunnersRequest) returns (MultiRunnerResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners"
-      additional_bindings182 {
+      additional_bindings180 {
         get: "/v2/users/{user_app_id.user_id}/runners"
       }
     };
@@ -3838,7 +3628,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/time_estimate"
       body: "*"
-      additional_bindings183 {
+      additional_bindings181 {
         post: "/v2/models/{model_id}/versions/time_estimate"
         body: "*"
       }
@@ -3887,7 +3677,7 @@ service V2 {
   rpc ListComputeClusters (ListComputeClustersRequest) returns (MultiComputeClusterResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters"
-      additional_bindings184 {
+      additional_bindings182 {
         get: "/v2/compute_clusters"
       }
     };
@@ -3964,10 +3754,10 @@ service V2 {
   rpc ListNodepools (ListNodepoolsRequest) returns (MultiNodepoolResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools"
-      additional_bindings185 {
+      additional_bindings183 {
         get: "/v2/users/{user_app_id.user_id}/nodepools"
       }
-      additional_bindings186 {
+      additional_bindings184 {
         get: "/v2/nodepools"
       }
     };
@@ -4050,7 +3840,7 @@ service V2 {
   rpc ListDeployments (ListDeploymentsRequest) returns (MultiDeploymentResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/deployments"
-      additional_bindings187 {
+      additional_bindings185 {
         get: "/v2/deployments"
       }
     };
@@ -4150,22 +3940,22 @@ service V2 {
       // Endpoint to list runner logs.
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners/{runner_id}/{log_type}/logs"
       // Endpoint to list runner logs by model, model version id.
-      additional_bindings188 {
+      additional_bindings186 {
         get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_user_id}/{compute_cluster_id}/nodepools/{nodepool_id}/versions/{model_version_id}/{log_type}/logs"
       }
       // TODO: add convenience endpoint for /users/{user_id}/runners/{runner_id}.
       // TODO: add endpoint for runner replicas.
       // Endpoint to list compute cluster's agent logs.
-      additional_bindings189 {
+      additional_bindings187 {
         get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/{log_type}/logs"
       }
       // Endpoint to list builder logs.
-      additional_bindings190 {
+      additional_bindings188 {
         get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/{log_type}/logs"
       }
 
       // Endpoint to list pipeline version run logs
-      additional_bindings191 {
+      additional_bindings189 {
         get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs/{pipeline_version_run_id}/{log_type}/logs"
       }
       // TODO: add endpoint for workflow.
@@ -4178,11 +3968,11 @@ service V2 {
   rpc StreamLogEntries (StreamLogEntriesRequest) returns (stream MultiLogEntryResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners/{runner_id}/{log_type}/logs"
-      additional_bindings192 {
+      additional_bindings190 {
         get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_user_id}/{compute_cluster_id}/nodepools/{nodepool_id}/versions/{model_version_id}/{log_type}/logs"
       }
       // Endpoint to stream pipeline version run logs
-      additional_bindings193 {
+      additional_bindings191 {
         get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs/{pipeline_version_run_id}/{log_type}/stream/logs"
       }
     };
@@ -4225,7 +4015,7 @@ service V2 {
   rpc GetWorkflowVersionEvaluation (GetWorkflowVersionEvaluationRequest) returns (SingleWorkflowVersionEvaluationResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations/{workflow_version_evaluation_id}"
-      additional_bindings194 {
+      additional_bindings192 {
         get: "/v2/workflow-version-evaluations/{workflow_version_evaluation_id}"
       }
     };
@@ -4240,7 +4030,7 @@ service V2 {
   rpc ListWorkflowVersionEvaluations (ListWorkflowVersionEvaluationsRequest) returns (MultiWorkflowVersionEvaluationResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations"
-      additional_bindings195 {
+      additional_bindings193 {
         get: "/v2/workflow-version-evaluations"
       }
     };
@@ -4273,7 +4063,7 @@ service V2 {
   rpc ListWorkflowVersionEvaluationData (ListWorkflowVersionEvaluationDataRequest) returns (MultiListWorkflowVersionEvaluationDataResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations/{workflow_version_evaluation_id}/data"
-      additional_bindings196 {
+      additional_bindings194 {
         get: "/v2/workflow-version-evaluations/{workflow_version_evaluation_id}/data"
       }
     };
@@ -4289,7 +4079,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations/{workflow_version_evaluation_id}/data"
       body: "*"
-      additional_bindings197 {
+      additional_bindings195 {
         post: "/v2/workflow-version-evaluations/{workflow_version_evaluation_id}/data"
         body: "*"
       }
@@ -4306,7 +4096,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines"
       body: "*"
-      additional_bindings198 {
+      additional_bindings196 {
         get: "/v2/pipelines"
       }
     };
@@ -4319,7 +4109,7 @@ service V2 {
   rpc GetPipeline(GetPipelineRequest) returns (SinglePipelineResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}"
-      additional_bindings199 {
+      additional_bindings197 {
         get: "/v2/pipelines/{pipeline_id}"
       }
     };
@@ -4331,7 +4121,7 @@ service V2 {
   rpc ListPipelines(ListPipelinesRequest) returns (MultiPipelineResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines"
-      additional_bindings200 {
+      additional_bindings198 {
         get: "/v2/pipelines"
       }
     };
@@ -4366,7 +4156,7 @@ service V2 {
   rpc GetPipelineVersion(GetPipelineVersionRequest) returns (SinglePipelineVersionResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}"
-      additional_bindings201 {
+      additional_bindings199 {
         get: "/v2/pipelines/{pipeline_id}/versions/{pipeline_version_id}"
       }
     };
@@ -4378,7 +4168,7 @@ service V2 {
   rpc ListPipelineVersions(ListPipelineVersionsRequest) returns (MultiPipelineVersionResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions"
-      additional_bindings202 {
+      additional_bindings200 {
         get: "/v2/pipelines/{pipeline_id}/versions"
       }
     };
@@ -4413,7 +4203,7 @@ service V2 {
   rpc GetPipelineVersionRun(GetPipelineVersionRunRequest) returns (SinglePipelineVersionRunResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs/{pipeline_version_run_id}"
-      additional_bindings203 {
+      additional_bindings201 {
         get: "/v2/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs/{pipeline_version_run_id}"
       }
     };
@@ -6373,11 +6163,11 @@ message GetResourceCountsRequest {
 
 // ResourceCountResponse
 message GetResourceCountsResponse {
+  reserved 5;
   clarifai.api.status.Status status = 1;
   int64 datasets = 2;
   int64 models = 3;
   int64 workflows = 4;
-  int64 modules = 5;
   int64 inputs = 6;
   int64 pipelines = 7;
 }
@@ -6619,7 +6409,7 @@ message PostModelVersionsRequest {
 }
 
 message PostModelVersionsUploadRequest {
-   oneof upload_data {
+  oneof upload_data {
     PostModelVersionsUploadConfig upload_config = 1;
     UploadContentPart content_part = 2;
   }
@@ -6897,7 +6687,7 @@ message MultiModelTypeResponse {
   // List of model importers
   ModelTypeField model_importers = 3;
   // Triton model envs that can be used for model upload
-  repeated TritonCondaEnvInfo triton_conda_envs_info= 4;
+  repeated TritonCondaEnvInfo triton_conda_envs_info = 4;
 }
 
 // GetModelVersionInputExampleRequest
@@ -7076,7 +6866,7 @@ message PostSearchesRequest {
 
   // The query; this specifies how the data to be searched
   // this will be replaced by "Searches"
-  Query query = 2 [deprecated=true];
+  Query query = 2 [deprecated = true];
 
   // The searched to be executed or saved
   // Eventually the request level fields will be deprecated in favor of this object
@@ -7419,7 +7209,7 @@ enum OrganizationInvitationStatus {
 
 // GetWorkflowRequest
 message GetWorkflowRequest {
-  reserved 3,5;
+  reserved 3, 5;
   clarifai.api.UserAppIDSet user_app_id = 1;
 
   // Workflow ID to retrieve
@@ -7629,44 +7419,44 @@ message ListWorkflowVersionsRequest {
 
 // GetWorkflowVersionRequest
 message GetWorkflowVersionRequest {
-    clarifai.api.UserAppIDSet user_app_id = 1;
-    // The id of the workflow that has the requested version.
-    string workflow_id = 2;
-    // Get the identified by this id
-    string workflow_version_id = 3;
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The id of the workflow that has the requested version.
+  string workflow_id = 2;
+  // Get the identified by this id
+  string workflow_version_id = 3;
 }
 
 // DeleteWorkflowVersionsRequest
 message DeleteWorkflowVersionsRequest {
-    clarifai.api.UserAppIDSet user_app_id = 1;
-    // The id of the workflow that has the requested versions to delete.
-    string workflow_id = 2;
-    // Delete the versions identified by these ids
-    repeated string workflow_version_ids = 3;
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The id of the workflow that has the requested versions to delete.
+  string workflow_id = 2;
+  // Delete the versions identified by these ids
+  repeated string workflow_version_ids = 3;
 }
 
 // PatchWorkflowVersionsRequest
 message PatchWorkflowVersionsRequest {
-    clarifai.api.UserAppIDSet user_app_id = 1;
-    // The id of the workflow that has the requested versions to patch.
-    string workflow_id = 2;
-    // Patch these versions.
-    repeated WorkflowVersion workflow_versions = 3;
-    // The action to perform on the patched objects
-    // For now actions 'merge', 'overwrite', and 'remove' are supported
-    string action = 4;
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // The id of the workflow that has the requested versions to patch.
+  string workflow_id = 2;
+  // Patch these versions.
+  repeated WorkflowVersion workflow_versions = 3;
+  // The action to perform on the patched objects
+  // For now actions 'merge', 'overwrite', and 'remove' are supported
+  string action = 4;
 }
 
 // MultiWorkflowVersionResponse
 message MultiWorkflowVersionResponse {
-    clarifai.api.status.Status status = 1;
-    repeated WorkflowVersion workflow_versions = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+  clarifai.api.status.Status status = 1;
+  repeated WorkflowVersion workflow_versions = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
 // SingleWorkflowVersionResponse
 message SingleWorkflowVersionResponse {
-    clarifai.api.status.Status status = 1;
-    WorkflowVersion workflow_version = 2;
+  clarifai.api.status.Status status = 1;
+  WorkflowVersion workflow_version = 2;
 }
 
 // Request to start app duplication jobs.
@@ -8024,241 +7814,15 @@ message MultiStatValueAggregateResponse {
 
 
 
-// GetModuleRequest
-message GetModuleRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  string module_id = 2;
-  repeated string additional_fields = 3;
-}
 
-// ListModulesRequest
-message ListModulesRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
-  // Defaults to 1.
-  uint32 page = 2;
-  // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 128.
-  uint32 per_page = 3;
 
-  repeated string additional_fields = 5;
 
-  // Sorting options:
-  // Whether to sort in ascending order. If false, will order in descending order.
-  bool sort_ascending = 6;
-  oneof sort_by {
-    // Whether to order by the created_at time.
-    bool sort_by_created_at = 7;
-    // Whether to order by the number of users stared the app
-    bool sort_by_star_count = 8;
-    // If neither sort option is set to true, will sort by modified_at.
-    bool sort_by_modified_at = 9;
-    // Whether to order by the external id
-    bool sort_by_id = 11;
-    // Whether to order by search query relevance. Can only be used if search is not empty.
-    bool sort_by_relevance = 16;
-  }
 
-  // Filtering options:
-  bool starred_only = 4;
-  // Filter modules by bookmark. If set, only return bookmarked modules. Otherwise none bookmarked modules only.
-  bool bookmark = 10;
 
-  // Searching options:
-  // Specify a search parameter in order to perform keyword search on the
-  // following fields of the module:
-  //   - id
-  //   - description
-  //   - user_id (unless user_app_id.user_id is already set)
-  //
-  // Keywords are both normalized for search (so searching for "satisfy" matches "satisfied")
-  // and used for partial prefix-matching (so searching for "clari" matches "clarifai").
-  //
-  // NOTE: Both the list of fields searched and the exact keyword matching
-  // rules are subject to change and not guaranteed to be backwards-compatible.
-  string search = 14;
-  // Filter by the id and description of the module. This supports wildcard queries like "gen*" to match "general" as an example.
-  // Deprecated: use search instead.
-  string name = 12 [deprecated = true];
-  // Filter by the application owner whose this module belongs to
-  // Deprecated: use search instead of name.
-  bool filter_by_user_id = 13 [deprecated = true];
-  // Filter by visibility of the modules. If set, only return modules with the specified visibility.
-  Visibility visibility = 15;
-}
 
-// PostModulesRequest
-message PostModulesRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  // This allows you to create one or more module by posting it to the API.
-  repeated Module modules = 3;
-}
 
-// PatchModulesRequest
-message PatchModulesRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  repeated Module modules = 2;
 
-  // The action to perform on the patched objects
-  // Supported values: 'overwrite' and 'remove'.
-  //
-  // Note that 'remove' can only be used to remove the module image by setting
-  // 'image.url' in the request to the current value returned for that module.
-  string action = 3;
-}
 
-// Request to delete several things by the list of ids.
-message DeleteModulesRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  repeated string ids = 2;
-}
-
-// SingleModuleResponse
-message SingleModuleResponse {
-  clarifai.api.status.Status status = 1;
-  Module module = 2;
-}
-
-// MultiModuleResponse
-message MultiModuleResponse {
-  clarifai.api.status.Status status = 1;
-  repeated Module modules = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
-}
-
-// request for different endpoints currently.
-message GetModuleVersionRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  string module_id = 2;
-  string module_version_id = 3;
-}
-
-// ListModuleVersionsRequest
-message ListModuleVersionsRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  string module_id = 2;
-  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
-  // Defaults to 1.
-  uint32 page = 3;
-  // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 128.
-  uint32 per_page = 4;
-}
-
-// PostModuleVersionsRequest
-message PostModuleVersionsRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  string module_id = 2;
-  // This allows you to create one or more module by posting it to the API.
-  repeated ModuleVersion module_versions = 3;
-}
-
-// PatchModuleVersionsRequest
-message PatchModuleVersionsRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  string module_id = 2;
-  // This allows you to modify the module version details.
-  // ########## Supported fields ##########
-  // - description
-  // - id
-  // - metadata.fields
-  // - module_nav.module_sub_navs[].query_key
-  // - module_nav.module_sub_navs[].query_value
-  // - module_nav.module_sub_navs[].title
-  // - module_nav.title
-  // - notes
-  // - visibility.gettable
-  repeated ModuleVersion module_versions = 3;
-  // The action to perform on the patched objects
-  // For now only action 'merge' is supported
-  string action = 4;
-}
-
-// Request to delete several module versions by the list of ids.
-message DeleteModuleVersionsRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  string module_id = 2;
-  repeated string ids = 3;
-}
-
-// Request to get the number of installations (by all users) for the module version
-message GetModuleVersionUsageCountRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  string module_id = 2;
-  string module_version_id = 3;
-}
-
-// SingleModuleVersionResponse
-message SingleModuleVersionResponse {
-  clarifai.api.status.Status status = 1;
-  ModuleVersion module_version = 2;
-}
-
-// MultiModuleVersionResponse
-message MultiModuleVersionResponse {
-  clarifai.api.status.Status status = 1;
-  repeated ModuleVersion module_versions = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
-}
-
-// SingleModuleVersionUsageCountResponse
-message SingleModuleVersionUsageCountResponse {
-  clarifai.api.status.Status status = 1;
-  uint32 usage_count = 2;
-}
-
-// GetInstalledModuleVersionRequest
-message GetInstalledModuleVersionRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  // the ID to get of the install module version.
-  string installed_module_version_id = 2;
-}
-
-// ListInstalledModuleVersionsRequest
-message ListInstalledModuleVersionsRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
-  // Defaults to 1.
-  uint32 page = 2;
-  // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 128.
-  uint32 per_page = 3;
-}
-
-// PostInstalledModuleVersionsRequest to install a module version into the app in the URL
-message PostInstalledModuleVersionsRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  // This allows you to create one or more module by posting it to the API.
-  repeated InstalledModuleVersion installed_module_versions = 2;
-}
-
-// PostInstalledModuleVersionsKeyRequest to associate a key of the caller's to the installed module
-// version.
-message PostInstalledModuleVersionsKeyRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  // the ID to get of the install module version.
-  string installed_module_version_id = 2;
-  // Note(zeiler): we don't provide a key to create since it's always deterministic.
-  // we'll create a PAT, owned by the caller with the scopes that the module requests.
-  // in the future if we want we can pass in a Key key = 3; field so that the caller
-  // can adjust the scopes, but for now that doesn't seem necessary.
-}
-
-// Request to delete several installed module versions by the list of ids.
-message DeleteInstalledModuleVersionsRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  repeated string ids = 2;
-}
-
-// SingleInstalledModuleVersionResponse
-message SingleInstalledModuleVersionResponse {
-  clarifai.api.status.Status status = 1;
-  InstalledModuleVersion installed_module_version = 2;
-}
-
-// MultiInstalledModuleVersionResponse
-message MultiInstalledModuleVersionResponse {
-  clarifai.api.status.Status status = 1;
-  repeated InstalledModuleVersion installed_module_versions = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
-}
 
 // ListNextTaskAssignmentsRequest
 message ListNextTaskAssignmentsRequest {
@@ -8338,7 +7902,7 @@ message PutTaskAssignmentsRequest {
   PutTaskAssignmentsRequestAction action = 4;
 
   oneof action_config {
-//    LabelStartConfig label_start_config = 5; // no config for label start action
+    //    LabelStartConfig label_start_config = 5; // no config for label start action
     LabelSubmitConfig label_submit_config = 6;
     ReviewStartConfig review_start_config = 10;
     ReviewApproveConfig review_approve_config = 7;
@@ -9393,29 +8957,29 @@ message PostPipelineStepVersionsUploadRequest {
 
     // Upload a part of a multipart upload.
     UploadContentPart content_part = 3;
- }
+  }
 }
 
 message PostPipelineStepVersionsUploadResponse {
   // Status of the upload
- clarifai.api.status.Status status = 1;
- // Bytes remaining to be uploaded - This is total_size - bytes_uploaded
- uint64 bytes_remaining = 2;
- // ID of the pipeline step version being uploaded
- string pipeline_step_version_id = 3;
+  clarifai.api.status.Status status = 1;
+  // Bytes remaining to be uploaded - This is total_size - bytes_uploaded
+  uint64 bytes_remaining = 2;
+  // ID of the pipeline step version being uploaded
+  string pipeline_step_version_id = 3;
 }
 
 message PostPipelineStepVersionsUploadConfig {
- // User ID and App ID of the user uploading the pipeline step
- clarifai.api.UserAppIDSet user_app_id = 1;
- // Pipeline Step to create version for
- string pipeline_step_id = 2;
- // Specification for the pipeline step version to be uploaded
- PipelineStepVersion pipeline_step_version = 3;
- // Number of bytes in the pipeline step files to be uploaded
- uint64 total_size = 4;
- // Number of bytes requested for the build process.
- uint64 storage_request_size = 5;
+  // User ID and App ID of the user uploading the pipeline step
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // Pipeline Step to create version for
+  string pipeline_step_id = 2;
+  // Specification for the pipeline step version to be uploaded
+  PipelineStepVersion pipeline_step_version = 3;
+  // Number of bytes in the pipeline step files to be uploaded
+  uint64 total_size = 4;
+  // Number of bytes requested for the build process.
+  uint64 storage_request_size = 5;
 }
 
 message GetPipelineStepRequest {

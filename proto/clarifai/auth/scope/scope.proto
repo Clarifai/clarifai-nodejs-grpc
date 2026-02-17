@@ -342,31 +342,37 @@ enum S {
 
 	// Write to the modules DB tables.
   Modules_Add = 108 [(clarfai_exposed) = true,
-                   (clarifai_depending_scopes) = Modules_Get];
+                   (clarifai_depending_scopes) = Modules_Get,
+                   deprecated = true];
 
   // Read from the modules and modules versions DB tables.
-  Modules_Get = 109 [(clarfai_exposed) = true];
+  Modules_Get = 109 [(clarfai_exposed) = true,
+                     deprecated = true];
 
   // To delete we need read/write.
   Modules_Delete = 110 [(clarfai_exposed) = true,
                       (clarifai_depending_scopes) = Modules_Add,
-                      (clarifai_depending_scopes) = Modules_Get];
+                      (clarifai_depending_scopes) = Modules_Get,
+                      deprecated = true];
 
 
 	// Write to the InstalledModuleVersions DB tables.
   InstalledModuleVersions_Add = 111 [(clarfai_exposed) = true,
                                      (clarifai_depending_scopes) = InstalledModuleVersions_Get,
-                                     (clarifai_depending_scopes) = Modules_Get];
+                                     (clarifai_depending_scopes) = Modules_Get,
+                                     deprecated = true];
 
   // Read from the InstalledModuleVersions and InstalledModuleVersions versions DB tables.
   InstalledModuleVersions_Get = 112 [(clarfai_exposed) = true,
-                                     (clarifai_depending_scopes) = Modules_Get];
+                                     (clarifai_depending_scopes) = Modules_Get,
+                                     deprecated = true];
 
   // To delete we need read/write.
   InstalledModuleVersions_Delete = 113 [(clarfai_exposed) = true,
                                         (clarifai_depending_scopes) = InstalledModuleVersions_Add,
                                         (clarifai_depending_scopes) = InstalledModuleVersions_Get,
-                                        (clarifai_depending_scopes) = Modules_Get];
+                                        (clarifai_depending_scopes) = Modules_Get,
+                                        deprecated = true];
 
   // Make an rpc to our search services.
   Search = 3 [(clarfai_exposed) = true];

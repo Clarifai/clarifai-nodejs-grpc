@@ -77,7 +77,7 @@ message Annotation {
 
 // AnnotationTrack of an asset with metadata
 message AnnotationTrack {
-  reserved 2,5,7,8,11;
+  reserved 2, 5, 7, 8, 11;
 
   // The ID for the annotation track
   string id = 1;
@@ -232,10 +232,12 @@ message AppQuery {
 }
 
 message AppResourceCounts {
+  reserved 4;
+
   int64 datasets = 1;
   int64 models = 2;
   int64 workflows = 3;
-  int64 modules = 4;
+
   int64 inputs = 5;
   int64 pipelines = 6;
 }
@@ -3260,7 +3262,6 @@ message AppDuplication {
   //  - annotations
   //  - models
   //  - workflows
-  //  - installed_module_versions
   repeated AppCopyProgress progress = 9;
 }
 
@@ -3271,6 +3272,7 @@ message AppCopyProgress {
 
 // AppDuplicationFilters
 message AppDuplicationFilters {
+  reserved 6;
   // Copy inputs. Requires that copy_concepts is also set.
   // Note that this will still copy input-level annotations even if copy_annotations is not set.
   bool copy_inputs = 1;
@@ -3282,8 +3284,6 @@ message AppDuplicationFilters {
   bool copy_models = 4;
   // Copy workflows.
   bool copy_workflows = 5;
-  // Copy installed module versions.
-  bool copy_installed_module_versions = 6;
 }
 
 // LabelOrder
@@ -4134,183 +4134,17 @@ message TimeInfo {
 
 
 
-// DatasetStar
-message DatasetStar {string dataset_id = 1;}
-
-// ModuleStar
-message ModuleStar {
-  // Module id of the star
-  string module_id = 1;
-}
 
 
-// An app module that a user created in our app module marketplace.
-message Module {
-  reserved 2;
-  // A unique ID for this app module.
-  string id = 1;
-  // A short description for this app module to be used in grids of modules.
-  string description = 3;
-  // When the app module was created.
-  google.protobuf.Timestamp created_at = 4;
-  // When the app module was last modified.
-  google.protobuf.Timestamp modified_at = 5;
 
-  // The visibility field represents whether this message is privately/publicly visible.
-  // To be visible to the public the App that contains it AND the User that contains the App must
-  // also be publicly visible.
-  // Defaults to PRIVATE if not provided.
-  Visibility visibility = 7;
 
-  // To handle arbitrary json metadata you can use a struct field:
-  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
-  // This is an optional arg.
-  google.protobuf.Struct metadata = 8;
 
-  // The creator of the app module.
-  string user_id = 9;
 
-  // The app_id this module was created in.
-  string app_id = 10;
 
-  // A ModuleVersion which is used when listing modules to include the latest module version
-  // in the response.
-  ModuleVersion module_version = 11;
 
-  // Is starred by the requesting user (only showed on get/list requests)
-  // Please use PostModuleStars/DeleteModuleStars endpoints to star/unstar a module
-  bool is_starred = 12;
-  // How many users have starred the module (only showed on get/list requests)
-  // Computed value, not editable
-  int32 star_count = 13;
 
-  // bookmark info. When set, this module is a bookmarked module of this app.
-  // Info in this field will allow you to find/access original module.
-  BookmarkOrigin bookmark_origin = 14;
-  // Representative image for this module
-  Image image = 15;
-}
 
-// A specific version of an app module that is available for assigning to apps.
-message ModuleVersion {
-  reserved 5;
-  // A name for this version like 1_0, 1_1_0, etc.
-  string id = 1;
-  // The module this version belongs to.
-  string module_id = 2;
-  // The app_id this module version belongs to.
-  string app_id = 3;
-  // The user_id this module version belongs to.
-  string user_id = 4;
-  // A short description for this version.
-  string description = 6;
-  // A markdown formatted string to detailed description of the app module.
-  // This is within each version so that it can be change version to version.
-  string notes = 7;
-  // When the app module version was created.
-  google.protobuf.Timestamp created_at = 8;
-  // When the app module version was last modified.
-  google.protobuf.Timestamp modified_at = 9;
 
-  // The code repo of the streamlit app.
-  // If you are still developing your Module you should create a ModuleVersion
-  // with an empty git_commit_url and then create an InstalledModuleVersion
-  // with a pre-deployed deploy_url (such as localhost or streamlit cloud).
-  // Once you are ready to create a production, create a new ModuleVersion with
-  // the ready git url to a specific commit that you would like to be reviewed by the
-  // Clarifai team for approval within our community. You cannot publish a ModuleVersion
-  // is reviewed and approved. Please only provide the git_commit_url when you're
-  // ready for a review. This url needs to include a specific commit, for example:
-  // https://github.com/user/repo/commit/767ff9c08ba3429c8e7b8825da148555
-  string git_commit_url = 10;
-
-  message ModuleSubNav {
-    // This is the display title for a navbar element to link to a specific page.
-    // The name for this subnav element to show in the sidebar.
-    string title = 1;
-    // The query param name
-    string query_key = 2;
-    // The query param value
-    string query_value = 3;
-  }
-
-  message ModuleNav {
-    // This is the left side title for this module and for browser tab title of the module.
-    // We have this in the version so that users can change those settings
-    // when releasing a new version of their module.
-    string title = 1;
-
-    // A list of subnav elements to put under the module title.
-    repeated ModuleSubNav module_sub_navs = 2;
-  }
-  ModuleNav module_nav = 11;
-
-  // A boolean to mark if Clarifai has approved this app version.
-  // This cannot be set in the request to True.
-  bool approved = 12;
-
-  // The visibility field represents whether this message is privately/publicly visible.
-  // To be visible to the public the App that contains it AND the User that contains the App must
-  // also be publicly visible.
-  // Defaults to PRIVATE if not provided.
-  Visibility visibility = 13;
-
-  // To handle arbitrary json metadata you can use a struct field:
-  // https://github.com/google/protobuf/blob/master/src/google/protobuf/struct.proto
-  // This is an optional arg.
-  google.protobuf.Struct metadata = 14;
-}
-  message InstalledModuleVersion {
-  // A unique id for this install. This will be used in the browser url.
-  string id = 1;
-  // The installed module version provided here so that we users don't need to do an additional
-  // fetch. When creating a new InstalledModuleVersion you should provide the:
-  // module_version.user_id
-  // module_version.app_id
-  // module_version.module_id
-  // module_version.id
-  // in order to uniquely define which module version.
-  ModuleVersion module_version = 2;
-  // The app_id the ModuleVersion is installed into (not necessary where the ModuleVersion was
-  // created). This doesn't have to be provided in requests to install, but will be returned in
-  // responses.
-  string app_id = 3;
-  // The user that the app belongs to where the ModuleVersion is installed into (not necessary where
-  // the ModuleVersion was created). This doesn't have to be provided in requests to install, but
-  // will be returned in responses.
-  string user_id = 4;
-  // When the install was created.
-  google.protobuf.Timestamp created_at = 5;
-  // When the install was last modified.
-  google.protobuf.Timestamp modified_at = 6;
-
-  // The URL of where this app module version is deployed.
-  // If you provide this deploy_url when creating the install then it will
-  // be treated as a pre-deployed module. You can only use a pre-deployed module
-  // in when installing to an app_id that you own as the creator of the module.
-  // If you want to install someone elses module or to rely on Clarifai deploying
-  // your module for you, leave deploy_url empty when creating the install.
-  // If it is left empty, then deployment will occur when this module version is
-  // installed into an app using the git_commit_url of the ModuleVersion.
-  string deploy_url = 7;
-
-  // The visibility field represents whether this message is privately/publicly visible.
-  // To be visible to the public the App that contains it AND the User that contains the App must
-  // also be publicly visible. For the InstalledModuleVersion this allows the app owner who
-  // installed the module version to decide if they want other users of their app to have
-  // the added functionality that the modules version provides to their app.
-  // Defaults to PRIVATE if not provided.
-  Visibility visibility = 8;
-
-  // The key ID to use for making requests to the API for this module.
-  // This key is associated to this installed module version by PostInstalledModuleVersionsKey
-  // request. The key is associated with the CALLER not the App Owner where this module is installed
-  // nor the author of the module. This allows the module to act on behalf of the caller at all
-  // times so we get proper permissions the caller has (such as if they are stranger, teammate or
-  // collaborator). This key should be a personal access token to enable modules to work across apps
-  // and have necessary abilities beyond what app-specific keys offer.
-  string key_id = 9;
-}
 
 
 message BulkOperation {
@@ -4697,11 +4531,11 @@ message BookmarkOrigin {
   string user_id = 3;
 
   enum BookmarkType {
+    reserved 4;
     unknown = 0;
     model = 1;
     workflow = 2;
     dataset = 3;
-    module = 4;
   }
   // resource type.
   BookmarkType resource_type = 4;
@@ -4886,7 +4720,7 @@ message CloudProvider {
   string id = 1;
   // Name of the cloud provider.
   string name = 2;
-   // List of special handling instructions for this cloud provider.
+  // List of special handling instructions for this cloud provider.
   repeated SpecialHandling special_handling = 3;
 }
 
@@ -5185,6 +5019,7 @@ message ProcessingInfo {
 }
 
 enum EventType {
+  reserved 200, 201, 202, 203, 204, 205;
   EVENT_TYPE_NOT_SET = 0;
 
   // Event types related to organization memberships and teams: 100 - 199
@@ -5206,15 +5041,6 @@ enum EventType {
 
   ORGANIZATION_TEAM_APP_ADD = 112 [(clarifai.api.utils.description) = "Organization team applications added"];
   ORGANIZATION_TEAM_APP_REMOVE = 113 [(clarifai.api.utils.description) = "Organization team applications removed"];
-
-  // Event types related to modules: 200 - 299
-  MODULE_CREATE = 200 [(clarifai.api.utils.description) = "Modules created"];
-  MODULE_UPDATE = 201 [(clarifai.api.utils.description) = "Modules updated"];
-  MODULE_DELETE = 202 [(clarifai.api.utils.description) = "Modules deleted"];
-
-  MODULE_VERSION_CREATE = 203 [(clarifai.api.utils.description) = "Module versions created"];
-  MODULE_VERSION_UPDATE = 204 [(clarifai.api.utils.description) = "Module versions updated"];
-  MODULE_VERSION_DELETE = 205 [(clarifai.api.utils.description) = "Module versions deleted"];
 
   // Event types related to models: 300 - 399
   MODEL_CREATE = 300 [(clarifai.api.utils.description) = "Models created"];
@@ -5266,13 +5092,13 @@ enum EventType {
 // AuditLogTarget is a resource on which an operation recorded in an
 // audit log was performed.
 message AuditLogTarget {
+  reserved 5, 6;
   oneof target {
     User user = 1;
     Role role = 2;
     Team team = 3;
     App app = 4;
-    Module module = 5;
-    ModuleVersion module_version = 6;
+
     Workflow workflow = 7;
     WorkflowVersion workflow_version = 8;
     Model model = 9;
