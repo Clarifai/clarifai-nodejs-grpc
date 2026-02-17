@@ -10874,7 +10874,7 @@ proto.clarifai.api.PostTrackAnnotationsSearchesRequest.deserializeBinaryFromRead
       msg.setFrameNumberStart(value);
       break;
     case 5:
-      var value = /** @type {number} */ (reader.readUint32());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setFrameTimeStart(value);
       break;
     case 6:
@@ -10886,7 +10886,7 @@ proto.clarifai.api.PostTrackAnnotationsSearchesRequest.deserializeBinaryFromRead
       msg.setMaxFrames(value);
       break;
     case 8:
-      var value = /** @type {number} */ (reader.readUint32());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setMaxDuration(value);
       break;
     case 9:
@@ -10954,7 +10954,7 @@ proto.clarifai.api.PostTrackAnnotationsSearchesRequest.serializeBinaryToWriter =
   }
   f = message.getFrameTimeStart();
   if (f !== 0) {
-    writer.writeUint32(
+    writer.writeUint64(
       5,
       f
     );
@@ -10975,7 +10975,7 @@ proto.clarifai.api.PostTrackAnnotationsSearchesRequest.serializeBinaryToWriter =
   }
   f = message.getMaxDuration();
   if (f !== 0) {
-    writer.writeUint32(
+    writer.writeUint64(
       8,
       f
     );
@@ -11083,7 +11083,7 @@ proto.clarifai.api.PostTrackAnnotationsSearchesRequest.prototype.setFrameNumberS
 
 
 /**
- * optional uint32 frame_time_start = 5;
+ * optional uint64 frame_time_start = 5;
  * @return {number}
  */
 proto.clarifai.api.PostTrackAnnotationsSearchesRequest.prototype.getFrameTimeStart = function() {
@@ -11137,7 +11137,7 @@ proto.clarifai.api.PostTrackAnnotationsSearchesRequest.prototype.setMaxFrames = 
 
 
 /**
- * optional uint32 max_duration = 8;
+ * optional uint64 max_duration = 8;
  * @return {number}
  */
 proto.clarifai.api.PostTrackAnnotationsSearchesRequest.prototype.getMaxDuration = function() {
@@ -11293,7 +11293,7 @@ proto.clarifai.api.StreamAnnotationsRequest.deserializeBinaryFromReader = functi
       msg.setFrameNumberStart(value);
       break;
     case 5:
-      var value = /** @type {number} */ (reader.readUint32());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setFrameTimeStart(value);
       break;
     case 6:
@@ -11305,7 +11305,7 @@ proto.clarifai.api.StreamAnnotationsRequest.deserializeBinaryFromReader = functi
       msg.setMaxFrames(value);
       break;
     case 8:
-      var value = /** @type {number} */ (reader.readUint32());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setMaxDuration(value);
       break;
     case 9:
@@ -11373,7 +11373,7 @@ proto.clarifai.api.StreamAnnotationsRequest.serializeBinaryToWriter = function(m
   }
   f = message.getFrameTimeStart();
   if (f !== 0) {
-    writer.writeUint32(
+    writer.writeUint64(
       5,
       f
     );
@@ -11394,7 +11394,7 @@ proto.clarifai.api.StreamAnnotationsRequest.serializeBinaryToWriter = function(m
   }
   f = message.getMaxDuration();
   if (f !== 0) {
-    writer.writeUint32(
+    writer.writeUint64(
       8,
       f
     );
@@ -11521,7 +11521,7 @@ proto.clarifai.api.StreamAnnotationsRequest.prototype.setFrameNumberStart = func
 
 
 /**
- * optional uint32 frame_time_start = 5;
+ * optional uint64 frame_time_start = 5;
  * @return {number}
  */
 proto.clarifai.api.StreamAnnotationsRequest.prototype.getFrameTimeStart = function() {
@@ -11575,7 +11575,7 @@ proto.clarifai.api.StreamAnnotationsRequest.prototype.setMaxFrames = function(va
 
 
 /**
- * optional uint32 max_duration = 8;
+ * optional uint64 max_duration = 8;
  * @return {number}
  */
 proto.clarifai.api.StreamAnnotationsRequest.prototype.getMaxDuration = function() {

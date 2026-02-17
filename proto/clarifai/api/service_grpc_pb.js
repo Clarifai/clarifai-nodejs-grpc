@@ -4954,8 +4954,8 @@ streamAnnotations: {
     responseSerialize: serialize_clarifai_api_SingleStreamAnnotationResponse,
     responseDeserialize: deserialize_clarifai_api_SingleStreamAnnotationResponse,
   },
-  // Stream live video annotations as they are being created by the runner.
-// This endpoint reads from Redis instead of the database for real-time streaming.
+  // Stream live video annotations as soon as they are available.
+// This endpoint will NOT replay old annotations, but only stream new annotations that are generated after the stream is opened.
 streamLivestreamAnnotations: {
     path: '/clarifai.api.V2/StreamLivestreamAnnotations',
     requestStream: false,

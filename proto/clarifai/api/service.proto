@@ -370,8 +370,8 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = AnnotationTracks_Get;
   }
 
-  // Stream live video annotations as they are being created by the runner.
-  // This endpoint reads from Redis instead of the database for real-time streaming.
+  // Stream live video annotations as soon as they are available.
+  // This endpoint will NOT replay old annotations, but only stream new annotations that are generated after the stream is opened.
   rpc StreamLivestreamAnnotations (StreamLivestreamAnnotationsRequest) returns (stream SingleStreamAnnotationResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/{input_id}/annotations/stream/live"
@@ -4796,7 +4796,7 @@ message PostTrackAnnotationsSearchesRequest {
   uint32 frame_number_start = 4;
 
   // Filter annotations starting from this time in milliseconds (inclusive)
-  uint32 frame_time_start = 5;
+  uint64 frame_time_start = 5;
 
   // Filter by annotation type (e.g., "bounding_box", "point", "mask")
   AnnotationDataType annotation_type = 6;
@@ -4805,7 +4805,7 @@ message PostTrackAnnotationsSearchesRequest {
   uint32 max_frames = 7;
 
   // Maximum duration in milliseconds to return (default and max: 3000)
-  uint32 max_duration = 8;
+  uint64 max_duration = 8;
 
   // Filtering by model version ID within a worker (optional).
   // Point annotations don't need filtering by worker.
@@ -4828,7 +4828,7 @@ message StreamAnnotationsRequest {
   uint32 frame_number_start = 4;
 
   // Filter annotations starting from this time in milliseconds (inclusive)
-  uint32 frame_time_start = 5;
+  uint64 frame_time_start = 5;
 
   // Filter by annotation type (e.g., "bounding_box", "point", "mask")
   AnnotationDataType annotation_type = 6;
@@ -4840,7 +4840,7 @@ message StreamAnnotationsRequest {
 
   // Maximum duration in milliseconds to return. Returns annotations from time range [frame_time_start, frame_time_start + max_duration - 1] (inclusive on both ends).
   // Default and max: 3600000 ms (60 minutes)
-  uint32 max_duration = 8;
+  uint64 max_duration = 8;
 
   // Filtering by model version ID within a worker (optional).
   // Point annotations don't need filtering by worker.
