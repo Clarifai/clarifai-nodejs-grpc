@@ -1680,6 +1680,10 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/migration"
       body: "*"
+      additional_bindings {
+        post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{version_id}/migration"
+        body: "*"
+      }
     };
     option (clarifai.auth.util.cl_auth_type) = KeyAuth;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
@@ -9084,6 +9088,7 @@ message ListWorkflowVersionEvaluationsRequest {
 message PostModelMigrationRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string model_id = 2;
+  string version_id = 3;
 }
 
 message DeleteModelMigrationRequest {
