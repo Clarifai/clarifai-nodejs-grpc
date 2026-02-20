@@ -9259,6 +9259,116 @@ export namespace CpuMetrics {
     }
 }
 
+export class RunnerReplicaTaskMetrics extends jspb.Message { 
+    getTaskId(): string;
+    setTaskId(value: string): RunnerReplicaTaskMetrics;
+
+    hasStartTime(): boolean;
+    clearStartTime(): void;
+    getStartTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setStartTime(value?: google_protobuf_timestamp_pb.Timestamp): RunnerReplicaTaskMetrics;
+
+    hasEndTime(): boolean;
+    clearEndTime(): void;
+    getEndTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setEndTime(value?: google_protobuf_timestamp_pb.Timestamp): RunnerReplicaTaskMetrics;
+
+    hasStartFrameTime(): boolean;
+    clearStartFrameTime(): void;
+    getStartFrameTime(): google_protobuf_wrappers_pb.UInt64Value | undefined;
+    setStartFrameTime(value?: google_protobuf_wrappers_pb.UInt64Value): RunnerReplicaTaskMetrics;
+
+    hasEndFrameTime(): boolean;
+    clearEndFrameTime(): void;
+    getEndFrameTime(): google_protobuf_wrappers_pb.UInt64Value | undefined;
+    setEndFrameTime(value?: google_protobuf_wrappers_pb.UInt64Value): RunnerReplicaTaskMetrics;
+    getFramesProcessed(): number;
+    setFramesProcessed(value: number): RunnerReplicaTaskMetrics;
+    getFramesDropped(): number;
+    setFramesDropped(value: number): RunnerReplicaTaskMetrics;
+    getFramesSkipped(): number;
+    setFramesSkipped(value: number): RunnerReplicaTaskMetrics;
+    getAnnotationsUploaded(): number;
+    setAnnotationsUploaded(value: number): RunnerReplicaTaskMetrics;
+    getAnnotationsFailed(): number;
+    setAnnotationsFailed(value: number): RunnerReplicaTaskMetrics;
+    getBatchesUploaded(): number;
+    setBatchesUploaded(value: number): RunnerReplicaTaskMetrics;
+    getBatchesDropped(): number;
+    setBatchesDropped(value: number): RunnerReplicaTaskMetrics;
+
+    hasAvgUploadLatency(): boolean;
+    clearAvgUploadLatency(): void;
+    getAvgUploadLatency(): google_protobuf_duration_pb.Duration | undefined;
+    setAvgUploadLatency(value?: google_protobuf_duration_pb.Duration): RunnerReplicaTaskMetrics;
+
+    hasMaxUploadLatency(): boolean;
+    clearMaxUploadLatency(): void;
+    getMaxUploadLatency(): google_protobuf_duration_pb.Duration | undefined;
+    setMaxUploadLatency(value?: google_protobuf_duration_pb.Duration): RunnerReplicaTaskMetrics;
+
+    hasLastUploadLatency(): boolean;
+    clearLastUploadLatency(): void;
+    getLastUploadLatency(): google_protobuf_duration_pb.Duration | undefined;
+    setLastUploadLatency(value?: google_protobuf_duration_pb.Duration): RunnerReplicaTaskMetrics;
+
+    hasAvgStreamDelay(): boolean;
+    clearAvgStreamDelay(): void;
+    getAvgStreamDelay(): google_protobuf_duration_pb.Duration | undefined;
+    setAvgStreamDelay(value?: google_protobuf_duration_pb.Duration): RunnerReplicaTaskMetrics;
+
+    hasMaxStreamDelay(): boolean;
+    clearMaxStreamDelay(): void;
+    getMaxStreamDelay(): google_protobuf_duration_pb.Duration | undefined;
+    setMaxStreamDelay(value?: google_protobuf_duration_pb.Duration): RunnerReplicaTaskMetrics;
+
+    hasLastStreamDelay(): boolean;
+    clearLastStreamDelay(): void;
+    getLastStreamDelay(): google_protobuf_duration_pb.Duration | undefined;
+    setLastStreamDelay(value?: google_protobuf_duration_pb.Duration): RunnerReplicaTaskMetrics;
+    getPredictQueueSize(): number;
+    setPredictQueueSize(value: number): RunnerReplicaTaskMetrics;
+    getUploadQueueSize(): number;
+    setUploadQueueSize(value: number): RunnerReplicaTaskMetrics;
+    getCurrentFrameDropChance(): number;
+    setCurrentFrameDropChance(value: number): RunnerReplicaTaskMetrics;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): RunnerReplicaTaskMetrics.AsObject;
+    static toObject(includeInstance: boolean, msg: RunnerReplicaTaskMetrics): RunnerReplicaTaskMetrics.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: RunnerReplicaTaskMetrics, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): RunnerReplicaTaskMetrics;
+    static deserializeBinaryFromReader(message: RunnerReplicaTaskMetrics, reader: jspb.BinaryReader): RunnerReplicaTaskMetrics;
+}
+
+export namespace RunnerReplicaTaskMetrics {
+    export type AsObject = {
+        taskId: string,
+        startTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        endTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        startFrameTime?: google_protobuf_wrappers_pb.UInt64Value.AsObject,
+        endFrameTime?: google_protobuf_wrappers_pb.UInt64Value.AsObject,
+        framesProcessed: number,
+        framesDropped: number,
+        framesSkipped: number,
+        annotationsUploaded: number,
+        annotationsFailed: number,
+        batchesUploaded: number,
+        batchesDropped: number,
+        avgUploadLatency?: google_protobuf_duration_pb.Duration.AsObject,
+        maxUploadLatency?: google_protobuf_duration_pb.Duration.AsObject,
+        lastUploadLatency?: google_protobuf_duration_pb.Duration.AsObject,
+        avgStreamDelay?: google_protobuf_duration_pb.Duration.AsObject,
+        maxStreamDelay?: google_protobuf_duration_pb.Duration.AsObject,
+        lastStreamDelay?: google_protobuf_duration_pb.Duration.AsObject,
+        predictQueueSize: number,
+        uploadQueueSize: number,
+        currentFrameDropChance: number,
+    }
+}
+
 export class LogEntry extends jspb.Message { 
     getMessage(): string;
     setMessage(value: string): LogEntry;

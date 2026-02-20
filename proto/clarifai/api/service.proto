@@ -3992,6 +3992,17 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
   }
 
+  // Post task metrics from runner replicas.
+  rpc PostRunnerReplicaTaskMetrics (PostRunnerReplicaTaskMetricsRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/runner_replica_task_metrics"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
+  }
+
   rpc PostWorkflowVersionEvaluations (PostWorkflowVersionEvaluationsRequest) returns (MultiWorkflowVersionEvaluationResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations"
@@ -5885,6 +5896,12 @@ message ListModelInputsRequest {
 message PostComputePlaneMetricsRequest {
   // List of ComputePlaneMetrics.
   repeated ComputePlaneMetrics compute_plane_metrics = 1;
+}
+
+message PostRunnerReplicaTaskMetricsRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  // List of task metrics reported by runner replicas.
+  repeated RunnerReplicaTaskMetrics runner_replica_task_metrics = 2;
 }
 
 message PostLogEntriesRequest {

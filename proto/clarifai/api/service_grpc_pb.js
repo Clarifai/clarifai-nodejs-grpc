@@ -3644,6 +3644,17 @@ function deserialize_clarifai_api_PostRunnerItemOutputsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostRunnerItemOutputsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PostRunnerReplicaTaskMetricsRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostRunnerReplicaTaskMetricsRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostRunnerReplicaTaskMetricsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostRunnerReplicaTaskMetricsRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostRunnerReplicaTaskMetricsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PostRunnersRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PostRunnersRequest)) {
     throw new Error('Expected argument of type clarifai.api.PostRunnersRequest');
@@ -7386,6 +7397,18 @@ deleteDeployments: {
     responseType: proto_clarifai_api_status_status_pb.BaseResponse,
     requestSerialize: serialize_clarifai_api_PostComputePlaneMetricsRequest,
     requestDeserialize: deserialize_clarifai_api_PostComputePlaneMetricsRequest,
+    responseSerialize: serialize_clarifai_api_status_BaseResponse,
+    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
+  // Post task metrics from runner replicas.
+postRunnerReplicaTaskMetrics: {
+    path: '/clarifai.api.V2/PostRunnerReplicaTaskMetrics',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostRunnerReplicaTaskMetricsRequest,
+    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
+    requestSerialize: serialize_clarifai_api_PostRunnerReplicaTaskMetricsRequest,
+    requestDeserialize: deserialize_clarifai_api_PostRunnerReplicaTaskMetricsRequest,
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },

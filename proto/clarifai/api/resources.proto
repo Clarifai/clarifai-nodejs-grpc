@@ -5218,6 +5218,48 @@ message CpuMetrics {
   int64 memory_bytes = 5; // Memory bytes.
 }
 
+// RunnerReplicaTaskMetrics captures auto-annotation task metrics reported by an individual
+// runner replica. Each entry corresponds to a specific task running on a specific replica.
+message RunnerReplicaTaskMetrics {
+  string task_id = 1;
+
+  // Time window these metrics cover.
+  google.protobuf.Timestamp start_time = 2;
+  google.protobuf.Timestamp end_time = 3;
+
+  // Frame time range in milliseconds (nullable — absent when no frames have been processed yet).
+  google.protobuf.UInt64Value start_frame_time = 4;
+  google.protobuf.UInt64Value end_frame_time = 5;
+
+  // Frame counts.
+  uint32 frames_processed = 10;
+  uint32 frames_dropped = 11;
+  uint32 frames_skipped = 12;
+
+  // Annotation counts.
+  uint32 annotations_uploaded = 20;
+  uint32 annotations_failed = 21;
+  uint32 batches_uploaded = 30;
+  uint32 batches_dropped = 31;
+
+  // Upload latency metrics (nullable — absent means not yet measured).
+  google.protobuf.Duration avg_upload_latency = 40;
+  google.protobuf.Duration max_upload_latency = 41;
+  google.protobuf.Duration last_upload_latency = 42;
+
+  // Stream delay metrics (nullable — absent means not yet measured).
+  google.protobuf.Duration avg_stream_delay = 50;
+  google.protobuf.Duration max_stream_delay = 51;
+  google.protobuf.Duration last_stream_delay = 52;
+
+  // Queue metrics.
+  uint32 predict_queue_size = 60;
+  uint32 upload_queue_size = 61;
+
+  // Current probability of dropping a frame (0.0 – 1.0).
+  float current_frame_drop_chance = 70;
+}
+
 // LogEntry is a single technical log entry (e.g. service log, stack traces, etc).
 message LogEntry {
   // Text of the log entry.
