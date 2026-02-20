@@ -4969,10 +4969,12 @@ message Deployment {
   google.protobuf.Timestamp created_at = 12;
   // When the deployment was last modified.
   google.protobuf.Timestamp modified_at = 13;
-  // When to always deploy latest model version
+  // Whether to always deploy latest model version
   bool deploy_latest_version = 14;
   // List of special handling instructions for this deployment.
   repeated SpecialHandling special_handling = 15;
+  // Whether to gracefully deploy a new worker
+  bool graceful_deploy = 17;
 }
 
 

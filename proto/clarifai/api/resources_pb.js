@@ -72643,7 +72643,8 @@ proto.clarifai.api.Deployment.toObject = function(includeInstance, msg) {
     modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     deployLatestVersion: jspb.Message.getBooleanFieldWithDefault(msg, 14, false),
     specialHandlingList: jspb.Message.toObjectList(msg.getSpecialHandlingList(),
-    proto.clarifai.api.SpecialHandling.toObject, includeInstance)
+    proto.clarifai.api.SpecialHandling.toObject, includeInstance),
+    gracefulDeploy: jspb.Message.getBooleanFieldWithDefault(msg, 17, false)
   };
 
   if (includeInstance) {
@@ -72744,6 +72745,10 @@ proto.clarifai.api.Deployment.deserializeBinaryFromReader = function(msg, reader
       var value = new proto.clarifai.api.SpecialHandling;
       reader.readMessage(value,proto.clarifai.api.SpecialHandling.deserializeBinaryFromReader);
       msg.addSpecialHandling(value);
+      break;
+    case 17:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setGracefulDeploy(value);
       break;
     default:
       reader.skipField();
@@ -72879,6 +72884,13 @@ proto.clarifai.api.Deployment.serializeBinaryToWriter = function(message, writer
       15,
       f,
       proto.clarifai.api.SpecialHandling.serializeBinaryToWriter
+    );
+  }
+  f = message.getGracefulDeploy();
+  if (f) {
+    writer.writeBool(
+      17,
+      f
     );
   }
 };
@@ -73321,6 +73333,24 @@ proto.clarifai.api.Deployment.prototype.addSpecialHandling = function(opt_value,
  */
 proto.clarifai.api.Deployment.prototype.clearSpecialHandlingList = function() {
   return this.setSpecialHandlingList([]);
+};
+
+
+/**
+ * optional bool graceful_deploy = 17;
+ * @return {boolean}
+ */
+proto.clarifai.api.Deployment.prototype.getGracefulDeploy = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 17, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.Deployment} returns this
+ */
+proto.clarifai.api.Deployment.prototype.setGracefulDeploy = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 17, value);
 };
 
 
