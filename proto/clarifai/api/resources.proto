@@ -4553,6 +4553,9 @@ message BookmarkOrigin {
 message RunnerMetrics {
   uint32 pods_total = 1;
   uint32 pods_running = 2;
+  // Cumulative total time (in seconds) that pods have been running for this runner.
+  // This accumulates across scale-up/down cycles and is reported by the agent.
+  uint32 total_pods_running_time_s = 3;
 }
 
 // A worker for compute within a nodepool of instances.
@@ -4973,8 +4976,13 @@ message Deployment {
   bool deploy_latest_version = 14;
   // List of special handling instructions for this deployment.
   repeated SpecialHandling special_handling = 15;
+
+  // Duration after which to send a reminder email if pods are still running.
+  // If set, users will receive a one-time email notification when any runner
+  // under this deployment has been running longer than this duration.
+  google.protobuf.Duration email_reminder_after = 17;
   // Whether to gracefully deploy a new worker
-  bool graceful_deploy = 17;
+  bool graceful_deploy = 18;
 }
 
 

@@ -68748,7 +68748,8 @@ proto.clarifai.api.RunnerMetrics.prototype.toObject = function(opt_includeInstan
 proto.clarifai.api.RunnerMetrics.toObject = function(includeInstance, msg) {
   var f, obj = {
     podsTotal: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    podsRunning: jspb.Message.getFieldWithDefault(msg, 2, 0)
+    podsRunning: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    totalPodsRunningTimeS: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -68793,6 +68794,10 @@ proto.clarifai.api.RunnerMetrics.deserializeBinaryFromReader = function(msg, rea
       var value = /** @type {number} */ (reader.readUint32());
       msg.setPodsRunning(value);
       break;
+    case 3:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setTotalPodsRunningTimeS(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -68836,6 +68841,13 @@ proto.clarifai.api.RunnerMetrics.serializeBinaryToWriter = function(message, wri
       f
     );
   }
+  f = message.getTotalPodsRunningTimeS();
+  if (f !== 0) {
+    writer.writeUint32(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -68872,6 +68884,24 @@ proto.clarifai.api.RunnerMetrics.prototype.getPodsRunning = function() {
  */
 proto.clarifai.api.RunnerMetrics.prototype.setPodsRunning = function(value) {
   return jspb.Message.setProto3IntField(this, 2, value);
+};
+
+
+/**
+ * optional uint32 total_pods_running_time_s = 3;
+ * @return {number}
+ */
+proto.clarifai.api.RunnerMetrics.prototype.getTotalPodsRunningTimeS = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.RunnerMetrics} returns this
+ */
+proto.clarifai.api.RunnerMetrics.prototype.setTotalPodsRunningTimeS = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -72666,7 +72696,8 @@ proto.clarifai.api.Deployment.toObject = function(includeInstance, msg) {
     deployLatestVersion: jspb.Message.getBooleanFieldWithDefault(msg, 14, false),
     specialHandlingList: jspb.Message.toObjectList(msg.getSpecialHandlingList(),
     proto.clarifai.api.SpecialHandling.toObject, includeInstance),
-    gracefulDeploy: jspb.Message.getBooleanFieldWithDefault(msg, 17, false)
+    emailReminderAfter: (f = msg.getEmailReminderAfter()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
+    gracefulDeploy: jspb.Message.getBooleanFieldWithDefault(msg, 18, false)
   };
 
   if (includeInstance) {
@@ -72769,6 +72800,11 @@ proto.clarifai.api.Deployment.deserializeBinaryFromReader = function(msg, reader
       msg.addSpecialHandling(value);
       break;
     case 17:
+      var value = new google_protobuf_duration_pb.Duration;
+      reader.readMessage(value,google_protobuf_duration_pb.Duration.deserializeBinaryFromReader);
+      msg.setEmailReminderAfter(value);
+      break;
+    case 18:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setGracefulDeploy(value);
       break;
@@ -72908,10 +72944,18 @@ proto.clarifai.api.Deployment.serializeBinaryToWriter = function(message, writer
       proto.clarifai.api.SpecialHandling.serializeBinaryToWriter
     );
   }
+  f = message.getEmailReminderAfter();
+  if (f != null) {
+    writer.writeMessage(
+      17,
+      f,
+      google_protobuf_duration_pb.Duration.serializeBinaryToWriter
+    );
+  }
   f = message.getGracefulDeploy();
   if (f) {
     writer.writeBool(
-      17,
+      18,
       f
     );
   }
@@ -73359,11 +73403,48 @@ proto.clarifai.api.Deployment.prototype.clearSpecialHandlingList = function() {
 
 
 /**
- * optional bool graceful_deploy = 17;
+ * optional google.protobuf.Duration email_reminder_after = 17;
+ * @return {?proto.google.protobuf.Duration}
+ */
+proto.clarifai.api.Deployment.prototype.getEmailReminderAfter = function() {
+  return /** @type{?proto.google.protobuf.Duration} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_duration_pb.Duration, 17));
+};
+
+
+/**
+ * @param {?proto.google.protobuf.Duration|undefined} value
+ * @return {!proto.clarifai.api.Deployment} returns this
+*/
+proto.clarifai.api.Deployment.prototype.setEmailReminderAfter = function(value) {
+  return jspb.Message.setWrapperField(this, 17, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.Deployment} returns this
+ */
+proto.clarifai.api.Deployment.prototype.clearEmailReminderAfter = function() {
+  return this.setEmailReminderAfter(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.Deployment.prototype.hasEmailReminderAfter = function() {
+  return jspb.Message.getField(this, 17) != null;
+};
+
+
+/**
+ * optional bool graceful_deploy = 18;
  * @return {boolean}
  */
 proto.clarifai.api.Deployment.prototype.getGracefulDeploy = function() {
-  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 17, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 18, false));
 };
 
 
@@ -73372,7 +73453,7 @@ proto.clarifai.api.Deployment.prototype.getGracefulDeploy = function() {
  * @return {!proto.clarifai.api.Deployment} returns this
  */
 proto.clarifai.api.Deployment.prototype.setGracefulDeploy = function(value) {
-  return jspb.Message.setProto3BooleanField(this, 17, value);
+  return jspb.Message.setProto3BooleanField(this, 18, value);
 };
 
 

@@ -8197,6 +8197,8 @@ export class RunnerMetrics extends jspb.Message {
     setPodsTotal(value: number): RunnerMetrics;
     getPodsRunning(): number;
     setPodsRunning(value: number): RunnerMetrics;
+    getTotalPodsRunningTimeS(): number;
+    setTotalPodsRunningTimeS(value: number): RunnerMetrics;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): RunnerMetrics.AsObject;
@@ -8212,6 +8214,7 @@ export namespace RunnerMetrics {
     export type AsObject = {
         podsTotal: number,
         podsRunning: number,
+        totalPodsRunningTimeS: number,
     }
 }
 
@@ -8725,6 +8728,11 @@ export class Deployment extends jspb.Message {
     getSpecialHandlingList(): Array<SpecialHandling>;
     setSpecialHandlingList(value: Array<SpecialHandling>): Deployment;
     addSpecialHandling(value?: SpecialHandling, index?: number): SpecialHandling;
+
+    hasEmailReminderAfter(): boolean;
+    clearEmailReminderAfter(): void;
+    getEmailReminderAfter(): google_protobuf_duration_pb.Duration | undefined;
+    setEmailReminderAfter(value?: google_protobuf_duration_pb.Duration): Deployment;
     getGracefulDeploy(): boolean;
     setGracefulDeploy(value: boolean): Deployment;
 
@@ -8754,6 +8762,7 @@ export namespace Deployment {
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         deployLatestVersion: boolean,
         specialHandlingList: Array<SpecialHandling.AsObject>,
+        emailReminderAfter?: google_protobuf_duration_pb.Duration.AsObject,
         gracefulDeploy: boolean,
     }
 
