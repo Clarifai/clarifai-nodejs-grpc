@@ -372,8 +372,6 @@ export class AppResourceCounts extends jspb.Message {
     setModels(value: number): AppResourceCounts;
     getWorkflows(): number;
     setWorkflows(value: number): AppResourceCounts;
-    getModules(): number;
-    setModules(value: number): AppResourceCounts;
     getInputs(): number;
     setInputs(value: number): AppResourceCounts;
     getPipelines(): number;
@@ -394,7 +392,6 @@ export namespace AppResourceCounts {
         datasets: number,
         models: number,
         workflows: number,
-        modules: number,
         inputs: number,
         pipelines: number,
     }
@@ -5879,8 +5876,6 @@ export class AppDuplicationFilters extends jspb.Message {
     setCopyModels(value: boolean): AppDuplicationFilters;
     getCopyWorkflows(): boolean;
     setCopyWorkflows(value: boolean): AppDuplicationFilters;
-    getCopyInstalledModuleVersions(): boolean;
-    setCopyInstalledModuleVersions(value: boolean): AppDuplicationFilters;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): AppDuplicationFilters.AsObject;
@@ -5899,7 +5894,6 @@ export namespace AppDuplicationFilters {
         copyAnnotations: boolean,
         copyModels: boolean,
         copyWorkflows: boolean,
-        copyInstalledModuleVersions: boolean,
     }
 }
 
@@ -7196,303 +7190,6 @@ export namespace TimeInfo {
     }
 }
 
-export class DatasetStar extends jspb.Message { 
-    getDatasetId(): string;
-    setDatasetId(value: string): DatasetStar;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): DatasetStar.AsObject;
-    static toObject(includeInstance: boolean, msg: DatasetStar): DatasetStar.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: DatasetStar, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): DatasetStar;
-    static deserializeBinaryFromReader(message: DatasetStar, reader: jspb.BinaryReader): DatasetStar;
-}
-
-export namespace DatasetStar {
-    export type AsObject = {
-        datasetId: string,
-    }
-}
-
-export class ModuleStar extends jspb.Message { 
-    getModuleId(): string;
-    setModuleId(value: string): ModuleStar;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): ModuleStar.AsObject;
-    static toObject(includeInstance: boolean, msg: ModuleStar): ModuleStar.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: ModuleStar, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): ModuleStar;
-    static deserializeBinaryFromReader(message: ModuleStar, reader: jspb.BinaryReader): ModuleStar;
-}
-
-export namespace ModuleStar {
-    export type AsObject = {
-        moduleId: string,
-    }
-}
-
-export class Module extends jspb.Message { 
-    getId(): string;
-    setId(value: string): Module;
-    getDescription(): string;
-    setDescription(value: string): Module;
-
-    hasCreatedAt(): boolean;
-    clearCreatedAt(): void;
-    getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): Module;
-
-    hasModifiedAt(): boolean;
-    clearModifiedAt(): void;
-    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): Module;
-
-    hasVisibility(): boolean;
-    clearVisibility(): void;
-    getVisibility(): Visibility | undefined;
-    setVisibility(value?: Visibility): Module;
-
-    hasMetadata(): boolean;
-    clearMetadata(): void;
-    getMetadata(): google_protobuf_struct_pb.Struct | undefined;
-    setMetadata(value?: google_protobuf_struct_pb.Struct): Module;
-    getUserId(): string;
-    setUserId(value: string): Module;
-    getAppId(): string;
-    setAppId(value: string): Module;
-
-    hasModuleVersion(): boolean;
-    clearModuleVersion(): void;
-    getModuleVersion(): ModuleVersion | undefined;
-    setModuleVersion(value?: ModuleVersion): Module;
-    getIsStarred(): boolean;
-    setIsStarred(value: boolean): Module;
-    getStarCount(): number;
-    setStarCount(value: number): Module;
-
-    hasBookmarkOrigin(): boolean;
-    clearBookmarkOrigin(): void;
-    getBookmarkOrigin(): BookmarkOrigin | undefined;
-    setBookmarkOrigin(value?: BookmarkOrigin): Module;
-
-    hasImage(): boolean;
-    clearImage(): void;
-    getImage(): Image | undefined;
-    setImage(value?: Image): Module;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): Module.AsObject;
-    static toObject(includeInstance: boolean, msg: Module): Module.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: Module, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): Module;
-    static deserializeBinaryFromReader(message: Module, reader: jspb.BinaryReader): Module;
-}
-
-export namespace Module {
-    export type AsObject = {
-        id: string,
-        description: string,
-        createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        visibility?: Visibility.AsObject,
-        metadata?: google_protobuf_struct_pb.Struct.AsObject,
-        userId: string,
-        appId: string,
-        moduleVersion?: ModuleVersion.AsObject,
-        isStarred: boolean,
-        starCount: number,
-        bookmarkOrigin?: BookmarkOrigin.AsObject,
-        image?: Image.AsObject,
-    }
-}
-
-export class ModuleVersion extends jspb.Message { 
-    getId(): string;
-    setId(value: string): ModuleVersion;
-    getModuleId(): string;
-    setModuleId(value: string): ModuleVersion;
-    getAppId(): string;
-    setAppId(value: string): ModuleVersion;
-    getUserId(): string;
-    setUserId(value: string): ModuleVersion;
-    getDescription(): string;
-    setDescription(value: string): ModuleVersion;
-    getNotes(): string;
-    setNotes(value: string): ModuleVersion;
-
-    hasCreatedAt(): boolean;
-    clearCreatedAt(): void;
-    getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): ModuleVersion;
-
-    hasModifiedAt(): boolean;
-    clearModifiedAt(): void;
-    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): ModuleVersion;
-    getGitCommitUrl(): string;
-    setGitCommitUrl(value: string): ModuleVersion;
-
-    hasModuleNav(): boolean;
-    clearModuleNav(): void;
-    getModuleNav(): ModuleVersion.ModuleNav | undefined;
-    setModuleNav(value?: ModuleVersion.ModuleNav): ModuleVersion;
-    getApproved(): boolean;
-    setApproved(value: boolean): ModuleVersion;
-
-    hasVisibility(): boolean;
-    clearVisibility(): void;
-    getVisibility(): Visibility | undefined;
-    setVisibility(value?: Visibility): ModuleVersion;
-
-    hasMetadata(): boolean;
-    clearMetadata(): void;
-    getMetadata(): google_protobuf_struct_pb.Struct | undefined;
-    setMetadata(value?: google_protobuf_struct_pb.Struct): ModuleVersion;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): ModuleVersion.AsObject;
-    static toObject(includeInstance: boolean, msg: ModuleVersion): ModuleVersion.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: ModuleVersion, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): ModuleVersion;
-    static deserializeBinaryFromReader(message: ModuleVersion, reader: jspb.BinaryReader): ModuleVersion;
-}
-
-export namespace ModuleVersion {
-    export type AsObject = {
-        id: string,
-        moduleId: string,
-        appId: string,
-        userId: string,
-        description: string,
-        notes: string,
-        createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        gitCommitUrl: string,
-        moduleNav?: ModuleVersion.ModuleNav.AsObject,
-        approved: boolean,
-        visibility?: Visibility.AsObject,
-        metadata?: google_protobuf_struct_pb.Struct.AsObject,
-    }
-
-
-    export class ModuleSubNav extends jspb.Message { 
-        getTitle(): string;
-        setTitle(value: string): ModuleSubNav;
-        getQueryKey(): string;
-        setQueryKey(value: string): ModuleSubNav;
-        getQueryValue(): string;
-        setQueryValue(value: string): ModuleSubNav;
-
-        serializeBinary(): Uint8Array;
-        toObject(includeInstance?: boolean): ModuleSubNav.AsObject;
-        static toObject(includeInstance: boolean, msg: ModuleSubNav): ModuleSubNav.AsObject;
-        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-        static serializeBinaryToWriter(message: ModuleSubNav, writer: jspb.BinaryWriter): void;
-        static deserializeBinary(bytes: Uint8Array): ModuleSubNav;
-        static deserializeBinaryFromReader(message: ModuleSubNav, reader: jspb.BinaryReader): ModuleSubNav;
-    }
-
-    export namespace ModuleSubNav {
-        export type AsObject = {
-            title: string,
-            queryKey: string,
-            queryValue: string,
-        }
-    }
-
-    export class ModuleNav extends jspb.Message { 
-        getTitle(): string;
-        setTitle(value: string): ModuleNav;
-        clearModuleSubNavsList(): void;
-        getModuleSubNavsList(): Array<ModuleVersion.ModuleSubNav>;
-        setModuleSubNavsList(value: Array<ModuleVersion.ModuleSubNav>): ModuleNav;
-        addModuleSubNavs(value?: ModuleVersion.ModuleSubNav, index?: number): ModuleVersion.ModuleSubNav;
-
-        serializeBinary(): Uint8Array;
-        toObject(includeInstance?: boolean): ModuleNav.AsObject;
-        static toObject(includeInstance: boolean, msg: ModuleNav): ModuleNav.AsObject;
-        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-        static serializeBinaryToWriter(message: ModuleNav, writer: jspb.BinaryWriter): void;
-        static deserializeBinary(bytes: Uint8Array): ModuleNav;
-        static deserializeBinaryFromReader(message: ModuleNav, reader: jspb.BinaryReader): ModuleNav;
-    }
-
-    export namespace ModuleNav {
-        export type AsObject = {
-            title: string,
-            moduleSubNavsList: Array<ModuleVersion.ModuleSubNav.AsObject>,
-        }
-    }
-
-}
-
-export class InstalledModuleVersion extends jspb.Message { 
-    getId(): string;
-    setId(value: string): InstalledModuleVersion;
-
-    hasModuleVersion(): boolean;
-    clearModuleVersion(): void;
-    getModuleVersion(): ModuleVersion | undefined;
-    setModuleVersion(value?: ModuleVersion): InstalledModuleVersion;
-    getAppId(): string;
-    setAppId(value: string): InstalledModuleVersion;
-    getUserId(): string;
-    setUserId(value: string): InstalledModuleVersion;
-
-    hasCreatedAt(): boolean;
-    clearCreatedAt(): void;
-    getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): InstalledModuleVersion;
-
-    hasModifiedAt(): boolean;
-    clearModifiedAt(): void;
-    getModifiedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setModifiedAt(value?: google_protobuf_timestamp_pb.Timestamp): InstalledModuleVersion;
-    getDeployUrl(): string;
-    setDeployUrl(value: string): InstalledModuleVersion;
-
-    hasVisibility(): boolean;
-    clearVisibility(): void;
-    getVisibility(): Visibility | undefined;
-    setVisibility(value?: Visibility): InstalledModuleVersion;
-    getKeyId(): string;
-    setKeyId(value: string): InstalledModuleVersion;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): InstalledModuleVersion.AsObject;
-    static toObject(includeInstance: boolean, msg: InstalledModuleVersion): InstalledModuleVersion.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: InstalledModuleVersion, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): InstalledModuleVersion;
-    static deserializeBinaryFromReader(message: InstalledModuleVersion, reader: jspb.BinaryReader): InstalledModuleVersion;
-}
-
-export namespace InstalledModuleVersion {
-    export type AsObject = {
-        id: string,
-        moduleVersion?: ModuleVersion.AsObject,
-        appId: string,
-        userId: string,
-        createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        deployUrl: string,
-        visibility?: Visibility.AsObject,
-        keyId: string,
-    }
-}
-
 export class BulkOperation extends jspb.Message { 
     getId(): string;
     setId(value: string): BulkOperation;
@@ -8491,7 +8188,6 @@ export namespace BookmarkOrigin {
     MODEL = 1,
     WORKFLOW = 2,
     DATASET = 3,
-    MODULE = 4,
     }
 
 }
@@ -8501,6 +8197,8 @@ export class RunnerMetrics extends jspb.Message {
     setPodsTotal(value: number): RunnerMetrics;
     getPodsRunning(): number;
     setPodsRunning(value: number): RunnerMetrics;
+    getTotalPodsRunningTimeS(): number;
+    setTotalPodsRunningTimeS(value: number): RunnerMetrics;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): RunnerMetrics.AsObject;
@@ -8516,6 +8214,7 @@ export namespace RunnerMetrics {
     export type AsObject = {
         podsTotal: number,
         podsRunning: number,
+        totalPodsRunningTimeS: number,
     }
 }
 
@@ -8648,6 +8347,8 @@ export class Nodepool extends jspb.Message {
     getSpecialHandlingList(): Array<SpecialHandling>;
     setSpecialHandlingList(value: Array<SpecialHandling>): Nodepool;
     addSpecialHandling(value?: SpecialHandling, index?: number): SpecialHandling;
+    getNodeCount(): number;
+    setNodeCount(value: number): Nodepool;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Nodepool.AsObject;
@@ -8675,6 +8376,7 @@ export namespace Nodepool {
         visibility?: Visibility.AsObject,
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
         specialHandlingList: Array<SpecialHandling.AsObject>,
+        nodeCount: number,
     }
 }
 
@@ -9027,6 +8729,13 @@ export class Deployment extends jspb.Message {
     setSpecialHandlingList(value: Array<SpecialHandling>): Deployment;
     addSpecialHandling(value?: SpecialHandling, index?: number): SpecialHandling;
 
+    hasEmailReminderAfter(): boolean;
+    clearEmailReminderAfter(): void;
+    getEmailReminderAfter(): google_protobuf_duration_pb.Duration | undefined;
+    setEmailReminderAfter(value?: google_protobuf_duration_pb.Duration): Deployment;
+    getGracefulDeploy(): boolean;
+    setGracefulDeploy(value: boolean): Deployment;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Deployment.AsObject;
     static toObject(includeInstance: boolean, msg: Deployment): Deployment.AsObject;
@@ -9053,6 +8762,8 @@ export namespace Deployment {
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         deployLatestVersion: boolean,
         specialHandlingList: Array<SpecialHandling.AsObject>,
+        emailReminderAfter?: google_protobuf_duration_pb.Duration.AsObject,
+        gracefulDeploy: boolean,
     }
 
     export enum SchedulingChoice {
@@ -9155,16 +8866,6 @@ export class AuditLogTarget extends jspb.Message {
     getApp(): App | undefined;
     setApp(value?: App): AuditLogTarget;
 
-    hasModule(): boolean;
-    clearModule(): void;
-    getModule(): Module | undefined;
-    setModule(value?: Module): AuditLogTarget;
-
-    hasModuleVersion(): boolean;
-    clearModuleVersion(): void;
-    getModuleVersion(): ModuleVersion | undefined;
-    setModuleVersion(value?: ModuleVersion): AuditLogTarget;
-
     hasWorkflow(): boolean;
     clearWorkflow(): void;
     getWorkflow(): Workflow | undefined;
@@ -9218,8 +8919,6 @@ export namespace AuditLogTarget {
         role?: Role.AsObject,
         team?: Team.AsObject,
         app?: App.AsObject,
-        module?: Module.AsObject,
-        moduleVersion?: ModuleVersion.AsObject,
         workflow?: Workflow.AsObject,
         workflowVersion?: WorkflowVersion.AsObject,
         model?: Model.AsObject,
@@ -9235,8 +8934,6 @@ export namespace AuditLogTarget {
         ROLE = 2,
         TEAM = 3,
         APP = 4,
-        MODULE = 5,
-        MODULE_VERSION = 6,
         WORKFLOW = 7,
         WORKFLOW_VERSION = 8,
         MODEL = 9,
@@ -9568,6 +9265,116 @@ export namespace CpuMetrics {
         memoryUtilizationPct: number,
         millicores: number,
         memoryBytes: number,
+    }
+}
+
+export class RunnerReplicaTaskMetrics extends jspb.Message { 
+    getTaskId(): string;
+    setTaskId(value: string): RunnerReplicaTaskMetrics;
+
+    hasStartTime(): boolean;
+    clearStartTime(): void;
+    getStartTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setStartTime(value?: google_protobuf_timestamp_pb.Timestamp): RunnerReplicaTaskMetrics;
+
+    hasEndTime(): boolean;
+    clearEndTime(): void;
+    getEndTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setEndTime(value?: google_protobuf_timestamp_pb.Timestamp): RunnerReplicaTaskMetrics;
+
+    hasStartFrameTime(): boolean;
+    clearStartFrameTime(): void;
+    getStartFrameTime(): google_protobuf_wrappers_pb.UInt64Value | undefined;
+    setStartFrameTime(value?: google_protobuf_wrappers_pb.UInt64Value): RunnerReplicaTaskMetrics;
+
+    hasEndFrameTime(): boolean;
+    clearEndFrameTime(): void;
+    getEndFrameTime(): google_protobuf_wrappers_pb.UInt64Value | undefined;
+    setEndFrameTime(value?: google_protobuf_wrappers_pb.UInt64Value): RunnerReplicaTaskMetrics;
+    getFramesProcessed(): number;
+    setFramesProcessed(value: number): RunnerReplicaTaskMetrics;
+    getFramesDropped(): number;
+    setFramesDropped(value: number): RunnerReplicaTaskMetrics;
+    getFramesSkipped(): number;
+    setFramesSkipped(value: number): RunnerReplicaTaskMetrics;
+    getAnnotationsUploaded(): number;
+    setAnnotationsUploaded(value: number): RunnerReplicaTaskMetrics;
+    getAnnotationsFailed(): number;
+    setAnnotationsFailed(value: number): RunnerReplicaTaskMetrics;
+    getBatchesUploaded(): number;
+    setBatchesUploaded(value: number): RunnerReplicaTaskMetrics;
+    getBatchesDropped(): number;
+    setBatchesDropped(value: number): RunnerReplicaTaskMetrics;
+
+    hasAvgUploadLatency(): boolean;
+    clearAvgUploadLatency(): void;
+    getAvgUploadLatency(): google_protobuf_duration_pb.Duration | undefined;
+    setAvgUploadLatency(value?: google_protobuf_duration_pb.Duration): RunnerReplicaTaskMetrics;
+
+    hasMaxUploadLatency(): boolean;
+    clearMaxUploadLatency(): void;
+    getMaxUploadLatency(): google_protobuf_duration_pb.Duration | undefined;
+    setMaxUploadLatency(value?: google_protobuf_duration_pb.Duration): RunnerReplicaTaskMetrics;
+
+    hasLastUploadLatency(): boolean;
+    clearLastUploadLatency(): void;
+    getLastUploadLatency(): google_protobuf_duration_pb.Duration | undefined;
+    setLastUploadLatency(value?: google_protobuf_duration_pb.Duration): RunnerReplicaTaskMetrics;
+
+    hasAvgStreamDelay(): boolean;
+    clearAvgStreamDelay(): void;
+    getAvgStreamDelay(): google_protobuf_duration_pb.Duration | undefined;
+    setAvgStreamDelay(value?: google_protobuf_duration_pb.Duration): RunnerReplicaTaskMetrics;
+
+    hasMaxStreamDelay(): boolean;
+    clearMaxStreamDelay(): void;
+    getMaxStreamDelay(): google_protobuf_duration_pb.Duration | undefined;
+    setMaxStreamDelay(value?: google_protobuf_duration_pb.Duration): RunnerReplicaTaskMetrics;
+
+    hasLastStreamDelay(): boolean;
+    clearLastStreamDelay(): void;
+    getLastStreamDelay(): google_protobuf_duration_pb.Duration | undefined;
+    setLastStreamDelay(value?: google_protobuf_duration_pb.Duration): RunnerReplicaTaskMetrics;
+    getPredictQueueSize(): number;
+    setPredictQueueSize(value: number): RunnerReplicaTaskMetrics;
+    getUploadQueueSize(): number;
+    setUploadQueueSize(value: number): RunnerReplicaTaskMetrics;
+    getCurrentFrameDropChance(): number;
+    setCurrentFrameDropChance(value: number): RunnerReplicaTaskMetrics;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): RunnerReplicaTaskMetrics.AsObject;
+    static toObject(includeInstance: boolean, msg: RunnerReplicaTaskMetrics): RunnerReplicaTaskMetrics.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: RunnerReplicaTaskMetrics, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): RunnerReplicaTaskMetrics;
+    static deserializeBinaryFromReader(message: RunnerReplicaTaskMetrics, reader: jspb.BinaryReader): RunnerReplicaTaskMetrics;
+}
+
+export namespace RunnerReplicaTaskMetrics {
+    export type AsObject = {
+        taskId: string,
+        startTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        endTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        startFrameTime?: google_protobuf_wrappers_pb.UInt64Value.AsObject,
+        endFrameTime?: google_protobuf_wrappers_pb.UInt64Value.AsObject,
+        framesProcessed: number,
+        framesDropped: number,
+        framesSkipped: number,
+        annotationsUploaded: number,
+        annotationsFailed: number,
+        batchesUploaded: number,
+        batchesDropped: number,
+        avgUploadLatency?: google_protobuf_duration_pb.Duration.AsObject,
+        maxUploadLatency?: google_protobuf_duration_pb.Duration.AsObject,
+        lastUploadLatency?: google_protobuf_duration_pb.Duration.AsObject,
+        avgStreamDelay?: google_protobuf_duration_pb.Duration.AsObject,
+        maxStreamDelay?: google_protobuf_duration_pb.Duration.AsObject,
+        lastStreamDelay?: google_protobuf_duration_pb.Duration.AsObject,
+        predictQueueSize: number,
+        uploadQueueSize: number,
+        currentFrameDropChance: number,
     }
 }
 
@@ -11300,12 +11107,6 @@ export enum EventType {
     ORGANIZATION_TEAM_MEMBER_REMOVE = 111,
     ORGANIZATION_TEAM_APP_ADD = 112,
     ORGANIZATION_TEAM_APP_REMOVE = 113,
-    MODULE_CREATE = 200,
-    MODULE_UPDATE = 201,
-    MODULE_DELETE = 202,
-    MODULE_VERSION_CREATE = 203,
-    MODULE_VERSION_UPDATE = 204,
-    MODULE_VERSION_DELETE = 205,
     MODEL_CREATE = 300,
     MODEL_UPDATE = 301,
     MODEL_DELETE = 302,
