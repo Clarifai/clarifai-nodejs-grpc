@@ -1554,6 +1554,17 @@ function deserialize_clarifai_api_ListPipelineStepsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListPipelineStepsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_ListPipelineTemplatesRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.ListPipelineTemplatesRequest)) {
+    throw new Error('Expected argument of type clarifai.api.ListPipelineTemplatesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_ListPipelineTemplatesRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.ListPipelineTemplatesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_ListPipelineVersionRunStatusLogsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.ListPipelineVersionRunStatusLogsRequest)) {
     throw new Error('Expected argument of type clarifai.api.ListPipelineVersionRunStatusLogsRequest');
@@ -2311,6 +2322,17 @@ function serialize_clarifai_api_MultiPipelineStepVersionResponse(arg) {
 
 function deserialize_clarifai_api_MultiPipelineStepVersionResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiPipelineStepVersionResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_MultiPipelineTemplateResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.MultiPipelineTemplateResponse)) {
+    throw new Error('Expected argument of type clarifai.api.MultiPipelineTemplateResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_MultiPipelineTemplateResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.MultiPipelineTemplateResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiPipelineVersionResponse(arg) {
@@ -3609,6 +3631,28 @@ function serialize_clarifai_api_PostPipelineStepsRequest(arg) {
 
 function deserialize_clarifai_api_PostPipelineStepsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostPipelineStepsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PostPipelineVersionRunFromTemplateRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostPipelineVersionRunFromTemplateRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostPipelineVersionRunFromTemplateRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostPipelineVersionRunFromTemplateRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostPipelineVersionRunFromTemplateRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_clarifai_api_PostPipelineVersionRunFromTemplateResponse(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostPipelineVersionRunFromTemplateResponse)) {
+    throw new Error('Expected argument of type clarifai.api.PostPipelineVersionRunFromTemplateResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostPipelineVersionRunFromTemplateResponse(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostPipelineVersionRunFromTemplateResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PostPipelineVersionRunsRequest(arg) {
@@ -7715,6 +7759,31 @@ postPipelineStepVersionsUpload: {
     requestDeserialize: deserialize_clarifai_api_DeletePipelineStepVersionsRequest,
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
+  // Lists pipeline templates, which are ready-to-use templates that can simply be run on demand.
+listPipelineTemplates: {
+    path: '/clarifai.api.V2/ListPipelineTemplates',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.ListPipelineTemplatesRequest,
+    responseType: proto_clarifai_api_service_pb.MultiPipelineTemplateResponse,
+    requestSerialize: serialize_clarifai_api_ListPipelineTemplatesRequest,
+    requestDeserialize: deserialize_clarifai_api_ListPipelineTemplatesRequest,
+    responseSerialize: serialize_clarifai_api_MultiPipelineTemplateResponse,
+    responseDeserialize: deserialize_clarifai_api_MultiPipelineTemplateResponse,
+  },
+  // Creates a Pipeline, PipelineVersion, and PipelineVersionRun from a PipelineTemplate. 
+// This is a convenience endpoint for users to quickly get started with running pipelines.
+postPipelineVersionRunFromTemplate: {
+    path: '/clarifai.api.V2/PostPipelineVersionRunFromTemplate',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostPipelineVersionRunFromTemplateRequest,
+    responseType: proto_clarifai_api_service_pb.PostPipelineVersionRunFromTemplateResponse,
+    requestSerialize: serialize_clarifai_api_PostPipelineVersionRunFromTemplateRequest,
+    requestDeserialize: deserialize_clarifai_api_PostPipelineVersionRunFromTemplateRequest,
+    responseSerialize: serialize_clarifai_api_PostPipelineVersionRunFromTemplateResponse,
+    responseDeserialize: deserialize_clarifai_api_PostPipelineVersionRunFromTemplateResponse,
   },
   postArtifacts: {
     path: '/clarifai.api.V2/PostArtifacts',

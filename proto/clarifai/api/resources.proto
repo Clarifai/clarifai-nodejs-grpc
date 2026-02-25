@@ -5686,6 +5686,116 @@ message PipelineVersionRunStatusLog {
   google.protobuf.Timestamp created_at = 6;
 }
 
+message PipelineTemplateParameter {
+  // Name of the parameter
+  string name = 1;
+
+  enum Type {
+    PARAMETER_TYPE_UNSPECIFIED = 0;
+    STRING = 1;
+    INT = 2;
+    FLOAT = 3;
+    BOOL = 4;
+  }
+  // Type of the parameter (string, int, float, bool)
+  Type type = 2;
+  // Whether this parameter is required
+  bool required = 3;
+
+  oneof default_value {
+    // Default value when type is STRING
+    string default_string = 4;
+    // Default value when type is INT
+    int64 default_int = 5;
+    // Default value when type is FLOAT
+    double default_float = 6;
+    // Default value when type is BOOL
+    bool default_bool = 7;
+  }
+
+  // Description of the parameter
+  string description = 8;
+
+  message Constraints {
+    message StringConstraints {
+      // List of allowed values for the string parameter
+      repeated string allowed_values = 1;
+      // Whether free text input is allowed beyond allowed_values
+      bool allow_free_text = 2;
+      // Minimum length of the string
+      uint32 min_length = 3;
+      // Maximum length of the string
+      uint32 max_length = 4;
+    }
+    
+    message IntConstraints {
+      // Minimum value for the int parameter
+      int64 min = 1;
+      // Maximum value for the int parameter
+      int64 max = 2;
+    }
+    
+    message FloatConstraints {
+      // Minimum value for the float parameter
+      double min = 1;
+      // Maximum value for the float parameter
+      double max = 2;
+    }
+    
+    oneof constraints {
+      StringConstraints string_constraints = 1;
+      IntConstraints int_constraints = 2;
+      FloatConstraints float_constraints = 3;
+    }
+  }
+
+  // Constraints to validate parameter values
+  Constraints constraints = 9;
+  message UIHints {
+    enum UIWidget {
+      UI_WIDGET_UNSPECIFIED = 0;
+      TEXT_INPUT = 1;
+      NUMBER_INPUT = 2;
+      SLIDER = 3;
+      DROPDOWN = 4;
+      TOGGLE = 5;
+    }
+    // The UI widget to use for displaying this parameter
+    UIWidget widget = 1;
+  
+    // Used for dropdowns populated dynamically
+    string data_source = 2;
+  
+    // Used when backend expects string even if UI shows bool/int
+    bool serialize_as_string = 3;
+  }
+
+  // UI hints for rendering this parameter in the frontend
+  UIHints ui_hints = 10;
+}
+
+message PipelineTemplate {
+  // Name of the template
+  string name = 1; 
+  // Description of the template
+  string description = 2;
+
+  enum PipelineTemplateType {
+    UNKNOWN = 0;
+    TRAINING = 1;
+  }
+  // Type of the pipeline template
+  PipelineTemplateType pipeline_template_type = 3;
+  // Compute resources required to run this pipeline template
+  ComputeInfo compute_info = 4;
+  // List of parameters that can be configured for this template
+  repeated PipelineTemplateParameter parameters = 5;
+  // Map from pipeline step name to pipeline step reference
+  map<string, string> pipeline_steps = 6;
+}
+
+
+
 message Secret {
   reserved 2, 3, 9;
   // The name of the secret, corresponds to id in model_version.output_info.params.secrets
