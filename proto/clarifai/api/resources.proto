@@ -462,6 +462,7 @@ message PatchAction {
   // Default path is root level i.e. ''.
   string path = 3;
 }
+
 ////////////////////////////////////////////////////////////////////////////////
 
 // Concept or tag
