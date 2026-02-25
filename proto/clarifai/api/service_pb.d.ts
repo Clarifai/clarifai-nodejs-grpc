@@ -10980,6 +10980,41 @@ export namespace DeleteNodepoolsRequest {
     }
 }
 
+export class PostNodepoolStatusRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PostNodepoolStatusRequest;
+    getComputeClusterId(): string;
+    setComputeClusterId(value: string): PostNodepoolStatusRequest;
+    getNodepoolId(): string;
+    setNodepoolId(value: string): PostNodepoolStatusRequest;
+    getStatus(): proto_clarifai_api_resources_pb.Nodepool.NodepoolStatus;
+    setStatus(value: proto_clarifai_api_resources_pb.Nodepool.NodepoolStatus): PostNodepoolStatusRequest;
+    getStatusDescription(): string;
+    setStatusDescription(value: string): PostNodepoolStatusRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PostNodepoolStatusRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PostNodepoolStatusRequest): PostNodepoolStatusRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PostNodepoolStatusRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PostNodepoolStatusRequest;
+    static deserializeBinaryFromReader(message: PostNodepoolStatusRequest, reader: jspb.BinaryReader): PostNodepoolStatusRequest;
+}
+
+export namespace PostNodepoolStatusRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        computeClusterId: string,
+        nodepoolId: string,
+        status: proto_clarifai_api_resources_pb.Nodepool.NodepoolStatus,
+        statusDescription: string,
+    }
+}
+
 export class SingleNodepoolResponse extends jspb.Message { 
 
     hasStatus(): boolean;

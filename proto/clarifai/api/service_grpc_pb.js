@@ -3589,6 +3589,17 @@ function deserialize_clarifai_api_PostModelsSearchesRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostModelsSearchesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_clarifai_api_PostNodepoolStatusRequest(arg) {
+  if (!(arg instanceof proto_clarifai_api_service_pb.PostNodepoolStatusRequest)) {
+    throw new Error('Expected argument of type clarifai.api.PostNodepoolStatusRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_clarifai_api_PostNodepoolStatusRequest(buffer_arg) {
+  return proto_clarifai_api_service_pb.PostNodepoolStatusRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_clarifai_api_PostNodepoolsRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PostNodepoolsRequest)) {
     throw new Error('Expected argument of type clarifai.api.PostNodepoolsRequest');
@@ -7318,6 +7329,18 @@ deleteNodepools: {
     responseType: proto_clarifai_api_status_status_pb.BaseResponse,
     requestSerialize: serialize_clarifai_api_DeleteNodepoolsRequest,
     requestDeserialize: deserialize_clarifai_api_DeleteNodepoolsRequest,
+    responseSerialize: serialize_clarifai_api_status_BaseResponse,
+    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
+  },
+  // Update nodepool status. Called by the agent to report nodepool health/errors.
+postNodepoolStatus: {
+    path: '/clarifai.api.V2/PostNodepoolStatus',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_clarifai_api_service_pb.PostNodepoolStatusRequest,
+    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
+    requestSerialize: serialize_clarifai_api_PostNodepoolStatusRequest,
+    requestDeserialize: deserialize_clarifai_api_PostNodepoolStatusRequest,
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },

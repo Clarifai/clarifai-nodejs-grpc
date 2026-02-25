@@ -240,6 +240,7 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     postNodepools: IV2Service_IPostNodepools;
     patchNodepools: IV2Service_IPatchNodepools;
     deleteNodepools: IV2Service_IDeleteNodepools;
+    postNodepoolStatus: IV2Service_IPostNodepoolStatus;
     getDeployment: IV2Service_IGetDeployment;
     listDeployments: IV2Service_IListDeployments;
     postDeployments: IV2Service_IPostDeployments;
@@ -2305,6 +2306,15 @@ interface IV2Service_IDeleteNodepools extends grpc.MethodDefinition<proto_clarif
     responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
 }
+interface IV2Service_IPostNodepoolStatus extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostNodepoolStatusRequest, proto_clarifai_api_status_status_pb.BaseResponse> {
+    path: "/clarifai.api.V2/PostNodepoolStatus";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostNodepoolStatusRequest>;
+    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostNodepoolStatusRequest>;
+    responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
+    responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
+}
 interface IV2Service_IGetDeployment extends grpc.MethodDefinition<proto_clarifai_api_service_pb.GetDeploymentRequest, proto_clarifai_api_service_pb.SingleDeploymentResponse> {
     path: "/clarifai.api.V2/GetDeployment";
     requestStream: false;
@@ -3036,6 +3046,7 @@ export interface IV2Server {
     postNodepools: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostNodepoolsRequest, proto_clarifai_api_service_pb.MultiNodepoolResponse>;
     patchNodepools: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchNodepoolsRequest, proto_clarifai_api_service_pb.MultiNodepoolResponse>;
     deleteNodepools: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteNodepoolsRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
+    postNodepoolStatus: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostNodepoolStatusRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
     getDeployment: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetDeploymentRequest, proto_clarifai_api_service_pb.SingleDeploymentResponse>;
     listDeployments: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListDeploymentsRequest, proto_clarifai_api_service_pb.MultiDeploymentResponse>;
     postDeployments: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostDeploymentsRequest, proto_clarifai_api_service_pb.MultiDeploymentResponse>;
@@ -3761,6 +3772,9 @@ export interface IV2Client {
     deleteNodepools(request: proto_clarifai_api_service_pb.DeleteNodepoolsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteNodepools(request: proto_clarifai_api_service_pb.DeleteNodepoolsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteNodepools(request: proto_clarifai_api_service_pb.DeleteNodepoolsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    postNodepoolStatus(request: proto_clarifai_api_service_pb.PostNodepoolStatusRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    postNodepoolStatus(request: proto_clarifai_api_service_pb.PostNodepoolStatusRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    postNodepoolStatus(request: proto_clarifai_api_service_pb.PostNodepoolStatusRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     getDeployment(request: proto_clarifai_api_service_pb.GetDeploymentRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleDeploymentResponse) => void): grpc.ClientUnaryCall;
     getDeployment(request: proto_clarifai_api_service_pb.GetDeploymentRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleDeploymentResponse) => void): grpc.ClientUnaryCall;
     getDeployment(request: proto_clarifai_api_service_pb.GetDeploymentRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleDeploymentResponse) => void): grpc.ClientUnaryCall;
@@ -4595,6 +4609,9 @@ export class V2Client extends grpc.Client implements IV2Client {
     public deleteNodepools(request: proto_clarifai_api_service_pb.DeleteNodepoolsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteNodepools(request: proto_clarifai_api_service_pb.DeleteNodepoolsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteNodepools(request: proto_clarifai_api_service_pb.DeleteNodepoolsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public postNodepoolStatus(request: proto_clarifai_api_service_pb.PostNodepoolStatusRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public postNodepoolStatus(request: proto_clarifai_api_service_pb.PostNodepoolStatusRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
+    public postNodepoolStatus(request: proto_clarifai_api_service_pb.PostNodepoolStatusRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public getDeployment(request: proto_clarifai_api_service_pb.GetDeploymentRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleDeploymentResponse) => void): grpc.ClientUnaryCall;
     public getDeployment(request: proto_clarifai_api_service_pb.GetDeploymentRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleDeploymentResponse) => void): grpc.ClientUnaryCall;
     public getDeployment(request: proto_clarifai_api_service_pb.GetDeploymentRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.SingleDeploymentResponse) => void): grpc.ClientUnaryCall;

@@ -4621,6 +4621,15 @@ message Runner {
 // like UI modules may be assigned to node pools.
 message Nodepool {
   reserved 5;
+
+  enum NodepoolStatus {
+    NODEPOOL_STATUS_UNKNOWN = 0;
+    NODEPOOL_STATUS_PENDING = 1;
+    NODEPOOL_STATUS_READY = 2;
+    NODEPOOL_STATUS_ERROR = 3;
+    NODEPOOL_STATUS_DELETED = 4;
+  }
+
   // The user defined ID of the nodepool.
   string id = 1;
   // Short description about the nodepool.
@@ -4666,6 +4675,10 @@ message Nodepool {
   // The current number of nodes in this nodepool. This value is queried from Prometheus metrics
   // and represents the most recent node count reported by the compute plane.
   uint32 node_count = 16;
+  // Current status of the nodepool.
+  NodepoolStatus status = 17;
+  // Human-readable status description. Contains error details when status is NODEPOOL_STATUS_ERROR.
+  string status_description = 18;
 
   // Other future configuration we can add:
   // - disk information

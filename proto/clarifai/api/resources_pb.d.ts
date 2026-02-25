@@ -8349,6 +8349,10 @@ export class Nodepool extends jspb.Message {
     addSpecialHandling(value?: SpecialHandling, index?: number): SpecialHandling;
     getNodeCount(): number;
     setNodeCount(value: number): Nodepool;
+    getStatus(): Nodepool.NodepoolStatus;
+    setStatus(value: Nodepool.NodepoolStatus): Nodepool;
+    getStatusDescription(): string;
+    setStatusDescription(value: string): Nodepool;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Nodepool.AsObject;
@@ -8377,7 +8381,18 @@ export namespace Nodepool {
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
         specialHandlingList: Array<SpecialHandling.AsObject>,
         nodeCount: number,
+        status: Nodepool.NodepoolStatus,
+        statusDescription: string,
     }
+
+    export enum NodepoolStatus {
+    NODEPOOL_STATUS_UNKNOWN = 0,
+    NODEPOOL_STATUS_PENDING = 1,
+    NODEPOOL_STATUS_READY = 2,
+    NODEPOOL_STATUS_ERROR = 3,
+    NODEPOOL_STATUS_DELETED = 4,
+    }
+
 }
 
 export class NodeCapacityType extends jspb.Message { 

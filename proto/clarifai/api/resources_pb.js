@@ -235,6 +235,7 @@ goog.exportSymbol('proto.clarifai.api.NodeCapacityType', null, global);
 goog.exportSymbol('proto.clarifai.api.NodeCapacityType.CapacityType', null, global);
 goog.exportSymbol('proto.clarifai.api.NodeInput', null, global);
 goog.exportSymbol('proto.clarifai.api.Nodepool', null, global);
+goog.exportSymbol('proto.clarifai.api.Nodepool.NodepoolStatus', null, global);
 goog.exportSymbol('proto.clarifai.api.OpenRouterInfo', null, global);
 goog.exportSymbol('proto.clarifai.api.Operation', null, global);
 goog.exportSymbol('proto.clarifai.api.Operation.AnnotationOperationCase', null, global);
@@ -69775,7 +69776,9 @@ proto.clarifai.api.Nodepool.toObject = function(includeInstance, msg) {
     metadata: (f = msg.getMetadata()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
     specialHandlingList: jspb.Message.toObjectList(msg.getSpecialHandlingList(),
     proto.clarifai.api.SpecialHandling.toObject, includeInstance),
-    nodeCount: jspb.Message.getFieldWithDefault(msg, 16, 0)
+    nodeCount: jspb.Message.getFieldWithDefault(msg, 16, 0),
+    status: jspb.Message.getFieldWithDefault(msg, 17, 0),
+    statusDescription: jspb.Message.getFieldWithDefault(msg, 18, "")
   };
 
   if (includeInstance) {
@@ -69879,6 +69882,14 @@ proto.clarifai.api.Nodepool.deserializeBinaryFromReader = function(msg, reader) 
     case 16:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setNodeCount(value);
+      break;
+    case 17:
+      var value = /** @type {!proto.clarifai.api.Nodepool.NodepoolStatus} */ (reader.readEnum());
+      msg.setStatus(value);
+      break;
+    case 18:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setStatusDescription(value);
       break;
     default:
       reader.skipField();
@@ -70022,8 +70033,33 @@ proto.clarifai.api.Nodepool.serializeBinaryToWriter = function(message, writer) 
       f
     );
   }
+  f = message.getStatus();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      17,
+      f
+    );
+  }
+  f = message.getStatusDescription();
+  if (f.length > 0) {
+    writer.writeString(
+      18,
+      f
+    );
+  }
 };
 
+
+/**
+ * @enum {number}
+ */
+proto.clarifai.api.Nodepool.NodepoolStatus = {
+  NODEPOOL_STATUS_UNKNOWN: 0,
+  NODEPOOL_STATUS_PENDING: 1,
+  NODEPOOL_STATUS_READY: 2,
+  NODEPOOL_STATUS_ERROR: 3,
+  NODEPOOL_STATUS_DELETED: 4
+};
 
 /**
  * optional string id = 1;
@@ -70446,6 +70482,42 @@ proto.clarifai.api.Nodepool.prototype.getNodeCount = function() {
  */
 proto.clarifai.api.Nodepool.prototype.setNodeCount = function(value) {
   return jspb.Message.setProto3IntField(this, 16, value);
+};
+
+
+/**
+ * optional NodepoolStatus status = 17;
+ * @return {!proto.clarifai.api.Nodepool.NodepoolStatus}
+ */
+proto.clarifai.api.Nodepool.prototype.getStatus = function() {
+  return /** @type {!proto.clarifai.api.Nodepool.NodepoolStatus} */ (jspb.Message.getFieldWithDefault(this, 17, 0));
+};
+
+
+/**
+ * @param {!proto.clarifai.api.Nodepool.NodepoolStatus} value
+ * @return {!proto.clarifai.api.Nodepool} returns this
+ */
+proto.clarifai.api.Nodepool.prototype.setStatus = function(value) {
+  return jspb.Message.setProto3EnumField(this, 17, value);
+};
+
+
+/**
+ * optional string status_description = 18;
+ * @return {string}
+ */
+proto.clarifai.api.Nodepool.prototype.getStatusDescription = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 18, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.clarifai.api.Nodepool} returns this
+ */
+proto.clarifai.api.Nodepool.prototype.setStatusDescription = function(value) {
+  return jspb.Message.setProto3StringField(this, 18, value);
 };
 
 
