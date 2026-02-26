@@ -10980,6 +10980,41 @@ export namespace DeleteNodepoolsRequest {
     }
 }
 
+export class PostNodepoolStatusRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PostNodepoolStatusRequest;
+    getComputeClusterId(): string;
+    setComputeClusterId(value: string): PostNodepoolStatusRequest;
+    getNodepoolId(): string;
+    setNodepoolId(value: string): PostNodepoolStatusRequest;
+    getStatus(): proto_clarifai_api_resources_pb.Nodepool.NodepoolStatus;
+    setStatus(value: proto_clarifai_api_resources_pb.Nodepool.NodepoolStatus): PostNodepoolStatusRequest;
+    getStatusDescription(): string;
+    setStatusDescription(value: string): PostNodepoolStatusRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PostNodepoolStatusRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PostNodepoolStatusRequest): PostNodepoolStatusRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PostNodepoolStatusRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PostNodepoolStatusRequest;
+    static deserializeBinaryFromReader(message: PostNodepoolStatusRequest, reader: jspb.BinaryReader): PostNodepoolStatusRequest;
+}
+
+export namespace PostNodepoolStatusRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        computeClusterId: string,
+        nodepoolId: string,
+        status: proto_clarifai_api_resources_pb.Nodepool.NodepoolStatus,
+        statusDescription: string,
+    }
+}
+
 export class SingleNodepoolResponse extends jspb.Message { 
 
     hasStatus(): boolean;
@@ -13009,6 +13044,137 @@ export namespace MultiSecretResponse {
     export type AsObject = {
         status?: proto_clarifai_api_status_status_pb.Status.AsObject,
         secretsList: Array<proto_clarifai_api_resources_pb.Secret.AsObject>,
+    }
+}
+
+export class ListPipelineTemplatesRequest extends jspb.Message { 
+    clearPipelineTemplateTypeList(): void;
+    getPipelineTemplateTypeList(): Array<proto_clarifai_api_resources_pb.PipelineTemplate.PipelineTemplateType>;
+    setPipelineTemplateTypeList(value: Array<proto_clarifai_api_resources_pb.PipelineTemplate.PipelineTemplateType>): ListPipelineTemplatesRequest;
+    addPipelineTemplateType(value: proto_clarifai_api_resources_pb.PipelineTemplate.PipelineTemplateType, index?: number): proto_clarifai_api_resources_pb.PipelineTemplate.PipelineTemplateType;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListPipelineTemplatesRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListPipelineTemplatesRequest): ListPipelineTemplatesRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListPipelineTemplatesRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListPipelineTemplatesRequest;
+    static deserializeBinaryFromReader(message: ListPipelineTemplatesRequest, reader: jspb.BinaryReader): ListPipelineTemplatesRequest;
+}
+
+export namespace ListPipelineTemplatesRequest {
+    export type AsObject = {
+        pipelineTemplateTypeList: Array<proto_clarifai_api_resources_pb.PipelineTemplate.PipelineTemplateType>,
+    }
+}
+
+export class MultiPipelineTemplateResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): MultiPipelineTemplateResponse;
+    clearPipelineTemplatesList(): void;
+    getPipelineTemplatesList(): Array<proto_clarifai_api_resources_pb.PipelineTemplate>;
+    setPipelineTemplatesList(value: Array<proto_clarifai_api_resources_pb.PipelineTemplate>): MultiPipelineTemplateResponse;
+    addPipelineTemplates(value?: proto_clarifai_api_resources_pb.PipelineTemplate, index?: number): proto_clarifai_api_resources_pb.PipelineTemplate;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MultiPipelineTemplateResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: MultiPipelineTemplateResponse): MultiPipelineTemplateResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MultiPipelineTemplateResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MultiPipelineTemplateResponse;
+    static deserializeBinaryFromReader(message: MultiPipelineTemplateResponse, reader: jspb.BinaryReader): MultiPipelineTemplateResponse;
+}
+
+export namespace MultiPipelineTemplateResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        pipelineTemplatesList: Array<proto_clarifai_api_resources_pb.PipelineTemplate.AsObject>,
+    }
+}
+
+export class PostPipelineVersionRunFromTemplateRequest extends jspb.Message { 
+
+    hasUserAppId(): boolean;
+    clearUserAppId(): void;
+    getUserAppId(): proto_clarifai_api_resources_pb.UserAppIDSet | undefined;
+    setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): PostPipelineVersionRunFromTemplateRequest;
+    getPipelineTemplateName(): string;
+    setPipelineTemplateName(value: string): PostPipelineVersionRunFromTemplateRequest;
+    getPipelineId(): string;
+    setPipelineId(value: string): PostPipelineVersionRunFromTemplateRequest;
+    getPipelineDescription(): string;
+    setPipelineDescription(value: string): PostPipelineVersionRunFromTemplateRequest;
+    getPipelineVersionDescription(): string;
+    setPipelineVersionDescription(value: string): PostPipelineVersionRunFromTemplateRequest;
+    clearNodepoolsList(): void;
+    getNodepoolsList(): Array<proto_clarifai_api_resources_pb.Nodepool>;
+    setNodepoolsList(value: Array<proto_clarifai_api_resources_pb.Nodepool>): PostPipelineVersionRunFromTemplateRequest;
+    addNodepools(value?: proto_clarifai_api_resources_pb.Nodepool, index?: number): proto_clarifai_api_resources_pb.Nodepool;
+
+    hasInputArgsOverride(): boolean;
+    clearInputArgsOverride(): void;
+    getInputArgsOverride(): proto_clarifai_api_resources_pb.OrchestrationArgsOverride | undefined;
+    setInputArgsOverride(value?: proto_clarifai_api_resources_pb.OrchestrationArgsOverride): PostPipelineVersionRunFromTemplateRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PostPipelineVersionRunFromTemplateRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PostPipelineVersionRunFromTemplateRequest): PostPipelineVersionRunFromTemplateRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PostPipelineVersionRunFromTemplateRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PostPipelineVersionRunFromTemplateRequest;
+    static deserializeBinaryFromReader(message: PostPipelineVersionRunFromTemplateRequest, reader: jspb.BinaryReader): PostPipelineVersionRunFromTemplateRequest;
+}
+
+export namespace PostPipelineVersionRunFromTemplateRequest {
+    export type AsObject = {
+        userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
+        pipelineTemplateName: string,
+        pipelineId: string,
+        pipelineDescription: string,
+        pipelineVersionDescription: string,
+        nodepoolsList: Array<proto_clarifai_api_resources_pb.Nodepool.AsObject>,
+        inputArgsOverride?: proto_clarifai_api_resources_pb.OrchestrationArgsOverride.AsObject,
+    }
+}
+
+export class PostPipelineVersionRunFromTemplateResponse extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
+    setStatus(value?: proto_clarifai_api_status_status_pb.Status): PostPipelineVersionRunFromTemplateResponse;
+
+    hasPipeline(): boolean;
+    clearPipeline(): void;
+    getPipeline(): proto_clarifai_api_resources_pb.Pipeline | undefined;
+    setPipeline(value?: proto_clarifai_api_resources_pb.Pipeline): PostPipelineVersionRunFromTemplateResponse;
+
+    hasPipelineVersionRun(): boolean;
+    clearPipelineVersionRun(): void;
+    getPipelineVersionRun(): proto_clarifai_api_resources_pb.PipelineVersionRun | undefined;
+    setPipelineVersionRun(value?: proto_clarifai_api_resources_pb.PipelineVersionRun): PostPipelineVersionRunFromTemplateResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PostPipelineVersionRunFromTemplateResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: PostPipelineVersionRunFromTemplateResponse): PostPipelineVersionRunFromTemplateResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PostPipelineVersionRunFromTemplateResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PostPipelineVersionRunFromTemplateResponse;
+    static deserializeBinaryFromReader(message: PostPipelineVersionRunFromTemplateResponse, reader: jspb.BinaryReader): PostPipelineVersionRunFromTemplateResponse;
+}
+
+export namespace PostPipelineVersionRunFromTemplateResponse {
+    export type AsObject = {
+        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
+        pipeline?: proto_clarifai_api_resources_pb.Pipeline.AsObject,
+        pipelineVersionRun?: proto_clarifai_api_resources_pb.PipelineVersionRun.AsObject,
     }
 }
 

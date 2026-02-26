@@ -8349,6 +8349,10 @@ export class Nodepool extends jspb.Message {
     addSpecialHandling(value?: SpecialHandling, index?: number): SpecialHandling;
     getNodeCount(): number;
     setNodeCount(value: number): Nodepool;
+    getStatus(): Nodepool.NodepoolStatus;
+    setStatus(value: Nodepool.NodepoolStatus): Nodepool;
+    getStatusDescription(): string;
+    setStatusDescription(value: string): Nodepool;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Nodepool.AsObject;
@@ -8377,7 +8381,18 @@ export namespace Nodepool {
         metadata?: google_protobuf_struct_pb.Struct.AsObject,
         specialHandlingList: Array<SpecialHandling.AsObject>,
         nodeCount: number,
+        status: Nodepool.NodepoolStatus,
+        statusDescription: string,
     }
+
+    export enum NodepoolStatus {
+    NODEPOOL_STATUS_UNKNOWN = 0,
+    NODEPOOL_STATUS_PENDING = 1,
+    NODEPOOL_STATUS_READY = 2,
+    NODEPOOL_STATUS_ERROR = 3,
+    NODEPOOL_STATUS_DELETED = 4,
+    }
+
 }
 
 export class NodeCapacityType extends jspb.Message { 
@@ -10448,6 +10463,301 @@ export namespace PipelineVersionRunStatusLog {
         triggeredByUserId: string,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
     }
+}
+
+export class PipelineTemplateParameter extends jspb.Message { 
+    getName(): string;
+    setName(value: string): PipelineTemplateParameter;
+    getType(): PipelineTemplateParameter.Type;
+    setType(value: PipelineTemplateParameter.Type): PipelineTemplateParameter;
+    getRequired(): boolean;
+    setRequired(value: boolean): PipelineTemplateParameter;
+
+    hasDefaultString(): boolean;
+    clearDefaultString(): void;
+    getDefaultString(): string;
+    setDefaultString(value: string): PipelineTemplateParameter;
+
+    hasDefaultInt(): boolean;
+    clearDefaultInt(): void;
+    getDefaultInt(): number;
+    setDefaultInt(value: number): PipelineTemplateParameter;
+
+    hasDefaultFloat(): boolean;
+    clearDefaultFloat(): void;
+    getDefaultFloat(): number;
+    setDefaultFloat(value: number): PipelineTemplateParameter;
+
+    hasDefaultBool(): boolean;
+    clearDefaultBool(): void;
+    getDefaultBool(): boolean;
+    setDefaultBool(value: boolean): PipelineTemplateParameter;
+    getDescription(): string;
+    setDescription(value: string): PipelineTemplateParameter;
+
+    hasConstraints(): boolean;
+    clearConstraints(): void;
+    getConstraints(): PipelineTemplateParameter.Constraints | undefined;
+    setConstraints(value?: PipelineTemplateParameter.Constraints): PipelineTemplateParameter;
+
+    hasUiHints(): boolean;
+    clearUiHints(): void;
+    getUiHints(): PipelineTemplateParameter.UIHints | undefined;
+    setUiHints(value?: PipelineTemplateParameter.UIHints): PipelineTemplateParameter;
+
+    getDefaultValueCase(): PipelineTemplateParameter.DefaultValueCase;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PipelineTemplateParameter.AsObject;
+    static toObject(includeInstance: boolean, msg: PipelineTemplateParameter): PipelineTemplateParameter.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PipelineTemplateParameter, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PipelineTemplateParameter;
+    static deserializeBinaryFromReader(message: PipelineTemplateParameter, reader: jspb.BinaryReader): PipelineTemplateParameter;
+}
+
+export namespace PipelineTemplateParameter {
+    export type AsObject = {
+        name: string,
+        type: PipelineTemplateParameter.Type,
+        required: boolean,
+        defaultString: string,
+        defaultInt: number,
+        defaultFloat: number,
+        defaultBool: boolean,
+        description: string,
+        constraints?: PipelineTemplateParameter.Constraints.AsObject,
+        uiHints?: PipelineTemplateParameter.UIHints.AsObject,
+    }
+
+
+    export class Constraints extends jspb.Message { 
+
+        hasStringConstraints(): boolean;
+        clearStringConstraints(): void;
+        getStringConstraints(): PipelineTemplateParameter.Constraints.StringConstraints | undefined;
+        setStringConstraints(value?: PipelineTemplateParameter.Constraints.StringConstraints): Constraints;
+
+        hasIntConstraints(): boolean;
+        clearIntConstraints(): void;
+        getIntConstraints(): PipelineTemplateParameter.Constraints.IntConstraints | undefined;
+        setIntConstraints(value?: PipelineTemplateParameter.Constraints.IntConstraints): Constraints;
+
+        hasFloatConstraints(): boolean;
+        clearFloatConstraints(): void;
+        getFloatConstraints(): PipelineTemplateParameter.Constraints.FloatConstraints | undefined;
+        setFloatConstraints(value?: PipelineTemplateParameter.Constraints.FloatConstraints): Constraints;
+
+        getConstraintsCase(): Constraints.ConstraintsCase;
+
+        serializeBinary(): Uint8Array;
+        toObject(includeInstance?: boolean): Constraints.AsObject;
+        static toObject(includeInstance: boolean, msg: Constraints): Constraints.AsObject;
+        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+        static serializeBinaryToWriter(message: Constraints, writer: jspb.BinaryWriter): void;
+        static deserializeBinary(bytes: Uint8Array): Constraints;
+        static deserializeBinaryFromReader(message: Constraints, reader: jspb.BinaryReader): Constraints;
+    }
+
+    export namespace Constraints {
+        export type AsObject = {
+            stringConstraints?: PipelineTemplateParameter.Constraints.StringConstraints.AsObject,
+            intConstraints?: PipelineTemplateParameter.Constraints.IntConstraints.AsObject,
+            floatConstraints?: PipelineTemplateParameter.Constraints.FloatConstraints.AsObject,
+        }
+
+
+        export class StringConstraints extends jspb.Message { 
+            clearAllowedValuesList(): void;
+            getAllowedValuesList(): Array<string>;
+            setAllowedValuesList(value: Array<string>): StringConstraints;
+            addAllowedValues(value: string, index?: number): string;
+            getAllowFreeText(): boolean;
+            setAllowFreeText(value: boolean): StringConstraints;
+            getMinLength(): number;
+            setMinLength(value: number): StringConstraints;
+            getMaxLength(): number;
+            setMaxLength(value: number): StringConstraints;
+
+            serializeBinary(): Uint8Array;
+            toObject(includeInstance?: boolean): StringConstraints.AsObject;
+            static toObject(includeInstance: boolean, msg: StringConstraints): StringConstraints.AsObject;
+            static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+            static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+            static serializeBinaryToWriter(message: StringConstraints, writer: jspb.BinaryWriter): void;
+            static deserializeBinary(bytes: Uint8Array): StringConstraints;
+            static deserializeBinaryFromReader(message: StringConstraints, reader: jspb.BinaryReader): StringConstraints;
+        }
+
+        export namespace StringConstraints {
+            export type AsObject = {
+                allowedValuesList: Array<string>,
+                allowFreeText: boolean,
+                minLength: number,
+                maxLength: number,
+            }
+        }
+
+        export class IntConstraints extends jspb.Message { 
+            getMin(): number;
+            setMin(value: number): IntConstraints;
+            getMax(): number;
+            setMax(value: number): IntConstraints;
+
+            serializeBinary(): Uint8Array;
+            toObject(includeInstance?: boolean): IntConstraints.AsObject;
+            static toObject(includeInstance: boolean, msg: IntConstraints): IntConstraints.AsObject;
+            static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+            static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+            static serializeBinaryToWriter(message: IntConstraints, writer: jspb.BinaryWriter): void;
+            static deserializeBinary(bytes: Uint8Array): IntConstraints;
+            static deserializeBinaryFromReader(message: IntConstraints, reader: jspb.BinaryReader): IntConstraints;
+        }
+
+        export namespace IntConstraints {
+            export type AsObject = {
+                min: number,
+                max: number,
+            }
+        }
+
+        export class FloatConstraints extends jspb.Message { 
+            getMin(): number;
+            setMin(value: number): FloatConstraints;
+            getMax(): number;
+            setMax(value: number): FloatConstraints;
+
+            serializeBinary(): Uint8Array;
+            toObject(includeInstance?: boolean): FloatConstraints.AsObject;
+            static toObject(includeInstance: boolean, msg: FloatConstraints): FloatConstraints.AsObject;
+            static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+            static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+            static serializeBinaryToWriter(message: FloatConstraints, writer: jspb.BinaryWriter): void;
+            static deserializeBinary(bytes: Uint8Array): FloatConstraints;
+            static deserializeBinaryFromReader(message: FloatConstraints, reader: jspb.BinaryReader): FloatConstraints;
+        }
+
+        export namespace FloatConstraints {
+            export type AsObject = {
+                min: number,
+                max: number,
+            }
+        }
+
+
+        export enum ConstraintsCase {
+            CONSTRAINTS_NOT_SET = 0,
+            STRING_CONSTRAINTS = 1,
+            INT_CONSTRAINTS = 2,
+            FLOAT_CONSTRAINTS = 3,
+        }
+
+    }
+
+    export class UIHints extends jspb.Message { 
+        getWidget(): PipelineTemplateParameter.UIHints.UIWidget;
+        setWidget(value: PipelineTemplateParameter.UIHints.UIWidget): UIHints;
+        getDataSource(): string;
+        setDataSource(value: string): UIHints;
+        getSerializeAsString(): boolean;
+        setSerializeAsString(value: boolean): UIHints;
+
+        serializeBinary(): Uint8Array;
+        toObject(includeInstance?: boolean): UIHints.AsObject;
+        static toObject(includeInstance: boolean, msg: UIHints): UIHints.AsObject;
+        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+        static serializeBinaryToWriter(message: UIHints, writer: jspb.BinaryWriter): void;
+        static deserializeBinary(bytes: Uint8Array): UIHints;
+        static deserializeBinaryFromReader(message: UIHints, reader: jspb.BinaryReader): UIHints;
+    }
+
+    export namespace UIHints {
+        export type AsObject = {
+            widget: PipelineTemplateParameter.UIHints.UIWidget,
+            dataSource: string,
+            serializeAsString: boolean,
+        }
+
+        export enum UIWidget {
+    UI_WIDGET_UNSPECIFIED = 0,
+    TEXT_INPUT = 1,
+    NUMBER_INPUT = 2,
+    SLIDER = 3,
+    DROPDOWN = 4,
+    TOGGLE = 5,
+        }
+
+    }
+
+
+    export enum Type {
+    PARAMETER_TYPE_UNSPECIFIED = 0,
+    STRING = 1,
+    INT = 2,
+    FLOAT = 3,
+    BOOL = 4,
+    }
+
+
+    export enum DefaultValueCase {
+        DEFAULT_VALUE_NOT_SET = 0,
+        DEFAULT_STRING = 4,
+        DEFAULT_INT = 5,
+        DEFAULT_FLOAT = 6,
+        DEFAULT_BOOL = 7,
+    }
+
+}
+
+export class PipelineTemplate extends jspb.Message { 
+    getName(): string;
+    setName(value: string): PipelineTemplate;
+    getDescription(): string;
+    setDescription(value: string): PipelineTemplate;
+    getPipelineTemplateType(): PipelineTemplate.PipelineTemplateType;
+    setPipelineTemplateType(value: PipelineTemplate.PipelineTemplateType): PipelineTemplate;
+
+    hasComputeInfo(): boolean;
+    clearComputeInfo(): void;
+    getComputeInfo(): ComputeInfo | undefined;
+    setComputeInfo(value?: ComputeInfo): PipelineTemplate;
+    clearParametersList(): void;
+    getParametersList(): Array<PipelineTemplateParameter>;
+    setParametersList(value: Array<PipelineTemplateParameter>): PipelineTemplate;
+    addParameters(value?: PipelineTemplateParameter, index?: number): PipelineTemplateParameter;
+
+    getPipelineStepsMap(): jspb.Map<string, string>;
+    clearPipelineStepsMap(): void;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PipelineTemplate.AsObject;
+    static toObject(includeInstance: boolean, msg: PipelineTemplate): PipelineTemplate.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PipelineTemplate, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PipelineTemplate;
+    static deserializeBinaryFromReader(message: PipelineTemplate, reader: jspb.BinaryReader): PipelineTemplate;
+}
+
+export namespace PipelineTemplate {
+    export type AsObject = {
+        name: string,
+        description: string,
+        pipelineTemplateType: PipelineTemplate.PipelineTemplateType,
+        computeInfo?: ComputeInfo.AsObject,
+        parametersList: Array<PipelineTemplateParameter.AsObject>,
+
+        pipelineStepsMap: Array<[string, string]>,
+    }
+
+    export enum PipelineTemplateType {
+    UNKNOWN = 0,
+    TRAINING = 1,
+    }
+
 }
 
 export class Secret extends jspb.Message { 

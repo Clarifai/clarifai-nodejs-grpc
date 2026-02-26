@@ -2393,6 +2393,8 @@ service V2 {
 
 
 
+
+
   // Validate new password in real-time for a user
   rpc PostValidatePassword (PostValidatePasswordRequest) returns (SinglePasswordValidationResponse) {
     option (google.api.http) = {
@@ -3822,6 +3824,17 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Deployments_Delete;
   }
 
+  // Update nodepool status. Called by the agent to report nodepool health/errors.
+  rpc PostNodepoolStatus (PostNodepoolStatusRequest) returns (clarifai.api.status.BaseResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/status"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Add;
+  }
+
   // Deployments CRUD
   rpc GetDeployment (GetDeploymentRequest) returns (SingleDeploymentResponse) {
     option (google.api.http) = {
@@ -4351,6 +4364,33 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
     option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Add;
     option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Delete;
+  }
+
+  // Lists pipeline templates, which are ready-to-use templates that can simply be run on demand.
+  rpc ListPipelineTemplates(ListPipelineTemplatesRequest) returns (MultiPipelineTemplateResponse) {
+    option (google.api.http) = {
+      get: "/v2/pipeline_templates"
+    };
+    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
+  }
+
+  // Creates a Pipeline, PipelineVersion, and PipelineVersionRun from a PipelineTemplate. 
+  // This is a convenience endpoint for users to quickly get started with running pipelines.
+  rpc PostPipelineVersionRunFromTemplate(PostPipelineVersionRunFromTemplateRequest) returns (PostPipelineVersionRunFromTemplateResponse) {
+    option (google.api.http) = {
+      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipeline_templates/{pipeline_template_name}/pipeline_version_runs"
+      body: "*"
+    };
+    option (clarifai.auth.util.cl_auth_type) = PATAuth;
+    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Add;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = PipelineSteps_Pull;
+    option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
   }
 
   rpc PostArtifacts(PostArtifactsRequest) returns (MultiArtifactResponse) {
@@ -7122,6 +7162,10 @@ message SingleUserResponse {
 
 
 
+
+
+
+
 // PostValidatePasswordRequest
 message PostValidatePasswordRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
@@ -8502,6 +8546,16 @@ message DeleteNodepoolsRequest {
   repeated string ids = 3;
 }
 
+message PostNodepoolStatusRequest {
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  string compute_cluster_id = 2;
+  string nodepool_id = 3;
+  // New status of the nodepool.
+  Nodepool.NodepoolStatus status = 4;
+  // Human-readable status description. Contains error details when status is NODEPOOL_STATUS_ERROR.
+  string status_description = 5;
+}
+
 message SingleNodepoolResponse {
   clarifai.api.status.Status status = 1;
   Nodepool nodepool = 2;
@@ -9082,6 +9136,51 @@ message SingleSecretResponse {
 }message MultiSecretResponse {
   clarifai.api.status.Status status = 1;
   repeated Secret secrets = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+message ListPipelineTemplatesRequest {
+  // Filter based on PipelineTemplateTypes (e.g. TRAINING)
+  repeated PipelineTemplate.PipelineTemplateType pipeline_template_type = 1;
+}
+
+message MultiPipelineTemplateResponse {
+  clarifai.api.status.Status status = 1;
+  repeated PipelineTemplate pipeline_templates = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
+}
+
+// Request to create a Pipeline, PipelineVersion, and PipelineVersionRun from a PipelineTemplate
+message PostPipelineVersionRunFromTemplateRequest {
+
+  clarifai.api.UserAppIDSet user_app_id = 1;
+  
+  // Name of the pipeline template to use (from ListPipelineTemplates)
+  string pipeline_template_name = 2;
+    
+  // Optional: ID of existing pipeline to create version under
+  string pipeline_id = 3;
+  
+  // Optional: Description for the pipeline (used if creating new pipeline)
+  string pipeline_description = 4;
+  
+  // Optional: Description for the pipeline version
+  string pipeline_version_description = 5;
+  
+  // Optional: Nodepools to use for the pipeline version run
+  repeated Nodepool nodepools = 6;
+  
+  // Optional: Overrides to input arguments for the orchestration system
+  OrchestrationArgsOverride input_args_override = 7;
+}
+
+// Response containing the created Pipeline, PipelineVersion, and PipelineVersionRun
+message PostPipelineVersionRunFromTemplateResponse {
+  clarifai.api.status.Status status = 1;
+  
+  // The created or updated pipeline (contains the latest pipeline version)
+  Pipeline pipeline = 2;
+  
+  // The created pipeline version run
+  PipelineVersionRun pipeline_version_run = 3;
 }
 
 message PostMetricsQueryRequest {
