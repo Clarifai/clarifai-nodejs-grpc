@@ -8750,6 +8750,10 @@ export class Deployment extends jspb.Message {
     setEmailReminderAfter(value?: google_protobuf_duration_pb.Duration): Deployment;
     getGracefulDeploy(): boolean;
     setGracefulDeploy(value: boolean): Deployment;
+    clearDeploymentNodepoolsList(): void;
+    getDeploymentNodepoolsList(): Array<DeploymentNodepool>;
+    setDeploymentNodepoolsList(value: Array<DeploymentNodepool>): Deployment;
+    addDeploymentNodepools(value?: DeploymentNodepool, index?: number): DeploymentNodepool;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Deployment.AsObject;
@@ -8779,6 +8783,7 @@ export namespace Deployment {
         specialHandlingList: Array<SpecialHandling.AsObject>,
         emailReminderAfter?: google_protobuf_duration_pb.Duration.AsObject,
         gracefulDeploy: boolean,
+        deploymentNodepoolsList: Array<DeploymentNodepool.AsObject>,
     }
 
     export enum SchedulingChoice {
@@ -8793,6 +8798,41 @@ export namespace Deployment {
     PREFER_ONDEMAND = 8,
     }
 
+}
+
+export class DeploymentNodepool extends jspb.Message { 
+    getId(): string;
+    setId(value: string): DeploymentNodepool;
+
+    hasComputeCluster(): boolean;
+    clearComputeCluster(): void;
+    getComputeCluster(): ComputeCluster | undefined;
+    setComputeCluster(value?: ComputeCluster): DeploymentNodepool;
+    getPriority(): number;
+    setPriority(value: number): DeploymentNodepool;
+
+    hasNodepool(): boolean;
+    clearNodepool(): void;
+    getNodepool(): Nodepool | undefined;
+    setNodepool(value?: Nodepool): DeploymentNodepool;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DeploymentNodepool.AsObject;
+    static toObject(includeInstance: boolean, msg: DeploymentNodepool): DeploymentNodepool.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DeploymentNodepool, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DeploymentNodepool;
+    static deserializeBinaryFromReader(message: DeploymentNodepool, reader: jspb.BinaryReader): DeploymentNodepool;
+}
+
+export namespace DeploymentNodepool {
+    export type AsObject = {
+        id: string,
+        computeCluster?: ComputeCluster.AsObject,
+        priority: number,
+        nodepool?: Nodepool.AsObject,
+    }
 }
 
 export class RunnerSelector extends jspb.Message { 

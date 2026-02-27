@@ -4941,7 +4941,9 @@ message Deployment {
   // NodepoolRank below. Note: even within a single nodepool if it is heterogeneous then
   // we need a way to rank scheduling choices when we don't know how to decide (like a model
   // supports
-  repeated Nodepool nodepools = 4;
+
+  // Use DeploymentNodepools field instead
+  repeated Nodepool nodepools = 4 [deprecated = true];
 
   // In some scenarios it may not be obvous how we should schedule a resource to underlying nodes
   // within the nodepool(s) above. The SchedulerChoice allows us to specify how to decide which
@@ -4997,6 +4999,28 @@ message Deployment {
   google.protobuf.Duration email_reminder_after = 17;
   // Whether to gracefully deploy a new worker
   bool graceful_deploy = 18;
+
+  // Per-nodepool settings including priority. If set, 'nodepools' must not also be set.
+  // When any priority value is non-zero, the response will populate this field instead
+  // of 'nodepools'.
+  repeated DeploymentNodepool deployment_nodepools = 19;
+}
+
+// DeploymentNodepool associates a nodepool with a deployment and holds per-nodepool settings.
+message DeploymentNodepool {
+  // Nodepool ID correlates with nodepools in deployment.
+  string id = 1;
+  // The compute cluster that owns this nodepool.
+  ComputeCluster compute_cluster = 2;
+  // The scheduling priority for this deployment on the given nodepool.
+  // Valid values are 0-9, where higher values indicate higher priority.
+  // Default is 0 (lowest priority).
+  uint32 priority = 3;
+
+  // -------------------------------------------------------------------
+  // OUTPUT FIELDS (Server populates these so the client gets the data)
+  // -------------------------------------------------------------------
+  Nodepool nodepool = 4;
 }
 
 
