@@ -3848,6 +3848,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
   }
 
   rpc ListDeployments (ListDeploymentsRequest) returns (MultiDeploymentResponse) {
@@ -3866,6 +3867,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = ComputeClusters_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Nodepools_Get;
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
+    option (clarifai.auth.util.cl_depending_scopes) = Runners_Get;
   }
 
   rpc PostDeployments (PostDeploymentsRequest) returns (MultiDeploymentResponse) {

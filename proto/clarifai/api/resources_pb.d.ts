@@ -8689,6 +8689,32 @@ export namespace AutoscaleConfig {
     }
 }
 
+export class DeploymentMetrics extends jspb.Message { 
+    getDesiredReplicas(): number;
+    setDesiredReplicas(value: number): DeploymentMetrics;
+    getLiveReplicas(): number;
+    setLiveReplicas(value: number): DeploymentMetrics;
+    getRolloutInProgress(): boolean;
+    setRolloutInProgress(value: boolean): DeploymentMetrics;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DeploymentMetrics.AsObject;
+    static toObject(includeInstance: boolean, msg: DeploymentMetrics): DeploymentMetrics.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DeploymentMetrics, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DeploymentMetrics;
+    static deserializeBinaryFromReader(message: DeploymentMetrics, reader: jspb.BinaryReader): DeploymentMetrics;
+}
+
+export namespace DeploymentMetrics {
+    export type AsObject = {
+        desiredReplicas: number,
+        liveReplicas: number,
+        rolloutInProgress: boolean,
+    }
+}
+
 export class Deployment extends jspb.Message { 
     getId(): string;
     setId(value: string): Deployment;
@@ -8755,6 +8781,11 @@ export class Deployment extends jspb.Message {
     setDeploymentNodepoolsList(value: Array<DeploymentNodepool>): Deployment;
     addDeploymentNodepools(value?: DeploymentNodepool, index?: number): DeploymentNodepool;
 
+    hasDeploymentMetrics(): boolean;
+    clearDeploymentMetrics(): void;
+    getDeploymentMetrics(): DeploymentMetrics | undefined;
+    setDeploymentMetrics(value?: DeploymentMetrics): Deployment;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Deployment.AsObject;
     static toObject(includeInstance: boolean, msg: Deployment): Deployment.AsObject;
@@ -8784,6 +8815,7 @@ export namespace Deployment {
         emailReminderAfter?: google_protobuf_duration_pb.Duration.AsObject,
         gracefulDeploy: boolean,
         deploymentNodepoolsList: Array<DeploymentNodepool.AsObject>,
+        deploymentMetrics?: DeploymentMetrics.AsObject,
     }
 
     export enum SchedulingChoice {
