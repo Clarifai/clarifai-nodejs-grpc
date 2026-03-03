@@ -4939,6 +4939,13 @@ message DeploymentMetrics {
 // you can scale differently.
 message Deployment {
   reserved 5, 6;
+
+  // Status of the deployment.
+  enum Status {
+    ENABLED = 0;  // Default: deployment is enabled and can serve traffic.
+    DISABLED = 1;  // Deployment is disabled: scaled to zero, traffic rejected.
+  }
+
   // An id for this configured deployment.
   string id = 1;
   // The user who owns the deployment. These live in the user/org account.
@@ -5018,6 +5025,11 @@ message Deployment {
 
   // Real-time metrics for this deployment, including the desired and live replica counts.
   DeploymentMetrics deployment_metrics = 20;
+
+  // The current status of the deployment.
+  // When disabled, all infrastructure is scaled to zero and prediction requests are rejected.
+  // The autoscale_config is preserved for when the deployment is enabled.
+  Status status = 21;
 }
 
 // DeploymentNodepool associates a nodepool with a deployment and holds per-nodepool settings.
@@ -5779,21 +5791,21 @@ message PipelineTemplateParameter {
       // Maximum length of the string
       uint32 max_length = 4;
     }
-    
+
     message IntConstraints {
       // Minimum value for the int parameter
       int64 min = 1;
       // Maximum value for the int parameter
       int64 max = 2;
     }
-    
+
     message FloatConstraints {
       // Minimum value for the float parameter
       double min = 1;
       // Maximum value for the float parameter
       double max = 2;
     }
-    
+
     oneof constraints {
       StringConstraints string_constraints = 1;
       IntConstraints int_constraints = 2;
@@ -5814,10 +5826,10 @@ message PipelineTemplateParameter {
     }
     // The UI widget to use for displaying this parameter
     UIWidget widget = 1;
-  
+
     // Used for dropdowns populated dynamically
     string data_source = 2;
-  
+
     // Used when backend expects string even if UI shows bool/int
     bool serialize_as_string = 3;
   }
@@ -5828,7 +5840,7 @@ message PipelineTemplateParameter {
 
 message PipelineTemplate {
   // Name of the template
-  string name = 1; 
+  string name = 1;
   // Description of the template
   string description = 2;
 

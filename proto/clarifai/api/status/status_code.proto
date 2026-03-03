@@ -250,6 +250,7 @@ enum StatusCode {
   DEPLOYMENT_DOES_NOT_EXIST = 25900;
   DEPLOYMENT_INVALID_ARGUMENT = 25901;
   DEPLOYMENT_INVALID_REQUEST = 25902;
+  DEPLOYMENT_DISABLED = 25903;  // The deployment is disabled and cannot serve traffic.
 
   // InstanceType related codes 260xx
   INSTANCE_TYPE_DOES_NOT_EXIST = 26000;

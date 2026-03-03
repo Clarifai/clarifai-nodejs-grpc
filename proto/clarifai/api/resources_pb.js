@@ -137,6 +137,7 @@ goog.exportSymbol('proto.clarifai.api.DeleteMetadata', null, global);
 goog.exportSymbol('proto.clarifai.api.DeployRestriction', null, global);
 goog.exportSymbol('proto.clarifai.api.Deployment', null, global);
 goog.exportSymbol('proto.clarifai.api.Deployment.SchedulingChoice', null, global);
+goog.exportSymbol('proto.clarifai.api.Deployment.Status', null, global);
 goog.exportSymbol('proto.clarifai.api.DeploymentMetrics', null, global);
 goog.exportSymbol('proto.clarifai.api.DeploymentNodepool', null, global);
 goog.exportSymbol('proto.clarifai.api.DetailConceptCount', null, global);
@@ -73165,7 +73166,8 @@ proto.clarifai.api.Deployment.toObject = function(includeInstance, msg) {
     gracefulDeploy: jspb.Message.getBooleanFieldWithDefault(msg, 18, false),
     deploymentNodepoolsList: jspb.Message.toObjectList(msg.getDeploymentNodepoolsList(),
     proto.clarifai.api.DeploymentNodepool.toObject, includeInstance),
-    deploymentMetrics: (f = msg.getDeploymentMetrics()) && proto.clarifai.api.DeploymentMetrics.toObject(includeInstance, f)
+    deploymentMetrics: (f = msg.getDeploymentMetrics()) && proto.clarifai.api.DeploymentMetrics.toObject(includeInstance, f),
+    status: jspb.Message.getFieldWithDefault(msg, 21, 0)
   };
 
   if (includeInstance) {
@@ -73285,6 +73287,10 @@ proto.clarifai.api.Deployment.deserializeBinaryFromReader = function(msg, reader
       var value = new proto.clarifai.api.DeploymentMetrics;
       reader.readMessage(value,proto.clarifai.api.DeploymentMetrics.deserializeBinaryFromReader);
       msg.setDeploymentMetrics(value);
+      break;
+    case 21:
+      var value = /** @type {!proto.clarifai.api.Deployment.Status} */ (reader.readEnum());
+      msg.setStatus(value);
       break;
     default:
       reader.skipField();
@@ -73453,8 +73459,23 @@ proto.clarifai.api.Deployment.serializeBinaryToWriter = function(message, writer
       proto.clarifai.api.DeploymentMetrics.serializeBinaryToWriter
     );
   }
+  f = message.getStatus();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      21,
+      f
+    );
+  }
 };
 
+
+/**
+ * @enum {number}
+ */
+proto.clarifai.api.Deployment.Status = {
+  ENABLED: 0,
+  DISABLED: 1
+};
 
 /**
  * @enum {number}
@@ -74023,6 +74044,24 @@ proto.clarifai.api.Deployment.prototype.clearDeploymentMetrics = function() {
  */
 proto.clarifai.api.Deployment.prototype.hasDeploymentMetrics = function() {
   return jspb.Message.getField(this, 20) != null;
+};
+
+
+/**
+ * optional Status status = 21;
+ * @return {!proto.clarifai.api.Deployment.Status}
+ */
+proto.clarifai.api.Deployment.prototype.getStatus = function() {
+  return /** @type {!proto.clarifai.api.Deployment.Status} */ (jspb.Message.getFieldWithDefault(this, 21, 0));
+};
+
+
+/**
+ * @param {!proto.clarifai.api.Deployment.Status} value
+ * @return {!proto.clarifai.api.Deployment} returns this
+ */
+proto.clarifai.api.Deployment.prototype.setStatus = function(value) {
+  return jspb.Message.setProto3EnumField(this, 21, value);
 };
 
 
