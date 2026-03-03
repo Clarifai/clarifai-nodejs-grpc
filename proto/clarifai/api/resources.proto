@@ -4923,6 +4923,17 @@ message AutoscaleConfig {
 
 
 
+// DeploymentMetrics captures metrics and status for a Deployment's underlying runners.
+// This allows tracking of the desired replica count and the actual live replica count.
+message DeploymentMetrics {
+  // The number of replicas desired by the orchestrator.
+  uint32 desired_replicas = 1;
+  // The actual number of live replicas connected and ready to process requests.
+  uint32 live_replicas = 2;
+  // If true, the deployment is currently rolling out a new version.
+  bool rollout_in_progress = 3;
+}
+
 // A deployment allows you to configure how runners for a particular type of resource will
 // scale up and down. These are unique per user_id, nodepool and model so for differnet nodepools
 // you can scale differently.
@@ -5004,6 +5015,9 @@ message Deployment {
   // When any priority value is non-zero, the response will populate this field instead
   // of 'nodepools'.
   repeated DeploymentNodepool deployment_nodepools = 19;
+
+  // Real-time metrics for this deployment, including the desired and live replica counts.
+  DeploymentMetrics deployment_metrics = 20;
 }
 
 // DeploymentNodepool associates a nodepool with a deployment and holds per-nodepool settings.
