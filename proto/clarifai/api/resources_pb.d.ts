@@ -8785,6 +8785,8 @@ export class Deployment extends jspb.Message {
     clearDeploymentMetrics(): void;
     getDeploymentMetrics(): DeploymentMetrics | undefined;
     setDeploymentMetrics(value?: DeploymentMetrics): Deployment;
+    getStatus(): Deployment.Status;
+    setStatus(value: Deployment.Status): Deployment;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Deployment.AsObject;
@@ -8816,6 +8818,12 @@ export namespace Deployment {
         gracefulDeploy: boolean,
         deploymentNodepoolsList: Array<DeploymentNodepool.AsObject>,
         deploymentMetrics?: DeploymentMetrics.AsObject,
+        status: Deployment.Status,
+    }
+
+    export enum Status {
+    ENABLED = 0,
+    DISABLED = 1,
     }
 
     export enum SchedulingChoice {
