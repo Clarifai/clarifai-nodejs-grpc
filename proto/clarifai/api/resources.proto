@@ -4915,6 +4915,13 @@ message AutoscaleConfig {
   bool disable_packing = 7;
   // The idle time before scaling down to zero
   uint32 scale_to_zero_delay_seconds = 8;
+
+  // The soft minimum number of replicas for the runner.
+  // Unlike min_replicas (which is a hard floor the autoscaler never violates),
+  // soft_min_replicas is a target the autoscaler tries to maintain but can violate
+  // (e.g., scaling to zero during idle periods).
+  // A value of 0 means not set / disabled.
+  uint32 soft_min_replicas = 9;
 }
 
 

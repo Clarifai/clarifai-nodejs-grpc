@@ -8666,6 +8666,8 @@ export class AutoscaleConfig extends jspb.Message {
     setDisablePacking(value: boolean): AutoscaleConfig;
     getScaleToZeroDelaySeconds(): number;
     setScaleToZeroDelaySeconds(value: number): AutoscaleConfig;
+    getSoftMinReplicas(): number;
+    setSoftMinReplicas(value: number): AutoscaleConfig;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): AutoscaleConfig.AsObject;
@@ -8686,6 +8688,7 @@ export namespace AutoscaleConfig {
         scaleUpDelaySeconds: number,
         disablePacking: boolean,
         scaleToZeroDelaySeconds: number,
+        softMinReplicas: number,
     }
 }
 

@@ -72645,7 +72645,8 @@ proto.clarifai.api.AutoscaleConfig.toObject = function(includeInstance, msg) {
     scaleDownDelaySeconds: jspb.Message.getFieldWithDefault(msg, 4, 0),
     scaleUpDelaySeconds: jspb.Message.getFieldWithDefault(msg, 5, 0),
     disablePacking: jspb.Message.getBooleanFieldWithDefault(msg, 7, false),
-    scaleToZeroDelaySeconds: jspb.Message.getFieldWithDefault(msg, 8, 0)
+    scaleToZeroDelaySeconds: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    softMinReplicas: jspb.Message.getFieldWithDefault(msg, 9, 0)
   };
 
   if (includeInstance) {
@@ -72709,6 +72710,10 @@ proto.clarifai.api.AutoscaleConfig.deserializeBinaryFromReader = function(msg, r
     case 8:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setScaleToZeroDelaySeconds(value);
+      break;
+    case 9:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setSoftMinReplicas(value);
       break;
     default:
       reader.skipField();
@@ -72785,6 +72790,13 @@ proto.clarifai.api.AutoscaleConfig.serializeBinaryToWriter = function(message, w
   if (f !== 0) {
     writer.writeUint32(
       8,
+      f
+    );
+  }
+  f = message.getSoftMinReplicas();
+  if (f !== 0) {
+    writer.writeUint32(
+      9,
       f
     );
   }
@@ -72914,6 +72926,24 @@ proto.clarifai.api.AutoscaleConfig.prototype.getScaleToZeroDelaySeconds = functi
  */
 proto.clarifai.api.AutoscaleConfig.prototype.setScaleToZeroDelaySeconds = function(value) {
   return jspb.Message.setProto3IntField(this, 8, value);
+};
+
+
+/**
+ * optional uint32 soft_min_replicas = 9;
+ * @return {number}
+ */
+proto.clarifai.api.AutoscaleConfig.prototype.getSoftMinReplicas = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.AutoscaleConfig} returns this
+ */
+proto.clarifai.api.AutoscaleConfig.prototype.setSoftMinReplicas = function(value) {
+  return jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
