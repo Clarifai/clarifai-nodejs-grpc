@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package clarifai.api.utils;
+
+option go_package = "github.com/Clarifai/clarifai-go-grpc/proto/clarifai/api/utils";
+option java_package = "com.clarifai.grpc.api.utils";
+
+
+message TimeOfDay {
+  // Hours of day in 24 hour format. Must be from 0 to 23.
+  int32 hours = 1;
+  // Minutes of hour of day. Must be from 0 to 59.
+  int32 minutes = 2;
+  // Seconds of minutes of the time. Must be from 0 to 59.
+  int32 seconds = 3;
+  // Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
+  int32 nanos = 4;
+}
+
+// TimeOfDayRange represents a period of time withing a day.
+// e.g. [9am, 5pm) -> start = 9:00:00, end = 17:00:00, is_start_inclusive = true, is_end_inclusive = false
+message TimeOfDayRange {
+  // Start time of day represented as a duration.
+  TimeOfDay start = 1;
+  // End time of day represented as a duration.
+  // May be less than start duration if the time of day range goes over midnight.
+  TimeOfDay end = 2;
+  bool is_start_inclusive = 3;
+  bool is_end_inclusive = 4;
+}

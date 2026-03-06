@@ -4,6 +4,7 @@ import "proto/clarifai/api/status/status.proto";
 import "proto/clarifai/api/status/status_code.proto";
 import "proto/clarifai/api/utils/extensions.proto";
 import "proto/clarifai/api/utils/matrix.proto";
+import "proto/clarifai/api/utils/time.proto";
 import "proto/clarifai/auth/util/extension.proto";
 
 import "google/protobuf/duration.proto";
@@ -3713,6 +3714,14 @@ message TaskConceptAutoAnnotationConfig {
   ThresholdRange threshold_range = 2;
   // The output annotations will be created using this status code.
   clarifai.api.status.StatusCode status_code = 3;
+
+  // Task auto annotation for this concept only applies to this time of day range.
+  // When out of range, the task will not generate annotations for the concept.
+  clarifai.api.utils.TimeOfDayRange time_of_day_range = 4;
+
+  // Filter out annotations that are out of this polygon.
+  // When it's set, only detection annotations that intersect the polygon will pass the filter.
+  Polygon polygon = 5;
 }
 
 message TaskConcept {

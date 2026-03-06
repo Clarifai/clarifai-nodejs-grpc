@@ -29,6 +29,8 @@ var proto_clarifai_api_utils_extensions_pb = require('../../../proto/clarifai/ap
 goog.object.extend(proto, proto_clarifai_api_utils_extensions_pb);
 var proto_clarifai_api_utils_matrix_pb = require('../../../proto/clarifai/api/utils/matrix_pb.js');
 goog.object.extend(proto, proto_clarifai_api_utils_matrix_pb);
+var proto_clarifai_api_utils_time_pb = require('../../../proto/clarifai/api/utils/time_pb.js');
+goog.object.extend(proto, proto_clarifai_api_utils_time_pb);
 var proto_clarifai_auth_util_extension_pb = require('../../../proto/clarifai/auth/util/extension_pb.js');
 goog.object.extend(proto, proto_clarifai_auth_util_extension_pb);
 var google_protobuf_duration_pb = require('google-protobuf/google/protobuf/duration_pb.js');
@@ -56778,7 +56780,9 @@ proto.clarifai.api.TaskConceptAutoAnnotationConfig.toObject = function(includeIn
   var f, obj = {
     annotationDataTypes: jspb.Message.getFieldWithDefault(msg, 1, 0),
     thresholdRange: (f = msg.getThresholdRange()) && proto.clarifai.api.ThresholdRange.toObject(includeInstance, f),
-    statusCode: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    statusCode: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    timeOfDayRange: (f = msg.getTimeOfDayRange()) && proto_clarifai_api_utils_time_pb.TimeOfDayRange.toObject(includeInstance, f),
+    polygon: (f = msg.getPolygon()) && proto.clarifai.api.Polygon.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -56827,6 +56831,16 @@ proto.clarifai.api.TaskConceptAutoAnnotationConfig.deserializeBinaryFromReader =
     case 3:
       var value = /** @type {!proto.clarifai.api.status.StatusCode} */ (reader.readEnum());
       msg.setStatusCode(value);
+      break;
+    case 4:
+      var value = new proto_clarifai_api_utils_time_pb.TimeOfDayRange;
+      reader.readMessage(value,proto_clarifai_api_utils_time_pb.TimeOfDayRange.deserializeBinaryFromReader);
+      msg.setTimeOfDayRange(value);
+      break;
+    case 5:
+      var value = new proto.clarifai.api.Polygon;
+      reader.readMessage(value,proto.clarifai.api.Polygon.deserializeBinaryFromReader);
+      msg.setPolygon(value);
       break;
     default:
       reader.skipField();
@@ -56877,6 +56891,22 @@ proto.clarifai.api.TaskConceptAutoAnnotationConfig.serializeBinaryToWriter = fun
     writer.writeEnum(
       3,
       f
+    );
+  }
+  f = message.getTimeOfDayRange();
+  if (f != null) {
+    writer.writeMessage(
+      4,
+      f,
+      proto_clarifai_api_utils_time_pb.TimeOfDayRange.serializeBinaryToWriter
+    );
+  }
+  f = message.getPolygon();
+  if (f != null) {
+    writer.writeMessage(
+      5,
+      f,
+      proto.clarifai.api.Polygon.serializeBinaryToWriter
     );
   }
 };
@@ -56952,6 +56982,80 @@ proto.clarifai.api.TaskConceptAutoAnnotationConfig.prototype.getStatusCode = fun
  */
 proto.clarifai.api.TaskConceptAutoAnnotationConfig.prototype.setStatusCode = function(value) {
   return jspb.Message.setProto3EnumField(this, 3, value);
+};
+
+
+/**
+ * optional utils.TimeOfDayRange time_of_day_range = 4;
+ * @return {?proto.clarifai.api.utils.TimeOfDayRange}
+ */
+proto.clarifai.api.TaskConceptAutoAnnotationConfig.prototype.getTimeOfDayRange = function() {
+  return /** @type{?proto.clarifai.api.utils.TimeOfDayRange} */ (
+    jspb.Message.getWrapperField(this, proto_clarifai_api_utils_time_pb.TimeOfDayRange, 4));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.utils.TimeOfDayRange|undefined} value
+ * @return {!proto.clarifai.api.TaskConceptAutoAnnotationConfig} returns this
+*/
+proto.clarifai.api.TaskConceptAutoAnnotationConfig.prototype.setTimeOfDayRange = function(value) {
+  return jspb.Message.setWrapperField(this, 4, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.TaskConceptAutoAnnotationConfig} returns this
+ */
+proto.clarifai.api.TaskConceptAutoAnnotationConfig.prototype.clearTimeOfDayRange = function() {
+  return this.setTimeOfDayRange(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.TaskConceptAutoAnnotationConfig.prototype.hasTimeOfDayRange = function() {
+  return jspb.Message.getField(this, 4) != null;
+};
+
+
+/**
+ * optional Polygon polygon = 5;
+ * @return {?proto.clarifai.api.Polygon}
+ */
+proto.clarifai.api.TaskConceptAutoAnnotationConfig.prototype.getPolygon = function() {
+  return /** @type{?proto.clarifai.api.Polygon} */ (
+    jspb.Message.getWrapperField(this, proto.clarifai.api.Polygon, 5));
+};
+
+
+/**
+ * @param {?proto.clarifai.api.Polygon|undefined} value
+ * @return {!proto.clarifai.api.TaskConceptAutoAnnotationConfig} returns this
+*/
+proto.clarifai.api.TaskConceptAutoAnnotationConfig.prototype.setPolygon = function(value) {
+  return jspb.Message.setWrapperField(this, 5, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.clarifai.api.TaskConceptAutoAnnotationConfig} returns this
+ */
+proto.clarifai.api.TaskConceptAutoAnnotationConfig.prototype.clearPolygon = function() {
+  return this.setPolygon(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.clarifai.api.TaskConceptAutoAnnotationConfig.prototype.hasPolygon = function() {
+  return jspb.Message.getField(this, 5) != null;
 };
 
 
