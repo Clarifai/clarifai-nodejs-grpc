@@ -612,6 +612,8 @@ enum StatusCode {
   //Twilio related issues: 71xxx
   TWILIO_MAX_VERIFICATION_BEGIN_EXCEEDED = 71003;
   TWILIO_MAX_VERIFICATION_CHECK_EXCEEDED = 71004;
+  // The provided phone number was rejected or blocked by Twilio.
+  TWILIO_PHONE_NUMBER_BLOCKED = 71005;
 
   // Internal issues: 98xxx
   INTERNAL_SERVER_ISSUE = 98004;
