@@ -139,7 +139,8 @@ proto.clarifai.api.status.Status.toObject = function(includeInstance, msg) {
     reqId: jspb.Message.getFieldWithDefault(msg, 7, ""),
     internalDetails: jspb.Message.getFieldWithDefault(msg, 8, ""),
     redirectInfo: (f = msg.getRedirectInfo()) && proto.clarifai.api.status.RedirectInfo.toObject(includeInstance, f),
-    developerNotes: jspb.Message.getFieldWithDefault(msg, 10, "")
+    developerNotes: jspb.Message.getFieldWithDefault(msg, 10, ""),
+    httpStatusCode: jspb.Message.getFieldWithDefault(msg, 11, 0)
   };
 
   if (includeInstance) {
@@ -216,6 +217,10 @@ proto.clarifai.api.status.Status.deserializeBinaryFromReader = function(msg, rea
     case 10:
       var value = /** @type {string} */ (reader.readString());
       msg.setDeveloperNotes(value);
+      break;
+    case 11:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setHttpStatusCode(value);
       break;
     default:
       reader.skipField();
@@ -314,6 +319,13 @@ proto.clarifai.api.status.Status.serializeBinaryToWriter = function(message, wri
   if (f.length > 0) {
     writer.writeString(
       10,
+      f
+    );
+  }
+  f = message.getHttpStatusCode();
+  if (f !== 0) {
+    writer.writeUint32(
+      11,
       f
     );
   }
@@ -535,6 +547,24 @@ proto.clarifai.api.status.Status.prototype.getDeveloperNotes = function() {
  */
 proto.clarifai.api.status.Status.prototype.setDeveloperNotes = function(value) {
   return jspb.Message.setProto3StringField(this, 10, value);
+};
+
+
+/**
+ * optional uint32 http_status_code = 11;
+ * @return {number}
+ */
+proto.clarifai.api.status.Status.prototype.getHttpStatusCode = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.status.Status} returns this
+ */
+proto.clarifai.api.status.Status.prototype.setHttpStatusCode = function(value) {
+  return jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
