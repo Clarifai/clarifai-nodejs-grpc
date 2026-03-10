@@ -36,6 +36,8 @@ message Status {
   // These notes are rather technical details for developers how to interpret the status,
   // e.g. why an error occurred and how to avoid getting the error.
   string developer_notes = 10;
+  // The HTTP status code of the response.
+  uint32 http_status_code = 11;
 }
 
 message RedirectInfo {
