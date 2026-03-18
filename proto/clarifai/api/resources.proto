@@ -5165,6 +5165,7 @@ enum EventType {
 
   // Event types related to compute clusters: 900-999
   COMPUTE_CLUSTER_CREATE = 900 [(clarifai.api.utils.description) = "Compute clusters created"];
+  COMPUTE_CLUSTER_UPDATE = 902 [(clarifai.api.utils.description) = "Compute clusters updated"];
   COMPUTE_CLUSTER_DELETE = 901 [(clarifai.api.utils.description) = "Compute clusters deleted"];
 
   // Event types related to nodepools: 1000-1099
