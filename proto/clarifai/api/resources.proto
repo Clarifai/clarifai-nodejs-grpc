@@ -4619,6 +4619,10 @@ message Runner {
   // Metrics and status for the underlying k8s deployment.
   // Each Runner is 1:1 with a k8s deployment, so this field tracks deployment health and metrics.
   RunnerMetrics runner_metrics = 13;
+
+  // Hard minimum replicas from the deployment's autoscale config.
+  // The agent uses this to determine how many replicas are non-preemptable.
+  uint32 min_replicas = 14;
 }
 
 
