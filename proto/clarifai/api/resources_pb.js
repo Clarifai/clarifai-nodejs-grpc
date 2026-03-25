@@ -69266,7 +69266,8 @@ proto.clarifai.api.Runner.toObject = function(includeInstance, msg) {
     specialHandlingList: jspb.Message.toObjectList(msg.getSpecialHandlingList(),
     proto.clarifai.api.SpecialHandling.toObject, includeInstance),
     runnerMetrics: (f = msg.getRunnerMetrics()) && proto.clarifai.api.RunnerMetrics.toObject(includeInstance, f),
-    minReplicas: jspb.Message.getFieldWithDefault(msg, 14, 0)
+    minReplicas: jspb.Message.getFieldWithDefault(msg, 14, 0),
+    priority: jspb.Message.getFieldWithDefault(msg, 15, 0)
   };
 
   if (includeInstance) {
@@ -69362,6 +69363,10 @@ proto.clarifai.api.Runner.deserializeBinaryFromReader = function(msg, reader) {
     case 14:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setMinReplicas(value);
+      break;
+    case 15:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setPriority(value);
       break;
     default:
       reader.skipField();
@@ -69488,6 +69493,13 @@ proto.clarifai.api.Runner.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0) {
     writer.writeUint32(
       14,
+      f
+    );
+  }
+  f = message.getPriority();
+  if (f !== 0) {
+    writer.writeUint32(
+      15,
       f
     );
   }
@@ -69897,6 +69909,24 @@ proto.clarifai.api.Runner.prototype.getMinReplicas = function() {
  */
 proto.clarifai.api.Runner.prototype.setMinReplicas = function(value) {
   return jspb.Message.setProto3IntField(this, 14, value);
+};
+
+
+/**
+ * optional uint32 priority = 15;
+ * @return {number}
+ */
+proto.clarifai.api.Runner.prototype.getPriority = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 15, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.Runner} returns this
+ */
+proto.clarifai.api.Runner.prototype.setPriority = function(value) {
+  return jspb.Message.setProto3IntField(this, 15, value);
 };
 
 

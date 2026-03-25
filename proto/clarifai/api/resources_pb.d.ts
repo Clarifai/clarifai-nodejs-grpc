@@ -8283,6 +8283,8 @@ export class Runner extends jspb.Message {
     setRunnerMetrics(value?: RunnerMetrics): Runner;
     getMinReplicas(): number;
     setMinReplicas(value: number): Runner;
+    getPriority(): number;
+    setPriority(value: number): Runner;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Runner.AsObject;
@@ -8309,6 +8311,7 @@ export namespace Runner {
         specialHandlingList: Array<SpecialHandling.AsObject>,
         runnerMetrics?: RunnerMetrics.AsObject,
         minReplicas: number,
+        priority: number,
     }
 }
 
