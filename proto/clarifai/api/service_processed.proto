@@ -4378,7 +4378,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
   }
 
-  // Creates a Pipeline, PipelineVersion, and PipelineVersionRun from a PipelineTemplate. 
+  // Creates a Pipeline, PipelineVersion, and PipelineVersionRun from a PipelineTemplate.
   // This is a convenience endpoint for users to quickly get started with running pipelines.
   rpc PostPipelineVersionRunFromTemplate(PostPipelineVersionRunFromTemplateRequest) returns (PostPipelineVersionRunFromTemplateResponse) {
     option (google.api.http) = {
@@ -8368,6 +8368,16 @@ message RunnerItem {
     // Workflow request from a user.  // FUTURE
     // training request next, etc.
   }
+
+  // Metadata used for routing and other purposes.
+  RunnerItemMetadata metadata = 7;
+}
+
+message RunnerItemMetadata {
+  // The user ID of the requester. Used for sticky routing to the same runner replica.
+  string user_id = 1;
+  // chained block hashes of input for prefix cache routing
+  repeated uint64 block_hashes = 2;
 }
 
 message AutoAnnotationRequest {
@@ -9154,22 +9164,22 @@ message MultiPipelineTemplateResponse {
 message PostPipelineVersionRunFromTemplateRequest {
 
   clarifai.api.UserAppIDSet user_app_id = 1;
-  
+
   // Name of the pipeline template to use (from ListPipelineTemplates)
   string pipeline_template_name = 2;
-    
+
   // Optional: ID of existing pipeline to create version under
   string pipeline_id = 3;
-  
+
   // Optional: Description for the pipeline (used if creating new pipeline)
   string pipeline_description = 4;
-  
+
   // Optional: Description for the pipeline version
   string pipeline_version_description = 5;
-  
+
   // Optional: Nodepools to use for the pipeline version run
   repeated Nodepool nodepools = 6;
-  
+
   // Optional: Overrides to input arguments for the orchestration system
   OrchestrationArgsOverride input_args_override = 7;
 }
@@ -9177,10 +9187,10 @@ message PostPipelineVersionRunFromTemplateRequest {
 // Response containing the created Pipeline, PipelineVersion, and PipelineVersionRun
 message PostPipelineVersionRunFromTemplateResponse {
   clarifai.api.status.Status status = 1;
-  
+
   // The created or updated pipeline (contains the latest pipeline version)
   Pipeline pipeline = 2;
-  
+
   // The created pipeline version run
   PipelineVersionRun pipeline_version_run = 3;
 }

@@ -7795,7 +7795,7 @@ listPipelineTemplates: {
     responseSerialize: serialize_clarifai_api_MultiPipelineTemplateResponse,
     responseDeserialize: deserialize_clarifai_api_MultiPipelineTemplateResponse,
   },
-  // Creates a Pipeline, PipelineVersion, and PipelineVersionRun from a PipelineTemplate. 
+  // Creates a Pipeline, PipelineVersion, and PipelineVersionRun from a PipelineTemplate.
 // This is a convenience endpoint for users to quickly get started with running pipelines.
 postPipelineVersionRunFromTemplate: {
     path: '/clarifai.api.V2/PostPipelineVersionRunFromTemplate',

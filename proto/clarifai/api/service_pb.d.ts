@@ -10282,6 +10282,11 @@ export class RunnerItem extends jspb.Message {
     getAutoAnnotationRequest(): AutoAnnotationRequest | undefined;
     setAutoAnnotationRequest(value?: AutoAnnotationRequest): RunnerItem;
 
+    hasMetadata(): boolean;
+    clearMetadata(): void;
+    getMetadata(): RunnerItemMetadata | undefined;
+    setMetadata(value?: RunnerItemMetadata): RunnerItem;
+
     getRequestCase(): RunnerItem.RequestCase;
 
     serializeBinary(): Uint8Array;
@@ -10302,6 +10307,7 @@ export namespace RunnerItem {
         postModelOutputsRequest?: PostModelOutputsRequest.AsObject,
         syncStateRequest?: SyncStateRequest.AsObject,
         autoAnnotationRequest?: AutoAnnotationRequest.AsObject,
+        metadata?: RunnerItemMetadata.AsObject,
     }
 
     export enum RequestCase {
@@ -10311,6 +10317,31 @@ export namespace RunnerItem {
         AUTO_ANNOTATION_REQUEST = 6,
     }
 
+}
+
+export class RunnerItemMetadata extends jspb.Message { 
+    getUserId(): string;
+    setUserId(value: string): RunnerItemMetadata;
+    clearBlockHashesList(): void;
+    getBlockHashesList(): Array<number>;
+    setBlockHashesList(value: Array<number>): RunnerItemMetadata;
+    addBlockHashes(value: number, index?: number): number;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): RunnerItemMetadata.AsObject;
+    static toObject(includeInstance: boolean, msg: RunnerItemMetadata): RunnerItemMetadata.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: RunnerItemMetadata, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): RunnerItemMetadata;
+    static deserializeBinaryFromReader(message: RunnerItemMetadata, reader: jspb.BinaryReader): RunnerItemMetadata;
+}
+
+export namespace RunnerItemMetadata {
+    export type AsObject = {
+        userId: string,
+        blockHashesList: Array<number>,
+    }
 }
 
 export class AutoAnnotationRequest extends jspb.Message { 
