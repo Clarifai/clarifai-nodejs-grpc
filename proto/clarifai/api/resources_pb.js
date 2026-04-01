@@ -69088,7 +69088,8 @@ proto.clarifai.api.RunnerMetrics.toObject = function(includeInstance, msg) {
   var f, obj = {
     podsTotal: jspb.Message.getFieldWithDefault(msg, 1, 0),
     podsRunning: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    totalPodsRunningTimeS: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    totalPodsRunningTimeS: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    podsPreemptedTotal: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -69137,6 +69138,10 @@ proto.clarifai.api.RunnerMetrics.deserializeBinaryFromReader = function(msg, rea
       var value = /** @type {number} */ (reader.readUint32());
       msg.setTotalPodsRunningTimeS(value);
       break;
+    case 4:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setPodsPreemptedTotal(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -69184,6 +69189,13 @@ proto.clarifai.api.RunnerMetrics.serializeBinaryToWriter = function(message, wri
   if (f !== 0) {
     writer.writeUint32(
       3,
+      f
+    );
+  }
+  f = message.getPodsPreemptedTotal();
+  if (f !== 0) {
+    writer.writeUint32(
+      4,
       f
     );
   }
@@ -69241,6 +69253,24 @@ proto.clarifai.api.RunnerMetrics.prototype.getTotalPodsRunningTimeS = function()
  */
 proto.clarifai.api.RunnerMetrics.prototype.setTotalPodsRunningTimeS = function(value) {
   return jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional uint32 pods_preempted_total = 4;
+ * @return {number}
+ */
+proto.clarifai.api.RunnerMetrics.prototype.getPodsPreemptedTotal = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.RunnerMetrics} returns this
+ */
+proto.clarifai.api.RunnerMetrics.prototype.setPodsPreemptedTotal = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 

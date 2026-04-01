@@ -4570,6 +4570,9 @@ message RunnerMetrics {
   // Cumulative total time (in seconds) that pods have been running for this runner.
   // This accumulates across scale-up/down cycles and is reported by the agent.
   uint32 total_pods_running_time_s = 3;
+  // Cumulative count of pods that have been preempted by the k8s scheduler.
+  // This accumulates across reconcile cycles and is reported by the agent.
+  uint32 pods_preempted_total = 4;
 }
 
 // A worker for compute within a nodepool of instances.
