@@ -2438,6 +2438,10 @@ message Output {
   uint32 prompt_tokens = 7;
   // Number of completion tokens as reported by the model or third-party API.
   uint32 completion_tokens = 8;
+
+  // Number of cached prompt tokens as reported by the model (subset of prompt_tokens).
+  // Cached tokens are prompt tokens served from the model's KV cache rather than recomputed.
+  uint32 cached_tokens = 9;
 }
 
 // ScopeDeps
