@@ -4954,15 +4954,40 @@ message AutoscaleConfig {
 
 
 
-// DeploymentMetrics captures metrics and status for a Deployment's underlying runners.
-// This allows tracking of the desired replica count and the actual live replica count.
-message DeploymentMetrics {
+// DeploymentMetricsSummary holds the core deployment metrics fields, reusable as both
+// an aggregate across all nodepools and per-individual-nodepool metrics.
+message DeploymentMetricsSummary {
   // The number of replicas desired by the orchestrator.
   uint32 desired_replicas = 1;
   // The actual number of live replicas connected and ready to process requests.
   uint32 live_replicas = 2;
-  // If true, the deployment is currently rolling out a new version.
+  // If true, a new version is currently being rolled out.
   bool rollout_in_progress = 3;
+}
+
+// NodepoolDeploymentMetrics captures metrics for a single nodepool within a Deployment.
+message NodepoolDeploymentMetrics {
+  // The user-facing compute cluster ID.
+  string compute_cluster_id = 1;
+  // The user-facing nodepool ID.
+  string nodepool_id = 2;
+  // Metrics for this nodepool.
+  DeploymentMetricsSummary metrics = 3;
+}
+
+// DeploymentMetrics captures metrics and status for a Deployment's underlying runners.
+// This allows tracking of the desired replica count and the actual live replica count.
+message DeploymentMetrics {
+  // Deprecated: use aggregate instead.
+  uint32 desired_replicas = 1 [deprecated = true];
+  // Deprecated: use aggregate instead.
+  uint32 live_replicas = 2 [deprecated = true];
+  // Deprecated: use aggregate instead.
+  bool rollout_in_progress = 3 [deprecated = true];
+  // Per-nodepool breakdown of metrics.
+  repeated NodepoolDeploymentMetrics nodepool_metrics = 4;
+  // Aggregate metrics across all nodepools.
+  DeploymentMetricsSummary aggregate = 5;
 }
 
 // A deployment allows you to configure how runners for a particular type of resource will

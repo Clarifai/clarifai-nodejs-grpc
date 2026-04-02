@@ -8717,6 +8717,61 @@ export namespace AutoscaleConfig {
     }
 }
 
+export class DeploymentMetricsSummary extends jspb.Message { 
+    getDesiredReplicas(): number;
+    setDesiredReplicas(value: number): DeploymentMetricsSummary;
+    getLiveReplicas(): number;
+    setLiveReplicas(value: number): DeploymentMetricsSummary;
+    getRolloutInProgress(): boolean;
+    setRolloutInProgress(value: boolean): DeploymentMetricsSummary;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DeploymentMetricsSummary.AsObject;
+    static toObject(includeInstance: boolean, msg: DeploymentMetricsSummary): DeploymentMetricsSummary.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DeploymentMetricsSummary, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DeploymentMetricsSummary;
+    static deserializeBinaryFromReader(message: DeploymentMetricsSummary, reader: jspb.BinaryReader): DeploymentMetricsSummary;
+}
+
+export namespace DeploymentMetricsSummary {
+    export type AsObject = {
+        desiredReplicas: number,
+        liveReplicas: number,
+        rolloutInProgress: boolean,
+    }
+}
+
+export class NodepoolDeploymentMetrics extends jspb.Message { 
+    getComputeClusterId(): string;
+    setComputeClusterId(value: string): NodepoolDeploymentMetrics;
+    getNodepoolId(): string;
+    setNodepoolId(value: string): NodepoolDeploymentMetrics;
+
+    hasMetrics(): boolean;
+    clearMetrics(): void;
+    getMetrics(): DeploymentMetricsSummary | undefined;
+    setMetrics(value?: DeploymentMetricsSummary): NodepoolDeploymentMetrics;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): NodepoolDeploymentMetrics.AsObject;
+    static toObject(includeInstance: boolean, msg: NodepoolDeploymentMetrics): NodepoolDeploymentMetrics.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: NodepoolDeploymentMetrics, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): NodepoolDeploymentMetrics;
+    static deserializeBinaryFromReader(message: NodepoolDeploymentMetrics, reader: jspb.BinaryReader): NodepoolDeploymentMetrics;
+}
+
+export namespace NodepoolDeploymentMetrics {
+    export type AsObject = {
+        computeClusterId: string,
+        nodepoolId: string,
+        metrics?: DeploymentMetricsSummary.AsObject,
+    }
+}
+
 export class DeploymentMetrics extends jspb.Message { 
     getDesiredReplicas(): number;
     setDesiredReplicas(value: number): DeploymentMetrics;
@@ -8724,6 +8779,15 @@ export class DeploymentMetrics extends jspb.Message {
     setLiveReplicas(value: number): DeploymentMetrics;
     getRolloutInProgress(): boolean;
     setRolloutInProgress(value: boolean): DeploymentMetrics;
+    clearNodepoolMetricsList(): void;
+    getNodepoolMetricsList(): Array<NodepoolDeploymentMetrics>;
+    setNodepoolMetricsList(value: Array<NodepoolDeploymentMetrics>): DeploymentMetrics;
+    addNodepoolMetrics(value?: NodepoolDeploymentMetrics, index?: number): NodepoolDeploymentMetrics;
+
+    hasAggregate(): boolean;
+    clearAggregate(): void;
+    getAggregate(): DeploymentMetricsSummary | undefined;
+    setAggregate(value?: DeploymentMetricsSummary): DeploymentMetrics;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): DeploymentMetrics.AsObject;
@@ -8740,6 +8804,8 @@ export namespace DeploymentMetrics {
         desiredReplicas: number,
         liveReplicas: number,
         rolloutInProgress: boolean,
+        nodepoolMetricsList: Array<NodepoolDeploymentMetrics.AsObject>,
+        aggregate?: DeploymentMetricsSummary.AsObject,
     }
 }
 
