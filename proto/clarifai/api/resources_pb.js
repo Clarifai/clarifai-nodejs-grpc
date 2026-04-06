@@ -93580,8 +93580,8 @@ proto.clarifai.api.EventType = {
  */
 proto.clarifai.api.MetricType = {
   METRIC_TYPE_NOT_SET: 0,
-  MODEL_REQUEST_COUNT: 1,
-  MODEL_LATENCY: 2
+  MODEL_TTFT: 1,
+  MODEL_THROUGHPUT: 2
 };
 
 /**
@@ -93592,8 +93592,7 @@ proto.clarifai.api.MetricLabel = {
   APP_ID: 1,
   MODEL_ID: 2,
   MODEL_VERSION_ID: 3,
-  CALLER_USER_ID: 4,
-  WORKFLOW_ID: 5
+  HTTP_STATUS: 4
 };
 
 goog.object.extend(exports, proto.clarifai.api);
