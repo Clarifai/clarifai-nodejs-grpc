@@ -5848,7 +5848,7 @@ message MetricData {
     // The format is https://www.ietf.org/rfc/rfc3339.txt.
     // Example: "2006-01-02T15:04:05.999999Z".
     google.protobuf.Timestamp timestamp = 1;
-    double value = 2;
+    double value = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
   }
   message MatrixData {
     message TimeSeries {
@@ -5865,6 +5865,8 @@ enum MetricType {
   METRIC_TYPE_NOT_SET = 0;
   MODEL_TTFT = 1;
   MODEL_THROUGHPUT = 2;
+  MODEL_PROMPT_TOKEN_THROUGHPUT = 3;
+  MODEL_COMPLETION_TOKEN_THROUGHPUT = 4;
 }
 
 enum MetricLabel {

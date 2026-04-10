@@ -92651,7 +92651,9 @@ proto.clarifai.api.EventType = {
 proto.clarifai.api.MetricType = {
   METRIC_TYPE_NOT_SET: 0,
   MODEL_TTFT: 1,
-  MODEL_THROUGHPUT: 2
+  MODEL_THROUGHPUT: 2,
+  MODEL_PROMPT_TOKEN_THROUGHPUT: 3,
+  MODEL_COMPLETION_TOKEN_THROUGHPUT: 4
 };
 
 /**
