@@ -2738,18 +2738,11 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Collaborators_Get;
   }
 
+  // Deprecated: App duplication is no longer supported.
   // PostAppDuplications starts async app duplication jobs which copy resources
-  // (inputs, annotations, models etc) from one application to another. It can
-  // also create the destination application if it does not exist, with fields
-  // (description, metadata etc) copied from the source application.
-  //
-  // A duplication job can be started by any user that can read from the source
-  // application (the target of this call) and can create and write to the
-  // destination application. The duplication is associated with the user that
-  // created it, so in order to read the status and progress of the job, that
-  // user's ID has to be used in the call to GetAppDuplication, which might be
-  // different to the source application owner ID in this call.
+  // (inputs, annotations, models etc) from one application to another.
   rpc PostAppDuplications (PostAppDuplicationsRequest) returns (MultiAppDuplicationsResponse) {
+    option deprecated = true;
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/duplications"
       body: "*"
@@ -2758,16 +2751,20 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
   }
 
+  // Deprecated: App duplication is no longer supported.
   // ListAppDuplications lists all app duplication jobs created by the user.
   rpc ListAppDuplications (ListAppDuplicationsRequest) returns (MultiAppDuplicationsResponse){
+    option deprecated = true;
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/duplications"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
   }
 
+  // Deprecated: App duplication is no longer supported.
   // GetAppDuplication returns an app duplication job created by the user.
   rpc GetAppDuplication (GetAppDuplicationRequest) returns (SingleAppDuplicationResponse) {
+    option deprecated = true;
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/duplications/{app_duplication_id}"
     };
@@ -7431,22 +7428,28 @@ message SingleWorkflowVersionResponse {
   WorkflowVersion workflow_version = 2;
 }
 
+// Deprecated: App duplication is no longer supported.
 // Request to start app duplication jobs.
 message PostAppDuplicationsRequest {
+  option deprecated = true;
   // The user and application ID of the source application to duplicate.
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated AppDuplication app_duplications = 2;
 }
 
+// Deprecated: App duplication is no longer supported.
 // Request to get an app duplication job.
 message GetAppDuplicationRequest {
+  option deprecated = true;
   // The ID of the user that created the app duplication job.
   clarifai.api.UserAppIDSet user_app_id = 1;
   string app_duplication_id = 2;
 }
 
+// Deprecated: App duplication is no longer supported.
 // Request to list all the app duplication jobs that a user created.
 message ListAppDuplicationsRequest {
+  option deprecated = true;
   // The ID of the user whose app duplication jobs to list.
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
@@ -7457,14 +7460,18 @@ message ListAppDuplicationsRequest {
   uint32 per_page = 3;
 }
 
+// Deprecated: App duplication is no longer supported.
 // MultiAppDuplicationsResponse
 message MultiAppDuplicationsResponse {
+  option deprecated = true;
   clarifai.api.status.Status status = 1;
   repeated AppDuplication app_duplications = 2;
 }
 
+// Deprecated: App duplication is no longer supported.
 // SingleAppDuplicationResponse
 message SingleAppDuplicationResponse {
+  option deprecated = true;
   clarifai.api.status.Status status = 1;
   AppDuplication app_duplication = 2;
 }

@@ -6427,17 +6427,9 @@ listCollaborations: {
     responseSerialize: serialize_clarifai_api_MultiCollaborationsResponse,
     responseDeserialize: deserialize_clarifai_api_MultiCollaborationsResponse,
   },
-  // PostAppDuplications starts async app duplication jobs which copy resources
-// (inputs, annotations, models etc) from one application to another. It can
-// also create the destination application if it does not exist, with fields
-// (description, metadata etc) copied from the source application.
-//
-// A duplication job can be started by any user that can read from the source
-// application (the target of this call) and can create and write to the
-// destination application. The duplication is associated with the user that
-// created it, so in order to read the status and progress of the job, that
-// user's ID has to be used in the call to GetAppDuplication, which might be
-// different to the source application owner ID in this call.
+  // Deprecated: App duplication is no longer supported.
+// PostAppDuplications starts async app duplication jobs which copy resources
+// (inputs, annotations, models etc) from one application to another.
 postAppDuplications: {
     path: '/clarifai.api.V2/PostAppDuplications',
     requestStream: false,
@@ -6449,7 +6441,8 @@ postAppDuplications: {
     responseSerialize: serialize_clarifai_api_MultiAppDuplicationsResponse,
     responseDeserialize: deserialize_clarifai_api_MultiAppDuplicationsResponse,
   },
-  // ListAppDuplications lists all app duplication jobs created by the user.
+  // Deprecated: App duplication is no longer supported.
+// ListAppDuplications lists all app duplication jobs created by the user.
 listAppDuplications: {
     path: '/clarifai.api.V2/ListAppDuplications',
     requestStream: false,
@@ -6461,7 +6454,8 @@ listAppDuplications: {
     responseSerialize: serialize_clarifai_api_MultiAppDuplicationsResponse,
     responseDeserialize: deserialize_clarifai_api_MultiAppDuplicationsResponse,
   },
-  // GetAppDuplication returns an app duplication job created by the user.
+  // Deprecated: App duplication is no longer supported.
+// GetAppDuplication returns an app duplication job created by the user.
 getAppDuplication: {
     path: '/clarifai.api.V2/GetAppDuplication',
     requestStream: false,
