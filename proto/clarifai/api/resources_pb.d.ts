@@ -4635,6 +4635,8 @@ export class Output extends jspb.Message {
     setPromptTokens(value: number): Output;
     getCompletionTokens(): number;
     setCompletionTokens(value: number): Output;
+    getCachedTokens(): number;
+    setCachedTokens(value: number): Output;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Output.AsObject;
@@ -4656,6 +4658,7 @@ export namespace Output {
         data?: Data.AsObject,
         promptTokens: number,
         completionTokens: number,
+        cachedTokens: number,
     }
 }
 
@@ -6797,117 +6800,6 @@ export namespace Team {
     }
 }
 
-export class Collector extends jspb.Message { 
-    getId(): string;
-    setId(value: string): Collector;
-    getDescription(): string;
-    setDescription(value: string): Collector;
-
-    hasCreatedAt(): boolean;
-    clearCreatedAt(): void;
-    getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): Collector;
-    getPreQueueWorkflowId(): string;
-    setPreQueueWorkflowId(value: string): Collector;
-    getPreQueueRandomSample(): number;
-    setPreQueueRandomSample(value: number): Collector;
-    getPostQueueWorkflowId(): string;
-    setPostQueueWorkflowId(value: string): Collector;
-
-    hasCollectorSource(): boolean;
-    clearCollectorSource(): void;
-    getCollectorSource(): CollectorSource | undefined;
-    setCollectorSource(value?: CollectorSource): Collector;
-
-    hasStatus(): boolean;
-    clearStatus(): void;
-    getStatus(): proto_clarifai_api_status_status_pb.Status | undefined;
-    setStatus(value?: proto_clarifai_api_status_status_pb.Status): Collector;
-    getCollectOutputs(): boolean;
-    setCollectOutputs(value: boolean): Collector;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): Collector.AsObject;
-    static toObject(includeInstance: boolean, msg: Collector): Collector.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: Collector, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): Collector;
-    static deserializeBinaryFromReader(message: Collector, reader: jspb.BinaryReader): Collector;
-}
-
-export namespace Collector {
-    export type AsObject = {
-        id: string,
-        description: string,
-        createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        preQueueWorkflowId: string,
-        preQueueRandomSample: number,
-        postQueueWorkflowId: string,
-        collectorSource?: CollectorSource.AsObject,
-        status?: proto_clarifai_api_status_status_pb.Status.AsObject,
-        collectOutputs: boolean,
-    }
-}
-
-export class CollectorSource extends jspb.Message { 
-
-    hasApiPostModelOutputsCollectorSource(): boolean;
-    clearApiPostModelOutputsCollectorSource(): void;
-    getApiPostModelOutputsCollectorSource(): APIPostModelOutputsCollectorSource | undefined;
-    setApiPostModelOutputsCollectorSource(value?: APIPostModelOutputsCollectorSource): CollectorSource;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): CollectorSource.AsObject;
-    static toObject(includeInstance: boolean, msg: CollectorSource): CollectorSource.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: CollectorSource, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): CollectorSource;
-    static deserializeBinaryFromReader(message: CollectorSource, reader: jspb.BinaryReader): CollectorSource;
-}
-
-export namespace CollectorSource {
-    export type AsObject = {
-        apiPostModelOutputsCollectorSource?: APIPostModelOutputsCollectorSource.AsObject,
-    }
-}
-
-export class APIPostModelOutputsCollectorSource extends jspb.Message { 
-    getModelUserId(): string;
-    setModelUserId(value: string): APIPostModelOutputsCollectorSource;
-    getModelAppId(): string;
-    setModelAppId(value: string): APIPostModelOutputsCollectorSource;
-    getModelId(): string;
-    setModelId(value: string): APIPostModelOutputsCollectorSource;
-    getModelVersionId(): string;
-    setModelVersionId(value: string): APIPostModelOutputsCollectorSource;
-    getPostInputsKeyId(): string;
-    setPostInputsKeyId(value: string): APIPostModelOutputsCollectorSource;
-    getCallerUserId(): string;
-    setCallerUserId(value: string): APIPostModelOutputsCollectorSource;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): APIPostModelOutputsCollectorSource.AsObject;
-    static toObject(includeInstance: boolean, msg: APIPostModelOutputsCollectorSource): APIPostModelOutputsCollectorSource.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: APIPostModelOutputsCollectorSource, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): APIPostModelOutputsCollectorSource;
-    static deserializeBinaryFromReader(message: APIPostModelOutputsCollectorSource, reader: jspb.BinaryReader): APIPostModelOutputsCollectorSource;
-}
-
-export namespace APIPostModelOutputsCollectorSource {
-    export type AsObject = {
-        modelUserId: string,
-        modelAppId: string,
-        modelId: string,
-        modelVersionId: string,
-        postInputsKeyId: string,
-        callerUserId: string,
-    }
-}
-
 export class StatValue extends jspb.Message { 
 
     hasTime(): boolean;
@@ -8212,6 +8104,8 @@ export class RunnerMetrics extends jspb.Message {
     setPodsRunning(value: number): RunnerMetrics;
     getTotalPodsRunningTimeS(): number;
     setTotalPodsRunningTimeS(value: number): RunnerMetrics;
+    getPodsPreemptedTotal(): number;
+    setPodsPreemptedTotal(value: number): RunnerMetrics;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): RunnerMetrics.AsObject;
@@ -8228,6 +8122,7 @@ export namespace RunnerMetrics {
         podsTotal: number,
         podsRunning: number,
         totalPodsRunningTimeS: number,
+        podsPreemptedTotal: number,
     }
 }
 
@@ -8283,6 +8178,8 @@ export class Runner extends jspb.Message {
     setRunnerMetrics(value?: RunnerMetrics): Runner;
     getMinReplicas(): number;
     setMinReplicas(value: number): Runner;
+    getPriority(): number;
+    setPriority(value: number): Runner;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Runner.AsObject;
@@ -8309,6 +8206,7 @@ export namespace Runner {
         specialHandlingList: Array<SpecialHandling.AsObject>,
         runnerMetrics?: RunnerMetrics.AsObject,
         minReplicas: number,
+        priority: number,
     }
 }
 
@@ -8708,6 +8606,61 @@ export namespace AutoscaleConfig {
     }
 }
 
+export class DeploymentMetricsSummary extends jspb.Message { 
+    getDesiredReplicas(): number;
+    setDesiredReplicas(value: number): DeploymentMetricsSummary;
+    getLiveReplicas(): number;
+    setLiveReplicas(value: number): DeploymentMetricsSummary;
+    getRolloutInProgress(): boolean;
+    setRolloutInProgress(value: boolean): DeploymentMetricsSummary;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DeploymentMetricsSummary.AsObject;
+    static toObject(includeInstance: boolean, msg: DeploymentMetricsSummary): DeploymentMetricsSummary.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DeploymentMetricsSummary, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DeploymentMetricsSummary;
+    static deserializeBinaryFromReader(message: DeploymentMetricsSummary, reader: jspb.BinaryReader): DeploymentMetricsSummary;
+}
+
+export namespace DeploymentMetricsSummary {
+    export type AsObject = {
+        desiredReplicas: number,
+        liveReplicas: number,
+        rolloutInProgress: boolean,
+    }
+}
+
+export class NodepoolDeploymentMetrics extends jspb.Message { 
+    getComputeClusterId(): string;
+    setComputeClusterId(value: string): NodepoolDeploymentMetrics;
+    getNodepoolId(): string;
+    setNodepoolId(value: string): NodepoolDeploymentMetrics;
+
+    hasMetrics(): boolean;
+    clearMetrics(): void;
+    getMetrics(): DeploymentMetricsSummary | undefined;
+    setMetrics(value?: DeploymentMetricsSummary): NodepoolDeploymentMetrics;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): NodepoolDeploymentMetrics.AsObject;
+    static toObject(includeInstance: boolean, msg: NodepoolDeploymentMetrics): NodepoolDeploymentMetrics.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: NodepoolDeploymentMetrics, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): NodepoolDeploymentMetrics;
+    static deserializeBinaryFromReader(message: NodepoolDeploymentMetrics, reader: jspb.BinaryReader): NodepoolDeploymentMetrics;
+}
+
+export namespace NodepoolDeploymentMetrics {
+    export type AsObject = {
+        computeClusterId: string,
+        nodepoolId: string,
+        metrics?: DeploymentMetricsSummary.AsObject,
+    }
+}
+
 export class DeploymentMetrics extends jspb.Message { 
     getDesiredReplicas(): number;
     setDesiredReplicas(value: number): DeploymentMetrics;
@@ -8715,6 +8668,15 @@ export class DeploymentMetrics extends jspb.Message {
     setLiveReplicas(value: number): DeploymentMetrics;
     getRolloutInProgress(): boolean;
     setRolloutInProgress(value: boolean): DeploymentMetrics;
+    clearNodepoolMetricsList(): void;
+    getNodepoolMetricsList(): Array<NodepoolDeploymentMetrics>;
+    setNodepoolMetricsList(value: Array<NodepoolDeploymentMetrics>): DeploymentMetrics;
+    addNodepoolMetrics(value?: NodepoolDeploymentMetrics, index?: number): NodepoolDeploymentMetrics;
+
+    hasAggregate(): boolean;
+    clearAggregate(): void;
+    getAggregate(): DeploymentMetricsSummary | undefined;
+    setAggregate(value?: DeploymentMetricsSummary): DeploymentMetrics;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): DeploymentMetrics.AsObject;
@@ -8731,6 +8693,8 @@ export namespace DeploymentMetrics {
         desiredReplicas: number,
         liveReplicas: number,
         rolloutInProgress: boolean,
+        nodepoolMetricsList: Array<NodepoolDeploymentMetrics.AsObject>,
+        aggregate?: DeploymentMetricsSummary.AsObject,
     }
 }
 
@@ -11548,8 +11512,10 @@ export enum EventType {
 
 export enum MetricType {
     METRIC_TYPE_NOT_SET = 0,
-    MODEL_REQUEST_COUNT = 1,
-    MODEL_LATENCY = 2,
+    MODEL_TTFT = 1,
+    MODEL_THROUGHPUT = 2,
+    MODEL_PROMPT_TOKEN_THROUGHPUT = 3,
+    MODEL_COMPLETION_TOKEN_THROUGHPUT = 4,
 }
 
 export enum MetricLabel {
@@ -11557,6 +11523,5 @@ export enum MetricLabel {
     APP_ID = 1,
     MODEL_ID = 2,
     MODEL_VERSION_ID = 3,
-    CALLER_USER_ID = 4,
-    WORKFLOW_ID = 5,
+    HTTP_STATUS = 4,
 }

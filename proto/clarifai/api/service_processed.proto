@@ -2738,18 +2738,11 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Collaborators_Get;
   }
 
+  // Deprecated: App duplication is no longer supported.
   // PostAppDuplications starts async app duplication jobs which copy resources
-  // (inputs, annotations, models etc) from one application to another. It can
-  // also create the destination application if it does not exist, with fields
-  // (description, metadata etc) copied from the source application.
-  //
-  // A duplication job can be started by any user that can read from the source
-  // application (the target of this call) and can create and write to the
-  // destination application. The duplication is associated with the user that
-  // created it, so in order to read the status and progress of the job, that
-  // user's ID has to be used in the call to GetAppDuplication, which might be
-  // different to the source application owner ID in this call.
+  // (inputs, annotations, models etc) from one application to another.
   rpc PostAppDuplications (PostAppDuplicationsRequest) returns (MultiAppDuplicationsResponse) {
+    option deprecated = true;
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/duplications"
       body: "*"
@@ -2758,16 +2751,20 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
   }
 
+  // Deprecated: App duplication is no longer supported.
   // ListAppDuplications lists all app duplication jobs created by the user.
   rpc ListAppDuplications (ListAppDuplicationsRequest) returns (MultiAppDuplicationsResponse){
+    option deprecated = true;
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/duplications"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
   }
 
+  // Deprecated: App duplication is no longer supported.
   // GetAppDuplication returns an app duplication job created by the user.
   rpc GetAppDuplication (GetAppDuplicationRequest) returns (SingleAppDuplicationResponse) {
+    option deprecated = true;
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/duplications/{app_duplication_id}"
     };
@@ -3005,103 +3002,12 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
   }
 
-  // Add a list of Collectors to an app.
-  // In the handler of this endpoint we also check for all the scopes of the  POST /inputs
-  // endpoint.
-  // Those current scopes are listed here as a hard requirement.
-  // They are needed when adding the collectors just so we now that you have permission with
-  // that key at least to do the writing to this app with POST /inputs.
-  rpc PostCollectors (PostCollectorsRequest) returns (MultiCollectorResponse) {
-    option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
-      body: "*"
-      additional_bindings152 {
-        post: "/v2/collectors"
-        body: "*"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Predict;
-    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
-  }
-
-  // Get a specific collector from an app.
-  rpc GetCollector (GetCollectorRequest) returns (SingleCollectorResponse) {
-    option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors/{collector_id}"
-      additional_bindings153 {
-        get: "/v2/collectors/{collector_id}"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Get;
-  }
-
-  // List all the collectors.
-  rpc ListCollectors (ListCollectorsRequest) returns (MultiCollectorResponse) {
-    option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
-      additional_bindings154 {
-        get: "/v2/collectors"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Get;
-  }
-
-  // Patch one or more collectors.
-  rpc PatchCollectors (PatchCollectorsRequest) returns (MultiCollectorResponse) {
-    option (google.api.http) = {
-      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
-      body: "*"
-      additional_bindings155 {
-        patch: "/v2/collectors"
-        body: "*"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Get;
-  }
-
-
-
-  // Delete multiple collectors in one request.
-  // This call is asynchronous. Use DeleteCollector if you want a synchronous version.
-  rpc DeleteCollectors (DeleteCollectorsRequest) returns (clarifai.api.status.BaseResponse) {
-    option (google.api.http) = {
-      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
-      body: "*"
-      additional_bindings156 {
-        delete: "/v2/collectors"
-        body: "*"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Delete;
-    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Get;
-  }
-
   // PostStatValues
   rpc PostStatValues (PostStatValuesRequest) returns (MultiStatValueResponse) {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/stats/values"
       body: "*"
-      additional_bindings157 {
+      additional_bindings152 {
         post: "/v2/stats/values"
         body: "*"
       }
@@ -3114,7 +3020,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/stats/values/aggregate"
       body: "*"
-      additional_bindings158 {
+      additional_bindings153 {
         post: "/v2/stats/values/aggregate"
         body: "*"
       }
@@ -3140,7 +3046,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/bulk_operations"
       body: "*"
-      additional_bindings159 {
+      additional_bindings154 {
         post: "/v2/bulk_operations"
         body: "*"
       }
@@ -3158,7 +3064,7 @@ service V2 {
   rpc ListBulkOperations (ListBulkOperationsRequest) returns (MultiBulkOperationsResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/bulk_operations"
-      additional_bindings160 {
+      additional_bindings155 {
         get: "/v2/bulk_operations"
       }
     };
@@ -3171,7 +3077,7 @@ service V2 {
   rpc GetBulkOperation (GetBulkOperationRequest) returns (SingleBulkOperationsResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/bulk_operations/{id}"
-      additional_bindings161 {
+      additional_bindings156 {
         get: "/v2/bulk_operations/{id}"
       }
     };
@@ -3185,7 +3091,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/bulk_operations"
       body: "*"
-      additional_bindings162 {
+      additional_bindings157 {
         patch: "/v2/bulk_operations"
         body: "*"
       }
@@ -3201,7 +3107,7 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/bulk_operations"
       body: "*"
-      additional_bindings163 {
+      additional_bindings158 {
         delete: "/v2/bulk_operations"
         body: "*"
       }
@@ -3224,7 +3130,7 @@ service V2 {
   rpc ListNextTaskAssignments (ListNextTaskAssignmentsRequest) returns (MultiInputResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/tasks/{task_id}/assignments"
-      additional_bindings164 {
+      additional_bindings159 {
         get: "/v2/tasks/{task_id}/assignments"
       }
     };
@@ -3259,7 +3165,7 @@ service V2 {
   rpc ListInputsAddJobs (ListInputsAddJobsRequest) returns (MultiInputsAddJobResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/add"
-      additional_bindings165 {
+      additional_bindings160 {
         get: "/v2/inputs/jobs/add"
       }
     };
@@ -3272,7 +3178,7 @@ service V2 {
   rpc GetInputsAddJob (GetInputsAddJobRequest) returns (SingleInputsAddJobResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/add/{id}"
-      additional_bindings166 {
+      additional_bindings161 {
         get: "/v2/inputs/jobs/add/{id}"
       }
     };
@@ -3286,7 +3192,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/add/{id}"
       body: "*"
-      additional_bindings167 {
+      additional_bindings162 {
         patch: "/v2/inputs/jobs/add/{id}"
         body: "*"
       }
@@ -3306,7 +3212,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads"
       body: "*"
-      additional_bindings168 {
+      additional_bindings163 {
         post: "/v2/uploads"
         body: "*"
       }
@@ -3322,7 +3228,7 @@ service V2 {
   rpc PutUploadContentParts (PutUploadContentPartsRequest) returns (SingleUploadResponse) {
     option (google.api.http) = {
       put: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads/{upload_id}/content_parts"
-      additional_bindings169 {
+      additional_bindings164 {
         put: "/v2/uploads/{upload_id}/content_parts"
       }
       body: "*"
@@ -3336,7 +3242,7 @@ service V2 {
   rpc GetUpload (GetUploadRequest) returns (SingleUploadResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads/{upload_id}"
-      additional_bindings170 {
+      additional_bindings165 {
         get: "/v2/uploads/{upload_id}"
       }
     };
@@ -3348,7 +3254,7 @@ service V2 {
   rpc ListUploads (ListUploadsRequest) returns (MultiUploadResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads"
-      additional_bindings171 {
+      additional_bindings166 {
         get: "/v2/uploads"
       }
     };
@@ -3361,7 +3267,7 @@ service V2 {
     option (google.api.http) = {
       delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/uploads"
       body: "*"
-      additional_bindings172 {
+      additional_bindings167 {
         delete: "/v2/uploads"
         body: "*"
       }
@@ -3390,7 +3296,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/data_sources"
       body: "*"
-      additional_bindings173 {
+      additional_bindings168 {
         post: "/v2/inputs/data_sources"
         body: "*"
       }
@@ -3413,7 +3319,7 @@ service V2 {
   rpc GetInputsExtractionJob (GetInputsExtractionJobRequest) returns (SingleInputsExtractionJobResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/extraction/{inputs_extraction_job_id}"
-      additional_bindings174 {
+      additional_bindings169 {
         get: "/v2/inputs/jobs/extraction/{inputs_extraction_job_id}"
       }
     };
@@ -3426,7 +3332,7 @@ service V2 {
   rpc ListInputsExtractionJobs (ListInputsExtractionJobsRequest) returns (MultiInputsExtractionJobResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/extraction"
-      additional_bindings175 {
+      additional_bindings170 {
         get: "/v2/inputs/jobs/extraction"
       }
     };
@@ -3439,7 +3345,7 @@ service V2 {
     option (google.api.http) = {
       patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/jobs/extraction"
       body: "*"
-      additional_bindings176 {
+      additional_bindings171 {
         patch: "/v2/inputs/jobs/extraction"
         body: "*"
       }
@@ -3460,7 +3366,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/inputs/uploads"
       body: "*"
-      additional_bindings177 {
+      additional_bindings172 {
         post: "/v2/inputs/uploads"
         body: "*"
       }
@@ -3483,7 +3389,7 @@ service V2 {
   rpc ListPipelineVersionRuns(ListPipelineVersionRunsRequest) returns (MultiPipelineVersionRunResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs"
-      additional_bindings178 {
+      additional_bindings173 {
         get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/pipeline_version_runs"
       }
     };
@@ -3499,7 +3405,7 @@ service V2 {
   rpc GetRunner (GetRunnerRequest) returns (SingleRunnerResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners/{runner_id}"
-      additional_bindings179 {
+      additional_bindings174 {
         get: "/v2/users/{user_app_id.user_id}/runners/{runner_id}"
       }
     };
@@ -3517,7 +3423,7 @@ service V2 {
   rpc ListRunners (ListRunnersRequest) returns (MultiRunnerResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners"
-      additional_bindings180 {
+      additional_bindings175 {
         get: "/v2/users/{user_app_id.user_id}/runners"
       }
     };
@@ -3630,7 +3536,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/time_estimate"
       body: "*"
-      additional_bindings181 {
+      additional_bindings176 {
         post: "/v2/models/{model_id}/versions/time_estimate"
         body: "*"
       }
@@ -3679,7 +3585,7 @@ service V2 {
   rpc ListComputeClusters (ListComputeClustersRequest) returns (MultiComputeClusterResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters"
-      additional_bindings182 {
+      additional_bindings177 {
         get: "/v2/compute_clusters"
       }
     };
@@ -3756,10 +3662,10 @@ service V2 {
   rpc ListNodepools (ListNodepoolsRequest) returns (MultiNodepoolResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools"
-      additional_bindings183 {
+      additional_bindings178 {
         get: "/v2/users/{user_app_id.user_id}/nodepools"
       }
-      additional_bindings184 {
+      additional_bindings179 {
         get: "/v2/nodepools"
       }
     };
@@ -3854,7 +3760,7 @@ service V2 {
   rpc ListDeployments (ListDeploymentsRequest) returns (MultiDeploymentResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/deployments"
-      additional_bindings185 {
+      additional_bindings180 {
         get: "/v2/deployments"
       }
     };
@@ -3955,22 +3861,22 @@ service V2 {
       // Endpoint to list runner logs.
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners/{runner_id}/{log_type}/logs"
       // Endpoint to list runner logs by model, model version id.
-      additional_bindings186 {
+      additional_bindings181 {
         get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_user_id}/{compute_cluster_id}/nodepools/{nodepool_id}/versions/{model_version_id}/{log_type}/logs"
       }
       // TODO: add convenience endpoint for /users/{user_id}/runners/{runner_id}.
       // TODO: add endpoint for runner replicas.
       // Endpoint to list compute cluster's agent logs.
-      additional_bindings187 {
+      additional_bindings182 {
         get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/{log_type}/logs"
       }
       // Endpoint to list builder logs.
-      additional_bindings188 {
+      additional_bindings183 {
         get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/models/{model_id}/versions/{model_version_id}/{log_type}/logs"
       }
 
       // Endpoint to list pipeline version run logs
-      additional_bindings189 {
+      additional_bindings184 {
         get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs/{pipeline_version_run_id}/{log_type}/logs"
       }
       // TODO: add endpoint for workflow.
@@ -3983,11 +3889,11 @@ service V2 {
   rpc StreamLogEntries (StreamLogEntriesRequest) returns (stream MultiLogEntryResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_id}/nodepools/{nodepool_id}/runners/{runner_id}/{log_type}/logs"
-      additional_bindings190 {
+      additional_bindings185 {
         get: "/v2/users/{user_app_id.user_id}/compute_clusters/{compute_cluster_user_id}/{compute_cluster_id}/nodepools/{nodepool_id}/versions/{model_version_id}/{log_type}/logs"
       }
       // Endpoint to stream pipeline version run logs
-      additional_bindings191 {
+      additional_bindings186 {
         get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs/{pipeline_version_run_id}/{log_type}/stream/logs"
       }
     };
@@ -4041,7 +3947,7 @@ service V2 {
   rpc GetWorkflowVersionEvaluation (GetWorkflowVersionEvaluationRequest) returns (SingleWorkflowVersionEvaluationResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations/{workflow_version_evaluation_id}"
-      additional_bindings192 {
+      additional_bindings187 {
         get: "/v2/workflow-version-evaluations/{workflow_version_evaluation_id}"
       }
     };
@@ -4056,7 +3962,7 @@ service V2 {
   rpc ListWorkflowVersionEvaluations (ListWorkflowVersionEvaluationsRequest) returns (MultiWorkflowVersionEvaluationResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations"
-      additional_bindings193 {
+      additional_bindings188 {
         get: "/v2/workflow-version-evaluations"
       }
     };
@@ -4089,7 +3995,7 @@ service V2 {
   rpc ListWorkflowVersionEvaluationData (ListWorkflowVersionEvaluationDataRequest) returns (MultiListWorkflowVersionEvaluationDataResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations/{workflow_version_evaluation_id}/data"
-      additional_bindings194 {
+      additional_bindings189 {
         get: "/v2/workflow-version-evaluations/{workflow_version_evaluation_id}/data"
       }
     };
@@ -4105,7 +4011,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/workflows/{workflow_id}/versions/{workflow_version_id}/evaluations/{workflow_version_evaluation_id}/data"
       body: "*"
-      additional_bindings195 {
+      additional_bindings190 {
         post: "/v2/workflow-version-evaluations/{workflow_version_evaluation_id}/data"
         body: "*"
       }
@@ -4122,7 +4028,7 @@ service V2 {
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines"
       body: "*"
-      additional_bindings196 {
+      additional_bindings191 {
         get: "/v2/pipelines"
       }
     };
@@ -4135,7 +4041,7 @@ service V2 {
   rpc GetPipeline(GetPipelineRequest) returns (SinglePipelineResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}"
-      additional_bindings197 {
+      additional_bindings192 {
         get: "/v2/pipelines/{pipeline_id}"
       }
     };
@@ -4147,7 +4053,7 @@ service V2 {
   rpc ListPipelines(ListPipelinesRequest) returns (MultiPipelineResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines"
-      additional_bindings198 {
+      additional_bindings193 {
         get: "/v2/pipelines"
       }
     };
@@ -4182,7 +4088,7 @@ service V2 {
   rpc GetPipelineVersion(GetPipelineVersionRequest) returns (SinglePipelineVersionResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}"
-      additional_bindings199 {
+      additional_bindings194 {
         get: "/v2/pipelines/{pipeline_id}/versions/{pipeline_version_id}"
       }
     };
@@ -4194,7 +4100,7 @@ service V2 {
   rpc ListPipelineVersions(ListPipelineVersionsRequest) returns (MultiPipelineVersionResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions"
-      additional_bindings200 {
+      additional_bindings195 {
         get: "/v2/pipelines/{pipeline_id}/versions"
       }
     };
@@ -4229,7 +4135,7 @@ service V2 {
   rpc GetPipelineVersionRun(GetPipelineVersionRunRequest) returns (SinglePipelineVersionRunResponse) {
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs/{pipeline_version_run_id}"
-      additional_bindings201 {
+      additional_bindings196 {
         get: "/v2/pipelines/{pipeline_id}/versions/{pipeline_version_id}/runs/{pipeline_version_run_id}"
       }
     };
@@ -4378,7 +4284,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
   }
 
-  // Creates a Pipeline, PipelineVersion, and PipelineVersionRun from a PipelineTemplate. 
+  // Creates a Pipeline, PipelineVersion, and PipelineVersionRun from a PipelineTemplate.
   // This is a convenience endpoint for users to quickly get started with running pipelines.
   rpc PostPipelineVersionRunFromTemplate(PostPipelineVersionRunFromTemplateRequest) returns (PostPipelineVersionRunFromTemplateResponse) {
     option (google.api.http) = {
@@ -7522,22 +7428,28 @@ message SingleWorkflowVersionResponse {
   WorkflowVersion workflow_version = 2;
 }
 
+// Deprecated: App duplication is no longer supported.
 // Request to start app duplication jobs.
 message PostAppDuplicationsRequest {
+  option deprecated = true;
   // The user and application ID of the source application to duplicate.
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated AppDuplication app_duplications = 2;
 }
 
+// Deprecated: App duplication is no longer supported.
 // Request to get an app duplication job.
 message GetAppDuplicationRequest {
+  option deprecated = true;
   // The ID of the user that created the app duplication job.
   clarifai.api.UserAppIDSet user_app_id = 1;
   string app_duplication_id = 2;
 }
 
+// Deprecated: App duplication is no longer supported.
 // Request to list all the app duplication jobs that a user created.
 message ListAppDuplicationsRequest {
+  option deprecated = true;
   // The ID of the user whose app duplication jobs to list.
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
@@ -7548,14 +7460,18 @@ message ListAppDuplicationsRequest {
   uint32 per_page = 3;
 }
 
+// Deprecated: App duplication is no longer supported.
 // MultiAppDuplicationsResponse
 message MultiAppDuplicationsResponse {
+  option deprecated = true;
   clarifai.api.status.Status status = 1;
   repeated AppDuplication app_duplications = 2;
 }
 
+// Deprecated: App duplication is no longer supported.
 // SingleAppDuplicationResponse
 message SingleAppDuplicationResponse {
+  option deprecated = true;
   clarifai.api.status.Status status = 1;
   AppDuplication app_duplication = 2;
 }
@@ -7761,59 +7677,6 @@ message MultiLabelOrderResponse {
 message SingleLabelOrderResponse {
   clarifai.api.status.Status status = 1;
   LabelOrder label_order = 2;
-}
-
-// Request to create Collectors.
-message PostCollectorsRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  repeated Collector collectors = 2;
-}
-
-// PatchCollectorsRequest
-message PatchCollectorsRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-
-  repeated Collector collectors = 2;
-
-  // The action to perform on the patched objects
-  // Only 'overwrite' is supported
-  string action = 3;
-}
-
-// Request to delete several things by the list of ids.
-message DeleteCollectorsRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  repeated string ids = 2;
-  bool delete_all = 3;
-}
-
-// Request to GET a single Collector.
-message GetCollectorRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  string collector_id = 2;
-}
-
-// Request to GET all the Collectors.
-message ListCollectorsRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
-  // Defaults to 1.
-  uint32 page = 2;
-  // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 128.
-  uint32 per_page = 3;
-}
-
-// Response with multiple Collectors.
-message MultiCollectorResponse {
-  clarifai.api.status.Status status = 1;
-  repeated Collector collectors = 2;
-}
-
-// Response with a single Collector.
-message SingleCollectorResponse {
-  clarifai.api.status.Status status = 1;
-  Collector collector = 2;
 }
 
 // PostStatValuesRequest
@@ -8368,6 +8231,16 @@ message RunnerItem {
     // Workflow request from a user.  // FUTURE
     // training request next, etc.
   }
+
+  // Metadata used for routing and other purposes.
+  RunnerItemMetadata metadata = 7;
+}
+
+message RunnerItemMetadata {
+  // The user ID of the requester. Used for sticky routing to the same runner replica.
+  string user_id = 1;
+  // chained block hashes of input for prefix cache routing
+  repeated uint64 block_hashes = 2;
 }
 
 message AutoAnnotationRequest {
@@ -9154,22 +9027,22 @@ message MultiPipelineTemplateResponse {
 message PostPipelineVersionRunFromTemplateRequest {
 
   clarifai.api.UserAppIDSet user_app_id = 1;
-  
+
   // Name of the pipeline template to use (from ListPipelineTemplates)
   string pipeline_template_name = 2;
-    
+
   // Optional: ID of existing pipeline to create version under
   string pipeline_id = 3;
-  
+
   // Optional: Description for the pipeline (used if creating new pipeline)
   string pipeline_description = 4;
-  
+
   // Optional: Description for the pipeline version
   string pipeline_version_description = 5;
-  
+
   // Optional: Nodepools to use for the pipeline version run
   repeated Nodepool nodepools = 6;
-  
+
   // Optional: Overrides to input arguments for the orchestration system
   OrchestrationArgsOverride input_args_override = 7;
 }
@@ -9177,10 +9050,10 @@ message PostPipelineVersionRunFromTemplateRequest {
 // Response containing the created Pipeline, PipelineVersion, and PipelineVersionRun
 message PostPipelineVersionRunFromTemplateResponse {
   clarifai.api.status.Status status = 1;
-  
+
   // The created or updated pipeline (contains the latest pipeline version)
   Pipeline pipeline = 2;
-  
+
   // The created pipeline version run
   PipelineVersionRun pipeline_version_run = 3;
 }

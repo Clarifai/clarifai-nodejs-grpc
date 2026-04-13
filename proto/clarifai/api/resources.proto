@@ -2438,6 +2438,10 @@ message Output {
   uint32 prompt_tokens = 7;
   // Number of completion tokens as reported by the model or third-party API.
   uint32 completion_tokens = 8;
+
+  // Number of cached prompt tokens as reported by the model (subset of prompt_tokens).
+  // Cached tokens are prompt tokens served from the model's KV cache rather than recomputed.
+  uint32 cached_tokens = 9;
 }
 
 // ScopeDeps
@@ -3202,47 +3206,22 @@ message WorkflowState {
   string id = 1;
 }
 
+// Deprecated: App duplication is no longer supported.
 // AppDuplication
 message AppDuplication {
+  option deprecated = true;
   // The unique identifier of an app duplication job.
   string id = 1;
 
   // The destination application where resources are written.
-  //
-  // If the destination does not exist, then the fields from the request are
-  // used to create the application. If a field is not set or not supported,
-  // then it will be copied from the source app, unless otherwise noted.
-  //
-  // Note: this field can be empty when reading app duplication jobs in cases
-  // where the app has been deleted or is just not visible to the caller.
-  //
-  // ########## Supported fields ##########
-  //  - description
-  //  - id      - if not set, then generated automatically
-  //  - user_id - if not set, then the calling user is used as the app owner
   App destination_app = 10;
 
-  // The ID of an existing app you want to copy data into.
-  //
-  // If not provided, then we will create a new application as the destination instead.
-  // The various new_app_* fields can be used to set fields of this new application.
-  //
   // Deprecated: Use destination_app.id with an existing ID instead.
   string existing_app_id = 8 [deprecated = true];
 
-  // The ID to use when creating a new application.
-  // You cannot set this field when copying into an existing app, i.e., when existing_app_is is set.
-  //
-  // If not provided, then it will be generated automatically.
-  //
   // Deprecated: Use destination_app.id with a new ID instead.
   string new_app_id = 2 [deprecated = true];
 
-  // The name to use when creating a new application.
-  // You cannot set this field when copying into an existing app, i.e., when existing_app_is is set.
-  //
-  // If not provided, then the ID of the new application is also used as the name.
-  //
   // Deprecated: Application names are deprecated, use application IDs instead.
   string new_app_name = 3 [deprecated = true];
 
@@ -3258,12 +3237,7 @@ message AppDuplication {
   // The filter specifies which resources are copied by the app duplication job.
   AppDuplicationFilters filter = 7;
 
-  // Copy progress for each resource type requested by the filter. Possible fields:
-  //  - inputs
-  //  - concepts
-  //  - annotations
-  //  - models
-  //  - workflows
+  // Copy progress for each resource type requested by the filter.
   repeated AppCopyProgress progress = 9;
 }
 
@@ -3272,17 +3246,18 @@ message AppCopyProgress {
   int32 value = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
 }
 
+// Deprecated: App duplication is no longer supported.
 // AppDuplicationFilters
 message AppDuplicationFilters {
+  option deprecated = true;
   reserved 6;
-  // Copy inputs. Requires that copy_concepts is also set.
-  // Note that this will still copy input-level annotations even if copy_annotations is not set.
+  // Copy inputs.
   bool copy_inputs = 1;
   // Copy concepts.
   bool copy_concepts = 2;
-  // Copy annotations. Requires that copy_inputs and copy_concepts are also set.
+  // Copy annotations.
   bool copy_annotations = 3;
-  // Copy models. Requires that copy_concepts is also set.
+  // Copy models.
   bool copy_models = 4;
   // Copy workflows.
   bool copy_workflows = 5;
@@ -3862,112 +3837,7 @@ message Team {
 
 
 
-// Collector is a data pathway from a CollectorSource to an app to collect data automatically.
-// For example, a CollectorSource
-message Collector {
-  // Unique ID for the collector.
-  string id = 1;
 
-  // Human readable description for the collector.
-  string description = 2;
-
-  // When the collector is created. We follow the XXXX timestamp
-  // format. We use https://www.ietf.org/rfc/rfc3339.txt format:
-  // "2006-01-02T15:04:05.999999Z" so you can expect results like
-  // the following from the API:
-  // "2017-04-11T21:50:50.223962Z"
-  google.protobuf.Timestamp created_at = 3;
-
-  // This is a workflow to run inline in model predict calls. It should ONLY have very fast and
-  // light-weight models in it as it will effect the speed of the predictions being made.
-  // This workflow's purpose is to filter down the inputs to queue for the collector to process.
-  // The input to this workflow is going to be the OUTPUT of the model, not the input to the model
-  // since we want to encourage having fast workflows that can also take advantage of the model
-  // outputs to make deciions (for example: thresholding based on concepts). If the workflow
-  // output has any field that is non-empty then the input will be queued for the collector
-  // to process with the post_queue_workflow_id.
-  //
-  // As a simpler alternative, pre_queue_random_sample can be set to just use random sampling instead.
-  string pre_queue_workflow_id = 4;
-
-  // Instead of needing to create a new workflow for pre_queue_workflow_id, if just random sampling
-  // of the model inputs is required, then pre_queue_random_sample can be set to a value from (0-1]
-  // to denote the fraction of inputs to collect.
-  float pre_queue_random_sample = 8;
-
-  // A workflow to run to after the collector is processing the queued input. This workflow
-  // uses the original input to the model as input to the workflow so that you can run additional
-  // models as well on that input to decide whether to queue the model or not. If the workflow
-  // output has any field that is non-empty then it will be passed on to POST /inputs to
-  // the destination app.
-  string post_queue_workflow_id = 5;
-
-  // The source of the collector to feed data into this app.
-  // Note(zeiler): if we wanted more than one source per collector we could make this it's own
-  // object and introduce /collectors/{collector_id}/sources
-  // We will keep it simple for now and have just one source per collector since a user can make
-  // more than one collector in the same app anyways.
-  CollectorSource collector_source = 6;
-
-  // This is the workflow ID to do POST /inputs with the collected data using.
-  // This needs to be present at all times in this app for the collector to work.
-  // If this is not specified then it will use the default_workflow_id of the app.
-  // Note(zeiler): not yet available, uses only the default workflow that POST /inputs uses.
-  // string workflow_id = 7;
-
-  // Status for the collector. This allows you to pause a collector without having to delete it as
-  // an example.
-  clarifai.api.status.Status status = 7;
-
-  // Whether to collect outputs or not. Default is false. If selected, outputs from the
-  // original model predict call will be posted as annotations along with the input with success status.
-  bool collect_outputs = 9;
-}
-
-// Configuration for the source to collect data from.
-// Only one of the fields can be present at a time.
-message CollectorSource {
-  // The ID of the source in case we want to implment /collectors/{collector_id}/sources
-  // string id = 1;
-
-  // Collect from the inputs passed in for PostModelOutputs predictions of a specific model.
-  // This does not apply to models used within workflows, only PostModelOutputs calls.
-  APIPostModelOutputsCollectorSource api_post_model_outputs_collector_source = 2;
-}
-
-// This is configuration for using the inputs send for model prediction in our API as
-// as the source for data.
-message APIPostModelOutputsCollectorSource {
-  // To define the model that we should collect from we need to specify the following 4 IDs:
-  // The User ID of the model we want to collect from.
-  // This is User B in the example.
-  string model_user_id = 1;
-  // The App ID of the model we want to collect from.
-  string model_app_id = 2;
-  // The Model ID of the model we want to collect from.
-  string model_id = 3;
-  // The Version ID of the model we want to collect from.
-  string model_version_id = 4;
-
-  // This key is used to POST /inputs into your app by the collector. It can be an API key or a
-  // PAT. This needs the permissions that are needed for POST /inputs for the app_id this
-  // Collector is defined in.
-  string post_inputs_key_id = 5;
-
-  // The most flexible scenario is User C creates a collector and she wants to ingest User A's
-  // predictions of User B's model into their app (User C's app), for which User C has created
-  // the annotation workflow using a combination of models, perhaps from User D even.
-
-  // The User ID of the caller of the model we want to collect from.
-  // This is needed because the below Model's ids could be used by multiple users like the
-  // clarifai/main models are or any model that has been shared with a collaborator. Therefore we
-  // need to know which caller of the model to collect inputs from.
-  // This is User A in the example.
-
-  // This is a private field that defaults to the app owner for public users.
-  // If this is left blank then this collector will collect from ALL users calling the given model.
-  string caller_user_id = 6;
-}
 
 // StatValue
 message StatValue {
@@ -4566,6 +4436,9 @@ message RunnerMetrics {
   // Cumulative total time (in seconds) that pods have been running for this runner.
   // This accumulates across scale-up/down cycles and is reported by the agent.
   uint32 total_pods_running_time_s = 3;
+  // Cumulative count of pods that have been preempted by the k8s scheduler.
+  // This accumulates across reconcile cycles and is reported by the agent.
+  uint32 pods_preempted_total = 4;
 }
 
 // A worker for compute within a nodepool of instances.
@@ -4623,6 +4496,11 @@ message Runner {
   // Hard minimum replicas from the deployment's autoscale config.
   // The agent uses this to determine how many replicas are non-preemptable.
   uint32 min_replicas = 14;
+
+  // The scheduling priority for this runner's k8s deployment.
+  // Valid values are 0-9, where higher values indicate higher priority.
+  // This value comes from the deployment nodepool's priority setting.
+  uint32 priority = 15;
 }
 
 
@@ -4942,15 +4820,40 @@ message AutoscaleConfig {
 
 
 
-// DeploymentMetrics captures metrics and status for a Deployment's underlying runners.
-// This allows tracking of the desired replica count and the actual live replica count.
-message DeploymentMetrics {
+// DeploymentMetricsSummary holds the core deployment metrics fields, reusable as both
+// an aggregate across all nodepools and per-individual-nodepool metrics.
+message DeploymentMetricsSummary {
   // The number of replicas desired by the orchestrator.
   uint32 desired_replicas = 1;
   // The actual number of live replicas connected and ready to process requests.
   uint32 live_replicas = 2;
-  // If true, the deployment is currently rolling out a new version.
+  // If true, a new version is currently being rolled out.
   bool rollout_in_progress = 3;
+}
+
+// NodepoolDeploymentMetrics captures metrics for a single nodepool within a Deployment.
+message NodepoolDeploymentMetrics {
+  // The user-facing compute cluster ID.
+  string compute_cluster_id = 1;
+  // The user-facing nodepool ID.
+  string nodepool_id = 2;
+  // Metrics for this nodepool.
+  DeploymentMetricsSummary metrics = 3;
+}
+
+// DeploymentMetrics captures metrics and status for a Deployment's underlying runners.
+// This allows tracking of the desired replica count and the actual live replica count.
+message DeploymentMetrics {
+  // Deprecated: use aggregate instead.
+  uint32 desired_replicas = 1 [deprecated = true];
+  // Deprecated: use aggregate instead.
+  uint32 live_replicas = 2 [deprecated = true];
+  // Deprecated: use aggregate instead.
+  bool rollout_in_progress = 3 [deprecated = true];
+  // Per-nodepool breakdown of metrics.
+  repeated NodepoolDeploymentMetrics nodepool_metrics = 4;
+  // Aggregate metrics across all nodepools.
+  DeploymentMetricsSummary aggregate = 5;
 }
 
 // A deployment allows you to configure how runners for a particular type of resource will
@@ -5916,7 +5819,7 @@ message MetricData {
     // The format is https://www.ietf.org/rfc/rfc3339.txt.
     // Example: "2006-01-02T15:04:05.999999Z".
     google.protobuf.Timestamp timestamp = 1;
-    double value = 2;
+    double value = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
   }
   message MatrixData {
     message TimeSeries {
@@ -5931,8 +5834,10 @@ message MetricData {
 }
 enum MetricType {
   METRIC_TYPE_NOT_SET = 0;
-  MODEL_REQUEST_COUNT = 1;
-  MODEL_LATENCY = 2;
+  MODEL_TTFT = 1;
+  MODEL_THROUGHPUT = 2;
+  MODEL_PROMPT_TOKEN_THROUGHPUT = 3;
+  MODEL_COMPLETION_TOKEN_THROUGHPUT = 4;
 }
 
 enum MetricLabel {
@@ -5940,8 +5845,7 @@ enum MetricLabel {
   APP_ID = 1;
   MODEL_ID = 2;
   MODEL_VERSION_ID = 3;
-  CALLER_USER_ID = 4;
-  WORKFLOW_ID = 5;
+  HTTP_STATUS = 4;
 }
 message MetricAggregate {
   enum Operator {

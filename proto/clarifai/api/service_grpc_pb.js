@@ -146,17 +146,6 @@ function deserialize_clarifai_api_DeleteCollaboratorsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.DeleteCollaboratorsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_DeleteCollectorsRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.DeleteCollectorsRequest)) {
-    throw new Error('Expected argument of type clarifai.api.DeleteCollectorsRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_DeleteCollectorsRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.DeleteCollectorsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_clarifai_api_DeleteComputeClustersRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.DeleteComputeClustersRequest)) {
     throw new Error('Expected argument of type clarifai.api.DeleteComputeClustersRequest');
@@ -529,17 +518,6 @@ function serialize_clarifai_api_GetBulkOperationRequest(arg) {
 
 function deserialize_clarifai_api_GetBulkOperationRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.GetBulkOperationRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_GetCollectorRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.GetCollectorRequest)) {
-    throw new Error('Expected argument of type clarifai.api.GetCollectorRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_GetCollectorRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.GetCollectorRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_GetComputeClusterRequest(arg) {
@@ -1178,17 +1156,6 @@ function serialize_clarifai_api_ListCollaboratorsRequest(arg) {
 
 function deserialize_clarifai_api_ListCollaboratorsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.ListCollaboratorsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_ListCollectorsRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.ListCollectorsRequest)) {
-    throw new Error('Expected argument of type clarifai.api.ListCollectorsRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_ListCollectorsRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.ListCollectorsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_ListComputeClustersRequest(arg) {
@@ -1904,17 +1871,6 @@ function serialize_clarifai_api_MultiCollaboratorsResponse(arg) {
 
 function deserialize_clarifai_api_MultiCollaboratorsResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiCollaboratorsResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_MultiCollectorResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.MultiCollectorResponse)) {
-    throw new Error('Expected argument of type clarifai.api.MultiCollectorResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_MultiCollectorResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.MultiCollectorResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_MultiComputeClusterResponse(arg) {
@@ -2753,17 +2709,6 @@ function deserialize_clarifai_api_PatchCollaboratorsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PatchCollaboratorsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_PatchCollectorsRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.PatchCollectorsRequest)) {
-    throw new Error('Expected argument of type clarifai.api.PatchCollectorsRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_PatchCollectorsRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.PatchCollectorsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_clarifai_api_PatchComputeClustersRequest(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.PatchComputeClustersRequest)) {
     throw new Error('Expected argument of type clarifai.api.PatchComputeClustersRequest');
@@ -3224,17 +3169,6 @@ function serialize_clarifai_api_PostCollaboratorsRequest(arg) {
 
 function deserialize_clarifai_api_PostCollaboratorsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostCollaboratorsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_PostCollectorsRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.PostCollectorsRequest)) {
-    throw new Error('Expected argument of type clarifai.api.PostCollectorsRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_PostCollectorsRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.PostCollectorsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PostComputeClustersRequest(arg) {
@@ -4016,17 +3950,6 @@ function serialize_clarifai_api_SingleBulkOperationsResponse(arg) {
 
 function deserialize_clarifai_api_SingleBulkOperationsResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.SingleBulkOperationsResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_SingleCollectorResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.SingleCollectorResponse)) {
-    throw new Error('Expected argument of type clarifai.api.SingleCollectorResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_SingleCollectorResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.SingleCollectorResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_SingleComputeClusterResponse(arg) {
@@ -6504,17 +6427,9 @@ listCollaborations: {
     responseSerialize: serialize_clarifai_api_MultiCollaborationsResponse,
     responseDeserialize: deserialize_clarifai_api_MultiCollaborationsResponse,
   },
-  // PostAppDuplications starts async app duplication jobs which copy resources
-// (inputs, annotations, models etc) from one application to another. It can
-// also create the destination application if it does not exist, with fields
-// (description, metadata etc) copied from the source application.
-//
-// A duplication job can be started by any user that can read from the source
-// application (the target of this call) and can create and write to the
-// destination application. The duplication is associated with the user that
-// created it, so in order to read the status and progress of the job, that
-// user's ID has to be used in the call to GetAppDuplication, which might be
-// different to the source application owner ID in this call.
+  // Deprecated: App duplication is no longer supported.
+// PostAppDuplications starts async app duplication jobs which copy resources
+// (inputs, annotations, models etc) from one application to another.
 postAppDuplications: {
     path: '/clarifai.api.V2/PostAppDuplications',
     requestStream: false,
@@ -6526,7 +6441,8 @@ postAppDuplications: {
     responseSerialize: serialize_clarifai_api_MultiAppDuplicationsResponse,
     responseDeserialize: deserialize_clarifai_api_MultiAppDuplicationsResponse,
   },
-  // ListAppDuplications lists all app duplication jobs created by the user.
+  // Deprecated: App duplication is no longer supported.
+// ListAppDuplications lists all app duplication jobs created by the user.
 listAppDuplications: {
     path: '/clarifai.api.V2/ListAppDuplications',
     requestStream: false,
@@ -6538,7 +6454,8 @@ listAppDuplications: {
     responseSerialize: serialize_clarifai_api_MultiAppDuplicationsResponse,
     responseDeserialize: deserialize_clarifai_api_MultiAppDuplicationsResponse,
   },
-  // GetAppDuplication returns an app duplication job created by the user.
+  // Deprecated: App duplication is no longer supported.
+// GetAppDuplication returns an app duplication job created by the user.
 getAppDuplication: {
     path: '/clarifai.api.V2/GetAppDuplication',
     requestStream: false,
@@ -6696,72 +6613,6 @@ deleteLabelOrders: {
     responseType: proto_clarifai_api_status_status_pb.BaseResponse,
     requestSerialize: serialize_clarifai_api_DeleteLabelOrdersRequest,
     requestDeserialize: deserialize_clarifai_api_DeleteLabelOrdersRequest,
-    responseSerialize: serialize_clarifai_api_status_BaseResponse,
-    responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
-  },
-  // Add a list of Collectors to an app.
-// In the handler of this endpoint we also check for all the scopes of the  POST /inputs
-// endpoint.
-// Those current scopes are listed here as a hard requirement.
-// They are needed when adding the collectors just so we now that you have permission with
-// that key at least to do the writing to this app with POST /inputs.
-postCollectors: {
-    path: '/clarifai.api.V2/PostCollectors',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.PostCollectorsRequest,
-    responseType: proto_clarifai_api_service_pb.MultiCollectorResponse,
-    requestSerialize: serialize_clarifai_api_PostCollectorsRequest,
-    requestDeserialize: deserialize_clarifai_api_PostCollectorsRequest,
-    responseSerialize: serialize_clarifai_api_MultiCollectorResponse,
-    responseDeserialize: deserialize_clarifai_api_MultiCollectorResponse,
-  },
-  // Get a specific collector from an app.
-getCollector: {
-    path: '/clarifai.api.V2/GetCollector',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.GetCollectorRequest,
-    responseType: proto_clarifai_api_service_pb.SingleCollectorResponse,
-    requestSerialize: serialize_clarifai_api_GetCollectorRequest,
-    requestDeserialize: deserialize_clarifai_api_GetCollectorRequest,
-    responseSerialize: serialize_clarifai_api_SingleCollectorResponse,
-    responseDeserialize: deserialize_clarifai_api_SingleCollectorResponse,
-  },
-  // List all the collectors.
-listCollectors: {
-    path: '/clarifai.api.V2/ListCollectors',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.ListCollectorsRequest,
-    responseType: proto_clarifai_api_service_pb.MultiCollectorResponse,
-    requestSerialize: serialize_clarifai_api_ListCollectorsRequest,
-    requestDeserialize: deserialize_clarifai_api_ListCollectorsRequest,
-    responseSerialize: serialize_clarifai_api_MultiCollectorResponse,
-    responseDeserialize: deserialize_clarifai_api_MultiCollectorResponse,
-  },
-  // Patch one or more collectors.
-patchCollectors: {
-    path: '/clarifai.api.V2/PatchCollectors',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.PatchCollectorsRequest,
-    responseType: proto_clarifai_api_service_pb.MultiCollectorResponse,
-    requestSerialize: serialize_clarifai_api_PatchCollectorsRequest,
-    requestDeserialize: deserialize_clarifai_api_PatchCollectorsRequest,
-    responseSerialize: serialize_clarifai_api_MultiCollectorResponse,
-    responseDeserialize: deserialize_clarifai_api_MultiCollectorResponse,
-  },
-  // Delete multiple collectors in one request.
-// This call is asynchronous. Use DeleteCollector if you want a synchronous version.
-deleteCollectors: {
-    path: '/clarifai.api.V2/DeleteCollectors',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.DeleteCollectorsRequest,
-    responseType: proto_clarifai_api_status_status_pb.BaseResponse,
-    requestSerialize: serialize_clarifai_api_DeleteCollectorsRequest,
-    requestDeserialize: deserialize_clarifai_api_DeleteCollectorsRequest,
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
   },
@@ -7795,7 +7646,7 @@ listPipelineTemplates: {
     responseSerialize: serialize_clarifai_api_MultiPipelineTemplateResponse,
     responseDeserialize: deserialize_clarifai_api_MultiPipelineTemplateResponse,
   },
-  // Creates a Pipeline, PipelineVersion, and PipelineVersionRun from a PipelineTemplate. 
+  // Creates a Pipeline, PipelineVersion, and PipelineVersionRun from a PipelineTemplate.
 // This is a convenience endpoint for users to quickly get started with running pipelines.
 postPipelineVersionRunFromTemplate: {
     path: '/clarifai.api.V2/PostPipelineVersionRunFromTemplate',

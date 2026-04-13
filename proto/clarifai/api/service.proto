@@ -2738,18 +2738,11 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Collaborators_Get;
   }
 
+  // Deprecated: App duplication is no longer supported.
   // PostAppDuplications starts async app duplication jobs which copy resources
-  // (inputs, annotations, models etc) from one application to another. It can
-  // also create the destination application if it does not exist, with fields
-  // (description, metadata etc) copied from the source application.
-  //
-  // A duplication job can be started by any user that can read from the source
-  // application (the target of this call) and can create and write to the
-  // destination application. The duplication is associated with the user that
-  // created it, so in order to read the status and progress of the job, that
-  // user's ID has to be used in the call to GetAppDuplication, which might be
-  // different to the source application owner ID in this call.
+  // (inputs, annotations, models etc) from one application to another.
   rpc PostAppDuplications (PostAppDuplicationsRequest) returns (MultiAppDuplicationsResponse) {
+    option deprecated = true;
     option (google.api.http) = {
       post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/duplications"
       body: "*"
@@ -2758,16 +2751,20 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
   }
 
+  // Deprecated: App duplication is no longer supported.
   // ListAppDuplications lists all app duplication jobs created by the user.
   rpc ListAppDuplications (ListAppDuplicationsRequest) returns (MultiAppDuplicationsResponse){
+    option deprecated = true;
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/duplications"
     };
     option (clarifai.auth.util.cl_auth_type) = PATAuth;
   }
 
+  // Deprecated: App duplication is no longer supported.
   // GetAppDuplication returns an app duplication job created by the user.
   rpc GetAppDuplication (GetAppDuplicationRequest) returns (SingleAppDuplicationResponse) {
+    option deprecated = true;
     option (google.api.http) = {
       get: "/v2/users/{user_app_id.user_id}/duplications/{app_duplication_id}"
     };
@@ -3003,97 +3000,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = LabelOrders_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Add;
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
-  }
-
-  // Add a list of Collectors to an app.
-  // In the handler of this endpoint we also check for all the scopes of the  POST /inputs
-  // endpoint.
-  // Those current scopes are listed here as a hard requirement.
-  // They are needed when adding the collectors just so we now that you have permission with
-  // that key at least to do the writing to this app with POST /inputs.
-  rpc PostCollectors (PostCollectorsRequest) returns (MultiCollectorResponse) {
-    option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
-      body: "*"
-      additional_bindings {
-        post: "/v2/collectors"
-        body: "*"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Annotations_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Concepts_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Inputs_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Models_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Predict;
-    option (clarifai.auth.util.cl_depending_scopes) = Workflows_Get;
-  }
-
-  // Get a specific collector from an app.
-  rpc GetCollector (GetCollectorRequest) returns (SingleCollectorResponse) {
-    option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors/{collector_id}"
-      additional_bindings {
-        get: "/v2/collectors/{collector_id}"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Get;
-  }
-
-  // List all the collectors.
-  rpc ListCollectors (ListCollectorsRequest) returns (MultiCollectorResponse) {
-    option (google.api.http) = {
-      get: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
-      additional_bindings {
-        get: "/v2/collectors"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Get;
-  }
-
-  // Patch one or more collectors.
-  rpc PatchCollectors (PatchCollectorsRequest) returns (MultiCollectorResponse) {
-    option (google.api.http) = {
-      patch: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
-      body: "*"
-      additional_bindings {
-        patch: "/v2/collectors"
-        body: "*"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Get;
-  }
-
-
-
-  // Delete multiple collectors in one request.
-  // This call is asynchronous. Use DeleteCollector if you want a synchronous version.
-  rpc DeleteCollectors (DeleteCollectorsRequest) returns (clarifai.api.status.BaseResponse) {
-    option (google.api.http) = {
-      delete: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/collectors"
-      body: "*"
-      additional_bindings {
-        delete: "/v2/collectors"
-        body: "*"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Add;
-    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Delete;
-    option (clarifai.auth.util.cl_depending_scopes) = Collectors_Get;
   }
 
   // PostStatValues
@@ -4378,7 +4284,7 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Pipelines_Get;
   }
 
-  // Creates a Pipeline, PipelineVersion, and PipelineVersionRun from a PipelineTemplate. 
+  // Creates a Pipeline, PipelineVersion, and PipelineVersionRun from a PipelineTemplate.
   // This is a convenience endpoint for users to quickly get started with running pipelines.
   rpc PostPipelineVersionRunFromTemplate(PostPipelineVersionRunFromTemplateRequest) returns (PostPipelineVersionRunFromTemplateResponse) {
     option (google.api.http) = {
@@ -7522,22 +7428,28 @@ message SingleWorkflowVersionResponse {
   WorkflowVersion workflow_version = 2;
 }
 
+// Deprecated: App duplication is no longer supported.
 // Request to start app duplication jobs.
 message PostAppDuplicationsRequest {
+  option deprecated = true;
   // The user and application ID of the source application to duplicate.
   clarifai.api.UserAppIDSet user_app_id = 1;
   repeated AppDuplication app_duplications = 2;
 }
 
+// Deprecated: App duplication is no longer supported.
 // Request to get an app duplication job.
 message GetAppDuplicationRequest {
+  option deprecated = true;
   // The ID of the user that created the app duplication job.
   clarifai.api.UserAppIDSet user_app_id = 1;
   string app_duplication_id = 2;
 }
 
+// Deprecated: App duplication is no longer supported.
 // Request to list all the app duplication jobs that a user created.
 message ListAppDuplicationsRequest {
+  option deprecated = true;
   // The ID of the user whose app duplication jobs to list.
   clarifai.api.UserAppIDSet user_app_id = 1;
   // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
@@ -7548,14 +7460,18 @@ message ListAppDuplicationsRequest {
   uint32 per_page = 3;
 }
 
+// Deprecated: App duplication is no longer supported.
 // MultiAppDuplicationsResponse
 message MultiAppDuplicationsResponse {
+  option deprecated = true;
   clarifai.api.status.Status status = 1;
   repeated AppDuplication app_duplications = 2;
 }
 
+// Deprecated: App duplication is no longer supported.
 // SingleAppDuplicationResponse
 message SingleAppDuplicationResponse {
+  option deprecated = true;
   clarifai.api.status.Status status = 1;
   AppDuplication app_duplication = 2;
 }
@@ -7761,59 +7677,6 @@ message MultiLabelOrderResponse {
 message SingleLabelOrderResponse {
   clarifai.api.status.Status status = 1;
   LabelOrder label_order = 2;
-}
-
-// Request to create Collectors.
-message PostCollectorsRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  repeated Collector collectors = 2;
-}
-
-// PatchCollectorsRequest
-message PatchCollectorsRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-
-  repeated Collector collectors = 2;
-
-  // The action to perform on the patched objects
-  // Only 'overwrite' is supported
-  string action = 3;
-}
-
-// Request to delete several things by the list of ids.
-message DeleteCollectorsRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  repeated string ids = 2;
-  bool delete_all = 3;
-}
-
-// Request to GET a single Collector.
-message GetCollectorRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  string collector_id = 2;
-}
-
-// Request to GET all the Collectors.
-message ListCollectorsRequest {
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  // (optional URL parameter) The page number. Pagination is used to split the results into chunks.
-  // Defaults to 1.
-  uint32 page = 2;
-  // (optional URL parameter) The number of results that will be contained in each page. Defaults
-  // to 128.
-  uint32 per_page = 3;
-}
-
-// Response with multiple Collectors.
-message MultiCollectorResponse {
-  clarifai.api.status.Status status = 1;
-  repeated Collector collectors = 2;
-}
-
-// Response with a single Collector.
-message SingleCollectorResponse {
-  clarifai.api.status.Status status = 1;
-  Collector collector = 2;
 }
 
 // PostStatValuesRequest
@@ -8368,6 +8231,16 @@ message RunnerItem {
     // Workflow request from a user.  // FUTURE
     // training request next, etc.
   }
+
+  // Metadata used for routing and other purposes.
+  RunnerItemMetadata metadata = 7;
+}
+
+message RunnerItemMetadata {
+  // The user ID of the requester. Used for sticky routing to the same runner replica.
+  string user_id = 1;
+  // chained block hashes of input for prefix cache routing
+  repeated uint64 block_hashes = 2;
 }
 
 message AutoAnnotationRequest {
@@ -9154,22 +9027,22 @@ message MultiPipelineTemplateResponse {
 message PostPipelineVersionRunFromTemplateRequest {
 
   clarifai.api.UserAppIDSet user_app_id = 1;
-  
+
   // Name of the pipeline template to use (from ListPipelineTemplates)
   string pipeline_template_name = 2;
-    
+
   // Optional: ID of existing pipeline to create version under
   string pipeline_id = 3;
-  
+
   // Optional: Description for the pipeline (used if creating new pipeline)
   string pipeline_description = 4;
-  
+
   // Optional: Description for the pipeline version
   string pipeline_version_description = 5;
-  
+
   // Optional: Nodepools to use for the pipeline version run
   repeated Nodepool nodepools = 6;
-  
+
   // Optional: Overrides to input arguments for the orchestration system
   OrchestrationArgsOverride input_args_override = 7;
 }
@@ -9177,10 +9050,10 @@ message PostPipelineVersionRunFromTemplateRequest {
 // Response containing the created Pipeline, PipelineVersion, and PipelineVersionRun
 message PostPipelineVersionRunFromTemplateResponse {
   clarifai.api.status.Status status = 1;
-  
+
   // The created or updated pipeline (contains the latest pipeline version)
   Pipeline pipeline = 2;
-  
+
   // The created pipeline version run
   PipelineVersionRun pipeline_version_run = 3;
 }
