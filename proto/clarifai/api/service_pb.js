@@ -10731,7 +10731,8 @@ proto.clarifai.api.StreamAnnotationsRequest.toObject = function(includeInstance,
     annotationType: jspb.Message.getFieldWithDefault(msg, 6, 0),
     maxFrames: jspb.Message.getFieldWithDefault(msg, 7, 0),
     maxDuration: jspb.Message.getFieldWithDefault(msg, 8, 0),
-    worker: (f = msg.getWorker()) && proto_clarifai_api_resources_pb.Worker.toObject(includeInstance, f)
+    worker: (f = msg.getWorker()) && proto_clarifai_api_resources_pb.Worker.toObject(includeInstance, f),
+    minPredictionScore: jspb.Message.getFloatingPointFieldWithDefault(msg, 10, 0.0)
   };
 
   if (includeInstance) {
@@ -10805,6 +10806,10 @@ proto.clarifai.api.StreamAnnotationsRequest.deserializeBinaryFromReader = functi
       var value = new proto_clarifai_api_resources_pb.Worker;
       reader.readMessage(value,proto_clarifai_api_resources_pb.Worker.deserializeBinaryFromReader);
       msg.setWorker(value);
+      break;
+    case 10:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setMinPredictionScore(value);
       break;
     default:
       reader.skipField();
@@ -10898,6 +10903,13 @@ proto.clarifai.api.StreamAnnotationsRequest.serializeBinaryToWriter = function(m
       9,
       f,
       proto_clarifai_api_resources_pb.Worker.serializeBinaryToWriter
+    );
+  }
+  f = message.getMinPredictionScore();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      10,
+      f
     );
   }
 };
@@ -11122,6 +11134,24 @@ proto.clarifai.api.StreamAnnotationsRequest.prototype.hasWorker = function() {
 };
 
 
+/**
+ * optional float min_prediction_score = 10;
+ * @return {number}
+ */
+proto.clarifai.api.StreamAnnotationsRequest.prototype.getMinPredictionScore = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 10, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.StreamAnnotationsRequest} returns this
+ */
+proto.clarifai.api.StreamAnnotationsRequest.prototype.setMinPredictionScore = function(value) {
+  return jspb.Message.setProto3FloatField(this, 10, value);
+};
+
+
 
 
 
@@ -11155,7 +11185,8 @@ proto.clarifai.api.StreamLivestreamAnnotationsRequest.prototype.toObject = funct
 proto.clarifai.api.StreamLivestreamAnnotationsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     userAppId: (f = msg.getUserAppId()) && proto_clarifai_api_resources_pb.UserAppIDSet.toObject(includeInstance, f),
-    inputId: jspb.Message.getFieldWithDefault(msg, 2, "")
+    inputId: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    minPredictionScore: jspb.Message.getFloatingPointFieldWithDefault(msg, 3, 0.0)
   };
 
   if (includeInstance) {
@@ -11201,6 +11232,10 @@ proto.clarifai.api.StreamLivestreamAnnotationsRequest.deserializeBinaryFromReade
       var value = /** @type {string} */ (reader.readString());
       msg.setInputId(value);
       break;
+    case 3:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setMinPredictionScore(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -11242,6 +11277,13 @@ proto.clarifai.api.StreamLivestreamAnnotationsRequest.serializeBinaryToWriter = 
   if (f.length > 0) {
     writer.writeString(
       2,
+      f
+    );
+  }
+  f = message.getMinPredictionScore();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      3,
       f
     );
   }
@@ -11300,6 +11342,24 @@ proto.clarifai.api.StreamLivestreamAnnotationsRequest.prototype.getInputId = fun
  */
 proto.clarifai.api.StreamLivestreamAnnotationsRequest.prototype.setInputId = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional float min_prediction_score = 3;
+ * @return {number}
+ */
+proto.clarifai.api.StreamLivestreamAnnotationsRequest.prototype.getMinPredictionScore = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 3, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.StreamLivestreamAnnotationsRequest} returns this
+ */
+proto.clarifai.api.StreamLivestreamAnnotationsRequest.prototype.setMinPredictionScore = function(value) {
+  return jspb.Message.setProto3FloatField(this, 3, value);
 };
 
 
