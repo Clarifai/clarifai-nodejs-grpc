@@ -11516,6 +11516,7 @@ export enum MetricType {
     MODEL_THROUGHPUT = 2,
     MODEL_PROMPT_TOKEN_THROUGHPUT = 3,
     MODEL_COMPLETION_TOKEN_THROUGHPUT = 4,
+    MODEL_REQUEST_COUNT = 5,
 }
 
 export enum MetricLabel {
