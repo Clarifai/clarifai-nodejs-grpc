@@ -212,6 +212,8 @@ export class StreamAnnotationsRequest extends jspb.Message {
     clearWorker(): void;
     getWorker(): proto_clarifai_api_resources_pb.Worker | undefined;
     setWorker(value?: proto_clarifai_api_resources_pb.Worker): StreamAnnotationsRequest;
+    getMinPredictionScore(): number;
+    setMinPredictionScore(value: number): StreamAnnotationsRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): StreamAnnotationsRequest.AsObject;
@@ -234,6 +236,7 @@ export namespace StreamAnnotationsRequest {
         maxFrames: number,
         maxDuration: number,
         worker?: proto_clarifai_api_resources_pb.Worker.AsObject,
+        minPredictionScore: number,
     }
 }
 
@@ -245,6 +248,8 @@ export class StreamLivestreamAnnotationsRequest extends jspb.Message {
     setUserAppId(value?: proto_clarifai_api_resources_pb.UserAppIDSet): StreamLivestreamAnnotationsRequest;
     getInputId(): string;
     setInputId(value: string): StreamLivestreamAnnotationsRequest;
+    getMinPredictionScore(): number;
+    setMinPredictionScore(value: number): StreamLivestreamAnnotationsRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): StreamLivestreamAnnotationsRequest.AsObject;
@@ -260,6 +265,7 @@ export namespace StreamLivestreamAnnotationsRequest {
     export type AsObject = {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         inputId: string,
+        minPredictionScore: number,
     }
 }
 
