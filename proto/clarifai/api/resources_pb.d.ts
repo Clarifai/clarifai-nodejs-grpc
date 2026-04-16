@@ -9251,6 +9251,8 @@ export class ComputePlaneMetrics extends jspb.Message {
     getCpuMetricsList(): Array<CpuMetrics>;
     setCpuMetricsList(value: Array<CpuMetrics>): ComputePlaneMetrics;
     addCpuMetrics(value?: CpuMetrics, index?: number): CpuMetrics;
+    getIsFinalMetrics(): boolean;
+    setIsFinalMetrics(value: boolean): ComputePlaneMetrics;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ComputePlaneMetrics.AsObject;
@@ -9276,6 +9278,7 @@ export namespace ComputePlaneMetrics {
         gpuMetricsList: Array<GpuMetrics.AsObject>,
         hostname: string,
         cpuMetricsList: Array<CpuMetrics.AsObject>,
+        isFinalMetrics: boolean,
     }
 }
 
@@ -11517,6 +11520,12 @@ export enum MetricType {
     MODEL_PROMPT_TOKEN_THROUGHPUT = 3,
     MODEL_COMPLETION_TOKEN_THROUGHPUT = 4,
     MODEL_REQUEST_COUNT = 5,
+    NODEPOOL_NODE_COUNT = 51,
+    NODEPOOL_GPU_UTILIZATION = 52,
+    NODEPOOL_GPU_TENSOR_UTILIZATION = 53,
+    NODEPOOL_GPU_MEMORY_UTILIZATION = 54,
+    NODEPOOL_CPU_UTILIZATION = 55,
+    NODEPOOL_MEMORY_UTILIZATION = 56,
 }
 
 export enum MetricLabel {
@@ -11525,4 +11534,6 @@ export enum MetricLabel {
     MODEL_ID = 2,
     MODEL_VERSION_ID = 3,
     HTTP_STATUS = 4,
+    COMPUTE_CLUSTER_ID = 5,
+    NODEPOOL_ID = 6,
 }

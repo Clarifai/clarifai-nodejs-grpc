@@ -5195,6 +5195,11 @@ message ComputePlaneMetrics {
   string hostname = 11; // Hostname of the node.
 
   repeated CpuMetrics cpu_metrics = 12; // CPU metrics.
+
+  // When true, indicates this is the final metrics submission from a node that is being
+  // terminated. The handler should skip node count aggregation to avoid corrupting the
+  // count with a partial batch from the dying node.
+  bool is_final_metrics = 13;
 }
 
 message GpuMetrics {
@@ -5834,11 +5839,21 @@ message MetricData {
 }
 enum MetricType {
   METRIC_TYPE_NOT_SET = 0;
+
+  // Model metrics: 1-50
   MODEL_TTFT = 1;
   MODEL_THROUGHPUT = 2;
   MODEL_PROMPT_TOKEN_THROUGHPUT = 3;
   MODEL_COMPLETION_TOKEN_THROUGHPUT = 4;
   MODEL_REQUEST_COUNT = 5;
+
+  // Nodepool metrics: 51-100
+  NODEPOOL_NODE_COUNT = 51;
+  NODEPOOL_GPU_UTILIZATION = 52;
+  NODEPOOL_GPU_TENSOR_UTILIZATION = 53;
+  NODEPOOL_GPU_MEMORY_UTILIZATION = 54;
+  NODEPOOL_CPU_UTILIZATION = 55;
+  NODEPOOL_MEMORY_UTILIZATION = 56;
 }
 
 enum MetricLabel {
@@ -5847,6 +5862,8 @@ enum MetricLabel {
   MODEL_ID = 2;
   MODEL_VERSION_ID = 3;
   HTTP_STATUS = 4;
+  COMPUTE_CLUSTER_ID = 5;
+  NODEPOOL_ID = 6;
 }
 message MetricAggregate {
   enum Operator {

@@ -76889,7 +76889,8 @@ proto.clarifai.api.ComputePlaneMetrics.toObject = function(includeInstance, msg)
     proto.clarifai.api.GpuMetrics.toObject, includeInstance),
     hostname: jspb.Message.getFieldWithDefault(msg, 11, ""),
     cpuMetricsList: jspb.Message.toObjectList(msg.getCpuMetricsList(),
-    proto.clarifai.api.CpuMetrics.toObject, includeInstance)
+    proto.clarifai.api.CpuMetrics.toObject, includeInstance),
+    isFinalMetrics: jspb.Message.getBooleanFieldWithDefault(msg, 13, false)
   };
 
   if (includeInstance) {
@@ -76977,6 +76978,10 @@ proto.clarifai.api.ComputePlaneMetrics.deserializeBinaryFromReader = function(ms
       var value = new proto.clarifai.api.CpuMetrics;
       reader.readMessage(value,proto.clarifai.api.CpuMetrics.deserializeBinaryFromReader);
       msg.addCpuMetrics(value);
+      break;
+    case 13:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsFinalMetrics(value);
       break;
     default:
       reader.skipField();
@@ -77093,6 +77098,13 @@ proto.clarifai.api.ComputePlaneMetrics.serializeBinaryToWriter = function(messag
       12,
       f,
       proto.clarifai.api.CpuMetrics.serializeBinaryToWriter
+    );
+  }
+  f = message.getIsFinalMetrics();
+  if (f) {
+    writer.writeBool(
+      13,
+      f
     );
   }
 };
@@ -77389,6 +77401,24 @@ proto.clarifai.api.ComputePlaneMetrics.prototype.addCpuMetrics = function(opt_va
  */
 proto.clarifai.api.ComputePlaneMetrics.prototype.clearCpuMetricsList = function() {
   return this.setCpuMetricsList([]);
+};
+
+
+/**
+ * optional bool is_final_metrics = 13;
+ * @return {boolean}
+ */
+proto.clarifai.api.ComputePlaneMetrics.prototype.getIsFinalMetrics = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 13, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.ComputePlaneMetrics} returns this
+ */
+proto.clarifai.api.ComputePlaneMetrics.prototype.setIsFinalMetrics = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 13, value);
 };
 
 
@@ -92654,7 +92684,13 @@ proto.clarifai.api.MetricType = {
   MODEL_THROUGHPUT: 2,
   MODEL_PROMPT_TOKEN_THROUGHPUT: 3,
   MODEL_COMPLETION_TOKEN_THROUGHPUT: 4,
-  MODEL_REQUEST_COUNT: 5
+  MODEL_REQUEST_COUNT: 5,
+  NODEPOOL_NODE_COUNT: 51,
+  NODEPOOL_GPU_UTILIZATION: 52,
+  NODEPOOL_GPU_TENSOR_UTILIZATION: 53,
+  NODEPOOL_GPU_MEMORY_UTILIZATION: 54,
+  NODEPOOL_CPU_UTILIZATION: 55,
+  NODEPOOL_MEMORY_UTILIZATION: 56
 };
 
 /**
@@ -92665,7 +92701,9 @@ proto.clarifai.api.MetricLabel = {
   APP_ID: 1,
   MODEL_ID: 2,
   MODEL_VERSION_ID: 3,
-  HTTP_STATUS: 4
+  HTTP_STATUS: 4,
+  COMPUTE_CLUSTER_ID: 5,
+  NODEPOOL_ID: 6
 };
 
 goog.object.extend(exports, proto.clarifai.api);
