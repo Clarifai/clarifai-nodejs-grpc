@@ -10955,6 +10955,10 @@ export class ListDeploymentsRequest extends jspb.Message {
     addWorkflowVersionIds(value: string, index?: number): string;
     getComputeClusterId(): string;
     setComputeClusterId(value: string): ListDeploymentsRequest;
+    clearSchedulingPrioritiesList(): void;
+    getSchedulingPrioritiesList(): Array<number>;
+    setSchedulingPrioritiesList(value: Array<number>): ListDeploymentsRequest;
+    addSchedulingPriorities(value: number, index?: number): number;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListDeploymentsRequest.AsObject;
@@ -10975,6 +10979,7 @@ export namespace ListDeploymentsRequest {
         modelVersionIdsList: Array<string>,
         workflowVersionIdsList: Array<string>,
         computeClusterId: string,
+        schedulingPrioritiesList: Array<number>,
     }
 }
 

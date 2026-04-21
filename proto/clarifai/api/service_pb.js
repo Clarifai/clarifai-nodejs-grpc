@@ -91790,7 +91790,7 @@ proto.clarifai.api.GetDeploymentRequest.prototype.setDeploymentId = function(val
  * @private {!Array<number>}
  * @const
  */
-proto.clarifai.api.ListDeploymentsRequest.repeatedFields_ = [5,6];
+proto.clarifai.api.ListDeploymentsRequest.repeatedFields_ = [5,6,8];
 
 
 
@@ -91829,7 +91829,8 @@ proto.clarifai.api.ListDeploymentsRequest.toObject = function(includeInstance, m
     perPage: jspb.Message.getFieldWithDefault(msg, 4, 0),
     modelVersionIdsList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f,
     workflowVersionIdsList: (f = jspb.Message.getRepeatedField(msg, 6)) == null ? undefined : f,
-    computeClusterId: jspb.Message.getFieldWithDefault(msg, 7, "")
+    computeClusterId: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    schedulingPrioritiesList: (f = jspb.Message.getRepeatedField(msg, 8)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -91894,6 +91895,12 @@ proto.clarifai.api.ListDeploymentsRequest.deserializeBinaryFromReader = function
     case 7:
       var value = /** @type {string} */ (reader.readString());
       msg.setComputeClusterId(value);
+      break;
+    case 8:
+      var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedUint32() : [reader.readUint32()]);
+      for (var i = 0; i < values.length; i++) {
+        msg.addSchedulingPriorities(values[i]);
+      }
       break;
     default:
       reader.skipField();
@@ -91971,6 +91978,13 @@ proto.clarifai.api.ListDeploymentsRequest.serializeBinaryToWriter = function(mes
   if (f.length > 0) {
     writer.writeString(
       7,
+      f
+    );
+  }
+  f = message.getSchedulingPrioritiesList();
+  if (f.length > 0) {
+    writer.writePackedUint32(
+      8,
       f
     );
   }
@@ -92157,6 +92171,43 @@ proto.clarifai.api.ListDeploymentsRequest.prototype.getComputeClusterId = functi
  */
 proto.clarifai.api.ListDeploymentsRequest.prototype.setComputeClusterId = function(value) {
   return jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * repeated uint32 scheduling_priorities = 8;
+ * @return {!Array<number>}
+ */
+proto.clarifai.api.ListDeploymentsRequest.prototype.getSchedulingPrioritiesList = function() {
+  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 8));
+};
+
+
+/**
+ * @param {!Array<number>} value
+ * @return {!proto.clarifai.api.ListDeploymentsRequest} returns this
+ */
+proto.clarifai.api.ListDeploymentsRequest.prototype.setSchedulingPrioritiesList = function(value) {
+  return jspb.Message.setField(this, 8, value || []);
+};
+
+
+/**
+ * @param {number} value
+ * @param {number=} opt_index
+ * @return {!proto.clarifai.api.ListDeploymentsRequest} returns this
+ */
+proto.clarifai.api.ListDeploymentsRequest.prototype.addSchedulingPriorities = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 8, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.clarifai.api.ListDeploymentsRequest} returns this
+ */
+proto.clarifai.api.ListDeploymentsRequest.prototype.clearSchedulingPrioritiesList = function() {
+  return this.setSchedulingPrioritiesList([]);
 };
 
 

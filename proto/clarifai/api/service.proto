@@ -8475,6 +8475,9 @@ message ListDeploymentsRequest {
   repeated string workflow_version_ids = 6;
   // (optional URL parameter) ComputeCluster ID. To list all deployed workers in a ComputeCluster
   string compute_cluster_id = 7;
+  // (optional URL parameter) Scheduling priorities. To list all deployments with one of the
+  // provided scheduling priorities. Valid values are 0-9.
+  repeated uint32 scheduling_priorities = 8;
 }
 
 message PostDeploymentsRequest {
