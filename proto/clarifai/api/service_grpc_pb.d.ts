@@ -190,8 +190,6 @@ interface IV2Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplement
     listLabelOrders: IV2Service_IListLabelOrders;
     patchLabelOrders: IV2Service_IPatchLabelOrders;
     deleteLabelOrders: IV2Service_IDeleteLabelOrders;
-    postStatValues: IV2Service_IPostStatValues;
-    postStatValuesAggregate: IV2Service_IPostStatValuesAggregate;
     postBulkOperations: IV2Service_IPostBulkOperations;
     listBulkOperations: IV2Service_IListBulkOperations;
     getBulkOperation: IV2Service_IGetBulkOperation;
@@ -1851,24 +1849,6 @@ interface IV2Service_IDeleteLabelOrders extends grpc.MethodDefinition<proto_clar
     responseSerialize: grpc.serialize<proto_clarifai_api_status_status_pb.BaseResponse>;
     responseDeserialize: grpc.deserialize<proto_clarifai_api_status_status_pb.BaseResponse>;
 }
-interface IV2Service_IPostStatValues extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostStatValuesRequest, proto_clarifai_api_service_pb.MultiStatValueResponse> {
-    path: "/clarifai.api.V2/PostStatValues";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostStatValuesRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostStatValuesRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiStatValueResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiStatValueResponse>;
-}
-interface IV2Service_IPostStatValuesAggregate extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, proto_clarifai_api_service_pb.MultiStatValueAggregateResponse> {
-    path: "/clarifai.api.V2/PostStatValuesAggregate";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<proto_clarifai_api_service_pb.PostStatValuesAggregateRequest>;
-    requestDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.PostStatValuesAggregateRequest>;
-    responseSerialize: grpc.serialize<proto_clarifai_api_service_pb.MultiStatValueAggregateResponse>;
-    responseDeserialize: grpc.deserialize<proto_clarifai_api_service_pb.MultiStatValueAggregateResponse>;
-}
 interface IV2Service_IPostBulkOperations extends grpc.MethodDefinition<proto_clarifai_api_service_pb.PostBulkOperationsRequest, proto_clarifai_api_service_pb.MultiBulkOperationsResponse> {
     path: "/clarifai.api.V2/PostBulkOperations";
     requestStream: false;
@@ -2946,8 +2926,6 @@ export interface IV2Server {
     listLabelOrders: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListLabelOrdersRequest, proto_clarifai_api_service_pb.MultiLabelOrderResponse>;
     patchLabelOrders: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PatchLabelOrdersRequest, proto_clarifai_api_service_pb.MultiLabelOrderResponse>;
     deleteLabelOrders: grpc.handleUnaryCall<proto_clarifai_api_service_pb.DeleteLabelOrdersRequest, proto_clarifai_api_status_status_pb.BaseResponse>;
-    postStatValues: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostStatValuesRequest, proto_clarifai_api_service_pb.MultiStatValueResponse>;
-    postStatValuesAggregate: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, proto_clarifai_api_service_pb.MultiStatValueAggregateResponse>;
     postBulkOperations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.PostBulkOperationsRequest, proto_clarifai_api_service_pb.MultiBulkOperationsResponse>;
     listBulkOperations: grpc.handleUnaryCall<proto_clarifai_api_service_pb.ListBulkOperationsRequest, proto_clarifai_api_service_pb.MultiBulkOperationsResponse>;
     getBulkOperation: grpc.handleUnaryCall<proto_clarifai_api_service_pb.GetBulkOperationRequest, proto_clarifai_api_service_pb.SingleBulkOperationsResponse>;
@@ -3567,12 +3545,6 @@ export interface IV2Client {
     deleteLabelOrders(request: proto_clarifai_api_service_pb.DeleteLabelOrdersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteLabelOrders(request: proto_clarifai_api_service_pb.DeleteLabelOrdersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     deleteLabelOrders(request: proto_clarifai_api_service_pb.DeleteLabelOrdersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    postStatValues(request: proto_clarifai_api_service_pb.PostStatValuesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueResponse) => void): grpc.ClientUnaryCall;
-    postStatValues(request: proto_clarifai_api_service_pb.PostStatValuesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueResponse) => void): grpc.ClientUnaryCall;
-    postStatValues(request: proto_clarifai_api_service_pb.PostStatValuesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueResponse) => void): grpc.ClientUnaryCall;
-    postStatValuesAggregate(request: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse) => void): grpc.ClientUnaryCall;
-    postStatValuesAggregate(request: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse) => void): grpc.ClientUnaryCall;
-    postStatValuesAggregate(request: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse) => void): grpc.ClientUnaryCall;
     postBulkOperations(request: proto_clarifai_api_service_pb.PostBulkOperationsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiBulkOperationsResponse) => void): grpc.ClientUnaryCall;
     postBulkOperations(request: proto_clarifai_api_service_pb.PostBulkOperationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiBulkOperationsResponse) => void): grpc.ClientUnaryCall;
     postBulkOperations(request: proto_clarifai_api_service_pb.PostBulkOperationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiBulkOperationsResponse) => void): grpc.ClientUnaryCall;
@@ -4390,12 +4362,6 @@ export class V2Client extends grpc.Client implements IV2Client {
     public deleteLabelOrders(request: proto_clarifai_api_service_pb.DeleteLabelOrdersRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteLabelOrders(request: proto_clarifai_api_service_pb.DeleteLabelOrdersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
     public deleteLabelOrders(request: proto_clarifai_api_service_pb.DeleteLabelOrdersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_status_status_pb.BaseResponse) => void): grpc.ClientUnaryCall;
-    public postStatValues(request: proto_clarifai_api_service_pb.PostStatValuesRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueResponse) => void): grpc.ClientUnaryCall;
-    public postStatValues(request: proto_clarifai_api_service_pb.PostStatValuesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueResponse) => void): grpc.ClientUnaryCall;
-    public postStatValues(request: proto_clarifai_api_service_pb.PostStatValuesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueResponse) => void): grpc.ClientUnaryCall;
-    public postStatValuesAggregate(request: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse) => void): grpc.ClientUnaryCall;
-    public postStatValuesAggregate(request: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse) => void): grpc.ClientUnaryCall;
-    public postStatValuesAggregate(request: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse) => void): grpc.ClientUnaryCall;
     public postBulkOperations(request: proto_clarifai_api_service_pb.PostBulkOperationsRequest, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiBulkOperationsResponse) => void): grpc.ClientUnaryCall;
     public postBulkOperations(request: proto_clarifai_api_service_pb.PostBulkOperationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiBulkOperationsResponse) => void): grpc.ClientUnaryCall;
     public postBulkOperations(request: proto_clarifai_api_service_pb.PostBulkOperationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_clarifai_api_service_pb.MultiBulkOperationsResponse) => void): grpc.ClientUnaryCall;
