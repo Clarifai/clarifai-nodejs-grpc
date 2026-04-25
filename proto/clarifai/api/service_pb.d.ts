@@ -10553,6 +10553,8 @@ export class GetNodepoolRequest extends jspb.Message {
     setComputeClusterId(value: string): GetNodepoolRequest;
     getNodepoolId(): string;
     setNodepoolId(value: string): GetNodepoolRequest;
+    getActiveUsage(): boolean;
+    setActiveUsage(value: boolean): GetNodepoolRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetNodepoolRequest.AsObject;
@@ -10569,6 +10571,7 @@ export namespace GetNodepoolRequest {
         userAppId?: proto_clarifai_api_resources_pb.UserAppIDSet.AsObject,
         computeClusterId: string,
         nodepoolId: string,
+        activeUsage: boolean,
     }
 }
 

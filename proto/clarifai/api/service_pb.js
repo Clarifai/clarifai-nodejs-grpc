@@ -88790,7 +88790,8 @@ proto.clarifai.api.GetNodepoolRequest.toObject = function(includeInstance, msg) 
   var f, obj = {
     userAppId: (f = msg.getUserAppId()) && proto_clarifai_api_resources_pb.UserAppIDSet.toObject(includeInstance, f),
     computeClusterId: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    nodepoolId: jspb.Message.getFieldWithDefault(msg, 3, "")
+    nodepoolId: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    activeUsage: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
   };
 
   if (includeInstance) {
@@ -88840,6 +88841,10 @@ proto.clarifai.api.GetNodepoolRequest.deserializeBinaryFromReader = function(msg
       var value = /** @type {string} */ (reader.readString());
       msg.setNodepoolId(value);
       break;
+    case 4:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setActiveUsage(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -88888,6 +88893,13 @@ proto.clarifai.api.GetNodepoolRequest.serializeBinaryToWriter = function(message
   if (f.length > 0) {
     writer.writeString(
       3,
+      f
+    );
+  }
+  f = message.getActiveUsage();
+  if (f) {
+    writer.writeBool(
+      4,
       f
     );
   }
@@ -88964,6 +88976,24 @@ proto.clarifai.api.GetNodepoolRequest.prototype.getNodepoolId = function() {
  */
 proto.clarifai.api.GetNodepoolRequest.prototype.setNodepoolId = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional bool active_usage = 4;
+ * @return {boolean}
+ */
+proto.clarifai.api.GetNodepoolRequest.prototype.getActiveUsage = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 4, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.clarifai.api.GetNodepoolRequest} returns this
+ */
+proto.clarifai.api.GetNodepoolRequest.prototype.setActiveUsage = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 

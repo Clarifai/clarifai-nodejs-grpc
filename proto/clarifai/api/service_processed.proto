@@ -8328,6 +8328,9 @@ message GetNodepoolRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string compute_cluster_id = 2;
   string nodepool_id = 3;
+  // Only return the nodepool if it is actively being used (having min_instances > 0,
+  // runners with replicas >= threshold or pipeline versions scheduled to run)
+  bool active_usage = 4;
 }
 
 message ListNodepoolsRequest {
