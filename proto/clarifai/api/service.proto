@@ -3002,33 +3002,6 @@ service V2 {
     option (clarifai.auth.util.cl_depending_scopes) = Tasks_Get;
   }
 
-  // PostStatValues
-  rpc PostStatValues (PostStatValuesRequest) returns (MultiStatValueResponse) {
-    option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/stats/values"
-      body: "*"
-      additional_bindings {
-        post: "/v2/stats/values"
-        body: "*"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-  }
-
-  // PostStatValuesAggregate
-  rpc PostStatValuesAggregate (PostStatValuesAggregateRequest) returns (MultiStatValueAggregateResponse) {
-    option (google.api.http) = {
-      post: "/v2/users/{user_app_id.user_id}/apps/{user_app_id.app_id}/stats/values/aggregate"
-      body: "*"
-      additional_bindings {
-        post: "/v2/stats/values/aggregate"
-        body: "*"
-      }
-    };
-    option (clarifai.auth.util.cl_auth_type) = KeyAuth;
-    option (clarifai.auth.util.cl_depending_scopes) = Apps_Get;
-  }
-
 
 
 
@@ -7691,41 +7664,6 @@ message SingleLabelOrderResponse {
   LabelOrder label_order = 2;
 }
 
-// PostStatValuesRequest
-message PostStatValuesRequest {
-  // The user and app information for the request.
-  clarifai.api.UserAppIDSet user_app_id = 1;
-  // The stats to post, can post more than one at a time.
-  repeated StatValue stat_values = 2;
-}
-
-// MultiStatValueResponse
-message MultiStatValueResponse {
-  // The response status.
-  clarifai.api.status.Status status = 1;
-  // The returned stats values.
-  repeated StatValue stat_values = 2 [(clarifai.api.utils.cl_show_if_empty) = true];
-}
-
-// PostStatValuesAggregateRequest
-message PostStatValuesAggregateRequest {
-  // Ids present in the url of the request.
-  clarifai.api.UserAppIDSet user_app_id = 1;
-
-  // Query to retrieve aggregate values.
-  repeated StatValueAggregateQuery stat_value_aggregate_queries = 2;
-}
-
-// MultiStatValueAggregateResponse
-message MultiStatValueAggregateResponse {
-  // The response status.
-  clarifai.api.status.Status status = 1;
-
-  // The aggregate results for each query passedin.
-  repeated StatValueAggregateResult stat_value_aggregate_results = 2;
-}
-
-
 
 
 
@@ -8390,6 +8328,9 @@ message GetNodepoolRequest {
   clarifai.api.UserAppIDSet user_app_id = 1;
   string compute_cluster_id = 2;
   string nodepool_id = 3;
+  // Only return the nodepool if it is actively being used (having min_instances > 0,
+  // runners with replicas >= threshold or pipeline versions scheduled to run)
+  bool active_usage = 4;
 }
 
 message ListNodepoolsRequest {
@@ -8475,6 +8416,9 @@ message ListDeploymentsRequest {
   repeated string workflow_version_ids = 6;
   // (optional URL parameter) ComputeCluster ID. To list all deployed workers in a ComputeCluster
   string compute_cluster_id = 7;
+  // (optional URL parameter) Scheduling priorities. To list all deployments with one of the
+  // provided scheduling priorities. Valid values are 0-9.
+  repeated uint32 scheduling_priorities = 8;
 }
 
 message PostDeploymentsRequest {

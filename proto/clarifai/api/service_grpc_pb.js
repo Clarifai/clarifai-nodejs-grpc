@@ -2423,28 +2423,6 @@ function deserialize_clarifai_api_MultiSecretResponse(buffer_arg) {
   return proto_clarifai_api_service_pb.MultiSecretResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_clarifai_api_MultiStatValueAggregateResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.MultiStatValueAggregateResponse)) {
-    throw new Error('Expected argument of type clarifai.api.MultiStatValueAggregateResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_MultiStatValueAggregateResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.MultiStatValueAggregateResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_MultiStatValueResponse(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.MultiStatValueResponse)) {
-    throw new Error('Expected argument of type clarifai.api.MultiStatValueResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_MultiStatValueResponse(buffer_arg) {
-  return proto_clarifai_api_service_pb.MultiStatValueResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_clarifai_api_MultiStatusCodeResponse(arg) {
   if (!(arg instanceof proto_clarifai_api_service_pb.MultiStatusCodeResponse)) {
     throw new Error('Expected argument of type clarifai.api.MultiStatusCodeResponse');
@@ -3686,28 +3664,6 @@ function serialize_clarifai_api_PostSecretsRequest(arg) {
 
 function deserialize_clarifai_api_PostSecretsRequest(buffer_arg) {
   return proto_clarifai_api_service_pb.PostSecretsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_PostStatValuesAggregateRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.PostStatValuesAggregateRequest)) {
-    throw new Error('Expected argument of type clarifai.api.PostStatValuesAggregateRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_PostStatValuesAggregateRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.PostStatValuesAggregateRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_clarifai_api_PostStatValuesRequest(arg) {
-  if (!(arg instanceof proto_clarifai_api_service_pb.PostStatValuesRequest)) {
-    throw new Error('Expected argument of type clarifai.api.PostStatValuesRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_clarifai_api_PostStatValuesRequest(buffer_arg) {
-  return proto_clarifai_api_service_pb.PostStatValuesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_clarifai_api_PostTasksRequest(arg) {
@@ -6615,30 +6571,6 @@ deleteLabelOrders: {
     requestDeserialize: deserialize_clarifai_api_DeleteLabelOrdersRequest,
     responseSerialize: serialize_clarifai_api_status_BaseResponse,
     responseDeserialize: deserialize_clarifai_api_status_BaseResponse,
-  },
-  // PostStatValues
-postStatValues: {
-    path: '/clarifai.api.V2/PostStatValues',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.PostStatValuesRequest,
-    responseType: proto_clarifai_api_service_pb.MultiStatValueResponse,
-    requestSerialize: serialize_clarifai_api_PostStatValuesRequest,
-    requestDeserialize: deserialize_clarifai_api_PostStatValuesRequest,
-    responseSerialize: serialize_clarifai_api_MultiStatValueResponse,
-    responseDeserialize: deserialize_clarifai_api_MultiStatValueResponse,
-  },
-  // PostStatValuesAggregate
-postStatValuesAggregate: {
-    path: '/clarifai.api.V2/PostStatValuesAggregate',
-    requestStream: false,
-    responseStream: false,
-    requestType: proto_clarifai_api_service_pb.PostStatValuesAggregateRequest,
-    responseType: proto_clarifai_api_service_pb.MultiStatValueAggregateResponse,
-    requestSerialize: serialize_clarifai_api_PostStatValuesAggregateRequest,
-    requestDeserialize: deserialize_clarifai_api_PostStatValuesAggregateRequest,
-    responseSerialize: serialize_clarifai_api_MultiStatValueAggregateResponse,
-    responseDeserialize: deserialize_clarifai_api_MultiStatValueAggregateResponse,
   },
   // Perform bulk operations on a list of inputs based on input source.
 // Operation include add, update, delete of concepts, metadata and geo data.

@@ -6800,144 +6800,6 @@ export namespace Team {
     }
 }
 
-export class StatValue extends jspb.Message { 
-
-    hasTime(): boolean;
-    clearTime(): void;
-    getTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setTime(value?: google_protobuf_timestamp_pb.Timestamp): StatValue;
-    getValue(): number;
-    setValue(value: number): StatValue;
-    clearTagsList(): void;
-    getTagsList(): Array<string>;
-    setTagsList(value: Array<string>): StatValue;
-    addTags(value: string, index?: number): string;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): StatValue.AsObject;
-    static toObject(includeInstance: boolean, msg: StatValue): StatValue.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: StatValue, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): StatValue;
-    static deserializeBinaryFromReader(message: StatValue, reader: jspb.BinaryReader): StatValue;
-}
-
-export namespace StatValue {
-    export type AsObject = {
-        time?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        value: number,
-        tagsList: Array<string>,
-    }
-}
-
-export class StatValueAggregateResult extends jspb.Message { 
-    clearStatValueAggregatesList(): void;
-    getStatValueAggregatesList(): Array<StatValueAggregate>;
-    setStatValueAggregatesList(value: Array<StatValueAggregate>): StatValueAggregateResult;
-    addStatValueAggregates(value?: StatValueAggregate, index?: number): StatValueAggregate;
-
-    hasStatValueAggregateQuery(): boolean;
-    clearStatValueAggregateQuery(): void;
-    getStatValueAggregateQuery(): StatValueAggregateQuery | undefined;
-    setStatValueAggregateQuery(value?: StatValueAggregateQuery): StatValueAggregateResult;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): StatValueAggregateResult.AsObject;
-    static toObject(includeInstance: boolean, msg: StatValueAggregateResult): StatValueAggregateResult.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: StatValueAggregateResult, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): StatValueAggregateResult;
-    static deserializeBinaryFromReader(message: StatValueAggregateResult, reader: jspb.BinaryReader): StatValueAggregateResult;
-}
-
-export namespace StatValueAggregateResult {
-    export type AsObject = {
-        statValueAggregatesList: Array<StatValueAggregate.AsObject>,
-        statValueAggregateQuery?: StatValueAggregateQuery.AsObject,
-    }
-}
-
-export class StatValueAggregate extends jspb.Message { 
-
-    hasTime(): boolean;
-    clearTime(): void;
-    getTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setTime(value?: google_protobuf_timestamp_pb.Timestamp): StatValueAggregate;
-    getAggregateValue(): number;
-    setAggregateValue(value: number): StatValueAggregate;
-    getCount(): number;
-    setCount(value: number): StatValueAggregate;
-    clearTagsList(): void;
-    getTagsList(): Array<string>;
-    setTagsList(value: Array<string>): StatValueAggregate;
-    addTags(value: string, index?: number): string;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): StatValueAggregate.AsObject;
-    static toObject(includeInstance: boolean, msg: StatValueAggregate): StatValueAggregate.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: StatValueAggregate, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): StatValueAggregate;
-    static deserializeBinaryFromReader(message: StatValueAggregate, reader: jspb.BinaryReader): StatValueAggregate;
-}
-
-export namespace StatValueAggregate {
-    export type AsObject = {
-        time?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        aggregateValue: number,
-        count: number,
-        tagsList: Array<string>,
-    }
-}
-
-export class StatValueAggregateQuery extends jspb.Message { 
-    clearTagsList(): void;
-    getTagsList(): Array<string>;
-    setTagsList(value: Array<string>): StatValueAggregateQuery;
-    addTags(value: string, index?: number): string;
-    clearTagGroupsList(): void;
-    getTagGroupsList(): Array<string>;
-    setTagGroupsList(value: Array<string>): StatValueAggregateQuery;
-    addTagGroups(value: string, index?: number): string;
-    getStatValueAggType(): StatValueAggType;
-    setStatValueAggType(value: StatValueAggType): StatValueAggregateQuery;
-    getStatTimeAggType(): StatTimeAggType;
-    setStatTimeAggType(value: StatTimeAggType): StatValueAggregateQuery;
-
-    hasStartTime(): boolean;
-    clearStartTime(): void;
-    getStartTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setStartTime(value?: google_protobuf_timestamp_pb.Timestamp): StatValueAggregateQuery;
-
-    hasEndTime(): boolean;
-    clearEndTime(): void;
-    getEndTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setEndTime(value?: google_protobuf_timestamp_pb.Timestamp): StatValueAggregateQuery;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): StatValueAggregateQuery.AsObject;
-    static toObject(includeInstance: boolean, msg: StatValueAggregateQuery): StatValueAggregateQuery.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: StatValueAggregateQuery, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): StatValueAggregateQuery;
-    static deserializeBinaryFromReader(message: StatValueAggregateQuery, reader: jspb.BinaryReader): StatValueAggregateQuery;
-}
-
-export namespace StatValueAggregateQuery {
-    export type AsObject = {
-        tagsList: Array<string>,
-        tagGroupsList: Array<string>,
-        statValueAggType: StatValueAggType,
-        statTimeAggType: StatTimeAggType,
-        startTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-        endTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-    }
-}
-
 export class PCAProjectionComparator extends jspb.Message { 
     getDistanceThreshold(): number;
     setDistanceThreshold(value: number): PCAProjectionComparator;
@@ -9251,6 +9113,8 @@ export class ComputePlaneMetrics extends jspb.Message {
     getCpuMetricsList(): Array<CpuMetrics>;
     setCpuMetricsList(value: Array<CpuMetrics>): ComputePlaneMetrics;
     addCpuMetrics(value?: CpuMetrics, index?: number): CpuMetrics;
+    getIsFinalMetrics(): boolean;
+    setIsFinalMetrics(value: boolean): ComputePlaneMetrics;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ComputePlaneMetrics.AsObject;
@@ -9276,6 +9140,7 @@ export namespace ComputePlaneMetrics {
         gpuMetricsList: Array<GpuMetrics.AsObject>,
         hostname: string,
         cpuMetricsList: Array<CpuMetrics.AsObject>,
+        isFinalMetrics: boolean,
     }
 }
 
@@ -11428,21 +11293,6 @@ export enum RoleType {
     ORG = 1,
 }
 
-export enum StatValueAggType {
-    SUM = 0,
-    AVG = 1,
-}
-
-export enum StatTimeAggType {
-    NO_TIME_AGG = 0,
-    YEAR = 1,
-    MONTH = 2,
-    WEEK = 3,
-    DAY = 4,
-    HOUR = 5,
-    MINUTE = 6,
-}
-
 export enum ValidationErrorType {
     VALIDATION_ERROR_TYPE_NOT_SET = 0,
     RESTRICTED = 1,
@@ -11517,6 +11367,13 @@ export enum MetricType {
     MODEL_PROMPT_TOKEN_THROUGHPUT = 3,
     MODEL_COMPLETION_TOKEN_THROUGHPUT = 4,
     MODEL_REQUEST_COUNT = 5,
+    MODEL_E2E_LATENCY = 6,
+    NODEPOOL_NODE_COUNT = 51,
+    NODEPOOL_GPU_UTILIZATION = 52,
+    NODEPOOL_GPU_TENSOR_UTILIZATION = 53,
+    NODEPOOL_GPU_MEMORY_UTILIZATION = 54,
+    NODEPOOL_CPU_UTILIZATION = 55,
+    NODEPOOL_MEMORY_UTILIZATION = 56,
 }
 
 export enum MetricLabel {
@@ -11525,4 +11382,6 @@ export enum MetricLabel {
     MODEL_ID = 2,
     MODEL_VERSION_ID = 3,
     HTTP_STATUS = 4,
+    COMPUTE_CLUSTER_ID = 5,
+    NODEPOOL_ID = 6,
 }
