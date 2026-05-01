@@ -294,7 +294,8 @@ proto.google.api.BackendRule.toObject = function(includeInstance, msg) {
     jwtAudience: jspb.Message.getFieldWithDefault(msg, 7, ""),
     disableAuth: jspb.Message.getBooleanFieldWithDefault(msg, 8, false),
     protocol: jspb.Message.getFieldWithDefault(msg, 9, ""),
-    overridesByRequestProtocolMap: (f = msg.getOverridesByRequestProtocolMap()) ? f.toObject(includeInstance, proto.google.api.BackendRule.toObject) : []
+    overridesByRequestProtocolMap: (f = msg.getOverridesByRequestProtocolMap()) ? f.toObject(includeInstance, proto.google.api.BackendRule.toObject) : [],
+    loadBalancingPolicy: jspb.Message.getFieldWithDefault(msg, 11, "")
   };
 
   if (includeInstance) {
@@ -372,6 +373,10 @@ proto.google.api.BackendRule.deserializeBinaryFromReader = function(msg, reader)
       reader.readMessage(value, function(message, reader) {
         jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.google.api.BackendRule.deserializeBinaryFromReader, "", new proto.google.api.BackendRule());
          });
+      break;
+    case 11:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setLoadBalancingPolicy(value);
       break;
     default:
       reader.skipField();
@@ -468,6 +473,13 @@ proto.google.api.BackendRule.serializeBinaryToWriter = function(message, writer)
   f = message.getOverridesByRequestProtocolMap(true);
   if (f && f.getLength() > 0) {
     f.serializeBinary(10, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeMessage, proto.google.api.BackendRule.serializeBinaryToWriter);
+  }
+  f = message.getLoadBalancingPolicy();
+  if (f.length > 0) {
+    writer.writeString(
+      11,
+      f
+    );
   }
 };
 
@@ -699,6 +711,24 @@ proto.google.api.BackendRule.prototype.getOverridesByRequestProtocolMap = functi
 proto.google.api.BackendRule.prototype.clearOverridesByRequestProtocolMap = function() {
   this.getOverridesByRequestProtocolMap().clear();
   return this;
+};
+
+
+/**
+ * optional string load_balancing_policy = 11;
+ * @return {string}
+ */
+proto.google.api.BackendRule.prototype.getLoadBalancingPolicy = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.google.api.BackendRule} returns this
+ */
+proto.google.api.BackendRule.prototype.setLoadBalancingPolicy = function(value) {
+  return jspb.Message.setProto3StringField(this, 11, value);
 };
 
 
