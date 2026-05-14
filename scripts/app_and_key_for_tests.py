@@ -72,8 +72,8 @@ def delete(app_id):
     _delete_app(session_token, user_id, app_id)
 
 
-def create_sample_workflow(api_key):
-    url = '/workflows'
+def create_sample_workflow(api_key, user_id, app_id):
+    url = '/users/%s/apps/%s/workflows' % (user_id, app_id)
     payload = {
         'workflows': [
             {
@@ -192,10 +192,12 @@ def run(arguments):
         app_id = arguments[1]
         delete(app_id)
     elif command == '--create-workflow':
-        if len(arguments) != 2:
-            raise Exception('--create-workflow takes one argument')
+        if len(arguments) != 4:
+            raise Exception('--create-workflow takes three arguments: api_key user_id app_id')
         api_key = arguments[1]
-        create_sample_workflow(api_key)
+        user_id = arguments[2]
+        app_id = arguments[3]
+        create_sample_workflow(api_key, user_id, app_id)
     elif command == '--create-pat':
         create_pat()
     elif command == '--delete-pat':
@@ -214,7 +216,7 @@ ARGUMENTS:
 --delete-pat [pat_id]        ... Deletes a Personal Access Token.
 --get-user-id                ... Prints the user ID.
 --delete-app [app_id]        ... Deletes an application (API keys that use it are deleted as well).
---create-workflow [api_key]  ... Creates a sample workflow to be used in int. tests.
+--create-workflow [api_key] [user_id] [app_id]  ... Creates a sample workflow to be used in int. tests.
 --help                       ... This text.''')
     else:
         print('Unknown argument. Please see --help')
