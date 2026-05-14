@@ -13,7 +13,6 @@ try {
 }
 
 const path = require('path');
-const PROTO_PATH = __dirname + "/../proto";
 const MAX_MESSAGE_LENGTH = 1024 * 1024 * 1024 // 1GB
 
 const packageDefinition = protoLoader.loadSync(
