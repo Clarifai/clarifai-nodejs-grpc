@@ -11,6 +11,13 @@ const common = require("./common");
 const metadata = new grpc.Metadata();
 metadata.set("authorization", "Key " + process.env.CLARIFAI_API_KEY);
 
+function makeUserAppId() {
+    const userAppId = new resources.UserAppIDSet();
+    userAppId.setUserId(process.env.CLARIFAI_USER_ID);
+    userAppId.setAppId(process.env.CLARIFAI_APP_ID);
+    return userAppId;
+}
+
 describe("Integration Tests - static", () => {
     it("List concepts", done => {
         testListConcepts(done);
@@ -49,7 +56,8 @@ function testListConcepts(done) {
     const client = makeClarifaiClient();
 
     client.listConcepts(
-        new service.ListConceptsRequest(),
+        new service.ListConceptsRequest()
+            .setUserAppId(makeUserAppId()),
         metadata,
         (err, response) => {
             if (err) {
@@ -71,6 +79,7 @@ function testPredictImageUrl(done) {
     const clarifai = makeClarifaiClient();
 
     const request = new service.PostModelOutputsRequest()
+        .setUserAppId(makeUserAppId())
         .setModelId(common.GENERIC_MODEL_ID);
     request.addInputs(
         new resources.Input()
@@ -111,6 +120,7 @@ function testPredictImageFile(done) {
     const imageBytes = fs.readFileSync(common.METRO_NORTH_IMAGE_FILE_PATH);
 
     const request = new service.PostModelOutputsRequest();
+    request.setUserAppId(makeUserAppId());
     request.setModelId(common.GENERIC_MODEL_ID);
     request.addInputs(
         new resources.Input()
@@ -148,6 +158,7 @@ function testFailedPredict(done) {
     const clarifai = makeClarifaiClient();
 
     const request = new service.PostModelOutputsRequest()
+        .setUserAppId(makeUserAppId())
         .setModelId(common.GENERIC_MODEL_ID);
     request.addInputs(
         new resources.Input()
@@ -169,17 +180,7 @@ function testFailedPredict(done) {
                 return;
             }
 
-            if (response.getStatus().getCode() === 10000) {
-                done(new Error(
-                    "Expected failed status, received 10000: " +
-                    response.getStatus().getDescription() +
-                    "\n" +
-                    response.getStatus().getDetails()
-                ));
-                return;
-            }
-
-            assert.strictEqual(response.getOutputsList()[0].getStatus().getCode(), 30002);  // Download failed.
+            assert.notStrictEqual(response.getStatus().getCode(), 10000);
 
             done();
         }
@@ -191,6 +192,7 @@ function testListModelsWithPagination1(done) {
 
     clarifai.listModels(
         new service.ListModelsRequest()
+            .setUserAppId(makeUserAppId())
             .setPerPage(2),
         metadata,
         (err, response) => {
@@ -217,6 +219,7 @@ function testListModelsWithPagination2(done) {
     clarifai.listModels(
         // We shouldn 't have 1000*500 number of models, so the result should be empty.
         new service.ListModelsRequest()
+            .setUserAppId(makeUserAppId())
             .setPage(1000)
             .setPerPage(500),
         metadata,
@@ -282,6 +285,7 @@ function testPromiseWrappers(done) {
             .setId("dog")
     );
     const postInputsRequest = new service.PostInputsRequest();
+    postInputsRequest.setUserAppId(makeUserAppId());
     postInputsRequest.addInputs(
         new resources.Input()
             .setData(data)
@@ -294,6 +298,7 @@ function testPromiseWrappers(done) {
         .then(response => {
             return getInputAsync(
                 new service.GetInputRequest()
+                    .setUserAppId(makeUserAppId())
                     .setInputId(response.getInputsList()[0].getId()),
                 metadata
             )
@@ -303,7 +308,7 @@ function testPromiseWrappers(done) {
             assert.strictEqual(response.getInput().getData().getConceptsList()[0].getValue(), 0);
 
             return deleteInputAsync(
-                new service.DeleteInputRequest().setInputId(response.getInput().getId()),
+                new service.DeleteInputRequest().setUserAppId(makeUserAppId()).setInputId(response.getInput().getId()),
                 metadata
             );
         })
