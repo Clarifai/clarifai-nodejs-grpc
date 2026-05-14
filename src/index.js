@@ -12,23 +12,27 @@ try {
     protoLoader = require('@grpc/proto-loader');
 }
 
+const path = require('path');
 const PROTO_PATH = __dirname + "/../proto";
 const MAX_MESSAGE_LENGTH = 1024 * 1024 * 1024 // 1GB
 
 const packageDefinition = protoLoader.loadSync(
     [
-        PROTO_PATH + "/clarifai/api/status/status_code.proto",
-        PROTO_PATH + "/clarifai/api/status/status.proto",
-        PROTO_PATH + "/clarifai/api/resources.proto",
-        PROTO_PATH + "/clarifai/api/service_processed.proto",
-	PROTO_PATH + "/clarifai/api/utils/matrix.proto",
+        "proto/clarifai/api/status/status.proto",
+        "proto/clarifai/api/resources.proto",
+        "proto/clarifai/api/service_processed.proto",
+        "proto/clarifai/api/utils/matrix.proto",
     ],
     {
         keepCase: true,
         longs: String,
         enums: Number,
         defaults: true,
-        oneofs: true
+        oneofs: true,
+        includeDirs: [
+            __dirname + "/..",
+            path.dirname(require.resolve('protobufjs/package.json')),
+        ]
     }
 );
 
