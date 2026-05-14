@@ -105,6 +105,39 @@ def create_sample_workflow(api_key):
     _raise_on_http_error(response)
 
 
+def create_pat():
+    session_token, user_id = _login()
+
+    url = '/users/%s/keys' % user_id
+    payload = {
+        'keys': [{
+            'description': 'Auto-created PAT in a CI test run',
+            'scopes': ['All'],
+            'type': 'personal_access_token',
+        }]
+    }
+    response = _request(method='POST', url=url, payload=payload, headers=_auth_headers(session_token))
+    _raise_on_http_error(response)
+    data = response
+    pat_id = data['keys'][0]['id']
+
+    # This print needs to be present so we can read the value in CI.
+    print(pat_id)
+
+
+def get_user_id():
+    _, user_id = _login()
+    print(user_id)
+
+
+def delete_pat(pat_id):
+    session_token, user_id = _login()
+
+    url = '/users/%s/keys/%s' % (user_id, pat_id)
+    response = _request(method='DELETE', url=url, headers=_auth_headers(session_token))
+    _raise_on_http_error(response)
+
+
 def _delete_app(session_token, user_id, app_id):
     url = '/users/%s/apps/%s' % (user_id, app_id)
     response = _request(method='DELETE', url=url, headers=_auth_headers(session_token))
@@ -163,11 +196,23 @@ def run(arguments):
             raise Exception('--create-workflow takes one argument')
         api_key = arguments[1]
         create_sample_workflow(api_key)
+    elif command == '--create-pat':
+        create_pat()
+    elif command == '--delete-pat':
+        if len(arguments) != 2:
+            raise Exception('--delete-pat takes one argument')
+        pat_id = arguments[1]
+        delete_pat(pat_id)
+    elif command == '--get-user-id':
+        get_user_id()
     elif command == '--help':
         print('''DESCRIPTION: Creates and delete applications and API keys
 ARGUMENTS:
 --create-app [env_name]      ... Creates a new application.
 --create-key [app_id]        ... Creates a new API key.
+--create-pat                 ... Creates a new Personal Access Token.
+--delete-pat [pat_id]        ... Deletes a Personal Access Token.
+--get-user-id                ... Prints the user ID.
 --delete-app [app_id]        ... Deletes an application (API keys that use it are deleted as well).
 --create-workflow [api_key]  ... Creates a sample workflow to be used in int. tests.
 --help                       ... This text.''')

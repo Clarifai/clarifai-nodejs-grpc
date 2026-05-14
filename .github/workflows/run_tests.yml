@@ -31,10 +31,12 @@ jobs:
         CI: true  # According to docs, setting this env. var. is required.
       shell: bash
       run: |
+        export CLARIFAI_USER_ID="$(python scripts/app_and_key_for_tests.py --get-user-id)"
         export CLARIFAI_APP_ID="$(python scripts/app_and_key_for_tests.py --create-app javascript-github)"
-        export CLARIFAI_API_KEY="$(python scripts/app_and_key_for_tests.py --create-key ${CLARIFAI_APP_ID})"
+        export CLARIFAI_API_KEY="$(python scripts/app_and_key_for_tests.py --create-pat)"
         python scripts/app_and_key_for_tests.py --create-workflow ${CLARIFAI_API_KEY}
         npm test
+        python scripts/app_and_key_for_tests.py --delete-pat ${CLARIFAI_API_KEY}
         python scripts/app_and_key_for_tests.py --delete-app ${CLARIFAI_APP_ID}
     - name: Slack Notify
       if: ${{ failure() }}
