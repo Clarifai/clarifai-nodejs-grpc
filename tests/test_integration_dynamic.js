@@ -13,6 +13,11 @@ const userAppId = {
     app_id: process.env.CLARIFAI_APP_ID,
 };
 
+const publicAppId = {
+    user_id: "clarifai",
+    app_id: "main",
+};
+
 describe("Integration Tests - dynamic", () => {
     it ("Lists concepts", done => {
         testListConceptsDynamic(done, ClarifaiStub.grpc());
@@ -66,7 +71,7 @@ function testListConceptsDynamic(done, stub) {
 function testPredictImageUrlDynamic(done, stub) {
     stub.PostModelOutputs(
         {
-            user_app_id: userAppId,
+            user_app_id: publicAppId,
             model_id: common.GENERIC_MODEL_ID,
             inputs: [{data: {image: {url: common.DOG_IMAGE_URL}}}]
         },
@@ -95,7 +100,7 @@ function testPredictImageFileDynamic(done, stub) {
 
     stub.PostModelOutputs(
         {
-            user_app_id: userAppId,
+            user_app_id: publicAppId,
             model_id: common.GENERIC_MODEL_ID,
             inputs: [{data: {image: {base64: imageBytes}}}]
         },
@@ -121,7 +126,7 @@ function testPredictImageFileDynamic(done, stub) {
 function testFailedPredictDynamic(done, stub) {
     stub.PostModelOutputs(
         {
-            user_app_id: userAppId,
+            user_app_id: publicAppId,
             model_id: common.GENERIC_MODEL_ID,
             inputs: [{data: {image: {url: common.NON_EXISTING_IMAGE_URL}}}]
         },
@@ -142,7 +147,7 @@ function testFailedPredictDynamic(done, stub) {
 function testListModelsWithPagination1Dynamic(done, stub) {
     stub.ListModels(
         {
-            user_app_id: userAppId,
+            user_app_id: publicAppId,
             per_page: 2
         },
         metadata,
@@ -168,7 +173,7 @@ function testListModelsWithPagination2Dynamic(done, stub) {
     stub.ListModels(
         {
             // We shouldn 't have 1000*500 number of models, so the result should be empty.
-            user_app_id: userAppId,
+            user_app_id: publicAppId,
             page: 1000,
             per_page: 500
         },

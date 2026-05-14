@@ -18,6 +18,13 @@ function makeUserAppId() {
     return userAppId;
 }
 
+function makePublicAppId() {
+    const userAppId = new resources.UserAppIDSet();
+    userAppId.setUserId("clarifai");
+    userAppId.setAppId("main");
+    return userAppId;
+}
+
 describe("Integration Tests - static", () => {
     it("List concepts", done => {
         testListConcepts(done);
@@ -79,7 +86,7 @@ function testPredictImageUrl(done) {
     const clarifai = makeClarifaiClient();
 
     const request = new service.PostModelOutputsRequest()
-        .setUserAppId(makeUserAppId())
+        .setUserAppId(makePublicAppId())
         .setModelId(common.GENERIC_MODEL_ID);
     request.addInputs(
         new resources.Input()
@@ -120,7 +127,7 @@ function testPredictImageFile(done) {
     const imageBytes = fs.readFileSync(common.METRO_NORTH_IMAGE_FILE_PATH);
 
     const request = new service.PostModelOutputsRequest();
-    request.setUserAppId(makeUserAppId());
+    request.setUserAppId(makePublicAppId());
     request.setModelId(common.GENERIC_MODEL_ID);
     request.addInputs(
         new resources.Input()
@@ -158,7 +165,7 @@ function testFailedPredict(done) {
     const clarifai = makeClarifaiClient();
 
     const request = new service.PostModelOutputsRequest()
-        .setUserAppId(makeUserAppId())
+        .setUserAppId(makePublicAppId())
         .setModelId(common.GENERIC_MODEL_ID);
     request.addInputs(
         new resources.Input()
@@ -192,7 +199,7 @@ function testListModelsWithPagination1(done) {
 
     clarifai.listModels(
         new service.ListModelsRequest()
-            .setUserAppId(makeUserAppId())
+            .setUserAppId(makePublicAppId())
             .setPerPage(2),
         metadata,
         (err, response) => {
@@ -219,7 +226,7 @@ function testListModelsWithPagination2(done) {
     clarifai.listModels(
         // We shouldn 't have 1000*500 number of models, so the result should be empty.
         new service.ListModelsRequest()
-            .setUserAppId(makeUserAppId())
+            .setUserAppId(makePublicAppId())
             .setPage(1000)
             .setPerPage(500),
         metadata,
