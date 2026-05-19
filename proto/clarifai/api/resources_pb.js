@@ -67983,6 +67983,7 @@ proto.clarifai.api.Nodepool.toObject = function(includeInstance, msg) {
     maxInstances: jspb.Message.getFieldWithDefault(msg, 10, 0),
     enforcedMinInstances: jspb.Message.getFieldWithDefault(msg, 13, 0),
     enforcedMaxInstances: jspb.Message.getFieldWithDefault(msg, 14, 0),
+    warmInstances: jspb.Message.getFieldWithDefault(msg, 19, 0),
     visibility: (f = msg.getVisibility()) && proto.clarifai.api.Visibility.toObject(includeInstance, f),
     metadata: (f = msg.getMetadata()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
     specialHandlingList: jspb.Message.toObjectList(msg.getSpecialHandlingList(),
@@ -68074,6 +68075,10 @@ proto.clarifai.api.Nodepool.deserializeBinaryFromReader = function(msg, reader) 
     case 14:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setEnforcedMaxInstances(value);
+      break;
+    case 19:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setWarmInstances(value);
       break;
     case 11:
       var value = new proto.clarifai.api.Visibility;
@@ -68210,6 +68215,13 @@ proto.clarifai.api.Nodepool.serializeBinaryToWriter = function(message, writer) 
   if (f !== 0) {
     writer.writeUint32(
       14,
+      f
+    );
+  }
+  f = message.getWarmInstances();
+  if (f !== 0) {
+    writer.writeUint32(
+      19,
       f
     );
   }
@@ -68563,6 +68575,24 @@ proto.clarifai.api.Nodepool.prototype.getEnforcedMaxInstances = function() {
  */
 proto.clarifai.api.Nodepool.prototype.setEnforcedMaxInstances = function(value) {
   return jspb.Message.setProto3IntField(this, 14, value);
+};
+
+
+/**
+ * optional uint32 warm_instances = 19;
+ * @return {number}
+ */
+proto.clarifai.api.Nodepool.prototype.getWarmInstances = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 19, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.clarifai.api.Nodepool} returns this
+ */
+proto.clarifai.api.Nodepool.prototype.setWarmInstances = function(value) {
+  return jspb.Message.setProto3IntField(this, 19, value);
 };
 
 

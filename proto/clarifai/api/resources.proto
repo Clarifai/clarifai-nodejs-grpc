@@ -4459,6 +4459,11 @@ message Nodepool {
   // The actual maximum number of instances. Enforced by the user's plan limits.
   uint32 enforced_max_instances = 14;
 
+  // Number of warm idle instances to keep in this nodepool.
+  // These allow the nodepool to have extra capacity ready for quickly scheduling additional runners.
+  // This is the user desired amount. See node_count for actual current number of nodes.
+  uint32 warm_instances = 19;
+
   // The visibility field represents whether this message is privately/publicly visible.
   // To be visible to the public the App that contains it AND the User that contains the App must
   // also be publicly visible.
