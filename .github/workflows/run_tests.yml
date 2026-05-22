@@ -60,7 +60,7 @@ jobs:
         python scripts/app_and_key_for_tests.py --delete-app ${CLARIFAI_APP_ID}
     - name: Slack Notify
       if: ${{ failure() }}
-      uses: rtCamp/action-slack-notify@e21bd54eb11b06b90e2356adfc37c299da78291d # v2
+      uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2
       env:
         SLACK_ICON: "https://raw.githubusercontent.com/github/explore/2c7e603b797535e5ad8b4beb575ab3b7354666e1/topics/actions/actions.png"
         SLACK_USERNAME: "GitHub Alerts"
