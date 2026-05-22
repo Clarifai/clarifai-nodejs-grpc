@@ -11,6 +11,8 @@ on:
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -23,7 +25,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       - name: Slack Notify
         if: ${{ failure() }}
-        uses: rtCamp/action-slack-notify@v2
+        uses: rtCamp/action-slack-notify@e21bd54eb11b06b90e2356adfc37c299da78291d # v2
         env:
           SLACK_ICON: "https://raw.githubusercontent.com/github/explore/2c7e603b797535e5ad8b4beb575ab3b7354666e1/topics/actions/actions.png"
           SLACK_USERNAME: "GitHub Alerts"
@@ -37,6 +39,8 @@ jobs:
     needs: publish-npm
     name: Create Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v2
       - name: Create Release
